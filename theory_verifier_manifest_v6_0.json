@@ -4177,6 +4177,7 @@
           "id": "extend_bounded_correlation_to_carrier_theorem",
           "status": "finite_witnessed",
           "evidence_refs": [
+            "bounded_correlation_carrier_lemma_route_demo",
             "idt_bounded_correlation_demo",
             "gpt_principle_separator_demo"
           ],
@@ -4258,6 +4259,40 @@
         "extend finite purification/filtering samples to arbitrary admissible carriers",
         "prove recoverable extensions are forced by IDT readout/facticity primitives",
         "show posterior support renormalization excludes non-IDT effect-cone filters universally"
+      ],
+      "expected_lemma_status": "finite_witnessed"
+    },
+    {
+      "id": "bounded_correlation_carrier_lemma_route_demo",
+      "type": "bounded_correlation_carrier_lemma_route",
+      "target_lemma": "extend_bounded_correlation_to_carrier_theorem",
+      "required_conditions": [
+        "single_joint_context_facticity",
+        "normalized_context_amplitudes",
+        "no_global_counterfactual_table",
+        "stable_correlation_invariant"
+      ],
+      "required_principles": [
+        "local_tomography",
+        "homogeneous_self_dual_cone",
+        "continuous_reversible_bit_symmetry",
+        "no_third_order_interference",
+        "purification_or_filtering",
+        "bounded_nonclassical_correlations"
+      ],
+      "finite_evidence_refs": [
+        "idt_bounded_correlation_demo",
+        "gpt_principle_separator_demo"
+      ],
+      "excluded_counterexamples": [
+        "pr_box_like",
+        "boxworld_like_gpt"
+      ],
+      "expected_exclusion_count": 2,
+      "open_generalization_gaps": [
+        "extend finite CHSH-bound samples to arbitrary admissible correlation resources",
+        "prove the bounded-correlation screen is forced by IDT stable-correlation invariants",
+        "show GPT separator principles jointly exclude all non-Hilbert carrier candidates rather than sample families"
       ],
       "expected_lemma_status": "finite_witnessed"
     },

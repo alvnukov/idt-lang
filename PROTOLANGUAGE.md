@@ -671,6 +671,10 @@ The `purification_filtering_carrier_lemma_route_demo` now starts the second
 lemma route below that theorem route: purification/filtering witnesses exclude
 finite insufficient-extension and zero-support-filter counterexamples while
 leaving universal carrier generalization gaps open.
+The `bounded_correlation_carrier_lemma_route_demo` now starts the third lemma
+route below that theorem route: bounded-correlation and GPT-separator witnesses
+exclude finite PR-box-like and boxworld-like counterexamples while leaving
+universal carrier generalization gaps open.
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.

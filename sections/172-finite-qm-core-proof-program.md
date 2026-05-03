@@ -469,6 +469,22 @@ carriers, recoverable extensions must be forced by IDT primitives, and
 posterior-support renormalization must exclude non-IDT effect-cone filters
 universally.
 
+The third lemma route is now executable as:
+
+`bounded_correlation_carrier_lemma_route_demo`.
+
+It connects `idt_bounded_correlation_demo` and `gpt_principle_separator_demo`
+to the carrier-selection proof route. The route records two finite exclusions:
+
+1. PR-box-like correlation resource;
+2. boxworld-like GPT carrier.
+
+It still remains `finite_witnessed`, not `formal_proof`, because finite
+CHSH-bound samples must be extended to arbitrary admissible correlation
+resources, the bounded-correlation screen must be forced by IDT invariants,
+and the GPT separator must exclude all non-Hilbert carrier candidates rather
+than only sample families.
+
 Status:
 
 `carrier_selection_proof_route_initialized`
@@ -480,6 +496,10 @@ Status:
 Status:
 
 `purification_filtering_carrier_lemma_route_initialized`
+
+Status:
+
+`bounded_correlation_carrier_lemma_route_initialized`
 
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that

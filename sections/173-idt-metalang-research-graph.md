@@ -117,6 +117,14 @@ It records purification/filtering conditions, finite exclusions, expected
 exclusion count, and remaining generalization gaps for the second
 carrier-selection lemma.
 
+The third lemma route is now manifest-backed:
+
+`bounded_correlation_carrier_lemma_route_demo`
+
+It records bounded-correlation conditions, GPT separator principles, finite
+exclusions, expected exclusion count, and remaining generalization gaps for
+the third carrier-selection lemma.
+
 Status:
 
 `lemma_route_language_initialized`

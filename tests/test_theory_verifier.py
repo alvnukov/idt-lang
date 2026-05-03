@@ -3591,6 +3591,38 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"purification_filtering_carrier_lemma_status_mismatch"})
 
+    def test_bounded_correlation_carrier_lemma_rejects_premature_formal_proof(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_bounded_correlation_carrier_lemma",
+                        "type": "bounded_correlation_carrier_lemma_route",
+                        "target_lemma": "extend_bounded_correlation_to_carrier_theorem",
+                        "required_conditions": list(IDT_BOUNDED_CORRELATION_CONDITIONS),
+                        "required_principles": list(GPT_SEPARATOR_PRINCIPLES),
+                        "finite_evidence_refs": [
+                            "idt_bounded_correlation_demo",
+                            "gpt_principle_separator_demo",
+                        ],
+                        "excluded_counterexamples": [
+                            "pr_box_like",
+                            "boxworld_like_gpt",
+                        ],
+                        "expected_exclusion_count": 2,
+                        "open_generalization_gaps": ["still finite"],
+                        "expected_lemma_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"bounded_correlation_carrier_lemma_status_mismatch"})
+
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
             {

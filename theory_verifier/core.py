@@ -221,6 +221,7 @@ CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES = (
 
 CONTEXT_PRODUCT_CARRIER_LEMMA_TARGET = "extend_context_product_exhaustion_to_carrier_theorem"
 PURIFICATION_FILTERING_CARRIER_LEMMA_TARGET = "extend_purification_filtering_to_carrier_theorem"
+BOUNDED_CORRELATION_CARRIER_LEMMA_TARGET = "extend_bounded_correlation_to_carrier_theorem"
 
 CARRIER_SELECTION_FRONTIER_STATUSES = {
     "not_derived",
@@ -6432,6 +6433,77 @@ def check_purification_filtering_carrier_lemma_route_gate(gate: FiniteGate) -> l
         return [
             Issue(
                 "purification_filtering_carrier_lemma_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_bounded_correlation_carrier_lemma_route_gate(gate: FiniteGate) -> list[Issue]:
+    target_lemma = require_string(gate.payload.get("target_lemma"), f"{gate.identifier}.target_lemma")
+    if target_lemma != BOUNDED_CORRELATION_CARRIER_LEMMA_TARGET:
+        return [
+            Issue(
+                "bounded_correlation_carrier_lemma_target_mismatch",
+                f"{gate.identifier}: target lemma must be {BOUNDED_CORRELATION_CARRIER_LEMMA_TARGET}",
+            )
+        ]
+
+    conditions = require_string_tuple(gate.payload.get("required_conditions", []), f"{gate.identifier}.required_conditions")
+    if set(conditions) != set(IDT_BOUNDED_CORRELATION_CONDITIONS):
+        return [
+            Issue(
+                "bounded_correlation_carrier_lemma_conditions_mismatch",
+                f"{gate.identifier}: required conditions must match IDT bounded-correlation conditions",
+            )
+        ]
+
+    principles = require_string_tuple(gate.payload.get("required_principles", []), f"{gate.identifier}.required_principles")
+    if set(principles) != set(GPT_SEPARATOR_PRINCIPLES):
+        return [
+            Issue(
+                "bounded_correlation_carrier_lemma_principles_mismatch",
+                f"{gate.identifier}: required principles must match GPT separator principles",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("finite_evidence_refs", []), f"{gate.identifier}.finite_evidence_refs")
+    if set(evidence_refs) != {"idt_bounded_correlation_demo", "gpt_principle_separator_demo"}:
+        return [
+            Issue(
+                "bounded_correlation_carrier_lemma_evidence_mismatch",
+                f"{gate.identifier}: finite evidence refs must link bounded-correlation and GPT separator witnesses",
+            )
+        ]
+
+    excluded_counterexamples = require_string_tuple(
+        gate.payload.get("excluded_counterexamples", []),
+        f"{gate.identifier}.excluded_counterexamples",
+    )
+    expected_exclusion_count = parse_positive_integer(
+        gate.payload.get("expected_exclusion_count"),
+        f"{gate.identifier}.expected_exclusion_count",
+    )
+    if len(excluded_counterexamples) != expected_exclusion_count:
+        return [
+            Issue(
+                "bounded_correlation_carrier_lemma_exclusion_count_mismatch",
+                f"{gate.identifier}: expected {expected_exclusion_count} exclusions, got {len(excluded_counterexamples)}",
+            )
+        ]
+
+    open_gaps = require_string_tuple(gate.payload.get("open_generalization_gaps", []), f"{gate.identifier}.open_generalization_gaps")
+    expected_status = require_string(gate.payload.get("expected_lemma_status"), f"{gate.identifier}.expected_lemma_status")
+    if expected_status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
+        raise ManifestError(f"{gate.identifier}: expected_lemma_status is unknown")
+    if open_gaps:
+        computed_status = "finite_witnessed"
+    else:
+        computed_status = "formal_proof"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "bounded_correlation_carrier_lemma_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
@@ -13439,6 +13511,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "carrier_selection_proof_route": check_carrier_selection_proof_route_gate,
     "context_product_carrier_lemma_route": check_context_product_carrier_lemma_route_gate,
     "purification_filtering_carrier_lemma_route": check_purification_filtering_carrier_lemma_route_gate,
+    "bounded_correlation_carrier_lemma_route": check_bounded_correlation_carrier_lemma_route_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,
     "marker_eraser_visibility": check_marker_eraser_visibility_gate,
     "bell_chsh_table": check_bell_chsh_table_gate,
