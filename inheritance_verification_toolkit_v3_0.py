@@ -9,7 +9,7 @@ bounds. This is not a full data-analysis package yet.
 from __future__ import annotations
 
 import math
-from typing import Iterable, Sequence, Callable, Dict, Any
+from typing import Sequence, Dict, Any
 import numpy as np
 
 

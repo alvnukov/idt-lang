@@ -214,6 +214,7 @@ The canonical theory modules are:
 169. [168. Holonomy Source Clearance Cluster](sections/168-holonomy-source-clearance-cluster.md)
 170. [169. Primitive Holonomy Selector Front](sections/169-primitive-holonomy-selector-front.md)
 171. [170. Sector Role Taxonomy Refactor](sections/170-sector-role-taxonomy-refactor.md)
+172. [171. QM Experiment Language Ledger](sections/171-qm-experiment-language-ledger.md)
 
 ---
 
@@ -536,6 +537,41 @@ contexts whose off-diagonal actualization terms are too large. The v6 calibrated
 QM pass now separates `full_QM_I` from `calibrated_QM_reconstruction_I` and
 adds calibrated Hamiltonian, momentum, de Broglie, and canonical readouts using
 `calibrated_hbar_I` as an explicit our-universe anchor.
+The QM experiment language ledger now registers a manifest-backed coverage map
+for known QM experiments. The verifier checks that every covered experiment has
+all six IDT primitives declared, a standard result, a stable invariant, a claim
+boundary, and either existing finite gates or an explicit proposed gate id.
+The first new two-state cluster now promotes Stern-Gerlach single-axis readout,
+sequential Stern-Gerlach context reset, and resonant Rabi oscillation from gate
+candidates to executable finite gates.
+The next phase/interferometer cluster now promotes delayed-choice readout,
+Ramsey phase fringes, Aharonov-Bohm holonomy phase, and AB flux periodicity to
+executable finite gates while keeping charge, apparatus, and action-scale
+derivations outside the claim.
+The threshold/update cluster now promotes photoelectric threshold, shared
+spectral action anchor, finite barrier tunneling, and repeated-context Zeno
+survival to executable finite gates without deriving material response,
+atomic levels, barrier profiles, or the continuous measurement limit.
+The quantum-information facticity cluster now promotes HOM coincidence
+suppression, antibunching, entanglement swapping, teleportation branch
+correction, and the no-cloning inner-product obstruction to executable finite
+gates while keeping physical network derivation open.
+The contextuality/temporal/graph cluster now promotes GHZ/Mermin, finite
+KS-style parity obstruction, Leggett-Garg temporal bound violation, weak
+partial readout, and a Hadamard graph-walk distribution to executable finite
+gates. All currently registered QM experiment rows now have finite verifier
+gates, while `full_QM_I` and first-principles physical derivations remain
+outside the public claim.
+The next QM pass now audits those `35` gates into six universal patterns:
+contextual readout, coherent alternatives, phase/action anchoring, finite
+update/survival, contextual correlation obstruction, and record
+transfer/noncopyability. The verifier checks that every registered QM
+experiment and executable QM gate is covered by one of these pattern families,
+making the next target a shared QM bench/compiler rather than more one-off
+experiment checkers.
+The first `scripts/qm_bench.py` runner now compiles the manifest audit into a
+machine-readable kernel summary: `6` universal kernels, `35` registered QM
+experiments, and `35` executable QM gate references.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

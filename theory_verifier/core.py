@@ -26,6 +26,31 @@ STATUS_VALUES = {
     "formula",
 }
 
+QM_EXPERIMENT_STATUS_VALUES = {
+    "executable_gate",
+    "idt_language_description",
+    "gate_candidate",
+    "not_claimed",
+}
+
+QM_EXPERIMENT_REQUIRED_PRIMITIVES = (
+    "event",
+    "distinguishability",
+    "inheritance",
+    "readout_context",
+    "facticity",
+    "stable_invariant",
+)
+
+QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS = (
+    "event_packet",
+    "distinguishability_partition",
+    "inheritance_update",
+    "readout_context",
+    "facticity_rule",
+    "stable_invariant",
+)
+
 NON_DERIVED_DEPENDENCY_STATUSES = {
     "open",
     "blocked",
@@ -923,6 +948,31 @@ class FiniteGate:
 
 
 @dataclass(frozen=True)
+class QMExperimentCoverage:
+    identifier: str
+    title: str
+    status: str
+    standard_result: str
+    idt_primitives: dict[str, str]
+    stable_invariant: str
+    finite_gates: tuple[str, ...]
+    proposed_gates: tuple[str, ...]
+    claim_boundary: str
+
+
+@dataclass(frozen=True)
+class QMUniversalPattern:
+    identifier: str
+    title: str
+    mechanism: str
+    experiments: tuple[str, ...]
+    finite_gates: tuple[str, ...]
+    operations: dict[str, str]
+    compiler_target: str
+    claim_boundary: str
+
+
+@dataclass(frozen=True)
 class PhaseActionScaleCycle:
     identifier: str
     role: str
@@ -946,6 +996,8 @@ class Manifest:
     derivations: tuple[Derivation, ...]
     forbidden_paths: tuple[ForbiddenPath, ...]
     finite_gates: tuple[FiniteGate, ...]
+    qm_experiments: tuple[QMExperimentCoverage, ...]
+    qm_universal_patterns: tuple[QMUniversalPattern, ...]
 
 
 @dataclass(frozen=True)
@@ -1032,12 +1084,16 @@ def parse_manifest(raw: object) -> Manifest:
     derivations = parse_derivations(root.get("derivations", []))
     forbidden_paths = parse_forbidden_paths(root.get("forbidden_paths", []))
     finite_gates = parse_finite_gates(root.get("finite_gates", []))
+    qm_experiments = parse_qm_experiments(root.get("qm_experiments", []))
+    qm_universal_patterns = parse_qm_universal_patterns(root.get("qm_universal_patterns", []))
     return Manifest(
         symbols=symbols,
         equations=equations,
         derivations=derivations,
         forbidden_paths=forbidden_paths,
         finite_gates=finite_gates,
+        qm_experiments=qm_experiments,
+        qm_universal_patterns=qm_universal_patterns,
     )
 
 
@@ -1121,6 +1177,94 @@ def parse_finite_gates(raw: object) -> tuple[FiniteGate, ...]:
     return tuple(gates)
 
 
+def parse_qm_experiments(raw: object) -> tuple[QMExperimentCoverage, ...]:
+    items = require_list(raw, "qm_experiments")
+    experiments: list[QMExperimentCoverage] = []
+    for index, item in enumerate(items):
+        item_map = require_mapping(item, f"qm_experiments[{index}]")
+        primitive_map = require_mapping(
+            item_map.get("idt_primitives", {}),
+            f"qm_experiments[{index}].idt_primitives",
+        )
+        idt_primitives: dict[str, str] = {}
+        for key, value in primitive_map.items():
+            idt_primitives[key] = require_string(
+                value,
+                f"qm_experiments[{index}].idt_primitives.{key}",
+            )
+        experiments.append(
+            QMExperimentCoverage(
+                identifier=require_string(item_map.get("id"), f"qm_experiments[{index}].id"),
+                title=require_string(item_map.get("title"), f"qm_experiments[{index}].title"),
+                status=require_string(item_map.get("status"), f"qm_experiments[{index}].status"),
+                standard_result=require_string(
+                    item_map.get("standard_result"),
+                    f"qm_experiments[{index}].standard_result",
+                ),
+                idt_primitives=idt_primitives,
+                stable_invariant=require_string(
+                    item_map.get("stable_invariant"),
+                    f"qm_experiments[{index}].stable_invariant",
+                ),
+                finite_gates=require_string_tuple(
+                    item_map.get("finite_gates", []),
+                    f"qm_experiments[{index}].finite_gates",
+                ),
+                proposed_gates=require_string_tuple(
+                    item_map.get("proposed_gates", []),
+                    f"qm_experiments[{index}].proposed_gates",
+                ),
+                claim_boundary=require_string(
+                    item_map.get("claim_boundary"),
+                    f"qm_experiments[{index}].claim_boundary",
+                ),
+            )
+        )
+    return tuple(experiments)
+
+
+def parse_qm_universal_patterns(raw: object) -> tuple[QMUniversalPattern, ...]:
+    items = require_list(raw, "qm_universal_patterns")
+    patterns: list[QMUniversalPattern] = []
+    for index, item in enumerate(items):
+        item_map = require_mapping(item, f"qm_universal_patterns[{index}]")
+        operation_map = require_mapping(
+            item_map.get("operations", {}),
+            f"qm_universal_patterns[{index}].operations",
+        )
+        operations: dict[str, str] = {}
+        for key, value in operation_map.items():
+            operations[key] = require_string(
+                value,
+                f"qm_universal_patterns[{index}].operations.{key}",
+            )
+        patterns.append(
+            QMUniversalPattern(
+                identifier=require_string(item_map.get("id"), f"qm_universal_patterns[{index}].id"),
+                title=require_string(item_map.get("title"), f"qm_universal_patterns[{index}].title"),
+                mechanism=require_string(item_map.get("mechanism"), f"qm_universal_patterns[{index}].mechanism"),
+                experiments=require_string_tuple(
+                    item_map.get("experiments", []),
+                    f"qm_universal_patterns[{index}].experiments",
+                ),
+                finite_gates=require_string_tuple(
+                    item_map.get("finite_gates", []),
+                    f"qm_universal_patterns[{index}].finite_gates",
+                ),
+                operations=operations,
+                compiler_target=require_string(
+                    item_map.get("compiler_target"),
+                    f"qm_universal_patterns[{index}].compiler_target",
+                ),
+                claim_boundary=require_string(
+                    item_map.get("claim_boundary"),
+                    f"qm_universal_patterns[{index}].claim_boundary",
+                ),
+            )
+        )
+    return tuple(patterns)
+
+
 def verify_manifest(manifest: Manifest) -> VerificationReport:
     checks: list[str] = []
     issues: list[Issue] = []
@@ -1142,6 +1286,12 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_qm_single_pass_closure(manifest))
     checks.append("QM single-pass closure")
+
+    issues.extend(check_qm_experiment_coverage(manifest))
+    checks.append("QM experiment coverage")
+
+    issues.extend(check_qm_universal_patterns(manifest))
+    checks.append("QM universal pattern audit")
 
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
@@ -1510,6 +1660,247 @@ def check_qm_single_pass_closure(manifest: Manifest) -> list[Issue]:
                     f"hbar_I cannot be derived while action-scale inputs remain unclosed: {', '.join(blocked_hbar_deps)}",
                 )
             )
+    return issues
+
+
+def check_qm_experiment_coverage(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    seen: set[str] = set()
+    finite_gate_ids = {gate.identifier for gate in manifest.finite_gates}
+
+    for experiment in manifest.qm_experiments:
+        if experiment.identifier in seen:
+            issues.append(
+                Issue(
+                    "qm_experiment_duplicate",
+                    f"{experiment.identifier}: duplicate QM experiment coverage entry",
+                )
+            )
+        seen.add(experiment.identifier)
+
+        if experiment.status not in QM_EXPERIMENT_STATUS_VALUES:
+            issues.append(
+                Issue(
+                    "qm_experiment_status_unknown",
+                    f"{experiment.identifier}: unknown status {experiment.status!r}",
+                )
+            )
+
+        missing_primitives = [
+            primitive
+            for primitive in QM_EXPERIMENT_REQUIRED_PRIMITIVES
+            if primitive not in experiment.idt_primitives
+        ]
+        if missing_primitives:
+            issues.append(
+                Issue(
+                    "qm_experiment_primitives_incomplete",
+                    f"{experiment.identifier}: missing IDT primitives: {', '.join(missing_primitives)}",
+                )
+            )
+
+        empty_primitives = [
+            primitive
+            for primitive in QM_EXPERIMENT_REQUIRED_PRIMITIVES
+            if not experiment.idt_primitives.get(primitive, "").strip()
+        ]
+        if empty_primitives:
+            issues.append(
+                Issue(
+                    "qm_experiment_primitives_empty",
+                    f"{experiment.identifier}: empty IDT primitive descriptions: {', '.join(empty_primitives)}",
+                )
+            )
+
+        missing_gates = [gate_id for gate_id in experiment.finite_gates if gate_id not in finite_gate_ids]
+        if missing_gates:
+            issues.append(
+                Issue(
+                    "qm_experiment_gate_missing",
+                    f"{experiment.identifier}: references missing finite gates: {', '.join(missing_gates)}",
+                )
+            )
+
+        if experiment.status == "executable_gate" and not experiment.finite_gates:
+            issues.append(
+                Issue(
+                    "qm_experiment_executable_without_gate",
+                    f"{experiment.identifier}: executable QM experiment needs at least one finite gate",
+                )
+            )
+
+        if experiment.status == "gate_candidate" and not experiment.proposed_gates:
+            issues.append(
+                Issue(
+                    "qm_experiment_candidate_without_proposed_gate",
+                    f"{experiment.identifier}: gate candidate needs a proposed gate id",
+                )
+            )
+
+        if not experiment.standard_result.strip():
+            issues.append(
+                Issue(
+                    "qm_experiment_standard_result_missing",
+                    f"{experiment.identifier}: standard result must be declared",
+                )
+            )
+
+        if not experiment.stable_invariant.strip():
+            issues.append(
+                Issue(
+                    "qm_experiment_stable_invariant_missing",
+                    f"{experiment.identifier}: stable invariant must be declared",
+                )
+            )
+
+        if not experiment.claim_boundary.strip():
+            issues.append(
+                Issue(
+                    "qm_experiment_claim_boundary_missing",
+                    f"{experiment.identifier}: claim boundary must be declared",
+                )
+            )
+
+    return issues
+
+
+def check_qm_universal_patterns(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    if not manifest.qm_universal_patterns:
+        if len(manifest.qm_experiments) >= 10:
+            return [
+                Issue(
+                    "qm_universal_patterns_missing",
+                    "large QM experiment ledgers must declare universal pattern coverage",
+                )
+            ]
+        return issues
+
+    experiment_ids = {experiment.identifier for experiment in manifest.qm_experiments}
+    finite_gate_ids = {gate.identifier for gate in manifest.finite_gates}
+    executable_gate_ids = {
+        gate_id
+        for experiment in manifest.qm_experiments
+        if experiment.status == "executable_gate"
+        for gate_id in experiment.finite_gates
+    }
+    seen_pattern_ids: set[str] = set()
+    experiment_to_pattern: dict[str, str] = {}
+    covered_gate_ids: set[str] = set()
+
+    for pattern in manifest.qm_universal_patterns:
+        if pattern.identifier in seen_pattern_ids:
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_duplicate",
+                    f"{pattern.identifier}: duplicate QM universal pattern entry",
+                )
+            )
+        seen_pattern_ids.add(pattern.identifier)
+
+        if not pattern.title.strip():
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_title_missing",
+                    f"{pattern.identifier}: title must be declared",
+                )
+            )
+        if not pattern.mechanism.strip():
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_mechanism_missing",
+                    f"{pattern.identifier}: mechanism must be declared",
+                )
+            )
+        if not pattern.compiler_target.strip():
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_compiler_target_missing",
+                    f"{pattern.identifier}: compiler target must be declared",
+                )
+            )
+        if not pattern.claim_boundary.strip():
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_claim_boundary_missing",
+                    f"{pattern.identifier}: claim boundary must be declared",
+                )
+            )
+
+        missing_operations = [
+            operation
+            for operation in QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS
+            if operation not in pattern.operations
+        ]
+        if missing_operations:
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_operations_incomplete",
+                    f"{pattern.identifier}: missing operations: {', '.join(missing_operations)}",
+                )
+            )
+        empty_operations = [
+            operation
+            for operation in QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS
+            if not pattern.operations.get(operation, "").strip()
+        ]
+        if empty_operations:
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_operations_empty",
+                    f"{pattern.identifier}: empty operations: {', '.join(empty_operations)}",
+                )
+            )
+
+        for experiment_id in pattern.experiments:
+            if experiment_id not in experiment_ids:
+                issues.append(
+                    Issue(
+                        "qm_universal_pattern_experiment_missing",
+                        f"{pattern.identifier}: references missing experiment {experiment_id}",
+                    )
+                )
+                continue
+            if experiment_id in experiment_to_pattern:
+                issues.append(
+                    Issue(
+                        "qm_universal_pattern_experiment_duplicate",
+                        (
+                            f"{experiment_id}: assigned to both {experiment_to_pattern[experiment_id]} "
+                            f"and {pattern.identifier}"
+                        ),
+                    )
+                )
+            experiment_to_pattern[experiment_id] = pattern.identifier
+
+        missing_gates = [gate_id for gate_id in pattern.finite_gates if gate_id not in finite_gate_ids]
+        if missing_gates:
+            issues.append(
+                Issue(
+                    "qm_universal_pattern_gate_missing",
+                    f"{pattern.identifier}: references missing finite gates: {', '.join(missing_gates)}",
+                )
+            )
+        covered_gate_ids.update(gate_id for gate_id in pattern.finite_gates if gate_id in finite_gate_ids)
+
+    uncovered_experiments = sorted(experiment_ids - set(experiment_to_pattern))
+    if uncovered_experiments:
+        issues.append(
+            Issue(
+                "qm_universal_pattern_experiment_uncovered",
+                f"QM experiments without universal pattern coverage: {', '.join(uncovered_experiments)}",
+            )
+        )
+
+    uncovered_gates = sorted(executable_gate_ids - covered_gate_ids)
+    if uncovered_gates:
+        issues.append(
+            Issue(
+                "qm_universal_pattern_gate_uncovered",
+                f"QM finite gates without universal pattern coverage: {', '.join(uncovered_gates)}",
+            )
+        )
+
     return issues
 
 
@@ -3313,6 +3704,715 @@ def check_projective_measurement_update_gate(gate: FiniteGate) -> list[Issue]:
                         f"{gate.identifier}: outcome {index} repeat probability is {repeat_probability:g}",
                     )
                 ]
+    return []
+
+
+def check_stern_gerlach_context_readout_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    state = parse_two_state(gate.payload.get("state"), f"{gate.identifier}.state", tolerance)
+    context = parse_two_state_context(gate.payload.get("context"), f"{gate.identifier}.context", tolerance)
+    expected = parse_two_probabilities(
+        gate.payload.get("expected_probabilities"),
+        f"{gate.identifier}.expected_probabilities",
+        tolerance,
+    )
+    probabilities = amplitude_probabilities(matrix_vector_multiply(context, state), tolerance)
+    if not real_lists_close(probabilities, expected, tolerance):
+        return [
+            Issue(
+                "stern_gerlach_probability_mismatch",
+                f"{gate.identifier}: expected {expected}, computed {probabilities}",
+            )
+        ]
+
+    repeat_outcome_raw = gate.payload.get("repeat_outcome")
+    if repeat_outcome_raw is not None:
+        repeat_outcome = parse_integer(repeat_outcome_raw, f"{gate.identifier}.repeat_outcome")
+        if repeat_outcome < 0 or repeat_outcome > 1:
+            raise ManifestError("repeat_outcome must be 0 or 1")
+        expected_repeat_probability = parse_real(
+            gate.payload.get("expected_repeat_probability"),
+            f"{gate.identifier}.expected_repeat_probability",
+        )
+        post_state = context_basis_state(context, repeat_outcome)
+        repeat_probabilities = amplitude_probabilities(matrix_vector_multiply(context, post_state), tolerance)
+        repeat_probability = repeat_probabilities[repeat_outcome]
+        if abs(repeat_probability - expected_repeat_probability) > tolerance:
+            return [
+                Issue(
+                    "stern_gerlach_repeatability_mismatch",
+                    f"{gate.identifier}: expected repeat probability {expected_repeat_probability:g}, "
+                    f"computed {repeat_probability:g}",
+                )
+            ]
+    return []
+
+
+def check_sequential_sg_noncommuting_context_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    initial_state = parse_two_state(gate.payload.get("initial_state"), f"{gate.identifier}.initial_state", tolerance)
+    sequences = require_list(gate.payload.get("sequences"), f"{gate.identifier}.sequences")
+    if not sequences:
+        raise ManifestError("sequences must not be empty")
+    for index, item in enumerate(sequences):
+        sequence = require_mapping(item, f"{gate.identifier}.sequences[{index}]")
+        sequence_id = require_string(sequence.get("id"), f"{gate.identifier}.sequences[{index}].id")
+        contexts = parse_two_state_contexts(
+            sequence.get("contexts"),
+            f"{gate.identifier}.sequences[{index}].contexts",
+            tolerance,
+        )
+        expected = parse_two_probabilities(
+            sequence.get("expected_final_probabilities"),
+            f"{gate.identifier}.sequences[{index}].expected_final_probabilities",
+            tolerance,
+        )
+        rho = density_matrix_from_state(initial_state)
+        for context in contexts[:-1]:
+            rho = nonselective_context_measurement(rho, context, tolerance)
+        probabilities = density_context_probabilities(rho, contexts[-1], tolerance)
+        if not real_lists_close(probabilities, expected, tolerance):
+            return [
+                Issue(
+                    "sequential_sg_probability_mismatch",
+                    f"{gate.identifier}: sequence {sequence_id} expected {expected}, computed {probabilities}",
+                )
+            ]
+    return []
+
+
+def check_two_level_update_oscillation_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    initial_state = parse_two_state(gate.payload.get("initial_state"), f"{gate.identifier}.initial_state", tolerance)
+    angular_frequency = parse_positive_real(
+        gate.payload.get("angular_frequency"),
+        f"{gate.identifier}.angular_frequency",
+    )
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if not samples:
+        raise ManifestError("samples must not be empty")
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        time = parse_real(sample.get("time"), f"{gate.identifier}.samples[{index}].time")
+        if time < -tolerance:
+            raise ManifestError("sample time must be non-negative")
+        expected = parse_two_probabilities(
+            sample.get("expected_probabilities"),
+            f"{gate.identifier}.samples[{index}].expected_probabilities",
+            tolerance,
+        )
+        evolved = matrix_vector_multiply(resonant_two_level_unitary(angular_frequency * time), initial_state)
+        probabilities = amplitude_probabilities(evolved, tolerance)
+        if not real_lists_close(probabilities, expected, tolerance):
+            return [
+                Issue(
+                    "two_level_update_probability_mismatch",
+                    f"{gate.identifier}: sample {index} expected {expected}, computed {probabilities}",
+                )
+            ]
+    return []
+
+
+def check_delayed_context_partition_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    state = parse_two_state(gate.payload.get("state"), f"{gate.identifier}.state", tolerance)
+    readouts = require_list(gate.payload.get("readouts"), f"{gate.identifier}.readouts")
+    if len(readouts) < 2:
+        raise ManifestError("delayed context gate requires at least two readouts")
+    for index, item in enumerate(readouts):
+        readout = require_mapping(item, f"{gate.identifier}.readouts[{index}]")
+        readout_id = require_string(readout.get("id"), f"{gate.identifier}.readouts[{index}].id")
+        context = parse_two_state_context(
+            readout.get("context"),
+            f"{gate.identifier}.readouts[{index}].context",
+            tolerance,
+        )
+        expected = parse_two_probabilities(
+            readout.get("expected_probabilities"),
+            f"{gate.identifier}.readouts[{index}].expected_probabilities",
+            tolerance,
+        )
+        probabilities = amplitude_probabilities(matrix_vector_multiply(context, state), tolerance)
+        if not real_lists_close(probabilities, expected, tolerance):
+            return [
+                Issue(
+                    "delayed_context_probability_mismatch",
+                    f"{gate.identifier}: readout {readout_id} expected {expected}, computed {probabilities}",
+                )
+            ]
+    return []
+
+
+def check_ramsey_clock_phase_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    initial_state = parse_two_state(gate.payload.get("initial_state"), f"{gate.identifier}.initial_state", tolerance)
+    first_pulse = parse_two_state_context(gate.payload.get("first_pulse"), f"{gate.identifier}.first_pulse", tolerance)
+    second_pulse = parse_two_state_context(
+        gate.payload.get("second_pulse"), f"{gate.identifier}.second_pulse", tolerance
+    )
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if not samples:
+        raise ManifestError("Ramsey gate samples must not be empty")
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        phase = parse_real(sample.get("phase"), f"{gate.identifier}.samples[{index}].phase")
+        expected = parse_two_probabilities(
+            sample.get("expected_probabilities"),
+            f"{gate.identifier}.samples[{index}].expected_probabilities",
+            tolerance,
+        )
+        after_first = matrix_vector_multiply(first_pulse, initial_state)
+        after_phase = matrix_vector_multiply(relative_phase_matrix(phase), after_first)
+        final_state = matrix_vector_multiply(second_pulse, after_phase)
+        probabilities = amplitude_probabilities(final_state, tolerance)
+        if not real_lists_close(probabilities, expected, tolerance):
+            return [
+                Issue(
+                    "ramsey_clock_phase_probability_mismatch",
+                    f"{gate.identifier}: sample {index} expected {expected}, computed {probabilities}",
+                )
+            ]
+    return []
+
+
+def check_ab_holonomy_phase_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    charge = parse_real(gate.payload.get("charge"), f"{gate.identifier}.charge")
+    flux = parse_real(gate.payload.get("magnetic_flux"), f"{gate.identifier}.magnetic_flux")
+    hbar = parse_positive_real(gate.payload.get("hbar"), f"{gate.identifier}.hbar")
+    expected_phase = parse_real(gate.payload.get("expected_phase"), f"{gate.identifier}.expected_phase")
+    local_force_bound = parse_nonnegative_real(
+        gate.payload.get("local_force_bound"),
+        f"{gate.identifier}.local_force_bound",
+    )
+    if local_force_bound > tolerance:
+        return [
+            Issue(
+                "ab_local_force_not_zero",
+                f"{gate.identifier}: local force bound {local_force_bound:g} exceeds tolerance",
+            )
+        ]
+    computed_phase = wrapped_angle((charge * flux) / hbar)
+    if abs(wrapped_angle(computed_phase - expected_phase)) > tolerance:
+        return [
+            Issue(
+                "ab_holonomy_phase_mismatch",
+                f"{gate.identifier}: expected phase {expected_phase:g}, computed {computed_phase:g}",
+            )
+        ]
+    return []
+
+
+def check_ab_flux_period_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    charge = parse_real(gate.payload.get("charge"), f"{gate.identifier}.charge")
+    if abs(charge) <= tolerance:
+        raise ManifestError("charge must be nonzero")
+    h_value = parse_positive_real(gate.payload.get("h"), f"{gate.identifier}.h")
+    expected_flux_period = parse_positive_real(
+        gate.payload.get("expected_flux_period"),
+        f"{gate.identifier}.expected_flux_period",
+    )
+    computed_flux_period = h_value / abs(charge)
+    if abs(computed_flux_period - expected_flux_period) > tolerance:
+        return [
+            Issue(
+                "ab_flux_period_mismatch",
+                f"{gate.identifier}: expected period {expected_flux_period:g}, computed {computed_flux_period:g}",
+            )
+        ]
+    closure_ratio = (abs(charge) * expected_flux_period) / h_value
+    if abs(closure_ratio - 1.0) > tolerance:
+        return [
+            Issue(
+                "ab_flux_period_closure_mismatch",
+                f"{gate.identifier}: |q|Phi0/h closure ratio is {closure_ratio:g}",
+            )
+        ]
+    return []
+
+
+def check_action_frequency_threshold_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    h_value = parse_positive_real(gate.payload.get("h"), f"{gate.identifier}.h")
+    work_function = parse_positive_real(gate.payload.get("work_function"), f"{gate.identifier}.work_function")
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if not samples:
+        raise ManifestError("threshold gate samples must not be empty")
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        frequency = parse_nonnegative_real(sample.get("frequency"), f"{gate.identifier}.samples[{index}].frequency")
+        expected_emission = parse_bool(
+            sample.get("expected_emission"),
+            f"{gate.identifier}.samples[{index}].expected_emission",
+        )
+        expected_kinetic_energy = parse_nonnegative_real(
+            sample.get("expected_kinetic_energy"),
+            f"{gate.identifier}.samples[{index}].expected_kinetic_energy",
+        )
+        available_energy = h_value * frequency
+        computed_emission = available_energy + tolerance >= work_function
+        if computed_emission != expected_emission:
+            return [
+                Issue(
+                    "action_frequency_emission_mismatch",
+                    f"{gate.identifier}: sample {index} expected emission {expected_emission}, computed {computed_emission}",
+                )
+            ]
+        computed_kinetic_energy = max(0.0, available_energy - work_function)
+        if abs(computed_kinetic_energy - expected_kinetic_energy) > tolerance:
+            return [
+                Issue(
+                    "action_frequency_kinetic_energy_mismatch",
+                    (
+                        f"{gate.identifier}: sample {index} expected kinetic energy "
+                        f"{expected_kinetic_energy:g}, computed {computed_kinetic_energy:g}"
+                    ),
+                )
+            ]
+    return []
+
+
+def check_spectral_anchor_consistency_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    h_value = parse_positive_real(gate.payload.get("h"), f"{gate.identifier}.h")
+    transitions = require_list(gate.payload.get("transitions"), f"{gate.identifier}.transitions")
+    if not transitions:
+        raise ManifestError("spectral anchor transitions must not be empty")
+    for index, item in enumerate(transitions):
+        transition = require_mapping(item, f"{gate.identifier}.transitions[{index}]")
+        transition_id = require_string(transition.get("id"), f"{gate.identifier}.transitions[{index}].id")
+        delta_energy = parse_positive_real(
+            transition.get("delta_energy"),
+            f"{gate.identifier}.transitions[{index}].delta_energy",
+        )
+        frequency = parse_positive_real(
+            transition.get("frequency"),
+            f"{gate.identifier}.transitions[{index}].frequency",
+        )
+        computed_frequency = delta_energy / h_value
+        if abs(computed_frequency - frequency) > tolerance:
+            return [
+                Issue(
+                    "spectral_anchor_frequency_mismatch",
+                    (
+                        f"{gate.identifier}: transition {transition_id} expected frequency "
+                        f"{frequency:g}, computed {computed_frequency:g}"
+                    ),
+                )
+            ]
+    return []
+
+
+def check_barrier_transmission_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    classically_forbidden = parse_bool(
+        gate.payload.get("classically_forbidden", True),
+        f"{gate.identifier}.classically_forbidden",
+    )
+    if not classically_forbidden:
+        return [Issue("barrier_not_classically_forbidden", f"{gate.identifier}: barrier is not marked forbidden")]
+    decay_constant = parse_positive_real(gate.payload.get("decay_constant"), f"{gate.identifier}.decay_constant")
+    width = parse_positive_real(gate.payload.get("width"), f"{gate.identifier}.width")
+    expected_transmission = parse_unit_interval(
+        gate.payload.get("expected_transmission"),
+        f"{gate.identifier}.expected_transmission",
+    )
+    expected_reflection = parse_unit_interval(
+        gate.payload.get("expected_reflection"),
+        f"{gate.identifier}.expected_reflection",
+    )
+    computed_transmission = math.exp(-2.0 * decay_constant * width)
+    computed_reflection = 1.0 - computed_transmission
+    if abs(expected_transmission + expected_reflection - 1.0) > tolerance:
+        return [
+            Issue(
+                "barrier_probability_closure_mismatch",
+                f"{gate.identifier}: expected transmission/reflection probabilities do not sum to one",
+            )
+        ]
+    if abs(computed_transmission - expected_transmission) > tolerance:
+        return [
+            Issue(
+                "barrier_transmission_mismatch",
+                (
+                    f"{gate.identifier}: expected transmission {expected_transmission:g}, "
+                    f"computed {computed_transmission:g}"
+                ),
+            )
+        ]
+    if abs(computed_reflection - expected_reflection) > tolerance:
+        return [
+            Issue(
+                "barrier_reflection_mismatch",
+                f"{gate.identifier}: expected reflection {expected_reflection:g}, computed {computed_reflection:g}",
+            )
+        ]
+    return []
+
+
+def check_repeated_context_zeno_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    total_angle = parse_positive_real(gate.payload.get("total_angle"), f"{gate.identifier}.total_angle")
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if not samples:
+        raise ManifestError("Zeno gate samples must not be empty")
+    previous_count: int | None = None
+    previous_survival: float | None = None
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        readout_count = parse_positive_integer(
+            sample.get("readout_count"),
+            f"{gate.identifier}.samples[{index}].readout_count",
+        )
+        expected_survival = parse_unit_interval(
+            sample.get("expected_survival"),
+            f"{gate.identifier}.samples[{index}].expected_survival",
+        )
+        step_survival = math.cos(total_angle / (2.0 * readout_count)) ** 2
+        computed_survival = step_survival**readout_count
+        if abs(computed_survival - expected_survival) > tolerance:
+            return [
+                Issue(
+                    "repeated_context_zeno_survival_mismatch",
+                    (
+                        f"{gate.identifier}: sample {index} expected survival "
+                        f"{expected_survival:g}, computed {computed_survival:g}"
+                    ),
+                )
+            ]
+        if (
+            previous_count is not None
+            and previous_survival is not None
+            and readout_count > previous_count
+            and computed_survival + tolerance < previous_survival
+        ):
+            return [
+                Issue(
+                    "repeated_context_zeno_monotonicity_mismatch",
+                    f"{gate.identifier}: survival decreased when readout count increased",
+                )
+            ]
+        previous_count = readout_count
+        previous_survival = computed_survival
+    return []
+
+
+def check_bosonic_indistinguishability_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    wavepacket_overlap = parse_unit_interval(
+        gate.payload.get("wavepacket_overlap"),
+        f"{gate.identifier}.wavepacket_overlap",
+    )
+    expected_coincidence = parse_unit_interval(
+        gate.payload.get("expected_coincidence"),
+        f"{gate.identifier}.expected_coincidence",
+    )
+    expected_bunching = parse_unit_interval(
+        gate.payload.get("expected_bunching"),
+        f"{gate.identifier}.expected_bunching",
+    )
+    computed_coincidence = 0.5 * (1.0 - wavepacket_overlap)
+    computed_bunching = 1.0 - computed_coincidence
+    if abs(expected_coincidence + expected_bunching - 1.0) > tolerance:
+        return [
+            Issue(
+                "bosonic_probability_closure_mismatch",
+                f"{gate.identifier}: coincidence and bunching probabilities do not sum to one",
+            )
+        ]
+    if abs(computed_coincidence - expected_coincidence) > tolerance:
+        return [
+            Issue(
+                "bosonic_coincidence_mismatch",
+                (
+                    f"{gate.identifier}: expected coincidence {expected_coincidence:g}, "
+                    f"computed {computed_coincidence:g}"
+                ),
+            )
+        ]
+    if abs(computed_bunching - expected_bunching) > tolerance:
+        return [
+            Issue(
+                "bosonic_bunching_mismatch",
+                f"{gate.identifier}: expected bunching {expected_bunching:g}, computed {computed_bunching:g}",
+            )
+        ]
+    return []
+
+
+def check_single_quantum_facticity_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    trial_count = parse_positive_integer(gate.payload.get("trial_count"), f"{gate.identifier}.trial_count")
+    detector_a_count = parse_positive_integer(
+        gate.payload.get("detector_a_count"),
+        f"{gate.identifier}.detector_a_count",
+    )
+    detector_b_count = parse_positive_integer(
+        gate.payload.get("detector_b_count"),
+        f"{gate.identifier}.detector_b_count",
+    )
+    coincidence_count = parse_nonnegative_integer(
+        gate.payload.get("coincidence_count"),
+        f"{gate.identifier}.coincidence_count",
+    )
+    expected_g2_zero = parse_nonnegative_real(gate.payload.get("expected_g2_zero"), f"{gate.identifier}.expected_g2_zero")
+    max_g2_zero = parse_nonnegative_real(gate.payload.get("max_g2_zero"), f"{gate.identifier}.max_g2_zero")
+    computed_g2_zero = (coincidence_count * trial_count) / (detector_a_count * detector_b_count)
+    if abs(computed_g2_zero - expected_g2_zero) > tolerance:
+        return [
+            Issue(
+                "single_quantum_g2_mismatch",
+                f"{gate.identifier}: expected g2(0) {expected_g2_zero:g}, computed {computed_g2_zero:g}",
+            )
+        ]
+    if computed_g2_zero - max_g2_zero > tolerance:
+        return [
+            Issue(
+                "single_quantum_classical_bound_mismatch",
+                f"{gate.identifier}: g2(0) {computed_g2_zero:g} exceeds bound {max_g2_zero:g}",
+            )
+        ]
+    return []
+
+
+def check_conditional_inheritance_swap_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    bell_outcome = require_string(gate.payload.get("bell_outcome"), f"{gate.identifier}.bell_outcome")
+    correlations = require_list(gate.payload.get("remote_correlations"), f"{gate.identifier}.remote_correlations")
+    if not correlations:
+        raise ManifestError("swapping gate correlations must not be empty")
+    for index, item in enumerate(correlations):
+        correlation = require_mapping(item, f"{gate.identifier}.remote_correlations[{index}]")
+        context = require_string(
+            correlation.get("context"),
+            f"{gate.identifier}.remote_correlations[{index}].context",
+        )
+        expected = parse_real(
+            correlation.get("expected_correlation"),
+            f"{gate.identifier}.remote_correlations[{index}].expected_correlation",
+        )
+        computed = bell_state_context_correlation(bell_outcome, context)
+        if abs(computed - expected) > tolerance:
+            return [
+                Issue(
+                    "conditional_inheritance_swap_correlation_mismatch",
+                    f"{gate.identifier}: context {context} expected {expected:g}, computed {computed:g}",
+                )
+            ]
+    return []
+
+
+def check_context_transfer_no_cloning_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    input_state = parse_two_state(gate.payload.get("input_state"), f"{gate.identifier}.input_state", tolerance)
+    bell_branch = require_string(gate.payload.get("bell_branch"), f"{gate.identifier}.bell_branch")
+    expected_target_state = parse_two_state(
+        gate.payload.get("expected_target_state"),
+        f"{gate.identifier}.expected_target_state",
+        tolerance,
+    )
+    branch_state = teleportation_branch_state(input_state, bell_branch)
+    corrected_state = teleportation_corrected_state(branch_state, bell_branch)
+    if not complex_lists_close(corrected_state, expected_target_state, tolerance):
+        return [
+            Issue(
+                "context_transfer_target_state_mismatch",
+                f"{gate.identifier}: corrected target state does not match expected input context",
+            )
+        ]
+    return []
+
+
+def check_no_cloning_context_invariance_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    state_overlap = parse_unit_interval(gate.payload.get("state_overlap"), f"{gate.identifier}.state_overlap")
+    min_obstruction = parse_positive_real(gate.payload.get("min_obstruction"), f"{gate.identifier}.min_obstruction")
+    expected_obstructed = parse_bool(gate.payload.get("expected_obstructed"), f"{gate.identifier}.expected_obstructed")
+    cloned_overlap = state_overlap * state_overlap
+    obstruction = abs(state_overlap - cloned_overlap)
+    computed_obstructed = obstruction + tolerance >= min_obstruction
+    if computed_obstructed != expected_obstructed:
+        return [
+            Issue(
+                "no_cloning_obstruction_mismatch",
+                f"{gate.identifier}: obstruction {obstruction:g} did not match expected obstruction status",
+            )
+        ]
+    return []
+
+
+def check_multipartite_contextuality_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    _ = tolerance
+    constraints = require_list(gate.payload.get("constraints"), f"{gate.identifier}.constraints")
+    if len(constraints) < 2:
+        raise ManifestError("multipartite contextuality gate requires at least two constraints")
+    expected_obstructed = parse_bool(gate.payload.get("expected_obstructed"), f"{gate.identifier}.expected_obstructed")
+    occurrence_counts: dict[str, int] = {}
+    product = 1
+    for index, item in enumerate(constraints):
+        constraint = require_mapping(item, f"{gate.identifier}.constraints[{index}]")
+        context = require_list(constraint.get("context"), f"{gate.identifier}.constraints[{index}].context")
+        if not context:
+            raise ManifestError("contextuality constraint context must not be empty")
+        for party_index, observable_raw in enumerate(context):
+            observable = require_string(
+                observable_raw,
+                f"{gate.identifier}.constraints[{index}].context[{party_index}]",
+            ).lower()
+            key = f"{party_index}:{observable}"
+            occurrence_counts[key] = occurrence_counts.get(key, 0) + 1
+        product *= parse_bell_outcome(
+            constraint.get("expected_product"),
+            f"{gate.identifier}.constraints[{index}].expected_product",
+        )
+    even_occurrences = all(count % 2 == 0 for count in occurrence_counts.values())
+    computed_obstructed = even_occurrences and product == -1
+    if computed_obstructed != expected_obstructed:
+        return [
+            Issue(
+                "multipartite_contextuality_obstruction_mismatch",
+                f"{gate.identifier}: computed obstruction {computed_obstructed}, expected {expected_obstructed}",
+            )
+        ]
+    return []
+
+
+def check_ks_contextuality_obstruction_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    _ = tolerance
+    contexts = require_list(gate.payload.get("contexts"), f"{gate.identifier}.contexts")
+    if not contexts:
+        raise ManifestError("KS gate contexts must not be empty")
+    expected_obstructed = parse_bool(gate.payload.get("expected_obstructed"), f"{gate.identifier}.expected_obstructed")
+    projector_counts: dict[str, int] = {}
+    for context_index, item in enumerate(contexts):
+        context = require_list(item, f"{gate.identifier}.contexts[{context_index}]")
+        if not context:
+            raise ManifestError("KS context must not be empty")
+        for projector_index, projector_raw in enumerate(context):
+            projector = require_string(projector_raw, f"{gate.identifier}.contexts[{context_index}][{projector_index}]")
+            projector_counts[projector] = projector_counts.get(projector, 0) + 1
+    even_projector_counts = all(count % 2 == 0 for count in projector_counts.values())
+    odd_context_count = len(contexts) % 2 == 1
+    computed_obstructed = even_projector_counts and odd_context_count
+    if computed_obstructed != expected_obstructed:
+        return [
+            Issue(
+                "ks_contextuality_obstruction_mismatch",
+                f"{gate.identifier}: computed obstruction {computed_obstructed}, expected {expected_obstructed}",
+            )
+        ]
+    return []
+
+
+def check_temporal_facticity_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    c12 = parse_real(gate.payload.get("c12"), f"{gate.identifier}.c12")
+    c23 = parse_real(gate.payload.get("c23"), f"{gate.identifier}.c23")
+    c13 = parse_real(gate.payload.get("c13"), f"{gate.identifier}.c13")
+    expected_k = parse_real(gate.payload.get("expected_k"), f"{gate.identifier}.expected_k")
+    macrorealist_bound = parse_positive_real(
+        gate.payload.get("macrorealist_bound"),
+        f"{gate.identifier}.macrorealist_bound",
+    )
+    expected_violation = parse_bool(gate.payload.get("expected_violation"), f"{gate.identifier}.expected_violation")
+    computed_k = c12 + c23 - c13
+    if abs(computed_k - expected_k) > tolerance:
+        return [
+            Issue(
+                "temporal_facticity_k_mismatch",
+                f"{gate.identifier}: expected K {expected_k:g}, computed {computed_k:g}",
+            )
+        ]
+    computed_violation = computed_k - macrorealist_bound > tolerance
+    if computed_violation != expected_violation:
+        return [
+            Issue(
+                "temporal_facticity_violation_mismatch",
+                f"{gate.identifier}: computed violation {computed_violation}, expected {expected_violation}",
+            )
+        ]
+    return []
+
+
+def check_partial_facticity_readout_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    coupling = parse_real(gate.payload.get("coupling"), f"{gate.identifier}.coupling")
+    weak_value = parse_real(gate.payload.get("weak_value"), f"{gate.identifier}.weak_value")
+    expected_pointer_shift = parse_real(
+        gate.payload.get("expected_pointer_shift"),
+        f"{gate.identifier}.expected_pointer_shift",
+    )
+    observed_disturbance = parse_nonnegative_real(
+        gate.payload.get("observed_disturbance"),
+        f"{gate.identifier}.observed_disturbance",
+    )
+    max_disturbance = parse_nonnegative_real(gate.payload.get("max_disturbance"), f"{gate.identifier}.max_disturbance")
+    distinguishability_gain = parse_nonnegative_real(
+        gate.payload.get("distinguishability_gain"),
+        f"{gate.identifier}.distinguishability_gain",
+    )
+    facticity_threshold = parse_positive_real(
+        gate.payload.get("facticity_threshold"),
+        f"{gate.identifier}.facticity_threshold",
+    )
+    expected_full_facticity = parse_bool(
+        gate.payload.get("expected_full_facticity"),
+        f"{gate.identifier}.expected_full_facticity",
+    )
+    computed_pointer_shift = coupling * weak_value
+    if abs(computed_pointer_shift - expected_pointer_shift) > tolerance:
+        return [
+            Issue(
+                "partial_facticity_pointer_shift_mismatch",
+                (
+                    f"{gate.identifier}: expected pointer shift {expected_pointer_shift:g}, "
+                    f"computed {computed_pointer_shift:g}"
+                ),
+            )
+        ]
+    if observed_disturbance - max_disturbance > tolerance:
+        return [
+            Issue(
+                "partial_facticity_disturbance_mismatch",
+                f"{gate.identifier}: disturbance {observed_disturbance:g} exceeds bound {max_disturbance:g}",
+            )
+        ]
+    computed_full_facticity = distinguishability_gain + tolerance >= facticity_threshold
+    if computed_full_facticity != expected_full_facticity:
+        return [
+            Issue(
+                "partial_facticity_status_mismatch",
+                f"{gate.identifier}: computed full facticity {computed_full_facticity}, expected {expected_full_facticity}",
+            )
+        ]
+    return []
+
+
+def check_unitary_graph_walk_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    steps = parse_positive_integer(gate.payload.get("steps"), f"{gate.identifier}.steps")
+    initial_coin = parse_two_state(gate.payload.get("initial_coin"), f"{gate.identifier}.initial_coin", tolerance)
+    expected_distribution = parse_position_distribution(
+        gate.payload.get("expected_distribution"),
+        f"{gate.identifier}.expected_distribution",
+    )
+    computed_distribution = hadamard_walk_distribution(steps, initial_coin)
+    expected_total = sum(expected_distribution.values())
+    if abs(expected_total - 1.0) > tolerance:
+        raise ManifestError("expected graph-walk distribution must sum to one")
+    for position in sorted(set(expected_distribution) | set(computed_distribution)):
+        expected = expected_distribution.get(position, 0.0)
+        computed = computed_distribution.get(position, 0.0)
+        if abs(computed - expected) > tolerance:
+            return [
+                Issue(
+                    "unitary_graph_walk_distribution_mismatch",
+                    f"{gate.identifier}: position {position} expected {expected:g}, computed {computed:g}",
+                )
+            ]
     return []
 
 
@@ -8444,6 +9544,13 @@ def parse_nonnegative_real(raw: object, field: str) -> float:
     return value
 
 
+def parse_unit_interval(raw: object, field: str) -> float:
+    value = parse_nonnegative_real(raw, field)
+    if value > 1.0:
+        raise ManifestError(f"{field} must be <= 1")
+    return value
+
+
 def parse_nonnegative_real_list(raw: object, field: str) -> list[float]:
     items = require_list(raw, field)
     return [parse_nonnegative_real(item, f"{field}[{index}]") for index, item in enumerate(items)]
@@ -8503,6 +9610,13 @@ def parse_positive_integer(raw: object, field: str) -> int:
     value = parse_integer(raw, field)
     if value <= 0:
         raise ManifestError(f"{field} must be positive")
+    return value
+
+
+def parse_nonnegative_integer(raw: object, field: str) -> int:
+    value = parse_integer(raw, field)
+    if value < 0:
+        raise ManifestError(f"{field} must be nonnegative")
     return value
 
 
@@ -9591,6 +10705,12 @@ def real_lists_close(left: list[float], right: list[float], tolerance: float) ->
     )
 
 
+def complex_lists_close(left: list[complex], right: list[complex], tolerance: float) -> bool:
+    return len(left) == len(right) and all(
+        abs(left_value - right[index]) <= tolerance for index, left_value in enumerate(left)
+    )
+
+
 def max_off_diagonal_abs(matrix: list[list[complex]]) -> float:
     max_value = 0.0
     for row_index, row in enumerate(matrix):
@@ -9696,6 +10816,197 @@ def amplitude_probabilities(amplitudes: list[complex], tolerance: float) -> list
     if abs(total - 1.0) > tolerance:
         raise ManifestError("amplitudes must be normalized")
     return [abs(value) ** 2 for value in amplitudes]
+
+
+def parse_two_state(raw: object, field: str, tolerance: float) -> list[complex]:
+    state = parse_vector(raw, field)
+    if len(state) != 2:
+        raise ManifestError(f"{field} must contain exactly two amplitudes")
+    if abs(vector_norm_squared(state) - 1.0) > tolerance:
+        raise ManifestError(f"{field} must be normalized")
+    return state
+
+
+def parse_two_state_context(raw: object, field: str, tolerance: float) -> list[list[complex]]:
+    context = parse_matrix(raw, field)
+    validate_square_block(context, field)
+    if len(context) != 2:
+        raise ManifestError(f"{field} must be a 2x2 context")
+    validate_unitary(context, tolerance, field)
+    return context
+
+
+def parse_two_state_contexts(raw: object, field: str, tolerance: float) -> list[list[list[complex]]]:
+    contexts = parse_matrix_list(raw, field)
+    for index, context in enumerate(contexts):
+        validate_square_block(context, f"{field}[{index}]")
+        if len(context) != 2:
+            raise ManifestError(f"{field}[{index}] must be a 2x2 context")
+        validate_unitary(context, tolerance, f"{field}[{index}]")
+    return contexts
+
+
+def parse_two_probabilities(raw: object, field: str, tolerance: float) -> list[float]:
+    probabilities = parse_real_list(raw, field)
+    if len(probabilities) != 2:
+        raise ManifestError(f"{field} must contain exactly two probabilities")
+    for probability in probabilities:
+        if probability < -tolerance or probability > 1.0 + tolerance:
+            raise ManifestError(f"{field} entries must be probabilities")
+    if abs(sum(probabilities) - 1.0) > tolerance:
+        raise ManifestError(f"{field} must sum to one")
+    return probabilities
+
+
+def context_basis_state(context: list[list[complex]], outcome: int) -> list[complex]:
+    return [value.conjugate() for value in context[outcome]]
+
+
+def density_matrix_from_state(state: list[complex]) -> list[list[complex]]:
+    return [[row_value * col_value.conjugate() for col_value in state] for row_value in state]
+
+
+def nonselective_context_measurement(
+    density: list[list[complex]], context: list[list[complex]], tolerance: float
+) -> list[list[complex]]:
+    validate_density_shape(density, context, tolerance)
+    context_density = unitary_conjugate(context, density)
+    dephased = [
+        [
+            context_density[row][col] if row == col else 0.0 + 0.0j
+            for col in range(len(context_density))
+        ]
+        for row in range(len(context_density))
+    ]
+    return unitary_conjugate(conjugate_transpose(context), dephased)
+
+
+def density_context_probabilities(
+    density: list[list[complex]], context: list[list[complex]], tolerance: float
+) -> list[float]:
+    validate_density_shape(density, context, tolerance)
+    context_density = unitary_conjugate(context, density)
+    probabilities: list[float] = []
+    for index, row in enumerate(context_density):
+        diagonal = row[index]
+        if abs(diagonal.imag) > tolerance:
+            raise ManifestError("density readout probability must be real")
+        if diagonal.real < -tolerance:
+            raise ManifestError("density readout probability must be non-negative")
+        probabilities.append(max(0.0, diagonal.real))
+    total = sum(probabilities)
+    if abs(total - 1.0) > tolerance:
+        raise ManifestError("density readout probabilities must sum to one")
+    return probabilities
+
+
+def validate_density_shape(
+    density: list[list[complex]], context: list[list[complex]], tolerance: float
+) -> None:
+    validate_square_block(density, "density")
+    if len(density) != len(context):
+        raise ManifestError("density and context dimensions must match")
+    if len(density) != 2:
+        raise ManifestError("two-state density gates require 2x2 density matrices")
+    if not is_hermitian(density, tolerance):
+        raise ManifestError("density must be Hermitian")
+
+
+def resonant_two_level_unitary(theta: float) -> list[list[complex]]:
+    cosine = math.cos(theta / 2.0)
+    sine = math.sin(theta / 2.0)
+    return [
+        [complex(cosine, 0.0), complex(0.0, -sine)],
+        [complex(0.0, -sine), complex(cosine, 0.0)],
+    ]
+
+
+def relative_phase_matrix(phase: float) -> list[list[complex]]:
+    return [
+        [complex(1.0, 0.0), complex(0.0, 0.0)],
+        [complex(0.0, 0.0), complex(math.cos(phase), math.sin(phase))],
+    ]
+
+
+def bell_state_context_correlation(bell_outcome: str, context: str) -> float:
+    correlations = {
+        "phi_plus": {"zz": 1.0, "xx": 1.0},
+        "phi_minus": {"zz": 1.0, "xx": -1.0},
+        "psi_plus": {"zz": -1.0, "xx": 1.0},
+        "psi_minus": {"zz": -1.0, "xx": -1.0},
+    }
+    if bell_outcome not in correlations:
+        raise ManifestError(f"unknown Bell outcome: {bell_outcome}")
+    if context not in correlations[bell_outcome]:
+        raise ManifestError(f"unknown Bell correlation context: {context}")
+    return correlations[bell_outcome][context]
+
+
+def teleportation_branch_state(input_state: list[complex], bell_branch: str) -> list[complex]:
+    alpha, beta = input_state
+    if bell_branch == "phi_plus":
+        return [alpha, beta]
+    if bell_branch == "phi_minus":
+        return [alpha, -beta]
+    if bell_branch == "psi_plus":
+        return [beta, alpha]
+    if bell_branch == "psi_minus":
+        return [-beta, alpha]
+    raise ManifestError(f"unknown teleportation Bell branch: {bell_branch}")
+
+
+def teleportation_corrected_state(branch_state: list[complex], bell_branch: str) -> list[complex]:
+    first, second = branch_state
+    if bell_branch == "phi_plus":
+        return [first, second]
+    if bell_branch == "phi_minus":
+        return [first, -second]
+    if bell_branch == "psi_plus":
+        return [second, first]
+    if bell_branch == "psi_minus":
+        return [second, -first]
+    raise ManifestError(f"unknown teleportation Bell branch: {bell_branch}")
+
+
+def hadamard_walk_distribution(steps: int, initial_coin: list[complex]) -> dict[int, float]:
+    root_half = 1.0 / math.sqrt(2.0)
+    state: dict[tuple[int, int], complex] = {
+        (0, 0): initial_coin[0],
+        (0, 1): initial_coin[1],
+    }
+    for _step in range(steps):
+        next_state: dict[tuple[int, int], complex] = {}
+        for (position, coin), amplitude in state.items():
+            if coin == 0:
+                left_amplitude = root_half * amplitude
+                right_amplitude = root_half * amplitude
+            else:
+                left_amplitude = root_half * amplitude
+                right_amplitude = -root_half * amplitude
+            left_key = (position - 1, 0)
+            right_key = (position + 1, 1)
+            next_state[left_key] = next_state.get(left_key, 0.0 + 0.0j) + left_amplitude
+            next_state[right_key] = next_state.get(right_key, 0.0 + 0.0j) + right_amplitude
+        state = next_state
+    distribution: dict[int, float] = {}
+    for (position, _coin), amplitude in state.items():
+        distribution[position] = distribution.get(position, 0.0) + (abs(amplitude) ** 2)
+    return distribution
+
+
+def parse_position_distribution(raw: object, field: str) -> dict[int, float]:
+    items = require_list(raw, field)
+    if not items:
+        raise ManifestError(f"{field} must not be empty")
+    distribution: dict[int, float] = {}
+    for index, item in enumerate(items):
+        entry = require_mapping(item, f"{field}[{index}]")
+        position = parse_integer(entry.get("position"), f"{field}[{index}].position")
+        probability = parse_unit_interval(entry.get("probability"), f"{field}[{index}].probability")
+        if position in distribution:
+            raise ManifestError(f"{field}[{index}].position duplicates position {position}")
+        distribution[position] = probability
+    return distribution
 
 
 def projective_probabilities(
@@ -9927,6 +11238,27 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "unitary_measurement_context": check_unitary_measurement_context_gate,
     "unitary_network_probability": check_unitary_network_probability_gate,
     "projective_measurement_update": check_projective_measurement_update_gate,
+    "stern_gerlach_context_readout": check_stern_gerlach_context_readout_gate,
+    "sequential_sg_noncommuting_context": check_sequential_sg_noncommuting_context_gate,
+    "two_level_update_oscillation": check_two_level_update_oscillation_gate,
+    "delayed_context_partition": check_delayed_context_partition_gate,
+    "ramsey_clock_phase": check_ramsey_clock_phase_gate,
+    "ab_holonomy_phase": check_ab_holonomy_phase_gate,
+    "ab_flux_period": check_ab_flux_period_gate,
+    "action_frequency_threshold": check_action_frequency_threshold_gate,
+    "spectral_anchor_consistency": check_spectral_anchor_consistency_gate,
+    "barrier_transmission": check_barrier_transmission_gate,
+    "repeated_context_zeno": check_repeated_context_zeno_gate,
+    "bosonic_indistinguishability": check_bosonic_indistinguishability_gate,
+    "single_quantum_facticity": check_single_quantum_facticity_gate,
+    "conditional_inheritance_swap": check_conditional_inheritance_swap_gate,
+    "context_transfer_no_cloning": check_context_transfer_no_cloning_gate,
+    "no_cloning_context_invariance": check_no_cloning_context_invariance_gate,
+    "multipartite_contextuality": check_multipartite_contextuality_gate,
+    "ks_contextuality_obstruction": check_ks_contextuality_obstruction_gate,
+    "temporal_facticity": check_temporal_facticity_gate,
+    "partial_facticity_readout": check_partial_facticity_readout_gate,
+    "unitary_graph_walk": check_unitary_graph_walk_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,
     "marker_eraser_visibility": check_marker_eraser_visibility_gate,
     "bell_chsh_table": check_bell_chsh_table_gate,

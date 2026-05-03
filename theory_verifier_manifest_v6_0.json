@@ -1882,6 +1882,824 @@
       ]
     }
   ],
+  "qm_experiments": [
+    {
+      "id": "born_context_probability_tests",
+      "title": "Born/context probability tests",
+      "status": "executable_gate",
+      "standard_result": "Context probabilities are nonnegative and normalized by the selected readout context.",
+      "idt_primitives": {
+        "event": "Resolved alternatives A_i are event bundles in the selected context.",
+        "distinguishability": "Off-diagonal actualization terms must remain below the context admissibility threshold.",
+        "inheritance": "The inherited kernel supplies the actualization measure mu(A_i).",
+        "readout_context": "The context K selects the finite partition whose weights are normalized.",
+        "facticity": "A factual outcome is one resolved cell of the context partition.",
+        "stable_invariant": "The normalized probability table is stable under the declared finite context."
+      },
+      "stable_invariant": "P_K(A_i)=mu(A_i)/sum_j mu(A_j)",
+      "finite_gates": ["born_context_probability_table_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Born readout is executable; global Born postulate and full QM are not claimed."
+    },
+    {
+      "id": "two_path_interference",
+      "title": "Two-path interference",
+      "status": "executable_gate",
+      "standard_result": "Balanced two-path readout gives P(phi)=1/2(1+V cos phi).",
+      "idt_primitives": {
+        "event": "The two path alternatives are the event bundles h0 and h1.",
+        "distinguishability": "Incomplete path distinguishability is encoded by Gamma_I(h0,h1).",
+        "inheritance": "The phase-shifted inheritance act changes the relative history weight.",
+        "readout_context": "The output port context compares phi with the complementary phi+pi output.",
+        "facticity": "A detector click facticizes one output event.",
+        "stable_invariant": "Visibility is fixed by the inherited coherence magnitude before readout."
+      },
+      "stable_invariant": "V=2|W0 conjugate(W1) Gamma_I(0,1)|/D",
+      "finite_gates": ["two_path_interference_fringe_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite fringe shape is executable; propagation phase geometry is still open."
+    },
+    {
+      "id": "finite_i3_actualization",
+      "title": "Finite I3 actualization",
+      "status": "executable_gate",
+      "standard_result": "Bilinear quantum readout has no primitive third-order interference term.",
+      "idt_primitives": {
+        "event": "Three disjoint alternatives A, B, and C define the tested event bundles.",
+        "distinguishability": "Pairwise distinguishability enters through the inherited bilinear kernel.",
+        "inheritance": "The same inherited actualization law is applied to singles, pairs, and triples.",
+        "readout_context": "The slit/readout context selects which unions are compared.",
+        "facticity": "Each run facticizes a detector event after the selected slit context.",
+        "stable_invariant": "The third-order inclusion-exclusion residual vanishes."
+      },
+      "stable_invariant": "I3(A,B,C)=0",
+      "finite_gates": ["actualization_demo_i3_zero"],
+      "proposed_gates": [],
+      "claim_boundary": "Bilinear finite actualization is checked; no beyond-QM residual is claimed."
+    },
+    {
+      "id": "triple_slit_sorkin_parameter",
+      "title": "Triple-slit Sorkin parameter",
+      "status": "executable_gate",
+      "standard_result": "The normalized Sorkin parameter remains below the declared tolerance.",
+      "idt_primitives": {
+        "event": "The three slit alternatives and their unions are event bundles.",
+        "distinguishability": "Only pairwise inherited distinguishability contributes to the measure.",
+        "inheritance": "The same actualization measure is reused across all slit combinations.",
+        "readout_context": "The experiment cycles through compatible slit-open contexts.",
+        "facticity": "Detector impact events are compared across contexts after normalization.",
+        "stable_invariant": "The normalized third-order residual kappa_I3 is bounded."
+      },
+      "stable_invariant": "kappa_I3 <= epsilon_I3",
+      "finite_gates": ["triple_path_sorkin_parameter_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Known triple-slit compatibility is executable; no new residual prediction is claimed."
+    },
+    {
+      "id": "which_way_marker",
+      "title": "Which-way marker visibility loss",
+      "status": "executable_gate",
+      "standard_result": "Visibility decreases as which-way distinguishability increases.",
+      "idt_primitives": {
+        "event": "The path alternatives are coupled to marker alternatives.",
+        "distinguishability": "Marker overlap controls how distinguishable the paths become.",
+        "inheritance": "The marker channel inherits path distinctions into the apparatus sector.",
+        "readout_context": "The interference readout context ignores or resolves the marker sector.",
+        "facticity": "A path-marking record can become a stable fact in the marker context.",
+        "stable_invariant": "Visibility and distinguishability obey the finite complementarity relation."
+      },
+      "stable_invariant": "(V_marked/V0)^2 + D^2 = 1",
+      "finite_gates": ["marker_eraser_visibility_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite marker visibility is executable; full environment dynamics is not derived."
+    },
+    {
+      "id": "quantum_eraser",
+      "title": "Quantum eraser",
+      "status": "executable_gate",
+      "standard_result": "Conditioning on an eraser context can recover interference visibility.",
+      "idt_primitives": {
+        "event": "Path-marker alternatives remain available before the conditioned readout.",
+        "distinguishability": "Effective path distinguishability depends on the conditioned marker overlap.",
+        "inheritance": "A later conditioning context changes which inherited distinctions are read out.",
+        "readout_context": "The eraser context reads marker superpositions rather than which-way records.",
+        "facticity": "Factual coincidence subensembles are selected by the conditioned context.",
+        "stable_invariant": "Recovered visibility is fixed by the conditioned overlap."
+      },
+      "stable_invariant": "V_eraser=V0 |m_cond|",
+      "finite_gates": ["marker_eraser_visibility_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Conditional eraser readout is executable; retrocausal claims are not made."
+    },
+    {
+      "id": "unitary_measurement_context",
+      "title": "Unitary measurement context",
+      "status": "executable_gate",
+      "standard_result": "Changing measurement basis changes the readout table by a unitary context map.",
+      "idt_primitives": {
+        "event": "Resolved basis outcomes are context-indexed event bundles.",
+        "distinguishability": "The context basis selects which alternatives are mutually distinguishable.",
+        "inheritance": "The unitary context map carries the amplitude packet into the readout basis.",
+        "readout_context": "U_K is the finite admissible measurement context.",
+        "facticity": "A detector outcome facticizes one component of the context packet.",
+        "stable_invariant": "The context probability table is |U_K psi|^2."
+      },
+      "stable_invariant": "P_i=|(U_K psi)_i|^2",
+      "finite_gates": ["unitary_measurement_context_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite context readout is executable; apparatus derivation of U_K is open."
+    },
+    {
+      "id": "finite_interferometer_network",
+      "title": "Finite interferometer network",
+      "status": "executable_gate",
+      "standard_result": "A sequence of unitary components produces the final output probability table.",
+      "idt_primitives": {
+        "event": "Intermediate and final ports are event bundles in a network context.",
+        "distinguishability": "Coherent path alternatives remain partially indistinguishable through the network.",
+        "inheritance": "Each component is an admissible update/context map in the sequence.",
+        "readout_context": "The final output basis selects the factual detector partition.",
+        "facticity": "Only the final detector click is facticized in the finite network gate.",
+        "stable_invariant": "The output probabilities are stable under the declared unitary product."
+      },
+      "stable_invariant": "psi_n=U_n...U_1 psi_0 and P_i=|psi_{n,i}|^2",
+      "finite_gates": ["unitary_network_probability_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite network readout is executable; continuum propagation is not derived here."
+    },
+    {
+      "id": "projective_repeatability",
+      "title": "Projective measurement repeatability",
+      "status": "executable_gate",
+      "standard_result": "Repeating the same ideal projective measurement returns the same nonzero outcome.",
+      "idt_primitives": {
+        "event": "Projector ranges are the event bundles of the measurement context.",
+        "distinguishability": "Projectors define mutually distinguishable factual alternatives.",
+        "inheritance": "Projection updates the packet into the selected factual event.",
+        "readout_context": "The same projective context is applied before and after facticity.",
+        "facticity": "The first nonzero outcome becomes stable under repeated same-context readout.",
+        "stable_invariant": "The post-readout state has unit probability for the same projector."
+      },
+      "stable_invariant": "<psi_i'|P_i|psi_i'>=1",
+      "finite_gates": ["projective_measurement_update_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Ideal repeatability is executable; irreversible collapse dynamics is not derived."
+    },
+    {
+      "id": "bell_chsh_table",
+      "title": "Bell/CHSH probability table",
+      "status": "executable_gate",
+      "standard_result": "Context-indexed joint tables obey no-signalling and the Tsirelson-compatible bound.",
+      "idt_primitives": {
+        "event": "Joint outcomes (a,b|x,y) are event bundles indexed by settings.",
+        "distinguishability": "Each local setting context defines which outcomes are distinguishable.",
+        "inheritance": "The correlation structure is inherited across the bipartite preparation.",
+        "readout_context": "No single global factual context over all settings is assumed.",
+        "facticity": "Each run facticizes only one setting-indexed joint outcome.",
+        "stable_invariant": "No-signalling marginals and CHSH value are context-stable."
+      },
+      "stable_invariant": "|S| <= 2 sqrt(2) with no-signalling marginals",
+      "finite_gates": ["bell_chsh_table_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Bell table validation is executable; Bell probabilities are not fully derived from primitives."
+    },
+    {
+      "id": "bell_chsh_from_amplitudes",
+      "title": "Bell/CHSH from amplitudes",
+      "status": "executable_gate",
+      "standard_result": "Joint probability tables are computed from amplitude tables before CHSH validation.",
+      "idt_primitives": {
+        "event": "Bipartite outcome alternatives are encoded as amplitude components.",
+        "distinguishability": "Outcome distinguishability is selected separately for each setting context.",
+        "inheritance": "Amplitude packets inherit the preparation correlation into setting-indexed readouts.",
+        "readout_context": "Each setting pair supplies a finite amplitude readout context.",
+        "facticity": "Only one joint result becomes factual per selected setting pair.",
+        "stable_invariant": "The amplitude-derived table satisfies no-signalling and CHSH bounds."
+      },
+      "stable_invariant": "P(a,b|x,y)=|alpha_ab^{xy}|^2",
+      "finite_gates": ["bell_chsh_from_amplitudes_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Amplitude-to-table bridge is executable; primitive local apparatus dynamics remains open."
+    },
+    {
+      "id": "singlet_angle_model",
+      "title": "Singlet angle Bell model",
+      "status": "executable_gate",
+      "standard_result": "The singlet correlation is E(alpha,beta)=-cos(alpha-beta) and reaches |S|=2 sqrt(2).",
+      "idt_primitives": {
+        "event": "Binary spin outcomes are event bundles indexed by two apparatus angles.",
+        "distinguishability": "The angle pair selects the distinguishability partition for the joint readout.",
+        "inheritance": "The singlet preparation inherits anti-correlated structure into all allowed contexts.",
+        "readout_context": "The selected analyzer angles define the finite Bell context.",
+        "facticity": "Each detector pair facticizes one context-indexed joint outcome.",
+        "stable_invariant": "The angle correlation table gives the Tsirelson value for the selected settings."
+      },
+      "stable_invariant": "E(alpha,beta)=-cos(alpha-beta)",
+      "finite_gates": ["spin_bell_angle_model_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite singlet angle readout is executable; spin representation theory is not derived."
+    },
+    {
+      "id": "calibrated_action_phase_holdout",
+      "title": "Calibrated action-phase holdout",
+      "status": "executable_gate",
+      "standard_result": "One action-phase anchor supports E=hbar omega, p=hbar k, and phase=S/hbar holdouts.",
+      "idt_primitives": {
+        "event": "Frequency, momentum, and phase readouts are separate experimental event families.",
+        "distinguishability": "Phase and generator distinctions are compared through one calibrated action scale.",
+        "inheritance": "The calibrated action anchor is inherited across multiple QM readout routes.",
+        "readout_context": "Each route supplies a different operational context for the same anchor.",
+        "facticity": "Measured spectral, momentum, or phase outcomes are factual readouts in their domains.",
+        "stable_invariant": "The same calibrated hbar is used without per-domain refit."
+      },
+      "stable_invariant": "E/omega = p/k = S/phase = calibrated_hbar_I",
+      "finite_gates": ["hbar_known_gate_holdout_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Calibrated consistency is executable; first-principles hbar_I remains blocked."
+    },
+    {
+      "id": "decoherence_and_recoverability",
+      "title": "Decoherence and recoverability loss",
+      "status": "executable_gate",
+      "standard_result": "Environment marking suppresses off-diagonal coherence, and recoverability loss separates erasure from stable facticity.",
+      "idt_primitives": {
+        "event": "System and environment alternatives form the joint event bundle.",
+        "distinguishability": "Environmental records increase distinguishability between system alternatives.",
+        "inheritance": "Distinguishability is inherited into the environment through premeasurement coupling.",
+        "readout_context": "Pointer/environment contexts select whether records are recoverable or factual.",
+        "facticity": "A large recoverability loss marks stable facticity rather than reversible marking.",
+        "stable_invariant": "Residual coherence and recoverability loss meet the declared thresholds."
+      },
+      "stable_invariant": "offdiagonal coherence <= threshold and Lambda_irrev >= threshold",
+      "finite_gates": ["premeasurement_decoherence_demo", "recoverability_loss_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite decoherence criteria are executable; complete macroscopic apparatus construction is open."
+    },
+    {
+      "id": "stern_gerlach_single_axis",
+      "title": "Stern-Gerlach single-axis readout",
+      "status": "executable_gate",
+      "standard_result": "A spin-1/2 packet yields two outcomes in the selected magnet-axis context.",
+      "idt_primitives": {
+        "event": "The up/down beam packets are event bundles in the chosen axis context.",
+        "distinguishability": "Spatial separation makes the two axis outcomes distinguishable.",
+        "inheritance": "The magnet apparatus inherits spin-context distinction into path separation.",
+        "readout_context": "The magnet orientation selects the admissible spin readout context.",
+        "facticity": "A detector hit facticizes one branch in that axis context.",
+        "stable_invariant": "Outcome probabilities are stable for repeated preparation in the same context."
+      },
+      "stable_invariant": "same-axis prepared eigenstate gives repeatable outcome",
+      "finite_gates": ["stern_gerlach_context_readout_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite single-axis SG context readout is executable; physical magnet apparatus derivation is open."
+    },
+    {
+      "id": "sequential_stern_gerlach",
+      "title": "Sequential Stern-Gerlach contexts",
+      "status": "executable_gate",
+      "standard_result": "SG_z+ followed by SG_z is repeatable, but SG_z+ then SG_x then SG_z returns half-half z outcomes.",
+      "idt_primitives": {
+        "event": "Successive axis outcomes are event bundles indexed by measurement order.",
+        "distinguishability": "Each axis defines a different distinguishability partition.",
+        "inheritance": "The intermediate x-context updates which distinctions remain inherited into the final z-context.",
+        "readout_context": "The ordered SG_z, SG_x, SG_z apparatus sequence defines the tested contexts.",
+        "facticity": "A fact is stable only relative to compatible repeated contexts.",
+        "stable_invariant": "Inserting an incompatible context destroys same-axis z repeatability."
+      },
+      "stable_invariant": "SG_z+ -> SG_x -> SG_z gives P(z+)=P(z-)=1/2",
+      "finite_gates": ["sequential_sg_noncommuting_context_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite sequential SG context reset is executable; primitive apparatus construction remains open."
+    },
+    {
+      "id": "delayed_choice",
+      "title": "Delayed-choice interferometry",
+      "status": "executable_gate",
+      "standard_result": "The late apparatus choice selects particle-like or wave-like readout statistics without retrocausal signalling.",
+      "idt_primitives": {
+        "event": "Open-path and recombined-path alternatives remain possible before final readout.",
+        "distinguishability": "The final context decides whether path distinctions are resolved or erased.",
+        "inheritance": "The late context changes inherited readout compatibility, not past event existence.",
+        "readout_context": "The final beam-splitter choice selects the factual partition.",
+        "facticity": "Only the final detector context facticizes the outcome.",
+        "stable_invariant": "Context-indexed statistics match particle or interference tables without signalling."
+      },
+      "stable_invariant": "late context changes readout table, not past facts",
+      "finite_gates": ["delayed_context_partition_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite delayed-context readout is executable; primitive apparatus timing derivation remains open."
+    },
+    {
+      "id": "aharonov_bohm_phase",
+      "title": "Aharonov-Bohm phase",
+      "status": "executable_gate",
+      "standard_result": "A closed electromagnetic holonomy shifts interference phase even where local force vanishes along the paths.",
+      "idt_primitives": {
+        "event": "The charged two-path alternatives enclose a flux region.",
+        "distinguishability": "The paths remain locally indistinguishable while their relative phase changes.",
+        "inheritance": "The phase holonomy is inherited as a nonlocal relation between path alternatives.",
+        "readout_context": "The recombination context reads out the phase shift as fringe displacement.",
+        "facticity": "Detector events facticize the shifted interference pattern.",
+        "stable_invariant": "The closed holonomy phase is gauge-invariant modulo 2pi."
+      },
+      "stable_invariant": "Delta phi_AB=q Phi_B/hbar",
+      "finite_gates": ["ab_holonomy_phase_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite AB holonomy phase readout is executable; primitive charge and hbar derivations remain open."
+    },
+    {
+      "id": "ab_flux_period",
+      "title": "Aharonov-Bohm flux period",
+      "status": "executable_gate",
+      "standard_result": "The single-charge two-path phase is periodic with Phi_0=h/|q|.",
+      "idt_primitives": {
+        "event": "Fringe maxima and minima are event families over changing flux.",
+        "distinguishability": "Flux changes phase distinguishability without local path-force readout.",
+        "inheritance": "The charge/action bridge inherits phase periodicity into the two-path packet.",
+        "readout_context": "The interferometer context reads flux changes as periodic fringe shifts.",
+        "facticity": "Each detector impact samples the periodic phase context.",
+        "stable_invariant": "The flux period is stable for the declared charge sector."
+      },
+      "stable_invariant": "|q_I| Phi_0^AB / h_I = 1",
+      "finite_gates": ["ab_flux_period_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite flux-period closure is executable; charge-scale derivation is still open."
+    },
+    {
+      "id": "ramsey_interferometry",
+      "title": "Ramsey interferometry",
+      "status": "executable_gate",
+      "standard_result": "Two separated pulses produce phase-dependent population fringes.",
+      "idt_primitives": {
+        "event": "Internal clock-state alternatives form the two Ramsey histories.",
+        "distinguishability": "Relative phase controls distinguishability at final recombination.",
+        "inheritance": "Free evolution inherits clock phase between the two pulse contexts.",
+        "readout_context": "The second pulse selects the final population readout basis.",
+        "facticity": "Population measurement facticizes one internal-state outcome.",
+        "stable_invariant": "Fringe phase is stable under the declared clock evolution."
+      },
+      "stable_invariant": "population fringe depends on accumulated phase",
+      "finite_gates": ["ramsey_clock_phase_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Ramsey phase readout is executable; primitive clock/apparatus construction remains open."
+    },
+    {
+      "id": "rabi_oscillation",
+      "title": "Rabi oscillation",
+      "status": "executable_gate",
+      "standard_result": "A driven two-level system transfers population sinusoidally between outcomes.",
+      "idt_primitives": {
+        "event": "The two level outcomes are event bundles of the driven context.",
+        "distinguishability": "Drive phase and detuning control distinguishability between level histories.",
+        "inheritance": "The drive inheritance act rotates amplitude weight between outcomes.",
+        "readout_context": "Population readout selects the level basis after a drive time.",
+        "facticity": "A level detection facticizes one outcome after the drive.",
+        "stable_invariant": "The oscillation frequency and population table are fixed by the declared update."
+      },
+      "stable_invariant": "two-level population oscillation under fixed drive",
+      "finite_gates": ["two_level_update_oscillation_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite resonant two-level update is executable; microscopic drive derivation is not claimed."
+    },
+    {
+      "id": "photoelectric_threshold",
+      "title": "Photoelectric threshold",
+      "status": "executable_gate",
+      "standard_result": "Emission occurs only when photon energy exceeds the material threshold.",
+      "idt_primitives": {
+        "event": "Emission and no-emission are the factual event alternatives.",
+        "distinguishability": "Above threshold, emission becomes distinguishable from bound-state continuation.",
+        "inheritance": "The action-frequency anchor transfers into the material excitation context.",
+        "readout_context": "The detector/work-function context selects emission as the readout.",
+        "facticity": "An emitted electron is the facticized threshold-crossing event.",
+        "stable_invariant": "The threshold is tied to one calibrated action-frequency anchor."
+      },
+      "stable_invariant": "emission threshold follows h f >= W",
+      "finite_gates": ["action_frequency_threshold_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite threshold readout is executable with a declared action anchor; material response derivation is not claimed."
+    },
+    {
+      "id": "spectroscopy_lines",
+      "title": "Spectroscopy lines",
+      "status": "executable_gate",
+      "standard_result": "Stable transition frequencies match energy differences through one action-frequency anchor.",
+      "idt_primitives": {
+        "event": "Initial and final atomic states plus emitted photon are event bundles.",
+        "distinguishability": "Discrete spectral lines are distinguishable transition readouts.",
+        "inheritance": "Transition structure inherits stable level differences into frequency readouts.",
+        "readout_context": "The spectrometer context selects line frequency as the factual output.",
+        "facticity": "Photon detection facticizes one transition event.",
+        "stable_invariant": "One calibrated hbar maps all declared transition frequencies."
+      },
+      "stable_invariant": "Delta E = h f across spectral lines without per-line refit",
+      "finite_gates": ["spectral_anchor_consistency_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite shared-anchor spectral consistency is executable; atomic level derivation is not claimed."
+    },
+    {
+      "id": "tunneling_barrier",
+      "title": "Tunneling through a barrier",
+      "status": "executable_gate",
+      "standard_result": "A classically blocked region can have nonzero transmission amplitude.",
+      "idt_primitives": {
+        "event": "Reflection and transmission are event bundles after the barrier context.",
+        "distinguishability": "Barrier structure changes distinguishability between transmitted and reflected histories.",
+        "inheritance": "Suppressed inherited weight remains admissible through the barrier alternative.",
+        "readout_context": "Detectors on each side select the reflection/transmission readout.",
+        "facticity": "A detector click facticizes either reflected or transmitted outcome.",
+        "stable_invariant": "Transmission probability is fixed by the declared barrier update."
+      },
+      "stable_invariant": "nonzero transmission for finite barrier with suppressed weight",
+      "finite_gates": ["barrier_transmission_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite suppressed-transmission readout is executable; exact material barrier dynamics are not claimed."
+    },
+    {
+      "id": "quantum_zeno",
+      "title": "Quantum Zeno effect",
+      "status": "executable_gate",
+      "standard_result": "Frequent compatible measurements inhibit transition away from the initial state.",
+      "idt_primitives": {
+        "event": "Initial-state survival and transition are event alternatives over time.",
+        "distinguishability": "Repeated readout keeps the initial-state distinction factically refreshed.",
+        "inheritance": "Frequent context acts interrupt the update that would transfer weight.",
+        "readout_context": "The same survival context is applied repeatedly.",
+        "facticity": "Each readout re-facticizes survival or transition.",
+        "stable_invariant": "Survival probability approaches one as context interval shrinks."
+      },
+      "stable_invariant": "repeated same-context readout suppresses transition",
+      "finite_gates": ["repeated_context_zeno_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite repeated-context survival is executable; continuous measurement model is open."
+    },
+    {
+      "id": "hong_ou_mandel",
+      "title": "Hong-Ou-Mandel interference",
+      "status": "executable_gate",
+      "standard_result": "Indistinguishable photons entering a beamsplitter suppress coincidence counts.",
+      "idt_primitives": {
+        "event": "Coincidence and bunching outputs are two-particle event bundles.",
+        "distinguishability": "Coincidence suppression occurs when particle alternatives become indistinguishable.",
+        "inheritance": "The beamsplitter inherits exchange symmetry into the two-particle readout.",
+        "readout_context": "The output-port coincidence context selects the tested partition.",
+        "facticity": "Detector coincidences or bunching events are facticized outcomes.",
+        "stable_invariant": "Coincidence probability vanishes for identical synchronized inputs."
+      },
+      "stable_invariant": "HOM dip at zero distinguishability",
+      "finite_gates": ["bosonic_indistinguishability_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite overlap-to-coincidence readout is executable; full photonic source/apparatus derivation is not claimed."
+    },
+    {
+      "id": "antibunching_single_photon",
+      "title": "Antibunching and single-photon source tests",
+      "status": "executable_gate",
+      "standard_result": "A single quantum source suppresses simultaneous double detection.",
+      "idt_primitives": {
+        "event": "Single and double detection outcomes are source-context event bundles.",
+        "distinguishability": "One factual emission excludes a second simultaneous emission in the same source context.",
+        "inheritance": "Source preparation inherits single-quantum constraint into detection events.",
+        "readout_context": "Coincidence counting selects the single-vs-double event partition.",
+        "facticity": "Detection facticizes the emitted quantum count.",
+        "stable_invariant": "The zero-delay second-order correlation is below the classical bound."
+      },
+      "stable_invariant": "g2(0) < 1 with ideal single-photon limit g2(0)=0",
+      "finite_gates": ["single_quantum_facticity_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite coincidence-count facticity gate is executable; source physics is not derived."
+    },
+    {
+      "id": "entanglement_swapping",
+      "title": "Entanglement swapping",
+      "status": "executable_gate",
+      "standard_result": "A joint Bell readout can condition correlations between systems that did not directly interact.",
+      "idt_primitives": {
+        "event": "Pair outcomes and Bell-readout outcomes are event bundles across subsystems.",
+        "distinguishability": "The Bell context erases some pair distinctions while selecting joint correlations.",
+        "inheritance": "Conditional readout transfers inherited correlation structure between remote alternatives.",
+        "readout_context": "The Bell-state measurement selects the conditioning context.",
+        "facticity": "The Bell outcome facticizes the subensemble in which remote correlations are read.",
+        "stable_invariant": "Conditioned remote correlation table matches the selected Bell outcome."
+      },
+      "stable_invariant": "conditional Bell readout swaps correlation structure",
+      "finite_gates": ["conditional_inheritance_swap_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Bell-outcome correlation transfer is executable; full source/network derivation is not claimed."
+    },
+    {
+      "id": "quantum_teleportation",
+      "title": "Quantum teleportation",
+      "status": "executable_gate",
+      "standard_result": "An unknown input state is reconstructed at a target after Bell readout and classical correction, without cloning.",
+      "idt_primitives": {
+        "event": "Input, Bell-measurement, classical-message, and target outcomes are event bundles.",
+        "distinguishability": "The unknown packet is not made globally distinguishable by the protocol.",
+        "inheritance": "Entanglement plus Bell facticity transfers the readout structure to the target context.",
+        "readout_context": "Bell readout and correction select the target reconstruction context.",
+        "facticity": "The Bell outcome and classical message facticize the required correction branch.",
+        "stable_invariant": "The target readout reproduces the input context statistics without copying."
+      },
+      "stable_invariant": "context transfer plus correction preserves target readout statistics",
+      "finite_gates": ["context_transfer_no_cloning_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Bell-branch correction is executable; full physical protocol derivation is not claimed."
+    },
+    {
+      "id": "no_cloning",
+      "title": "No-cloning",
+      "status": "executable_gate",
+      "standard_result": "No universal operation copies an arbitrary unknown quantum state while preserving all readout statistics.",
+      "idt_primitives": {
+        "event": "Original and would-be copy readouts are event bundles across future contexts.",
+        "distinguishability": "Unknown alternatives cannot be made distinguishable enough to duplicate all contexts.",
+        "inheritance": "A universal copy act would need to preserve inherited relations for every possible packet.",
+        "readout_context": "The obstruction appears when all future readout contexts are required.",
+        "facticity": "Copy verification would facticize incompatible context statistics at once.",
+        "stable_invariant": "Inner products/readout overlaps cannot be preserved by universal duplication."
+      },
+      "stable_invariant": "unknown packet context statistics cannot be universally cloned",
+      "finite_gates": ["no_cloning_context_invariance_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite inner-product obstruction is executable; no physical cloning machine model is claimed."
+    },
+    {
+      "id": "ghz_mermin_contextuality",
+      "title": "GHZ/Mermin contextuality",
+      "status": "executable_gate",
+      "standard_result": "Multipartite deterministic context products contradict a global pre-existing value assignment.",
+      "idt_primitives": {
+        "event": "Multipartite outcome products are event bundles indexed by joint contexts.",
+        "distinguishability": "Each commuting context supplies a distinguishable product partition.",
+        "inheritance": "The shared preparation inherits constraints across incompatible context families.",
+        "readout_context": "Only one compatible product context is read out per run.",
+        "facticity": "Product outcomes are factual only inside their selected context.",
+        "stable_invariant": "The context product constraints obstruct a global factual assignment."
+      },
+      "stable_invariant": "Mermin/GHZ product contradiction for global values",
+      "finite_gates": ["multipartite_contextuality_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Mermin parity obstruction is executable; full multipartite apparatus derivation is not claimed."
+    },
+    {
+      "id": "kochen_specker_contextuality",
+      "title": "Kochen-Specker contextuality",
+      "status": "executable_gate",
+      "standard_result": "No noncontextual value assignment satisfies all compatible measurement constraints.",
+      "idt_primitives": {
+        "event": "Projector outcomes are event bundles grouped into compatible contexts.",
+        "distinguishability": "Each context defines a local distinguishability partition.",
+        "inheritance": "The same projector may inherit constraints differently across context embeddings.",
+        "readout_context": "Factual assignments are only admissible inside selected compatible contexts.",
+        "facticity": "A global fact table across all contexts is obstructed.",
+        "stable_invariant": "The finite context hypergraph has no valid global assignment."
+      },
+      "stable_invariant": "no global noncontextual assignment",
+      "finite_gates": ["ks_contextuality_obstruction_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite parity-hypergraph obstruction is executable; physical projector-set derivation is not claimed."
+    },
+    {
+      "id": "leggett_garg_temporal_context",
+      "title": "Leggett-Garg temporal facticity",
+      "status": "executable_gate",
+      "standard_result": "Temporal correlation tests can violate macrorealist noninvasive global assignment bounds.",
+      "idt_primitives": {
+        "event": "Time-indexed outcomes are event bundles in a temporal readout sequence.",
+        "distinguishability": "Each time readout changes which future alternatives remain distinguishable.",
+        "inheritance": "Temporal inheritance carries update and disturbance between readout contexts.",
+        "readout_context": "Two-time and three-time measurement contexts are not automatically globally compatible.",
+        "facticity": "Macroscopic facticity over time is tested as a global assignment claim.",
+        "stable_invariant": "Temporal correlations violate the declared macro-facticity bound when contexts are incompatible."
+      },
+      "stable_invariant": "Leggett-Garg inequality violation as temporal context obstruction",
+      "finite_gates": ["temporal_facticity_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite temporal-correlation bound violation is executable; no macrorealist residual model is claimed."
+    },
+    {
+      "id": "weak_measurement",
+      "title": "Weak measurement",
+      "status": "executable_gate",
+      "standard_result": "Partial readout extracts limited information while disturbing the packet less than a projective readout.",
+      "idt_primitives": {
+        "event": "Pointer shifts and postselected outcomes are event bundles.",
+        "distinguishability": "Weak coupling increases distinguishability only partially.",
+        "inheritance": "The apparatus inherits a small amount of system distinction into the pointer.",
+        "readout_context": "Preselection, weak pointer readout, and postselection define the context chain.",
+        "facticity": "Pointer and postselection events are factual while the intermediate system fact remains partial.",
+        "stable_invariant": "Weak value/readout shift is stable for the declared weak-coupling context."
+      },
+      "stable_invariant": "partial distinguishability without full facticity",
+      "finite_gates": ["partial_facticity_readout_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite weak pointer-shift and partial-facticity gate is executable; full weak-measurement apparatus derivation is open."
+    },
+    {
+      "id": "quantum_random_walk",
+      "title": "Quantum random walk",
+      "status": "executable_gate",
+      "standard_result": "Unitary graph propagation produces interference-pattern distributions unlike a classical random walk.",
+      "idt_primitives": {
+        "event": "Graph-position and coin outcomes are event bundles.",
+        "distinguishability": "Path alternatives through the graph remain coherently distinguishable only at readout.",
+        "inheritance": "Coin and shift acts inherit amplitude through the graph sequence.",
+        "readout_context": "Final graph-position measurement selects the factual distribution.",
+        "facticity": "A final position detection facticizes one path-summed outcome.",
+        "stable_invariant": "The final distribution follows the declared unitary graph update."
+      },
+      "stable_invariant": "unitary graph-walk distribution from coherent path inheritance",
+      "finite_gates": ["unitary_graph_walk_demo"],
+      "proposed_gates": [],
+      "claim_boundary": "Finite Hadamard graph-walk distribution is executable; general graph-walk theory is not claimed."
+    }
+  ],
+  "qm_universal_patterns": [
+    {
+      "id": "contextual_probability_readout_pattern",
+      "title": "Contextual probability and facticized readout",
+      "mechanism": "A prepared event packet is evaluated only after an explicit readout context selects the distinguishability partition.",
+      "experiments": [
+        "born_context_probability_tests",
+        "unitary_measurement_context",
+        "projective_repeatability",
+        "stern_gerlach_single_axis",
+        "delayed_choice",
+        "weak_measurement"
+      ],
+      "finite_gates": [
+        "born_context_probability_table_demo",
+        "unitary_measurement_context_demo",
+        "projective_measurement_update_demo",
+        "stern_gerlach_context_readout_demo",
+        "delayed_context_partition_demo",
+        "partial_facticity_readout_demo"
+      ],
+      "operations": {
+        "event_packet": "prepare finite alternatives or pointer shifts before final readout",
+        "distinguishability_partition": "declare the partition made distinguishable by the selected context",
+        "inheritance_update": "propagate amplitudes or partial pointer information into that context",
+        "readout_context": "compute the probability table in the chosen basis or partial pointer context",
+        "facticity_rule": "mark only the selected context outcome as factual, with repeatability or partiality declared",
+        "stable_invariant": "verify the normalized probability, repeatability, or partial-readout table"
+      },
+      "compiler_target": "context_readout_kernel",
+      "claim_boundary": "This pattern unifies finite contextual readouts; it does not derive all apparatus contexts."
+    },
+    {
+      "id": "coherent_alternative_interference_pattern",
+      "title": "Coherent alternatives and interference readout",
+      "mechanism": "Unfacticized alternatives inherit phase/coherence through updates and become visible as interference only at readout.",
+      "experiments": [
+        "two_path_interference",
+        "finite_i3_actualization",
+        "triple_slit_sorkin_parameter",
+        "which_way_marker",
+        "quantum_eraser",
+        "finite_interferometer_network",
+        "ramsey_interferometry",
+        "hong_ou_mandel",
+        "quantum_random_walk"
+      ],
+      "finite_gates": [
+        "two_path_interference_fringe_demo",
+        "actualization_demo_i3_zero",
+        "triple_path_sorkin_parameter_demo",
+        "marker_eraser_visibility_demo",
+        "unitary_network_probability_demo",
+        "ramsey_clock_phase_demo",
+        "bosonic_indistinguishability_demo",
+        "unitary_graph_walk_demo"
+      ],
+      "operations": {
+        "event_packet": "prepare path, clock, particle, or graph alternatives before factual detection",
+        "distinguishability_partition": "track whether alternatives remain coherent, marked, erased, or exchange-indistinguishable",
+        "inheritance_update": "apply phase, unitary network, marker, or graph-walk inheritance before readout",
+        "readout_context": "select the detector, output-port, clock-population, or graph-position context",
+        "facticity_rule": "facticize only the final path-summed or conditioned event",
+        "stable_invariant": "verify interference, visibility, I3, coincidence, or graph distribution invariants"
+      },
+      "compiler_target": "coherent_alternative_kernel",
+      "claim_boundary": "This pattern captures finite coherence/readout structure; it does not derive all optical or graph apparatus."
+    },
+    {
+      "id": "phase_action_anchor_pattern",
+      "title": "Phase/action anchor and periodic closure",
+      "mechanism": "A declared action or charge anchor converts phase, flux, frequency, and threshold relations into finite readouts.",
+      "experiments": [
+        "calibrated_action_phase_holdout",
+        "aharonov_bohm_phase",
+        "ab_flux_period",
+        "photoelectric_threshold",
+        "spectroscopy_lines"
+      ],
+      "finite_gates": [
+        "hbar_known_gate_holdout_demo",
+        "ab_holonomy_phase_demo",
+        "ab_flux_period_demo",
+        "action_frequency_threshold_demo",
+        "spectral_anchor_consistency_demo"
+      ],
+      "operations": {
+        "event_packet": "prepare transitions, emission alternatives, or flux-indexed paths",
+        "distinguishability_partition": "distinguish threshold crossing, line frequency, or phase-period class",
+        "inheritance_update": "inherit the declared action/charge anchor into phase, energy, frequency, or flux closure",
+        "readout_context": "read phase shift, flux period, emitted electron, or spectral line",
+        "facticity_rule": "facticize the threshold event or selected phase/frequency readout",
+        "stable_invariant": "verify E=hf, Delta phi=q Phi/hbar, Phi0=h/|q|, or shared-anchor consistency"
+      },
+      "compiler_target": "phase_action_anchor_kernel",
+      "claim_boundary": "This pattern uses declared/calibrated anchors; it does not derive hbar, h, q, work functions, or atomic levels."
+    },
+    {
+      "id": "finite_update_survival_pattern",
+      "title": "Finite update, reset, suppression, and survival",
+      "mechanism": "A finite update transfers, resets, suppresses, or preserves weight depending on the intervening context sequence.",
+      "experiments": [
+        "sequential_stern_gerlach",
+        "rabi_oscillation",
+        "tunneling_barrier",
+        "quantum_zeno"
+      ],
+      "finite_gates": [
+        "sequential_sg_noncommuting_context_demo",
+        "two_level_update_oscillation_demo",
+        "barrier_transmission_demo",
+        "repeated_context_zeno_demo"
+      ],
+      "operations": {
+        "event_packet": "prepare two-state, barrier, or survival/transition alternatives",
+        "distinguishability_partition": "declare compatible, incompatible, forbidden, or repeated survival partitions",
+        "inheritance_update": "apply reset, drive, barrier suppression, or repeated readout update",
+        "readout_context": "read the final axis, population, reflection/transmission, or survival outcome",
+        "facticity_rule": "facticize the final context while preserving the declared update history",
+        "stable_invariant": "verify population transfer, context reset, nonzero suppressed transmission, or Zeno survival"
+      },
+      "compiler_target": "finite_update_survival_kernel",
+      "claim_boundary": "This pattern unifies finite update behavior; it does not derive microscopic drive, barrier, or continuous measurement dynamics."
+    },
+    {
+      "id": "correlation_contextual_obstruction_pattern",
+      "title": "Composite correlation and contextual obstruction",
+      "mechanism": "Composite systems have context-indexed correlations that cannot be collapsed into one global factual assignment.",
+      "experiments": [
+        "bell_chsh_table",
+        "bell_chsh_from_amplitudes",
+        "singlet_angle_model",
+        "entanglement_swapping",
+        "ghz_mermin_contextuality",
+        "kochen_specker_contextuality",
+        "leggett_garg_temporal_context"
+      ],
+      "finite_gates": [
+        "bell_chsh_table_demo",
+        "bell_chsh_from_amplitudes_demo",
+        "spin_bell_angle_model_demo",
+        "conditional_inheritance_swap_demo",
+        "multipartite_contextuality_demo",
+        "ks_contextuality_obstruction_demo",
+        "temporal_facticity_demo"
+      ],
+      "operations": {
+        "event_packet": "prepare joint, Bell-conditioned, product-context, projector, or temporal alternatives",
+        "distinguishability_partition": "declare which joint or compatible context is distinguishable per run",
+        "inheritance_update": "inherit correlation constraints through amplitude tables, angles, Bell facts, or temporal updates",
+        "readout_context": "read the selected joint, product, projector, Bell, or temporal context",
+        "facticity_rule": "reject any unregistered global fact table across incompatible contexts",
+        "stable_invariant": "verify CHSH, singlet angle, swapped correlation, parity obstruction, KS obstruction, or Leggett-Garg violation"
+      },
+      "compiler_target": "contextual_correlation_obstruction_kernel",
+      "claim_boundary": "This pattern unifies finite contextual-correlation obstructions; it does not derive all operator algebras or physical analyzers."
+    },
+    {
+      "id": "record_transfer_noncopyability_pattern",
+      "title": "Record stability, context transfer, and noncopyability",
+      "mechanism": "Factual records can become stable, transferred, or excluded, but unknown context structure cannot be freely duplicated.",
+      "experiments": [
+        "decoherence_and_recoverability",
+        "antibunching_single_photon",
+        "quantum_teleportation",
+        "no_cloning"
+      ],
+      "finite_gates": [
+        "premeasurement_decoherence_demo",
+        "recoverability_loss_demo",
+        "single_quantum_facticity_demo",
+        "context_transfer_no_cloning_demo",
+        "no_cloning_context_invariance_demo"
+      ],
+      "operations": {
+        "event_packet": "prepare system/environment records, source coincidences, input-target packets, or nonorthogonal states",
+        "distinguishability_partition": "track record recoverability, single-event exclusivity, branch correction, or overlap preservation",
+        "inheritance_update": "inherit records into environment, coincidence counts, Bell-branch transfer, or attempted copy closure",
+        "readout_context": "read residual coherence, g2(0), corrected target state, or overlap obstruction",
+        "facticity_rule": "mark stable records and single events while blocking unsupported universal copying",
+        "stable_invariant": "verify decoherence/recoverability loss, antibunching, target reconstruction, or no-cloning obstruction"
+      },
+      "compiler_target": "record_transfer_noncopyability_kernel",
+      "claim_boundary": "This pattern unifies finite record and transfer constraints; it does not derive sources, environments, or full physical networks."
+    }
+  ],
   "finite_gates": [
     {
       "id": "gamma_demo_psd",
@@ -2067,6 +2885,370 @@
         ]
       ],
       "expected_probabilities": [0.36, 0.64]
+    },
+    {
+      "id": "stern_gerlach_context_readout_demo",
+      "type": "stern_gerlach_context_readout",
+      "tolerance": 1.0e-10,
+      "state": [1.0, 0.0],
+      "context": [
+        [1.0, 0.0],
+        [0.0, 1.0]
+      ],
+      "expected_probabilities": [1.0, 0.0],
+      "repeat_outcome": 0,
+      "expected_repeat_probability": 1.0
+    },
+    {
+      "id": "sequential_sg_noncommuting_context_demo",
+      "type": "sequential_sg_noncommuting_context",
+      "tolerance": 1.0e-10,
+      "initial_state": [1.0, 0.0],
+      "sequences": [
+        {
+          "id": "same_axis_repeat",
+          "contexts": [
+            [
+              [1.0, 0.0],
+              [0.0, 1.0]
+            ],
+            [
+              [1.0, 0.0],
+              [0.0, 1.0]
+            ]
+          ],
+          "expected_final_probabilities": [1.0, 0.0]
+        },
+        {
+          "id": "incompatible_axis_reset",
+          "contexts": [
+            [
+              [1.0, 0.0],
+              [0.0, 1.0]
+            ],
+            [
+              [0.7071067811865476, 0.7071067811865476],
+              [0.7071067811865476, -0.7071067811865476]
+            ],
+            [
+              [1.0, 0.0],
+              [0.0, 1.0]
+            ]
+          ],
+          "expected_final_probabilities": [0.5, 0.5]
+        }
+      ]
+    },
+    {
+      "id": "two_level_update_oscillation_demo",
+      "type": "two_level_update_oscillation",
+      "tolerance": 1.0e-10,
+      "initial_state": [1.0, 0.0],
+      "angular_frequency": 2.0,
+      "samples": [
+        {
+          "time": 0.0,
+          "expected_probabilities": [1.0, 0.0]
+        },
+        {
+          "time": 0.7853981633974483,
+          "expected_probabilities": [0.5, 0.5]
+        },
+        {
+          "time": 1.5707963267948966,
+          "expected_probabilities": [0.0, 1.0]
+        },
+        {
+          "time": 3.141592653589793,
+          "expected_probabilities": [1.0, 0.0]
+        }
+      ]
+    },
+    {
+      "id": "delayed_context_partition_demo",
+      "type": "delayed_context_partition",
+      "tolerance": 1.0e-10,
+      "state": [0.7071067811865476, 0.7071067811865476],
+      "readouts": [
+        {
+          "id": "open_path_context",
+          "context": [
+            [1.0, 0.0],
+            [0.0, 1.0]
+          ],
+          "expected_probabilities": [0.5, 0.5]
+        },
+        {
+          "id": "closed_interference_context",
+          "context": [
+            [0.7071067811865476, 0.7071067811865476],
+            [0.7071067811865476, -0.7071067811865476]
+          ],
+          "expected_probabilities": [1.0, 0.0]
+        }
+      ]
+    },
+    {
+      "id": "ramsey_clock_phase_demo",
+      "type": "ramsey_clock_phase",
+      "tolerance": 1.0e-10,
+      "initial_state": [1.0, 0.0],
+      "first_pulse": [
+        [0.7071067811865476, 0.7071067811865476],
+        [0.7071067811865476, -0.7071067811865476]
+      ],
+      "second_pulse": [
+        [0.7071067811865476, 0.7071067811865476],
+        [0.7071067811865476, -0.7071067811865476]
+      ],
+      "samples": [
+        {
+          "phase": 0.0,
+          "expected_probabilities": [1.0, 0.0]
+        },
+        {
+          "phase": 1.5707963267948966,
+          "expected_probabilities": [0.5, 0.5]
+        },
+        {
+          "phase": 3.141592653589793,
+          "expected_probabilities": [0.0, 1.0]
+        }
+      ]
+    },
+    {
+      "id": "ab_holonomy_phase_demo",
+      "type": "ab_holonomy_phase",
+      "tolerance": 1.0e-10,
+      "charge": 1.0,
+      "magnetic_flux": 1.5707963267948966,
+      "hbar": 1.0,
+      "expected_phase": 1.5707963267948966,
+      "local_force_bound": 0.0
+    },
+    {
+      "id": "ab_flux_period_demo",
+      "type": "ab_flux_period",
+      "tolerance": 1.0e-10,
+      "charge": 2.0,
+      "h": 6.0,
+      "expected_flux_period": 3.0
+    },
+    {
+      "id": "action_frequency_threshold_demo",
+      "type": "action_frequency_threshold",
+      "tolerance": 1.0e-10,
+      "h": 2.0,
+      "work_function": 5.0,
+      "samples": [
+        {
+          "frequency": 2.0,
+          "expected_emission": false,
+          "expected_kinetic_energy": 0.0
+        },
+        {
+          "frequency": 2.5,
+          "expected_emission": true,
+          "expected_kinetic_energy": 0.0
+        },
+        {
+          "frequency": 3.25,
+          "expected_emission": true,
+          "expected_kinetic_energy": 1.5
+        }
+      ]
+    },
+    {
+      "id": "spectral_anchor_consistency_demo",
+      "type": "spectral_anchor_consistency",
+      "tolerance": 1.0e-10,
+      "h": 2.0,
+      "transitions": [
+        {
+          "id": "line_a",
+          "delta_energy": 4.0,
+          "frequency": 2.0
+        },
+        {
+          "id": "line_b",
+          "delta_energy": 7.0,
+          "frequency": 3.5
+        },
+        {
+          "id": "line_c",
+          "delta_energy": 10.0,
+          "frequency": 5.0
+        }
+      ]
+    },
+    {
+      "id": "barrier_transmission_demo",
+      "type": "barrier_transmission",
+      "tolerance": 1.0e-10,
+      "classically_forbidden": true,
+      "decay_constant": 0.5,
+      "width": 2.0,
+      "expected_transmission": 0.1353352832366127,
+      "expected_reflection": 0.8646647167633873
+    },
+    {
+      "id": "repeated_context_zeno_demo",
+      "type": "repeated_context_zeno",
+      "tolerance": 1.0e-10,
+      "total_angle": 1.5707963267948966,
+      "samples": [
+        {
+          "readout_count": 1,
+          "expected_survival": 0.5000000000000001
+        },
+        {
+          "readout_count": 4,
+          "expected_survival": 0.8562321183810632
+        },
+        {
+          "readout_count": 16,
+          "expected_survival": 0.9621656643239899
+        },
+        {
+          "readout_count": 64,
+          "expected_survival": 0.9904077742506335
+        }
+      ]
+    },
+    {
+      "id": "bosonic_indistinguishability_demo",
+      "type": "bosonic_indistinguishability",
+      "tolerance": 1.0e-10,
+      "wavepacket_overlap": 1.0,
+      "expected_coincidence": 0.0,
+      "expected_bunching": 1.0
+    },
+    {
+      "id": "single_quantum_facticity_demo",
+      "type": "single_quantum_facticity",
+      "tolerance": 1.0e-10,
+      "trial_count": 100,
+      "detector_a_count": 50,
+      "detector_b_count": 50,
+      "coincidence_count": 0,
+      "expected_g2_zero": 0.0,
+      "max_g2_zero": 0.5
+    },
+    {
+      "id": "conditional_inheritance_swap_demo",
+      "type": "conditional_inheritance_swap",
+      "tolerance": 1.0e-10,
+      "bell_outcome": "psi_minus",
+      "remote_correlations": [
+        {
+          "context": "zz",
+          "expected_correlation": -1.0
+        },
+        {
+          "context": "xx",
+          "expected_correlation": -1.0
+        }
+      ]
+    },
+    {
+      "id": "context_transfer_no_cloning_demo",
+      "type": "context_transfer_no_cloning",
+      "tolerance": 1.0e-10,
+      "input_state": [0.6, 0.8],
+      "bell_branch": "psi_minus",
+      "expected_target_state": [0.6, 0.8]
+    },
+    {
+      "id": "no_cloning_context_invariance_demo",
+      "type": "no_cloning_context_invariance",
+      "tolerance": 1.0e-10,
+      "state_overlap": 0.5,
+      "min_obstruction": 0.1,
+      "expected_obstructed": true
+    },
+    {
+      "id": "multipartite_contextuality_demo",
+      "type": "multipartite_contextuality",
+      "tolerance": 1.0e-10,
+      "constraints": [
+        {
+          "context": ["x", "y", "y"],
+          "expected_product": 1
+        },
+        {
+          "context": ["y", "x", "y"],
+          "expected_product": 1
+        },
+        {
+          "context": ["y", "y", "x"],
+          "expected_product": 1
+        },
+        {
+          "context": ["x", "x", "x"],
+          "expected_product": -1
+        }
+      ],
+      "expected_obstructed": true
+    },
+    {
+      "id": "ks_contextuality_obstruction_demo",
+      "type": "ks_contextuality_obstruction",
+      "tolerance": 1.0e-10,
+      "contexts": [
+        ["a", "b"],
+        ["b", "c"],
+        ["c", "a"]
+      ],
+      "expected_obstructed": true
+    },
+    {
+      "id": "temporal_facticity_demo",
+      "type": "temporal_facticity",
+      "tolerance": 1.0e-10,
+      "c12": 0.7071067811865476,
+      "c23": 0.7071067811865476,
+      "c13": 0.0,
+      "expected_k": 1.4142135623730951,
+      "macrorealist_bound": 1.0,
+      "expected_violation": true
+    },
+    {
+      "id": "partial_facticity_readout_demo",
+      "type": "partial_facticity_readout",
+      "tolerance": 1.0e-10,
+      "coupling": 0.1,
+      "weak_value": 2.0,
+      "expected_pointer_shift": 0.2,
+      "observed_disturbance": 0.01,
+      "max_disturbance": 0.05,
+      "distinguishability_gain": 0.2,
+      "facticity_threshold": 1.0,
+      "expected_full_facticity": false
+    },
+    {
+      "id": "unitary_graph_walk_demo",
+      "type": "unitary_graph_walk",
+      "tolerance": 1.0e-10,
+      "steps": 3,
+      "initial_coin": [1.0, 0.0],
+      "expected_distribution": [
+        {
+          "position": -3,
+          "probability": 0.125
+        },
+        {
+          "position": -1,
+          "probability": 0.625
+        },
+        {
+          "position": 1,
+          "probability": 0.125
+        },
+        {
+          "position": 3,
+          "probability": 0.125
+        }
+      ]
     },
     {
       "id": "triple_path_sorkin_parameter_demo",

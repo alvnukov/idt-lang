@@ -104,6 +104,12 @@ python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
 python3 -m unittest discover -s tests
 ```
 
+Compile the QM universal-pattern bench:
+
+```bash
+python3 scripts/qm_bench.py --json
+```
+
 Optional development tools:
 
 ```bash

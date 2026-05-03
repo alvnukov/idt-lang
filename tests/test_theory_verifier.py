@@ -81,6 +81,8 @@ from theory_verifier.core import (
     SCREENED_SLIP_RESIDUAL_TARGET,
     SCREENED_OBSERVATIONAL_GATE_REQUIRED_SYMBOLS,
     SCREENED_OBSERVATIONAL_GATE_TARGET,
+    QM_EXPERIMENT_REQUIRED_PRIMITIVES,
+    QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS,
     QM_APPARATUS_FACTICITY_REQUIRED_GATES,
     QM_APPARATUS_FACTICITY_REQUIRED_SYMBOLS,
     QM_APPARATUS_FACTICITY_TARGET,
@@ -99,6 +101,7 @@ from theory_verifier.core import (
     parse_manifest,
     verify_manifest,
 )
+from theory_verifier.qm_bench import compile_qm_bench
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -110,6 +113,15 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest_text(manifest_path)
         report = verify_manifest(manifest)
         self.assertEqual([], list(report.issues))
+
+    def test_current_manifest_compiles_qm_bench(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest = parse_manifest_text(manifest_path)
+        bench = compile_qm_bench(manifest)
+        self.assertEqual(6, len(bench.kernels))
+        self.assertEqual(35, bench.experiment_count)
+        self.assertEqual(35, bench.finite_gate_reference_count)
+        self.assertEqual(QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS, bench.shared_operations)
 
     def test_dimension_mismatch_is_reported(self) -> None:
         manifest = parse_manifest(
@@ -372,6 +384,137 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"hbar_action_scale_premature"})
+
+    def test_qm_experiment_executable_requires_existing_gate(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [
+                    qm_experiment(
+                        status="executable_gate",
+                        finite_gates=["missing_gate"],
+                    )
+                ],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_experiment_gate_missing"})
+
+    def test_qm_experiment_executable_rejects_empty_gate_list(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [
+                    qm_experiment(
+                        status="executable_gate",
+                        finite_gates=[],
+                    )
+                ],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_experiment_executable_without_gate"})
+
+    def test_qm_experiment_requires_complete_idt_primitives(self) -> None:
+        primitives = qm_experiment_primitives()
+        del primitives["facticity"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [qm_experiment(idt_primitives=primitives)],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_experiment_primitives_incomplete"})
+
+    def test_qm_experiment_gate_candidate_requires_proposed_gate(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [
+                    qm_experiment(
+                        status="gate_candidate",
+                        proposed_gates=[],
+                    )
+                ],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_experiment_candidate_without_proposed_gate"})
+
+    def test_large_qm_ledger_requires_universal_patterns(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [qm_experiment(identifier=f"experiment_{index}") for index in range(10)],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_universal_patterns_missing"})
+
+    def test_qm_universal_patterns_require_complete_operations(self) -> None:
+        operations = qm_universal_pattern_operations()
+        del operations["facticity_rule"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [qm_experiment(identifier="experiment_a")],
+                "qm_universal_patterns": [
+                    qm_universal_pattern(
+                        experiments=["experiment_a"],
+                        operations=operations,
+                    )
+                ],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_universal_pattern_operations_incomplete"})
+
+    def test_qm_universal_patterns_cover_experiments_once(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [
+                    qm_experiment(identifier="experiment_a"),
+                    qm_experiment(identifier="experiment_b"),
+                ],
+                "qm_universal_patterns": [
+                    qm_universal_pattern(
+                        experiments=["experiment_a"],
+                    )
+                ],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_universal_pattern_experiment_uncovered"})
 
     def test_joint_action_gravity_anchor_requires_explicit_derivation(self) -> None:
         manifest = parse_manifest(
@@ -2011,6 +2154,531 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"projective_probability_mismatch"})
+
+    def test_stern_gerlach_context_readout_rejects_bad_probability(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_stern_gerlach_context",
+                        "type": "stern_gerlach_context_readout",
+                        "state": [1.0, 0.0],
+                        "context": [[1.0, 0.0], [0.0, 1.0]],
+                        "expected_probabilities": [0.5, 0.5],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"stern_gerlach_probability_mismatch"})
+
+    def test_sequential_sg_noncommuting_context_rejects_bad_probability(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_sequential_sg",
+                        "type": "sequential_sg_noncommuting_context",
+                        "initial_state": [1.0, 0.0],
+                        "sequences": [
+                            {
+                                "id": "z_x_z",
+                                "contexts": [
+                                    [[1.0, 0.0], [0.0, 1.0]],
+                                    [
+                                        [0.7071067811865476, 0.7071067811865476],
+                                        [0.7071067811865476, -0.7071067811865476],
+                                    ],
+                                    [[1.0, 0.0], [0.0, 1.0]],
+                                ],
+                                "expected_final_probabilities": [1.0, 0.0],
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"sequential_sg_probability_mismatch"})
+
+    def test_two_level_update_oscillation_rejects_bad_probability(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_two_level_update",
+                        "type": "two_level_update_oscillation",
+                        "initial_state": [1.0, 0.0],
+                        "angular_frequency": 2.0,
+                        "samples": [
+                            {
+                                "time": 0.7853981633974483,
+                                "expected_probabilities": [1.0, 0.0],
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"two_level_update_probability_mismatch"})
+
+    def test_delayed_context_partition_rejects_bad_probability(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_delayed_context_partition",
+                        "type": "delayed_context_partition",
+                        "state": [0.7071067811865476, 0.7071067811865476],
+                        "readouts": [
+                            {
+                                "id": "open_path_context",
+                                "context": [[1.0, 0.0], [0.0, 1.0]],
+                                "expected_probabilities": [0.5, 0.5],
+                            },
+                            {
+                                "id": "closed_interference_context",
+                                "context": [
+                                    [0.7071067811865476, 0.7071067811865476],
+                                    [0.7071067811865476, -0.7071067811865476],
+                                ],
+                                "expected_probabilities": [0.5, 0.5],
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"delayed_context_probability_mismatch"})
+
+    def test_ramsey_clock_phase_rejects_bad_probability(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_ramsey_clock_phase",
+                        "type": "ramsey_clock_phase",
+                        "initial_state": [1.0, 0.0],
+                        "first_pulse": [
+                            [0.7071067811865476, 0.7071067811865476],
+                            [0.7071067811865476, -0.7071067811865476],
+                        ],
+                        "second_pulse": [
+                            [0.7071067811865476, 0.7071067811865476],
+                            [0.7071067811865476, -0.7071067811865476],
+                        ],
+                        "samples": [
+                            {
+                                "phase": 1.5707963267948966,
+                                "expected_probabilities": [1.0, 0.0],
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"ramsey_clock_phase_probability_mismatch"})
+
+    def test_ab_holonomy_phase_rejects_bad_phase(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_ab_holonomy_phase",
+                        "type": "ab_holonomy_phase",
+                        "charge": 1.0,
+                        "magnetic_flux": 1.5707963267948966,
+                        "hbar": 1.0,
+                        "expected_phase": 0.0,
+                        "local_force_bound": 0.0,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"ab_holonomy_phase_mismatch"})
+
+    def test_ab_flux_period_rejects_bad_period(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_ab_flux_period",
+                        "type": "ab_flux_period",
+                        "charge": 2.0,
+                        "h": 6.0,
+                        "expected_flux_period": 2.0,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"ab_flux_period_mismatch"})
+
+    def test_action_frequency_threshold_rejects_bad_emission(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_action_frequency_threshold",
+                        "type": "action_frequency_threshold",
+                        "h": 2.0,
+                        "work_function": 5.0,
+                        "samples": [
+                            {
+                                "frequency": 3.0,
+                                "expected_emission": False,
+                                "expected_kinetic_energy": 1.0,
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"action_frequency_emission_mismatch"})
+
+    def test_spectral_anchor_consistency_rejects_bad_frequency(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_spectral_anchor",
+                        "type": "spectral_anchor_consistency",
+                        "h": 2.0,
+                        "transitions": [
+                            {
+                                "id": "line_a",
+                                "delta_energy": 8.0,
+                                "frequency": 3.0,
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"spectral_anchor_frequency_mismatch"})
+
+    def test_barrier_transmission_rejects_bad_transmission(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_barrier_transmission",
+                        "type": "barrier_transmission",
+                        "classically_forbidden": True,
+                        "decay_constant": 0.5,
+                        "width": 2.0,
+                        "expected_transmission": 0.5,
+                        "expected_reflection": 0.5,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"barrier_transmission_mismatch"})
+
+    def test_repeated_context_zeno_rejects_bad_survival(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_repeated_context_zeno",
+                        "type": "repeated_context_zeno",
+                        "total_angle": 1.5707963267948966,
+                        "samples": [
+                            {
+                                "readout_count": 1,
+                                "expected_survival": 1.0,
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"repeated_context_zeno_survival_mismatch"})
+
+    def test_bosonic_indistinguishability_rejects_bad_coincidence(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_bosonic_indistinguishability",
+                        "type": "bosonic_indistinguishability",
+                        "wavepacket_overlap": 1.0,
+                        "expected_coincidence": 0.5,
+                        "expected_bunching": 0.5,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"bosonic_coincidence_mismatch"})
+
+    def test_single_quantum_facticity_rejects_bad_g2(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_single_quantum_facticity",
+                        "type": "single_quantum_facticity",
+                        "trial_count": 100,
+                        "detector_a_count": 50,
+                        "detector_b_count": 50,
+                        "coincidence_count": 0,
+                        "expected_g2_zero": 0.5,
+                        "max_g2_zero": 1.0,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"single_quantum_g2_mismatch"})
+
+    def test_conditional_inheritance_swap_rejects_bad_correlation(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_conditional_inheritance_swap",
+                        "type": "conditional_inheritance_swap",
+                        "bell_outcome": "psi_minus",
+                        "remote_correlations": [
+                            {
+                                "context": "zz",
+                                "expected_correlation": 1.0,
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"conditional_inheritance_swap_correlation_mismatch"})
+
+    def test_context_transfer_no_cloning_rejects_bad_target(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_context_transfer",
+                        "type": "context_transfer_no_cloning",
+                        "input_state": [0.6, 0.8],
+                        "bell_branch": "psi_minus",
+                        "expected_target_state": [0.8, 0.6],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_transfer_target_state_mismatch"})
+
+    def test_no_cloning_context_invariance_rejects_bad_obstruction_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_no_cloning_context_invariance",
+                        "type": "no_cloning_context_invariance",
+                        "state_overlap": 0.5,
+                        "min_obstruction": 0.1,
+                        "expected_obstructed": False,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"no_cloning_obstruction_mismatch"})
+
+    def test_multipartite_contextuality_rejects_bad_obstruction_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_multipartite_contextuality",
+                        "type": "multipartite_contextuality",
+                        "constraints": [
+                            {"context": ["x", "y", "y"], "expected_product": 1},
+                            {"context": ["y", "x", "y"], "expected_product": 1},
+                            {"context": ["y", "y", "x"], "expected_product": 1},
+                            {"context": ["x", "x", "x"], "expected_product": -1},
+                        ],
+                        "expected_obstructed": False,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"multipartite_contextuality_obstruction_mismatch"})
+
+    def test_ks_contextuality_obstruction_rejects_bad_obstruction_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_ks_contextuality",
+                        "type": "ks_contextuality_obstruction",
+                        "contexts": [["a", "b"], ["b", "c"], ["c", "a"]],
+                        "expected_obstructed": False,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"ks_contextuality_obstruction_mismatch"})
+
+    def test_temporal_facticity_rejects_bad_k(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_temporal_facticity",
+                        "type": "temporal_facticity",
+                        "c12": 0.7071067811865476,
+                        "c23": 0.7071067811865476,
+                        "c13": 0.0,
+                        "expected_k": 1.0,
+                        "macrorealist_bound": 1.0,
+                        "expected_violation": True,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"temporal_facticity_k_mismatch"})
+
+    def test_partial_facticity_readout_rejects_bad_pointer_shift(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_partial_facticity",
+                        "type": "partial_facticity_readout",
+                        "coupling": 0.1,
+                        "weak_value": 2.0,
+                        "expected_pointer_shift": 0.1,
+                        "observed_disturbance": 0.01,
+                        "max_disturbance": 0.05,
+                        "distinguishability_gain": 0.2,
+                        "facticity_threshold": 1.0,
+                        "expected_full_facticity": False,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"partial_facticity_pointer_shift_mismatch"})
+
+    def test_unitary_graph_walk_rejects_bad_distribution(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_unitary_graph_walk",
+                        "type": "unitary_graph_walk",
+                        "steps": 3,
+                        "initial_coin": [1.0, 0.0],
+                        "expected_distribution": [
+                            {"position": -3, "probability": 0.125},
+                            {"position": -1, "probability": 0.125},
+                            {"position": 1, "probability": 0.125},
+                            {"position": 3, "probability": 0.625},
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"unitary_graph_walk_distribution_mismatch"})
 
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
@@ -6781,6 +7449,54 @@ class TheoryVerifierTests(unittest.TestCase):
 
 def parse_manifest_text(path: Path) -> Manifest:
     return load_manifest(path)
+
+
+def qm_experiment_primitives() -> dict[str, str]:
+    return {primitive: f"{primitive} description" for primitive in QM_EXPERIMENT_REQUIRED_PRIMITIVES}
+
+
+def qm_experiment(
+    *,
+    identifier: str = "test_qm_experiment",
+    status: str = "idt_language_description",
+    idt_primitives: dict[str, str] | None = None,
+    finite_gates: list[str] | None = None,
+    proposed_gates: list[str] | None = None,
+) -> dict[str, object]:
+    return {
+        "id": identifier,
+        "title": "Test QM experiment",
+        "status": status,
+        "standard_result": "known finite QM result",
+        "idt_primitives": qm_experiment_primitives() if idt_primitives is None else idt_primitives,
+        "stable_invariant": "context-indexed invariant",
+        "finite_gates": [] if finite_gates is None else finite_gates,
+        "proposed_gates": [] if proposed_gates is None else proposed_gates,
+        "claim_boundary": "language coverage only; not full QM derivation",
+    }
+
+
+def qm_universal_pattern_operations() -> dict[str, str]:
+    return {operation: f"{operation} operation" for operation in QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS}
+
+
+def qm_universal_pattern(
+    *,
+    identifier: str = "test_qm_universal_pattern",
+    experiments: list[str] | None = None,
+    finite_gates: list[str] | None = None,
+    operations: dict[str, str] | None = None,
+) -> dict[str, object]:
+    return {
+        "id": identifier,
+        "title": "Test QM universal pattern",
+        "mechanism": "shared finite context mechanism",
+        "experiments": ["test_qm_experiment"] if experiments is None else experiments,
+        "finite_gates": [] if finite_gates is None else finite_gates,
+        "operations": qm_universal_pattern_operations() if operations is None else operations,
+        "compiler_target": "compile this family into a shared QM bench primitive",
+        "claim_boundary": "pattern audit only; not full QM derivation",
+    }
 
 
 def qm_foundation_symbols(statuses: dict[str, str] | None = None) -> dict[str, dict[str, object]]:

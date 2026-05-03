@@ -313,7 +313,7 @@ def build_markdown_report(result: ImportResult) -> str:
             "",
             "## Source",
             "",
-            f"- fixture: `pedalino_2026_sodium_nanoparticle_interferometry`",
+            "- fixture: `pedalino_2026_sodium_nanoparticle_interferometry`",
             f"- dataset DOI: `{DATASET_DOI}`",
             f"- article DOI: `{ARTICLE_DOI}`",
             f"- source record: {ZENODO_RECORD_URL}",
