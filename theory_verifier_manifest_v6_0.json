@@ -2745,11 +2745,12 @@
         "idt_purification_filtering_demo",
         "idt_bounded_correlation_demo",
         "noncomplex_jordan_separator_demo",
+        "generic_gpt_closure_separator_demo",
         "local_tomography_separator_demo",
         "gpt_principle_separator_demo",
         "carrier_selection_frontier_demo"
       ],
-      "open_gap": "Context-product exhaustion, purification/filtering, bounded correlations, and noncomplex-Jordan separation are now executable for finite witnessed routes, but their extension into a universal carrier-selection theorem and generic-GPT exclusion remain unresolved.",
+      "open_gap": "Context-product exhaustion, purification/filtering, bounded correlations, noncomplex-Jordan separation, and generic-GPT closure are now executable for finite witnessed routes, but their extension into a universal carrier-selection theorem remains unresolved.",
       "claim_boundary": "This is the next derivation target; no Hilbert carrier is claimed from current primitives."
     },
     {
@@ -3772,6 +3773,53 @@
       ]
     },
     {
+      "id": "generic_gpt_closure_separator_demo",
+      "type": "generic_gpt_closure_separator",
+      "conditions": [
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "tomographic_state_effect_duality",
+        "reversible_filter_closure",
+        "bounded_composite_correlations"
+      ],
+      "expected_selected_carrier": "none",
+      "candidates": [
+        {
+          "id": "unconstrained_generic_gpt_cone",
+          "expected_status": "rejected",
+          "capabilities": {
+            "finite_route_witness_completeness": "unsupported",
+            "no_unwitnessed_effect_cone_degrees": "unsupported",
+            "tomographic_state_effect_duality": "underdetermined",
+            "reversible_filter_closure": "underdetermined",
+            "bounded_composite_correlations": "unsupported"
+          }
+        },
+        {
+          "id": "route_closed_gpt_subtheory",
+          "expected_status": "underdetermined",
+          "capabilities": {
+            "finite_route_witness_completeness": "supported",
+            "no_unwitnessed_effect_cone_degrees": "supported",
+            "tomographic_state_effect_duality": "underdetermined",
+            "reversible_filter_closure": "underdetermined",
+            "bounded_composite_correlations": "supported"
+          }
+        },
+        {
+          "id": "complex_hilbert_like",
+          "expected_status": "survives",
+          "capabilities": {
+            "finite_route_witness_completeness": "supported",
+            "no_unwitnessed_effect_cone_degrees": "supported",
+            "tomographic_state_effect_duality": "supported",
+            "reversible_filter_closure": "supported",
+            "bounded_composite_correlations": "supported"
+          }
+        }
+      ]
+    },
+    {
       "id": "gpt_principle_separator_demo",
       "type": "gpt_principle_separator",
       "principles": [
@@ -3842,7 +3890,7 @@
         "extend_purification_filtering_to_carrier_theorem",
         "extend_bounded_correlation_to_carrier_theorem",
         "extend_noncomplex_jordan_exclusion_to_classification_theorem",
-        "exclude_generic_gpt_cones"
+        "extend_generic_gpt_exclusion_to_classification_theorem"
       ],
       "expected_selected_carrier": "none",
       "expected_frontier_status": "not_derived",
@@ -3868,7 +3916,7 @@
             "extend_context_product_exhaustion_to_carrier_theorem",
             "extend_purification_filtering_to_carrier_theorem",
             "extend_bounded_correlation_to_carrier_theorem",
-            "exclude_generic_gpt_cones"
+            "extend_generic_gpt_exclusion_to_classification_theorem"
           ]
         }
       ]

@@ -282,6 +282,18 @@ This is still not the full mathematical classification theorem. It is a finite
 IDT exclusion screen for the non-complex Jordan alternatives represented in the
 manifest.
 
+The generic-GPT closure separator is now executable as:
+
+`generic_gpt_closure_separator_demo`.
+
+It rejects an unconstrained generic GPT cone because it does not provide finite
+route-witness completeness, rules out unwitnessed effect-cone degrees, or
+enforce bounded composite correlations. A route-closed GPT subtheory remains
+underdetermined, and complex Hilbert-like structure survives.
+
+This narrows the generic-GPT ambiguity without pretending to classify every
+possible operational subtheory.
+
 The next GPT separator is now executable as:
 
 `gpt_principle_separator_demo`.
@@ -321,7 +333,7 @@ It records the remaining carrier-selection obstructions:
 2. extend purification/filtering to a carrier-selection theorem;
 3. extend bounded correlations to a carrier-selection theorem;
 4. extend non-complex Jordan exclusion to a classification theorem;
-5. exclude generic GPT cones.
+5. extend generic-GPT exclusion to a classification theorem.
 
 The frontier gate checks that those obstructions remain attached to surviving
 or underdetermined alternatives. With complex Hilbert-like structure surviving
@@ -369,6 +381,10 @@ Status:
 Status:
 
 `noncomplex_jordan_separator_executable`
+
+Status:
+
+`generic_gpt_closure_separator_executable`
 
 Status:
 

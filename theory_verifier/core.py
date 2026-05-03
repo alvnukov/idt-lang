@@ -140,12 +140,20 @@ NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS = (
     "bounded_correlation_route",
 )
 
+GENERIC_GPT_CLOSURE_CONDITIONS = (
+    "finite_route_witness_completeness",
+    "no_unwitnessed_effect_cone_degrees",
+    "tomographic_state_effect_duality",
+    "reversible_filter_closure",
+    "bounded_composite_correlations",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
     "extend_bounded_correlation_to_carrier_theorem",
     "extend_noncomplex_jordan_exclusion_to_classification_theorem",
-    "exclude_generic_gpt_cones",
+    "extend_generic_gpt_exclusion_to_classification_theorem",
 )
 
 CARRIER_SELECTION_FRONTIER_STATUSES = {
@@ -5258,6 +5266,63 @@ def check_noncomplex_jordan_separator_gate(gate: FiniteGate) -> list[Issue]:
         return [
             Issue(
                 "noncomplex_jordan_separator_selection_mismatch",
+                f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
+            )
+        ]
+    return []
+
+
+def check_generic_gpt_closure_separator_gate(gate: FiniteGate) -> list[Issue]:
+    conditions = require_string_tuple(gate.payload.get("conditions", []), f"{gate.identifier}.conditions")
+    if set(conditions) != set(GENERIC_GPT_CLOSURE_CONDITIONS):
+        return [
+            Issue(
+                "generic_gpt_closure_conditions_mismatch",
+                f"{gate.identifier}: conditions must match the generic-GPT closure set",
+            )
+        ]
+
+    candidates = require_list(gate.payload.get("candidates"), f"{gate.identifier}.candidates")
+    if len(candidates) < 2:
+        raise ManifestError("generic-GPT closure separator requires at least two candidates")
+
+    computed_statuses: dict[str, str] = {}
+    for index, item in enumerate(candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.candidates[{index}].id")
+        capabilities = parse_gpt_separator_capabilities(
+            candidate.get("capabilities"),
+            f"{gate.identifier}.candidates[{index}].capabilities",
+        )
+        expected_status = require_string(candidate.get("expected_status"), f"{gate.identifier}.candidates[{index}].expected_status")
+        if expected_status not in DISTINGUISHABILITY_GEOMETRY_STATUSES:
+            raise ManifestError(f"{gate.identifier}.candidates[{index}].expected_status is unknown")
+        missing = sorted(set(conditions) - set(capabilities))
+        if missing:
+            return [
+                Issue(
+                    "generic_gpt_closure_capabilities_incomplete",
+                    f"{gate.identifier}: candidate {candidate_id} missing capabilities: {', '.join(missing)}",
+                )
+            ]
+        computed_status = classify_gpt_principle_candidate(capabilities, conditions)
+        computed_statuses[candidate_id] = computed_status
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "generic_gpt_closure_status_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
+
+    expected_selected = require_string(gate.payload.get("expected_selected_carrier"), f"{gate.identifier}.expected_selected_carrier")
+    surviving = [candidate_id for candidate_id, status in computed_statuses.items() if status == "survives"]
+    underdetermined = [candidate_id for candidate_id, status in computed_statuses.items() if status == "underdetermined"]
+    computed_selected = surviving[0] if len(surviving) == 1 and not underdetermined else "none"
+    if computed_selected != expected_selected:
+        return [
+            Issue(
+                "generic_gpt_closure_selection_mismatch",
                 f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
             )
         ]
@@ -12317,6 +12382,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,
+    "generic_gpt_closure_separator": check_generic_gpt_closure_separator_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

@@ -84,6 +84,7 @@ from theory_verifier.core import (
     CARRIER_SELECTION_OPEN_OBSTRUCTIONS,
     CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES,
     DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS,
+    GENERIC_GPT_CLOSURE_CONDITIONS,
     GPT_SEPARATOR_PRINCIPLES,
     IDT_BOUNDED_CORRELATION_CONDITIONS,
     IDT_PURIFICATION_FILTERING_CONDITIONS,
@@ -3041,6 +3042,50 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"noncomplex_jordan_separator_status_mismatch"})
 
+    def test_generic_gpt_closure_separator_rejects_bad_candidate_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_generic_gpt_closure",
+                        "type": "generic_gpt_closure_separator",
+                        "conditions": list(GENERIC_GPT_CLOSURE_CONDITIONS),
+                        "expected_selected_carrier": "none",
+                        "candidates": [
+                            {
+                                "id": "unconstrained_generic_gpt_cone",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "finite_route_witness_completeness": "unsupported",
+                                    "no_unwitnessed_effect_cone_degrees": "unsupported",
+                                    "tomographic_state_effect_duality": "underdetermined",
+                                    "reversible_filter_closure": "underdetermined",
+                                    "bounded_composite_correlations": "unsupported",
+                                },
+                            },
+                            {
+                                "id": "complex_hilbert_like",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "finite_route_witness_completeness": "supported",
+                                    "no_unwitnessed_effect_cone_degrees": "supported",
+                                    "tomographic_state_effect_duality": "supported",
+                                    "reversible_filter_closure": "supported",
+                                    "bounded_composite_correlations": "supported",
+                                },
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"generic_gpt_closure_status_mismatch"})
+
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(
             {
@@ -3123,7 +3168,7 @@ class TheoryVerifierTests(unittest.TestCase):
                                     "extend_context_product_exhaustion_to_carrier_theorem",
                                     "extend_purification_filtering_to_carrier_theorem",
                                     "extend_bounded_correlation_to_carrier_theorem",
-                                    "exclude_generic_gpt_cones",
+                                    "extend_generic_gpt_exclusion_to_classification_theorem",
                                 ],
                             },
                         ],

@@ -607,14 +607,18 @@ quaternionic-like, and exceptional-Jordan-like carrier candidates against the
 IDT route requirements for complex phase orientation, local tomography,
 associative tensor composition, purification/filtering, and bounded
 correlations. Generic GPT structure remains underdetermined.
+The `generic_gpt_closure_separator_demo` now rejects an unconstrained generic
+GPT cone that lacks finite route-witness completeness, excludes no unwitnessed
+effect-cone degrees, and fails bounded composite correlations. Route-closed GPT
+subtheories remain underdetermined rather than silently collapsed to Hilbert
+space.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles
 are derived from IDT rather than assumed.
 The `carrier_selection_frontier_demo` makes that boundary executable: complex
 Hilbert-like structure survives the current screens, but no carrier is selected
-while the universal carrier theorem and generic-GPT exclusion remain open
-obstructions.
+while the universal carrier/classification theorem remains open.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping
