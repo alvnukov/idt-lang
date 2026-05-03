@@ -4168,6 +4168,7 @@
           "id": "extend_purification_filtering_to_carrier_theorem",
           "status": "finite_witnessed",
           "evidence_refs": [
+            "purification_filtering_carrier_lemma_route_demo",
             "idt_purification_filtering_demo"
           ],
           "open_gap": "Finite purification/filtering route exists, but it is not yet a universal carrier-selection theorem."
@@ -4232,6 +4233,31 @@
         "extend finite context tables to arbitrary operational composites",
         "prove no hidden joint invariant for all admissible effect cones",
         "show local-tomographic exhaustion is forced by IDT primitives rather than assumed as a condition"
+      ],
+      "expected_lemma_status": "finite_witnessed"
+    },
+    {
+      "id": "purification_filtering_carrier_lemma_route_demo",
+      "type": "purification_filtering_carrier_lemma_route",
+      "target_lemma": "extend_purification_filtering_to_carrier_theorem",
+      "required_conditions": [
+        "recoverable_extension_context",
+        "marginal_readout_consistency",
+        "facticized_filter_context",
+        "posterior_support_renormalization"
+      ],
+      "finite_evidence_refs": [
+        "idt_purification_filtering_demo"
+      ],
+      "excluded_counterexamples": [
+        "insufficient_environment_extension",
+        "zero_support_filter"
+      ],
+      "expected_exclusion_count": 2,
+      "open_generalization_gaps": [
+        "extend finite purification/filtering samples to arbitrary admissible carriers",
+        "prove recoverable extensions are forced by IDT readout/facticity primitives",
+        "show posterior support renormalization excludes non-IDT effect-cone filters universally"
       ],
       "expected_lemma_status": "finite_witnessed"
     },

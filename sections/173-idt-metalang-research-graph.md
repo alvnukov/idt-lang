@@ -109,6 +109,14 @@ This is the first narrower proof-unit below a theorem proof route. It records
 the finite witnesses, excluded counterexamples, expected exclusion count, and
 remaining generalization gaps for one carrier-selection lemma.
 
+The second lemma route is now manifest-backed:
+
+`purification_filtering_carrier_lemma_route_demo`
+
+It records purification/filtering conditions, finite exclusions, expected
+exclusion count, and remaining generalization gaps for the second
+carrier-selection lemma.
+
 Status:
 
 `lemma_route_language_initialized`

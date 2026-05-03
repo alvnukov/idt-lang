@@ -3563,6 +3563,34 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"context_product_carrier_lemma_status_mismatch"})
 
+    def test_purification_filtering_carrier_lemma_rejects_premature_formal_proof(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_purification_filtering_carrier_lemma",
+                        "type": "purification_filtering_carrier_lemma_route",
+                        "target_lemma": "extend_purification_filtering_to_carrier_theorem",
+                        "required_conditions": list(IDT_PURIFICATION_FILTERING_CONDITIONS),
+                        "finite_evidence_refs": ["idt_purification_filtering_demo"],
+                        "excluded_counterexamples": [
+                            "insufficient_environment_extension",
+                            "zero_support_filter",
+                        ],
+                        "expected_exclusion_count": 2,
+                        "open_generalization_gaps": ["still finite"],
+                        "expected_lemma_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"purification_filtering_carrier_lemma_status_mismatch"})
+
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
             {

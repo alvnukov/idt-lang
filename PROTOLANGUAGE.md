@@ -667,6 +667,10 @@ The `context_product_carrier_lemma_route_demo` now starts the first lemma
 route below that theorem route: context-product and local-tomography witnesses
 exclude finite hidden-joint counterexamples while leaving universal
 generalization gaps open.
+The `purification_filtering_carrier_lemma_route_demo` now starts the second
+lemma route below that theorem route: purification/filtering witnesses exclude
+finite insufficient-extension and zero-support-filter counterexamples while
+leaving universal carrier generalization gaps open.
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.

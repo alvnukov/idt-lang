@@ -453,6 +453,22 @@ It still remains `finite_witnessed`, not `formal_proof`, because the finite
 context tables must be extended to arbitrary operational composites and all
 admissible effect cones.
 
+The second lemma route is now executable as:
+
+`purification_filtering_carrier_lemma_route_demo`.
+
+It connects `idt_purification_filtering_demo` to the carrier-selection proof
+route. The route records two finite exclusions:
+
+1. insufficient environment extension;
+2. zero-support filter.
+
+It still remains `finite_witnessed`, not `formal_proof`, because the finite
+purification/filtering samples must be extended to arbitrary admissible
+carriers, recoverable extensions must be forced by IDT primitives, and
+posterior-support renormalization must exclude non-IDT effect-cone filters
+universally.
+
 Status:
 
 `carrier_selection_proof_route_initialized`
@@ -460,6 +476,10 @@ Status:
 Status:
 
 `context_product_carrier_lemma_route_initialized`
+
+Status:
+
+`purification_filtering_carrier_lemma_route_initialized`
 
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that
