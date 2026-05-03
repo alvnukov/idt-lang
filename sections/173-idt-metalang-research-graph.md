@@ -83,7 +83,45 @@ Status:
 
 `full_qm_frontier_theorem_cards_grounded`
 
-### 173.2. Required IDT-Core Kernel
+### 173.2. Query And Edit Layer
+
+The first file-based graph query tool is:
+
+`scripts/graph_query.py`
+
+It is intentionally not a database. The JSON manifest remains the source of
+truth, but common graph operations no longer require manual `zq` probing:
+
+```bash
+python3 scripts/graph_query.py summary
+python3 scripts/graph_query.py show universal_carrier_selection_theorem
+python3 scripts/graph_query.py refs hbar_I
+```
+
+The tool also supports cautious single-field edits:
+
+```bash
+python3 scripts/graph_query.py set-field \
+  --collection theorem_cards \
+  --id universal_carrier_selection_theorem \
+  --field proof_status \
+  --value open \
+  --expect-sha <sha-from-summary>
+```
+
+Edits are deliberately narrow:
+
+1. only allowlisted string fields can be changed;
+2. the caller must provide the current manifest SHA;
+3. writes hold an exclusive lock;
+4. writes use atomic replace;
+5. the tool changes only the target line, not the whole JSON file.
+
+Status:
+
+`file_based_graph_query_layer_added`
+
+### 173.3. Required IDT-Core Kernel
 
 The compact kernel should be:
 
@@ -103,7 +141,7 @@ or `alpha_em_I = derived`.
 
 It gives future physics work a stricter compiler.
 
-### 173.3. Prediction Object Target
+### 173.4. Prediction Object Target
 
 A future first-class prediction object should minimally contain:
 
@@ -127,7 +165,7 @@ The key rule is:
 `prediction` is not a successful prediction until the frozen parameters,
 tolerance, fail condition, and holdout dataset were declared before evaluation.
 
-### 173.4. Failure Ledger Target
+### 173.5. Failure Ledger Target
 
 A future first-class failure record should minimally contain:
 
@@ -145,7 +183,7 @@ failure:
 The retained value is important. A failed bridge can still narrow the theory if
 the failure was predeclared and not repaired after seeing the result.
 
-### 173.5. Theorem Card Target
+### 173.6. Theorem Card Target
 
 A future first-class theorem card should minimally contain:
 
@@ -167,7 +205,7 @@ This makes the next stage explicit:
 
 `IDT-MetaLang before IDT-Physics escalation`.
 
-### 173.6. Current Decision
+### 173.7. Current Decision
 
 We should strengthen the research language now.
 

@@ -76,6 +76,8 @@ of nature.
   successes.
 - `PROTOLANGUAGE.md` — canonical entry point and public positioning.
 - `sections/` — modular theory body.
+- `scripts/graph_query.py` — file-based research graph query and cautious edit
+  helper for the verifier manifest.
 - `theory_verifier/` — executable manifest verifier.
 - `theory_verifier_manifest_v6_0.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.

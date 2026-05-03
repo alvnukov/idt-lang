@@ -660,6 +660,9 @@ and theorem cards remain partial rather than complete. Its evidence references
 are grounded against existing manifest objects, schema surfaces, verifier
 checks, or Markdown sections. The first theorem-card pass now covers the
 full-QM closure frontier blockers as first-class manifest objects.
+The `scripts/graph_query.py` helper now provides summary, show, refs, and
+SHA-guarded single-field edits for the file-based research graph without
+introducing a database as the source of truth.
 
 ---
 
