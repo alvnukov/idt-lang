@@ -79,6 +79,12 @@ The first first-class theorem-card pass covers the full-QM closure frontier:
 These cards do not close QM. They make each remaining blocker explicit,
 typed, grounded, and separately inspectable.
 
+The full-QM frontier also reads these cards as the status authority:
+`formal_proof` is required before a theorem card can support a frontier
+component. Finite verifier passes, numerical evidence, or calibrated matches
+remain useful evidence, but they do not by themselves close a full-QM theorem
+blocker.
+
 Status:
 
 `full_qm_frontier_theorem_cards_grounded`

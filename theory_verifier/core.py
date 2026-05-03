@@ -2384,6 +2384,7 @@ def check_theorem_cards(manifest: Manifest) -> list[Issue]:
 
     full_qm_frontiers = [gate for gate in manifest.finite_gates if gate.gate_type == "full_qm_closure_frontier"]
     if full_qm_frontiers:
+        cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
         missing_cards = sorted(set(FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS) - theorem_ids)
         if missing_cards:
             issues.append(
@@ -2392,7 +2393,41 @@ def check_theorem_cards(manifest: Manifest) -> list[Issue]:
                     f"full-QM frontier requirements without theorem cards: {', '.join(missing_cards)}",
                 )
             )
+        for gate in full_qm_frontiers:
+            components = require_list(gate.payload.get("components"), f"{gate.identifier}.components")
+            for index, item in enumerate(components):
+                component = require_mapping(item, f"{gate.identifier}.components[{index}]")
+                requirement = require_string(
+                    component.get("requirement"),
+                    f"{gate.identifier}.components[{index}].requirement",
+                )
+                declared_status = require_string(
+                    component.get("status"),
+                    f"{gate.identifier}.components[{index}].status",
+                )
+                frontier_card = cards_by_id.get(requirement)
+                if frontier_card is None:
+                    continue
+                card_status = full_qm_frontier_status_from_proof(frontier_card.proof_status)
+                if declared_status != card_status:
+                    issues.append(
+                        Issue(
+                            "full_qm_frontier_theorem_card_status_mismatch",
+                            (
+                                f"{gate.identifier}: component {requirement} declares {declared_status}, "
+                                f"but theorem card proof_status {frontier_card.proof_status!r} maps to {card_status}"
+                            ),
+                        )
+                    )
     return issues
+
+
+def full_qm_frontier_status_from_proof(proof_status: str) -> str:
+    if proof_status == "blocked":
+        return "blocked"
+    if proof_status == "formal_proof":
+        return "supported"
+    return "open"
 
 
 def check_clock_vacuum_pole_closure(manifest: Manifest) -> list[Issue]:

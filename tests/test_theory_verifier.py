@@ -3362,6 +3362,52 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"theorem_card_dependency_missing"})
 
+    def test_full_qm_frontier_status_must_match_theorem_card(self) -> None:
+        cards = [
+            {
+                "id": requirement,
+                "statement": f"{requirement} statement.",
+                "role": "theorem",
+                "assumptions": [],
+                "dependencies": [],
+                "proof_status": "open",
+                "verifier": "",
+                "known_failures": [],
+                "physical_scope": "test",
+                "forbidden_claims": [],
+            }
+            for requirement in FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS
+        ]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": cards,
+                "finite_gates": [
+                    {
+                        "id": "full_qm_frontier_mismatched_card",
+                        "type": "full_qm_closure_frontier",
+                        "requirements": list(FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS),
+                        "components": [
+                            {
+                                "requirement": FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS[0],
+                                "status": "blocked",
+                            },
+                            *[
+                                {"requirement": requirement, "status": "open"}
+                                for requirement in FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS[1:]
+                            ],
+                        ],
+                        "expected_full_qm_status": "blocked",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"full_qm_frontier_theorem_card_status_mismatch"})
+
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(
             {

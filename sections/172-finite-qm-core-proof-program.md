@@ -164,6 +164,13 @@ cards in the manifest. The verifier requires each frontier requirement to have
 a grounded card before the frontier can be treated as an auditable research
 graph.
 
+The frontier component status is now locked to the corresponding theorem-card
+proof status:
+
+1. `blocked` proof status keeps the frontier component `blocked`;
+2. `formal_proof` is required before a component can become `supported`;
+3. every other proof status keeps the component `open`.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -481,6 +488,10 @@ Status:
 Status:
 
 `full_qm_frontier_theorem_cards_grounded`
+
+Status:
+
+`full_qm_frontier_status_card_locked`
 
 Status:
 
