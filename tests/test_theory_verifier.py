@@ -3530,6 +3530,49 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"carrier_selection_proof_route_status_mismatch"})
 
+    def test_carrier_selection_theorem_card_follows_proof_route_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "carrier_selection_proof_route_demo",
+                        "type": "carrier_selection_proof_route",
+                        "target_theorem": "universal_carrier_selection_theorem",
+                        "lemmas": [
+                            {
+                                "id": lemma,
+                                "status": "finite_witnessed",
+                                "evidence_refs": ["finite_witness"],
+                                "open_gap": "not yet formal",
+                            }
+                            for lemma in CARRIER_SELECTION_OPEN_OBSTRUCTIONS
+                        ],
+                        "expected_proof_status": "open",
+                    }
+                ],
+                "theorem_cards": [
+                    {
+                        "id": "universal_carrier_selection_theorem",
+                        "statement": "carrier selected",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": ["carrier_selection_proof_route_demo"],
+                        "proof_status": "formal_proof",
+                        "verifier": "carrier_selection_proof_route_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"carrier_selection_theorem_card_status_mismatch"})
+
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(
             {

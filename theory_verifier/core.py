@@ -225,6 +225,14 @@ BOUNDED_CORRELATION_CARRIER_LEMMA_TARGET = "extend_bounded_correlation_to_carrie
 NONCOMPLEX_JORDAN_CLASSIFICATION_LEMMA_TARGET = "extend_noncomplex_jordan_exclusion_to_classification_theorem"
 GENERIC_GPT_CLASSIFICATION_LEMMA_TARGET = "extend_generic_gpt_exclusion_to_classification_theorem"
 
+CARRIER_SELECTION_LEMMA_ROUTE_REFS = {
+    CONTEXT_PRODUCT_CARRIER_LEMMA_TARGET: "context_product_carrier_lemma_route_demo",
+    PURIFICATION_FILTERING_CARRIER_LEMMA_TARGET: "purification_filtering_carrier_lemma_route_demo",
+    BOUNDED_CORRELATION_CARRIER_LEMMA_TARGET: "bounded_correlation_carrier_lemma_route_demo",
+    NONCOMPLEX_JORDAN_CLASSIFICATION_LEMMA_TARGET: "noncomplex_jordan_classification_lemma_route_demo",
+    GENERIC_GPT_CLASSIFICATION_LEMMA_TARGET: "generic_gpt_classification_lemma_route_demo",
+}
+
 CARRIER_SELECTION_FRONTIER_STATUSES = {
     "not_derived",
     "selected_by_current_gates",
@@ -1629,6 +1637,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_theorem_cards(manifest))
     checks.append("theorem cards")
 
+    issues.extend(check_carrier_selection_theorem_grounding(manifest))
+    checks.append("carrier-selection theorem grounding")
+
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
 
@@ -2441,6 +2452,76 @@ def full_qm_frontier_status_from_proof(proof_status: str) -> str:
     if proof_status == "formal_proof":
         return "supported"
     return "open"
+
+
+def check_carrier_selection_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    gates_by_id = {gate.identifier: gate for gate in manifest.finite_gates}
+    theorem_card = cards_by_id.get("universal_carrier_selection_theorem")
+    proof_route = gates_by_id.get("carrier_selection_proof_route_demo")
+    if theorem_card is None or proof_route is None:
+        return issues
+    if proof_route.gate_type != "carrier_selection_proof_route":
+        issues.append(
+            Issue(
+                "carrier_selection_theorem_route_type_mismatch",
+                "carrier_selection_proof_route_demo must be a carrier_selection_proof_route gate",
+            )
+        )
+        return issues
+
+    try:
+        lemmas = require_list(proof_route.payload.get("lemmas"), f"{proof_route.identifier}.lemmas")
+        expected_proof_status = require_string(
+            proof_route.payload.get("expected_proof_status"),
+            f"{proof_route.identifier}.expected_proof_status",
+        )
+    except ManifestError as error:
+        issues.append(Issue("carrier_selection_theorem_grounding_invalid", f"{proof_route.identifier}: {error}"))
+        return issues
+
+    if theorem_card.proof_status != expected_proof_status:
+        issues.append(
+            Issue(
+                "carrier_selection_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    f"does not match route status {expected_proof_status!r}"
+                ),
+            )
+        )
+
+    for index, item in enumerate(lemmas):
+        try:
+            lemma = require_mapping(item, f"{proof_route.identifier}.lemmas[{index}]")
+            lemma_id = require_string(lemma.get("id"), f"{proof_route.identifier}.lemmas[{index}].id")
+            evidence_refs = require_string_tuple(
+                lemma.get("evidence_refs", []),
+                f"{proof_route.identifier}.lemmas[{index}].evidence_refs",
+            )
+        except ManifestError as error:
+            issues.append(Issue("carrier_selection_theorem_grounding_invalid", f"{proof_route.identifier}: {error}"))
+            continue
+
+        expected_route_ref = CARRIER_SELECTION_LEMMA_ROUTE_REFS.get(lemma_id)
+        if expected_route_ref is not None and expected_route_ref not in evidence_refs:
+            issues.append(
+                Issue(
+                    "carrier_selection_theorem_lemma_route_missing",
+                    f"{proof_route.identifier}: lemma {lemma_id} must cite {expected_route_ref}",
+                )
+            )
+        missing_refs = [evidence_ref for evidence_ref in evidence_refs if evidence_ref not in known_refs]
+        if missing_refs:
+            issues.append(
+                Issue(
+                    "carrier_selection_theorem_evidence_unresolved",
+                    f"{proof_route.identifier}: lemma {lemma_id} has unresolved evidence refs: {', '.join(missing_refs)}",
+                )
+            )
+    return issues
 
 
 def check_clock_vacuum_pole_closure(manifest: Manifest) -> list[Issue]:

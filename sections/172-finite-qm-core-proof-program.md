@@ -544,6 +544,15 @@ Status:
 
 `generic_gpt_classification_lemma_route_initialized`
 
+The carrier-selection theorem card is now directly locked to
+`carrier_selection_proof_route_demo`. The verifier rejects a theorem card that
+claims `formal_proof` while the route remains `open`, and it requires each
+theorem-route lemma to cite its executable lemma route.
+
+Status:
+
+`carrier_selection_theorem_grounding_locked`
+
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that
 selects complex Hilbert space from the language alone.

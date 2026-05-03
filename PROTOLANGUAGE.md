@@ -683,6 +683,9 @@ The `generic_gpt_classification_lemma_route_demo` now starts the fifth lemma
 route below that theorem route: generic GPT witnesses exclude the unconstrained
 generic cone while explicitly retaining route-closed and generic GPT
 underdetermination.
+The verifier now locks `universal_carrier_selection_theorem` directly to
+`carrier_selection_proof_route_demo`, so a theorem card cannot claim
+`formal_proof` while the route remains `open`.
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.

@@ -141,6 +141,11 @@ It records generic GPT closure conditions, finite exclusions, remaining
 underdetermined candidates, expected counts, and remaining classification gaps
 for the fifth carrier-selection lemma.
 
+The verifier now also checks carrier-selection theorem grounding directly:
+`universal_carrier_selection_theorem` must match
+`carrier_selection_proof_route_demo`, and every theorem-route lemma must cite
+its executable lemma route.
+
 Status:
 
 `lemma_route_language_initialized`
