@@ -602,14 +602,19 @@ The `idt_bounded_correlation_demo` now makes the bounded-correlation route
 executable: classical and Tsirelson-edge CHSH samples survive the finite bound,
 while a PR-box-like \(|S|=4\) sample is rejected. The remaining open item is
 again the extension from finite route to universal carrier selection.
+The `noncomplex_jordan_separator_demo` now rejects finite real,
+quaternionic-like, and exceptional-Jordan-like carrier candidates against the
+IDT route requirements for complex phase orientation, local tomography,
+associative tensor composition, purification/filtering, and bounded
+correlations. Generic GPT structure remains underdetermined.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles
 are derived from IDT rather than assumed.
 The `carrier_selection_frontier_demo` makes that boundary executable: complex
 Hilbert-like structure survives the current screens, but no carrier is selected
-while the universal carrier theorem, non-complex Jordan exclusion, and
-generic-GPT exclusion remain open obstructions.
+while the universal carrier theorem and generic-GPT exclusion remain open
+obstructions.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

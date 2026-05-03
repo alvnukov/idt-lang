@@ -88,6 +88,7 @@ from theory_verifier.core import (
     IDT_BOUNDED_CORRELATION_CONDITIONS,
     IDT_PURIFICATION_FILTERING_CONDITIONS,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
+    NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
     QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS,
@@ -2996,6 +2997,50 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_bounded_correlation_status_mismatch"})
 
+    def test_noncomplex_jordan_separator_rejects_bad_candidate_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_noncomplex_jordan_separator",
+                        "type": "noncomplex_jordan_separator",
+                        "conditions": list(NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS),
+                        "expected_selected_carrier": "none",
+                        "candidates": [
+                            {
+                                "id": "real_hilbert_like",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "complex_phase_orientation": "unsupported",
+                                    "local_tomographic_composition": "unsupported",
+                                    "associative_tensor_composition": "supported",
+                                    "purification_filtering_route": "underdetermined",
+                                    "bounded_correlation_route": "supported",
+                                },
+                            },
+                            {
+                                "id": "complex_hilbert_like",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "complex_phase_orientation": "supported",
+                                    "local_tomographic_composition": "supported",
+                                    "associative_tensor_composition": "supported",
+                                    "purification_filtering_route": "supported",
+                                    "bounded_correlation_route": "supported",
+                                },
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"noncomplex_jordan_separator_status_mismatch"})
+
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(
             {
@@ -3068,7 +3113,7 @@ class TheoryVerifierTests(unittest.TestCase):
                                 "blocking_obstructions": [
                                     "extend_context_product_exhaustion_to_carrier_theorem",
                                     "extend_purification_filtering_to_carrier_theorem",
-                                    "exclude_noncomplex_jordan_carriers",
+                                    "extend_noncomplex_jordan_exclusion_to_classification_theorem",
                                 ],
                             },
                             {

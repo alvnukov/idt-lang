@@ -262,6 +262,26 @@ This promotes bounded nonclassical correlations from a named separator
 principle to a finite IDT route. It still does not prove that the same bound
 selects the complete carrier class.
 
+The non-complex Jordan separator is now executable as:
+
+`noncomplex_jordan_separator_demo`.
+
+It checks finite carrier candidates against five IDT route requirements:
+
+1. complex phase orientation;
+2. local-tomographic composition;
+3. associative tensor composition;
+4. purification/filtering route;
+5. bounded-correlation route.
+
+Real, quaternionic-like, and exceptional-Jordan-like finite candidates are
+rejected by this separator. Complex Hilbert-like structure survives. A generic
+GPT cone remains underdetermined.
+
+This is still not the full mathematical classification theorem. It is a finite
+IDT exclusion screen for the non-complex Jordan alternatives represented in the
+manifest.
+
 The next GPT separator is now executable as:
 
 `gpt_principle_separator_demo`.
@@ -300,7 +320,7 @@ It records the remaining carrier-selection obstructions:
 1. extend context-product exhaustion to a carrier-selection theorem;
 2. extend purification/filtering to a carrier-selection theorem;
 3. extend bounded correlations to a carrier-selection theorem;
-4. exclude non-complex Jordan carriers;
+4. extend non-complex Jordan exclusion to a classification theorem;
 5. exclude generic GPT cones.
 
 The frontier gate checks that those obstructions remain attached to surviving
@@ -345,6 +365,10 @@ Status:
 Status:
 
 `idt_bounded_correlation_executable`
+
+Status:
+
+`noncomplex_jordan_separator_executable`
 
 Status:
 

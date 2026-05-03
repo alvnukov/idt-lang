@@ -2744,11 +2744,12 @@
         "idt_local_tomography_derivation_demo",
         "idt_purification_filtering_demo",
         "idt_bounded_correlation_demo",
+        "noncomplex_jordan_separator_demo",
         "local_tomography_separator_demo",
         "gpt_principle_separator_demo",
         "carrier_selection_frontier_demo"
       ],
-      "open_gap": "Context-product exhaustion, purification/filtering, and bounded correlations are now executable for finite witnessed routes, but their extension into a universal carrier-selection theorem and carrier exclusions remain unresolved.",
+      "open_gap": "Context-product exhaustion, purification/filtering, bounded correlations, and noncomplex-Jordan separation are now executable for finite witnessed routes, but their extension into a universal carrier-selection theorem and generic-GPT exclusion remain unresolved.",
       "claim_boundary": "This is the next derivation target; no Hilbert carrier is claimed from current primitives."
     },
     {
@@ -3702,6 +3703,75 @@
       ]
     },
     {
+      "id": "noncomplex_jordan_separator_demo",
+      "type": "noncomplex_jordan_separator",
+      "conditions": [
+        "complex_phase_orientation",
+        "local_tomographic_composition",
+        "associative_tensor_composition",
+        "purification_filtering_route",
+        "bounded_correlation_route"
+      ],
+      "expected_selected_carrier": "none",
+      "candidates": [
+        {
+          "id": "real_hilbert_like",
+          "expected_status": "rejected",
+          "capabilities": {
+            "complex_phase_orientation": "unsupported",
+            "local_tomographic_composition": "unsupported",
+            "associative_tensor_composition": "supported",
+            "purification_filtering_route": "underdetermined",
+            "bounded_correlation_route": "supported"
+          }
+        },
+        {
+          "id": "quaternionic_hilbert_like",
+          "expected_status": "rejected",
+          "capabilities": {
+            "complex_phase_orientation": "unsupported",
+            "local_tomographic_composition": "unsupported",
+            "associative_tensor_composition": "underdetermined",
+            "purification_filtering_route": "underdetermined",
+            "bounded_correlation_route": "supported"
+          }
+        },
+        {
+          "id": "exceptional_jordan_like",
+          "expected_status": "rejected",
+          "capabilities": {
+            "complex_phase_orientation": "unsupported",
+            "local_tomographic_composition": "unsupported",
+            "associative_tensor_composition": "unsupported",
+            "purification_filtering_route": "underdetermined",
+            "bounded_correlation_route": "underdetermined"
+          }
+        },
+        {
+          "id": "complex_hilbert_like",
+          "expected_status": "survives",
+          "capabilities": {
+            "complex_phase_orientation": "supported",
+            "local_tomographic_composition": "supported",
+            "associative_tensor_composition": "supported",
+            "purification_filtering_route": "supported",
+            "bounded_correlation_route": "supported"
+          }
+        },
+        {
+          "id": "generic_gpt_cone",
+          "expected_status": "underdetermined",
+          "capabilities": {
+            "complex_phase_orientation": "underdetermined",
+            "local_tomographic_composition": "underdetermined",
+            "associative_tensor_composition": "underdetermined",
+            "purification_filtering_route": "underdetermined",
+            "bounded_correlation_route": "underdetermined"
+          }
+        }
+      ]
+    },
+    {
       "id": "gpt_principle_separator_demo",
       "type": "gpt_principle_separator",
       "principles": [
@@ -3771,7 +3841,7 @@
         "extend_context_product_exhaustion_to_carrier_theorem",
         "extend_purification_filtering_to_carrier_theorem",
         "extend_bounded_correlation_to_carrier_theorem",
-        "exclude_noncomplex_jordan_carriers",
+        "extend_noncomplex_jordan_exclusion_to_classification_theorem",
         "exclude_generic_gpt_cones"
       ],
       "expected_selected_carrier": "none",
@@ -3788,7 +3858,7 @@
           "blocking_obstructions": [
             "extend_context_product_exhaustion_to_carrier_theorem",
             "extend_purification_filtering_to_carrier_theorem",
-            "exclude_noncomplex_jordan_carriers"
+            "extend_noncomplex_jordan_exclusion_to_classification_theorem"
           ]
         },
         {
