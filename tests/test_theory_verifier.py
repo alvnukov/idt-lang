@@ -22,6 +22,7 @@ from theory_verifier.core import (
     ELL0_CLOSURE_TARGET,
     ELL0_PHYSICAL_CANDIDATE_REQUIRED_SYMBOLS,
     ELL0_PHYSICAL_CANDIDATE_TARGET,
+    FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS,
     HBAR_ACTION_STANDARD_REQUIRED_GATES,
     HBAR_ACTION_STANDARD_REQUIRED_SYMBOLS,
     HBAR_ACTION_STANDARD_TARGET,
@@ -3279,6 +3280,36 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"continuum_action_frontier_status_mismatch"})
+
+    def test_full_qm_closure_frontier_rejects_premature_closure(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_full_qm_closure_frontier",
+                        "type": "full_qm_closure_frontier",
+                        "requirements": list(FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS),
+                        "components": [
+                            {"requirement": "universal_carrier_selection_theorem", "status": "open"},
+                            {"requirement": "hilbert_carrier_derivation", "status": "blocked"},
+                            {"requirement": "universal_born_rule_theorem", "status": "open"},
+                            {"requirement": "wigner_reversible_inheritance_theorem", "status": "open"},
+                            {"requirement": "apparatus_facticity_theorem", "status": "open"},
+                            {"requirement": "monoidal_tensor_composition_theorem", "status": "open"},
+                            {"requirement": "first_principles_hbar_lock", "status": "blocked"},
+                            {"requirement": "field_mode_continuum_limit", "status": "open"},
+                        ],
+                        "expected_full_qm_status": "derived",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"full_qm_closure_frontier_status_mismatch"})
 
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(

@@ -148,6 +148,17 @@ calibrated action holdout are supported. It keeps the full extension blocked
 because first-principles `hbar_I` remains blocked and field-mode limits remain
 open.
 
+The full-QM closure frontier is now executable as:
+
+`full_qm_closure_frontier_demo`.
+
+It records the theorem-level blockers that still prevent closure: universal
+carrier selection, Hilbert carrier derivation, universal Born derivation,
+reversible-symmetry inheritance, apparatus/facticity, monoidal tensor
+composition, first-principles `hbar_I`, and field-mode continuum limits. The
+gate rejects any premature `derived` status while any listed obligation remains
+blocked or open.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -457,6 +468,10 @@ Status:
 Status:
 
 `continuum_action_frontier_executable`
+
+Status:
+
+`full_qm_closure_frontier_executable`
 
 Status:
 

@@ -630,6 +630,10 @@ The `continuum_action_frontier_demo` now makes the last full-QM blocker
 executable: finite generator/translation/Weyl/continuity checks and calibrated
 action holdout are supported, while first-principles `hbar_I` and field-mode
 limits still block full closure.
+The `full_qm_closure_frontier_demo` now makes the global closure boundary
+executable: full QM remains blocked while carrier, Born, reversible-symmetry,
+facticity, tensor, first-principles `hbar_I`, or field-mode theorem obligations
+remain blocked or open.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles

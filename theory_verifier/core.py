@@ -193,6 +193,17 @@ CONTINUUM_ACTION_FRONTIER_REQUIREMENTS = (
     "field_mode_limit",
 )
 
+FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS = (
+    "universal_carrier_selection_theorem",
+    "hilbert_carrier_derivation",
+    "universal_born_rule_theorem",
+    "wigner_reversible_inheritance_theorem",
+    "apparatus_facticity_theorem",
+    "monoidal_tensor_composition_theorem",
+    "first_principles_hbar_lock",
+    "field_mode_continuum_limit",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
@@ -5701,6 +5712,70 @@ def check_continuum_action_frontier_gate(gate: FiniteGate) -> list[Issue]:
         return [
             Issue(
                 "continuum_action_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_full_qm_closure_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    requirements = require_string_tuple(gate.payload.get("requirements", []), f"{gate.identifier}.requirements")
+    if set(requirements) != set(FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS):
+        return [
+            Issue(
+                "full_qm_closure_frontier_requirements_mismatch",
+                f"{gate.identifier}: requirements must match the full-QM closure frontier set",
+            )
+        ]
+    components = require_list(gate.payload.get("components"), f"{gate.identifier}.components")
+    if len(components) != len(requirements):
+        raise ManifestError(f"{gate.identifier}: components must cover every full-QM closure frontier requirement")
+    status_by_requirement: dict[str, str] = {}
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate.identifier}.components[{index}]")
+        requirement = require_string(component.get("requirement"), f"{gate.identifier}.components[{index}].requirement")
+        status = require_string(component.get("status"), f"{gate.identifier}.components[{index}].status")
+        if requirement not in FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS:
+            return [
+                Issue(
+                    "full_qm_closure_frontier_unknown_requirement",
+                    f"{gate.identifier}: unknown requirement {requirement}",
+                )
+            ]
+        if status not in {"supported", "open", "blocked"}:
+            raise ManifestError(f"{gate.identifier}: component {requirement} has unknown status {status!r}")
+        if requirement in status_by_requirement:
+            return [
+                Issue(
+                    "full_qm_closure_frontier_duplicate_requirement",
+                    f"{gate.identifier}: duplicate requirement {requirement}",
+                )
+            ]
+        status_by_requirement[requirement] = status
+    missing = sorted(set(requirements) - set(status_by_requirement))
+    if missing:
+        return [
+            Issue(
+                "full_qm_closure_frontier_component_missing",
+                f"{gate.identifier}: missing components: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_full_qm_status"), f"{gate.identifier}.expected_full_qm_status")
+    if expected_status not in {"blocked", "target", "derived"}:
+        raise ManifestError(f"{gate.identifier}: expected_full_qm_status is unknown")
+    has_blocked = any(status == "blocked" for status in status_by_requirement.values())
+    has_open = any(status == "open" for status in status_by_requirement.values())
+    if has_blocked:
+        computed_status = "blocked"
+    elif has_open:
+        computed_status = "target"
+    else:
+        computed_status = "derived"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "full_qm_closure_frontier_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
@@ -12766,6 +12841,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "tensor_composition_route": check_tensor_composition_route_gate,
     "qm_core_recompile_route": check_qm_core_recompile_route_gate,
     "continuum_action_frontier": check_continuum_action_frontier_gate,
+    "full_qm_closure_frontier": check_full_qm_closure_frontier_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

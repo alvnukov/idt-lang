@@ -2864,10 +2864,11 @@
         "hbar_I",
         "phase_action_anchor_pattern",
         "hbar_known_gate_holdout_demo",
-        "continuum_action_frontier_demo"
+        "continuum_action_frontier_demo",
+        "full_qm_closure_frontier_demo"
       ],
-      "open_gap": "Finite generator, translation, Weyl, continuity, and calibrated action checks exist, but first-principles hbar and field-mode limits remain blocked/open.",
-      "claim_boundary": "The continuum/action frontier is executable; full QM must stay blocked while hbar_I and field-mode construction remain open."
+      "open_gap": "Finite generator, translation, Weyl, continuity, and calibrated action checks exist, but carrier, Born, reversible-symmetry, facticity, tensor, first-principles hbar, and field-mode theorem obligations remain blocked/open.",
+      "claim_boundary": "The full-QM closure frontier is executable; full QM must stay blocked while any required theorem frontier remains blocked or open."
     }
   ],
   "finite_gates": [
@@ -4338,6 +4339,31 @@
         {"requirement": "field_mode_limit", "status": "open"}
       ],
       "expected_extension_status": "blocked"
+    },
+    {
+      "id": "full_qm_closure_frontier_demo",
+      "type": "full_qm_closure_frontier",
+      "requirements": [
+        "universal_carrier_selection_theorem",
+        "hilbert_carrier_derivation",
+        "universal_born_rule_theorem",
+        "wigner_reversible_inheritance_theorem",
+        "apparatus_facticity_theorem",
+        "monoidal_tensor_composition_theorem",
+        "first_principles_hbar_lock",
+        "field_mode_continuum_limit"
+      ],
+      "components": [
+        {"requirement": "universal_carrier_selection_theorem", "status": "open"},
+        {"requirement": "hilbert_carrier_derivation", "status": "blocked"},
+        {"requirement": "universal_born_rule_theorem", "status": "open"},
+        {"requirement": "wigner_reversible_inheritance_theorem", "status": "open"},
+        {"requirement": "apparatus_facticity_theorem", "status": "open"},
+        {"requirement": "monoidal_tensor_composition_theorem", "status": "open"},
+        {"requirement": "first_principles_hbar_lock", "status": "blocked"},
+        {"requirement": "field_mode_continuum_limit", "status": "open"}
+      ],
+      "expected_full_qm_status": "blocked"
     },
     {
       "id": "action_standard_provenance_demo",
