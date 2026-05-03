@@ -43,6 +43,7 @@ from theory_verifier.core import (
     PRIMITIVE_WORK_REQUIRED_GATES,
     PRIMITIVE_WORK_REQUIRED_SYMBOLS,
     PRIMITIVE_WORK_TARGET,
+    RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES,
     NON_EXACT_HOLONOMY_SOURCE_REQUIRED_SYMBOLS,
     NON_EXACT_HOLONOMY_SOURCE_TARGET,
     RHO_CHI_PROTOCOL_REQUIRED_SYMBOLS,
@@ -4654,6 +4655,66 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"bridge_assumption_relabelled_derived"})
+
+    def test_research_graph_contract_rejects_premature_complete_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_research_graph_contract",
+                        "type": "research_graph_contract",
+                        "surfaces": [
+                            {
+                                "surface": surface,
+                                "status": "partial",
+                                "evidence_refs": ["bad_research_graph_contract"],
+                                "open_gap": "not yet first-class",
+                            }
+                            for surface in RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES
+                        ],
+                        "expected_contract_status": "complete",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"research_graph_contract_status_mismatch"})
+
+    def test_research_graph_contract_rejects_ungrounded_evidence_ref(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_research_graph_contract",
+                        "type": "research_graph_contract",
+                        "surfaces": [
+                            {
+                                "surface": surface,
+                                "status": "partial",
+                                "evidence_refs": (
+                                    ["missing_graph_ref"]
+                                    if surface == RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES[0]
+                                    else ["bad_research_graph_contract"]
+                                ),
+                                "open_gap": "not yet first-class",
+                            }
+                            for surface in RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES
+                        ],
+                        "expected_contract_status": "partial",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"research_graph_contract_evidence_unresolved"})
 
     def test_phase_branch_additivity_rejects_mismatch(self) -> None:
         manifest = parse_manifest(

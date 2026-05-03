@@ -216,6 +216,7 @@ The canonical theory modules are:
 171. [170. Sector Role Taxonomy Refactor](sections/170-sector-role-taxonomy-refactor.md)
 172. [171. QM Experiment Language Ledger](sections/171-qm-experiment-language-ledger.md)
 173. [172. Finite QM Core Proof Program](sections/172-finite-qm-core-proof-program.md)
+174. [173. IDT MetaLang Research Graph](sections/173-idt-metalang-research-graph.md)
 
 ---
 
@@ -652,6 +653,12 @@ independent primitive derivation rather than a calibrated branch choice.
 The taxonomy refactor now adds finite gates for role registry completeness,
 role partitioning, dimensionful-anchor policy, dimensionless-coupling policy,
 and bridge-assumption claim boundaries.
+The `idt_metalang_research_graph_contract_demo` now records the current
+language-level diagnosis: claim roles and dependency DAG are implemented, while
+proof-status axis, prediction protocol, failure ledger, compact core kernel,
+and theorem cards remain partial rather than complete. Its evidence references
+are grounded against existing manifest objects, schema surfaces, verifier
+checks, or Markdown sections.
 
 ---
 

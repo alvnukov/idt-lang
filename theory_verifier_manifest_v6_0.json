@@ -5380,6 +5380,84 @@
       ]
     },
     {
+      "id": "idt_metalang_research_graph_contract_demo",
+      "type": "research_graph_contract",
+      "surfaces": [
+        {
+          "surface": "claim_role_type_system",
+          "status": "implemented",
+          "evidence_refs": [
+            "sector_role_registry_demo",
+            "sector_role_assignment_partition_demo",
+            "dimensionful_anchor_policy_demo",
+            "dimensionless_coupling_policy_demo",
+            "bridge_assumption_boundary_demo"
+          ],
+          "open_gap": ""
+        },
+        {
+          "surface": "dependency_dag",
+          "status": "implemented",
+          "evidence_refs": [
+            "derivations.depends_on",
+            "derivation graph cycles",
+            "forbidden input paths"
+          ],
+          "open_gap": ""
+        },
+        {
+          "surface": "proof_status_axis",
+          "status": "partial",
+          "evidence_refs": [
+            "symbols.status",
+            "derivations.status",
+            "qm_core_proof_obligations.status"
+          ],
+          "open_gap": "Proof status is present but still mixed with role/status vocabulary instead of being a separate orthogonal axis."
+        },
+        {
+          "surface": "prediction_protocol",
+          "status": "partial",
+          "evidence_refs": [
+            "screened_profile_prediction_demo",
+            "sparc_proportional_radius_map_rejection_demo",
+            "sparc_no_fit_claim_status_demo"
+          ],
+          "open_gap": "Prediction fields exist inside sector gates, but there is no first-class prediction object with observable, frozen inputs, tolerance, fail condition, and holdout dataset."
+        },
+        {
+          "surface": "failure_ledger",
+          "status": "partial",
+          "evidence_refs": [
+            "old_screened_profile_solar_rejection_demo",
+            "sparc_proportional_radius_map_rejection_demo",
+            "sparc_q25_heldout_transfer_demo"
+          ],
+          "open_gap": "Useful exclusions are recorded as gates and prose, but failure records are not yet a top-level manifest object."
+        },
+        {
+          "surface": "minimal_core_kernel",
+          "status": "partial",
+          "evidence_refs": [
+            "sections/170-sector-role-taxonomy-refactor.md",
+            "sections/171-qm-experiment-language-ledger.md",
+            "sections/172-finite-qm-core-proof-program.md"
+          ],
+          "open_gap": "The core grammar is distributed across sections; it is not yet a compact IDT-Core kernel."
+        },
+        {
+          "surface": "theorem_cards",
+          "status": "partial",
+          "evidence_refs": [
+            "qm_core_proof_obligations",
+            "full_qm_closure_frontier_demo"
+          ],
+          "open_gap": "Theorem obligations exist for QM, but theorem/bridge/gate cards are not yet a uniform machine-readable object."
+        }
+      ],
+      "expected_contract_status": "partial"
+    },
+    {
       "id": "phase_branch_additivity_demo",
       "type": "phase_branch_additivity",
       "tolerance": 1.0e-10,
