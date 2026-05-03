@@ -155,6 +155,13 @@ BORN_READOUT_ROUTE_CONDITIONS = (
     "facticized_context_probability",
 )
 
+TENSOR_COMPOSITION_ROUTE_CONDITIONS = (
+    "product_context_basis",
+    "local_tomographic_dimension_product",
+    "schmidt_factorization_rank",
+    "entangled_nonproduct_states",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
@@ -5414,6 +5421,80 @@ def check_born_quadratic_readout_route_gate(gate: FiniteGate) -> list[Issue]:
                         f"{gate.identifier}: readout {readout_id} expected {expected_status}, computed {computed_status}",
                     )
                 ]
+    return []
+
+
+def check_tensor_composition_route_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    conditions = require_string_tuple(gate.payload.get("conditions", []), f"{gate.identifier}.conditions")
+    if set(conditions) != set(TENSOR_COMPOSITION_ROUTE_CONDITIONS):
+        return [
+            Issue(
+                "tensor_composition_route_conditions_mismatch",
+                f"{gate.identifier}: conditions must match the tensor-composition route set",
+            )
+        ]
+
+    systems = require_list(gate.payload.get("systems"), f"{gate.identifier}.systems")
+    if not systems:
+        raise ManifestError("tensor-composition route requires at least one system")
+    for index, item in enumerate(systems):
+        system = require_mapping(item, f"{gate.identifier}.systems[{index}]")
+        system_id = require_string(system.get("id"), f"{gate.identifier}.systems[{index}].id")
+        local_a = parse_positive_integer(system.get("local_a"), f"{gate.identifier}.systems[{index}].local_a")
+        local_b = parse_positive_integer(system.get("local_b"), f"{gate.identifier}.systems[{index}].local_b")
+        expected_composite = parse_positive_integer(system.get("expected_composite"), f"{gate.identifier}.systems[{index}].expected_composite")
+        expected_basis_count = parse_positive_integer(
+            system.get("expected_product_basis_count"),
+            f"{gate.identifier}.systems[{index}].expected_product_basis_count",
+        )
+        computed_composite = local_a * local_b
+        if computed_composite != expected_composite:
+            return [
+                Issue(
+                    "tensor_composition_dimension_mismatch",
+                    f"{gate.identifier}: system {system_id} expected composite {expected_composite}, computed {computed_composite}",
+                )
+            ]
+        if computed_composite != expected_basis_count:
+            return [
+                Issue(
+                    "tensor_composition_basis_count_mismatch",
+                    f"{gate.identifier}: system {system_id} expected basis count {expected_basis_count}, computed {computed_composite}",
+                )
+            ]
+
+    states = require_list(gate.payload.get("states"), f"{gate.identifier}.states")
+    if len(states) < 2:
+        raise ManifestError("tensor-composition route requires at least two states")
+    for index, item in enumerate(states):
+        state = require_mapping(item, f"{gate.identifier}.states[{index}]")
+        state_id = require_string(state.get("id"), f"{gate.identifier}.states[{index}].id")
+        coefficients = parse_nonnegative_real_list(
+            state.get("schmidt_coefficients"),
+            f"{gate.identifier}.states[{index}].schmidt_coefficients",
+        )
+        expected_rank = parse_positive_integer(state.get("expected_schmidt_rank"), f"{gate.identifier}.states[{index}].expected_schmidt_rank")
+        expected_factorizable = parse_bool(state.get("expected_factorizable"), f"{gate.identifier}.states[{index}].expected_factorizable")
+        norm = sum(coefficient * coefficient for coefficient in coefficients)
+        if abs(norm - 1.0) > tolerance:
+            raise ManifestError(f"{gate.identifier}: state {state_id} Schmidt coefficients must be normalized")
+        computed_rank = sum(1 for coefficient in coefficients if coefficient > tolerance)
+        if computed_rank != expected_rank:
+            return [
+                Issue(
+                    "tensor_composition_schmidt_rank_mismatch",
+                    f"{gate.identifier}: state {state_id} expected Schmidt rank {expected_rank}, computed {computed_rank}",
+                )
+            ]
+        computed_factorizable = computed_rank == 1
+        if computed_factorizable != expected_factorizable:
+            return [
+                Issue(
+                    "tensor_composition_factorization_mismatch",
+                    f"{gate.identifier}: state {state_id} expected factorizable={expected_factorizable}, computed {computed_factorizable}",
+                )
+            ]
     return []
 
 
@@ -12472,6 +12553,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,
     "generic_gpt_closure_separator": check_generic_gpt_closure_separator_gate,
     "born_quadratic_readout_route": check_born_quadratic_readout_route_gate,
+    "tensor_composition_route": check_tensor_composition_route_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

@@ -53,6 +53,7 @@ from theory_verifier.core import (
     SOURCE_RESPONSE_CHARGE_TARGET,
     GEOMETRY_RESPONSE_FACTOR_REQUIRED_SYMBOLS,
     GEOMETRY_RESPONSE_FACTOR_TARGET,
+    TENSOR_COMPOSITION_ROUTE_CONDITIONS,
     CLOCK_VACUUM_STIFFNESS_REQUIRED_GATES,
     CLOCK_VACUUM_STIFFNESS_REQUIRED_SYMBOLS,
     CLOCK_VACUUM_STIFFNESS_TARGET,
@@ -3125,6 +3126,48 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"generic_gpt_closure_status_mismatch"})
+
+    def test_tensor_composition_route_rejects_bad_factorization_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_tensor_composition_route",
+                        "type": "tensor_composition_route",
+                        "conditions": list(TENSOR_COMPOSITION_ROUTE_CONDITIONS),
+                        "systems": [
+                            {
+                                "id": "two_qubit_context",
+                                "local_a": 2,
+                                "local_b": 2,
+                                "expected_composite": 4,
+                                "expected_product_basis_count": 4,
+                            }
+                        ],
+                        "states": [
+                            {
+                                "id": "product_state",
+                                "schmidt_coefficients": [1.0, 0.0],
+                                "expected_schmidt_rank": 1,
+                                "expected_factorizable": True,
+                            },
+                            {
+                                "id": "bell_state",
+                                "schmidt_coefficients": [0.7071067811865476, 0.7071067811865476],
+                                "expected_schmidt_rank": 2,
+                                "expected_factorizable": True,
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"tensor_composition_factorization_mismatch"})
 
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(

@@ -109,6 +109,18 @@ This is a finite route toward Born readout, not the full Born theorem. The
 universal theorem still depends on closing the carrier and measurement/facticity
 obligations.
 
+The finite tensor-composition route is now executable as:
+
+`tensor_composition_route_demo`.
+
+It checks product-context basis size, local dimension multiplication, and
+Schmidt-rank factorization witnesses. Product states remain factorizable;
+Bell-style states have Schmidt rank two and are not reducible to product
+states.
+
+This is a finite route toward the composition layer, not the full monoidal
+composition theorem.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -402,6 +414,10 @@ Status:
 Status:
 
 `born_quadratic_readout_route_executable`
+
+Status:
+
+`tensor_composition_route_executable`
 
 Status:
 

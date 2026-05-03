@@ -2825,10 +2825,11 @@
         "correlation_contextual_obstruction_pattern",
         "bell_chsh_table_demo",
         "spin_bell_angle_model_demo",
+        "tensor_composition_route_demo",
         "context_transfer_no_cloning_demo"
       ],
-      "open_gap": "Bell, GHZ, swapping, teleportation, and no-cloning gates use composite structure, but the composition law itself is not derived.",
-      "claim_boundary": "Composite QM behavior is regression-supported; tensor composition remains a proof obligation."
+      "open_gap": "A finite tensor-composition route is now executable, but the full monoidal composition theorem remains open.",
+      "claim_boundary": "Composite QM behavior has a finite executable route; full tensor composition remains a proof obligation."
     },
     {
       "id": "recompile_35_from_core",
@@ -4140,6 +4141,40 @@
       "bob_angles": [0.7853981633974483, -0.7853981633974483],
       "expected_abs_s": 2.8284271247461903,
       "max_abs_s": 2.8284271247461903
+    },
+    {
+      "id": "tensor_composition_route_demo",
+      "type": "tensor_composition_route",
+      "tolerance": 1.0e-10,
+      "conditions": [
+        "product_context_basis",
+        "local_tomographic_dimension_product",
+        "schmidt_factorization_rank",
+        "entangled_nonproduct_states"
+      ],
+      "systems": [
+        {
+          "id": "two_qubit_context",
+          "local_a": 2,
+          "local_b": 2,
+          "expected_composite": 4,
+          "expected_product_basis_count": 4
+        }
+      ],
+      "states": [
+        {
+          "id": "product_state",
+          "schmidt_coefficients": [1.0, 0.0],
+          "expected_schmidt_rank": 1,
+          "expected_factorizable": true
+        },
+        {
+          "id": "bell_state",
+          "schmidt_coefficients": [0.7071067811865476, 0.7071067811865476],
+          "expected_schmidt_rank": 2,
+          "expected_factorizable": false
+        }
+      ]
     },
     {
       "id": "unitary_generator_reconstruction_demo",

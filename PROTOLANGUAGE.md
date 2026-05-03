@@ -616,6 +616,10 @@ The `born_quadratic_readout_route_demo` now makes the finite Born/readout route
 executable: quadratic modulus survives the phase-invariant normalized amplitude
 packet checks, while linear-modulus readout is rejected on the registered
 two- and three-branch packets.
+The `tensor_composition_route_demo` now makes the finite tensor-composition
+route executable: product context dimensions multiply, product states have
+Schmidt rank one, and Bell-style states carry Schmidt rank two rather than
+factorizing.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles
