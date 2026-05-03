@@ -357,6 +357,29 @@ SECTOR_ROLE_VALUES = (
     "blocked_claim",
 )
 
+RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES = (
+    "claim_role_type_system",
+    "dependency_dag",
+    "proof_status_axis",
+    "prediction_protocol",
+    "failure_ledger",
+    "minimal_core_kernel",
+    "theorem_cards",
+)
+
+RESEARCH_GRAPH_CONTRACT_SCHEMA_REFS = (
+    "symbols.status",
+    "derivations.status",
+    "derivations.depends_on",
+    "qm_core_proof_obligations",
+    "qm_core_proof_obligations.status",
+)
+
+RESEARCH_GRAPH_CONTRACT_CHECK_REFS = (
+    "derivation graph cycles",
+    "forbidden input paths",
+)
+
 SECTOR_ROLE_TAXONOMY_TARGET = "sector_role_taxonomy_I"
 
 SECTOR_ROLE_TAXONOMY_REQUIRED_SYMBOLS = (
@@ -1628,6 +1651,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_finite_gates(manifest))
     checks.append("finite kernel and holonomy gates")
+
+    issues.extend(check_research_graph_contract_grounding(manifest))
+    checks.append("research graph contract grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -3731,6 +3757,79 @@ def check_finite_gate(gate: FiniteGate) -> list[Issue]:
     if checker is not None:
         return checker(gate)
     raise ManifestError(f"unknown finite gate type {gate.gate_type!r}")
+
+
+def check_research_graph_contract_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "research_graph_contract":
+            continue
+        try:
+            surfaces = require_list(gate.payload.get("surfaces"), f"{gate.identifier}.surfaces")
+        except ManifestError as error:
+            issues.append(
+                Issue(
+                    "research_graph_contract_grounding_invalid",
+                    f"{gate.identifier}: {error}",
+                )
+            )
+            continue
+        for surface_index, item in enumerate(surfaces):
+            try:
+                surface = require_mapping(item, f"{gate.identifier}.surfaces[{surface_index}]")
+                surface_name = require_string(
+                    surface.get("surface"),
+                    f"{gate.identifier}.surfaces[{surface_index}].surface",
+                )
+                evidence_refs = require_string_tuple(
+                    surface.get("evidence_refs", []),
+                    f"{gate.identifier}.surfaces[{surface_index}].evidence_refs",
+                )
+            except ManifestError as error:
+                issues.append(
+                    Issue(
+                        "research_graph_contract_grounding_invalid",
+                        f"{gate.identifier}: {error}",
+                    )
+                )
+                continue
+            for evidence_ref in evidence_refs:
+                if evidence_ref in known_refs or research_graph_doc_ref_exists(evidence_ref):
+                    continue
+                issues.append(
+                    Issue(
+                        "research_graph_contract_evidence_unresolved",
+                        f"{gate.identifier}: {surface_name} evidence ref {evidence_ref!r} is not grounded",
+                    )
+                )
+    return issues
+
+
+def research_graph_known_evidence_refs(manifest: Manifest) -> set[str]:
+    refs = set(RESEARCH_GRAPH_CONTRACT_SCHEMA_REFS)
+    refs.update(RESEARCH_GRAPH_CONTRACT_CHECK_REFS)
+    refs.update(manifest.symbols)
+    refs.update(equation.identifier for equation in manifest.equations)
+    refs.update(derivation.identifier for derivation in manifest.derivations)
+    refs.update(derivation.target for derivation in manifest.derivations)
+    refs.update(gate.identifier for gate in manifest.finite_gates)
+    refs.update(experiment.identifier for experiment in manifest.qm_experiments)
+    refs.update(pattern.identifier for pattern in manifest.qm_universal_patterns)
+    refs.update(obligation.identifier for obligation in manifest.qm_core_proof_obligations)
+    return refs
+
+
+def research_graph_doc_ref_exists(evidence_ref: str) -> bool:
+    path = Path(evidence_ref)
+    if path.is_absolute():
+        return path.is_file()
+    if not evidence_ref.endswith(".md"):
+        return False
+    if path.is_file():
+        return True
+    repo_root = Path(__file__).resolve().parent.parent
+    return (repo_root / path).is_file()
 
 
 def check_psd_gate(gate: FiniteGate) -> list[Issue]:
@@ -7299,6 +7398,95 @@ def check_sector_role_assignment_partition_gate(gate: FiniteGate) -> list[Issue]
             Issue(
                 "sector_role_assignment_overlap",
                 f"{gate.identifier}: symbols have multiple sector roles: {', '.join(collisions)}",
+            )
+        ]
+    return []
+
+
+def check_research_graph_contract_gate(gate: FiniteGate) -> list[Issue]:
+    surfaces = require_list(gate.payload.get("surfaces"), f"{gate.identifier}.surfaces")
+    if len(surfaces) != len(RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES):
+        raise ManifestError(
+            f"{gate.identifier}: surfaces must cover every research graph contract surface"
+        )
+
+    status_by_surface: dict[str, str] = {}
+    for index, item in enumerate(surfaces):
+        item_map = require_mapping(item, f"{gate.identifier}.surfaces[{index}]")
+        surface = require_string(
+            item_map.get("surface"),
+            f"{gate.identifier}.surfaces[{index}].surface",
+        )
+        status = require_string(
+            item_map.get("status"),
+            f"{gate.identifier}.surfaces[{index}].status",
+        )
+        evidence_refs = require_string_tuple(
+            item_map.get("evidence_refs", []),
+            f"{gate.identifier}.surfaces[{index}].evidence_refs",
+        )
+        open_gap = require_string(
+            item_map.get("open_gap"),
+            f"{gate.identifier}.surfaces[{index}].open_gap",
+        )
+        if surface not in RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES:
+            return [
+                Issue(
+                    "research_graph_contract_unknown_surface",
+                    f"{gate.identifier}: unknown research graph surface {surface}",
+                )
+            ]
+        if status not in {"implemented", "partial", "missing"}:
+            raise ManifestError(f"{gate.identifier}: surface {surface} has unknown status {status!r}")
+        if surface in status_by_surface:
+            return [
+                Issue(
+                    "research_graph_contract_duplicate_surface",
+                    f"{gate.identifier}: duplicate research graph surface {surface}",
+                )
+            ]
+        if status in {"implemented", "partial"} and not evidence_refs:
+            return [
+                Issue(
+                    "research_graph_contract_evidence_missing",
+                    f"{gate.identifier}: surface {surface} needs evidence refs",
+                )
+            ]
+        if status in {"partial", "missing"} and not open_gap.strip():
+            return [
+                Issue(
+                    "research_graph_contract_gap_missing",
+                    f"{gate.identifier}: surface {surface} needs an open gap",
+                )
+            ]
+        status_by_surface[surface] = status
+
+    missing = sorted(set(RESEARCH_GRAPH_CONTRACT_REQUIRED_SURFACES) - set(status_by_surface))
+    if missing:
+        return [
+            Issue(
+                "research_graph_contract_surface_missing",
+                f"{gate.identifier}: missing research graph surfaces: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_contract_status"),
+        f"{gate.identifier}.expected_contract_status",
+    )
+    if expected_status not in {"complete", "partial", "incomplete"}:
+        raise ManifestError(f"{gate.identifier}: expected_contract_status is unknown")
+    if any(status == "missing" for status in status_by_surface.values()):
+        computed_status = "incomplete"
+    elif any(status == "partial" for status in status_by_surface.values()):
+        computed_status = "partial"
+    else:
+        computed_status = "complete"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "research_graph_contract_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
     return []
@@ -12894,6 +13082,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "winding_selector_no_calibrated_input": check_winding_selector_no_calibrated_input_gate,
     "sector_role_registry": check_sector_role_registry_gate,
     "sector_role_assignment_partition": check_sector_role_assignment_partition_gate,
+    "research_graph_contract": check_research_graph_contract_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
     "bridge_assumption_boundary": check_bridge_assumption_boundary_gate,

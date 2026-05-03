@@ -29,7 +29,9 @@ for QM or GR. Its present value is methodological and test-directed:
 - a finite verifier that turns candidate bridges into auditable checks;
 - a role taxonomy for separating structural selectors, dimensional anchors,
   couplings, bridge assumptions, readouts, experimental gates, and blocked
-  claims.
+  claims;
+- a research-graph contract for tracking which parts of the language are
+  implemented, partial, or still missing.
 
 For a compact public boundary, see the [Public Claim Sheet](PUBLIC_CLAIM_SHEET.md).
 
@@ -55,7 +57,12 @@ Current auditable results:
   held-out transfer for the current frozen candidate;
 - sector role taxonomy: selectors, dimensional anchors, couplings, bridge
   assumptions, readouts, experimental gates, and blocked claims are separated
-  before public claims are allowed.
+  before public claims are allowed;
+- IDT-MetaLang research graph: claim roles and the dependency DAG are
+  implemented, while proof-status, prediction, failure-ledger, compact-core,
+  and theorem-card surfaces remain explicitly partial; its evidence references
+  are grounded against real manifest objects, schema surfaces, verifier checks,
+  or Markdown sections.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants

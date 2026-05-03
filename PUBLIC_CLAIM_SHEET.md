@@ -22,7 +22,9 @@ workflow for:
 3. rejecting bridges that only work after post-fit tuning;
 4. keeping failed, near-miss, and surviving candidates comparable;
 5. giving AI scientific agents a structured claim ledger instead of free-form
-   theoretical text.
+   theoretical text;
+6. turning the ledger into a compact research graph before escalating physics
+   claims.
 
 ## Auditable Successes
 
@@ -57,6 +59,11 @@ The main current successes are bounded and methodological:
 6. The sector role taxonomy is machine-guarded. Symbols must be classified as
    structural selectors, dimensional anchors, dimensionless couplings, bridge
    assumptions, derived readouts, experimental gates, or blocked claims.
+7. The IDT-MetaLang research graph contract is executable. It records claim
+   role typing and dependency DAG checks as implemented, while proof status,
+   prediction protocol, failure ledger, compact core, and theorem cards remain
+   partial rather than complete. Its evidence references must resolve to real
+   manifest objects, schema surfaces, verifier checks, or Markdown sections.
 
 ## What The Verifier Catches
 
@@ -95,12 +102,16 @@ Current public classification:
 | Experimental gates | SPARC gates, Bell/CHSH gates, residual provenance gates |
 | Blocked claims | first-principles `hbar_I`, first-principles `G_I`, first-principles `alpha_em_I`, `full_QM_I = derived` |
 
-## Next Public Milestone
+## Next Public Milestones
 
-The next public milestone is not a stronger slogan. It is one pre-registered,
-non-refitted bridge that survives an independent holdout gate.
+The next public milestone is not a stronger slogan.
 
-The most promising current route is weak-gravity closure:
+The immediate language milestone is to promote prediction records, failure
+records, and theorem cards into first-class manifest objects.
+
+The next physics milestone remains one pre-registered, non-refitted bridge that
+survives an independent holdout gate. The most promising current route is
+weak-gravity closure:
 
 ```text
 source response + vacuum stiffness + calibrated action anchor
