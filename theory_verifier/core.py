@@ -148,6 +148,13 @@ GENERIC_GPT_CLOSURE_CONDITIONS = (
     "bounded_composite_correlations",
 )
 
+BORN_READOUT_ROUTE_CONDITIONS = (
+    "normalized_amplitude_packet",
+    "phase_invariant_readout",
+    "orthogonal_event_additivity",
+    "facticized_context_probability",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
@@ -5326,6 +5333,87 @@ def check_generic_gpt_closure_separator_gate(gate: FiniteGate) -> list[Issue]:
                 f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
             )
         ]
+    return []
+
+
+def check_born_quadratic_readout_route_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    conditions = require_string_tuple(gate.payload.get("conditions", []), f"{gate.identifier}.conditions")
+    if set(conditions) != set(BORN_READOUT_ROUTE_CONDITIONS):
+        return [
+            Issue(
+                "born_quadratic_route_conditions_mismatch",
+                f"{gate.identifier}: conditions must match the Born readout route set",
+            )
+        ]
+
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if not samples:
+        raise ManifestError("Born quadratic readout route requires at least one sample")
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        sample_id = require_string(sample.get("id"), f"{gate.identifier}.samples[{index}].id")
+        amplitudes = parse_vector(sample.get("amplitudes"), f"{gate.identifier}.samples[{index}].amplitudes")
+        expected_probabilities = parse_real_list(
+            sample.get("expected_probabilities"),
+            f"{gate.identifier}.samples[{index}].expected_probabilities",
+        )
+        if len(amplitudes) != len(expected_probabilities):
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} amplitude/probability size mismatch")
+        born_probabilities = amplitude_probabilities(amplitudes, tolerance)
+        for probability_index, probability in enumerate(born_probabilities):
+            if abs(probability - expected_probabilities[probability_index]) > tolerance:
+                return [
+                    Issue(
+                        "born_quadratic_route_probability_mismatch",
+                        (
+                            f"{gate.identifier}: sample {sample_id} probability {probability_index} expected "
+                            f"{expected_probabilities[probability_index]:g}, computed {probability:g}"
+                        ),
+                    )
+                ]
+
+        alternatives = require_list(sample.get("candidate_readouts"), f"{gate.identifier}.samples[{index}].candidate_readouts")
+        if len(alternatives) < 2:
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} requires at least two candidate readouts")
+        for alternative_index, raw_alternative in enumerate(alternatives):
+            alternative = require_mapping(raw_alternative, f"{gate.identifier}.samples[{index}].candidate_readouts[{alternative_index}]")
+            readout_id = require_string(
+                alternative.get("id"),
+                f"{gate.identifier}.samples[{index}].candidate_readouts[{alternative_index}].id",
+            )
+            readout_type = require_string(
+                alternative.get("type"),
+                f"{gate.identifier}.samples[{index}].candidate_readouts[{alternative_index}].type",
+            )
+            expected_status = require_string(
+                alternative.get("expected_status"),
+                f"{gate.identifier}.samples[{index}].candidate_readouts[{alternative_index}].expected_status",
+            )
+            if expected_status not in DISTINGUISHABILITY_GEOMETRY_STATUSES:
+                raise ManifestError(f"{gate.identifier}: readout {readout_id} expected_status is unknown")
+            if readout_type == "quadratic_modulus":
+                candidate_probabilities = born_probabilities
+            elif readout_type == "linear_modulus":
+                magnitudes = [abs(amplitude) for amplitude in amplitudes]
+                total = sum(magnitudes)
+                if total <= tolerance:
+                    raise ManifestError(f"{gate.identifier}: readout {readout_id} cannot normalize zero magnitudes")
+                candidate_probabilities = [magnitude / total for magnitude in magnitudes]
+            else:
+                raise ManifestError(f"{gate.identifier}: readout {readout_id} has unknown type {readout_type!r}")
+            max_deviation = max(
+                abs(candidate - born)
+                for candidate, born in zip(candidate_probabilities, born_probabilities, strict=True)
+            )
+            computed_status = "survives" if max_deviation <= tolerance else "rejected"
+            if computed_status != expected_status:
+                return [
+                    Issue(
+                        "born_quadratic_route_candidate_status_mismatch",
+                        f"{gate.identifier}: readout {readout_id} expected {expected_status}, computed {computed_status}",
+                    )
+                ]
     return []
 
 
@@ -12383,6 +12471,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,
     "generic_gpt_closure_separator": check_generic_gpt_closure_separator_gate,
+    "born_quadratic_readout_route": check_born_quadratic_readout_route_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

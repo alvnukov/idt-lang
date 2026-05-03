@@ -9,6 +9,7 @@ from theory_verifier.core import (
     ACTION_STANDARD_TARGET,
     CALIBRATED_QM_REQUIRED_SYMBOLS,
     CALIBRATED_QM_TARGET,
+    BORN_READOUT_ROUTE_CONDITIONS,
     CLOCK_VACUUM_POLE_REQUIRED_SYMBOLS,
     CLOCK_VACUUM_POLE_TARGET,
     CROSS_UPDATE_CONTRACTION_SELECTION_REQUIRED_SYMBOLS,
@@ -1958,6 +1959,45 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"born_probability_mismatch"})
+
+    def test_born_quadratic_readout_route_rejects_bad_linear_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_born_route",
+                        "type": "born_quadratic_readout_route",
+                        "tolerance": 1.0e-10,
+                        "conditions": list(BORN_READOUT_ROUTE_CONDITIONS),
+                        "samples": [
+                            {
+                                "id": "two_branch_packet",
+                                "amplitudes": [0.6, 0.8],
+                                "expected_probabilities": [0.36, 0.64],
+                                "candidate_readouts": [
+                                    {
+                                        "id": "quadratic",
+                                        "type": "quadratic_modulus",
+                                        "expected_status": "survives",
+                                    },
+                                    {
+                                        "id": "linear",
+                                        "type": "linear_modulus",
+                                        "expected_status": "survives",
+                                    },
+                                ],
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"born_quadratic_route_candidate_status_mismatch"})
 
     def test_unitary_measurement_context_rejects_bad_probability(self) -> None:
         manifest = parse_manifest(

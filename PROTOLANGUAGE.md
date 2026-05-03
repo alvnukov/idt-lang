@@ -612,6 +612,10 @@ GPT cone that lacks finite route-witness completeness, excludes no unwitnessed
 effect-cone degrees, and fails bounded composite correlations. Route-closed GPT
 subtheories remain underdetermined rather than silently collapsed to Hilbert
 space.
+The `born_quadratic_readout_route_demo` now makes the finite Born/readout route
+executable: quadratic modulus survives the phase-invariant normalized amplitude
+packet checks, while linear-modulus readout is rejected on the registered
+two- and three-branch packets.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles

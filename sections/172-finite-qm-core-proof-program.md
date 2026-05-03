@@ -96,6 +96,19 @@ Without it, IDT may still reconstruct a finite single-system QM-like theory,
 but it cannot claim the composite layer needed for Bell, GHZ, swapping,
 teleportation, and no-cloning.
 
+The finite Born/readout route is now executable as:
+
+`born_quadratic_readout_route_demo`.
+
+It checks normalized amplitude packets under phase-invariant, orthogonal-event
+additive, facticized context readout. The quadratic modulus readout survives;
+linear-modulus alternatives are rejected on the registered two- and
+three-branch packets.
+
+This is a finite route toward Born readout, not the full Born theorem. The
+universal theorem still depends on closing the carrier and measurement/facticity
+obligations.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -385,6 +398,10 @@ Status:
 Status:
 
 `generic_gpt_closure_separator_executable`
+
+Status:
+
+`born_quadratic_readout_route_executable`
 
 Status:
 

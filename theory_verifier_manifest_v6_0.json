@@ -2775,10 +2775,11 @@
       "depends_on": ["hilbert_carrier_derivation", "probability_measure_layer"],
       "evidence_refs": [
         "born_context_probability_table_demo",
+        "born_quadratic_readout_route_demo",
         "bell_chsh_from_amplitudes_demo"
       ],
-      "open_gap": "The gates verify |amplitude|^2 readouts, but the square-modulus rule is not yet derived from distinguishability and facticity.",
-      "claim_boundary": "Born readouts are executable regressions, not a first-principles Born-rule proof."
+      "open_gap": "A finite quadratic readout route is now executable, but a universal Born theorem still depends on the carrier and measurement/facticity theorems.",
+      "claim_boundary": "Born readouts have a finite executable route; full first-principles Born-rule derivation remains open."
     },
     {
       "id": "reversible_inheritance_symmetry",
@@ -3001,6 +3002,57 @@
       ],
       "events": [[0], [1], [2]],
       "expected_probabilities": [0.2, 0.3, 0.5]
+    },
+    {
+      "id": "born_quadratic_readout_route_demo",
+      "type": "born_quadratic_readout_route",
+      "tolerance": 1.0e-10,
+      "conditions": [
+        "normalized_amplitude_packet",
+        "phase_invariant_readout",
+        "orthogonal_event_additivity",
+        "facticized_context_probability"
+      ],
+      "samples": [
+        {
+          "id": "two_branch_packet",
+          "amplitudes": [0.6, 0.8],
+          "expected_probabilities": [0.36, 0.64],
+          "candidate_readouts": [
+            {
+              "id": "quadratic_modulus",
+              "type": "quadratic_modulus",
+              "expected_status": "survives"
+            },
+            {
+              "id": "linear_modulus",
+              "type": "linear_modulus",
+              "expected_status": "rejected"
+            }
+          ]
+        },
+        {
+          "id": "three_branch_packet",
+          "amplitudes": [
+            0.4472135954999579,
+            0.5477225575051661,
+            0.7071067811865476
+          ],
+          "expected_probabilities": [0.2, 0.3, 0.5],
+          "candidate_readouts": [
+            {
+              "id": "quadratic_modulus",
+              "type": "quadratic_modulus",
+              "expected_status": "survives"
+            },
+            {
+              "id": "linear_modulus",
+              "type": "linear_modulus",
+              "expected_status": "rejected"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "unitary_measurement_context_demo",
