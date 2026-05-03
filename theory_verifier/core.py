@@ -145,6 +145,27 @@ IDT_PURIFICATION_FILTERING_CONDITIONS = (
     "posterior_support_renormalization",
 )
 
+PURIFICATION_FILTERING_THEOREM_ASSUMPTIONS = (
+    "finite_context_family",
+    "recoverable_extension_context",
+    "marginal_readout_consistency",
+    "facticized_filter_context",
+    "posterior_support_renormalization",
+)
+
+PURIFICATION_FILTERING_THEOREM_CONCLUSIONS = (
+    "recoverable_marginal_extension",
+    "support_restricted_filter_update",
+    "zero_support_filter_rejection",
+)
+
+PURIFICATION_FILTERING_THEOREM_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_prove_Born_rule",
+    "does_not_select_complex_Hilbert_from_IDT_primitives_alone",
+)
+
 IDT_BOUNDED_CORRELATION_CONDITIONS = (
     "single_joint_context_facticity",
     "normalized_context_amplitudes",
@@ -1665,6 +1686,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_context_product_local_tomography_theorem_grounding(manifest))
     checks.append("context-product local tomography theorem grounding")
 
+    issues.extend(check_purification_filtering_theorem_grounding(manifest))
+    checks.append("purification-filtering theorem grounding")
+
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
 
@@ -2595,6 +2619,55 @@ def check_context_product_local_tomography_theorem_grounding(manifest: Manifest)
         issues.append(
             Issue(
                 "context_product_local_tomography_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
+    return issues
+
+
+def check_purification_filtering_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("purification_filtering_implies_recoverable_support_update")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "purification_filtering_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "purification_filtering_recoverable_support_theorem_demo",
+        "idt_purification_filtering_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "purification_filtering_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "purification_filtering_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    forbidden_upgrades = set(theorem_card.forbidden_claims)
+    if not set(PURIFICATION_FILTERING_THEOREM_FORBIDDEN_UPGRADES).issubset(forbidden_upgrades):
+        issues.append(
+            Issue(
+                "purification_filtering_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
             )
         )
@@ -5778,6 +5851,73 @@ def check_context_product_local_tomography_theorem_gate(gate: FiniteGate) -> lis
     return []
 
 
+def check_purification_filtering_recoverable_support_theorem_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "purification_filtering_implies_recoverable_support_update":
+        return [
+            Issue(
+                "purification_filtering_theorem_target_mismatch",
+                f"{gate.identifier}: target card must be purification_filtering_implies_recoverable_support_update",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(PURIFICATION_FILTERING_THEOREM_ASSUMPTIONS):
+        return [
+            Issue(
+                "purification_filtering_theorem_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the conditional purification/filtering theorem",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(PURIFICATION_FILTERING_THEOREM_CONCLUSIONS):
+        return [
+            Issue(
+                "purification_filtering_theorem_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must match recoverable extension and support-update claims",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("evidence_refs", []), f"{gate.identifier}.evidence_refs")
+    if set(evidence_refs) != {"idt_purification_filtering_demo"}:
+        return [
+            Issue(
+                "purification_filtering_theorem_evidence_mismatch",
+                f"{gate.identifier}: evidence refs must link the purification/filtering finite gate",
+            )
+        ]
+
+    rejected_cases = require_string_tuple(gate.payload.get("rejected_cases", []), f"{gate.identifier}.rejected_cases")
+    if set(rejected_cases) != {"insufficient_environment_extension", "zero_support_filter"}:
+        return [
+            Issue(
+                "purification_filtering_theorem_rejected_cases_mismatch",
+                f"{gate.identifier}: rejected cases must include insufficient extension and zero-support filter",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(PURIFICATION_FILTERING_THEOREM_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "purification_filtering_theorem_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM claim boundary",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_theorem_status"), f"{gate.identifier}.expected_theorem_status")
+    computed_status = "conditional_proof"
+    if expected_status != computed_status:
+        return [
+            Issue(
+                "purification_filtering_theorem_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
 def check_idt_purification_filtering_gate(gate: FiniteGate) -> list[Issue]:
     tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
     conditions = require_string_tuple(gate.payload.get("idt_conditions", []), f"{gate.identifier}.idt_conditions")
@@ -6604,7 +6744,7 @@ def check_carrier_selection_proof_route_gate(gate: FiniteGate) -> list[Issue]:
                     f"{gate.identifier}: duplicate lemma {lemma_id}",
                 )
             ]
-        if status in {"finite_witnessed", "formal_proof"} and not evidence_refs:
+        if status in {"finite_witnessed", "conditional_proof", "formal_proof"} and not evidence_refs:
             return [
                 Issue(
                     "carrier_selection_proof_route_evidence_missing",
@@ -6779,10 +6919,24 @@ def check_purification_filtering_carrier_lemma_route_gate(gate: FiniteGate) -> l
         ]
 
     open_gaps = require_string_tuple(gate.payload.get("open_generalization_gaps", []), f"{gate.identifier}.open_generalization_gaps")
+    conditional_refs = require_string_tuple(gate.payload.get("conditional_theorem_refs", []), f"{gate.identifier}.conditional_theorem_refs")
     expected_status = require_string(gate.payload.get("expected_lemma_status"), f"{gate.identifier}.expected_lemma_status")
     if expected_status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
         raise ManifestError(f"{gate.identifier}: expected_lemma_status is unknown")
-    if open_gaps:
+    required_conditional_refs = {
+        "purification_filtering_implies_recoverable_support_update",
+        "purification_filtering_recoverable_support_theorem_demo",
+    }
+    if conditional_refs and set(conditional_refs) != required_conditional_refs:
+        return [
+            Issue(
+                "purification_filtering_carrier_lemma_conditional_refs_mismatch",
+                f"{gate.identifier}: conditional theorem refs must link the purification/filtering theorem",
+            )
+        ]
+    if conditional_refs:
+        computed_status = "conditional_proof"
+    elif open_gaps:
         computed_status = "finite_witnessed"
     else:
         computed_status = "formal_proof"
@@ -14021,6 +14175,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "context_product_exhaustion": check_context_product_exhaustion_gate,
     "rebit_hidden_joint_invariant_separator": check_rebit_hidden_joint_invariant_separator_gate,
     "context_product_local_tomography_theorem": check_context_product_local_tomography_theorem_gate,
+    "purification_filtering_recoverable_support_theorem": check_purification_filtering_recoverable_support_theorem_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

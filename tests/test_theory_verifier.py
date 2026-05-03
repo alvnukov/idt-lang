@@ -77,6 +77,9 @@ from theory_verifier.core import (
     SOURCE_LAW_VARIATIONAL_TARGET,
     PPN_NO_SLIP_REQUIRED_SYMBOLS,
     PPN_NO_SLIP_TARGET,
+    PURIFICATION_FILTERING_THEOREM_ASSUMPTIONS,
+    PURIFICATION_FILTERING_THEOREM_CONCLUSIONS,
+    PURIFICATION_FILTERING_THEOREM_FORBIDDEN_UPGRADES,
     NO_SLIP_STRESS_REQUIRED_SYMBOLS,
     NO_SLIP_STRESS_TARGET,
     SOURCE_STRESS_PACKET_REQUIRED_SYMBOLS,
@@ -3078,6 +3081,34 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"context_product_local_tomography_theorem_status_mismatch"})
 
+    def test_purification_filtering_theorem_rejects_bad_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_purification_filtering_theorem",
+                        "type": "purification_filtering_recoverable_support_theorem",
+                        "target_theorem_card": "purification_filtering_implies_recoverable_support_update",
+                        "assumptions": list(PURIFICATION_FILTERING_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(PURIFICATION_FILTERING_THEOREM_CONCLUSIONS),
+                        "evidence_refs": ["idt_purification_filtering_demo"],
+                        "rejected_cases": [
+                            "insufficient_environment_extension",
+                            "zero_support_filter",
+                        ],
+                        "forbidden_upgrades": list(PURIFICATION_FILTERING_THEOREM_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"purification_filtering_theorem_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -3659,6 +3690,32 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"context_product_local_tomography_theorem_card_status_mismatch"})
+
+    def test_purification_filtering_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "purification_filtering_implies_recoverable_support_update",
+                        "statement": "conditional separator",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": [],
+                        "proof_status": "formal_proof",
+                        "verifier": "purification_filtering_recoverable_support_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"purification_filtering_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

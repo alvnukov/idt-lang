@@ -505,11 +505,25 @@ route. The route records two finite exclusions:
 1. insufficient environment extension;
 2. zero-support filter.
 
-It still remains `finite_witnessed`, not `formal_proof`, because the finite
-purification/filtering samples must be extended to arbitrary admissible
-carriers, recoverable extensions must be forced by IDT primitives, and
-posterior-support renormalization must exclude non-IDT effect-cone filters
-universally.
+It is now backed by the conditional theorem card:
+
+`purification_filtering_implies_recoverable_support_update`.
+
+The executable verifier is:
+
+`purification_filtering_recoverable_support_theorem_demo`.
+
+Under finite context families, recoverable extension contexts, marginal readout
+consistency, facticized filters, and posterior support renormalization,
+admissible filtering is a support-restricted recoverable update. The theorem
+records two rejected cases:
+
+1. insufficient environment extension;
+2. zero-support filter.
+
+It is now `conditional_proof`, not `formal_proof`, because recoverable
+extension contexts and posterior support renormalization are still assumptions
+of this route rather than consequences of the IDT primitives alone.
 
 The third lemma route is now executable as:
 

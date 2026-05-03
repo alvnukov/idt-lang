@@ -129,9 +129,18 @@ The second lemma route is now manifest-backed:
 
 `purification_filtering_carrier_lemma_route_demo`
 
-It records purification/filtering conditions, finite exclusions, expected
-exclusion count, and remaining generalization gaps for the second
-carrier-selection lemma.
+The second conditional separator theorem is now manifest-backed:
+
+`purification_filtering_implies_recoverable_support_update`
+
+Its executable verifier is:
+
+`purification_filtering_recoverable_support_theorem_demo`
+
+It promotes the purification/filtering route from finite witness to
+`conditional_proof`: under recoverable-extension and support-renormalization
+assumptions, admissible filtering is a support-restricted recoverable update,
+and insufficient-extension plus zero-support-filter cases are rejected.
 
 The third lemma route is now manifest-backed:
 

@@ -2948,6 +2948,35 @@
       ]
     },
     {
+      "id": "purification_filtering_implies_recoverable_support_update",
+      "statement": "For any finite IDT context family, if recoverable extensions reproduce marginal readouts and facticized filters restrict support with posterior renormalization, then admissible filtering is a support-restricted recoverable update and zero-support filters are rejected.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_context_family",
+        "recoverable_extension_context",
+        "marginal_readout_consistency",
+        "facticized_filter_context",
+        "posterior_support_renormalization"
+      ],
+      "dependencies": [
+        "purification_filtering_recoverable_support_theorem_demo",
+        "idt_purification_filtering_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "purification_filtering_recoverable_support_theorem_demo",
+      "known_failures": [
+        "does not prove universal carrier selection",
+        "does not derive purification from IDT primitives alone"
+      ],
+      "physical_scope": "Finite purification/filtering separator under declared recoverability and support-update assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
@@ -3970,6 +3999,37 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "purification_filtering_recoverable_support_theorem_demo",
+      "type": "purification_filtering_recoverable_support_theorem",
+      "target_theorem_card": "purification_filtering_implies_recoverable_support_update",
+      "assumptions": [
+        "finite_context_family",
+        "recoverable_extension_context",
+        "marginal_readout_consistency",
+        "facticized_filter_context",
+        "posterior_support_renormalization"
+      ],
+      "conclusions": [
+        "recoverable_marginal_extension",
+        "support_restricted_filter_update",
+        "zero_support_filter_rejection"
+      ],
+      "evidence_refs": [
+        "idt_purification_filtering_demo"
+      ],
+      "rejected_cases": [
+        "insufficient_environment_extension",
+        "zero_support_filter"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "idt_purification_filtering_demo",
       "type": "idt_purification_filtering",
       "tolerance": 1.0e-10,
@@ -4290,12 +4350,14 @@
         },
         {
           "id": "extend_purification_filtering_to_carrier_theorem",
-          "status": "finite_witnessed",
+          "status": "conditional_proof",
           "evidence_refs": [
             "purification_filtering_carrier_lemma_route_demo",
+            "purification_filtering_implies_recoverable_support_update",
+            "purification_filtering_recoverable_support_theorem_demo",
             "idt_purification_filtering_demo"
           ],
-          "open_gap": "Finite purification/filtering route exists, but it is not yet a universal carrier-selection theorem."
+          "open_gap": "Purification/filtering now has a conditional recoverable-support theorem, but it is not a universal carrier-selection theorem."
         },
         {
           "id": "extend_bounded_correlation_to_carrier_theorem",
@@ -4381,17 +4443,21 @@
       "finite_evidence_refs": [
         "idt_purification_filtering_demo"
       ],
+      "conditional_theorem_refs": [
+        "purification_filtering_implies_recoverable_support_update",
+        "purification_filtering_recoverable_support_theorem_demo"
+      ],
       "excluded_counterexamples": [
         "insufficient_environment_extension",
         "zero_support_filter"
       ],
       "expected_exclusion_count": 2,
       "open_generalization_gaps": [
-        "extend finite purification/filtering samples to arbitrary admissible carriers",
-        "prove recoverable extensions are forced by IDT readout/facticity primitives",
-        "show posterior support renormalization excludes non-IDT effect-cone filters universally"
+        "conditional theorem still assumes recoverable extension contexts",
+        "posterior support renormalization is not yet derived from IDT primitives alone",
+        "complex Hilbert carrier is not selected from IDT primitives alone"
       ],
-      "expected_lemma_status": "finite_witnessed"
+      "expected_lemma_status": "conditional_proof"
     },
     {
       "id": "bounded_correlation_carrier_lemma_route_demo",
