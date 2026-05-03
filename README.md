@@ -41,6 +41,17 @@ for QM or GR. Its present value is methodological and test-directed:
 - `tests/` — verifier unit tests.
 - `data/` — documented data anchors used by verifier-facing research notes.
 
+## Language Policy
+
+English is the canonical language of the project. The primary README, canonical
+source, verifier manifests, code, tests, and release notes should remain in
+English.
+
+Translations into other languages are welcome as secondary documentation, but
+they must preserve the same claim boundaries as the English source. If a
+translation conflicts with the English canonical text, the English text is
+authoritative.
+
 ## Verify
 
 Fetch external SPARC data first:
