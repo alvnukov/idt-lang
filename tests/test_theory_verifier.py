@@ -3530,6 +3530,39 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"carrier_selection_proof_route_status_mismatch"})
 
+    def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_context_product_carrier_lemma",
+                        "type": "context_product_carrier_lemma_route",
+                        "target_lemma": "extend_context_product_exhaustion_to_carrier_theorem",
+                        "required_primitives": list(CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES),
+                        "required_conditions": list(IDT_LOCAL_TOMOGRAPHY_CONDITIONS),
+                        "finite_evidence_refs": [
+                            "context_product_exhaustion_demo",
+                            "idt_local_tomography_derivation_demo",
+                        ],
+                        "excluded_counterexamples": [
+                            "hidden_joint_invariant_composite",
+                            "real_rebit_pair",
+                            "hidden_joint_sector",
+                        ],
+                        "expected_exclusion_count": 3,
+                        "open_generalization_gaps": ["still finite"],
+                        "expected_lemma_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_product_carrier_lemma_status_mismatch"})
+
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
             {

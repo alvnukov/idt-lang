@@ -219,6 +219,8 @@ CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES = (
     "formal_proof",
 )
 
+CONTEXT_PRODUCT_CARRIER_LEMMA_TARGET = "extend_context_product_exhaustion_to_carrier_theorem"
+
 CARRIER_SELECTION_FRONTIER_STATUSES = {
     "not_derived",
     "selected_by_current_gates",
@@ -6296,6 +6298,77 @@ def check_carrier_selection_proof_route_gate(gate: FiniteGate) -> list[Issue]:
         return [
             Issue(
                 "carrier_selection_proof_route_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_context_product_carrier_lemma_route_gate(gate: FiniteGate) -> list[Issue]:
+    target_lemma = require_string(gate.payload.get("target_lemma"), f"{gate.identifier}.target_lemma")
+    if target_lemma != CONTEXT_PRODUCT_CARRIER_LEMMA_TARGET:
+        return [
+            Issue(
+                "context_product_carrier_lemma_target_mismatch",
+                f"{gate.identifier}: target lemma must be {CONTEXT_PRODUCT_CARRIER_LEMMA_TARGET}",
+            )
+        ]
+
+    primitives = require_string_tuple(gate.payload.get("required_primitives", []), f"{gate.identifier}.required_primitives")
+    if set(primitives) != set(CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES):
+        return [
+            Issue(
+                "context_product_carrier_lemma_primitives_mismatch",
+                f"{gate.identifier}: required primitives must match context-product exhaustion primitives",
+            )
+        ]
+
+    conditions = require_string_tuple(gate.payload.get("required_conditions", []), f"{gate.identifier}.required_conditions")
+    if set(conditions) != set(IDT_LOCAL_TOMOGRAPHY_CONDITIONS):
+        return [
+            Issue(
+                "context_product_carrier_lemma_conditions_mismatch",
+                f"{gate.identifier}: required conditions must match IDT local-tomography conditions",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("finite_evidence_refs", []), f"{gate.identifier}.finite_evidence_refs")
+    if set(evidence_refs) != {"context_product_exhaustion_demo", "idt_local_tomography_derivation_demo"}:
+        return [
+            Issue(
+                "context_product_carrier_lemma_evidence_mismatch",
+                f"{gate.identifier}: finite evidence refs must link context-product and local-tomography witnesses",
+            )
+        ]
+
+    excluded_counterexamples = require_string_tuple(
+        gate.payload.get("excluded_counterexamples", []),
+        f"{gate.identifier}.excluded_counterexamples",
+    )
+    expected_exclusion_count = parse_positive_integer(
+        gate.payload.get("expected_exclusion_count"),
+        f"{gate.identifier}.expected_exclusion_count",
+    )
+    if len(excluded_counterexamples) != expected_exclusion_count:
+        return [
+            Issue(
+                "context_product_carrier_lemma_exclusion_count_mismatch",
+                f"{gate.identifier}: expected {expected_exclusion_count} exclusions, got {len(excluded_counterexamples)}",
+            )
+        ]
+
+    open_gaps = require_string_tuple(gate.payload.get("open_generalization_gaps", []), f"{gate.identifier}.open_generalization_gaps")
+    expected_status = require_string(gate.payload.get("expected_lemma_status"), f"{gate.identifier}.expected_lemma_status")
+    if expected_status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
+        raise ManifestError(f"{gate.identifier}: expected_lemma_status is unknown")
+    if open_gaps:
+        computed_status = "finite_witnessed"
+    else:
+        computed_status = "formal_proof"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "context_product_carrier_lemma_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
@@ -13301,6 +13374,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "carrier_selection_proof_route": check_carrier_selection_proof_route_gate,
+    "context_product_carrier_lemma_route": check_context_product_carrier_lemma_route_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,
     "marker_eraser_visibility": check_marker_eraser_visibility_gate,
     "bell_chsh_table": check_bell_chsh_table_gate,

@@ -101,6 +101,18 @@ Status:
 
 `theorem_proof_route_language_initialized`
 
+The first lemma route is now manifest-backed:
+
+`context_product_carrier_lemma_route_demo`
+
+This is the first narrower proof-unit below a theorem proof route. It records
+the finite witnesses, excluded counterexamples, expected exclusion count, and
+remaining generalization gaps for one carrier-selection lemma.
+
+Status:
+
+`lemma_route_language_initialized`
+
 ### 173.2. Query And Edit Layer
 
 The first file-based graph query tool is:

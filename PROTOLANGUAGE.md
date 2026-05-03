@@ -663,6 +663,10 @@ full-QM closure frontier blockers as first-class manifest objects.
 The `carrier_selection_proof_route_demo` now starts the first theorem proof
 route: five carrier-selection lemma obligations have finite witnesses but still
 remain below formal proof.
+The `context_product_carrier_lemma_route_demo` now starts the first lemma
+route below that theorem route: context-product and local-tomography witnesses
+exclude finite hidden-joint counterexamples while leaving universal
+generalization gaps open.
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.

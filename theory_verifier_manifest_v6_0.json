@@ -4158,6 +4158,7 @@
           "id": "extend_context_product_exhaustion_to_carrier_theorem",
           "status": "finite_witnessed",
           "evidence_refs": [
+            "context_product_carrier_lemma_route_demo",
             "context_product_exhaustion_demo",
             "idt_local_tomography_derivation_demo"
           ],
@@ -4199,6 +4200,40 @@
         }
       ],
       "expected_proof_status": "open"
+    },
+    {
+      "id": "context_product_carrier_lemma_route_demo",
+      "type": "context_product_carrier_lemma_route",
+      "target_lemma": "extend_context_product_exhaustion_to_carrier_theorem",
+      "required_primitives": [
+        "event_packet",
+        "distinguishability_partition",
+        "readout_context",
+        "facticity_rule",
+        "stable_invariant"
+      ],
+      "required_conditions": [
+        "product_readout_context_closure",
+        "joint_facticity_exhaustion",
+        "no_hidden_joint_invariant",
+        "stable_invariant_separability"
+      ],
+      "finite_evidence_refs": [
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo"
+      ],
+      "excluded_counterexamples": [
+        "hidden_joint_invariant_composite",
+        "real_rebit_pair",
+        "hidden_joint_sector"
+      ],
+      "expected_exclusion_count": 3,
+      "open_generalization_gaps": [
+        "extend finite context tables to arbitrary operational composites",
+        "prove no hidden joint invariant for all admissible effect cones",
+        "show local-tomographic exhaustion is forced by IDT primitives rather than assumed as a condition"
+      ],
+      "expected_lemma_status": "finite_witnessed"
     },
     {
       "id": "triple_path_sorkin_parameter_demo",

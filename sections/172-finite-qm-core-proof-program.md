@@ -437,9 +437,29 @@ It decomposes the theorem into five lemma obligations:
 Each lemma currently has finite witnesses but remains below `formal_proof`.
 The route therefore keeps `universal_carrier_selection_theorem` at `open`.
 
+The first lemma route is now executable as:
+
+`context_product_carrier_lemma_route_demo`.
+
+It connects `context_product_exhaustion_demo` and
+`idt_local_tomography_derivation_demo` to the carrier-selection proof route.
+The route records three finite exclusions:
+
+1. hidden joint invariant composite;
+2. real rebit pair;
+3. hidden joint sector.
+
+It still remains `finite_witnessed`, not `formal_proof`, because the finite
+context tables must be extended to arbitrary operational composites and all
+admissible effect cones.
+
 Status:
 
 `carrier_selection_proof_route_initialized`
+
+Status:
+
+`context_product_carrier_lemma_route_initialized`
 
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that
