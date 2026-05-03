@@ -31,9 +31,41 @@ for QM or GR. Its present value is methodological and test-directed:
   couplings, bridge assumptions, readouts, experimental gates, and blocked
   claims.
 
+For a compact public boundary, see the [Public Claim Sheet](PUBLIC_CLAIM_SHEET.md).
+
+## What This Snapshot Demonstrates
+
+The current public value is that IDT turns speculative theory work into a
+checked claim ledger. It shows which parts are finite executable readouts, which
+parts are calibrated, which bridges are still conditional, and which claims are
+blocked.
+
+Current auditable results:
+
+- finite QM readout gates: Born/context tables, two-path interference, Sorkin
+  `I3 = 0`, marker/eraser visibility, unitary context maps, projective readout
+  repeatability, Bell/CHSH no-signalling checks, amplitude-derived CHSH tables,
+  and a singlet angle model with `|S| = 2*sqrt(2)`;
+- anti-overclaim gates: the verifier rejects premature first-principles claims
+  for `hbar_I`, `G_I`, `alpha_em_I`, and `full_QM_I`;
+- calibrated-anchor discipline: `calibrated_hbar_I` may be used as an explicit
+  our-universe action anchor, while first-principles `hbar_I` remains blocked;
+- real-data weak-gravity gates: the SPARC front anchors real DDO154 data,
+  rejects post-fit residual provenance, records near misses, and rejects
+  held-out transfer for the current frozen candidate;
+- sector role taxonomy: selectors, dimensional anchors, couplings, bridge
+  assumptions, readouts, experimental gates, and blocked claims are separated
+  before public claims are allowed.
+
+These are successes of reconstruction discipline and executable claim control.
+They are not claims that IDT has already derived all of QM, GR, or the constants
+of nature.
+
 ## Repository Layout
 
 - `ORIGIN.md` — project origin and motivation.
+- `PUBLIC_CLAIM_SHEET.md` — public claim boundary and current auditable
+  successes.
 - `PROTOLANGUAGE.md` — canonical entry point and public positioning.
 - `sections/` — modular theory body.
 - `theory_verifier/` — executable manifest verifier.
