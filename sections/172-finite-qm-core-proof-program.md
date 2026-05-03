@@ -130,6 +130,14 @@ projective records through readout gain, disturbance bounds, and recoverability
 loss thresholds. This joins the existing projective, partial, decoherence, and
 recoverability gates into one finite mechanism route.
 
+The 35-gate finite-core recompile route is now executable as:
+
+`qm_core_recompile_route_demo`.
+
+It records the shared six-operation core, the required finite route gates, the
+six universal kernels, the 35 covered experiments, and the 35 finite gate
+references. This turns the old bench summary into an explicit manifest contract.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -431,6 +439,10 @@ Status:
 Status:
 
 `measurement_facticity_route_executable`
+
+Status:
+
+`qm_core_recompile_route_executable`
 
 Status:
 

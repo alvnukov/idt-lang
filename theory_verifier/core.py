@@ -162,6 +162,19 @@ TENSOR_COMPOSITION_ROUTE_CONDITIONS = (
     "entangled_nonproduct_states",
 )
 
+QM_CORE_RECOMPILE_REQUIRED_ROUTES = (
+    "born_quadratic_readout_route_demo",
+    "measurement_facticity_route_demo",
+    "tensor_composition_route_demo",
+    "context_product_exhaustion_demo",
+    "idt_local_tomography_derivation_demo",
+    "idt_purification_filtering_demo",
+    "idt_bounded_correlation_demo",
+    "noncomplex_jordan_separator_demo",
+    "generic_gpt_closure_separator_demo",
+    "carrier_selection_frontier_demo",
+)
+
 MEASUREMENT_FACTICITY_ROUTE_CONDITIONS = (
     "context_readout_gain",
     "disturbance_bound",
@@ -5554,6 +5567,68 @@ def check_tensor_composition_route_gate(gate: FiniteGate) -> list[Issue]:
                     f"{gate.identifier}: state {state_id} expected factorizable={expected_factorizable}, computed {computed_factorizable}",
                 )
             ]
+    return []
+
+
+def check_qm_core_recompile_route_gate(gate: FiniteGate) -> list[Issue]:
+    shared_operations = require_string_tuple(gate.payload.get("shared_operations", []), f"{gate.identifier}.shared_operations")
+    if set(shared_operations) != set(QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS):
+        return [
+            Issue(
+                "qm_core_recompile_operations_mismatch",
+                f"{gate.identifier}: shared operations must match the QM universal pattern operations",
+            )
+        ]
+    route_gates = require_string_tuple(gate.payload.get("route_gates", []), f"{gate.identifier}.route_gates")
+    if set(route_gates) != set(QM_CORE_RECOMPILE_REQUIRED_ROUTES):
+        return [
+            Issue(
+                "qm_core_recompile_routes_mismatch",
+                f"{gate.identifier}: route gates must match the finite QM core route set",
+            )
+        ]
+    kernel_count = parse_positive_integer(gate.payload.get("kernel_count"), f"{gate.identifier}.kernel_count")
+    experiment_count = parse_positive_integer(gate.payload.get("experiment_count"), f"{gate.identifier}.experiment_count")
+    finite_gate_reference_count = parse_positive_integer(
+        gate.payload.get("finite_gate_reference_count"),
+        f"{gate.identifier}.finite_gate_reference_count",
+    )
+    expected_kernel_count = parse_positive_integer(
+        gate.payload.get("expected_kernel_count"),
+        f"{gate.identifier}.expected_kernel_count",
+    )
+    expected_experiment_count = parse_positive_integer(
+        gate.payload.get("expected_experiment_count"),
+        f"{gate.identifier}.expected_experiment_count",
+    )
+    expected_finite_gate_reference_count = parse_positive_integer(
+        gate.payload.get("expected_finite_gate_reference_count"),
+        f"{gate.identifier}.expected_finite_gate_reference_count",
+    )
+    if kernel_count != expected_kernel_count:
+        return [
+            Issue(
+                "qm_core_recompile_kernel_count_mismatch",
+                f"{gate.identifier}: expected {expected_kernel_count} kernels, got {kernel_count}",
+            )
+        ]
+    if experiment_count != expected_experiment_count:
+        return [
+            Issue(
+                "qm_core_recompile_experiment_count_mismatch",
+                f"{gate.identifier}: expected {expected_experiment_count} experiments, got {experiment_count}",
+            )
+        ]
+    if finite_gate_reference_count != expected_finite_gate_reference_count:
+        return [
+            Issue(
+                "qm_core_recompile_gate_reference_count_mismatch",
+                (
+                    f"{gate.identifier}: expected {expected_finite_gate_reference_count} finite gate refs, "
+                    f"got {finite_gate_reference_count}"
+                ),
+            )
+        ]
     return []
 
 
@@ -12614,6 +12689,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "generic_gpt_closure_separator": check_generic_gpt_closure_separator_gate,
     "born_quadratic_readout_route": check_born_quadratic_readout_route_gate,
     "tensor_composition_route": check_tensor_composition_route_gate,
+    "qm_core_recompile_route": check_qm_core_recompile_route_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

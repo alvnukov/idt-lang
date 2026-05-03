@@ -94,6 +94,7 @@ from theory_verifier.core import (
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
     NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
+    QM_CORE_RECOMPILE_REQUIRED_ROUTES,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
     QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS,
     QM_APPARATUS_FACTICITY_REQUIRED_GATES,
@@ -3220,6 +3221,33 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"tensor_composition_factorization_mismatch"})
+
+    def test_qm_core_recompile_route_rejects_missing_route(self) -> None:
+        route_gates = [route for route in QM_CORE_RECOMPILE_REQUIRED_ROUTES if route != "carrier_selection_frontier_demo"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_qm_core_recompile_route",
+                        "type": "qm_core_recompile_route",
+                        "shared_operations": list(QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS),
+                        "route_gates": route_gates,
+                        "kernel_count": 6,
+                        "experiment_count": 35,
+                        "finite_gate_reference_count": 35,
+                        "expected_kernel_count": 6,
+                        "expected_experiment_count": 35,
+                        "expected_finite_gate_reference_count": 35,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_core_recompile_routes_mismatch"})
 
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(

@@ -623,6 +623,9 @@ factorizing.
 The `measurement_facticity_route_demo` now connects recoverable markers,
 partial pointer readouts, and stable projective records through readout gain,
 disturbance bounds, and recoverability loss thresholds.
+The `qm_core_recompile_route_demo` now turns the 35-experiment bench into an
+explicit finite-core contract: six shared operations, six universal kernels, 35
+experiments, 35 finite gate references, and the required route gates.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles

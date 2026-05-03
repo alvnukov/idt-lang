@@ -2848,10 +2848,11 @@
         "phase_action_anchor_pattern",
         "finite_update_survival_pattern",
         "correlation_contextual_obstruction_pattern",
-        "record_transfer_noncopyability_pattern"
+        "record_transfer_noncopyability_pattern",
+        "qm_core_recompile_route_demo"
       ],
-      "open_gap": "The current bench compiles pattern summaries, not every experiment as an instance of one proven finite core.",
-      "claim_boundary": "The 35 gates are the regression target for the future core compiler, not evidence that the core proof is already closed."
+      "open_gap": "The 35 gates now have a finite core recompile route contract, but this remains conditional on the open theorem-level obligations.",
+      "claim_boundary": "The 35 gates are compiled against the finite core route; this is not evidence that the full QM proof is closed."
     },
     {
       "id": "continuum_action_scale_extension",
@@ -4232,6 +4233,36 @@
       ],
       "hbar": 2.0,
       "expected_hamiltonian": [2.0, -4.0]
+    },
+    {
+      "id": "qm_core_recompile_route_demo",
+      "type": "qm_core_recompile_route",
+      "shared_operations": [
+        "event_packet",
+        "distinguishability_partition",
+        "inheritance_update",
+        "readout_context",
+        "facticity_rule",
+        "stable_invariant"
+      ],
+      "route_gates": [
+        "born_quadratic_readout_route_demo",
+        "measurement_facticity_route_demo",
+        "tensor_composition_route_demo",
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "idt_purification_filtering_demo",
+        "idt_bounded_correlation_demo",
+        "noncomplex_jordan_separator_demo",
+        "generic_gpt_closure_separator_demo",
+        "carrier_selection_frontier_demo"
+      ],
+      "kernel_count": 6,
+      "experiment_count": 35,
+      "finite_gate_reference_count": 35,
+      "expected_kernel_count": 6,
+      "expected_experiment_count": 35,
+      "expected_finite_gate_reference_count": 35
     },
     {
       "id": "translation_de_broglie_scale_demo",
