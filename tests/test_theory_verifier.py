@@ -3501,6 +3501,35 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"carrier_selection_frontier_selection_mismatch"})
 
+    def test_carrier_selection_proof_route_rejects_premature_formal_proof(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_carrier_selection_proof_route",
+                        "type": "carrier_selection_proof_route",
+                        "target_theorem": "universal_carrier_selection_theorem",
+                        "lemmas": [
+                            {
+                                "id": lemma,
+                                "status": "finite_witnessed",
+                                "evidence_refs": ["finite_witness"],
+                                "open_gap": "not yet formal",
+                            }
+                            for lemma in CARRIER_SELECTION_OPEN_OBSTRUCTIONS
+                        ],
+                        "expected_proof_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"carrier_selection_proof_route_status_mismatch"})
+
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
             {

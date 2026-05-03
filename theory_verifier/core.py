@@ -212,6 +212,13 @@ CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_generic_gpt_exclusion_to_classification_theorem",
 )
 
+CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES = (
+    "finite_witnessed",
+    "open",
+    "blocked",
+    "formal_proof",
+)
+
 CARRIER_SELECTION_FRONTIER_STATUSES = {
     "not_derived",
     "selected_by_current_gates",
@@ -6206,6 +6213,90 @@ def check_carrier_selection_frontier_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "carrier_selection_frontier_status_mismatch",
                 f"{gate.identifier}: expected frontier status {expected_frontier_status}, computed {computed_frontier_status}",
+            )
+        ]
+    return []
+
+
+def check_carrier_selection_proof_route_gate(gate: FiniteGate) -> list[Issue]:
+    target_theorem = require_string(gate.payload.get("target_theorem"), f"{gate.identifier}.target_theorem")
+    if target_theorem != "universal_carrier_selection_theorem":
+        return [
+            Issue(
+                "carrier_selection_proof_route_target_mismatch",
+                f"{gate.identifier}: target theorem must be universal_carrier_selection_theorem",
+            )
+        ]
+
+    lemmas = require_list(gate.payload.get("lemmas"), f"{gate.identifier}.lemmas")
+    if len(lemmas) != len(CARRIER_SELECTION_OPEN_OBSTRUCTIONS):
+        raise ManifestError(f"{gate.identifier}: lemmas must cover every carrier-selection obstruction")
+
+    status_by_lemma: dict[str, str] = {}
+    for index, item in enumerate(lemmas):
+        lemma = require_mapping(item, f"{gate.identifier}.lemmas[{index}]")
+        lemma_id = require_string(lemma.get("id"), f"{gate.identifier}.lemmas[{index}].id")
+        status = require_string(lemma.get("status"), f"{gate.identifier}.lemmas[{index}].status")
+        evidence_refs = require_string_tuple(
+            lemma.get("evidence_refs", []),
+            f"{gate.identifier}.lemmas[{index}].evidence_refs",
+        )
+        open_gap = require_string(lemma.get("open_gap"), f"{gate.identifier}.lemmas[{index}].open_gap")
+        if lemma_id not in CARRIER_SELECTION_OPEN_OBSTRUCTIONS:
+            return [
+                Issue(
+                    "carrier_selection_proof_route_unknown_lemma",
+                    f"{gate.identifier}: unknown lemma {lemma_id}",
+                )
+            ]
+        if status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
+            raise ManifestError(f"{gate.identifier}: lemma {lemma_id} has unknown status {status!r}")
+        if lemma_id in status_by_lemma:
+            return [
+                Issue(
+                    "carrier_selection_proof_route_duplicate_lemma",
+                    f"{gate.identifier}: duplicate lemma {lemma_id}",
+                )
+            ]
+        if status in {"finite_witnessed", "formal_proof"} and not evidence_refs:
+            return [
+                Issue(
+                    "carrier_selection_proof_route_evidence_missing",
+                    f"{gate.identifier}: lemma {lemma_id} needs evidence refs",
+                )
+            ]
+        if status != "formal_proof" and not open_gap.strip():
+            return [
+                Issue(
+                    "carrier_selection_proof_route_gap_missing",
+                    f"{gate.identifier}: lemma {lemma_id} needs an open gap",
+                )
+            ]
+        status_by_lemma[lemma_id] = status
+
+    missing = sorted(set(CARRIER_SELECTION_OPEN_OBSTRUCTIONS) - set(status_by_lemma))
+    if missing:
+        return [
+            Issue(
+                "carrier_selection_proof_route_lemma_missing",
+                f"{gate.identifier}: missing lemmas: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_proof_status"), f"{gate.identifier}.expected_proof_status")
+    if expected_status not in THEOREM_CARD_PROOF_STATUS_VALUES:
+        raise ManifestError(f"{gate.identifier}: expected_proof_status is unknown")
+    if any(status == "blocked" for status in status_by_lemma.values()):
+        computed_status = "blocked"
+    elif all(status == "formal_proof" for status in status_by_lemma.values()):
+        computed_status = "formal_proof"
+    else:
+        computed_status = "open"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "carrier_selection_proof_route_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
     return []
@@ -13209,6 +13300,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "full_qm_closure_frontier": check_full_qm_closure_frontier_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
+    "carrier_selection_proof_route": check_carrier_selection_proof_route_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,
     "marker_eraser_visibility": check_marker_eraser_visibility_gate,
     "bell_chsh_table": check_bell_chsh_table_gate,

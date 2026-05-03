@@ -89,6 +89,18 @@ Status:
 
 `full_qm_frontier_theorem_cards_grounded`
 
+The first theorem proof route is now manifest-backed:
+
+`carrier_selection_proof_route_demo`
+
+This adds the missing layer between a theorem card and finite evidence. A proof
+route is not a theorem proof. It is a typed list of lemma obligations with
+finite witnesses, open gaps, and a computed proof status.
+
+Status:
+
+`theorem_proof_route_language_initialized`
+
 ### 173.2. Query And Edit Layer
 
 The first file-based graph query tool is:

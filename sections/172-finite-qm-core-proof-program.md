@@ -421,6 +421,26 @@ The frontier status is therefore:
 
 `not_derived`.
 
+The first proof route toward the universal carrier-selection theorem is now
+executable as:
+
+`carrier_selection_proof_route_demo`.
+
+It decomposes the theorem into five lemma obligations:
+
+1. context-product exhaustion as a carrier theorem;
+2. purification/filtering as a carrier theorem;
+3. bounded correlations as a carrier theorem;
+4. non-complex Jordan exclusion as a classification theorem;
+5. generic GPT exclusion as a classification theorem.
+
+Each lemma currently has finite witnesses but remains below `formal_proof`.
+The route therefore keeps `universal_carrier_selection_theorem` at `open`.
+
+Status:
+
+`carrier_selection_proof_route_initialized`
+
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that
 selects complex Hilbert space from the language alone.

@@ -2878,6 +2878,7 @@
       "role": "theorem",
       "assumptions": ["QM_EXPERIMENT_REQUIRED_PRIMITIVES"],
       "dependencies": [
+        "carrier_selection_proof_route_demo",
         "carrier_selection_frontier_demo",
         "generic_gpt_closure_separator_demo",
         "noncomplex_jordan_separator_demo"
@@ -4147,6 +4148,57 @@
           ]
         }
       ]
+    },
+    {
+      "id": "carrier_selection_proof_route_demo",
+      "type": "carrier_selection_proof_route",
+      "target_theorem": "universal_carrier_selection_theorem",
+      "lemmas": [
+        {
+          "id": "extend_context_product_exhaustion_to_carrier_theorem",
+          "status": "finite_witnessed",
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "idt_local_tomography_derivation_demo"
+          ],
+          "open_gap": "Finite context-product exhaustion exists, but it is not yet a universal carrier-selection theorem."
+        },
+        {
+          "id": "extend_purification_filtering_to_carrier_theorem",
+          "status": "finite_witnessed",
+          "evidence_refs": [
+            "idt_purification_filtering_demo"
+          ],
+          "open_gap": "Finite purification/filtering route exists, but it is not yet a universal carrier-selection theorem."
+        },
+        {
+          "id": "extend_bounded_correlation_to_carrier_theorem",
+          "status": "finite_witnessed",
+          "evidence_refs": [
+            "idt_bounded_correlation_demo",
+            "gpt_principle_separator_demo"
+          ],
+          "open_gap": "Finite bounded-correlation screen exists, but it is not yet a universal carrier-selection theorem."
+        },
+        {
+          "id": "extend_noncomplex_jordan_exclusion_to_classification_theorem",
+          "status": "finite_witnessed",
+          "evidence_refs": [
+            "noncomplex_jordan_separator_demo"
+          ],
+          "open_gap": "Non-complex Jordan separator exists, but it is not yet a classification theorem."
+        },
+        {
+          "id": "extend_generic_gpt_exclusion_to_classification_theorem",
+          "status": "finite_witnessed",
+          "evidence_refs": [
+            "generic_gpt_closure_separator_demo",
+            "carrier_selection_frontier_demo"
+          ],
+          "open_gap": "Generic GPT separator exists, but it is not yet a classification theorem."
+        }
+      ],
+      "expected_proof_status": "open"
     },
     {
       "id": "triple_path_sorkin_parameter_demo",
