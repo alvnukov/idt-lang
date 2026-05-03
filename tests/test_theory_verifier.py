@@ -81,6 +81,12 @@ from theory_verifier.core import (
     SCREENED_SLIP_RESIDUAL_TARGET,
     SCREENED_OBSERVATIONAL_GATE_REQUIRED_SYMBOLS,
     SCREENED_OBSERVATIONAL_GATE_TARGET,
+    CARRIER_SELECTION_OPEN_OBSTRUCTIONS,
+    CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES,
+    DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS,
+    GPT_SEPARATOR_PRINCIPLES,
+    IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
+    QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
     QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS,
     QM_APPARATUS_FACTICITY_REQUIRED_GATES,
@@ -515,6 +521,58 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"qm_universal_pattern_experiment_uncovered"})
+
+    def test_large_qm_ledger_requires_core_proof_obligations(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [qm_experiment(identifier=f"experiment_{index}") for index in range(10)],
+                "qm_universal_patterns": [qm_universal_pattern(experiments=[f"experiment_{index}" for index in range(10)])],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_core_proof_obligations_missing"})
+
+    def test_qm_core_proof_obligations_require_complete_required_set(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_experiments": [qm_experiment(identifier="experiment_a")],
+                "qm_universal_patterns": [qm_universal_pattern(experiments=["experiment_a"])],
+                "qm_core_proof_obligations": [qm_core_proof_obligation(identifier="finite_operational_core")],
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_core_proof_obligations_incomplete"})
+
+    def test_full_qm_derived_requires_closed_core_proof_obligations(self) -> None:
+        obligations = [
+            qm_core_proof_obligation(identifier=identifier, status="derived")
+            for identifier in QM_CORE_PROOF_REQUIRED_OBLIGATIONS
+        ]
+        obligations[-1]["status"] = "blocked"
+        manifest = parse_manifest(
+            {
+                "symbols": {
+                    "full_QM_I": {"status": "derived", "dimension": {}},
+                },
+                "equations": [],
+                "derivations": [],
+                "finite_gates": [],
+                "qm_core_proof_obligations": obligations,
+                "forbidden_paths": [],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"full_qm_core_proof_incomplete"})
 
     def test_joint_action_gravity_anchor_requires_explicit_derivation(self) -> None:
         manifest = parse_manifest(
@@ -2679,6 +2737,276 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"unitary_graph_walk_distribution_mismatch"})
+
+    def test_distinguishability_geometry_probe_rejects_bad_candidate_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_distinguishability_geometry_probe",
+                        "type": "distinguishability_geometry_probe",
+                        "requirements": list(DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS),
+                        "expected_selected_carrier": "none",
+                        "candidates": [
+                            {
+                                "id": "classical_simplex",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "contextual_probability_readout": "supported",
+                                    "interference_i3_zero": "unsupported",
+                                    "reversible_inheritance_maps": "unsupported",
+                                    "contextual_correlation_obstruction": "unsupported",
+                                    "noncopyability": "unsupported",
+                                    "tensor_like_composition": "supported",
+                                },
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"distinguishability_geometry_candidate_status_mismatch"})
+
+    def test_local_tomography_separator_rejects_bad_candidate_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_local_tomography_separator",
+                        "type": "local_tomography_separator",
+                        "expected_selected_carrier": "none",
+                        "systems": [
+                            {
+                                "id": "complex_qubit_pair",
+                                "local_a": 4,
+                                "local_b": 4,
+                                "composite": 16,
+                                "expected_locally_tomographic": True,
+                            },
+                            {
+                                "id": "real_rebit_pair",
+                                "local_a": 3,
+                                "local_b": 3,
+                                "composite": 10,
+                                "expected_locally_tomographic": False,
+                            }
+                        ],
+                        "candidates": [
+                            {
+                                "id": "real_hilbert_like",
+                                "local_tomography": "unsupported",
+                                "expected_status": "survives",
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"local_tomography_candidate_status_mismatch"})
+
+    def test_idt_local_tomography_derivation_rejects_hidden_joint_admissibility(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_idt_local_tomography",
+                        "type": "idt_local_tomography_derivation",
+                        "idt_conditions": list(IDT_LOCAL_TOMOGRAPHY_CONDITIONS),
+                        "systems": [
+                            {
+                                "id": "hidden_joint_sector",
+                                "local_a": 4,
+                                "local_b": 4,
+                                "composite": 18,
+                                "joint_only_degrees": 2,
+                                "expected_product_dimension": 16,
+                                "expected_locally_tomographic": False,
+                                "expected_idt_admissible": True,
+                            },
+                            {
+                                "id": "product_context_table",
+                                "local_a": 4,
+                                "local_b": 4,
+                                "composite": 16,
+                                "joint_only_degrees": 0,
+                                "expected_product_dimension": 16,
+                                "expected_locally_tomographic": True,
+                                "expected_idt_admissible": True,
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_local_tomography_admissibility_mismatch"})
+
+    def test_context_product_exhaustion_rejects_hidden_invariant_admissibility(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_context_product_exhaustion",
+                        "type": "context_product_exhaustion",
+                        "idt_primitives": list(CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES),
+                        "candidates": [
+                            {
+                                "id": "hidden_joint_candidate",
+                                "left_contexts": ["a0", "a1"],
+                                "right_contexts": ["b0", "b1"],
+                                "product_contexts": [
+                                    {"id": "a0_b0", "left": "a0", "right": "b0"},
+                                    {"id": "a0_b1", "left": "a0", "right": "b1"},
+                                    {"id": "a1_b0", "left": "a1", "right": "b0"},
+                                    {"id": "a1_b1", "left": "a1", "right": "b1"},
+                                ],
+                                "stable_invariants": [
+                                    {
+                                        "id": "visible_joint_table",
+                                        "witness_contexts": ["a0_b0", "a0_b1", "a1_b0", "a1_b1"],
+                                        "expected_exhausted": True,
+                                    },
+                                    {
+                                        "id": "hidden_joint_phase",
+                                        "witness_contexts": [],
+                                        "expected_exhausted": False,
+                                    },
+                                ],
+                                "expected_context_product_exhausted": False,
+                                "expected_idt_admissible": True,
+                            },
+                            {
+                                "id": "exhausted_product_candidate",
+                                "left_contexts": ["a0"],
+                                "right_contexts": ["b0"],
+                                "product_contexts": [{"id": "a0_b0", "left": "a0", "right": "b0"}],
+                                "stable_invariants": [
+                                    {
+                                        "id": "single_product_record",
+                                        "witness_contexts": ["a0_b0"],
+                                        "expected_exhausted": True,
+                                    }
+                                ],
+                                "expected_context_product_exhausted": True,
+                                "expected_idt_admissible": True,
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_product_exhaustion_admissibility_mismatch"})
+
+    def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_gpt_principle_separator",
+                        "type": "gpt_principle_separator",
+                        "principles": list(GPT_SEPARATOR_PRINCIPLES),
+                        "expected_selected_carrier": "none",
+                        "candidates": [
+                            {
+                                "id": "complex_hilbert_like",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "local_tomography": "supported",
+                                    "homogeneous_self_dual_cone": "supported",
+                                    "continuous_reversible_bit_symmetry": "supported",
+                                    "no_third_order_interference": "supported",
+                                    "purification_or_filtering": "supported",
+                                    "bounded_nonclassical_correlations": "supported",
+                                },
+                            },
+                            {
+                                "id": "boxworld_like_gpt",
+                                "expected_status": "survives",
+                                "capabilities": {
+                                    "local_tomography": "supported",
+                                    "homogeneous_self_dual_cone": "unsupported",
+                                    "continuous_reversible_bit_symmetry": "unsupported",
+                                    "no_third_order_interference": "underdetermined",
+                                    "purification_or_filtering": "unsupported",
+                                    "bounded_nonclassical_correlations": "unsupported",
+                                },
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"gpt_principle_separator_candidate_status_mismatch"})
+
+    def test_carrier_selection_frontier_rejects_premature_selection(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_carrier_selection_frontier",
+                        "type": "carrier_selection_frontier",
+                        "open_obstructions": list(CARRIER_SELECTION_OPEN_OBSTRUCTIONS),
+                        "expected_selected_carrier": "complex_hilbert_like",
+                        "expected_frontier_status": "selected_by_current_gates",
+                        "candidates": [
+                            {
+                                "id": "complex_hilbert_like",
+                                "status": "survives",
+                                "blocking_obstructions": [],
+                            },
+                            {
+                                "id": "euclidean_jordan_family",
+                                "status": "underdetermined",
+                                "blocking_obstructions": [
+                                    "extend_context_product_exhaustion_to_carrier_theorem",
+                                    "derive_purification_or_filtering_from_idt",
+                                    "exclude_noncomplex_jordan_carriers",
+                                ],
+                            },
+                            {
+                                "id": "generic_gpt_cone",
+                                "status": "underdetermined",
+                                "blocking_obstructions": [
+                                    "extend_context_product_exhaustion_to_carrier_theorem",
+                                    "derive_bounded_correlation_from_idt",
+                                    "exclude_generic_gpt_cones",
+                                ],
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"carrier_selection_frontier_selection_mismatch"})
 
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
@@ -7496,6 +7824,25 @@ def qm_universal_pattern(
         "operations": qm_universal_pattern_operations() if operations is None else operations,
         "compiler_target": "compile this family into a shared QM bench primitive",
         "claim_boundary": "pattern audit only; not full QM derivation",
+    }
+
+
+def qm_core_proof_obligation(
+    *,
+    identifier: str = "finite_operational_core",
+    status: str = "target",
+    depends_on: list[str] | None = None,
+    evidence_refs: list[str] | None = None,
+) -> dict[str, object]:
+    return {
+        "id": identifier,
+        "title": "Test QM core proof obligation",
+        "status": status,
+        "scope": "finite_core",
+        "depends_on": [] if depends_on is None else depends_on,
+        "evidence_refs": [] if evidence_refs is None else evidence_refs,
+        "open_gap": "remaining derivation gap",
+        "claim_boundary": "proof obligation only; not a closed QM derivation",
     }
 
 

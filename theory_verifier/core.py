@@ -51,6 +51,86 @@ QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS = (
     "stable_invariant",
 )
 
+QM_CORE_PROOF_STATUS_VALUES = {
+    "open",
+    "target",
+    "regression_supported",
+    "blocked",
+    "derived_conditional",
+    "derived",
+}
+
+QM_CORE_PROOF_REQUIRED_OBLIGATIONS = (
+    "finite_operational_core",
+    "probability_measure_layer",
+    "distinguishability_geometry",
+    "hilbert_carrier_derivation",
+    "born_rule_derivation",
+    "reversible_inheritance_symmetry",
+    "measurement_facticity_mechanism",
+    "tensor_composition_law",
+    "recompile_35_from_core",
+    "continuum_action_scale_extension",
+)
+
+DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS = (
+    "contextual_probability_readout",
+    "interference_i3_zero",
+    "reversible_inheritance_maps",
+    "contextual_correlation_obstruction",
+    "noncopyability",
+    "tensor_like_composition",
+)
+
+DISTINGUISHABILITY_GEOMETRY_CAPABILITIES = {
+    "supported",
+    "unsupported",
+    "underdetermined",
+}
+
+DISTINGUISHABILITY_GEOMETRY_STATUSES = {
+    "rejected",
+    "survives",
+    "underdetermined",
+}
+
+GPT_SEPARATOR_PRINCIPLES = (
+    "local_tomography",
+    "homogeneous_self_dual_cone",
+    "continuous_reversible_bit_symmetry",
+    "no_third_order_interference",
+    "purification_or_filtering",
+    "bounded_nonclassical_correlations",
+)
+
+IDT_LOCAL_TOMOGRAPHY_CONDITIONS = (
+    "product_readout_context_closure",
+    "joint_facticity_exhaustion",
+    "no_hidden_joint_invariant",
+    "stable_invariant_separability",
+)
+
+CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES = (
+    "event_packet",
+    "distinguishability_partition",
+    "readout_context",
+    "facticity_rule",
+    "stable_invariant",
+)
+
+CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
+    "extend_context_product_exhaustion_to_carrier_theorem",
+    "derive_purification_or_filtering_from_idt",
+    "derive_bounded_correlation_from_idt",
+    "exclude_noncomplex_jordan_carriers",
+    "exclude_generic_gpt_cones",
+)
+
+CARRIER_SELECTION_FRONTIER_STATUSES = {
+    "not_derived",
+    "selected_by_current_gates",
+}
+
 NON_DERIVED_DEPENDENCY_STATUSES = {
     "open",
     "blocked",
@@ -973,6 +1053,18 @@ class QMUniversalPattern:
 
 
 @dataclass(frozen=True)
+class QMCoreProofObligation:
+    identifier: str
+    title: str
+    status: str
+    scope: str
+    depends_on: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+    open_gap: str
+    claim_boundary: str
+
+
+@dataclass(frozen=True)
 class PhaseActionScaleCycle:
     identifier: str
     role: str
@@ -998,6 +1090,7 @@ class Manifest:
     finite_gates: tuple[FiniteGate, ...]
     qm_experiments: tuple[QMExperimentCoverage, ...]
     qm_universal_patterns: tuple[QMUniversalPattern, ...]
+    qm_core_proof_obligations: tuple[QMCoreProofObligation, ...]
 
 
 @dataclass(frozen=True)
@@ -1086,6 +1179,7 @@ def parse_manifest(raw: object) -> Manifest:
     finite_gates = parse_finite_gates(root.get("finite_gates", []))
     qm_experiments = parse_qm_experiments(root.get("qm_experiments", []))
     qm_universal_patterns = parse_qm_universal_patterns(root.get("qm_universal_patterns", []))
+    qm_core_proof_obligations = parse_qm_core_proof_obligations(root.get("qm_core_proof_obligations", []))
     return Manifest(
         symbols=symbols,
         equations=equations,
@@ -1094,6 +1188,7 @@ def parse_manifest(raw: object) -> Manifest:
         finite_gates=finite_gates,
         qm_experiments=qm_experiments,
         qm_universal_patterns=qm_universal_patterns,
+        qm_core_proof_obligations=qm_core_proof_obligations,
     )
 
 
@@ -1265,6 +1360,38 @@ def parse_qm_universal_patterns(raw: object) -> tuple[QMUniversalPattern, ...]:
     return tuple(patterns)
 
 
+def parse_qm_core_proof_obligations(raw: object) -> tuple[QMCoreProofObligation, ...]:
+    items = require_list(raw, "qm_core_proof_obligations")
+    obligations: list[QMCoreProofObligation] = []
+    for index, item in enumerate(items):
+        item_map = require_mapping(item, f"qm_core_proof_obligations[{index}]")
+        obligations.append(
+            QMCoreProofObligation(
+                identifier=require_string(item_map.get("id"), f"qm_core_proof_obligations[{index}].id"),
+                title=require_string(item_map.get("title"), f"qm_core_proof_obligations[{index}].title"),
+                status=require_string(item_map.get("status"), f"qm_core_proof_obligations[{index}].status"),
+                scope=require_string(item_map.get("scope"), f"qm_core_proof_obligations[{index}].scope"),
+                depends_on=require_string_tuple(
+                    item_map.get("depends_on", []),
+                    f"qm_core_proof_obligations[{index}].depends_on",
+                ),
+                evidence_refs=require_string_tuple(
+                    item_map.get("evidence_refs", []),
+                    f"qm_core_proof_obligations[{index}].evidence_refs",
+                ),
+                open_gap=require_string(
+                    item_map.get("open_gap"),
+                    f"qm_core_proof_obligations[{index}].open_gap",
+                ),
+                claim_boundary=require_string(
+                    item_map.get("claim_boundary"),
+                    f"qm_core_proof_obligations[{index}].claim_boundary",
+                ),
+            )
+        )
+    return tuple(obligations)
+
+
 def verify_manifest(manifest: Manifest) -> VerificationReport:
     checks: list[str] = []
     issues: list[Issue] = []
@@ -1292,6 +1419,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_qm_universal_patterns(manifest))
     checks.append("QM universal pattern audit")
+
+    issues.extend(check_qm_core_proof_obligations(manifest))
+    checks.append("QM core proof obligations")
 
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
@@ -1900,6 +2030,114 @@ def check_qm_universal_patterns(manifest: Manifest) -> list[Issue]:
                 f"QM finite gates without universal pattern coverage: {', '.join(uncovered_gates)}",
             )
         )
+
+    return issues
+
+
+def check_qm_core_proof_obligations(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    if not manifest.qm_core_proof_obligations:
+        if len(manifest.qm_experiments) >= 10:
+            return [
+                Issue(
+                    "qm_core_proof_obligations_missing",
+                    "large QM experiment ledgers must declare finite/full QM proof obligations",
+                )
+            ]
+        return issues
+
+    obligation_ids = {obligation.identifier for obligation in manifest.qm_core_proof_obligations}
+    finite_gate_ids = {gate.identifier for gate in manifest.finite_gates}
+    pattern_ids = {pattern.identifier for pattern in manifest.qm_universal_patterns}
+    symbol_ids = set(manifest.symbols)
+    evidence_ids = finite_gate_ids | pattern_ids | symbol_ids
+    seen: set[str] = set()
+
+    missing_required = sorted(set(QM_CORE_PROOF_REQUIRED_OBLIGATIONS) - obligation_ids)
+    if missing_required:
+        issues.append(
+            Issue(
+                "qm_core_proof_obligations_incomplete",
+                f"missing QM core proof obligations: {', '.join(missing_required)}",
+            )
+        )
+
+    for obligation in manifest.qm_core_proof_obligations:
+        if obligation.identifier in seen:
+            issues.append(
+                Issue(
+                    "qm_core_proof_obligation_duplicate",
+                    f"{obligation.identifier}: duplicate QM core proof obligation",
+                )
+            )
+        seen.add(obligation.identifier)
+
+        if obligation.status not in QM_CORE_PROOF_STATUS_VALUES:
+            issues.append(
+                Issue(
+                    "qm_core_proof_status_unknown",
+                    f"{obligation.identifier}: unknown proof status {obligation.status!r}",
+                )
+            )
+        if not obligation.title.strip():
+            issues.append(
+                Issue(
+                    "qm_core_proof_title_missing",
+                    f"{obligation.identifier}: title must be declared",
+                )
+            )
+        if obligation.scope not in {"finite_core", "full_qm_extension"}:
+            issues.append(
+                Issue(
+                    "qm_core_proof_scope_unknown",
+                    f"{obligation.identifier}: unknown scope {obligation.scope!r}",
+                )
+            )
+        missing_deps = [dependency for dependency in obligation.depends_on if dependency not in obligation_ids]
+        if missing_deps:
+            issues.append(
+                Issue(
+                    "qm_core_proof_dependency_missing",
+                    f"{obligation.identifier}: references missing obligations: {', '.join(missing_deps)}",
+                )
+            )
+        missing_evidence = [evidence for evidence in obligation.evidence_refs if evidence not in evidence_ids]
+        if missing_evidence:
+            issues.append(
+                Issue(
+                    "qm_core_proof_evidence_missing",
+                    f"{obligation.identifier}: references missing evidence: {', '.join(missing_evidence)}",
+                )
+            )
+        if obligation.status in {"open", "target", "regression_supported", "blocked"} and not obligation.open_gap.strip():
+            issues.append(
+                Issue(
+                    "qm_core_proof_open_gap_missing",
+                    f"{obligation.identifier}: non-derived obligations must declare the remaining open gap",
+                )
+            )
+        if not obligation.claim_boundary.strip():
+            issues.append(
+                Issue(
+                    "qm_core_proof_claim_boundary_missing",
+                    f"{obligation.identifier}: claim boundary must be declared",
+                )
+            )
+
+    full_qm = manifest.symbols.get("full_QM_I")
+    if full_qm is not None and full_qm.status == "derived":
+        underived = sorted(
+            obligation.identifier
+            for obligation in manifest.qm_core_proof_obligations
+            if obligation.status != "derived"
+        )
+        if underived:
+            issues.append(
+                Issue(
+                    "full_qm_core_proof_incomplete",
+                    f"full_QM_I cannot be derived before QM proof obligations close: {', '.join(underived)}",
+                )
+            )
 
     return issues
 
@@ -4413,6 +4651,516 @@ def check_unitary_graph_walk_gate(gate: FiniteGate) -> list[Issue]:
                     f"{gate.identifier}: position {position} expected {expected:g}, computed {computed:g}",
                 )
             ]
+    return []
+
+
+def check_distinguishability_geometry_probe_gate(gate: FiniteGate) -> list[Issue]:
+    declared_requirements = require_string_tuple(
+        gate.payload.get("requirements", []),
+        f"{gate.identifier}.requirements",
+    )
+    if set(declared_requirements) != set(DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS):
+        return [
+            Issue(
+                "distinguishability_geometry_requirements_mismatch",
+                f"{gate.identifier}: requirements must match the finite QM geometry requirement set",
+            )
+        ]
+
+    candidates = require_list(gate.payload.get("candidates"), f"{gate.identifier}.candidates")
+    if not candidates:
+        raise ManifestError("distinguishability geometry probe requires at least one carrier candidate")
+
+    computed_statuses: dict[str, str] = {}
+    for index, item in enumerate(candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.candidates[{index}].id")
+        capabilities = parse_distinguishability_capabilities(
+            candidate.get("capabilities"),
+            f"{gate.identifier}.candidates[{index}].capabilities",
+        )
+        expected_status = require_string(
+            candidate.get("expected_status"),
+            f"{gate.identifier}.candidates[{index}].expected_status",
+        )
+        if expected_status not in DISTINGUISHABILITY_GEOMETRY_STATUSES:
+            raise ManifestError(f"{gate.identifier}.candidates[{index}].expected_status is unknown")
+        missing = sorted(set(declared_requirements) - set(capabilities))
+        if missing:
+            return [
+                Issue(
+                    "distinguishability_geometry_capabilities_incomplete",
+                    f"{gate.identifier}: candidate {candidate_id} missing capabilities: {', '.join(missing)}",
+                )
+            ]
+        computed_status = classify_distinguishability_candidate(capabilities, declared_requirements)
+        computed_statuses[candidate_id] = computed_status
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "distinguishability_geometry_candidate_status_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
+
+    expected_selected = require_string(gate.payload.get("expected_selected_carrier"), f"{gate.identifier}.expected_selected_carrier")
+    surviving = [candidate_id for candidate_id, status in computed_statuses.items() if status == "survives"]
+    underdetermined = [candidate_id for candidate_id, status in computed_statuses.items() if status == "underdetermined"]
+    computed_selected = surviving[0] if len(surviving) == 1 and not underdetermined else "none"
+    if computed_selected != expected_selected:
+        return [
+            Issue(
+                "distinguishability_geometry_selection_mismatch",
+                f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
+            )
+        ]
+    return []
+
+
+def check_local_tomography_separator_gate(gate: FiniteGate) -> list[Issue]:
+    systems = require_list(gate.payload.get("systems"), f"{gate.identifier}.systems")
+    if len(systems) < 2:
+        raise ManifestError("local tomography separator requires at least two systems")
+    for index, item in enumerate(systems):
+        system = require_mapping(item, f"{gate.identifier}.systems[{index}]")
+        system_id = require_string(system.get("id"), f"{gate.identifier}.systems[{index}].id")
+        local_a = parse_positive_integer(system.get("local_a"), f"{gate.identifier}.systems[{index}].local_a")
+        local_b = parse_positive_integer(system.get("local_b"), f"{gate.identifier}.systems[{index}].local_b")
+        composite = parse_positive_integer(system.get("composite"), f"{gate.identifier}.systems[{index}].composite")
+        expected_locally_tomographic = parse_bool(
+            system.get("expected_locally_tomographic"),
+            f"{gate.identifier}.systems[{index}].expected_locally_tomographic",
+        )
+        computed_locally_tomographic = (local_a * local_b) == composite
+        if computed_locally_tomographic != expected_locally_tomographic:
+            return [
+                Issue(
+                    "local_tomography_status_mismatch",
+                    (
+                        f"{gate.identifier}: system {system_id} expected local tomography "
+                        f"{expected_locally_tomographic}, computed {computed_locally_tomographic}"
+                    ),
+                )
+            ]
+
+    candidates = require_list(gate.payload.get("candidates"), f"{gate.identifier}.candidates")
+    if not candidates:
+        raise ManifestError("local tomography separator requires at least one candidate")
+    computed_statuses: dict[str, str] = {}
+    for index, item in enumerate(candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.candidates[{index}].id")
+        local_tomography = require_string(
+            candidate.get("local_tomography"),
+            f"{gate.identifier}.candidates[{index}].local_tomography",
+        )
+        expected_status = require_string(candidate.get("expected_status"), f"{gate.identifier}.candidates[{index}].expected_status")
+        computed_status = classify_local_tomography_candidate(local_tomography)
+        computed_statuses[candidate_id] = computed_status
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "local_tomography_candidate_status_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
+
+    expected_selected = require_string(gate.payload.get("expected_selected_carrier"), f"{gate.identifier}.expected_selected_carrier")
+    surviving = [candidate_id for candidate_id, status in computed_statuses.items() if status == "survives"]
+    underdetermined = [candidate_id for candidate_id, status in computed_statuses.items() if status == "underdetermined"]
+    computed_selected = surviving[0] if len(surviving) == 1 and not underdetermined else "none"
+    if computed_selected != expected_selected:
+        return [
+            Issue(
+                "local_tomography_selection_mismatch",
+                f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
+            )
+        ]
+    return []
+
+
+def check_idt_local_tomography_derivation_gate(gate: FiniteGate) -> list[Issue]:
+    declared_conditions = require_string_tuple(
+        gate.payload.get("idt_conditions", []),
+        f"{gate.identifier}.idt_conditions",
+    )
+    if set(declared_conditions) != set(IDT_LOCAL_TOMOGRAPHY_CONDITIONS):
+        return [
+            Issue(
+                "idt_local_tomography_conditions_mismatch",
+                f"{gate.identifier}: IDT conditions must match the local-tomography derivation set",
+            )
+        ]
+
+    systems = require_list(gate.payload.get("systems"), f"{gate.identifier}.systems")
+    if len(systems) < 2:
+        raise ManifestError("IDT local tomography derivation requires at least two systems")
+    for index, item in enumerate(systems):
+        system = require_mapping(item, f"{gate.identifier}.systems[{index}]")
+        system_id = require_string(system.get("id"), f"{gate.identifier}.systems[{index}].id")
+        local_a = parse_positive_integer(system.get("local_a"), f"{gate.identifier}.systems[{index}].local_a")
+        local_b = parse_positive_integer(system.get("local_b"), f"{gate.identifier}.systems[{index}].local_b")
+        composite = parse_positive_integer(system.get("composite"), f"{gate.identifier}.systems[{index}].composite")
+        declared_joint_only = parse_nonnegative_integer(
+            system.get("joint_only_degrees"),
+            f"{gate.identifier}.systems[{index}].joint_only_degrees",
+        )
+        expected_product_dimension = parse_positive_integer(
+            system.get("expected_product_dimension"),
+            f"{gate.identifier}.systems[{index}].expected_product_dimension",
+        )
+        expected_locally_tomographic = parse_bool(
+            system.get("expected_locally_tomographic"),
+            f"{gate.identifier}.systems[{index}].expected_locally_tomographic",
+        )
+        expected_idt_admissible = parse_bool(
+            system.get("expected_idt_admissible"),
+            f"{gate.identifier}.systems[{index}].expected_idt_admissible",
+        )
+
+        computed_product_dimension = local_a * local_b
+        if computed_product_dimension != expected_product_dimension:
+            return [
+                Issue(
+                    "idt_local_tomography_product_dimension_mismatch",
+                    (
+                        f"{gate.identifier}: system {system_id} expected product dimension "
+                        f"{expected_product_dimension}, computed {computed_product_dimension}"
+                    ),
+                )
+            ]
+        computed_joint_only = composite - computed_product_dimension
+        if computed_joint_only < 0:
+            return [
+                Issue(
+                    "idt_local_tomography_composite_below_product",
+                    (
+                        f"{gate.identifier}: system {system_id} has composite dimension {composite} below "
+                        f"product readout dimension {computed_product_dimension}"
+                    ),
+                )
+            ]
+        if computed_joint_only != declared_joint_only:
+            return [
+                Issue(
+                    "idt_local_tomography_joint_only_mismatch",
+                    (
+                        f"{gate.identifier}: system {system_id} expected joint-only degrees "
+                        f"{declared_joint_only}, computed {computed_joint_only}"
+                    ),
+                )
+            ]
+
+        computed_locally_tomographic = computed_joint_only == 0
+        if computed_locally_tomographic != expected_locally_tomographic:
+            return [
+                Issue(
+                    "idt_local_tomography_status_mismatch",
+                    (
+                        f"{gate.identifier}: system {system_id} expected local tomography "
+                        f"{expected_locally_tomographic}, computed {computed_locally_tomographic}"
+                    ),
+                )
+            ]
+
+        computed_idt_admissible = computed_locally_tomographic
+        if computed_idt_admissible != expected_idt_admissible:
+            return [
+                Issue(
+                    "idt_local_tomography_admissibility_mismatch",
+                    (
+                        f"{gate.identifier}: system {system_id} expected IDT admissibility "
+                        f"{expected_idt_admissible}, computed {computed_idt_admissible}"
+                    ),
+                )
+            ]
+    return []
+
+
+def check_context_product_exhaustion_gate(gate: FiniteGate) -> list[Issue]:
+    primitives = require_string_tuple(gate.payload.get("idt_primitives", []), f"{gate.identifier}.idt_primitives")
+    if set(primitives) != set(CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES):
+        return [
+            Issue(
+                "context_product_exhaustion_primitives_mismatch",
+                f"{gate.identifier}: IDT primitives must match the context-product exhaustion set",
+            )
+        ]
+
+    candidates = require_list(gate.payload.get("candidates"), f"{gate.identifier}.candidates")
+    if len(candidates) < 2:
+        raise ManifestError("context-product exhaustion requires at least two candidates")
+
+    for index, item in enumerate(candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.candidates[{index}].id")
+        left_contexts = require_string_tuple(
+            candidate.get("left_contexts"),
+            f"{gate.identifier}.candidates[{index}].left_contexts",
+        )
+        right_contexts = require_string_tuple(
+            candidate.get("right_contexts"),
+            f"{gate.identifier}.candidates[{index}].right_contexts",
+        )
+        product_contexts = require_list(
+            candidate.get("product_contexts"),
+            f"{gate.identifier}.candidates[{index}].product_contexts",
+        )
+        expected_context_pairs = {(left, right) for left in left_contexts for right in right_contexts}
+        declared_context_pairs: dict[tuple[str, str], str] = {}
+        declared_context_ids: set[str] = set()
+        for product_index, raw_product in enumerate(product_contexts):
+            product = require_mapping(raw_product, f"{gate.identifier}.candidates[{index}].product_contexts[{product_index}]")
+            product_id = require_string(product.get("id"), f"{gate.identifier}.candidates[{index}].product_contexts[{product_index}].id")
+            left = require_string(product.get("left"), f"{gate.identifier}.candidates[{index}].product_contexts[{product_index}].left")
+            right = require_string(product.get("right"), f"{gate.identifier}.candidates[{index}].product_contexts[{product_index}].right")
+            pair = (left, right)
+            if product_id in declared_context_ids:
+                return [
+                    Issue(
+                        "context_product_exhaustion_duplicate_context",
+                        f"{gate.identifier}: candidate {candidate_id} repeats product context {product_id}",
+                    )
+                ]
+            if pair in declared_context_pairs:
+                return [
+                    Issue(
+                        "context_product_exhaustion_duplicate_pair",
+                        f"{gate.identifier}: candidate {candidate_id} repeats product pair {left}/{right}",
+                    )
+                ]
+            declared_context_ids.add(product_id)
+            declared_context_pairs[pair] = product_id
+
+        if set(declared_context_pairs) != expected_context_pairs:
+            return [
+                Issue(
+                    "context_product_exhaustion_context_closure_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} does not close all product readout contexts",
+                )
+            ]
+
+        invariants = require_list(candidate.get("stable_invariants"), f"{gate.identifier}.candidates[{index}].stable_invariants")
+        if not invariants:
+            raise ManifestError("context-product exhaustion candidate requires at least one stable invariant")
+
+        exhausted_invariants = 0
+        for invariant_index, raw_invariant in enumerate(invariants):
+            invariant = require_mapping(raw_invariant, f"{gate.identifier}.candidates[{index}].stable_invariants[{invariant_index}]")
+            invariant_id = require_string(
+                invariant.get("id"),
+                f"{gate.identifier}.candidates[{index}].stable_invariants[{invariant_index}].id",
+            )
+            witness_contexts = require_string_tuple(
+                invariant.get("witness_contexts"),
+                f"{gate.identifier}.candidates[{index}].stable_invariants[{invariant_index}].witness_contexts",
+            )
+            expected_exhausted = parse_bool(
+                invariant.get("expected_exhausted"),
+                f"{gate.identifier}.candidates[{index}].stable_invariants[{invariant_index}].expected_exhausted",
+            )
+            unknown_witnesses = sorted(set(witness_contexts) - declared_context_ids)
+            if unknown_witnesses:
+                return [
+                    Issue(
+                        "context_product_exhaustion_unknown_witness",
+                        (
+                            f"{gate.identifier}: candidate {candidate_id} invariant {invariant_id} "
+                            f"references unknown witness contexts: {', '.join(unknown_witnesses)}"
+                        ),
+                    )
+                ]
+            computed_exhausted = bool(witness_contexts)
+            if computed_exhausted:
+                exhausted_invariants += 1
+            if computed_exhausted != expected_exhausted:
+                return [
+                    Issue(
+                        "context_product_exhaustion_invariant_mismatch",
+                        (
+                            f"{gate.identifier}: candidate {candidate_id} invariant {invariant_id} expected "
+                            f"exhausted={expected_exhausted}, computed {computed_exhausted}"
+                        ),
+                    )
+                ]
+
+        expected_exhausted = parse_bool(
+            candidate.get("expected_context_product_exhausted"),
+            f"{gate.identifier}.candidates[{index}].expected_context_product_exhausted",
+        )
+        expected_admissible = parse_bool(
+            candidate.get("expected_idt_admissible"),
+            f"{gate.identifier}.candidates[{index}].expected_idt_admissible",
+        )
+        computed_exhausted = exhausted_invariants == len(invariants)
+        if computed_exhausted != expected_exhausted:
+            return [
+                Issue(
+                    "context_product_exhaustion_status_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} expected exhausted={expected_exhausted}, computed {computed_exhausted}",
+                )
+            ]
+        computed_admissible = computed_exhausted
+        if computed_admissible != expected_admissible:
+            return [
+                Issue(
+                    "context_product_exhaustion_admissibility_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} expected IDT admissibility {expected_admissible}, computed {computed_admissible}",
+                )
+            ]
+    return []
+
+
+def check_gpt_principle_separator_gate(gate: FiniteGate) -> list[Issue]:
+    principles = require_string_tuple(gate.payload.get("principles", []), f"{gate.identifier}.principles")
+    if set(principles) != set(GPT_SEPARATOR_PRINCIPLES):
+        return [
+            Issue(
+                "gpt_principle_separator_principles_mismatch",
+                f"{gate.identifier}: principles must match the GPT separator principle set",
+            )
+        ]
+
+    candidates = require_list(gate.payload.get("candidates"), f"{gate.identifier}.candidates")
+    if len(candidates) < 2:
+        raise ManifestError("GPT principle separator requires at least two candidates")
+
+    computed_statuses: dict[str, str] = {}
+    for index, item in enumerate(candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.candidates[{index}].id")
+        capabilities = parse_gpt_separator_capabilities(
+            candidate.get("capabilities"),
+            f"{gate.identifier}.candidates[{index}].capabilities",
+        )
+        expected_status = require_string(candidate.get("expected_status"), f"{gate.identifier}.candidates[{index}].expected_status")
+        if expected_status not in DISTINGUISHABILITY_GEOMETRY_STATUSES:
+            raise ManifestError(f"{gate.identifier}.candidates[{index}].expected_status is unknown")
+        missing = sorted(set(principles) - set(capabilities))
+        if missing:
+            return [
+                Issue(
+                    "gpt_principle_separator_capabilities_incomplete",
+                    f"{gate.identifier}: candidate {candidate_id} missing capabilities: {', '.join(missing)}",
+                )
+            ]
+        computed_status = classify_gpt_principle_candidate(capabilities, principles)
+        computed_statuses[candidate_id] = computed_status
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "gpt_principle_separator_candidate_status_mismatch",
+                    f"{gate.identifier}: candidate {candidate_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
+
+    expected_selected = require_string(gate.payload.get("expected_selected_carrier"), f"{gate.identifier}.expected_selected_carrier")
+    surviving = [candidate_id for candidate_id, status in computed_statuses.items() if status == "survives"]
+    underdetermined = [candidate_id for candidate_id, status in computed_statuses.items() if status == "underdetermined"]
+    computed_selected = surviving[0] if len(surviving) == 1 and not underdetermined else "none"
+    if computed_selected != expected_selected:
+        return [
+            Issue(
+                "gpt_principle_separator_selection_mismatch",
+                f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
+            )
+        ]
+    return []
+
+
+def check_carrier_selection_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    declared_obstructions = require_string_tuple(
+        gate.payload.get("open_obstructions", []),
+        f"{gate.identifier}.open_obstructions",
+    )
+    if set(declared_obstructions) != set(CARRIER_SELECTION_OPEN_OBSTRUCTIONS):
+        return [
+            Issue(
+                "carrier_selection_frontier_obstructions_mismatch",
+                f"{gate.identifier}: open obstructions must match the carrier-selection frontier set",
+            )
+        ]
+
+    expected_selected = require_string(gate.payload.get("expected_selected_carrier"), f"{gate.identifier}.expected_selected_carrier")
+    expected_frontier_status = require_string(
+        gate.payload.get("expected_frontier_status"),
+        f"{gate.identifier}.expected_frontier_status",
+    )
+    if expected_frontier_status not in CARRIER_SELECTION_FRONTIER_STATUSES:
+        raise ManifestError(f"{gate.identifier}.expected_frontier_status is unknown")
+
+    candidates = require_list(gate.payload.get("candidates"), f"{gate.identifier}.candidates")
+    if len(candidates) < 2:
+        raise ManifestError("carrier selection frontier requires at least two candidates")
+
+    computed_statuses: dict[str, str] = {}
+    covered_obstructions: set[str] = set()
+    for index, item in enumerate(candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.candidates[{index}].id")
+        status = require_string(candidate.get("status"), f"{gate.identifier}.candidates[{index}].status")
+        if status not in DISTINGUISHABILITY_GEOMETRY_STATUSES:
+            raise ManifestError(f"{gate.identifier}.candidates[{index}].status is unknown")
+        obstructions = require_string_tuple(
+            candidate.get("blocking_obstructions", []),
+            f"{gate.identifier}.candidates[{index}].blocking_obstructions",
+        )
+        unknown_obstructions = sorted(set(obstructions) - set(declared_obstructions))
+        if unknown_obstructions:
+            return [
+                Issue(
+                    "carrier_selection_frontier_unknown_obstruction",
+                    (
+                        f"{gate.identifier}: candidate {candidate_id} references unknown obstructions: "
+                        f"{', '.join(unknown_obstructions)}"
+                    ),
+                )
+            ]
+        if status == "underdetermined" and not obstructions:
+            return [
+                Issue(
+                    "carrier_selection_frontier_obstruction_missing",
+                    f"{gate.identifier}: underdetermined candidate {candidate_id} needs at least one obstruction",
+                )
+            ]
+        if status != "underdetermined" and obstructions:
+            return [
+                Issue(
+                    "carrier_selection_frontier_obstruction_on_closed_candidate",
+                    f"{gate.identifier}: closed candidate {candidate_id} must not carry open obstructions",
+                )
+            ]
+        computed_statuses[candidate_id] = status
+        covered_obstructions.update(obstructions)
+
+    missing_obstructions = sorted(set(declared_obstructions) - covered_obstructions)
+    if missing_obstructions:
+        return [
+            Issue(
+                "carrier_selection_frontier_obstructions_uncovered",
+                f"{gate.identifier}: open obstructions are not attached to any candidate: {', '.join(missing_obstructions)}",
+            )
+        ]
+
+    surviving = [candidate_id for candidate_id, status in computed_statuses.items() if status == "survives"]
+    underdetermined = [candidate_id for candidate_id, status in computed_statuses.items() if status == "underdetermined"]
+    computed_selected = surviving[0] if len(surviving) == 1 and not underdetermined else "none"
+    if computed_selected != expected_selected:
+        return [
+            Issue(
+                "carrier_selection_frontier_selection_mismatch",
+                f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
+            )
+        ]
+
+    computed_frontier_status = "selected_by_current_gates" if computed_selected != "none" else "not_derived"
+    if computed_frontier_status != expected_frontier_status:
+        return [
+            Issue(
+                "carrier_selection_frontier_status_mismatch",
+                f"{gate.identifier}: expected frontier status {expected_frontier_status}, computed {computed_frontier_status}",
+            )
+        ]
     return []
 
 
@@ -11009,6 +11757,56 @@ def parse_position_distribution(raw: object, field: str) -> dict[int, float]:
     return distribution
 
 
+def parse_distinguishability_capabilities(raw: object, field: str) -> dict[str, str]:
+    mapping = require_mapping(raw, field)
+    capabilities: dict[str, str] = {}
+    for key, raw_value in mapping.items():
+        value = require_string(raw_value, f"{field}.{key}")
+        if value not in DISTINGUISHABILITY_GEOMETRY_CAPABILITIES:
+            raise ManifestError(f"{field}.{key} has unknown capability {value!r}")
+        capabilities[key] = value
+    return capabilities
+
+
+def parse_gpt_separator_capabilities(raw: object, field: str) -> dict[str, str]:
+    mapping = require_mapping(raw, field)
+    capabilities: dict[str, str] = {}
+    for key, raw_value in mapping.items():
+        value = require_string(raw_value, f"{field}.{key}")
+        if value not in DISTINGUISHABILITY_GEOMETRY_CAPABILITIES:
+            raise ManifestError(f"{field}.{key} has unknown capability {value!r}")
+        capabilities[key] = value
+    return capabilities
+
+
+def classify_distinguishability_candidate(capabilities: dict[str, str], requirements: tuple[str, ...]) -> str:
+    values = [capabilities[requirement] for requirement in requirements]
+    if "unsupported" in values:
+        return "rejected"
+    if "underdetermined" in values:
+        return "underdetermined"
+    return "survives"
+
+
+def classify_local_tomography_candidate(local_tomography: str) -> str:
+    if local_tomography == "supported":
+        return "survives"
+    if local_tomography == "unsupported":
+        return "rejected"
+    if local_tomography == "underdetermined":
+        return "underdetermined"
+    raise ManifestError(f"unknown local tomography status: {local_tomography}")
+
+
+def classify_gpt_principle_candidate(capabilities: dict[str, str], principles: tuple[str, ...]) -> str:
+    values = [capabilities[principle] for principle in principles]
+    if "unsupported" in values:
+        return "rejected"
+    if "underdetermined" in values:
+        return "underdetermined"
+    return "survives"
+
+
 def projective_probabilities(
     state: list[complex], projectors: list[list[list[complex]]], tolerance: float
 ) -> list[float]:
@@ -11259,6 +12057,12 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "temporal_facticity": check_temporal_facticity_gate,
     "partial_facticity_readout": check_partial_facticity_readout_gate,
     "unitary_graph_walk": check_unitary_graph_walk_gate,
+    "distinguishability_geometry_probe": check_distinguishability_geometry_probe_gate,
+    "local_tomography_separator": check_local_tomography_separator_gate,
+    "idt_local_tomography_derivation": check_idt_local_tomography_derivation_gate,
+    "context_product_exhaustion": check_context_product_exhaustion_gate,
+    "gpt_principle_separator": check_gpt_principle_separator_gate,
+    "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,
     "marker_eraser_visibility": check_marker_eraser_visibility_gate,
     "bell_chsh_table": check_bell_chsh_table_gate,

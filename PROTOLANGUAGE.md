@@ -215,6 +215,7 @@ The canonical theory modules are:
 170. [169. Primitive Holonomy Selector Front](sections/169-primitive-holonomy-selector-front.md)
 171. [170. Sector Role Taxonomy Refactor](sections/170-sector-role-taxonomy-refactor.md)
 172. [171. QM Experiment Language Ledger](sections/171-qm-experiment-language-ledger.md)
+173. [172. Finite QM Core Proof Program](sections/172-finite-qm-core-proof-program.md)
 
 ---
 
@@ -572,6 +573,35 @@ experiment checkers.
 The first `scripts/qm_bench.py` runner now compiles the manifest audit into a
 machine-readable kernel summary: `6` universal kernels, `35` registered QM
 experiments, and `35` executable QM gate references.
+Section 172 opens the next proof-program branch. It registers ten
+machine-checkable obligations for moving from finite readout coverage toward a
+finite QM core proof, and keeps `full_QM_I` blocked from `derived` unless those
+obligations are actually closed.
+The first proof-program gate, `distinguishability_geometry_probe_demo`, now
+rejects the purely classical simplex while leaving real Hilbert-like and GPT
+carriers underdetermined and complex Hilbert-like structure surviving but not
+yet derived.
+The follow-up `local_tomography_separator_demo` shows the next required
+principle: local tomography rejects real Hilbert-like composition by parameter
+counting, but still leaves broad GPT-style carriers underdetermined.
+The `idt_local_tomography_derivation_demo` refines that step: local tomography
+is executable as a consequence of product readout closure, joint facticity
+exhaustion, no hidden joint invariant, and stable-invariant separability. The
+`context_product_exhaustion_demo` now makes the witness rule executable:
+product readout contexts must close the Cartesian table, and every stable
+composite invariant must have a product-context witness. Hidden joint-only
+invariants are rejected for this finite route; the remaining open item is the
+extension from finite witness exhaustion to a universal carrier-selection
+theorem.
+The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
+the declared cone/symmetry/filtering/bounded-correlation principles, while
+leaving Euclidean-Jordan and generic GPT ambiguity open until those principles
+are derived from IDT rather than assumed.
+The `carrier_selection_frontier_demo` makes that boundary executable: complex
+Hilbert-like structure survives the current screens, but no carrier is selected
+while the universal carrier theorem, purification/filtering, bounded
+correlations, non-complex Jordan exclusion, and generic-GPT exclusion remain
+open obstructions.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

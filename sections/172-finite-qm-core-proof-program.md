@@ -1,0 +1,318 @@
+## 172. Finite QM Core Proof Program
+
+Status:
+
+`finite_qm_core_proof_program_opened`
+
+The previous QM milestone gives executable finite coverage:
+
+1. `35` registered QM experiment rows;
+2. `35` executable finite-gate references;
+3. `6` universal pattern families;
+4. one bench compiler summary.
+
+That is a useful intermediate result. It is not a proof of all QM.
+
+The next task is to separate three different claims:
+
+| Claim | Current status |
+|---|---|
+| finite readout regression suite | executable |
+| finite QM core derivation | target |
+| full QM including continuum and first-principles action scale | blocked |
+
+Status:
+
+`qm_claim_levels_separated`
+
+### 172.1. Proof Obligations
+
+The manifest now records `qm_core_proof_obligations`. The verifier checks that
+the proof program contains the required obligation set:
+
+| Obligation | Current status | Main blocker |
+|---|---|---|
+| `finite_operational_core` | `regression_supported` | minimal independent axiom set not proven |
+| `probability_measure_layer` | `regression_supported` | uniqueness of the readout probability measure not proven |
+| `distinguishability_geometry` | `target` | carrier geometry not selected from IDT alone |
+| `hilbert_carrier_derivation` | `blocked` | complex Hilbert structure is still imported as carrier |
+| `born_rule_derivation` | `blocked` | square-modulus rule is verified but not derived |
+| `reversible_inheritance_symmetry` | `regression_supported` | unitary/antiunitary form not forced by theorem |
+| `measurement_facticity_mechanism` | `regression_supported` | projection, POVM-like partial readout, and recoverability are not one theorem |
+| `tensor_composition_law` | `target` | composition law and entanglement structure not derived |
+| `recompile_35_from_core` | `target` | bench compiles patterns, not every gate from one proven core |
+| `continuum_action_scale_extension` | `blocked` | continuum limit and first-principles `hbar_I` remain open |
+
+The verifier also guards the public boundary:
+
+`full_QM_I`
+
+cannot be promoted to:
+
+`derived`
+
+while any obligation remains below `derived`.
+
+Status:
+
+`qm_core_proof_obligation_guard_registered`
+
+### 172.2. Correct Order
+
+The correct route is:
+
+$$
+\text{IDT finite operations}
+\Rightarrow
+\text{probability layer}
+\Rightarrow
+\text{distinguishability geometry}
+\Rightarrow
+\text{carrier}
+\Rightarrow
+\text{Born/readout}
+\Rightarrow
+\text{reversible inheritance}
+\Rightarrow
+\text{measurement/facticity}
+\Rightarrow
+\text{composition}
+\Rightarrow
+\text{35-gate recompilation}.
+$$
+
+This order matters.
+
+It would be weaker to assume Hilbert space first and then prove only internal
+Hilbert-space facts. The stronger target is to show why the IDT
+distinguishability/facticity structure forces a Hilbert-like carrier, or to
+record exactly where it fails.
+
+The highest-risk step is:
+
+`tensor_composition_law`.
+
+Without it, IDT may still reconstruct a finite single-system QM-like theory,
+but it cannot claim the composite layer needed for Bell, GHZ, swapping,
+teleportation, and no-cloning.
+
+Status:
+
+`finite_qm_core_route_order_declared`
+
+### 172.3. Next Executable Target
+
+The next executable target is not another experiment gate.
+
+It is:
+
+`distinguishability_geometry_probe`.
+
+This gate should compare the candidate finite carrier geometries:
+
+1. classical simplex;
+2. real Hilbert-like carrier;
+3. complex Hilbert-like carrier;
+4. broader GPT-style cone.
+
+The gate should ask which carriers can support the already registered pattern
+requirements:
+
+1. contextual probability readout;
+2. interference with \(I_3=0\);
+3. reversible inheritance maps;
+4. contextual-correlation obstruction;
+5. noncopyability;
+6. tensor-like composition.
+
+The expected honest outcome may be:
+
+1. a carrier is selected;
+2. several carriers survive;
+3. the current IDT primitives are insufficient.
+
+All three outcomes are useful. A failed or underdetermined carrier-selection
+gate is not a failure of the project; it identifies the next missing primitive
+or bridge.
+
+The first probe is now executable as:
+
+`distinguishability_geometry_probe_demo`.
+
+It currently gives this bounded result:
+
+| Candidate carrier | Probe status | Reason |
+|---|---|---|
+| classical simplex | `rejected` | cannot support interference, contextual obstruction, and noncopyability together |
+| real Hilbert-like carrier | `underdetermined` | supports the finite readouts but composition remains unresolved |
+| complex Hilbert-like carrier | `survives` | supports all declared finite requirements |
+| general GPT-style cone | `underdetermined` | broad enough to fit several requirements, but not uniquely constrained |
+
+The selected carrier remains:
+
+`none`.
+
+This is the right result for now. The probe rejects the purely classical
+simplex but does not pretend that IDT has derived complex Hilbert space.
+
+The next separator is now executable as:
+
+`local_tomography_separator_demo`.
+
+It adds the principle that composite states must be determined by joint local
+measurement statistics. In finite parameter-count form:
+
+$$
+K_{AB}=K_AK_B.
+$$
+
+For a complex qubit pair:
+
+$$
+K_A=4,\quad K_B=4,\quad K_{AB}=16,
+$$
+
+so the separator is satisfied. For a real rebit pair:
+
+$$
+K_A=3,\quad K_B=3,\quad K_{AB}=10,
+$$
+
+so \(K_{AB}\ne K_AK_B\), and local tomography fails.
+
+The separator therefore rejects the real Hilbert-like carrier if local
+tomography is accepted as an IDT composition principle. It still does not
+select complex Hilbert uniquely, because a broad GPT cone can remain
+underdetermined without additional cone/symmetry restrictions.
+
+The local-tomography route is now refined by:
+
+`idt_local_tomography_derivation_demo`.
+
+This gate does not merely restate the separator. It checks the conditional IDT
+route:
+
+1. product readout contexts are closed;
+2. joint facticity is exhausted by those product contexts;
+3. no stable joint invariant is hidden from every product readout;
+4. stable invariants separate across the product readout table.
+
+Under those conditions the finite parameter count is forced:
+
+$$
+K_{AB}=K_AK_B.
+$$
+
+Any additional joint-only degrees,
+
+$$
+K_{AB}>K_AK_B,
+$$
+
+are rejected as IDT-inadmissible for this route because they would encode a
+stable invariant that cannot be facticized by the declared product contexts.
+
+The context-product route is now executable as:
+
+`context_product_exhaustion_demo`.
+
+It checks the finite witness rule directly. Given local readout contexts
+\(A_i\) and \(B_j\), the product-context set must close the full Cartesian
+table:
+
+$$
+\{A_iB_j\}_{i,j}.
+$$
+
+Every stable composite invariant must then have at least one product-context
+witness. A candidate with a hidden joint invariant and no witness is rejected as
+IDT-inadmissible for this finite route.
+
+This closes one layer of the problem but not the whole theorem. The remaining
+gap is now sharper: extend this finite context-product exhaustion rule into a
+general carrier-selection theorem, rather than assuming that all admissible
+carriers have already been covered.
+
+The next GPT separator is now executable as:
+
+`gpt_principle_separator_demo`.
+
+It adds a stricter principle set:
+
+1. local tomography;
+2. homogeneous self-dual cone structure;
+3. continuous reversible bit symmetry;
+4. no third-order interference;
+5. purification or filtering;
+6. bounded nonclassical correlations.
+
+The current finite result is:
+
+| Candidate carrier | Separator status | Reason |
+|---|---|---|
+| complex Hilbert-like carrier | `survives` | satisfies all declared separator principles |
+| boxworld-like GPT | `rejected` | violates the cone/symmetry, purification/filtering, and bounded-correlation requirements |
+| Euclidean Jordan family | `underdetermined` | satisfies part of the cone/symmetry profile, but local tomography and filtering remain unresolved at this level |
+| generic GPT cone | `underdetermined` | too broad unless the additional principles are independently established |
+
+The selected carrier remains:
+
+`none`.
+
+This is again intentional. The separator narrows the search space, but it does
+not yet prove that IDT alone forces complex Hilbert space.
+
+The current frontier is now executable as:
+
+`carrier_selection_frontier_demo`.
+
+It records the remaining carrier-selection obstructions:
+
+1. extend context-product exhaustion to a carrier-selection theorem;
+2. derive purification or filtering from IDT primitives;
+3. derive the bounded-correlation constraint from IDT primitives;
+4. exclude non-complex Jordan carriers;
+5. exclude generic GPT cones.
+
+The frontier gate checks that those obstructions remain attached to surviving
+or underdetermined alternatives. With complex Hilbert-like structure surviving
+but Euclidean-Jordan and generic GPT alternatives still underdetermined, the
+selected carrier must remain:
+
+`none`.
+
+The frontier status is therefore:
+
+`not_derived`.
+
+This is the useful proof boundary: IDT has a finite executable screen that
+narrows the carrier space, but it does not yet have the missing theorem that
+selects complex Hilbert space from the language alone.
+
+Status:
+
+`distinguishability_geometry_probe_selected`
+
+Status:
+
+`distinguishability_geometry_probe_executable`
+
+Status:
+
+`local_tomography_separator_executable`
+
+Status:
+
+`idt_local_tomography_derivation_executable`
+
+Status:
+
+`context_product_exhaustion_executable`
+
+Status:
+
+`gpt_principle_separator_executable`
+
+Status:
+
+`carrier_selection_frontier_executable`

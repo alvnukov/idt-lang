@@ -2700,6 +2700,167 @@
       "claim_boundary": "This pattern unifies finite record and transfer constraints; it does not derive sources, environments, or full physical networks."
     }
   ],
+  "qm_core_proof_obligations": [
+    {
+      "id": "finite_operational_core",
+      "title": "Finite operational IDT core",
+      "status": "regression_supported",
+      "scope": "finite_core",
+      "depends_on": [],
+      "evidence_refs": [
+        "contextual_probability_readout_pattern",
+        "coherent_alternative_interference_pattern",
+        "finite_update_survival_pattern",
+        "record_transfer_noncopyability_pattern"
+      ],
+      "open_gap": "The current manifest has a stable operational vocabulary and 35 gate regressions, but the minimal axiom set is not yet proven independent or complete.",
+      "claim_boundary": "Supported as an executable finite reconstruction program, not as a closed derivation of QM."
+    },
+    {
+      "id": "probability_measure_layer",
+      "title": "Context-indexed probability measure",
+      "status": "regression_supported",
+      "scope": "finite_core",
+      "depends_on": ["finite_operational_core"],
+      "evidence_refs": [
+        "contextual_probability_readout_pattern",
+        "born_context_probability_table_demo",
+        "actualization_demo_i3_zero"
+      ],
+      "open_gap": "The verifier checks normalized finite readout tables, but the uniqueness of probability as the only admissible readout measure is not derived.",
+      "claim_boundary": "The current layer verifies probability readouts; it does not yet derive the probability calculus from IDT primitives."
+    },
+    {
+      "id": "distinguishability_geometry",
+      "title": "Distinguishability geometry",
+      "status": "target",
+      "scope": "finite_core",
+      "depends_on": ["finite_operational_core", "probability_measure_layer"],
+      "evidence_refs": [
+        "coherent_alternative_interference_pattern",
+        "contextual_probability_readout_pattern",
+        "distinguishability_geometry_probe_demo",
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "local_tomography_separator_demo",
+        "gpt_principle_separator_demo",
+        "carrier_selection_frontier_demo"
+      ],
+      "open_gap": "Context-product exhaustion is now executable for finite witnessed product readouts, but its extension into a universal carrier-selection theorem, purification/filtering, bounded correlations, and carrier exclusions remain unresolved.",
+      "claim_boundary": "This is the next derivation target; no Hilbert carrier is claimed from current primitives."
+    },
+    {
+      "id": "hilbert_carrier_derivation",
+      "title": "Hilbert-like carrier derivation",
+      "status": "blocked",
+      "scope": "finite_core",
+      "depends_on": ["distinguishability_geometry"],
+      "evidence_refs": [
+        "coherent_alternative_interference_pattern",
+        "correlation_contextual_obstruction_pattern",
+        "carrier_selection_frontier_demo"
+      ],
+      "open_gap": "The current gates use amplitudes and matrices as carriers; they do not derive complex Hilbert space as the forced carrier.",
+      "claim_boundary": "Hilbert space remains an imported or reconstructed carrier until the geometry obstruction is closed."
+    },
+    {
+      "id": "born_rule_derivation",
+      "title": "Born rule derivation",
+      "status": "blocked",
+      "scope": "finite_core",
+      "depends_on": ["hilbert_carrier_derivation", "probability_measure_layer"],
+      "evidence_refs": [
+        "born_context_probability_table_demo",
+        "bell_chsh_from_amplitudes_demo"
+      ],
+      "open_gap": "The gates verify |amplitude|^2 readouts, but the square-modulus rule is not yet derived from distinguishability and facticity.",
+      "claim_boundary": "Born readouts are executable regressions, not a first-principles Born-rule proof."
+    },
+    {
+      "id": "reversible_inheritance_symmetry",
+      "title": "Reversible inheritance and unitary symmetry",
+      "status": "regression_supported",
+      "scope": "finite_core",
+      "depends_on": ["distinguishability_geometry"],
+      "evidence_refs": [
+        "unitary_measurement_context_demo",
+        "unitary_network_probability_demo",
+        "two_level_update_oscillation_demo",
+        "unitary_graph_walk_demo"
+      ],
+      "open_gap": "The verifier checks finite unitary maps, but reversible inheritance has not yet been proven to force unitary or antiunitary structure.",
+      "claim_boundary": "Unitary behavior is regression-supported; its derivation from IDT invariants is open."
+    },
+    {
+      "id": "measurement_facticity_mechanism",
+      "title": "Measurement, facticity, and recoverability",
+      "status": "regression_supported",
+      "scope": "finite_core",
+      "depends_on": ["probability_measure_layer", "reversible_inheritance_symmetry"],
+      "evidence_refs": [
+        "projective_measurement_update_demo",
+        "premeasurement_decoherence_demo",
+        "recoverability_loss_demo",
+        "partial_facticity_readout_demo"
+      ],
+      "open_gap": "Projection, partial readout, conditioning, and recoverability are checked as finite gates, but not yet derived as one measurement theorem.",
+      "claim_boundary": "Finitary measurement behavior is executable; complete apparatus/facticity derivation is open."
+    },
+    {
+      "id": "tensor_composition_law",
+      "title": "Composite systems and tensor composition",
+      "status": "target",
+      "scope": "finite_core",
+      "depends_on": [
+        "hilbert_carrier_derivation",
+        "born_rule_derivation",
+        "reversible_inheritance_symmetry"
+      ],
+      "evidence_refs": [
+        "correlation_contextual_obstruction_pattern",
+        "bell_chsh_table_demo",
+        "spin_bell_angle_model_demo",
+        "context_transfer_no_cloning_demo"
+      ],
+      "open_gap": "Bell, GHZ, swapping, teleportation, and no-cloning gates use composite structure, but the composition law itself is not derived.",
+      "claim_boundary": "Composite QM behavior is regression-supported; tensor composition remains a proof obligation."
+    },
+    {
+      "id": "recompile_35_from_core",
+      "title": "Recompile the 35 QM gates from one finite core",
+      "status": "target",
+      "scope": "finite_core",
+      "depends_on": [
+        "born_rule_derivation",
+        "measurement_facticity_mechanism",
+        "tensor_composition_law"
+      ],
+      "evidence_refs": [
+        "contextual_probability_readout_pattern",
+        "coherent_alternative_interference_pattern",
+        "phase_action_anchor_pattern",
+        "finite_update_survival_pattern",
+        "correlation_contextual_obstruction_pattern",
+        "record_transfer_noncopyability_pattern"
+      ],
+      "open_gap": "The current bench compiles pattern summaries, not every experiment as an instance of one proven finite core.",
+      "claim_boundary": "The 35 gates are the regression target for the future core compiler, not evidence that the core proof is already closed."
+    },
+    {
+      "id": "continuum_action_scale_extension",
+      "title": "Continuum and action-scale extension",
+      "status": "blocked",
+      "scope": "full_qm_extension",
+      "depends_on": ["recompile_35_from_core"],
+      "evidence_refs": [
+        "hbar_I",
+        "phase_action_anchor_pattern",
+        "hbar_known_gate_holdout_demo"
+      ],
+      "open_gap": "The finite core does not derive infinite-dimensional limits, Schrödinger dynamics, field modes, or first-principles hbar.",
+      "claim_boundary": "This is outside the finite-core proof and must stay blocked while hbar_I and continuum construction remain open."
+    }
+  ],
   "finite_gates": [
     {
       "id": "gamma_demo_psd",
@@ -3247,6 +3408,314 @@
         {
           "position": 3,
           "probability": 0.125
+        }
+      ]
+    },
+    {
+      "id": "distinguishability_geometry_probe_demo",
+      "type": "distinguishability_geometry_probe",
+      "requirements": [
+        "contextual_probability_readout",
+        "interference_i3_zero",
+        "reversible_inheritance_maps",
+        "contextual_correlation_obstruction",
+        "noncopyability",
+        "tensor_like_composition"
+      ],
+      "expected_selected_carrier": "none",
+      "candidates": [
+        {
+          "id": "classical_simplex",
+          "expected_status": "rejected",
+          "capabilities": {
+            "contextual_probability_readout": "supported",
+            "interference_i3_zero": "unsupported",
+            "reversible_inheritance_maps": "unsupported",
+            "contextual_correlation_obstruction": "unsupported",
+            "noncopyability": "unsupported",
+            "tensor_like_composition": "supported"
+          }
+        },
+        {
+          "id": "real_hilbert_like",
+          "expected_status": "underdetermined",
+          "capabilities": {
+            "contextual_probability_readout": "supported",
+            "interference_i3_zero": "supported",
+            "reversible_inheritance_maps": "supported",
+            "contextual_correlation_obstruction": "supported",
+            "noncopyability": "supported",
+            "tensor_like_composition": "underdetermined"
+          }
+        },
+        {
+          "id": "complex_hilbert_like",
+          "expected_status": "survives",
+          "capabilities": {
+            "contextual_probability_readout": "supported",
+            "interference_i3_zero": "supported",
+            "reversible_inheritance_maps": "supported",
+            "contextual_correlation_obstruction": "supported",
+            "noncopyability": "supported",
+            "tensor_like_composition": "supported"
+          }
+        },
+        {
+          "id": "general_gpt_cone",
+          "expected_status": "underdetermined",
+          "capabilities": {
+            "contextual_probability_readout": "supported",
+            "interference_i3_zero": "underdetermined",
+            "reversible_inheritance_maps": "underdetermined",
+            "contextual_correlation_obstruction": "supported",
+            "noncopyability": "supported",
+            "tensor_like_composition": "underdetermined"
+          }
+        }
+      ]
+    },
+    {
+      "id": "local_tomography_separator_demo",
+      "type": "local_tomography_separator",
+      "expected_selected_carrier": "none",
+      "systems": [
+        {
+          "id": "complex_qubit_pair",
+          "local_a": 4,
+          "local_b": 4,
+          "composite": 16,
+          "expected_locally_tomographic": true
+        },
+        {
+          "id": "real_rebit_pair",
+          "local_a": 3,
+          "local_b": 3,
+          "composite": 10,
+          "expected_locally_tomographic": false
+        }
+      ],
+      "candidates": [
+        {
+          "id": "real_hilbert_like",
+          "local_tomography": "unsupported",
+          "expected_status": "rejected"
+        },
+        {
+          "id": "complex_hilbert_like",
+          "local_tomography": "supported",
+          "expected_status": "survives"
+        },
+        {
+          "id": "general_gpt_cone",
+          "local_tomography": "underdetermined",
+          "expected_status": "underdetermined"
+        }
+      ]
+    },
+    {
+      "id": "idt_local_tomography_derivation_demo",
+      "type": "idt_local_tomography_derivation",
+      "idt_conditions": [
+        "product_readout_context_closure",
+        "joint_facticity_exhaustion",
+        "no_hidden_joint_invariant",
+        "stable_invariant_separability"
+      ],
+      "systems": [
+        {
+          "id": "product_context_table",
+          "local_a": 4,
+          "local_b": 4,
+          "composite": 16,
+          "joint_only_degrees": 0,
+          "expected_product_dimension": 16,
+          "expected_locally_tomographic": true,
+          "expected_idt_admissible": true
+        },
+        {
+          "id": "real_rebit_pair",
+          "local_a": 3,
+          "local_b": 3,
+          "composite": 10,
+          "joint_only_degrees": 1,
+          "expected_product_dimension": 9,
+          "expected_locally_tomographic": false,
+          "expected_idt_admissible": false
+        },
+        {
+          "id": "hidden_joint_sector",
+          "local_a": 4,
+          "local_b": 4,
+          "composite": 18,
+          "joint_only_degrees": 2,
+          "expected_product_dimension": 16,
+          "expected_locally_tomographic": false,
+          "expected_idt_admissible": false
+        }
+      ]
+    },
+    {
+      "id": "context_product_exhaustion_demo",
+      "type": "context_product_exhaustion",
+      "idt_primitives": [
+        "event_packet",
+        "distinguishability_partition",
+        "readout_context",
+        "facticity_rule",
+        "stable_invariant"
+      ],
+      "candidates": [
+        {
+          "id": "exhausted_product_readout_composite",
+          "left_contexts": ["a0", "a1"],
+          "right_contexts": ["b0", "b1"],
+          "product_contexts": [
+            {"id": "a0_b0", "left": "a0", "right": "b0"},
+            {"id": "a0_b1", "left": "a0", "right": "b1"},
+            {"id": "a1_b0", "left": "a1", "right": "b0"},
+            {"id": "a1_b1", "left": "a1", "right": "b1"}
+          ],
+          "stable_invariants": [
+            {
+              "id": "joint_probability_table",
+              "witness_contexts": ["a0_b0", "a0_b1", "a1_b0", "a1_b1"],
+              "expected_exhausted": true
+            },
+            {
+              "id": "marginal_compatibility",
+              "witness_contexts": ["a0_b0", "a0_b1", "a1_b0", "a1_b1"],
+              "expected_exhausted": true
+            }
+          ],
+          "expected_context_product_exhausted": true,
+          "expected_idt_admissible": true
+        },
+        {
+          "id": "hidden_joint_invariant_composite",
+          "left_contexts": ["a0", "a1"],
+          "right_contexts": ["b0", "b1"],
+          "product_contexts": [
+            {"id": "a0_b0", "left": "a0", "right": "b0"},
+            {"id": "a0_b1", "left": "a0", "right": "b1"},
+            {"id": "a1_b0", "left": "a1", "right": "b0"},
+            {"id": "a1_b1", "left": "a1", "right": "b1"}
+          ],
+          "stable_invariants": [
+            {
+              "id": "visible_joint_table",
+              "witness_contexts": ["a0_b0", "a0_b1", "a1_b0", "a1_b1"],
+              "expected_exhausted": true
+            },
+            {
+              "id": "hidden_joint_phase",
+              "witness_contexts": [],
+              "expected_exhausted": false
+            }
+          ],
+          "expected_context_product_exhausted": false,
+          "expected_idt_admissible": false
+        }
+      ]
+    },
+    {
+      "id": "gpt_principle_separator_demo",
+      "type": "gpt_principle_separator",
+      "principles": [
+        "local_tomography",
+        "homogeneous_self_dual_cone",
+        "continuous_reversible_bit_symmetry",
+        "no_third_order_interference",
+        "purification_or_filtering",
+        "bounded_nonclassical_correlations"
+      ],
+      "expected_selected_carrier": "none",
+      "candidates": [
+        {
+          "id": "complex_hilbert_like",
+          "expected_status": "survives",
+          "capabilities": {
+            "local_tomography": "supported",
+            "homogeneous_self_dual_cone": "supported",
+            "continuous_reversible_bit_symmetry": "supported",
+            "no_third_order_interference": "supported",
+            "purification_or_filtering": "supported",
+            "bounded_nonclassical_correlations": "supported"
+          }
+        },
+        {
+          "id": "boxworld_like_gpt",
+          "expected_status": "rejected",
+          "capabilities": {
+            "local_tomography": "supported",
+            "homogeneous_self_dual_cone": "unsupported",
+            "continuous_reversible_bit_symmetry": "unsupported",
+            "no_third_order_interference": "underdetermined",
+            "purification_or_filtering": "unsupported",
+            "bounded_nonclassical_correlations": "unsupported"
+          }
+        },
+        {
+          "id": "euclidean_jordan_family",
+          "expected_status": "underdetermined",
+          "capabilities": {
+            "local_tomography": "underdetermined",
+            "homogeneous_self_dual_cone": "supported",
+            "continuous_reversible_bit_symmetry": "supported",
+            "no_third_order_interference": "supported",
+            "purification_or_filtering": "underdetermined",
+            "bounded_nonclassical_correlations": "underdetermined"
+          }
+        },
+        {
+          "id": "generic_gpt_cone",
+          "expected_status": "underdetermined",
+          "capabilities": {
+            "local_tomography": "underdetermined",
+            "homogeneous_self_dual_cone": "underdetermined",
+            "continuous_reversible_bit_symmetry": "underdetermined",
+            "no_third_order_interference": "underdetermined",
+            "purification_or_filtering": "underdetermined",
+            "bounded_nonclassical_correlations": "underdetermined"
+          }
+        }
+      ]
+    },
+    {
+      "id": "carrier_selection_frontier_demo",
+      "type": "carrier_selection_frontier",
+      "open_obstructions": [
+        "extend_context_product_exhaustion_to_carrier_theorem",
+        "derive_purification_or_filtering_from_idt",
+        "derive_bounded_correlation_from_idt",
+        "exclude_noncomplex_jordan_carriers",
+        "exclude_generic_gpt_cones"
+      ],
+      "expected_selected_carrier": "none",
+      "expected_frontier_status": "not_derived",
+      "candidates": [
+        {
+          "id": "complex_hilbert_like",
+          "status": "survives",
+          "blocking_obstructions": []
+        },
+        {
+          "id": "euclidean_jordan_family",
+          "status": "underdetermined",
+          "blocking_obstructions": [
+            "extend_context_product_exhaustion_to_carrier_theorem",
+            "derive_purification_or_filtering_from_idt",
+            "exclude_noncomplex_jordan_carriers"
+          ]
+        },
+        {
+          "id": "generic_gpt_cone",
+          "status": "underdetermined",
+          "blocking_obstructions": [
+            "extend_context_product_exhaustion_to_carrier_theorem",
+            "derive_purification_or_filtering_from_idt",
+            "derive_bounded_correlation_from_idt",
+            "exclude_generic_gpt_cones"
+          ]
         }
       ]
     },
