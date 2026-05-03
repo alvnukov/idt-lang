@@ -88,6 +88,9 @@ from theory_verifier.core import (
     SCREENED_OBSERVATIONAL_GATE_REQUIRED_SYMBOLS,
     SCREENED_OBSERVATIONAL_GATE_TARGET,
     CARRIER_SELECTION_OPEN_OBSTRUCTIONS,
+    CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_FORBIDDEN_UPGRADES,
+    CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_ASSUMPTIONS,
+    CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_CONCLUSIONS,
     CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES,
     DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS,
     GENERIC_GPT_CLOSURE_CONDITIONS,
@@ -3017,6 +3020,64 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"context_product_exhaustion_admissibility_mismatch"})
 
+    def test_rebit_hidden_joint_invariant_rejects_bad_product_dimension(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_rebit_hidden_joint_invariant",
+                        "type": "rebit_hidden_joint_invariant_separator",
+                        "local_a": 3,
+                        "local_b": 3,
+                        "composite": 10,
+                        "expected_product_dimension": 10,
+                        "expected_joint_only_degrees": 1,
+                        "local_basis": ["I", "X", "Z"],
+                        "hidden_invariant": "Y_tensor_Y",
+                        "epsilon": 1.0,
+                        "expected_product_indistinguishable": True,
+                        "expected_global_distinguishable": True,
+                        "expected_status": "rejected_under_context_product_exhaustion",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"rebit_hidden_joint_invariant_product_dimension_mismatch"})
+
+    def test_context_product_local_tomography_theorem_rejects_bad_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_context_product_local_tomography_theorem",
+                        "type": "context_product_local_tomography_theorem",
+                        "target_theorem_card": "context_product_exhaustion_implies_local_tomography",
+                        "assumptions": list(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_CONCLUSIONS),
+                        "evidence_refs": [
+                            "context_product_exhaustion_demo",
+                            "idt_local_tomography_derivation_demo",
+                            "local_tomography_separator_demo",
+                            "real_hilbert_composite_hidden_joint_invariant_demo",
+                        ],
+                        "forbidden_upgrades": list(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_product_local_tomography_theorem_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -3572,6 +3633,32 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"carrier_selection_theorem_card_status_mismatch"})
+
+    def test_context_product_local_tomography_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "context_product_exhaustion_implies_local_tomography",
+                        "statement": "conditional separator",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": [],
+                        "proof_status": "formal_proof",
+                        "verifier": "context_product_local_tomography_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_product_local_tomography_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

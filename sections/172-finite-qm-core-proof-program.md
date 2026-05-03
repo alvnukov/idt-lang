@@ -308,6 +308,45 @@ gap is now sharper: extend this finite context-product exhaustion rule into a
 general carrier-selection theorem, rather than assuming that all admissible
 carriers have already been covered.
 
+The first conditional separator theorem is now executable as:
+
+`context_product_local_tomography_theorem_demo`.
+
+It records the conditional theorem card:
+
+`context_product_exhaustion_implies_local_tomography`.
+
+The theorem is deliberately conditional. Under finite context families,
+product-context closure, stable-invariant witness completeness,
+product-effect separation, and no hidden joint-only facticizable invariant,
+product readouts separate stable composite facts. Therefore local tomography
+holds for that finite composite route:
+
+$$
+K_{AB}=K_AK_B.
+$$
+
+The corresponding rebit witness is:
+
+`real_hilbert_composite_hidden_joint_invariant_demo`.
+
+It checks the real-Hilbert composite separator:
+
+$$
+K_A=3,\quad K_B=3,\quad K_{AB}=10,\quad K_AK_B=9.
+$$
+
+The missing degree is represented by \(Y\otimes Y\). Product readouts over the
+local real basis \(\{I,X,Z\}\) cannot distinguish
+\(\rho_+=\frac14(I\otimes I+\varepsilon Y\otimes Y)\) from
+\(\rho_-=\frac14(I\otimes I-\varepsilon Y\otimes Y)\), while the global
+\(Y\otimes Y\) readout distinguishes them. This rejects real-Hilbert-like
+finite composite carriers under context-product exhaustion.
+
+Status:
+
+`context_product_local_tomography_conditional_proof`
+
 The purification/filtering route is now executable as:
 
 `idt_purification_filtering_demo`.
@@ -434,14 +473,17 @@ It decomposes the theorem into five lemma obligations:
 4. non-complex Jordan exclusion as a classification theorem;
 5. generic GPT exclusion as a classification theorem.
 
-Each lemma currently has finite witnesses but remains below `formal_proof`.
-The route therefore keeps `universal_carrier_selection_theorem` at `open`.
+The first lemma is now a `conditional_proof`; the other four currently have
+finite witnesses but remain below `formal_proof`. The route therefore still
+keeps `universal_carrier_selection_theorem` at `open`.
 
 The first lemma route is now executable as:
 
 `context_product_carrier_lemma_route_demo`.
 
-It connects `context_product_exhaustion_demo` and
+It connects `context_product_local_tomography_theorem_demo`,
+`real_hilbert_composite_hidden_joint_invariant_demo`,
+`context_product_exhaustion_demo`, and
 `idt_local_tomography_derivation_demo` to the carrier-selection proof route.
 The route records three finite exclusions:
 
@@ -449,9 +491,9 @@ The route records three finite exclusions:
 2. real rebit pair;
 3. hidden joint sector.
 
-It still remains `finite_witnessed`, not `formal_proof`, because the finite
-context tables must be extended to arbitrary operational composites and all
-admissible effect cones.
+It is now `conditional_proof`, not `formal_proof`, because the theorem is
+conditioned on context-product exhaustion and still does not close generic GPT
+or route-closed subtheory underdetermination.
 
 The second lemma route is now executable as:
 

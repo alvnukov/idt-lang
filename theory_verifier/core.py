@@ -110,6 +110,26 @@ IDT_LOCAL_TOMOGRAPHY_CONDITIONS = (
     "stable_invariant_separability",
 )
 
+CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_ASSUMPTIONS = (
+    "finite_context_family",
+    "product_context_closure",
+    "stable_invariant_witness_completeness",
+    "product_effect_separation",
+    "no_hidden_joint_only_facticizable_invariant",
+)
+
+CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_CONCLUSIONS = (
+    "local_tomography",
+    "minimal_parameter_product_basis",
+)
+
+CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_prove_Born_rule",
+    "does_not_select_complex_Hilbert_from_IDT_primitives_alone",
+)
+
 CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES = (
     "event_packet",
     "distinguishability_partition",
@@ -214,6 +234,7 @@ CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
 
 CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES = (
     "finite_witnessed",
+    "conditional_proof",
     "open",
     "blocked",
     "formal_proof",
@@ -418,6 +439,7 @@ THEOREM_CARD_ROLE_VALUES = (
 
 THEOREM_CARD_PROOF_STATUS_VALUES = (
     "formal_proof",
+    "conditional_proof",
     "finite_verifier_pass",
     "numerical_evidence",
     "calibrated_match",
@@ -1640,6 +1662,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_carrier_selection_theorem_grounding(manifest))
     checks.append("carrier-selection theorem grounding")
 
+    issues.extend(check_context_product_local_tomography_theorem_grounding(manifest))
+    checks.append("context-product local tomography theorem grounding")
+
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
 
@@ -2521,6 +2546,58 @@ def check_carrier_selection_theorem_grounding(manifest: Manifest) -> list[Issue]
                     f"{proof_route.identifier}: lemma {lemma_id} has unresolved evidence refs: {', '.join(missing_refs)}",
                 )
             )
+    return issues
+
+
+def check_context_product_local_tomography_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("context_product_exhaustion_implies_local_tomography")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "context_product_local_tomography_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "context_product_local_tomography_theorem_demo",
+        "real_hilbert_composite_hidden_joint_invariant_demo",
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "local_tomography_separator_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "context_product_local_tomography_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "context_product_local_tomography_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    forbidden_upgrades = set(theorem_card.forbidden_claims)
+    if not set(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_FORBIDDEN_UPGRADES).issubset(forbidden_upgrades):
+        issues.append(
+            Issue(
+                "context_product_local_tomography_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
     return issues
 
 
@@ -5519,6 +5596,188 @@ def check_context_product_exhaustion_gate(gate: FiniteGate) -> list[Issue]:
     return []
 
 
+def check_rebit_hidden_joint_invariant_separator_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    local_a = parse_positive_integer(gate.payload.get("local_a"), f"{gate.identifier}.local_a")
+    local_b = parse_positive_integer(gate.payload.get("local_b"), f"{gate.identifier}.local_b")
+    composite = parse_positive_integer(gate.payload.get("composite"), f"{gate.identifier}.composite")
+    expected_product_dimension = parse_positive_integer(
+        gate.payload.get("expected_product_dimension"),
+        f"{gate.identifier}.expected_product_dimension",
+    )
+    expected_joint_only_degrees = parse_nonnegative_integer(
+        gate.payload.get("expected_joint_only_degrees"),
+        f"{gate.identifier}.expected_joint_only_degrees",
+    )
+    hidden_invariant = require_string(gate.payload.get("hidden_invariant"), f"{gate.identifier}.hidden_invariant")
+    if hidden_invariant != "Y_tensor_Y":
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_name_mismatch",
+                f"{gate.identifier}: hidden invariant must be Y_tensor_Y",
+            )
+        ]
+
+    computed_product_dimension = local_a * local_b
+    if computed_product_dimension != expected_product_dimension:
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_product_dimension_mismatch",
+                f"{gate.identifier}: expected product dimension {expected_product_dimension}, computed {computed_product_dimension}",
+            )
+        ]
+
+    computed_joint_only_degrees = composite - computed_product_dimension
+    if computed_joint_only_degrees != expected_joint_only_degrees:
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_joint_only_mismatch",
+                f"{gate.identifier}: expected joint-only degrees {expected_joint_only_degrees}, computed {computed_joint_only_degrees}",
+            )
+        ]
+
+    epsilon = parse_unit_interval(gate.payload.get("epsilon"), f"{gate.identifier}.epsilon")
+    expected_product_indistinguishable = parse_bool(
+        gate.payload.get("expected_product_indistinguishable"),
+        f"{gate.identifier}.expected_product_indistinguishable",
+    )
+    expected_global_distinguishable = parse_bool(
+        gate.payload.get("expected_global_distinguishable"),
+        f"{gate.identifier}.expected_global_distinguishable",
+    )
+    expected_status = require_string(gate.payload.get("expected_status"), f"{gate.identifier}.expected_status")
+
+    pauli_i = [[1.0 + 0.0j, 0.0j], [0.0j, 1.0 + 0.0j]]
+    pauli_x = [[0.0j, 1.0 + 0.0j], [1.0 + 0.0j, 0.0j]]
+    pauli_y = [[0.0j, -1.0j], [1.0j, 0.0j]]
+    pauli_z = [[1.0 + 0.0j, 0.0j], [0.0j, -1.0 + 0.0j]]
+    local_basis = {
+        "I": pauli_i,
+        "X": pauli_x,
+        "Z": pauli_z,
+    }
+    basis_labels = require_string_tuple(gate.payload.get("local_basis"), f"{gate.identifier}.local_basis")
+    if set(basis_labels) != set(local_basis):
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_basis_mismatch",
+                f"{gate.identifier}: local basis must be I, X, Z",
+            )
+        ]
+
+    yy = kronecker_product(pauli_y, pauli_y)
+    base_density = scalar_multiply_matrix(0.25 + 0.0j, kronecker_product(pauli_i, pauli_i))
+    rho_plus = matrix_add(base_density, scalar_multiply_matrix(epsilon / 4.0, yy))
+    rho_minus = matrix_add(base_density, scalar_multiply_matrix(-epsilon / 4.0, yy))
+    psd_issues = matrix_psd_issues(f"{gate.identifier}.rho_plus", rho_plus, tolerance)
+    psd_issues.extend(matrix_psd_issues(f"{gate.identifier}.rho_minus", rho_minus, tolerance))
+    if psd_issues:
+        return psd_issues
+
+    product_indistinguishable = True
+    delta = matrix_add(rho_plus, scalar_multiply_matrix(-1.0 + 0.0j, rho_minus))
+    for left_label in basis_labels:
+        for right_label in basis_labels:
+            product_observable = kronecker_product(local_basis[left_label], local_basis[right_label])
+            if abs(complex_matrix_trace(matrix_multiply(product_observable, delta))) > tolerance:
+                product_indistinguishable = False
+                break
+        if not product_indistinguishable:
+            break
+    if product_indistinguishable != expected_product_indistinguishable:
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_product_readout_mismatch",
+                f"{gate.identifier}: expected product indistinguishability {expected_product_indistinguishable}",
+            )
+        ]
+
+    plus_global = complex_matrix_trace(matrix_multiply(rho_plus, yy)).real
+    minus_global = complex_matrix_trace(matrix_multiply(rho_minus, yy)).real
+    global_distinguishable = abs(plus_global - epsilon) <= tolerance and abs(minus_global + epsilon) <= tolerance
+    if global_distinguishable != expected_global_distinguishable:
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_global_readout_mismatch",
+                f"{gate.identifier}: expected global distinguishability {expected_global_distinguishable}",
+            )
+        ]
+
+    computed_status = "rejected_under_context_product_exhaustion" if product_indistinguishable and global_distinguishable else "survives"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "rebit_hidden_joint_invariant_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_context_product_local_tomography_theorem_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "context_product_exhaustion_implies_local_tomography":
+        return [
+            Issue(
+                "context_product_local_tomography_theorem_target_mismatch",
+                f"{gate.identifier}: target card must be context_product_exhaustion_implies_local_tomography",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_ASSUMPTIONS):
+        return [
+            Issue(
+                "context_product_local_tomography_theorem_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the conditional local-tomography theorem",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_CONCLUSIONS):
+        return [
+            Issue(
+                "context_product_local_tomography_theorem_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must match local tomography and parameter-product basis",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("evidence_refs", []), f"{gate.identifier}.evidence_refs")
+    required_evidence = {
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "local_tomography_separator_demo",
+        "real_hilbert_composite_hidden_joint_invariant_demo",
+    }
+    if set(evidence_refs) != required_evidence:
+        return [
+            Issue(
+                "context_product_local_tomography_theorem_evidence_mismatch",
+                f"{gate.identifier}: evidence refs must link context-product, local tomography, and rebit separator gates",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "context_product_local_tomography_theorem_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM claim boundary",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_theorem_status"), f"{gate.identifier}.expected_theorem_status")
+    computed_status = "conditional_proof"
+    if expected_status != computed_status:
+        return [
+            Issue(
+                "context_product_local_tomography_theorem_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
 def check_idt_purification_filtering_gate(gate: FiniteGate) -> list[Issue]:
     tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
     conditions = require_string_tuple(gate.payload.get("idt_conditions", []), f"{gate.identifier}.idt_conditions")
@@ -6443,10 +6702,25 @@ def check_context_product_carrier_lemma_route_gate(gate: FiniteGate) -> list[Iss
         ]
 
     open_gaps = require_string_tuple(gate.payload.get("open_generalization_gaps", []), f"{gate.identifier}.open_generalization_gaps")
+    conditional_refs = require_string_tuple(gate.payload.get("conditional_theorem_refs", []), f"{gate.identifier}.conditional_theorem_refs")
     expected_status = require_string(gate.payload.get("expected_lemma_status"), f"{gate.identifier}.expected_lemma_status")
     if expected_status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
         raise ManifestError(f"{gate.identifier}: expected_lemma_status is unknown")
-    if open_gaps:
+    required_conditional_refs = {
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "real_hilbert_composite_hidden_joint_invariant",
+    }
+    if conditional_refs and set(conditional_refs) != required_conditional_refs:
+        return [
+            Issue(
+                "context_product_carrier_lemma_conditional_refs_mismatch",
+                f"{gate.identifier}: conditional theorem refs must link the local-tomography theorem and rebit candidate card",
+            )
+        ]
+    if conditional_refs:
+        computed_status = "conditional_proof"
+    elif open_gaps:
         computed_status = "finite_witnessed"
     else:
         computed_status = "formal_proof"
@@ -13062,6 +13336,28 @@ def scalar_multiply_matrix(scalar: complex, matrix: list[list[complex]]) -> list
     return [[scalar * value for value in row] for row in matrix]
 
 
+def complex_matrix_trace(matrix: list[list[complex]]) -> complex:
+    if not matrix:
+        raise ManifestError("cannot trace empty matrix")
+    width = len(matrix[0])
+    if width != len(matrix):
+        raise ManifestError("trace requires a square matrix")
+    return sum(matrix[index][index] for index in range(width))
+
+
+def kronecker_product(left: list[list[complex]], right: list[list[complex]]) -> list[list[complex]]:
+    if not left or not right:
+        raise ManifestError("cannot tensor empty matrices")
+    output: list[list[complex]] = []
+    for left_row in left:
+        rows: list[list[complex]] = [[] for _ in right]
+        for left_value in left_row:
+            for right_row_index, right_row in enumerate(right):
+                rows[right_row_index].extend(left_value * right_value for right_value in right_row)
+        output.extend(rows)
+    return output
+
+
 def diagonal_phase_matrix(phases: list[float]) -> list[list[complex]]:
     size = len(phases)
     matrix = zero_matrix(size, size)
@@ -13723,6 +14019,8 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "local_tomography_separator": check_local_tomography_separator_gate,
     "idt_local_tomography_derivation": check_idt_local_tomography_derivation_gate,
     "context_product_exhaustion": check_context_product_exhaustion_gate,
+    "rebit_hidden_joint_invariant_separator": check_rebit_hidden_joint_invariant_separator_gate,
+    "context_product_local_tomography_theorem": check_context_product_local_tomography_theorem_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

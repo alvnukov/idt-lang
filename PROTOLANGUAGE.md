@@ -667,6 +667,14 @@ The `context_product_carrier_lemma_route_demo` now starts the first lemma
 route below that theorem route: context-product and local-tomography witnesses
 exclude finite hidden-joint counterexamples while leaving universal
 generalization gaps open.
+The `context_product_exhaustion_implies_local_tomography` theorem card now
+promotes that first route to a `conditional_proof`: under finite
+context-product exhaustion assumptions, product readouts separate stable
+composite facts and local tomography follows. The
+`real_hilbert_composite_hidden_joint_invariant_demo` fixture records the
+rebit \(Y\otimes Y\) separator: \(K_AK_B=9\) but \(K_{AB}=10\), so the
+real-Hilbert-like composite is rejected under the conditional separator
+without claiming universal carrier selection.
 The `purification_filtering_carrier_lemma_route_demo` now starts the second
 lemma route below that theorem route: purification/filtering witnesses exclude
 finite insufficient-extension and zero-support-filter counterexamples while

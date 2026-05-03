@@ -2742,6 +2742,8 @@
         "distinguishability_geometry_probe_demo",
         "context_product_exhaustion_demo",
         "idt_local_tomography_derivation_demo",
+        "context_product_local_tomography_theorem_demo",
+        "real_hilbert_composite_hidden_joint_invariant_demo",
         "idt_purification_filtering_demo",
         "idt_bounded_correlation_demo",
         "noncomplex_jordan_separator_demo",
@@ -2752,6 +2754,22 @@
       ],
       "open_gap": "Context-product exhaustion, purification/filtering, bounded correlations, noncomplex-Jordan separation, and generic-GPT closure are now executable for finite witnessed routes, but their extension into a universal carrier-selection theorem remains unresolved.",
       "claim_boundary": "This is the next derivation target; no Hilbert carrier is claimed from current primitives."
+    },
+    {
+      "id": "product_contexts_separate_stable_facts",
+      "title": "Product contexts separate stable facts",
+      "status": "derived_conditional",
+      "scope": "finite_core",
+      "depends_on": ["distinguishability_geometry"],
+      "evidence_refs": [
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "local_tomography_separator_demo",
+        "context_product_local_tomography_theorem_demo",
+        "real_hilbert_composite_hidden_joint_invariant_demo"
+      ],
+      "open_gap": "",
+      "claim_boundary": "This proves a conditional separator only under declared finite context-product assumptions; it does not select the universal QM carrier."
     },
     {
       "id": "hilbert_carrier_derivation",
@@ -2872,6 +2890,63 @@
     }
   ],
   "theorem_cards": [
+    {
+      "id": "context_product_exhaustion_implies_local_tomography",
+      "statement": "For any finite IDT composite AB, if product contexts close the full Cartesian readout table, stable composite invariants are exhausted by product-context witnesses, and product readouts separate stable facts, then the operational state of AB is determined by joint local readout statistics. Hence local tomography holds and K_AB = K_A*K_B in a minimal independent parameter basis.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_context_family",
+        "product_context_closure",
+        "stable_invariant_witness_completeness",
+        "product_effect_separation",
+        "no_hidden_joint_only_facticizable_invariant"
+      ],
+      "dependencies": [
+        "context_product_local_tomography_theorem_demo",
+        "real_hilbert_composite_hidden_joint_invariant_demo",
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "local_tomography_separator_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "context_product_local_tomography_theorem_demo",
+      "known_failures": [
+        "does not close generic GPT underdetermination",
+        "does not prove universal carrier selection"
+      ],
+      "physical_scope": "Finite composite carrier separator under context-product exhaustion assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ]
+    },
+    {
+      "id": "real_hilbert_composite_hidden_joint_invariant",
+      "statement": "A real-Hilbert-like rebit composite has K_AB=10 while K_A*K_B=9 and contains the joint-only invariant Y tensor Y, so it is globally distinguishable but product-readout indistinguishable under the local real basis I, X, Z.",
+      "role": "failure",
+      "assumptions": [
+        "real_symmetric_local_state_space",
+        "product_readout_basis_I_X_Z",
+        "context_product_exhaustion"
+      ],
+      "dependencies": [
+        "real_hilbert_composite_hidden_joint_invariant_demo",
+        "local_tomography_separator_demo",
+        "idt_local_tomography_derivation_demo"
+      ],
+      "proof_status": "finite_verifier_pass",
+      "verifier": "real_hilbert_composite_hidden_joint_invariant_demo",
+      "known_failures": [
+        "hidden joint-only invariant has no local product-context witness"
+      ],
+      "physical_scope": "Finite rebit-pair separator witness.",
+      "forbidden_claims": [
+        "does_not_reject_all_noncomplex_carriers",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ]
+    },
     {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
@@ -3850,6 +3925,51 @@
       ]
     },
     {
+      "id": "real_hilbert_composite_hidden_joint_invariant_demo",
+      "type": "rebit_hidden_joint_invariant_separator",
+      "tolerance": 1.0e-10,
+      "local_a": 3,
+      "local_b": 3,
+      "composite": 10,
+      "expected_product_dimension": 9,
+      "expected_joint_only_degrees": 1,
+      "local_basis": ["I", "X", "Z"],
+      "hidden_invariant": "Y_tensor_Y",
+      "epsilon": 1.0,
+      "expected_product_indistinguishable": true,
+      "expected_global_distinguishable": true,
+      "expected_status": "rejected_under_context_product_exhaustion"
+    },
+    {
+      "id": "context_product_local_tomography_theorem_demo",
+      "type": "context_product_local_tomography_theorem",
+      "target_theorem_card": "context_product_exhaustion_implies_local_tomography",
+      "assumptions": [
+        "finite_context_family",
+        "product_context_closure",
+        "stable_invariant_witness_completeness",
+        "product_effect_separation",
+        "no_hidden_joint_only_facticizable_invariant"
+      ],
+      "conclusions": [
+        "local_tomography",
+        "minimal_parameter_product_basis"
+      ],
+      "evidence_refs": [
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo",
+        "local_tomography_separator_demo",
+        "real_hilbert_composite_hidden_joint_invariant_demo"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "idt_purification_filtering_demo",
       "type": "idt_purification_filtering",
       "tolerance": 1.0e-10,
@@ -4156,13 +4276,17 @@
       "lemmas": [
         {
           "id": "extend_context_product_exhaustion_to_carrier_theorem",
-          "status": "finite_witnessed",
+          "status": "conditional_proof",
           "evidence_refs": [
             "context_product_carrier_lemma_route_demo",
+            "context_product_exhaustion_implies_local_tomography",
+            "context_product_local_tomography_theorem_demo",
+            "real_hilbert_composite_hidden_joint_invariant",
+            "real_hilbert_composite_hidden_joint_invariant_demo",
             "context_product_exhaustion_demo",
             "idt_local_tomography_derivation_demo"
           ],
-          "open_gap": "Finite context-product exhaustion exists, but it is not yet a universal carrier-selection theorem."
+          "open_gap": "Context-product exhaustion now has a conditional separator theorem for finite composites, but it is not a universal carrier-selection theorem."
         },
         {
           "id": "extend_purification_filtering_to_carrier_theorem",
@@ -4226,6 +4350,11 @@
         "context_product_exhaustion_demo",
         "idt_local_tomography_derivation_demo"
       ],
+      "conditional_theorem_refs": [
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "real_hilbert_composite_hidden_joint_invariant"
+      ],
       "excluded_counterexamples": [
         "hidden_joint_invariant_composite",
         "real_rebit_pair",
@@ -4233,11 +4362,11 @@
       ],
       "expected_exclusion_count": 3,
       "open_generalization_gaps": [
-        "extend finite context tables to arbitrary operational composites",
-        "prove no hidden joint invariant for all admissible effect cones",
-        "show local-tomographic exhaustion is forced by IDT primitives rather than assumed as a condition"
+        "conditional theorem still assumes finite context-product exhaustion",
+        "generic GPT and route-closed subtheories remain outside this separator",
+        "complex Hilbert carrier is not selected from IDT primitives alone"
       ],
-      "expected_lemma_status": "finite_witnessed"
+      "expected_lemma_status": "conditional_proof"
     },
     {
       "id": "purification_filtering_carrier_lemma_route_demo",

@@ -109,6 +109,22 @@ This is the first narrower proof-unit below a theorem proof route. It records
 the finite witnesses, excluded counterexamples, expected exclusion count, and
 remaining generalization gaps for one carrier-selection lemma.
 
+The first conditional separator theorem is now manifest-backed:
+
+`context_product_exhaustion_implies_local_tomography`
+
+Its executable verifier is:
+
+`context_product_local_tomography_theorem_demo`
+
+It promotes the context-product route from finite witness to
+`conditional_proof`: under finite context-product exhaustion assumptions,
+product readouts separate stable composite facts, so local tomography follows.
+The paired rejected-candidate card
+`real_hilbert_composite_hidden_joint_invariant` and fixture
+`real_hilbert_composite_hidden_joint_invariant_demo` record the rebit
+\(Y\otimes Y\) hidden-joint invariant separator.
+
 The second lemma route is now manifest-backed:
 
 `purification_filtering_carrier_lemma_route_demo`
