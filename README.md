@@ -11,6 +11,10 @@ could become a shared world-interpretation layer: a way for humans and AI
 systems to organize evidence, test explanations, expose gaps, and progressively
 deepen structural understanding of the physical world.
 
+The project has a personal origin in a long-running attempt to make physical
+systems intelligible, not only calculable. See [Origin and Motivation](ORIGIN.md)
+for the human context behind the protolanguage.
+
 ## Current Status
 
 This repository is a clean public snapshot of the modular canonical source.
@@ -29,6 +33,7 @@ for QM or GR. Its present value is methodological and test-directed:
 
 ## Repository Layout
 
+- `ORIGIN.md` — project origin and motivation.
 - `PROTOLANGUAGE.md` — canonical entry point and public positioning.
 - `sections/` — modular theory body.
 - `theory_verifier/` — executable manifest verifier.
