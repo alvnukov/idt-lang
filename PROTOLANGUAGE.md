@@ -675,6 +675,10 @@ The `bounded_correlation_carrier_lemma_route_demo` now starts the third lemma
 route below that theorem route: bounded-correlation and GPT-separator witnesses
 exclude finite PR-box-like and boxworld-like counterexamples while leaving
 universal carrier generalization gaps open.
+The `noncomplex_jordan_classification_lemma_route_demo` now starts the fourth
+lemma route below that theorem route: non-complex Jordan witnesses exclude
+finite real, quaternionic, and exceptional carrier samples while leaving
+classification gaps open.
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.

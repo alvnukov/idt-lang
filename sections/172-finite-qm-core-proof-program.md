@@ -485,6 +485,21 @@ resources, the bounded-correlation screen must be forced by IDT invariants,
 and the GPT separator must exclude all non-Hilbert carrier candidates rather
 than only sample families.
 
+The fourth lemma route is now executable as:
+
+`noncomplex_jordan_classification_lemma_route_demo`.
+
+It connects `noncomplex_jordan_separator_demo` to the carrier-selection proof
+route. The route records three finite exclusions:
+
+1. real Hilbert-like carrier;
+2. quaternionic Hilbert-like carrier;
+3. exceptional Jordan-like carrier.
+
+It still remains `finite_witnessed`, not `formal_proof`, because the finite
+non-complex Jordan samples must be promoted to a classification theorem and
+connected to the remaining generic GPT cone.
+
 Status:
 
 `carrier_selection_proof_route_initialized`
@@ -500,6 +515,10 @@ Status:
 Status:
 
 `bounded_correlation_carrier_lemma_route_initialized`
+
+Status:
+
+`noncomplex_jordan_classification_lemma_route_initialized`
 
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that

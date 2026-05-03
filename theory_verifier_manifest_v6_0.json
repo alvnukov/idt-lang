@@ -4187,6 +4187,7 @@
           "id": "extend_noncomplex_jordan_exclusion_to_classification_theorem",
           "status": "finite_witnessed",
           "evidence_refs": [
+            "noncomplex_jordan_classification_lemma_route_demo",
             "noncomplex_jordan_separator_demo"
           ],
           "open_gap": "Non-complex Jordan separator exists, but it is not yet a classification theorem."
@@ -4293,6 +4294,33 @@
         "extend finite CHSH-bound samples to arbitrary admissible correlation resources",
         "prove the bounded-correlation screen is forced by IDT stable-correlation invariants",
         "show GPT separator principles jointly exclude all non-Hilbert carrier candidates rather than sample families"
+      ],
+      "expected_lemma_status": "finite_witnessed"
+    },
+    {
+      "id": "noncomplex_jordan_classification_lemma_route_demo",
+      "type": "noncomplex_jordan_classification_lemma_route",
+      "target_lemma": "extend_noncomplex_jordan_exclusion_to_classification_theorem",
+      "required_conditions": [
+        "complex_phase_orientation",
+        "local_tomographic_composition",
+        "associative_tensor_composition",
+        "purification_filtering_route",
+        "bounded_correlation_route"
+      ],
+      "finite_evidence_refs": [
+        "noncomplex_jordan_separator_demo"
+      ],
+      "excluded_counterexamples": [
+        "real_hilbert_like",
+        "quaternionic_hilbert_like",
+        "exceptional_jordan_like"
+      ],
+      "expected_exclusion_count": 3,
+      "open_generalization_gaps": [
+        "promote finite non-complex Jordan samples to a classification theorem",
+        "prove IDT conditions exclude all real, quaternionic, and exceptional Jordan carrier families",
+        "connect the classification theorem to the remaining generic GPT cone"
       ],
       "expected_lemma_status": "finite_witnessed"
     },

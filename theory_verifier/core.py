@@ -222,6 +222,7 @@ CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES = (
 CONTEXT_PRODUCT_CARRIER_LEMMA_TARGET = "extend_context_product_exhaustion_to_carrier_theorem"
 PURIFICATION_FILTERING_CARRIER_LEMMA_TARGET = "extend_purification_filtering_to_carrier_theorem"
 BOUNDED_CORRELATION_CARRIER_LEMMA_TARGET = "extend_bounded_correlation_to_carrier_theorem"
+NONCOMPLEX_JORDAN_CLASSIFICATION_LEMMA_TARGET = "extend_noncomplex_jordan_exclusion_to_classification_theorem"
 
 CARRIER_SELECTION_FRONTIER_STATUSES = {
     "not_derived",
@@ -6504,6 +6505,68 @@ def check_bounded_correlation_carrier_lemma_route_gate(gate: FiniteGate) -> list
         return [
             Issue(
                 "bounded_correlation_carrier_lemma_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_noncomplex_jordan_classification_lemma_route_gate(gate: FiniteGate) -> list[Issue]:
+    target_lemma = require_string(gate.payload.get("target_lemma"), f"{gate.identifier}.target_lemma")
+    if target_lemma != NONCOMPLEX_JORDAN_CLASSIFICATION_LEMMA_TARGET:
+        return [
+            Issue(
+                "noncomplex_jordan_classification_lemma_target_mismatch",
+                f"{gate.identifier}: target lemma must be {NONCOMPLEX_JORDAN_CLASSIFICATION_LEMMA_TARGET}",
+            )
+        ]
+
+    conditions = require_string_tuple(gate.payload.get("required_conditions", []), f"{gate.identifier}.required_conditions")
+    if set(conditions) != set(NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS):
+        return [
+            Issue(
+                "noncomplex_jordan_classification_lemma_conditions_mismatch",
+                f"{gate.identifier}: required conditions must match non-complex Jordan separator conditions",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("finite_evidence_refs", []), f"{gate.identifier}.finite_evidence_refs")
+    if set(evidence_refs) != {"noncomplex_jordan_separator_demo"}:
+        return [
+            Issue(
+                "noncomplex_jordan_classification_lemma_evidence_mismatch",
+                f"{gate.identifier}: finite evidence refs must link the non-complex Jordan separator witness",
+            )
+        ]
+
+    excluded_counterexamples = require_string_tuple(
+        gate.payload.get("excluded_counterexamples", []),
+        f"{gate.identifier}.excluded_counterexamples",
+    )
+    expected_exclusion_count = parse_positive_integer(
+        gate.payload.get("expected_exclusion_count"),
+        f"{gate.identifier}.expected_exclusion_count",
+    )
+    if len(excluded_counterexamples) != expected_exclusion_count:
+        return [
+            Issue(
+                "noncomplex_jordan_classification_lemma_exclusion_count_mismatch",
+                f"{gate.identifier}: expected {expected_exclusion_count} exclusions, got {len(excluded_counterexamples)}",
+            )
+        ]
+
+    open_gaps = require_string_tuple(gate.payload.get("open_generalization_gaps", []), f"{gate.identifier}.open_generalization_gaps")
+    expected_status = require_string(gate.payload.get("expected_lemma_status"), f"{gate.identifier}.expected_lemma_status")
+    if expected_status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
+        raise ManifestError(f"{gate.identifier}: expected_lemma_status is unknown")
+    if open_gaps:
+        computed_status = "finite_witnessed"
+    else:
+        computed_status = "formal_proof"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "noncomplex_jordan_classification_lemma_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
@@ -13512,6 +13575,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "context_product_carrier_lemma_route": check_context_product_carrier_lemma_route_gate,
     "purification_filtering_carrier_lemma_route": check_purification_filtering_carrier_lemma_route_gate,
     "bounded_correlation_carrier_lemma_route": check_bounded_correlation_carrier_lemma_route_gate,
+    "noncomplex_jordan_classification_lemma_route": check_noncomplex_jordan_classification_lemma_route_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,
     "marker_eraser_visibility": check_marker_eraser_visibility_gate,
     "bell_chsh_table": check_bell_chsh_table_gate,

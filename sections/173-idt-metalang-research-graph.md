@@ -125,6 +125,14 @@ It records bounded-correlation conditions, GPT separator principles, finite
 exclusions, expected exclusion count, and remaining generalization gaps for
 the third carrier-selection lemma.
 
+The fourth lemma route is now manifest-backed:
+
+`noncomplex_jordan_classification_lemma_route_demo`
+
+It records non-complex Jordan separator conditions, finite exclusions,
+expected exclusion count, and remaining classification gaps for the fourth
+carrier-selection lemma.
+
 Status:
 
 `lemma_route_language_initialized`

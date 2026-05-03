@@ -3623,6 +3623,35 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"bounded_correlation_carrier_lemma_status_mismatch"})
 
+    def test_noncomplex_jordan_classification_lemma_rejects_premature_formal_proof(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_noncomplex_jordan_classification_lemma",
+                        "type": "noncomplex_jordan_classification_lemma_route",
+                        "target_lemma": "extend_noncomplex_jordan_exclusion_to_classification_theorem",
+                        "required_conditions": list(NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS),
+                        "finite_evidence_refs": ["noncomplex_jordan_separator_demo"],
+                        "excluded_counterexamples": [
+                            "real_hilbert_like",
+                            "quaternionic_hilbert_like",
+                            "exceptional_jordan_like",
+                        ],
+                        "expected_exclusion_count": 3,
+                        "open_generalization_gaps": ["still finite"],
+                        "expected_lemma_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"noncomplex_jordan_classification_lemma_status_mismatch"})
+
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
             {
