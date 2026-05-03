@@ -1,0 +1,34 @@
+suite: inherited_distinguishability_v3_1_dataset_binding
+version: '0.1'
+policy:
+  no_overfit: true
+  fixture_status_required: true
+  incomplete_fixtures_must_not_generate_numerical_bounds: true
+  citation_required_for_known_numeric_anchor: true
+fixtures_dir: /mnt/data/fixtures_v3_1
+fixtures:
+- sinha_2010_triple_slit_science
+- gerlich_2011_large_organic_molecules
+- eibenberger_2013_molecules_exceeding_10000_amu
+- pedalino_2026_sodium_nanoparticle_interferometry
+- kim_2000_delayed_choice_quantum_eraser
+- dibartolomeo_2024_levitated_optomechanics_collapse_bounds
+gating_rules:
+- id: G1
+  name: visibility_bound_requires_complete_visibility_fixture
+  required_fields:
+  - V_obs
+  - V_env
+  - sigma_V
+  - tau_s
+  - delta_x_m
+- id: G2
+  name: higher_order_interference_fixture_requires_I3_bound
+  required_fields:
+  - I3_over_I2_bound_order
+- id: G3
+  name: eraser_bound_requires_conditional_recovered_visibility
+  required_fields:
+  - V0_reference
+  - V_rec_conditional
+  - sigma_V

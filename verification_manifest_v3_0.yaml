@@ -1,0 +1,96 @@
+suite: inherited_distinguishability_v3_0
+version: '0.1'
+policy:
+  no_overfit: true
+  parameter_freeze_required_for_test_claims: true
+  calibration_validation_test_split: true
+unit_tests:
+- id: U1
+  name: psd_kernel
+  tolerance: 1.0e-10
+- id: U2
+  name: schur_product_psd
+  tolerance: 1.0e-10
+- id: U3
+  name: strong_positivity
+  tolerance: 1.0e-10
+- id: U4
+  name: facticity_bounds
+  tolerance: 1.0e-10
+- id: U5
+  name: third_order_interference_zero
+  tolerance: 1.0e-10
+- id: U6
+  name: monotonic_inheritance_overlap
+  tolerance: 1.0e-10
+integration_tests:
+- id: I1
+  name: two_slit_visibility
+- id: I2
+  name: three_slit_sorkin
+- id: I3
+  name: bell_chsh_gram
+- id: I4
+  name: quantum_eraser_recovery
+- id: I5
+  name: no_signalling_local_inheritance
+experimental_fixtures:
+- id: sinha_2010_triple_slit
+  type: higher_order_interference
+  status: benchmark
+  known_numeric_anchor:
+    I3_over_I2_upper_bound_order: 0.01
+  tests:
+  - third_order_interference_zero
+- id: gerlich_2011_large_molecules
+  type: matter_wave_visibility
+  status: benchmark
+  known_numeric_anchor:
+    max_mass_amu: 6910
+  requires:
+  - V_obs
+  - V_env
+  - sigma_V
+  - tau_s
+  - delta_x_m
+  tests:
+  - residual_visibility_bound
+  - mass_spatial_bound
+- id: eibenberger_2013_10000_amu
+  type: matter_wave_visibility
+  status: benchmark
+  known_numeric_anchor:
+    mass_amu_min: 10000
+  requires:
+  - V_obs
+  - V_env
+  - sigma_V
+  - tau_s
+  - delta_x_m
+  tests:
+  - residual_visibility_bound
+  - mass_spatial_bound
+- id: kim_2000_quantum_eraser
+  type: quantum_eraser
+  status: benchmark
+  tests:
+  - eraser_recovery_bound
+- id: di_bartolomeo_2024_levitated_bounds
+  type: collapse_like_bounds
+  status: comparison
+  tests:
+  - noise_or_visibility_bound_mapping
+- id: maqro_future
+  type: future_macroscopic_interference
+  status: future
+  known_numeric_anchor:
+    target_atoms_order: 100000000.0
+  tests:
+  - prospective_sensitivity
+model_families:
+  M0: Y=0
+  M1: Y=lambda*tau
+  M2: Y=0.5*log(1+kappa*tau)
+  M3: Y=lambda_I*tau*(m/m0)^alpha*(1-exp(-dx^2/(4*rI^2)))
+  M4: R_K context factization
+  M5: compound poisson inheritance acts

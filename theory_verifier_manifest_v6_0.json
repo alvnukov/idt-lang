@@ -1,0 +1,5149 @@
+{
+  "schema_version": "0.1",
+  "theory_version": "v6.10.0",
+  "symbols": {
+    "A0_I": {
+      "status": "blocked",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
+    "action_standard_work_time_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "action_scale_gauge_obstruction_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "action_anchor_lock_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "A_chi_star": {
+      "status": "open",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
+    "C_chi_I": {
+      "status": "open",
+      "dimension": {}
+    },
+    "D_S": {
+      "status": "open",
+      "dimension": {}
+    },
+    "G_I": {
+      "status": "target",
+      "dimension": {"M": -1, "L": 3, "T": -2}
+    },
+    "G_N": {
+      "status": "experimental_gate",
+      "dimension": {"M": -1, "L": 3, "T": -2}
+    },
+    "observed_gravity_residual": {
+      "status": "experimental_gate",
+      "dimension": {}
+    },
+    "Phi_I": {
+      "status": "derived_conditional",
+      "dimension": {"L": 2, "T": -2}
+    },
+    "gamma_ppn_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "Psi_I": {
+      "status": "target",
+      "dimension": {"L": 2, "T": -2}
+    },
+    "beta_ppn_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "ppn_no_slip_validation_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "anisotropic_stress_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "non_gravity_slip_residual_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "no_slip_stress_closure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "source_stress_tensor_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "isotropic_pressure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "stress_coarse_grain_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "source_stress_packet_closure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "validated_weak_field_domain_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "transition_scale_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "dark_sector_residual_candidate_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "scale_separated_residual_policy_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "residual_amplitude_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "residual_transition_length_I": {
+      "status": "target",
+      "dimension": {"L": 1}
+    },
+    "screened_slip_residual_candidate_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "galactic_residual_test_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "sparc_rotation_curve_data_I": {
+      "status": "experimental_gate",
+      "dimension": {}
+    },
+    "observed_centripetal_acceleration_I": {
+      "status": "definition",
+      "dimension": {"L": 1, "T": -2}
+    },
+    "baryonic_rotation_acceleration_I": {
+      "status": "definition",
+      "dimension": {"L": 1, "T": -2}
+    },
+    "sparc_galaxy_residual_packet_I": {
+      "status": "experimental_gate",
+      "dimension": {}
+    },
+    "screened_sparc_capacity_test_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_amplitude_lower_bound_I": {
+      "status": "experimental_gate",
+      "dimension": {}
+    },
+    "galaxy_residual_no_postfit_policy_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_solar_transition_bound_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "old_screened_profile_rejection_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_corridor_feasibility_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_no_fit_claim_policy_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_radius_scale_map_candidate_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_simple_map_rejection_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_baryonic_acceleration_map_candidate_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_acceleration_map_rejection_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_inverse_residual_map_forbidden_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_baryonic_exponent_family_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_q_selection_postfit_policy_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_q25_heldout_transfer_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "sparc_heldout_selection_policy_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "screened_slip_observational_gate_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "weak_field_clock_calculator_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "rho_source_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "alpha_chi_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "alpha_em_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "beta_source_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "clock_strain_source_law_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "apparatus_context_dynamics_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "bar_C_gamma": {
+      "status": "open",
+      "dimension": {}
+    },
+    "born_readout_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "canonical_commutator_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "c_I": {
+      "status": "primitive",
+      "dimension": {"L": 1, "T": -1}
+    },
+    "complex_amplitude_packet_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "continuum_limit_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "de_broglie_relation_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "ell0": {
+      "status": "open",
+      "dimension": {"L": 1}
+    },
+    "ell0_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "clock_vacuum_pole_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "ell0_emergence_clearance_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "ell0_physical_candidate_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "ell0_upper_bound_I": {
+      "status": "derived_conditional",
+      "dimension": {"L": 1}
+    },
+    "full_QM_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "hamiltonian_energy_operator_I": {
+      "status": "derived_conditional",
+      "dimension": {"M": 1, "L": 2, "T": -2}
+    },
+    "hbar_I": {
+      "status": "blocked",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
+    "hbar_action_standard_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "hbar_obs": {
+      "status": "experimental_gate",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
+    "calibrated_action_anchor_I": {
+      "status": "bridge_assumption",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
+    "calibrated_hbar_I": {
+      "status": "bridge_assumption",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
+    "calibrated_action_reconstruction_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "calibrated_G_I": {
+      "status": "target",
+      "dimension": {"M": -1, "L": 3, "T": -2}
+    },
+    "calibrated_G_calculator_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "calibrated_G_anchor_I": {
+      "status": "bridge_assumption",
+      "dimension": {"M": -1, "L": 3, "T": -2}
+    },
+    "G_calibrated_omega_ell_squared_I": {
+      "status": "target",
+      "dimension": {"T": -2}
+    },
+    "two_anchor_calibrated_reconstruction_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "our_universe_selection_I": {
+      "status": "bridge_assumption",
+      "dimension": {}
+    },
+    "dimensionful_anchor_selection_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "our_universe_calibrated_reconstruction_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "local_G_anchor_I": {
+      "status": "bridge_assumption",
+      "dimension": {"M": -1, "L": 3, "T": -2}
+    },
+    "G_domain_variation_hypothesis_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "G_effective_domain_map_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "global_G_constancy_I": {
+      "status": "open",
+      "dimension": {}
+    },
+    "local_G_physical_meaning_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "source_response_charge_I": {
+      "status": "open",
+      "dimension": {"M": 1}
+    },
+    "source_response_charge_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "active_passive_inertial_equality_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "geometry_response_factor_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "clock_vacuum_stiffness_from_source_charge_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "G_emergence_clearance_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "first_principles_G_candidate_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "joint_action_gravity_anchor_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "calibrated_hamiltonian_energy_operator_I": {
+      "status": "derived_conditional",
+      "dimension": {"M": 1, "L": 2, "T": -2}
+    },
+    "calibrated_momentum_operator_I": {
+      "status": "derived_conditional",
+      "dimension": {"M": 1, "L": 1, "T": -1}
+    },
+    "calibrated_de_broglie_relation_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "calibrated_canonical_commutator_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "calibrated_qm_continuum_closure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "calibrated_qm_generator_translation_closure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "calibrated_qm_apparatus_facticity_closure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "calibrated_qm_dynamics_action_facticity_closure_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "calibrated_QM_reconstruction_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "clock_vacuum_spectral_law_I": {
+      "status": "open",
+      "dimension": {}
+    },
+    "spectral_primitive_reduction_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cross_update_contraction_selection_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cross_update_support_relation_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cross_update_block_kernel_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "support_respecting_isometry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "contraction_phase_selection_rule_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "primitive_transition_phase_readout_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "transfer_phase_normalization_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cycle_holonomy_composition_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "phase_branch_reconstruction_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "primitive_holonomy_source_selector_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "primitive_source_class_registry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "pre_observation_selection_rule_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "selector_holdout_policy_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "primitive_topology_winding_selector_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cycle_word_grammar_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cycle_homotopy_class_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "orientation_reversal_rule_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "winding_additivity_rule_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "sector_role_taxonomy_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "structural_selector_registry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "dimensional_anchor_registry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "dimensionless_coupling_registry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "bridge_assumption_registry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "derived_readout_registry_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cross_sector_holdout_policy_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "non_exact_holonomy_source_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "holonomy_source_classification_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "phase_cost_independence_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "fixed_point_step_invariant_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "fixed_point_rotation_map_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "cycle_rotation_number_I": {
+      "status": "open",
+      "dimension": {}
+    },
+    "step_clock_readout_rule_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "radar_response_pole_relation_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "omega_link_blind_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "kappa_chi_I": {
+      "status": "open",
+      "dimension": {"M": 1, "L": 2, "T": -2}
+    },
+    "measurement_facticity_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "momentum_operator_I": {
+      "status": "derived_conditional",
+      "dimension": {"M": 1, "L": 1, "T": -1}
+    },
+    "observable_context_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "omega_ell_I": {
+      "status": "open",
+      "dimension": {"T": -1}
+    },
+    "omega_ell_lower_bound_I": {
+      "status": "derived_conditional",
+      "dimension": {"T": -1}
+    },
+    "photon_dispersion_omega_bound_obs": {
+      "status": "experimental_gate",
+      "dimension": {"T": -1}
+    },
+    "planck_units": {
+      "status": "experimental_gate",
+      "dimension": {}
+    },
+    "primitive_tick_I": {
+      "status": "open",
+      "dimension": {"T": 1}
+    },
+    "primitive_tick_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "primitive_tick_upper_bound_I": {
+      "status": "derived_conditional",
+      "dimension": {"T": 1}
+    },
+    "tick_scale_lock_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "primitive_mass_anchor_I": {
+      "status": "open",
+      "dimension": {"M": 1}
+    },
+    "primitive_mass_anchor_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "primitive_work_unit_I": {
+      "status": "open",
+      "dimension": {"M": 1, "L": 2, "T": -2}
+    },
+    "primitive_work_unit_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "work_scale_lock_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "q_V_I": {
+      "status": "open",
+      "dimension": {}
+    },
+    "matter_wave_omega_bound_proxy": {
+      "status": "experimental_gate",
+      "dimension": {"T": -1}
+    },
+    "minimal_link_dispersion_residual_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "qm_continuum_limit_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "qm_apparatus_facticity_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "qm_dynamics_action_facticity_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "qm_generator_translation_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "rho_chi_I": {
+      "status": "open",
+      "dimension": {}
+    },
+    "rho_chi_protocol_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "kappa_omega_consistency_closure_I": {
+      "status": "target",
+      "dimension": {}
+    },
+    "schrodinger_generator_I": {
+      "status": "derived_conditional",
+      "dimension": {"T": -1}
+    },
+    "tau_chi_star": {
+      "status": "open",
+      "dimension": {"T": 1}
+    },
+    "theta_gamma": {
+      "status": "open",
+      "dimension": {}
+    },
+    "translation_generator_I": {
+      "status": "derived_conditional",
+      "dimension": {"L": -1}
+    },
+    "unitary_evolution_I": {
+      "status": "derived_conditional",
+      "dimension": {}
+    },
+    "z_I": {
+      "status": "open",
+      "dimension": {}
+    }
+  },
+  "equations": [
+    {
+      "id": "kappa_action_rate",
+      "lhs": "kappa_chi_I",
+      "rhs": {"div": [{"symbol": "A_chi_star"}, {"symbol": "tau_chi_star"}]}
+    },
+    {
+      "id": "A_chi_phase_action",
+      "lhs": "A_chi_star",
+      "rhs": {"mul": [{"symbol": "hbar_I"}, {"symbol": "C_chi_I"}]}
+    },
+    {
+      "id": "hbar_from_action_standard",
+      "lhs": "hbar_I",
+      "rhs": {
+        "div": [
+          {"mul": [{"symbol": "A0_I"}, {"symbol": "bar_C_gamma"}]},
+          {"symbol": "theta_gamma"}
+        ]
+      }
+    },
+    {
+      "id": "A0_from_primitive_work_tick",
+      "lhs": "A0_I",
+      "rhs": {"mul": [{"symbol": "primitive_work_unit_I"}, {"symbol": "primitive_tick_I"}]}
+    },
+    {
+      "id": "H_from_hbar_generator",
+      "lhs": "hamiltonian_energy_operator_I",
+      "rhs": {"mul": [{"symbol": "hbar_I"}, {"symbol": "schrodinger_generator_I"}]}
+    },
+    {
+      "id": "p_from_hbar_translation_generator",
+      "lhs": "momentum_operator_I",
+      "rhs": {"mul": [{"symbol": "hbar_I"}, {"symbol": "translation_generator_I"}]}
+    },
+    {
+      "id": "calibrated_H_from_generator",
+      "lhs": "calibrated_hamiltonian_energy_operator_I",
+      "rhs": {"mul": [{"symbol": "calibrated_hbar_I"}, {"symbol": "schrodinger_generator_I"}]}
+    },
+    {
+      "id": "calibrated_p_from_translation_generator",
+      "lhs": "calibrated_momentum_operator_I",
+      "rhs": {"mul": [{"symbol": "calibrated_hbar_I"}, {"symbol": "translation_generator_I"}]}
+    },
+    {
+      "id": "G_symbolic_clock_strain",
+      "lhs": "G_I",
+      "rhs": {
+        "div": [
+          {"mul": [{"pow": [{"symbol": "c_I"}, 4]}, {"symbol": "ell0"}, {"symbol": "D_S"}]},
+          {"mul": [{"symbol": "kappa_chi_I"}, {"symbol": "z_I"}, {"symbol": "q_V_I"}]}
+        ]
+      }
+    },
+    {
+      "id": "G_orthogonal_clock_vacuum",
+      "lhs": "G_I",
+      "rhs": {
+        "div": [
+          {"mul": [{"symbol": "rho_chi_I"}, {"pow": [{"symbol": "c_I"}, 5]}]},
+          {"mul": [{"symbol": "hbar_I"}, {"pow": [{"symbol": "omega_ell_I"}, 2]}]}
+        ]
+      }
+    },
+    {
+      "id": "calibrated_G_clock_vacuum",
+      "lhs": "calibrated_G_I",
+      "rhs": {
+        "div": [
+          {"mul": [{"symbol": "rho_chi_I"}, {"symbol": "D_S"}, {"pow": [{"symbol": "c_I"}, 5]}]},
+          {
+            "mul": [
+              {"symbol": "calibrated_hbar_I"},
+              {"symbol": "z_I"},
+              {"symbol": "q_V_I"},
+              {"pow": [{"symbol": "omega_ell_I"}, 2]}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "G_anchor_omega_ell_squared",
+      "lhs": "G_calibrated_omega_ell_squared_I",
+      "rhs": {
+        "div": [
+          {"mul": [{"symbol": "rho_chi_I"}, {"symbol": "D_S"}, {"pow": [{"symbol": "c_I"}, 5]}]},
+          {
+            "mul": [
+              {"symbol": "calibrated_hbar_I"},
+              {"symbol": "z_I"},
+              {"symbol": "q_V_I"},
+              {"symbol": "calibrated_G_anchor_I"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "calibrated_G_anchor_as_local_anchor",
+      "lhs": "calibrated_G_anchor_I",
+      "rhs": {"symbol": "local_G_anchor_I"}
+    },
+    {
+      "id": "ell0_upper_bound_from_omega_lower",
+      "lhs": "ell0_upper_bound_I",
+      "rhs": {"div": [{"symbol": "c_I"}, {"symbol": "omega_ell_lower_bound_I"}]}
+    },
+    {
+      "id": "tick_upper_bound_from_ell0_bound",
+      "lhs": "primitive_tick_upper_bound_I",
+      "rhs": {"div": [{"symbol": "ell0_upper_bound_I"}, {"symbol": "c_I"}]}
+    }
+  ],
+  "derivations": [
+    {
+      "id": "numeric_hbar_route",
+      "target": "hbar_I",
+      "status": "blocked",
+      "depends_on": ["A0_I", "bar_C_gamma", "theta_gamma"]
+    },
+    {
+      "id": "calibrated_action_anchor_route",
+      "target": "calibrated_action_reconstruction_I",
+      "status": "target",
+      "depends_on": ["calibrated_action_anchor_I", "calibrated_hbar_I", "hbar_obs"]
+    },
+    {
+      "id": "calibrated_G_calculator_route",
+      "target": "calibrated_G_calculator_I",
+      "status": "target",
+      "depends_on": [
+        "calibrated_hbar_I",
+        "omega_ell_I",
+        "rho_chi_I",
+        "D_S",
+        "z_I",
+        "q_V_I",
+        "c_I"
+      ]
+    },
+    {
+      "id": "G_anchor_omega_squared_route",
+      "target": "G_calibrated_omega_ell_squared_I",
+      "status": "target",
+      "depends_on": [
+        "calibrated_G_anchor_I",
+        "calibrated_hbar_I",
+        "rho_chi_I",
+        "D_S",
+        "z_I",
+        "q_V_I",
+        "c_I"
+      ]
+    },
+    {
+      "id": "two_anchor_calibrated_reconstruction_route",
+      "target": "two_anchor_calibrated_reconstruction_I",
+      "status": "target",
+      "depends_on": [
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "G_calibrated_omega_ell_squared_I"
+      ]
+    },
+    {
+      "id": "dimensionful_anchor_selection_route",
+      "target": "dimensionful_anchor_selection_I",
+      "status": "target",
+      "depends_on": [
+        "our_universe_selection_I",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I"
+      ]
+    },
+    {
+      "id": "our_universe_calibrated_reconstruction_route",
+      "target": "our_universe_calibrated_reconstruction_I",
+      "status": "target",
+      "depends_on": [
+        "dimensionful_anchor_selection_I",
+        "two_anchor_calibrated_reconstruction_I",
+        "calibrated_action_reconstruction_I"
+      ]
+    },
+    {
+      "id": "local_G_domain_variation_hypothesis_route",
+      "target": "G_domain_variation_hypothesis_I",
+      "status": "target",
+      "depends_on": [
+        "local_G_anchor_I",
+        "validated_weak_field_domain_I",
+        "scale_separated_residual_policy_I",
+        "dark_sector_residual_candidate_I"
+      ]
+    },
+    {
+      "id": "G_effective_domain_map_route",
+      "target": "G_effective_domain_map_I",
+      "status": "target",
+      "depends_on": [
+        "G_domain_variation_hypothesis_I",
+        "local_G_anchor_I",
+        "non_gravity_slip_residual_I"
+      ]
+    },
+    {
+      "id": "local_G_physical_meaning_route",
+      "target": "local_G_physical_meaning_I",
+      "status": "target",
+      "depends_on": [
+        "local_G_anchor_I",
+        "kappa_chi_I",
+        "clock_strain_source_law_I",
+        "validated_weak_field_domain_I",
+        "G_effective_domain_map_I"
+      ]
+    },
+    {
+      "id": "source_response_charge_closure_route",
+      "target": "source_response_charge_closure_I",
+      "status": "target",
+      "depends_on": [
+        "primitive_mass_anchor_I",
+        "primitive_mass_anchor_closure_I",
+        "source_response_charge_I",
+        "active_passive_inertial_equality_I",
+        "source_stress_packet_closure_I",
+        "clock_strain_source_law_I"
+      ]
+    },
+    {
+      "id": "geometry_response_factor_closure_route",
+      "target": "geometry_response_factor_closure_I",
+      "status": "target",
+      "depends_on": [
+        "D_S",
+        "z_I",
+        "q_V_I",
+        "ell0",
+        "ell0_closure_I"
+      ]
+    },
+    {
+      "id": "clock_vacuum_stiffness_from_source_charge_route",
+      "target": "clock_vacuum_stiffness_from_source_charge_I",
+      "status": "target",
+      "depends_on": [
+        "source_response_charge_closure_I",
+        "source_response_charge_I",
+        "clock_strain_source_law_I",
+        "clock_vacuum_spectral_law_I",
+        "kappa_chi_I",
+        "geometry_response_factor_closure_I"
+      ]
+    },
+    {
+      "id": "G_emergence_clearance_route",
+      "target": "G_emergence_clearance_I",
+      "status": "target",
+      "depends_on": [
+        "c_I",
+        "ell0",
+        "ell0_closure_I",
+        "D_S",
+        "z_I",
+        "q_V_I",
+        "geometry_response_factor_closure_I",
+        "kappa_chi_I",
+        "clock_vacuum_stiffness_from_source_charge_I",
+        "source_response_charge_closure_I",
+        "clock_strain_source_law_I"
+      ]
+    },
+    {
+      "id": "first_principles_G_candidate_route",
+      "target": "first_principles_G_candidate_I",
+      "status": "target",
+      "depends_on": [
+        "G_emergence_clearance_I"
+      ]
+    },
+    {
+      "id": "joint_action_gravity_anchor_route",
+      "target": "joint_action_gravity_anchor_I",
+      "status": "target",
+      "depends_on": [
+        "primitive_tick_I",
+        "primitive_tick_closure_I",
+        "primitive_work_unit_I",
+        "primitive_work_unit_closure_I",
+        "primitive_mass_anchor_I",
+        "primitive_mass_anchor_closure_I",
+        "source_response_charge_closure_I",
+        "action_standard_work_time_closure_I",
+        "hbar_action_standard_closure_I",
+        "hbar_I",
+        "clock_strain_source_law_I",
+        "source_stress_packet_closure_I",
+        "clock_vacuum_stiffness_from_source_charge_I",
+        "G_I"
+      ]
+    },
+    {
+      "id": "spectral_primitive_reduction_route",
+      "target": "spectral_primitive_reduction_I",
+      "status": "target",
+      "depends_on": [
+        "clock_vacuum_spectral_law_I",
+        "omega_ell_I",
+        "cross_update_contraction_selection_I",
+        "primitive_transition_phase_readout_I",
+        "non_exact_holonomy_source_I",
+        "fixed_point_step_invariant_I"
+      ]
+    },
+    {
+      "id": "cross_update_contraction_selection_route",
+      "target": "cross_update_contraction_selection_I",
+      "status": "target",
+      "depends_on": [
+        "cross_update_support_relation_I",
+        "cross_update_block_kernel_I",
+        "support_respecting_isometry_I",
+        "contraction_phase_selection_rule_I",
+        "non_exact_holonomy_source_I"
+      ]
+    },
+    {
+      "id": "primitive_transition_phase_readout_route",
+      "target": "primitive_transition_phase_readout_I",
+      "status": "target",
+      "depends_on": [
+        "cross_update_block_kernel_I",
+        "transfer_phase_normalization_I",
+        "cycle_holonomy_composition_I",
+        "phase_branch_reconstruction_I"
+      ]
+    },
+    {
+      "id": "non_exact_holonomy_source_route",
+      "target": "non_exact_holonomy_source_I",
+      "status": "target",
+      "depends_on": [
+        "primitive_transition_phase_readout_I",
+        "phase_branch_reconstruction_I",
+        "primitive_holonomy_source_selector_I",
+        "holonomy_source_classification_I",
+        "phase_cost_independence_I"
+      ]
+    },
+    {
+      "id": "primitive_holonomy_source_selector_route",
+      "target": "primitive_holonomy_source_selector_I",
+      "status": "target",
+      "depends_on": [
+        "primitive_source_class_registry_I",
+        "pre_observation_selection_rule_I",
+        "selector_holdout_policy_I"
+      ]
+    },
+    {
+      "id": "primitive_topology_winding_selector_route",
+      "target": "primitive_topology_winding_selector_I",
+      "status": "target",
+      "depends_on": [
+        "cycle_word_grammar_I",
+        "cycle_homotopy_class_I",
+        "orientation_reversal_rule_I",
+        "winding_additivity_rule_I"
+      ]
+    },
+    {
+      "id": "sector_role_taxonomy_route",
+      "target": "sector_role_taxonomy_I",
+      "status": "target",
+      "depends_on": [
+        "structural_selector_registry_I",
+        "dimensional_anchor_registry_I",
+        "dimensionless_coupling_registry_I",
+        "bridge_assumption_registry_I",
+        "derived_readout_registry_I",
+        "cross_sector_holdout_policy_I"
+      ]
+    },
+    {
+      "id": "fixed_point_step_invariant_route",
+      "target": "fixed_point_step_invariant_I",
+      "status": "target",
+      "depends_on": [
+        "fixed_point_rotation_map_I",
+        "cycle_rotation_number_I",
+        "step_clock_readout_rule_I",
+        "radar_response_pole_relation_I"
+      ]
+    },
+    {
+      "id": "omega_link_blind_closure_route",
+      "target": "omega_link_blind_closure_I",
+      "status": "target",
+      "depends_on": [
+        "calibrated_hbar_I",
+        "omega_ell_I",
+        "rho_chi_I",
+        "D_S",
+        "z_I",
+        "q_V_I",
+        "calibrated_G_I",
+        "G_N"
+      ]
+    },
+    {
+      "id": "A0_from_work_tick_route",
+      "target": "A0_I",
+      "status": "blocked",
+      "depends_on": [
+        "primitive_work_unit_I",
+        "primitive_tick_I",
+        "primitive_work_unit_closure_I",
+        "primitive_tick_closure_I"
+      ]
+    },
+    {
+      "id": "primitive_tick_closure_route",
+      "target": "primitive_tick_closure_I",
+      "status": "target",
+      "depends_on": ["primitive_tick_I", "ell0", "ell0_closure_I", "c_I", "tick_scale_lock_I"]
+    },
+    {
+      "id": "clock_vacuum_pole_closure_route",
+      "target": "clock_vacuum_pole_closure_I",
+      "status": "target",
+      "depends_on": [
+        "clock_vacuum_spectral_law_I",
+        "omega_ell_I",
+        "spectral_primitive_reduction_I"
+      ]
+    },
+    {
+      "id": "ell0_emergence_clearance_route",
+      "target": "ell0_emergence_clearance_I",
+      "status": "target",
+      "depends_on": [
+        "c_I",
+        "omega_ell_I",
+        "clock_vacuum_pole_closure_I"
+      ]
+    },
+    {
+      "id": "ell0_physical_candidate_route",
+      "target": "ell0_physical_candidate_I",
+      "status": "target",
+      "depends_on": ["ell0_emergence_clearance_I"]
+    },
+    {
+      "id": "ell0_closure_route",
+      "target": "ell0_closure_I",
+      "status": "target",
+      "depends_on": ["ell0", "c_I", "omega_ell_I", "ell0_physical_candidate_I"]
+    },
+    {
+      "id": "minimal_link_dispersion_residual_route",
+      "target": "minimal_link_dispersion_residual_I",
+      "status": "derived_conditional",
+      "depends_on": ["ell0", "c_I"]
+    },
+    {
+      "id": "omega_ell_lower_bound_from_non_gravity_residuals",
+      "target": "omega_ell_lower_bound_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "minimal_link_dispersion_residual_I",
+        "photon_dispersion_omega_bound_obs",
+        "matter_wave_omega_bound_proxy"
+      ]
+    },
+    {
+      "id": "ell0_upper_bound_from_non_gravity_omega_bound",
+      "target": "ell0_upper_bound_I",
+      "status": "derived_conditional",
+      "depends_on": ["c_I", "omega_ell_lower_bound_I"]
+    },
+    {
+      "id": "primitive_tick_upper_bound_from_link_scale_bound",
+      "target": "primitive_tick_upper_bound_I",
+      "status": "derived_conditional",
+      "depends_on": ["ell0_upper_bound_I", "c_I"]
+    },
+    {
+      "id": "tick_scale_lock_status_route",
+      "target": "tick_scale_lock_I",
+      "status": "derived_conditional",
+      "depends_on": ["ell0_upper_bound_I", "primitive_tick_upper_bound_I", "ell0_closure_I", "c_I"]
+    },
+    {
+      "id": "weak_field_clock_calculator_route",
+      "target": "weak_field_clock_calculator_I",
+      "status": "derived_conditional",
+      "depends_on": ["c_I", "G_N", "Phi_I", "gamma_ppn_I"]
+    },
+    {
+      "id": "clock_strain_source_law_route",
+      "target": "clock_strain_source_law_I",
+      "status": "derived_conditional",
+      "depends_on": ["Phi_I", "rho_source_I", "alpha_chi_I", "beta_source_I"]
+    },
+    {
+      "id": "ppn_no_slip_validation_route",
+      "target": "ppn_no_slip_validation_I",
+      "status": "derived_conditional",
+      "depends_on": ["Phi_I", "Psi_I", "gamma_ppn_I", "beta_ppn_I"]
+    },
+    {
+      "id": "no_slip_stress_closure_route",
+      "target": "no_slip_stress_closure_I",
+      "status": "derived_conditional",
+      "depends_on": ["Psi_I", "Phi_I", "anisotropic_stress_I", "non_gravity_slip_residual_I"]
+    },
+    {
+      "id": "source_stress_packet_closure_route",
+      "target": "source_stress_packet_closure_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "source_stress_tensor_I",
+        "isotropic_pressure_I",
+        "anisotropic_stress_I",
+        "stress_coarse_grain_I"
+      ]
+    },
+    {
+      "id": "scale_separated_residual_policy_route",
+      "target": "scale_separated_residual_policy_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "validated_weak_field_domain_I",
+        "transition_scale_I",
+        "non_gravity_slip_residual_I",
+        "dark_sector_residual_candidate_I"
+      ]
+    },
+    {
+      "id": "screened_slip_residual_candidate_route",
+      "target": "screened_slip_residual_candidate_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "residual_amplitude_I",
+        "residual_transition_length_I",
+        "non_gravity_slip_residual_I",
+        "dark_sector_residual_candidate_I"
+      ]
+    },
+    {
+      "id": "screened_slip_observational_gate_route",
+      "target": "screened_slip_observational_gate_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "screened_slip_residual_candidate_I",
+        "validated_weak_field_domain_I",
+        "galactic_residual_test_I",
+        "sparc_rotation_curve_data_I",
+        "observed_centripetal_acceleration_I",
+        "baryonic_rotation_acceleration_I",
+        "sparc_galaxy_residual_packet_I",
+        "screened_sparc_capacity_test_I",
+        "sparc_amplitude_lower_bound_I",
+        "galaxy_residual_no_postfit_policy_I",
+        "sparc_solar_transition_bound_I",
+        "old_screened_profile_rejection_I",
+        "sparc_corridor_feasibility_I",
+        "sparc_no_fit_claim_policy_I",
+        "sparc_radius_scale_map_candidate_I",
+        "sparc_simple_map_rejection_I",
+        "sparc_baryonic_acceleration_map_candidate_I",
+        "sparc_acceleration_map_rejection_I",
+        "sparc_inverse_residual_map_forbidden_I",
+        "sparc_baryonic_exponent_family_I",
+        "sparc_q_selection_postfit_policy_I",
+        "sparc_q25_heldout_transfer_I",
+        "sparc_heldout_selection_policy_I"
+      ]
+    },
+    {
+      "id": "primitive_work_unit_closure_route",
+      "target": "primitive_work_unit_closure_I",
+      "status": "target",
+      "depends_on": [
+        "primitive_work_unit_I",
+        "primitive_mass_anchor_I",
+        "primitive_mass_anchor_closure_I",
+        "work_scale_lock_I"
+      ]
+    },
+    {
+      "id": "primitive_mass_anchor_closure_route",
+      "target": "primitive_mass_anchor_closure_I",
+      "status": "target",
+      "depends_on": ["primitive_mass_anchor_I", "work_scale_lock_I"]
+    },
+    {
+      "id": "work_scale_lock_status_route",
+      "target": "work_scale_lock_I",
+      "status": "derived_conditional",
+      "depends_on": ["primitive_mass_anchor_I", "primitive_work_unit_I"]
+    },
+    {
+      "id": "rho_chi_protocol_closure_route",
+      "target": "rho_chi_protocol_closure_I",
+      "status": "target",
+      "depends_on": ["rho_chi_I", "C_chi_I", "tau_chi_star", "ell0", "ell0_closure_I"]
+    },
+    {
+      "id": "kappa_omega_consistency_closure_route",
+      "target": "kappa_omega_consistency_closure_I",
+      "status": "target",
+      "depends_on": [
+        "kappa_chi_I",
+        "hbar_I",
+        "omega_ell_I",
+        "rho_chi_I",
+        "rho_chi_protocol_closure_I",
+        "clock_vacuum_pole_closure_I"
+      ]
+    },
+    {
+      "id": "action_standard_work_time_route",
+      "target": "action_standard_work_time_closure_I",
+      "status": "target",
+      "depends_on": [
+        "primitive_work_unit_I",
+        "primitive_tick_I",
+        "primitive_work_unit_closure_I",
+        "primitive_tick_closure_I",
+        "action_scale_gauge_obstruction_I",
+        "tick_scale_lock_I",
+        "work_scale_lock_I",
+        "action_anchor_lock_I",
+        "A0_I"
+      ]
+    },
+    {
+      "id": "action_anchor_lock_status_route",
+      "target": "action_anchor_lock_I",
+      "status": "derived_conditional",
+      "depends_on": ["tick_scale_lock_I", "work_scale_lock_I", "action_scale_gauge_obstruction_I"]
+    },
+    {
+      "id": "hbar_action_standard_closure_route",
+      "target": "hbar_action_standard_closure_I",
+      "status": "target",
+      "depends_on": [
+        "action_standard_work_time_closure_I",
+        "A0_I",
+        "bar_C_gamma",
+        "theta_gamma",
+        "action_scale_gauge_obstruction_I",
+        "action_anchor_lock_I",
+        "hbar_I"
+      ]
+    },
+    {
+      "id": "kappa_action_rate_form",
+      "target": "kappa_chi_I",
+      "status": "formula",
+      "depends_on": ["A_chi_star", "tau_chi_star"]
+    },
+    {
+      "id": "G_orthogonal_form",
+      "target": "G_I",
+      "status": "formula",
+      "depends_on": ["rho_chi_I", "c_I", "hbar_I", "omega_ell_I"]
+    },
+    {
+      "id": "amplitude_packet_from_actualization",
+      "target": "complex_amplitude_packet_I",
+      "status": "derived_conditional",
+      "depends_on": ["bar_C_gamma", "theta_gamma"]
+    },
+    {
+      "id": "born_readout_from_positive_kernel",
+      "target": "born_readout_I",
+      "status": "derived_conditional",
+      "depends_on": ["complex_amplitude_packet_I"]
+    },
+    {
+      "id": "unitary_evolution_from_reversible_contexts",
+      "target": "unitary_evolution_I",
+      "status": "derived_conditional",
+      "depends_on": ["complex_amplitude_packet_I", "born_readout_I"]
+    },
+    {
+      "id": "continuum_limit_route",
+      "target": "continuum_limit_I",
+      "status": "derived_conditional",
+      "depends_on": ["unitary_evolution_I"]
+    },
+    {
+      "id": "qm_continuum_limit_route",
+      "target": "qm_continuum_limit_closure_I",
+      "status": "target",
+      "depends_on": ["unitary_evolution_I", "continuum_limit_I"]
+    },
+    {
+      "id": "schrodinger_generator_route",
+      "target": "schrodinger_generator_I",
+      "status": "derived_conditional",
+      "depends_on": ["unitary_evolution_I", "continuum_limit_I"]
+    },
+    {
+      "id": "hamiltonian_energy_operator_route",
+      "target": "hamiltonian_energy_operator_I",
+      "status": "derived_conditional",
+      "depends_on": ["schrodinger_generator_I", "hbar_I"]
+    },
+    {
+      "id": "translation_generator_route",
+      "target": "translation_generator_I",
+      "status": "derived_conditional",
+      "depends_on": ["continuum_limit_I"]
+    },
+    {
+      "id": "momentum_operator_route",
+      "target": "momentum_operator_I",
+      "status": "derived_conditional",
+      "depends_on": ["translation_generator_I", "hbar_I"]
+    },
+    {
+      "id": "de_broglie_route",
+      "target": "de_broglie_relation_I",
+      "status": "derived_conditional",
+      "depends_on": ["momentum_operator_I", "translation_generator_I", "hbar_I"]
+    },
+    {
+      "id": "canonical_commutator_route",
+      "target": "canonical_commutator_I",
+      "status": "derived_conditional",
+      "depends_on": ["continuum_limit_I", "translation_generator_I", "momentum_operator_I", "hbar_I"]
+    },
+    {
+      "id": "calibrated_hamiltonian_energy_operator_route",
+      "target": "calibrated_hamiltonian_energy_operator_I",
+      "status": "derived_conditional",
+      "depends_on": ["schrodinger_generator_I", "calibrated_hbar_I"]
+    },
+    {
+      "id": "calibrated_momentum_operator_route",
+      "target": "calibrated_momentum_operator_I",
+      "status": "derived_conditional",
+      "depends_on": ["translation_generator_I", "calibrated_hbar_I"]
+    },
+    {
+      "id": "calibrated_de_broglie_route",
+      "target": "calibrated_de_broglie_relation_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "calibrated_momentum_operator_I",
+        "translation_generator_I",
+        "calibrated_hbar_I"
+      ]
+    },
+    {
+      "id": "calibrated_canonical_commutator_route",
+      "target": "calibrated_canonical_commutator_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "continuum_limit_I",
+        "translation_generator_I",
+        "calibrated_momentum_operator_I",
+        "calibrated_hbar_I"
+      ]
+    },
+    {
+      "id": "calibrated_qm_continuum_closure_route",
+      "target": "calibrated_qm_continuum_closure_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "unitary_evolution_I",
+        "continuum_limit_I",
+        "qm_continuum_limit_closure_I"
+      ]
+    },
+    {
+      "id": "calibrated_qm_generator_translation_closure_route",
+      "target": "calibrated_qm_generator_translation_closure_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "calibrated_qm_continuum_closure_I",
+        "schrodinger_generator_I",
+        "calibrated_hbar_I",
+        "calibrated_hamiltonian_energy_operator_I",
+        "translation_generator_I",
+        "calibrated_momentum_operator_I",
+        "calibrated_de_broglie_relation_I",
+        "calibrated_canonical_commutator_I"
+      ]
+    },
+    {
+      "id": "calibrated_qm_apparatus_facticity_closure_route",
+      "target": "calibrated_qm_apparatus_facticity_closure_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "born_readout_I",
+        "observable_context_I",
+        "apparatus_context_dynamics_I",
+        "measurement_facticity_I",
+        "qm_apparatus_facticity_closure_I"
+      ]
+    },
+    {
+      "id": "calibrated_qm_dynamics_action_facticity_closure_route",
+      "target": "calibrated_qm_dynamics_action_facticity_closure_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "calibrated_qm_continuum_closure_I",
+        "calibrated_qm_generator_translation_closure_I",
+        "calibrated_qm_apparatus_facticity_closure_I",
+        "calibrated_hbar_I"
+      ]
+    },
+    {
+      "id": "observable_context_route",
+      "target": "observable_context_I",
+      "status": "derived_conditional",
+      "depends_on": ["born_readout_I", "unitary_evolution_I", "canonical_commutator_I"]
+    },
+    {
+      "id": "apparatus_context_route",
+      "target": "apparatus_context_dynamics_I",
+      "status": "derived_conditional",
+      "depends_on": ["unitary_evolution_I", "observable_context_I"]
+    },
+    {
+      "id": "measurement_facticity_route",
+      "target": "measurement_facticity_I",
+      "status": "derived_conditional",
+      "depends_on": ["apparatus_context_dynamics_I"]
+    },
+    {
+      "id": "qm_apparatus_facticity_route",
+      "target": "qm_apparatus_facticity_closure_I",
+      "status": "target",
+      "depends_on": [
+        "born_readout_I",
+        "observable_context_I",
+        "apparatus_context_dynamics_I",
+        "measurement_facticity_I"
+      ]
+    },
+    {
+      "id": "qm_generator_translation_route",
+      "target": "qm_generator_translation_closure_I",
+      "status": "target",
+      "depends_on": [
+        "unitary_evolution_I",
+        "continuum_limit_I",
+        "qm_continuum_limit_closure_I",
+        "schrodinger_generator_I",
+        "hbar_I",
+        "hamiltonian_energy_operator_I",
+        "translation_generator_I",
+        "momentum_operator_I",
+        "de_broglie_relation_I",
+        "canonical_commutator_I"
+      ]
+    },
+    {
+      "id": "qm_dynamics_action_facticity_single_pass",
+      "target": "qm_dynamics_action_facticity_closure_I",
+      "status": "target",
+      "depends_on": [
+        "continuum_limit_I",
+        "qm_continuum_limit_closure_I",
+        "schrodinger_generator_I",
+        "A0_I",
+        "bar_C_gamma",
+        "theta_gamma",
+        "hbar_action_standard_closure_I",
+        "hbar_I",
+        "hamiltonian_energy_operator_I",
+        "translation_generator_I",
+        "momentum_operator_I",
+        "de_broglie_relation_I",
+        "canonical_commutator_I",
+        "qm_generator_translation_closure_I",
+        "observable_context_I",
+        "apparatus_context_dynamics_I",
+        "measurement_facticity_I",
+        "qm_apparatus_facticity_closure_I"
+      ]
+    },
+    {
+      "id": "calibrated_qm_reconstruction_route",
+      "target": "calibrated_QM_reconstruction_I",
+      "status": "derived_conditional",
+      "depends_on": [
+        "complex_amplitude_packet_I",
+        "born_readout_I",
+        "unitary_evolution_I",
+        "continuum_limit_I",
+        "calibrated_qm_continuum_closure_I",
+        "schrodinger_generator_I",
+        "calibrated_hbar_I",
+        "calibrated_hamiltonian_energy_operator_I",
+        "translation_generator_I",
+        "calibrated_momentum_operator_I",
+        "calibrated_de_broglie_relation_I",
+        "calibrated_canonical_commutator_I",
+        "observable_context_I",
+        "apparatus_context_dynamics_I",
+        "measurement_facticity_I",
+        "calibrated_qm_generator_translation_closure_I",
+        "calibrated_qm_apparatus_facticity_closure_I",
+        "calibrated_qm_dynamics_action_facticity_closure_I"
+      ]
+    },
+    {
+      "id": "full_qm_foundation_spine",
+      "target": "full_QM_I",
+      "status": "target",
+      "depends_on": [
+        "complex_amplitude_packet_I",
+        "born_readout_I",
+        "unitary_evolution_I",
+        "continuum_limit_I",
+        "qm_continuum_limit_closure_I",
+        "schrodinger_generator_I",
+        "hbar_action_standard_closure_I",
+        "hbar_I",
+        "hamiltonian_energy_operator_I",
+        "translation_generator_I",
+        "momentum_operator_I",
+        "de_broglie_relation_I",
+        "canonical_commutator_I",
+        "qm_generator_translation_closure_I",
+        "observable_context_I",
+        "apparatus_context_dynamics_I",
+        "measurement_facticity_I",
+        "qm_apparatus_facticity_closure_I",
+        "qm_dynamics_action_facticity_closure_I"
+      ]
+    }
+  ],
+  "forbidden_paths": [
+    {
+      "target": "hbar_I",
+      "sources": ["hbar_obs", "G_N", "planck_units"]
+    },
+    {
+      "target": "G_I",
+      "sources": ["G_N", "planck_units"]
+    },
+    {
+      "target": "source_response_charge_closure_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "geometry_response_factor_closure_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "clock_vacuum_pole_closure_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "spectral_primitive_reduction_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "cross_update_contraction_selection_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "primitive_transition_phase_readout_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "non_exact_holonomy_source_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "primitive_holonomy_source_selector_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "primitive_topology_winding_selector_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "sector_role_taxonomy_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "fixed_point_step_invariant_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "rho_chi_protocol_closure_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "kappa_omega_consistency_closure_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ]
+    },
+    {
+      "target": "ell0_emergence_clearance_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "ell0_physical_candidate_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "clock_vacuum_stiffness_from_source_charge_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "G_emergence_clearance_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "first_principles_G_candidate_I",
+      "sources": [
+        "G_N",
+        "planck_units",
+        "hbar_obs",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    },
+    {
+      "target": "joint_action_gravity_anchor_I",
+      "sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ]
+    }
+  ],
+  "finite_gates": [
+    {
+      "id": "gamma_demo_psd",
+      "type": "psd_matrix",
+      "tolerance": 1.0e-10,
+      "matrix": [
+        [1.0, {"re": 0.3, "im": 0.2}],
+        [{"re": 0.3, "im": -0.2}, 1.0]
+      ]
+    },
+    {
+      "id": "schur_inheritance_demo_psd",
+      "type": "schur_psd",
+      "tolerance": 1.0e-10,
+      "left": [
+        [1.0, 0.4],
+        [0.4, 1.0]
+      ],
+      "right": [
+        [1.0, {"re": 0.2, "im": 0.1}],
+        [{"re": 0.2, "im": -0.1}, 1.0]
+      ]
+    },
+    {
+      "id": "cross_update_block_demo_psd",
+      "type": "block_psd",
+      "tolerance": 1.0e-10,
+      "G0": [
+        [1.0, 0.0],
+        [0.0, 1.0]
+      ],
+      "G1": [
+        [1.0, 0.0],
+        [0.0, 1.0]
+      ],
+      "X": [
+        [{"re": 0.8, "im": 0.0}, 0.0],
+        [0.0, {"re": 0.6, "im": 0.0}]
+      ]
+    },
+    {
+      "id": "cycle_holonomy_demo_gauge_invariant",
+      "type": "cycle_holonomy_gauge_invariance",
+      "tolerance": 1.0e-10,
+      "edges": [
+        {"from": "a", "to": "b", "phase": 0.2},
+        {"from": "b", "to": "c", "phase": 0.5},
+        {"from": "c", "to": "a", "phase": -0.1}
+      ],
+      "cycle": ["a", "b", "c", "a"],
+      "gauge": {
+        "a": 0.7,
+        "b": -0.4,
+        "c": 0.2
+      }
+    },
+    {
+      "id": "cross_update_contraction_demo",
+      "type": "contraction",
+      "tolerance": 1.0e-10,
+      "matrix": [
+        [{"re": 0.8, "im": 0.0}, 0.0],
+        [0.0, {"re": 0.6, "im": 0.0}]
+      ]
+    },
+    {
+      "id": "cycle_holonomy_demo_non_exact",
+      "type": "cycle_holonomy_class",
+      "tolerance": 1.0e-10,
+      "edges": [
+        {"from": "a", "to": "b", "phase": 0.2},
+        {"from": "b", "to": "c", "phase": 0.5},
+        {"from": "c", "to": "a", "phase": -0.1}
+      ],
+      "cycle": ["a", "b", "c", "a"],
+      "expected": "non_exact"
+    },
+    {
+      "id": "actualization_demo_i3_zero",
+      "type": "actualization_i3_zero",
+      "tolerance": 1.0e-10,
+      "weights": [0.5773502691896258, 0.5773502691896258, 0.5773502691896258],
+      "gamma": [
+        [1.0, 0.2, 0.1],
+        [0.2, 1.0, 0.3],
+        [0.1, 0.3, 1.0]
+      ],
+      "events": {
+        "A": [0],
+        "B": [1],
+        "C": [2]
+      }
+    },
+    {
+      "id": "probability_context_demo_admissible",
+      "type": "probability_admissible_context",
+      "tolerance": 1.0e-10,
+      "delta": 0.05,
+      "weights": [0.5773502691896258, 0.5773502691896258, 0.5773502691896258],
+      "gamma": [
+        [1.0, 0.01, 0.01],
+        [0.01, 1.0, 0.01],
+        [0.01, 0.01, 1.0]
+      ],
+      "events": [[0], [1], [2]]
+    },
+    {
+      "id": "two_path_interference_fringe_demo",
+      "type": "two_path_interference_fringe",
+      "tolerance": 1.0e-10,
+      "weights": [0.7071067811865476, 0.7071067811865476],
+      "gamma": [
+        [1.0, 0.8],
+        [0.8, 1.0]
+      ],
+      "expected_visibility": 0.8,
+      "samples": [
+        {"phase": 0.0, "expected_probability": 0.9},
+        {"phase": 1.5707963267948966, "expected_probability": 0.5},
+        {"phase": 3.141592653589793, "expected_probability": 0.1},
+        {"phase": 4.71238898038469, "expected_probability": 0.5}
+      ]
+    },
+    {
+      "id": "born_context_probability_table_demo",
+      "type": "born_context_probability_table",
+      "tolerance": 1.0e-10,
+      "delta": 0.0,
+      "weights": [0.4472135954999579, 0.5477225575051661, 0.7071067811865476],
+      "gamma": [
+        [1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 0.0, 1.0]
+      ],
+      "events": [[0], [1], [2]],
+      "expected_probabilities": [0.2, 0.3, 0.5]
+    },
+    {
+      "id": "unitary_measurement_context_demo",
+      "type": "unitary_measurement_context",
+      "tolerance": 1.0e-10,
+      "state": [1.0, 0.0],
+      "basis": [
+        [0.7071067811865476, 0.7071067811865476],
+        [0.7071067811865476, -0.7071067811865476]
+      ],
+      "expected_probabilities": [0.5, 0.5]
+    },
+    {
+      "id": "unitary_network_probability_demo",
+      "type": "unitary_network_probability",
+      "tolerance": 1.0e-10,
+      "state": [1.0, 0.0],
+      "unitaries": [
+        [
+          [0.7071067811865476, 0.7071067811865476],
+          [0.7071067811865476, -0.7071067811865476]
+        ],
+        [
+          [1.0, 0.0],
+          [0.0, {"re": 0.0, "im": 1.0}]
+        ],
+        [
+          [0.7071067811865476, 0.7071067811865476],
+          [0.7071067811865476, -0.7071067811865476]
+        ]
+      ],
+      "expected_probabilities": [0.5, 0.5]
+    },
+    {
+      "id": "projective_measurement_update_demo",
+      "type": "projective_measurement_update",
+      "tolerance": 1.0e-10,
+      "state": [0.6, 0.8],
+      "projectors": [
+        [
+          [1.0, 0.0],
+          [0.0, 0.0]
+        ],
+        [
+          [0.0, 0.0],
+          [0.0, 1.0]
+        ]
+      ],
+      "expected_probabilities": [0.36, 0.64]
+    },
+    {
+      "id": "triple_path_sorkin_parameter_demo",
+      "type": "triple_path_sorkin_parameter",
+      "tolerance": 1.0e-10,
+      "max_abs_kappa": 1.0e-10,
+      "weights": [0.5773502691896258, 0.5773502691896258, 0.5773502691896258],
+      "gamma": [
+        [1.0, 0.2, 0.1],
+        [0.2, 1.0, 0.3],
+        [0.1, 0.3, 1.0]
+      ],
+      "events": {
+        "A": [0],
+        "B": [1],
+        "C": [2]
+      }
+    },
+    {
+      "id": "marker_eraser_visibility_demo",
+      "type": "marker_eraser_visibility",
+      "tolerance": 1.0e-10,
+      "initial_visibility": 1.0,
+      "marker_overlap": 0.6,
+      "expected_marked_visibility": 0.6,
+      "expected_distinguishability": 0.8,
+      "conditioned_overlap": 1.0,
+      "expected_erased_visibility": 1.0
+    },
+    {
+      "id": "pointer_sector_stability_demo",
+      "type": "pointer_sector_stability",
+      "tolerance": 1.0e-10,
+      "pointer_kernel": [
+        [1.0, 0.01],
+        [0.01, 1.0]
+      ],
+      "max_offdiag": 0.05,
+      "expected_stable": true
+    },
+    {
+      "id": "premeasurement_decoherence_demo",
+      "type": "premeasurement_decoherence",
+      "tolerance": 1.0e-10,
+      "amplitudes": [0.6, 0.8],
+      "environment_kernel": [
+        [1.0, 0.01],
+        [0.01, 1.0]
+      ],
+      "expected_probabilities": [0.36, 0.64],
+      "max_residual_coherence": 0.005
+    },
+    {
+      "id": "recoverability_loss_demo",
+      "type": "recoverability_loss",
+      "tolerance": 1.0e-10,
+      "observed_visibility": 0.1,
+      "environment_recoverable_visibility": 0.9,
+      "expected_lambda": 2.1972245773362196,
+      "facticity_threshold": 2.0,
+      "expected_facticity": true
+    },
+    {
+      "id": "bell_chsh_table_demo",
+      "type": "bell_chsh_table",
+      "tolerance": 1.0e-10,
+      "expected_abs_s": 2.8284271247461903,
+      "max_abs_s": 2.8284271247461903,
+      "contexts": [
+        {
+          "x": 0,
+          "y": 0,
+          "probabilities": [
+            {"a": 1, "b": 1, "p": 0.4267766952966369},
+            {"a": 1, "b": -1, "p": 0.0732233047033631},
+            {"a": -1, "b": 1, "p": 0.0732233047033631},
+            {"a": -1, "b": -1, "p": 0.4267766952966369}
+          ]
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "probabilities": [
+            {"a": 1, "b": 1, "p": 0.4267766952966369},
+            {"a": 1, "b": -1, "p": 0.0732233047033631},
+            {"a": -1, "b": 1, "p": 0.0732233047033631},
+            {"a": -1, "b": -1, "p": 0.4267766952966369}
+          ]
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "probabilities": [
+            {"a": 1, "b": 1, "p": 0.4267766952966369},
+            {"a": 1, "b": -1, "p": 0.0732233047033631},
+            {"a": -1, "b": 1, "p": 0.0732233047033631},
+            {"a": -1, "b": -1, "p": 0.4267766952966369}
+          ]
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "probabilities": [
+            {"a": 1, "b": 1, "p": 0.0732233047033631},
+            {"a": 1, "b": -1, "p": 0.4267766952966369},
+            {"a": -1, "b": 1, "p": 0.4267766952966369},
+            {"a": -1, "b": -1, "p": 0.0732233047033631}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bell_chsh_from_amplitudes_demo",
+      "type": "bell_chsh_from_amplitudes",
+      "tolerance": 1.0e-10,
+      "expected_abs_s": 2.8284271247461903,
+      "max_abs_s": 2.8284271247461903,
+      "contexts": [
+        {
+          "x": 0,
+          "y": 0,
+          "amplitudes": [
+            {"a": 1, "b": 1, "amp": 0.6532814824381883},
+            {"a": 1, "b": -1, "amp": 0.27059805007309845},
+            {"a": -1, "b": 1, "amp": 0.27059805007309845},
+            {"a": -1, "b": -1, "amp": 0.6532814824381883}
+          ]
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "amplitudes": [
+            {"a": 1, "b": 1, "amp": 0.6532814824381883},
+            {"a": 1, "b": -1, "amp": 0.27059805007309845},
+            {"a": -1, "b": 1, "amp": 0.27059805007309845},
+            {"a": -1, "b": -1, "amp": 0.6532814824381883}
+          ]
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "amplitudes": [
+            {"a": 1, "b": 1, "amp": 0.6532814824381883},
+            {"a": 1, "b": -1, "amp": 0.27059805007309845},
+            {"a": -1, "b": 1, "amp": 0.27059805007309845},
+            {"a": -1, "b": -1, "amp": 0.6532814824381883}
+          ]
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "amplitudes": [
+            {"a": 1, "b": 1, "amp": 0.27059805007309845},
+            {"a": 1, "b": -1, "amp": 0.6532814824381883},
+            {"a": -1, "b": 1, "amp": 0.6532814824381883},
+            {"a": -1, "b": -1, "amp": 0.27059805007309845}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spin_bell_angle_model_demo",
+      "type": "spin_bell_angle_model",
+      "tolerance": 1.0e-10,
+      "alice_angles": [0.0, 1.5707963267948966],
+      "bob_angles": [0.7853981633974483, -0.7853981633974483],
+      "expected_abs_s": 2.8284271247461903,
+      "max_abs_s": 2.8284271247461903
+    },
+    {
+      "id": "unitary_generator_reconstruction_demo",
+      "type": "unitary_generator_reconstruction",
+      "tolerance": 1.0e-10,
+      "dt": 0.5,
+      "omegas": [1.0, -2.0],
+      "expected_unitary": [
+        [{"re": 0.8775825618903728, "im": -0.479425538604203}, 0.0],
+        [0.0, {"re": 0.5403023058681398, "im": 0.8414709848078965}]
+      ],
+      "hbar": 2.0,
+      "expected_hamiltonian": [2.0, -4.0]
+    },
+    {
+      "id": "translation_de_broglie_scale_demo",
+      "type": "translation_de_broglie_scale",
+      "tolerance": 1.0e-10,
+      "shift": 0.25,
+      "wave_numbers": [2.0, -4.0],
+      "hbar": 0.5,
+      "expected_translation": [
+        [{"re": 0.8775825618903728, "im": -0.479425538604203}, 0.0],
+        [0.0, {"re": 0.5403023058681398, "im": 0.8414709848078965}]
+      ],
+      "expected_momenta": [1.0, -2.0],
+      "expected_wavelengths": [3.141592653589793, 1.5707963267948966]
+    },
+    {
+      "id": "finite_weyl_relation_demo",
+      "type": "finite_weyl_relation",
+      "tolerance": 1.0e-10,
+      "dimension": 5,
+      "expected_phase": 1.2566370614359172
+    },
+    {
+      "id": "one_parameter_unitary_flow_demo",
+      "type": "one_parameter_unitary_flow",
+      "tolerance": 1.0e-10,
+      "omegas": [1.0, -2.0],
+      "times": [0.0, 0.25, 0.5, 0.75],
+      "pairs": [
+        {"left": 0.25, "right": 0.5, "sum": 0.75},
+        {"left": 0.5, "right": 0.25, "sum": 0.75}
+      ]
+    },
+    {
+      "id": "strong_continuity_modulus_demo",
+      "type": "strong_continuity_modulus",
+      "tolerance": 1.0e-10,
+      "omegas": [1.0, -2.0],
+      "max_time": 0.01,
+      "samples": [0.0, 0.005, 0.01],
+      "max_deviation": 0.021
+    },
+    {
+      "id": "generator_difference_convergence_demo",
+      "type": "generator_difference_convergence",
+      "tolerance": 1.0e-10,
+      "omega": 1.25,
+      "steps": [0.2, 0.1, 0.05],
+      "max_error": 1.0e-10
+    },
+    {
+      "id": "action_standard_provenance_demo",
+      "type": "action_standard_provenance",
+      "candidate_sources": ["primitive_update_work", "clock_vacuum_action_standard"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "p_equals_hbar_k",
+        "phase_equals_action_over_hbar"
+      ],
+      "action_standard_status": "candidate",
+      "normalization_only": true,
+      "claims_physical_hbar": false
+    },
+    {
+      "id": "photon_dispersion_bound_demo",
+      "type": "photon_dispersion_bound",
+      "tolerance": 1.0e-8,
+      "alpha_abs": 0.125,
+      "omega_qg": 1.9750476834523637e35,
+      "convention_kappa": 1.0,
+      "expected_omega_min": 6.982848050679741e34
+    },
+    {
+      "id": "matter_wave_bound_demo",
+      "type": "matter_wave_bound",
+      "tolerance": 1.0e-3,
+      "c_value": 299792458.0,
+      "wave_number": 1.19e14,
+      "coefficient_abs": 0.08333333333333333,
+      "phase_residual_bound": 0.1,
+      "expected_omega_min": 3.256694654360982e22
+    },
+    {
+      "id": "composite_omega_bound_demo",
+      "type": "composite_omega_bound",
+      "tolerance": 1.0e-8,
+      "omega_bounds": [6.982848050679741e34, 3.256694654360982e22],
+      "expected_omega_min": 6.982848050679741e34
+    },
+    {
+      "id": "ell0_tick_bound_demo",
+      "type": "ell0_tick_bound",
+      "tolerance": 1.0e-8,
+      "c_value": 299792458.0,
+      "omega_lower_bound": 6.982848050679741e34,
+      "radar_steps": 1,
+      "expected_ell0_upper": 4.293269104872143e-27,
+      "expected_tick_upper": 1.4320804368943517e-35
+    },
+    {
+      "id": "clock_redshift_1m_demo",
+      "type": "clock_redshift",
+      "tolerance": 1.0e-28,
+      "c_value": 299792458.0,
+      "potential_a": 9.80665,
+      "potential_b": 0.0,
+      "expected_fractional_shift": 1.0911369672198217e-16
+    },
+    {
+      "id": "combined_clock_rate_demo",
+      "type": "combined_clock_rate",
+      "tolerance": 1.0e-15,
+      "c_value": 299792458.0,
+      "potential": 100.0,
+      "speed": 1000.0,
+      "expected_rate": 0.9999999999944379
+    },
+    {
+      "id": "point_mass_clock_field_demo",
+      "type": "newtonian_point_mass_clock_field",
+      "tolerance": 1.0e-12,
+      "c_value": 299792458.0,
+      "g_value": 6.67430e-11,
+      "mass": 5.9722e24,
+      "radius": 6.371e6,
+      "expected_potential": -62565145.91115994,
+      "expected_acceleration": 9.820302293385645,
+      "expected_redshift_to_infinity": 6.961311310505493e-10
+    },
+    {
+      "id": "source_flux_gauss_demo",
+      "type": "source_flux_gauss",
+      "tolerance": 1.0e-12,
+      "g_value": 6.67430e-11,
+      "mass": 5.9722e24,
+      "expected_flux": 5008987303270231.0
+    },
+    {
+      "id": "clock_strain_variational_poisson_demo",
+      "type": "clock_strain_variational_poisson",
+      "tolerance": 1.0e-12,
+      "alpha": 3.0,
+      "beta": 2.0,
+      "phi_values": [0.0, -1.0, 0.0],
+      "source_values": [0.0, 3.0, 0.0]
+    },
+    {
+      "id": "source_law_coefficient_demo",
+      "type": "source_law_coefficient",
+      "tolerance": 1.0e-12,
+      "c_value": 299792458.0,
+      "alpha": 1.0,
+      "beta": 1.0383237214224859e-43,
+      "zeta": 1.0,
+      "expected_coefficient": 8.387172739141742e-10
+    },
+    {
+      "id": "ppn_light_bending_solar_limb_demo",
+      "type": "ppn_light_bending",
+      "tolerance": 1.0e-12,
+      "c_value": 299792458.0,
+      "g_value": 6.67430e-11,
+      "mass": 1.98847e30,
+      "impact_parameter": 6.957e8,
+      "gamma_ppn": 1.0,
+      "expected_deflection": 8.490267017584816e-6
+    },
+    {
+      "id": "ppn_gamma_no_slip_demo",
+      "type": "ppn_gamma_from_potentials",
+      "tolerance": 1.0e-12,
+      "phi_values": [1.0, 2.0, 3.0],
+      "psi_values": [1.0, 2.0, 3.0],
+      "expected_gamma": 1.0,
+      "max_slip_fraction": 1.0e-12
+    },
+    {
+      "id": "shapiro_delay_solar_limb_demo",
+      "type": "shapiro_delay",
+      "tolerance": 1.0e-12,
+      "c_value": 299792458.0,
+      "g_value": 6.67430e-11,
+      "mass": 1.98847e30,
+      "emitter_radius": 1.495978707e11,
+      "receiver_radius": 1.495978707e11,
+      "impact_parameter": 6.957e8,
+      "gamma_ppn": 1.0,
+      "expected_delay": 0.00023895007169711242
+    },
+    {
+      "id": "ppn_perihelion_mercury_demo",
+      "type": "ppn_perihelion",
+      "tolerance": 1.0e-12,
+      "c_value": 299792458.0,
+      "g_value": 6.67430e-11,
+      "mass": 1.98847e30,
+      "semi_major_axis": 5.790905e10,
+      "eccentricity": 0.205630,
+      "beta_ppn": 1.0,
+      "gamma_ppn": 1.0,
+      "expected_precession": 5.018814721871578e-7
+    },
+    {
+      "id": "slip_source_poisson_demo",
+      "type": "slip_source_poisson",
+      "tolerance": 1.0e-12,
+      "coupling": 2.0,
+      "slip_values": [0.0, -1.0, 0.0],
+      "stress_values": [0.0, 1.0, 0.0],
+      "residual_values": [0.0, 0.0, 0.0]
+    },
+    {
+      "id": "zero_stress_boundary_no_slip_demo",
+      "type": "zero_stress_boundary_no_slip",
+      "tolerance": 1.0e-12,
+      "slip_values": [0.0, 0.0, 0.0],
+      "stress_values": [0.0, 0.0, 0.0],
+      "residual_values": [0.0, 0.0, 0.0]
+    },
+    {
+      "id": "source_continuity_demo",
+      "type": "source_continuity",
+      "tolerance": 1.0e-12,
+      "delta_t": 0.5,
+      "density_initial": [1.0, 2.0],
+      "density_final": [1.1, 1.8],
+      "flux_divergence": [-0.2, 0.4]
+    },
+    {
+      "id": "stress_tensor_decomposition_demo",
+      "type": "stress_tensor_decomposition",
+      "tolerance": 1.0e-12,
+      "stress_matrix": [[4.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+      "expected_pressure": 2.0,
+      "expected_anisotropic": [[2.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, -1.0]]
+    },
+    {
+      "id": "isotropic_stress_zero_anisotropy_demo",
+      "type": "anisotropic_stress_norm",
+      "tolerance": 1.0e-12,
+      "stress_matrix": [[2.0, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 2.0]],
+      "expected_norm": 0.0
+    },
+    {
+      "id": "coarse_grained_anisotropy_cancellation_demo",
+      "type": "coarse_grained_anisotropy",
+      "tolerance": 1.0e-12,
+      "weights": [0.5, 0.5],
+      "stress_tensors": [
+        [[4.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        [[0.0, 0.0, 0.0], [0.0, 3.0, 0.0], [0.0, 0.0, 3.0]]
+      ],
+      "expected_norm": 0.0
+    },
+    {
+      "id": "slip_source_bound_from_anisotropy_demo",
+      "type": "slip_source_bound_from_anisotropy",
+      "tolerance": 1.0e-12,
+      "coupling": 2.0,
+      "anisotropy_norm": 0.01,
+      "non_gravity_residual_norm": 0.001,
+      "expected_bound": 0.021
+    },
+    {
+      "id": "solar_system_residual_bound_demo",
+      "type": "scale_residual_bound",
+      "tolerance": 1.0e-12,
+      "scales": [1.0, 10.0, 100000.0],
+      "residuals": [1.0e-8, 2.0e-8, 0.01],
+      "validated_max_scale": 10.0,
+      "validated_bound": 1.0e-5,
+      "expected_validated_max": 2.0e-8
+    },
+    {
+      "id": "scale_residual_activation_profile_demo",
+      "type": "scale_residual_activation",
+      "tolerance": 1.0e-12,
+      "amplitude": 1.0,
+      "transition_scale": 10000.0,
+      "exponent": 2.0,
+      "scales": [1.0, 10000.0, 100000.0],
+      "expected_residuals": [9.999999900000002e-9, 0.5, 0.9900990099009901]
+    },
+    {
+      "id": "validated_domain_no_refit_demo",
+      "type": "domain_no_refit",
+      "tolerance": 1.0e-12,
+      "constants": [6.67430e-11, 6.67430e-11, 6.67430e-11],
+      "reference": 6.67430e-11,
+      "expected_max_fractional_mismatch": 0.0
+    },
+    {
+      "id": "screened_transition_bound_demo",
+      "type": "screened_transition_bound",
+      "tolerance": 1.0e-12,
+      "amplitude": 1.0,
+      "residual_bound": 1.0e-5,
+      "validated_scale": 10.0,
+      "exponent": 2.0,
+      "expected_transition_min": 3162.26184874055
+    },
+    {
+      "id": "screened_profile_prediction_demo",
+      "type": "screened_profile_prediction",
+      "tolerance": 1.0e-12,
+      "amplitude": 1.0,
+      "transition_scale": 3162.26184874055,
+      "exponent": 2.0,
+      "scales": [1.0, 10.0, 100000.0],
+      "expected_residuals": [1.0000099000980111e-7, 1.0e-5, 0.9990010089810291]
+    },
+    {
+      "id": "screened_acceleration_output_demo",
+      "type": "residual_acceleration_output",
+      "tolerance": 1.0e-12,
+      "g_value": 6.67430e-11,
+      "mass": 5.9722e24,
+      "radius": 6.371e6,
+      "residual_fraction": 2.0e-8,
+      "expected_newtonian_acceleration": 9.820302293385645,
+      "expected_residual_acceleration": 1.9640604586771288e-7,
+      "expected_total_acceleration": 9.820302489791692
+    },
+    {
+      "id": "screened_light_bending_output_demo",
+      "type": "residual_light_bending_output",
+      "tolerance": 1.0e-12,
+      "base_gr_deflection": 8.490267017584816e-6,
+      "gamma_residual": 2.0e-8,
+      "expected_deflection": 8.490267102487485e-6
+    },
+    {
+      "id": "screened_solar_galactic_observation_demo",
+      "type": "screened_observational_profile",
+      "tolerance": 1.0e-12,
+      "amplitude": 1.0,
+      "transition_scale": 3162.26184874055,
+      "exponent": 2.0,
+      "solar_scale": 10.0,
+      "solar_bound": 1.0e-5,
+      "expected_solar_residual": 1.0e-5,
+      "galactic_scale": 100000.0,
+      "expected_galactic_residual": 0.9990010089810291,
+      "galactic_min": 0.1,
+      "galactic_max": 1.0
+    },
+    {
+      "id": "sparc_ddo154_outer_baryonic_residual_demo",
+      "type": "sparc_baryonic_residual_point",
+      "tolerance": 1.0e-12,
+      "source_path": "data/sparc/raw/Rotmod_LTG.zip",
+      "source_sha256": "0a80cc90714828cc28b7dd57923576714d209f2490328c087c4a4ad607faf588",
+      "member_path": "DDO154_rotmod.dat",
+      "row_number": 10,
+      "upsilon_disk": 0.5,
+      "upsilon_bulge": 0.0,
+      "expected_radius_kpc": 4.94,
+      "expected_observed_velocity_km_s": 48.20,
+      "expected_gas_velocity_km_s": 16.93,
+      "expected_disk_velocity_km_s": 6.89,
+      "expected_bulge_velocity_km_s": 0.0,
+      "expected_observed_acceleration": 470.2914979757085,
+      "expected_baryonic_acceleration": 62.82610323886638,
+      "expected_missing_acceleration": 407.46539473684214,
+      "expected_residual_fraction": 6.485606678288621
+    },
+    {
+      "id": "sparc_ddo154_residual_packet_demo",
+      "type": "sparc_residual_packet",
+      "tolerance": 1.0e-12,
+      "source_path": "data/sparc/raw/Rotmod_LTG.zip",
+      "source_sha256": "0a80cc90714828cc28b7dd57923576714d209f2490328c087c4a4ad607faf588",
+      "member_path": "DDO154_rotmod.dat",
+      "upsilon_disk": 0.5,
+      "upsilon_bulge": 0.0,
+      "expected_count": 12,
+      "expected_radius_min_kpc": 0.49,
+      "expected_radius_max_kpc": 5.92,
+      "expected_residual_fractions": [
+        1.1217605799746315,
+        1.8888654286905768,
+        3.134536156090732,
+        3.821518293237686,
+        4.4052111889842225,
+        4.795143643345046,
+        4.76921877748515,
+        5.108169847064242,
+        5.764854348147797,
+        6.485606678288621,
+        6.842377551859201,
+        6.835818918303093
+      ],
+      "expected_min_residual": 1.1217605799746315,
+      "expected_max_residual": 6.842377551859201,
+      "expected_mean_residual": 4.581090117622583
+    },
+    {
+      "id": "screened_sparc_capacity_bound_demo",
+      "type": "screened_sparc_capacity",
+      "tolerance": 1.0e-12,
+      "candidate_max_residual": 1.0,
+      "required_max_residual": 6.842377551859201,
+      "expected_capacity_ratio": 0.1461480300408564,
+      "declared_status": "insufficient"
+    },
+    {
+      "id": "sparc_ddo154_amplitude_lower_bound_demo",
+      "type": "screened_amplitude_lower_bound",
+      "tolerance": 1.0e-12,
+      "residual_fractions": [
+        1.1217605799746315,
+        1.8888654286905768,
+        3.134536156090732,
+        3.821518293237686,
+        4.4052111889842225,
+        4.795143643345046,
+        4.76921877748515,
+        5.108169847064242,
+        5.764854348147797,
+        6.485606678288621,
+        6.842377551859201,
+        6.835818918303093
+      ],
+      "candidate_amplitude": 1.0,
+      "expected_lower_bound": 6.842377551859201,
+      "expected_shortfall": 5.842377551859201,
+      "declared_status": "below_bound"
+    },
+    {
+      "id": "galaxy_residual_no_postfit_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "screened_slip_residual_candidate_I",
+        "source_stress_packet_closure_I",
+        "scale_separated_residual_policy_I"
+      ],
+      "forbidden_sources": [
+        "sparc_rotation_curve_data_I",
+        "sparc_galaxy_residual_packet_I",
+        "observed_centripetal_acceleration_I",
+        "baryonic_rotation_acceleration_I"
+      ],
+      "declared_status": "predeclared"
+    },
+    {
+      "id": "sparc_amplitude_solar_transition_bound_demo",
+      "type": "screened_transition_bound",
+      "tolerance": 1.0e-12,
+      "amplitude": 6.842377551859201,
+      "residual_bound": 1.0e-5,
+      "validated_scale": 10.0,
+      "exponent": 2.0,
+      "expected_transition_min": 8271.860462954632
+    },
+    {
+      "id": "old_screened_profile_solar_rejection_demo",
+      "type": "screened_profile_bound_status",
+      "tolerance": 1.0e-12,
+      "amplitude": 6.842377551859201,
+      "transition_scale": 3162.26184874055,
+      "exponent": 2.0,
+      "validated_scale": 10.0,
+      "residual_bound": 1.0e-5,
+      "expected_residual": 6.842377551859202e-05,
+      "declared_status": "excluded"
+    },
+    {
+      "id": "sparc_solar_galactic_corridor_demo",
+      "type": "screened_corridor_feasibility",
+      "tolerance": 1.0e-12,
+      "amplitude": 6.842377551859201,
+      "transition_scale": 8271.860462954632,
+      "exponent": 2.0,
+      "solar_scale": 10.0,
+      "solar_bound": 1.0e-5,
+      "required_amplitude": 6.842377551859201,
+      "galactic_scale": 100000.0,
+      "galactic_activation_min": 0.99,
+      "expected_solar_residual": 9.999999999999999e-06,
+      "expected_galactic_residual": 6.795877659078318,
+      "expected_activation_fraction": 0.9932041322729629,
+      "declared_status": "open"
+    },
+    {
+      "id": "sparc_no_fit_claim_status_demo",
+      "type": "residual_fit_claim_status",
+      "profile_source_status": "predeclared",
+      "radius_scale_map_status": "missing",
+      "heldout_validation_status": "missing",
+      "declared_status": "not_fit"
+    },
+    {
+      "id": "sparc_proportional_radius_map_rejection_demo",
+      "type": "screened_radius_scale_prediction",
+      "tolerance": 1.0e-12,
+      "amplitude": 6.842377551859201,
+      "transition_scale": 8271.860462954632,
+      "exponent": 2.0,
+      "radii_kpc": [
+        0.49,
+        0.99,
+        1.48,
+        1.97,
+        2.47,
+        2.96,
+        3.46,
+        3.95,
+        4.44,
+        4.94,
+        5.43,
+        5.92
+      ],
+      "observed_residuals": [
+        1.1217605799746315,
+        1.8888654286905768,
+        3.134536156090732,
+        3.821518293237686,
+        4.4052111889842225,
+        4.795143643345046,
+        4.76921877748515,
+        5.108169847064242,
+        5.764854348147797,
+        6.485606678288621,
+        6.842377551859201,
+        6.835818918303093
+      ],
+      "anchor_radius_kpc": 5.92,
+      "anchor_scale": 100000.0,
+      "expected_map_factor": 16891.891891891893,
+      "expected_predicted_residuals": [
+        3.4233249665711125,
+        5.497345941121766,
+        6.167205016058527,
+        6.44419171122652,
+        6.583604160543878,
+        6.660094299354304,
+        6.708010936575406,
+        6.738806448126778,
+        6.760145726499486,
+        6.775795647186442,
+        6.787177515741149,
+        6.795877659078319
+      ],
+      "expected_rms_error": 2.043579601832694,
+      "expected_max_abs_error": 3.6084805124311896,
+      "expected_mean_abs_error": 1.7132317672748618,
+      "acceptance_max_abs_error": 1.0,
+      "declared_status": "rejected"
+    },
+    {
+      "id": "sparc_baryonic_acceleration_power_map_demo",
+      "type": "screened_baryonic_acceleration_map",
+      "tolerance": 1.0e-12,
+      "amplitude": 6.842377551859201,
+      "transition_scale": 8271.860462954632,
+      "screened_exponent": 2.0,
+      "baryonic_accelerations": [
+        183.17479591836735,
+        163.13419191919195,
+        136.49199324324323,
+        123.86203045685279,
+        109.29923076923075,
+        102.83540540540541,
+        99.64984104046243,
+        88.84925316455696,
+        74.8023536036036,
+        62.82610323886638,
+        52.760524861878466,
+        44.62895270270271
+      ],
+      "observed_residuals": [
+        1.1217605799746315,
+        1.8888654286905768,
+        3.134536156090732,
+        3.821518293237686,
+        4.4052111889842225,
+        4.795143643345046,
+        4.76921877748515,
+        5.108169847064242,
+        5.764854348147797,
+        6.485606678288621,
+        6.842377551859201,
+        6.835818918303093
+      ],
+      "anchor_baryonic_acceleration": 44.62895270270271,
+      "anchor_scale": 100000.0,
+      "map_exponent": 2.0,
+      "expected_scales": [
+        5936.110247965054,
+        7484.165780173169,
+        10691.017464415814,
+        12982.460227860482,
+        16672.44064651306,
+        18834.238338788422,
+        20057.65562033945,
+        25230.498288666477,
+        35596.13664409562,
+        50460.68522652587,
+        71550.91244561534,
+        100000.0
+      ],
+      "expected_predicted_residuals": [
+        2.325922392391693,
+        3.0799690228066243,
+        4.280114519527604,
+        4.86666470466284,
+        5.490793270929006,
+        5.735965695625486,
+        5.847800162768621,
+        6.178293183704846,
+        6.491814017826684,
+        6.663320746744761,
+        6.7521338115608485,
+        6.795877659078318
+      ],
+      "expected_rms_error": 0.9226475712953834,
+      "expected_max_abs_error": 1.2041618124170617,
+      "expected_mean_abs_error": 0.8163298146002157,
+      "acceptance_max_abs_error": 1.0,
+      "declared_status": "rejected"
+    },
+    {
+      "id": "sparc_baryonic_exponent_family_scan_demo",
+      "type": "screened_baryonic_exponent_scan",
+      "tolerance": 1.0e-12,
+      "amplitude": 6.842377551859201,
+      "transition_scale": 8271.860462954632,
+      "screened_exponent": 2.0,
+      "baryonic_accelerations": [
+        183.17479591836735,
+        163.13419191919195,
+        136.49199324324323,
+        123.86203045685279,
+        109.29923076923075,
+        102.83540540540541,
+        99.64984104046243,
+        88.84925316455696,
+        74.8023536036036,
+        62.82610323886638,
+        52.760524861878466,
+        44.62895270270271
+      ],
+      "observed_residuals": [
+        1.1217605799746315,
+        1.8888654286905768,
+        3.134536156090732,
+        3.821518293237686,
+        4.4052111889842225,
+        4.795143643345046,
+        4.76921877748515,
+        5.108169847064242,
+        5.764854348147797,
+        6.485606678288621,
+        6.842377551859201,
+        6.835818918303093
+      ],
+      "anchor_baryonic_acceleration": 44.62895270270271,
+      "anchor_scale": 100000.0,
+      "map_exponents": [1.0, 1.5, 2.0, 2.5, 3.0],
+      "expected_rms_errors": [
+        2.5352051265854065,
+        1.937624995759783,
+        0.9226475712953834,
+        0.41184161715564477,
+        1.229423259166758
+      ],
+      "expected_max_abs_errors": [
+        5.013432558195559,
+        3.5231209288627565,
+        1.2041618124170617,
+        0.7174826101020031,
+        2.163585695463742
+      ],
+      "expected_mean_abs_errors": [
+        2.0052150740682904,
+        1.5842273597245127,
+        0.8163298146002157,
+        0.33277922579801605,
+        0.9549864916563973
+      ],
+      "acceptance_max_abs_error": 1.0,
+      "expected_best_exponent": 2.5,
+      "expected_best_max_abs_error": 0.7174826101020031,
+      "declared_status": "diagnostic_pass_not_validated"
+    },
+    {
+      "id": "sparc_inverse_residual_map_forbidden_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "observed_residuals",
+        "sparc_galaxy_residual_packet_I"
+      ],
+      "forbidden_sources": [
+        "observed_residuals",
+        "sparc_galaxy_residual_packet_I",
+        "observed_centripetal_acceleration_I",
+        "baryonic_rotation_acceleration_I"
+      ],
+      "declared_status": "postfit_contaminated"
+    },
+    {
+      "id": "sparc_q_selection_postfit_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "q_grid_selection",
+        "sparc_galaxy_residual_packet_I"
+      ],
+      "forbidden_sources": [
+        "q_grid_selection",
+        "sparc_galaxy_residual_packet_I",
+        "observed_residuals"
+      ],
+      "declared_status": "postfit_contaminated"
+    },
+    {
+      "id": "sparc_q25_heldout_transfer_demo",
+      "type": "screened_baryonic_exponent_transfer",
+      "tolerance": 1.0e-12,
+      "source_path": "data/sparc/raw/Rotmod_LTG.zip",
+      "source_sha256": "0a80cc90714828cc28b7dd57923576714d209f2490328c087c4a4ad607faf588",
+      "selection_start_after": "DDO154_rotmod.dat",
+      "heldout_count": 3,
+      "min_row_count": 8,
+      "expected_member_paths": [
+        "DDO161_rotmod.dat",
+        "DDO168_rotmod.dat",
+        "DDO170_rotmod.dat"
+      ],
+      "upsilon_disk": 0.5,
+      "upsilon_bulge": 0.0,
+      "amplitude": 6.842377551859201,
+      "transition_scale": 8271.860462954632,
+      "screened_exponent": 2.0,
+      "map_exponent": 2.5,
+      "anchor_scale": 100000.0,
+      "expected_row_counts": [31, 10, 8],
+      "expected_rms_errors": [
+        2.167412481319462,
+        3.4184206624318167,
+        2.7656598030931256
+      ],
+      "expected_max_abs_errors": [
+        3.472139558653409,
+        4.476556241800259,
+        3.509040879343504
+      ],
+      "expected_mean_abs_errors": [
+        1.7492127149324677,
+        3.3546521953364468,
+        2.7040281728403945
+      ],
+      "expected_aggregate_count": 49,
+      "expected_aggregate_rms_error": 2.5701384629361645,
+      "expected_aggregate_max_abs_error": 4.476556241800259,
+      "expected_aggregate_mean_abs_error": 2.2327416632447776,
+      "acceptance_max_abs_error": 1.0,
+      "declared_status": "rejected"
+    },
+    {
+      "id": "sparc_heldout_selection_no_postfit_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "member_name_order",
+        "row_count_filter",
+        "fixed_heldout_count"
+      ],
+      "forbidden_sources": [
+        "observed_residuals",
+        "fit_quality",
+        "q_grid_selection",
+        "screened_residual_error"
+      ],
+      "declared_status": "predeclared"
+    },
+    {
+      "id": "spectral_law_free_parameter_audit_demo",
+      "type": "spectral_law_free_parameter_audit",
+      "free_parameters": [
+        "cross_update_contraction_selection_I",
+        "primitive_transition_phase_readout_I",
+        "non_exact_holonomy_source_I",
+        "fixed_point_step_invariant_I"
+      ],
+      "claims_predictive": false
+    },
+    {
+      "id": "spectral_law_no_calibrated_input_demo",
+      "type": "spectral_law_no_calibrated_input",
+      "candidate_sources": [
+        "kernel_normalization_map",
+        "cross_update_contraction_selection_I",
+        "primitive_transition_phase_readout_I",
+        "non_exact_holonomy_source_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "spectral_law_status": "candidate",
+      "claims_physical_spectral_law": false
+    },
+    {
+      "id": "fixed_point_component_status_demo",
+      "type": "fixed_point_component_status",
+      "components": {
+        "cross_update_contraction_selection_I": "target",
+        "primitive_transition_phase_readout_I": "target",
+        "non_exact_holonomy_source_I": "target",
+        "fixed_point_step_invariant_I": "target",
+        "omega_ell_I": "open"
+      },
+      "claims_predictive": false
+    },
+    {
+      "id": "non_exact_holonomy_source_demo",
+      "type": "non_exact_holonomy_source",
+      "source_status": "target",
+      "exact_cocycle": false,
+      "claims_nontrivial_rotation": false
+    },
+    {
+      "id": "transition_phase_unit_readout_demo",
+      "type": "transition_phase_unit_readout",
+      "tolerance": 1.0e-10,
+      "transfer": {"re": 0.8, "im": 0.6},
+      "expected_unit_phase": {"re": 0.8, "im": 0.6}
+    },
+    {
+      "id": "cycle_holonomy_composition_demo",
+      "type": "cycle_holonomy_composition",
+      "tolerance": 1.0e-10,
+      "unit_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "unit_transfer": {"re": 0.9800665778412416, "im": 0.19866933079506122}
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "unit_transfer": {"re": 0.955336489125606, "im": 0.29552020666133955}
+        }
+      ],
+      "cycle": ["a", "b", "a"],
+      "expected_holonomy": {"re": 0.8775825618903728, "im": 0.479425538604203}
+    },
+    {
+      "id": "primitive_transition_phase_no_calibrated_input_demo",
+      "type": "primitive_transition_phase_no_calibrated_input",
+      "candidate_sources": [
+        "cross_update_block_kernel_I",
+        "transfer_phase_normalization_I",
+        "cycle_holonomy_composition_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "phase_status": "candidate",
+      "claims_physical_phase": false
+    },
+    {
+      "id": "holonomy_source_classification_demo",
+      "type": "holonomy_source_classification",
+      "source_class": "none",
+      "source_status": "target",
+      "exact_cocycle": false,
+      "claims_nonexact_source": false
+    },
+    {
+      "id": "holonomy_selector_class_registry_demo",
+      "type": "holonomy_selector_class_registry",
+      "registered_classes": [
+        "discrete_curvature",
+        "topological_winding",
+        "action_cost_obstruction",
+        "source_coupled_phase_response"
+      ]
+    },
+    {
+      "id": "holonomy_selector_status_demo",
+      "type": "holonomy_selector_status",
+      "selected_class": "none",
+      "selector_status": "candidate",
+      "claims_physical_selector": false
+    },
+    {
+      "id": "holonomy_selector_no_calibrated_input_demo",
+      "type": "holonomy_selector_no_calibrated_input",
+      "candidate_sources": [
+        "primitive_source_class_registry_I",
+        "pre_observation_selection_rule_I",
+        "selector_holdout_policy_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "selector_status": "candidate",
+      "claims_physical_selector": false
+    },
+    {
+      "id": "winding_selector_homotopy_consistency_demo",
+      "type": "winding_selector_homotopy_consistency",
+      "assignments": [
+        {"cycle": "gamma_a", "homotopy_class": "alpha", "winding": 1},
+        {"cycle": "gamma_a_prime", "homotopy_class": "alpha", "winding": 1},
+        {"cycle": "gamma_b", "homotopy_class": "beta", "winding": 0}
+      ]
+    },
+    {
+      "id": "winding_selector_orientation_reversal_demo",
+      "type": "winding_selector_orientation_reversal",
+      "pairs": [
+        {
+          "left_class": "alpha",
+          "right_class": "alpha_inv",
+          "left_winding": 1,
+          "right_winding": -1
+        }
+      ]
+    },
+    {
+      "id": "winding_selector_additivity_demo",
+      "type": "winding_selector_additivity",
+      "relations": [
+        {
+          "left_class": "alpha",
+          "right_class": "beta",
+          "composed_class": "alpha_beta",
+          "left_winding": 1,
+          "right_winding": 0,
+          "composed_winding": 1
+        }
+      ]
+    },
+    {
+      "id": "winding_selector_no_calibrated_input_demo",
+      "type": "winding_selector_no_calibrated_input",
+      "candidate_sources": [
+        "cycle_word_grammar_I",
+        "cycle_homotopy_class_I",
+        "orientation_reversal_rule_I",
+        "winding_additivity_rule_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "selector_status": "candidate",
+      "claims_physical_selector": false
+    },
+    {
+      "id": "sector_role_registry_demo",
+      "type": "sector_role_registry",
+      "roles": [
+        "structural_selector",
+        "dimensional_anchor",
+        "dimensionless_coupling",
+        "bridge_assumption",
+        "derived_readout",
+        "experimental_gate",
+        "blocked_claim"
+      ]
+    },
+    {
+      "id": "sector_role_assignment_partition_demo",
+      "type": "sector_role_assignment_partition",
+      "assignments": [
+        {"symbol": "primitive_holonomy_source_selector_I", "role": "structural_selector"},
+        {"symbol": "primitive_topology_winding_selector_I", "role": "structural_selector"},
+        {"symbol": "calibrated_hbar_I", "role": "bridge_assumption"},
+        {"symbol": "calibrated_G_anchor_I", "role": "bridge_assumption"},
+        {"symbol": "local_G_anchor_I", "role": "bridge_assumption"},
+        {"symbol": "hbar_I", "role": "blocked_claim"},
+        {"symbol": "G_I", "role": "blocked_claim"},
+        {"symbol": "G_N", "role": "experimental_gate"},
+        {"symbol": "hbar_obs", "role": "experimental_gate"},
+        {"symbol": "alpha_em_I", "role": "dimensionless_coupling"},
+        {"symbol": "born_readout_I", "role": "derived_readout"},
+        {"symbol": "primitive_mass_anchor_I", "role": "dimensional_anchor"}
+      ]
+    },
+    {
+      "id": "dimensionful_anchor_policy_demo",
+      "type": "dimensionful_anchor_policy",
+      "entries": [
+        {
+          "symbol": "hbar_I",
+          "role": "blocked_claim",
+          "dimensionful": true,
+          "anchor_status": "blocked",
+          "claims_first_principles_output": false
+        },
+        {
+          "symbol": "G_I",
+          "role": "blocked_claim",
+          "dimensionful": true,
+          "anchor_status": "target",
+          "claims_first_principles_output": false
+        },
+        {
+          "symbol": "calibrated_hbar_I",
+          "role": "bridge_assumption",
+          "dimensionful": true,
+          "anchor_status": "bridge_assumption",
+          "claims_first_principles_output": false
+        }
+      ]
+    },
+    {
+      "id": "dimensionless_coupling_policy_demo",
+      "type": "dimensionless_coupling_policy",
+      "entries": [
+        {
+          "symbol": "alpha_em_I",
+          "role": "dimensionless_coupling",
+          "selector_status": "target",
+          "coupling_status": "target",
+          "claims_derived_coupling": false,
+          "calibrated_once": false
+        }
+      ]
+    },
+    {
+      "id": "bridge_assumption_boundary_demo",
+      "type": "bridge_assumption_boundary",
+      "entries": [
+        {
+          "symbol": "calibrated_hbar_I",
+          "role": "bridge_assumption",
+          "status": "bridge_assumption",
+          "claims_derived": false
+        },
+        {
+          "symbol": "calibrated_G_anchor_I",
+          "role": "bridge_assumption",
+          "status": "bridge_assumption",
+          "claims_derived": false
+        }
+      ]
+    },
+    {
+      "id": "phase_branch_additivity_demo",
+      "type": "phase_branch_additivity",
+      "tolerance": 1.0e-10,
+      "theta_left": 0.2,
+      "theta_right": 0.3,
+      "theta_composed": 0.5
+    },
+    {
+      "id": "phase_branch_no_postfit_demo",
+      "type": "phase_branch_no_postfit",
+      "candidate_sources": [
+        "phase_branch_reconstruction_gate",
+        "primitive_topology_winding"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "branch_status": "candidate",
+      "claims_physical_branch": false
+    },
+    {
+      "id": "phase_cost_independence_demo",
+      "type": "phase_cost_independence",
+      "phase_defined_cost": false,
+      "claims_independent_cost": false,
+      "candidate_sources": [
+        "kernel_strain_cost_route",
+        "relative_phase_cost_from_edges"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "cost_status": "candidate"
+    },
+    {
+      "id": "contraction_phase_degeneracy_demo",
+      "type": "contraction_phase_degeneracy",
+      "tolerance": 1.0e-10,
+      "recoverability_scores": [1.0, 1.0, 1.0],
+      "phase_values": [0.0, 0.5, -0.5],
+      "claims_unique_selection": false
+    },
+    {
+      "id": "support_matching_phase_freedom_demo",
+      "type": "support_matching_phase_freedom",
+      "unique_support_matching": true,
+      "diagonal_phase_freedom": true,
+      "claims_phase_selected": false
+    },
+    {
+      "id": "contraction_selection_no_calibrated_input_demo",
+      "type": "contraction_selection_no_calibrated_input",
+      "candidate_sources": [
+        "cross_update_support_relation_I",
+        "cross_update_block_kernel_I",
+        "maximal_recoverability_contraction_test"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "selection_status": "candidate",
+      "claims_physical_selection": false
+    },
+    {
+      "id": "fixed_point_step_integer_obstruction_demo",
+      "type": "fixed_point_step_integer_obstruction",
+      "tolerance": 1.0e-10,
+      "cycle_steps": 6,
+      "winding": 1,
+      "half_radar_steps": 1,
+      "claims_exact_compatibility": false
+    },
+    {
+      "id": "fixed_point_step_free_parameter_audit_demo",
+      "type": "fixed_point_step_free_parameter_audit",
+      "free_parameters": [
+        "cycle_rotation_number_I",
+        "step_clock_readout_rule_I",
+        "radar_response_pole_relation_I"
+      ],
+      "claims_derived_step": false
+    },
+    {
+      "id": "fixed_point_step_no_gravity_input_demo",
+      "type": "fixed_point_step_no_gravity_input",
+      "candidate_sources": [
+        "fixed_point_rotation_map_I",
+        "step_clock_readout_rule_I",
+        "radar_response_pole_relation_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "step_status": "candidate",
+      "claims_physical_step": false
+    },
+    {
+      "id": "clock_vacuum_pole_candidate_demo",
+      "type": "clock_vacuum_pole_candidate",
+      "tolerance": 1.0e-10,
+      "candidate_edges": [3.0, 5.0, 7.0],
+      "expected_omega_link": 3.0
+    },
+    {
+      "id": "clock_vacuum_pole_universality_demo",
+      "type": "clock_vacuum_pole_universality",
+      "tolerance": 1.0e-4,
+      "species_omega_values": [3.0, 3.00001, 2.99999]
+    },
+    {
+      "id": "clock_vacuum_pole_no_calibrated_input_demo",
+      "type": "clock_vacuum_pole_no_calibrated_input",
+      "candidate_sources": [
+        "clock_vacuum_response_function",
+        "low_frequency_even_response_expansion"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "pole_status": "candidate",
+      "claims_physical_frequency": false
+    },
+    {
+      "id": "clock_vacuum_pole_no_postfit_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "clock_vacuum_pole_candidate_demo",
+        "clock_vacuum_pole_universality_demo"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "local_G_anchor_I",
+        "calibrated_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "declared_status": "predeclared"
+    },
+    {
+      "id": "ell0_candidate_from_clock_pole_demo",
+      "type": "ell0_candidate_from_clock_pole",
+      "tolerance": 1.0e-10,
+      "c_value": 12.0,
+      "omega_link": 3.0,
+      "expected_ell0": 4.0
+    },
+    {
+      "id": "ell0_candidate_no_gravity_input_demo",
+      "type": "ell0_candidate_no_gravity_input",
+      "candidate_sources": [
+        "clock_vacuum_pole_closure_I",
+        "c_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "ell0_status": "candidate",
+      "claims_physical_length": false
+    },
+    {
+      "id": "ell0_bound_not_value_demo",
+      "type": "ell0_bound_not_value",
+      "bound_status": "upper_bound",
+      "uses_bound_only_input": true,
+      "claims_exact_length": false
+    },
+    {
+      "id": "ell0_radar_consistency_demo",
+      "type": "ell0_radar_consistency",
+      "tolerance": 1.0e-10,
+      "c_value": 10.0,
+      "round_trip_time": 4.0,
+      "order_weight": 2.0,
+      "expected_ell0": 10.0
+    },
+    {
+      "id": "ell0_link_frequency_consistency_demo",
+      "type": "ell0_link_frequency_consistency",
+      "tolerance": 1.0e-10,
+      "c_value": 12.0,
+      "omega_link": 3.0,
+      "expected_ell0": 4.0
+    },
+    {
+      "id": "ell0_no_gravity_input_demo",
+      "type": "ell0_no_gravity_input",
+      "candidate_sources": ["clock_radar_loop", "link_frequency_readout"],
+      "forbidden_sources": [
+        "G_N",
+        "planck_units",
+        "Planck_length",
+        "black_hole_radius",
+        "weak_gravity_residual"
+      ],
+      "ell0_status": "candidate",
+      "claims_physical_length": false
+    },
+    {
+      "id": "primitive_mass_anchor_inertia_response_demo",
+      "type": "primitive_mass_anchor_inertia_response",
+      "tolerance": 1.0e-10,
+      "impulse": 12.0,
+      "velocity_delta": 3.0,
+      "expected_mass": 4.0
+    },
+    {
+      "id": "primitive_mass_anchor_no_quantum_gravity_input_demo",
+      "type": "primitive_mass_anchor_no_quantum_gravity_input",
+      "candidate_sources": ["inertial_response_protocol"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "known_quantum_energy_gap",
+        "spectroscopy_gap",
+        "gravitational_mass_calibration"
+      ],
+      "mass_status": "candidate",
+      "claims_physical_mass": false
+    },
+    {
+      "id": "rho_chi_protocol_invariance_demo",
+      "type": "rho_chi_protocol_invariance",
+      "tolerance": 1.0e-10,
+      "expected_rho": 1.0,
+      "protocols": [
+        {"eta_tau": 1.0, "C_chi": 1.0},
+        {"eta_tau": 2.0, "C_chi": 2.0},
+        {"eta_tau": 3.0, "C_chi": 3.0}
+      ]
+    },
+    {
+      "id": "rho_chi_no_gravity_input_demo",
+      "type": "rho_chi_no_gravity_input",
+      "candidate_sources": [
+        "radar_sampling_invariant",
+        "clock_strain_action_curvature"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "planck_units",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "rho_status": "candidate",
+      "claims_physical_rho": false
+    },
+    {
+      "id": "kappa_omega_consistency_demo",
+      "type": "kappa_omega_consistency",
+      "tolerance": 1.0e-10,
+      "hbar_value": 2.0,
+      "omega_link": 3.0,
+      "rho_chi": 1.5,
+      "expected_kappa": 4.0
+    },
+    {
+      "id": "kappa_omega_no_gravity_input_demo",
+      "type": "kappa_omega_no_gravity_input",
+      "candidate_sources": [
+        "phase_action_kappa_gate",
+        "clock_vacuum_pole_closure_I",
+        "rho_chi_protocol_closure_I"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "planck_units",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "relation_status": "candidate",
+      "claims_physical_relation": false
+    },
+    {
+      "id": "source_response_charge_normalization_demo",
+      "type": "source_response_charge_normalization",
+      "tolerance": 1.0e-10,
+      "stiffness_scale": 8.0,
+      "clock_strain_response": 0.5,
+      "geometry_factor": 1.0,
+      "expected_source_charge": 4.0
+    },
+    {
+      "id": "source_response_no_calibrated_input_demo",
+      "type": "source_response_no_calibrated_input",
+      "candidate_sources": [
+        "inertial_response_protocol",
+        "clock_strain_source_law_I",
+        "source_stress_packet_closure_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "spectroscopy_gap",
+        "gravitational_mass_calibration"
+      ],
+      "source_charge_status": "candidate",
+      "claims_physical_source_charge": false
+    },
+    {
+      "id": "active_passive_inertial_equality_demo",
+      "type": "active_passive_inertial_equality",
+      "tolerance": 1.0e-10,
+      "inertial_mass": 4.0,
+      "passive_charge": 4.0,
+      "active_charge": 4.0
+    },
+    {
+      "id": "source_response_packet_universality_demo",
+      "type": "source_response_packet_universality",
+      "tolerance": 1.0e-10,
+      "source_charges": [4.0, 4.01, 3.99],
+      "max_relative_spread": 0.01
+    },
+    {
+      "id": "source_response_no_postfit_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "inertial_response_protocol",
+        "source_response_charge_normalization_demo",
+        "source_stress_packet_closure_I"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "local_G_anchor_I",
+        "calibrated_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "declared_status": "predeclared"
+    },
+    {
+      "id": "geometry_response_factor_freeze_demo",
+      "type": "geometry_response_factor_freeze",
+      "tolerance": 1.0e-10,
+      "D_S_values": [1.0, 1.0001, 0.9999],
+      "z_values": [3.0, 3.0002, 2.9998],
+      "q_V_values": [2.0, 2.0001, 1.9999],
+      "ell0_values": [5.0, 5.0002, 4.9998],
+      "max_relative_spread": 0.001,
+      "declared_status": "frozen"
+    },
+    {
+      "id": "geometry_response_no_gravity_anchor_demo",
+      "type": "geometry_response_no_gravity_anchor",
+      "candidate_sources": [
+        "radar_adjacency_count",
+        "cell_volume_readout",
+        "ell0_closure_I"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "planck_units",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I",
+        "weak_gravity_residual"
+      ],
+      "geometry_status": "candidate",
+      "claims_physical_geometry": false
+    },
+    {
+      "id": "clock_vacuum_stiffness_from_source_response_demo",
+      "type": "clock_vacuum_stiffness_from_source_response",
+      "tolerance": 1.0e-10,
+      "source_charge": 4.0,
+      "geometry_factor": 2.0,
+      "clock_strain_response": 0.5,
+      "expected_kappa": 16.0
+    },
+    {
+      "id": "clock_vacuum_stiffness_universality_demo",
+      "type": "clock_vacuum_stiffness_universality",
+      "tolerance": 1.0e-10,
+      "kappa_values": [16.0, 16.01, 15.99],
+      "max_relative_spread": 0.002
+    },
+    {
+      "id": "clock_vacuum_stiffness_no_calibrated_input_demo",
+      "type": "clock_vacuum_stiffness_no_calibrated_input",
+      "candidate_sources": [
+        "source_response_charge_closure_I",
+        "geometry_response_factor_closure_I",
+        "clock_strain_source_law_I"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "stiffness_status": "candidate",
+      "claims_physical_stiffness": false
+    },
+    {
+      "id": "clock_vacuum_stiffness_no_postfit_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "source_response_charge_closure_I",
+        "clock_vacuum_stiffness_from_source_response_demo",
+        "geometry_response_factor_closure_I"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "local_G_anchor_I",
+        "calibrated_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "declared_status": "predeclared"
+    },
+    {
+      "id": "G_symbolic_clock_strain_candidate_demo",
+      "type": "G_symbolic_clock_strain_candidate",
+      "tolerance": 1.0e-10,
+      "c_value": 10.0,
+      "ell0_value": 5.0,
+      "dimension_factor": 3.0,
+      "kappa_value": 20.0,
+      "adjacency_factor": 6.0,
+      "volume_factor": 1.0,
+      "expected_G": 1250.0
+    },
+    {
+      "id": "G_candidate_no_calibrated_input_demo",
+      "type": "G_candidate_no_calibrated_input",
+      "candidate_sources": [
+        "ell0_physical_candidate_I",
+        "ell0_closure_I",
+        "geometry_response_factor_closure_I",
+        "clock_vacuum_stiffness_from_source_charge_I",
+        "G_symbolic_clock_strain_candidate_demo"
+      ],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "calibrated_hbar_I",
+        "calibrated_G_anchor_I",
+        "local_G_anchor_I"
+      ],
+      "G_candidate_status": "candidate",
+      "claims_physical_G": false
+    },
+    {
+      "id": "G_candidate_no_postfit_holdout_demo",
+      "type": "residual_no_postfit_provenance",
+      "candidate_sources": [
+        "G_symbolic_clock_strain_candidate_demo",
+        "ell0_physical_candidate_I",
+        "ell0_closure_I",
+        "clock_vacuum_stiffness_from_source_charge_I"
+      ],
+      "forbidden_sources": [
+        "G_N",
+        "local_G_anchor_I",
+        "calibrated_G_anchor_I",
+        "observed_gravity_residual"
+      ],
+      "declared_status": "predeclared"
+    },
+    {
+      "id": "primitive_tick_clock_count_demo",
+      "type": "primitive_tick_clock_count",
+      "tolerance": 1.0e-10,
+      "clock_interval": 12.0,
+      "step_count": 4,
+      "expected_tick": 3.0,
+      "candidate_sources": ["clock_interval_readout", "step_count_readout"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "Planck_time",
+        "E_equals_hbar_omega",
+        "known_quantum_frequency"
+      ],
+      "tick_status": "candidate",
+      "claims_physical_tick": false
+    },
+    {
+      "id": "primitive_tick_radar_consistency_demo",
+      "type": "primitive_tick_radar_consistency",
+      "tolerance": 1.0e-10,
+      "radar_half_time": 12.0,
+      "step_count": 4,
+      "expected_tick": 3.0,
+      "candidate_sources": ["radar_half_time", "step_count_readout"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "Planck_time",
+        "E_equals_hbar_omega",
+        "known_quantum_frequency"
+      ],
+      "tick_status": "candidate",
+      "claims_physical_tick": false
+    },
+    {
+      "id": "primitive_tick_reparam_invariance_demo",
+      "type": "primitive_tick_reparam_invariance",
+      "tolerance": 1.0e-10,
+      "rates_before": [2.0, 4.0, 6.0],
+      "rates_after": [1.0, 2.0, 3.0],
+      "reparam_factor": 2.0,
+      "reference_index": 0
+    },
+    {
+      "id": "primitive_tick_clock_universality_demo",
+      "type": "primitive_tick_clock_universality",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "tick_estimates": [3.0, 3.0, 3.0],
+      "candidate_sources": ["clock_chain_A", "clock_chain_B", "clock_chain_C"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "Planck_time",
+        "E_equals_hbar_omega",
+        "known_quantum_frequency"
+      ],
+      "tick_status": "candidate",
+      "claims_physical_tick": false
+    },
+    {
+      "id": "primitive_work_balance_demo",
+      "type": "primitive_work_balance",
+      "tolerance": 1.0e-10,
+      "work_inputs": [5.0, 2.0],
+      "work_outputs": [1.0],
+      "expected_work_unit": 6.0,
+      "candidate_sources": ["kernel_strain_work_balance", "primitive_update_counter"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "known_quantum_energy_gap",
+        "spectroscopy_gap"
+      ],
+      "work_unit_status": "candidate",
+      "claims_physical_work": false
+    },
+    {
+      "id": "primitive_work_coarse_grain_balance_demo",
+      "type": "primitive_work_coarse_grain_balance",
+      "tolerance": 1.0e-10,
+      "fine_inputs": [2.0, 4.0, 1.0],
+      "fine_outputs": [1.0],
+      "coarse_inputs": [7.0],
+      "coarse_outputs": [1.0]
+    },
+    {
+      "id": "primitive_work_sector_universality_demo",
+      "type": "primitive_work_sector_universality",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "work_units": [6.0, 6.0, 6.0],
+      "candidate_sources": ["sector_A", "sector_B", "sector_C"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "known_quantum_energy_gap",
+        "spectroscopy_gap"
+      ],
+      "work_unit_status": "candidate",
+      "claims_physical_work": false
+    },
+    {
+      "id": "primitive_work_dimensional_obstruction_demo",
+      "type": "primitive_work_dimensional_obstruction",
+      "target_dimension": {"M": 1, "L": 2, "T": -2},
+      "source_dimensions": [
+        {"id": "dimensionless_kernel_cost", "dimension": {}},
+        {"id": "c_I", "dimension": {"L": 1, "T": -1}},
+        {"id": "ell0", "dimension": {"L": 1}},
+        {"id": "primitive_tick_I", "dimension": {"T": 1}}
+      ],
+      "expected_obstructed": true
+    },
+    {
+      "id": "primitive_work_no_quantum_energy_demo",
+      "type": "primitive_work_no_quantum_energy",
+      "candidate_sources": ["kernel_strain_work_balance", "primitive_update_counter"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "known_quantum_energy_gap",
+        "spectroscopy_gap"
+      ],
+      "work_unit_status": "candidate",
+      "claims_physical_work": false
+    },
+    {
+      "id": "action_standard_work_time_provenance_demo",
+      "type": "action_standard_work_time_provenance",
+      "tolerance": 1.0e-10,
+      "work_unit": 2.0,
+      "tick": 3.0,
+      "expected_action": 6.0,
+      "candidate_sources": ["primitive_work_unit_I", "primitive_tick_I"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "p_equals_hbar_k",
+        "phase_equals_action_over_hbar"
+      ],
+      "action_standard_status": "candidate",
+      "claims_physical_action": false
+    },
+    {
+      "id": "action_scale_gauge_obstruction_demo",
+      "type": "action_scale_gauge_obstruction",
+      "tolerance": 1.0e-10,
+      "tick_samples": [3.0, 6.0, 9.0],
+      "work_samples": [2.0, 4.0, 8.0],
+      "tick_gauge_factor": 5.0,
+      "work_gauge_factor": 7.0,
+      "expected_action_scale_factor": 35.0,
+      "declared_status": "scale_not_locked"
+    },
+    {
+      "id": "tick_scale_lock_status_demo",
+      "type": "tick_scale_lock_status",
+      "tolerance": 1.0e-45,
+      "lower_bound": 0.0,
+      "upper_bound": 1.4320804368943517e-35,
+      "expected_width": 1.4320804368943517e-35,
+      "source_status": "bound_only",
+      "declared_status": "bound_only"
+    },
+    {
+      "id": "work_scale_lock_status_demo",
+      "type": "work_scale_lock_status",
+      "tolerance": 1.0e-10,
+      "impulse": 12.0,
+      "velocity_delta": 3.0,
+      "expected_mass": 4.0,
+      "impulse_scale_status": "candidate",
+      "mass_anchor_status": "candidate",
+      "candidate_sources": ["inertial_response_protocol", "kernel_strain_work_balance"],
+      "forbidden_sources": [
+        "hbar_obs",
+        "G_N",
+        "planck_units",
+        "E_equals_hbar_omega",
+        "known_quantum_energy_gap",
+        "spectroscopy_gap",
+        "gravitational_mass_calibration"
+      ],
+      "declared_status": "not_locked"
+    },
+    {
+      "id": "action_anchor_lock_status_demo",
+      "type": "action_anchor_lock_status",
+      "tick_lock_status": "bound_only",
+      "work_lock_status": "not_locked",
+      "gauge_status": "scale_not_locked",
+      "declared_status": "not_locked"
+    },
+    {
+      "id": "phase_action_scale_universality_demo",
+      "type": "phase_action_scale_universality",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "action_standard": 2.0,
+      "cycles": [
+        {
+          "id": "gamma_action_cal",
+          "role": "calibration",
+          "cost": 3.0,
+          "phase": 6.0
+        },
+        {
+          "id": "gamma_action_val",
+          "role": "validation",
+          "cost": 4.0,
+          "phase": 8.0
+        },
+        {
+          "id": "gamma_action_excluded",
+          "role": "excluded",
+          "cost": 1.0,
+          "phase": 1.0
+        }
+      ]
+    },
+    {
+      "id": "action_standard_independence_demo",
+      "type": "action_standard_independence",
+      "candidate_sources": ["primitive_update_work", "clock_vacuum_action_standard"],
+      "forbidden_sources": ["hbar_obs", "G_N", "planck_units", "E_equals_hbar_omega"]
+    },
+    {
+      "id": "hbar_known_gate_holdout_demo",
+      "type": "hbar_known_gate_holdout",
+      "tolerance": 1.0e-10,
+      "hbar_estimate": 1.0,
+      "frequency_pairs": [{"omega": 2.0, "energy": 2.0}],
+      "momentum_pairs": [{"k": 3.0, "p": 3.0}],
+      "phase_pairs": [{"action": 5.0, "phase": 5.0}]
+    },
+    {
+      "id": "phase_cost_family_demo",
+      "type": "relative_phase_cost_family",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "theta": 0.4,
+          "cost": 2.0
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "theta": 0.6,
+          "cost": 3.0
+        },
+        {
+          "id": "gamma_excluded_missing_cost",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "theta": 0.0,
+          "cost": 0.0,
+          "reason": "missing derived kernel-strain cost"
+        }
+      ]
+    },
+    {
+      "id": "diagonal_kernel_strain_cost_demo",
+      "type": "diagonal_kernel_strain_cost",
+      "tolerance": 1.0e-10,
+      "G0_diag": [1.0, 1.0],
+      "G1_diag": [4.0, 1.0],
+      "alignment": [0, 1],
+      "expected_cost": 0.10352341925454667
+    },
+    {
+      "id": "cycle_cost_sum_demo",
+      "type": "cycle_cost_sum",
+      "tolerance": 1.0e-10,
+      "edge_costs": [
+        {"from": "a", "to": "b", "cost": 1.0},
+        {"from": "b", "to": "a", "cost": 1.0},
+        {"from": "a", "to": "c", "cost": 1.5},
+        {"from": "c", "to": "a", "cost": 1.5}
+      ],
+      "cycles": [
+        {"id": "gamma_cal_1", "word": ["a", "b", "a"], "expected_cost": 2.0},
+        {"id": "gamma_val_1", "word": ["a", "c", "a"], "expected_cost": 3.0}
+      ]
+    },
+    {
+      "id": "phase_cost_from_edges_demo",
+      "type": "relative_phase_cost_from_edges",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "edge_costs": [
+        {"from": "a", "to": "b", "cost": 1.0},
+        {"from": "b", "to": "a", "cost": 1.0},
+        {"from": "a", "to": "c", "cost": 1.5},
+        {"from": "c", "to": "a", "cost": 1.5}
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "theta": 0.4
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "theta": 0.6
+        },
+        {
+          "id": "gamma_excluded_missing_edge_cost",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "theta": 0.0,
+          "reason": "missing derived edge costs"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_edges_demo",
+      "type": "relative_phase_cost_from_kernel_edges",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "theta": 0.04140936770181867
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "theta": 0.08598764213286577
+        },
+        {
+          "id": "gamma_excluded_missing_kernel_edge",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "theta": 0.0,
+          "reason": "missing kernel edge"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_holonomy_demo",
+      "type": "relative_phase_cost_from_kernel_holonomy",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "phase_edges": [
+        {"from": "a", "to": "b", "phase": 0.020704683850909334},
+        {"from": "b", "to": "a", "phase": 0.020704683850909334},
+        {"from": "a", "to": "c", "phase": 0.04299382106643289},
+        {"from": "c", "to": "a", "phase": 0.04299382106643289}
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_phase_edge",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing phase edge"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_unit_holonomy_demo",
+      "type": "relative_phase_cost_from_kernel_unit_holonomy",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "unit_holonomy": {
+            "re": 0.9991427546395419,
+            "im": 0.04139753436266696
+          }
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true,
+          "unit_holonomy": {
+            "re": 0.9963053400297743,
+            "im": 0.0858817176595564
+          }
+        },
+        {
+          "id": "gamma_excluded_missing_unit_holonomy",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing unit holonomy"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_unit_edges_demo",
+      "type": "relative_phase_cost_from_kernel_unit_edges",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "unit_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "unit_transfer": {
+            "re": 0.9997856656902873,
+            "im": 0.020703204588397774
+          }
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "unit_transfer": {
+            "re": 0.9997856656902873,
+            "im": 0.020703204588397774
+          }
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "unit_transfer": {
+            "re": 0.9990759080344632,
+            "im": 0.04298057683550604
+          }
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "unit_transfer": {
+            "re": 0.9990759080344632,
+            "im": 0.04298057683550604
+          }
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_unit_edge",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing unit transfer edge"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_transfer_elements_demo",
+      "type": "relative_phase_cost_from_kernel_transfer_elements",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "transfer_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "transfer": {
+            "re": 0.7998285325522299,
+            "im": 0.01656256367071822
+          }
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "transfer": {
+            "re": 0.7998285325522299,
+            "im": 0.01656256367071822
+          }
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "transfer": {
+            "re": 0.6993531356241243,
+            "im": 0.030086403784854224
+          }
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "transfer": {
+            "re": 0.6993531356241243,
+            "im": 0.030086403784854224
+          }
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_transfer_edge",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing transfer edge"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_transfer_blocks_demo",
+      "type": "relative_phase_cost_from_kernel_transfer_blocks",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "transfer_blocks": [
+        {
+          "from": "a",
+          "to": "b",
+          "block": [
+            [{"re": 0.7998285325522299, "im": 0.01656256367071822}, 0.0],
+            [0.0, 0.5]
+          ]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "block": [
+            [{"re": 0.7998285325522299, "im": 0.01656256367071822}, 0.0],
+            [0.0, 0.5]
+          ]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "block": [
+            [{"re": 0.6993531356241243, "im": 0.030086403784854224}, 0.0],
+            [0.0, 0.4]
+          ]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "block": [
+            [{"re": 0.6993531356241243, "im": 0.030086403784854224}, 0.0],
+            [0.0, 0.4]
+          ]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_transfer_block",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing transfer block"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_block_kernels_demo",
+      "type": "relative_phase_cost_from_kernel_block_kernels",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "block_kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0": [[1.0, 0.0], [0.0, 1.0]],
+          "G1": [[1.0, 0.0], [0.0, 1.0]],
+          "X": [
+            [{"re": 0.7998285325522299, "im": 0.01656256367071822}, 0.0],
+            [0.0, 0.5]
+          ]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0": [[1.0, 0.0], [0.0, 1.0]],
+          "G1": [[1.0, 0.0], [0.0, 1.0]],
+          "X": [
+            [{"re": 0.7998285325522299, "im": 0.01656256367071822}, 0.0],
+            [0.0, 0.5]
+          ]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0": [[1.0, 0.0], [0.0, 1.0]],
+          "G1": [[1.0, 0.0], [0.0, 1.0]],
+          "X": [
+            [{"re": 0.6993531356241243, "im": 0.030086403784854224}, 0.0],
+            [0.0, 0.4]
+          ]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0": [[1.0, 0.0], [0.0, 1.0]],
+          "G1": [[1.0, 0.0], [0.0, 1.0]],
+          "X": [
+            [{"re": 0.6993531356241243, "im": 0.030086403784854224}, 0.0],
+            [0.0, 0.4]
+          ]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_block_kernel",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing block kernel"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_normalized_blocks_demo",
+      "type": "relative_phase_cost_from_kernel_normalized_blocks",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "normalized_block_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [2.0, 3.0],
+          "G1_diag": [5.0, 7.0],
+          "X": [
+            [{"re": 2.5292799004551743, "im": 0.052375425091028625}, 0.0],
+            [0.0, 2.29128784747792]
+          ]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [2.0, 3.0],
+          "G1_diag": [5.0, 7.0],
+          "X": [
+            [{"re": 2.5292799004551743, "im": 0.052375425091028625}, 0.0],
+            [0.0, 2.29128784747792]
+          ]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [2.0, 3.0],
+          "G1_diag": [5.0, 7.0],
+          "X": [
+            [{"re": 2.211548797352875, "im": 0.0951415625636499}, 0.0],
+            [0.0, 1.833030277982336]
+          ]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [2.0, 3.0],
+          "G1_diag": [5.0, 7.0],
+          "X": [
+            [{"re": 2.211548797352875, "im": 0.0951415625636499}, 0.0],
+            [0.0, 1.833030277982336]
+          ]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_normalized_block",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing normalized block"
+        }
+      ]
+    },
+    {
+      "id": "phase_cost_from_kernel_spectral_blocks_demo",
+      "type": "relative_phase_cost_from_kernel_spectral_blocks",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "kernel_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [4.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0_diag": [1.0, 1.0],
+          "G1_diag": [9.0, 1.0],
+          "alignment": [0, 1]
+        }
+      ],
+      "spectral_block_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[2.0, 0.4], [0.4, 3.0]],
+          "X": [
+            [
+              {"re": 1.599914263979032, "im": 0.016563451223469094},
+              {"re": 0.3199828527958064, "im": 0.003312690244693819}
+            ],
+            [
+              {"re": 0.3199828527958064, "im": 0.003312690244693819},
+              {"re": 2.399871395968548, "im": 0.02484517683520364}
+            ]
+          ]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[2.0, 0.4], [0.4, 3.0]],
+          "X": [
+            [
+              {"re": 1.599914263979032, "im": 0.016563451223469094},
+              {"re": 0.3199828527958064, "im": 0.003312690244693819}
+            ],
+            [
+              {"re": 0.3199828527958064, "im": 0.003312690244693819},
+              {"re": 2.399871395968548, "im": 0.02484517683520364}
+            ]
+          ]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[2.0, 0.4], [0.4, 3.0]],
+          "X": [
+            [
+              {"re": 1.3996765304432928, "im": 0.03009335684542467},
+              {"re": 0.2799353060886586, "im": 0.006018671369084934}
+            ],
+            [
+              {"re": 0.2799353060886586, "im": 0.006018671369084934},
+              {"re": 2.0995147956649394, "im": 0.04514003526813701}
+            ]
+          ]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[2.0, 0.4], [0.4, 3.0]],
+          "X": [
+            [
+              {"re": 1.3996765304432928, "im": 0.03009335684542467},
+              {"re": 0.2799353060886586, "im": 0.006018671369084934}
+            ],
+            [
+              {"re": 0.2799353060886586, "im": 0.006018671369084934},
+              {"re": 2.0995147956649394, "im": 0.04514003526813701}
+            ]
+          ]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_spectral_block",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing spectral block"
+        }
+      ]
+    },
+    {
+      "id": "spectral_kernel_strain_cost_demo",
+      "type": "spectral_kernel_strain_cost",
+      "tolerance": 1.0e-10,
+      "G0": [[2.0, 0.4], [0.4, 3.0]],
+      "G1": [[4.0, 0.7], [0.7, 1.6]],
+      "X": [
+        [
+          {"re": 2.2622416234451306, "im": 0.024203025688530763},
+          {"re": 0.5019277526803017, "im": 0.00536997028346053}
+        ],
+        [
+          {"re": 0.37100474292914626, "im": 0.003969265365211626},
+          {"re": 1.744164059099928, "im": 0.018660273548994542}
+        ]
+      ],
+      "expected_cost": 0.10698283533839438
+    },
+    {
+      "id": "spectral_kernel_diagonal_limit_demo",
+      "type": "spectral_kernel_diagonal_limit",
+      "tolerance": 1.0e-10,
+      "G0_diag": [1.0, 1.0],
+      "G1_diag": [4.0, 1.0],
+      "alignment": [0, 1]
+    },
+    {
+      "id": "spectral_kernel_readout_covariance_demo",
+      "type": "spectral_kernel_readout_covariance",
+      "tolerance": 1.0e-10,
+      "G0": [[2.0, 0.4], [0.4, 3.0]],
+      "G1": [[4.0, 0.7], [0.7, 1.6]],
+      "X": [
+        [
+          {"re": 2.2622416234451306, "im": 0.024203025688530763},
+          {"re": 0.5019277526803017, "im": 0.00536997028346053}
+        ],
+        [
+          {"re": 0.37100474292914626, "im": 0.003969265365211626},
+          {"re": 1.744164059099928, "im": 0.018660273548994542}
+        ]
+      ],
+      "U0": [[0.8, -0.6], [0.6, 0.8]],
+      "U1": [[0.8, -0.6], [0.6, 0.8]]
+    },
+    {
+      "id": "phase_cost_from_spectral_kernel_blocks_demo",
+      "type": "relative_phase_cost_from_spectral_kernel_blocks",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "spectral_block_edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[4.0, 0.7], [0.7, 1.6]],
+          "X": [
+            [
+              {"re": 2.2622416234451306, "im": 0.024203025688530763},
+              {"re": 0.5019277526803017, "im": 0.00536997028346053}
+            ],
+            [
+              {"re": 0.37100474292914626, "im": 0.003969265365211626},
+              {"re": 1.744164059099928, "im": 0.018660273548994542}
+            ]
+          ]
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[4.0, 0.7], [0.7, 1.6]],
+          "X": [
+            [
+              {"re": 2.2622416234451306, "im": 0.024203025688530763},
+              {"re": 0.5019277526803017, "im": 0.00536997028346053}
+            ],
+            [
+              {"re": 0.37100474292914626, "im": 0.003969265365211626},
+              {"re": 1.744164059099928, "im": 0.018660273548994542}
+            ]
+          ]
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[7.0, 1.1], [1.1, 1.4]],
+          "X": [
+            [
+              {"re": 2.6179750535655044, "im": 0.05885825470355462},
+              {"re": 0.5868545667596812, "im": 0.013193874982591104}
+            ],
+            [
+              {"re": 0.3894756910050193, "im": 0.008756332261759188},
+              {"re": 1.4123008873247482, "im": 0.03175185540099202}
+            ]
+          ]
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "G0": [[2.0, 0.4], [0.4, 3.0]],
+          "G1": [[7.0, 1.1], [1.1, 1.4]],
+          "X": [
+            [
+              {"re": 2.6179750535655044, "im": 0.05885825470355462},
+              {"re": 0.5868545667596812, "im": 0.013193874982591104}
+            ],
+            [
+              {"re": 0.3894756910050193, "im": 0.008756332261759188},
+              {"re": 1.4123008873247482, "im": 0.03175185540099202}
+            ]
+          ]
+        }
+      ],
+      "cycles": [
+        {
+          "id": "gamma_cal_1",
+          "word": ["a", "b", "a"],
+          "role": "calibration",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_val_1",
+          "word": ["a", "c", "a"],
+          "role": "validation",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": true
+        },
+        {
+          "id": "gamma_excluded_missing_full_spectral_block",
+          "word": ["a", "d", "a"],
+          "role": "excluded",
+          "class": "small",
+          "branch_source": "principal",
+          "admissible": false,
+          "reason": "missing spectral kernel block"
+        }
+      ]
+    }
+  ]
+}

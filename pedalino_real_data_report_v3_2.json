@@ -1,0 +1,31 @@
+{
+  "V_obs_raw_fit": 0.0975350983168952,
+  "best_scan": {
+    "baseline_counts": 3155.008162637352,
+    "name": "Sodium_int_powerscan_55_s1.dat",
+    "phase_rad": -2.4007601570257653,
+    "points": 41,
+    "residual_rms_counts": 95.92396069823087,
+    "visibility": 0.0975350983168952,
+    "visibility_sigma": 0.006983146106861205
+  },
+  "delta_x_proxy_m": 1.33e-07,
+  "fixture": "pedalino_2026_sodium_nanoparticle_interferometry",
+  "import_status": "real_data_import_complete",
+  "lambda_I_bound_status": "blocked_missing_V_env",
+  "mean_mass_da_from_mass_spectrum_window": 168939.73938905454,
+  "missing_for_lambda_bound": [
+    "V_env",
+    "frozen_tau_policy",
+    "frozen_delta_x_policy"
+  ],
+  "points_total": 3895,
+  "scans_imported": 95,
+  "sigma_V_raw_fit": 0.006983146106861205,
+  "source_article_doi": "10.1038/s41586-025-09917-9",
+  "source_dataset_doi": "10.5281/zenodo.17502163",
+  "source_record_url": "https://zenodo.org/records/17502163",
+  "tau_single_spacing_s": 0.00622626582278481,
+  "tau_two_spacing_s": 0.01245253164556962,
+  "theory_version": "v3.2"
+}
