@@ -679,6 +679,10 @@ The `noncomplex_jordan_classification_lemma_route_demo` now starts the fourth
 lemma route below that theorem route: non-complex Jordan witnesses exclude
 finite real, quaternionic, and exceptional carrier samples while leaving
 classification gaps open.
+The `generic_gpt_classification_lemma_route_demo` now starts the fifth lemma
+route below that theorem route: generic GPT witnesses exclude the unconstrained
+generic cone while explicitly retaining route-closed and generic GPT
+underdetermination.
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.

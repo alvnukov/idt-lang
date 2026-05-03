@@ -3652,6 +3652,36 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"noncomplex_jordan_classification_lemma_status_mismatch"})
 
+    def test_generic_gpt_classification_lemma_rejects_premature_formal_proof(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_generic_gpt_classification_lemma",
+                        "type": "generic_gpt_classification_lemma_route",
+                        "target_lemma": "extend_generic_gpt_exclusion_to_classification_theorem",
+                        "required_conditions": list(GENERIC_GPT_CLOSURE_CONDITIONS),
+                        "finite_evidence_refs": [
+                            "generic_gpt_closure_separator_demo",
+                            "carrier_selection_frontier_demo",
+                        ],
+                        "excluded_counterexamples": ["unconstrained_generic_gpt_cone"],
+                        "expected_exclusion_count": 1,
+                        "remaining_underdetermined_candidates": ["route_closed_gpt_subtheory"],
+                        "expected_underdetermined_count": 1,
+                        "open_generalization_gaps": [],
+                        "expected_lemma_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"generic_gpt_classification_lemma_status_mismatch"})
+
     def test_spin_bell_angle_model_rejects_bad_chsh(self) -> None:
         manifest = parse_manifest(
             {

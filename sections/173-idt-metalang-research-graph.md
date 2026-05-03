@@ -133,6 +133,14 @@ It records non-complex Jordan separator conditions, finite exclusions,
 expected exclusion count, and remaining classification gaps for the fourth
 carrier-selection lemma.
 
+The fifth lemma route is now manifest-backed:
+
+`generic_gpt_classification_lemma_route_demo`
+
+It records generic GPT closure conditions, finite exclusions, remaining
+underdetermined candidates, expected counts, and remaining classification gaps
+for the fifth carrier-selection lemma.
+
 Status:
 
 `lemma_route_language_initialized`

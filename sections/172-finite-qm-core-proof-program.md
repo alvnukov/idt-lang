@@ -500,6 +500,26 @@ It still remains `finite_witnessed`, not `formal_proof`, because the finite
 non-complex Jordan samples must be promoted to a classification theorem and
 connected to the remaining generic GPT cone.
 
+The fifth lemma route is now executable as:
+
+`generic_gpt_classification_lemma_route_demo`.
+
+It connects `generic_gpt_closure_separator_demo` and
+`carrier_selection_frontier_demo` to the carrier-selection proof route. The
+route records one finite exclusion:
+
+1. unconstrained generic GPT cone.
+
+It also records two remaining underdetermined candidates:
+
+1. route-closed GPT subtheory;
+2. generic GPT cone.
+
+It still remains `finite_witnessed`, not `formal_proof`, because the generic
+GPT closure samples must be promoted to a classification theorem and the
+route-closed subtheory must be shown to collapse to the complex Hilbert carrier
+under IDT primitives.
+
 Status:
 
 `carrier_selection_proof_route_initialized`
@@ -519,6 +539,10 @@ Status:
 Status:
 
 `noncomplex_jordan_classification_lemma_route_initialized`
+
+Status:
+
+`generic_gpt_classification_lemma_route_initialized`
 
 This is the useful proof boundary: IDT has a finite executable screen that
 narrows the carrier space, but it does not yet have the missing theorem that

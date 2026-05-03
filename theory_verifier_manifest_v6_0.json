@@ -4196,6 +4196,7 @@
           "id": "extend_generic_gpt_exclusion_to_classification_theorem",
           "status": "finite_witnessed",
           "evidence_refs": [
+            "generic_gpt_classification_lemma_route_demo",
             "generic_gpt_closure_separator_demo",
             "carrier_selection_frontier_demo"
           ],
@@ -4321,6 +4322,37 @@
         "promote finite non-complex Jordan samples to a classification theorem",
         "prove IDT conditions exclude all real, quaternionic, and exceptional Jordan carrier families",
         "connect the classification theorem to the remaining generic GPT cone"
+      ],
+      "expected_lemma_status": "finite_witnessed"
+    },
+    {
+      "id": "generic_gpt_classification_lemma_route_demo",
+      "type": "generic_gpt_classification_lemma_route",
+      "target_lemma": "extend_generic_gpt_exclusion_to_classification_theorem",
+      "required_conditions": [
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "tomographic_state_effect_duality",
+        "reversible_filter_closure",
+        "bounded_composite_correlations"
+      ],
+      "finite_evidence_refs": [
+        "generic_gpt_closure_separator_demo",
+        "carrier_selection_frontier_demo"
+      ],
+      "excluded_counterexamples": [
+        "unconstrained_generic_gpt_cone"
+      ],
+      "expected_exclusion_count": 1,
+      "remaining_underdetermined_candidates": [
+        "route_closed_gpt_subtheory",
+        "generic_gpt_cone"
+      ],
+      "expected_underdetermined_count": 2,
+      "open_generalization_gaps": [
+        "promote finite generic GPT closure samples to a classification theorem",
+        "decide whether route-closed GPT subtheories collapse to complex Hilbert carriers under IDT primitives",
+        "prove no generic GPT cone survives all carrier-selection obligations outside complex Hilbert space"
       ],
       "expected_lemma_status": "finite_witnessed"
     },
