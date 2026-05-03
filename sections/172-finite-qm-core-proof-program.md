@@ -121,6 +121,15 @@ states.
 This is a finite route toward the composition layer, not the full monoidal
 composition theorem.
 
+The finite measurement/facticity route is now executable as:
+
+`measurement_facticity_route_demo`.
+
+It connects recoverable markers, partial pointer readouts, and stable
+projective records through readout gain, disturbance bounds, and recoverability
+loss thresholds. This joins the existing projective, partial, decoherence, and
+recoverability gates into one finite mechanism route.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -418,6 +427,10 @@ Status:
 Status:
 
 `tensor_composition_route_executable`
+
+Status:
+
+`measurement_facticity_route_executable`
 
 Status:
 

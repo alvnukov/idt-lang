@@ -620,6 +620,9 @@ The `tensor_composition_route_demo` now makes the finite tensor-composition
 route executable: product context dimensions multiply, product states have
 Schmidt rank one, and Bell-style states carry Schmidt rank two rather than
 factorizing.
+The `measurement_facticity_route_demo` now connects recoverable markers,
+partial pointer readouts, and stable projective records through readout gain,
+disturbance bounds, and recoverability loss thresholds.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles

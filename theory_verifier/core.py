@@ -162,6 +162,13 @@ TENSOR_COMPOSITION_ROUTE_CONDITIONS = (
     "entangled_nonproduct_states",
 )
 
+MEASUREMENT_FACTICITY_ROUTE_CONDITIONS = (
+    "context_readout_gain",
+    "disturbance_bound",
+    "recoverability_loss_threshold",
+    "stable_record_facticity",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
@@ -4670,6 +4677,58 @@ def check_partial_facticity_readout_gate(gate: FiniteGate) -> list[Issue]:
                 f"{gate.identifier}: computed full facticity {computed_full_facticity}, expected {expected_full_facticity}",
             )
         ]
+    return []
+
+
+def check_measurement_facticity_route_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    conditions = require_string_tuple(gate.payload.get("conditions", []), f"{gate.identifier}.conditions")
+    if set(conditions) != set(MEASUREMENT_FACTICITY_ROUTE_CONDITIONS):
+        return [
+            Issue(
+                "measurement_facticity_route_conditions_mismatch",
+                f"{gate.identifier}: conditions must match the measurement/facticity route set",
+            )
+        ]
+
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if len(samples) < 3:
+        raise ManifestError("measurement/facticity route requires at least three samples")
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        sample_id = require_string(sample.get("id"), f"{gate.identifier}.samples[{index}].id")
+        readout_gain = parse_nonnegative_real(sample.get("readout_gain"), f"{gate.identifier}.samples[{index}].readout_gain")
+        facticity_threshold = parse_positive_real(
+            sample.get("facticity_threshold"),
+            f"{gate.identifier}.samples[{index}].facticity_threshold",
+        )
+        disturbance = parse_nonnegative_real(sample.get("disturbance"), f"{gate.identifier}.samples[{index}].disturbance")
+        max_disturbance = parse_nonnegative_real(sample.get("max_disturbance"), f"{gate.identifier}.samples[{index}].max_disturbance")
+        recoverability_loss = parse_nonnegative_real(
+            sample.get("recoverability_loss"),
+            f"{gate.identifier}.samples[{index}].recoverability_loss",
+        )
+        recoverability_threshold = parse_positive_real(
+            sample.get("recoverability_threshold"),
+            f"{gate.identifier}.samples[{index}].recoverability_threshold",
+        )
+        expected_status = require_string(sample.get("expected_status"), f"{gate.identifier}.samples[{index}].expected_status")
+        disturbance_admissible = disturbance <= max_disturbance + tolerance
+        full_readout = readout_gain + tolerance >= facticity_threshold
+        stable_record = recoverability_loss + tolerance >= recoverability_threshold
+        if full_readout and stable_record:
+            computed_status = "full_facticity"
+        elif disturbance_admissible and readout_gain > tolerance:
+            computed_status = "partial_facticity"
+        else:
+            computed_status = "recoverable_marker"
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "measurement_facticity_route_status_mismatch",
+                    f"{gate.identifier}: sample {sample_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
     return []
 
 
@@ -12543,6 +12602,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "ks_contextuality_obstruction": check_ks_contextuality_obstruction_gate,
     "temporal_facticity": check_temporal_facticity_gate,
     "partial_facticity_readout": check_partial_facticity_readout_gate,
+    "measurement_facticity_route": check_measurement_facticity_route_gate,
     "unitary_graph_walk": check_unitary_graph_walk_gate,
     "distinguishability_geometry_probe": check_distinguishability_geometry_probe_gate,
     "local_tomography_separator": check_local_tomography_separator_gate,

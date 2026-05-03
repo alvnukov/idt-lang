@@ -2806,10 +2806,11 @@
         "projective_measurement_update_demo",
         "premeasurement_decoherence_demo",
         "recoverability_loss_demo",
-        "partial_facticity_readout_demo"
+        "partial_facticity_readout_demo",
+        "measurement_facticity_route_demo"
       ],
-      "open_gap": "Projection, partial readout, conditioning, and recoverability are checked as finite gates, but not yet derived as one measurement theorem.",
-      "claim_boundary": "Finitary measurement behavior is executable; complete apparatus/facticity derivation is open."
+      "open_gap": "Projection, partial readout, conditioning, and recoverability now have a finite route gate, but complete apparatus/facticity derivation is open.",
+      "claim_boundary": "Finitary measurement behavior has an executable route; full apparatus/facticity derivation remains open."
     },
     {
       "id": "tensor_composition_law",
@@ -3442,6 +3443,49 @@
       "distinguishability_gain": 0.2,
       "facticity_threshold": 1.0,
       "expected_full_facticity": false
+    },
+    {
+      "id": "measurement_facticity_route_demo",
+      "type": "measurement_facticity_route",
+      "tolerance": 1.0e-10,
+      "conditions": [
+        "context_readout_gain",
+        "disturbance_bound",
+        "recoverability_loss_threshold",
+        "stable_record_facticity"
+      ],
+      "samples": [
+        {
+          "id": "recoverable_marker",
+          "readout_gain": 0.0,
+          "facticity_threshold": 1.0,
+          "disturbance": 0.0,
+          "max_disturbance": 0.05,
+          "recoverability_loss": 0.1,
+          "recoverability_threshold": 2.0,
+          "expected_status": "recoverable_marker"
+        },
+        {
+          "id": "partial_pointer_readout",
+          "readout_gain": 0.2,
+          "facticity_threshold": 1.0,
+          "disturbance": 0.01,
+          "max_disturbance": 0.05,
+          "recoverability_loss": 0.1,
+          "recoverability_threshold": 2.0,
+          "expected_status": "partial_facticity"
+        },
+        {
+          "id": "stable_projective_record",
+          "readout_gain": 1.2,
+          "facticity_threshold": 1.0,
+          "disturbance": 0.2,
+          "max_disturbance": 0.05,
+          "recoverability_loss": 2.5,
+          "recoverability_threshold": 2.0,
+          "expected_status": "full_facticity"
+        }
+      ]
     },
     {
       "id": "unitary_graph_walk_demo",

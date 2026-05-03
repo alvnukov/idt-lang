@@ -24,6 +24,7 @@ from theory_verifier.core import (
     HBAR_ACTION_STANDARD_REQUIRED_GATES,
     HBAR_ACTION_STANDARD_REQUIRED_SYMBOLS,
     HBAR_ACTION_STANDARD_TARGET,
+    MEASUREMENT_FACTICITY_ROUTE_CONDITIONS,
     JOINT_ACTION_GRAVITY_ANCHOR_REQUIRED_SYMBOLS,
     JOINT_ACTION_GRAVITY_ANCHOR_TARGET,
     PRIMITIVE_TICK_REQUIRED_GATES,
@@ -2756,6 +2757,57 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"partial_facticity_pointer_shift_mismatch"})
+
+    def test_measurement_facticity_route_rejects_bad_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_measurement_facticity_route",
+                        "type": "measurement_facticity_route",
+                        "conditions": list(MEASUREMENT_FACTICITY_ROUTE_CONDITIONS),
+                        "samples": [
+                            {
+                                "id": "partial_pointer",
+                                "readout_gain": 0.2,
+                                "facticity_threshold": 1.0,
+                                "disturbance": 0.01,
+                                "max_disturbance": 0.05,
+                                "recoverability_loss": 0.1,
+                                "recoverability_threshold": 2.0,
+                                "expected_status": "full_facticity",
+                            },
+                            {
+                                "id": "stable_record",
+                                "readout_gain": 1.2,
+                                "facticity_threshold": 1.0,
+                                "disturbance": 0.2,
+                                "max_disturbance": 0.05,
+                                "recoverability_loss": 2.5,
+                                "recoverability_threshold": 2.0,
+                                "expected_status": "full_facticity",
+                            },
+                            {
+                                "id": "recoverable_marker",
+                                "readout_gain": 0.0,
+                                "facticity_threshold": 1.0,
+                                "disturbance": 0.0,
+                                "max_disturbance": 0.05,
+                                "recoverability_loss": 0.1,
+                                "recoverability_threshold": 2.0,
+                                "expected_status": "recoverable_marker",
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"measurement_facticity_route_status_mismatch"})
 
     def test_unitary_graph_walk_rejects_bad_distribution(self) -> None:
         manifest = parse_manifest(
