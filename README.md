@@ -52,6 +52,11 @@ they must preserve the same claim boundaries as the English source. If a
 translation conflicts with the English canonical text, the English text is
 authoritative.
 
+## License
+
+This repository is licensed under the Apache License, Version 2.0. See
+[`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
+
 ## Verify
 
 Fetch external SPARC data first:
