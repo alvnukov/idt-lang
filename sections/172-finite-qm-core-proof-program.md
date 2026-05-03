@@ -233,6 +233,35 @@ gap is now sharper: extend this finite context-product exhaustion rule into a
 general carrier-selection theorem, rather than assuming that all admissible
 carriers have already been covered.
 
+The purification/filtering route is now executable as:
+
+`idt_purification_filtering_demo`.
+
+It checks two finite consequences of the IDT composition route:
+
+1. a mixed readout can be represented by a recoverable extension whose marginal
+   probabilities match the readout packet;
+2. a facticized filter restricts support and renormalizes the posterior
+   probabilities on the surviving events.
+
+This promotes purification/filtering from a named GPT principle to a finite
+IDT route. It still does not prove that every admissible carrier must support
+the full categorical or operational purification theorem.
+
+The bounded-correlation route is now executable as:
+
+`idt_bounded_correlation_demo`.
+
+It checks the finite CHSH-style obstruction under the IDT conditions of
+single joint-context facticity, normalized context amplitudes, absence of a
+global counterfactual fact table, and a stable correlation invariant. Classical
+and Tsirelson-edge samples survive the declared bound, while a PR-box-like
+sample with \(|S|=4\) is rejected.
+
+This promotes bounded nonclassical correlations from a named separator
+principle to a finite IDT route. It still does not prove that the same bound
+selects the complete carrier class.
+
 The next GPT separator is now executable as:
 
 `gpt_principle_separator_demo`.
@@ -269,8 +298,8 @@ The current frontier is now executable as:
 It records the remaining carrier-selection obstructions:
 
 1. extend context-product exhaustion to a carrier-selection theorem;
-2. derive purification or filtering from IDT primitives;
-3. derive the bounded-correlation constraint from IDT primitives;
+2. extend purification/filtering to a carrier-selection theorem;
+3. extend bounded correlations to a carrier-selection theorem;
 4. exclude non-complex Jordan carriers;
 5. exclude generic GPT cones.
 
@@ -308,6 +337,14 @@ Status:
 Status:
 
 `context_product_exhaustion_executable`
+
+Status:
+
+`idt_purification_filtering_executable`
+
+Status:
+
+`idt_bounded_correlation_executable`
 
 Status:
 

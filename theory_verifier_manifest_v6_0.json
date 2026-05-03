@@ -2742,11 +2742,13 @@
         "distinguishability_geometry_probe_demo",
         "context_product_exhaustion_demo",
         "idt_local_tomography_derivation_demo",
+        "idt_purification_filtering_demo",
+        "idt_bounded_correlation_demo",
         "local_tomography_separator_demo",
         "gpt_principle_separator_demo",
         "carrier_selection_frontier_demo"
       ],
-      "open_gap": "Context-product exhaustion is now executable for finite witnessed product readouts, but its extension into a universal carrier-selection theorem, purification/filtering, bounded correlations, and carrier exclusions remain unresolved.",
+      "open_gap": "Context-product exhaustion, purification/filtering, and bounded correlations are now executable for finite witnessed routes, but their extension into a universal carrier-selection theorem and carrier exclusions remain unresolved.",
       "claim_boundary": "This is the next derivation target; no Hilbert carrier is claimed from current primitives."
     },
     {
@@ -3618,6 +3620,88 @@
       ]
     },
     {
+      "id": "idt_purification_filtering_demo",
+      "type": "idt_purification_filtering",
+      "tolerance": 1.0e-10,
+      "idt_conditions": [
+        "recoverable_extension_context",
+        "marginal_readout_consistency",
+        "facticized_filter_context",
+        "posterior_support_renormalization"
+      ],
+      "purification_samples": [
+        {
+          "id": "two_branch_recoverable_extension",
+          "schmidt_amplitudes": [0.8, 0.6],
+          "expected_marginal": [0.64, 0.36],
+          "environment_dimension": 2,
+          "expected_recoverable_extension": true
+        },
+        {
+          "id": "insufficient_environment_extension",
+          "schmidt_amplitudes": [0.7071067811865476, 0.7071067811865476],
+          "expected_marginal": [0.5, 0.5],
+          "environment_dimension": 1,
+          "expected_recoverable_extension": false
+        }
+      ],
+      "filtering_samples": [
+        {
+          "id": "two_cell_filter",
+          "prior": [0.2, 0.3, 0.5],
+          "filter_indices": [1, 2],
+          "expected_acceptance_probability": 0.8,
+          "expected_posterior": [0.375, 0.625],
+          "expected_filter_admissible": true
+        },
+        {
+          "id": "zero_support_filter",
+          "prior": [1.0, 0.0, 0.0],
+          "filter_indices": [1, 2],
+          "expected_acceptance_probability": 0.0,
+          "expected_posterior": [0.0, 0.0],
+          "expected_filter_admissible": false
+        }
+      ]
+    },
+    {
+      "id": "idt_bounded_correlation_demo",
+      "type": "idt_bounded_correlation",
+      "tolerance": 1.0e-10,
+      "idt_conditions": [
+        "single_joint_context_facticity",
+        "normalized_context_amplitudes",
+        "no_global_counterfactual_table",
+        "stable_correlation_invariant"
+      ],
+      "max_abs_s": 2.8284271247461903,
+      "samples": [
+        {
+          "id": "classical_edge",
+          "correlations": [0.5, 0.5, 0.5, -0.5],
+          "expected_abs_s": 2.0,
+          "expected_status": "survives"
+        },
+        {
+          "id": "tsirelson_edge",
+          "correlations": [
+            0.7071067811865476,
+            0.7071067811865476,
+            0.7071067811865476,
+            -0.7071067811865476
+          ],
+          "expected_abs_s": 2.8284271247461903,
+          "expected_status": "survives"
+        },
+        {
+          "id": "pr_box_like",
+          "correlations": [1.0, 1.0, 1.0, -1.0],
+          "expected_abs_s": 4.0,
+          "expected_status": "rejected"
+        }
+      ]
+    },
+    {
       "id": "gpt_principle_separator_demo",
       "type": "gpt_principle_separator",
       "principles": [
@@ -3685,8 +3769,8 @@
       "type": "carrier_selection_frontier",
       "open_obstructions": [
         "extend_context_product_exhaustion_to_carrier_theorem",
-        "derive_purification_or_filtering_from_idt",
-        "derive_bounded_correlation_from_idt",
+        "extend_purification_filtering_to_carrier_theorem",
+        "extend_bounded_correlation_to_carrier_theorem",
         "exclude_noncomplex_jordan_carriers",
         "exclude_generic_gpt_cones"
       ],
@@ -3703,7 +3787,7 @@
           "status": "underdetermined",
           "blocking_obstructions": [
             "extend_context_product_exhaustion_to_carrier_theorem",
-            "derive_purification_or_filtering_from_idt",
+            "extend_purification_filtering_to_carrier_theorem",
             "exclude_noncomplex_jordan_carriers"
           ]
         },
@@ -3712,8 +3796,8 @@
           "status": "underdetermined",
           "blocking_obstructions": [
             "extend_context_product_exhaustion_to_carrier_theorem",
-            "derive_purification_or_filtering_from_idt",
-            "derive_bounded_correlation_from_idt",
+            "extend_purification_filtering_to_carrier_theorem",
+            "extend_bounded_correlation_to_carrier_theorem",
             "exclude_generic_gpt_cones"
           ]
         }

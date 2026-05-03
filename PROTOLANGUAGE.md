@@ -593,15 +593,23 @@ composite invariant must have a product-context witness. Hidden joint-only
 invariants are rejected for this finite route; the remaining open item is the
 extension from finite witness exhaustion to a universal carrier-selection
 theorem.
+The `idt_purification_filtering_demo` now makes purification/filtering finite
+and executable: a recoverable extension must reproduce marginal readout
+probabilities, and a facticized filter must restrict support and renormalize
+the posterior. The remaining open item is again the extension from finite route
+to a universal carrier theorem.
+The `idt_bounded_correlation_demo` now makes the bounded-correlation route
+executable: classical and Tsirelson-edge CHSH samples survive the finite bound,
+while a PR-box-like \(|S|=4\) sample is rejected. The remaining open item is
+again the extension from finite route to universal carrier selection.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles
 are derived from IDT rather than assumed.
 The `carrier_selection_frontier_demo` makes that boundary executable: complex
 Hilbert-like structure survives the current screens, but no carrier is selected
-while the universal carrier theorem, purification/filtering, bounded
-correlations, non-complex Jordan exclusion, and generic-GPT exclusion remain
-open obstructions.
+while the universal carrier theorem, non-complex Jordan exclusion, and
+generic-GPT exclusion remain open obstructions.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

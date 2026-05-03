@@ -118,10 +118,24 @@ CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES = (
     "stable_invariant",
 )
 
+IDT_PURIFICATION_FILTERING_CONDITIONS = (
+    "recoverable_extension_context",
+    "marginal_readout_consistency",
+    "facticized_filter_context",
+    "posterior_support_renormalization",
+)
+
+IDT_BOUNDED_CORRELATION_CONDITIONS = (
+    "single_joint_context_facticity",
+    "normalized_context_amplitudes",
+    "no_global_counterfactual_table",
+    "stable_correlation_invariant",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
-    "derive_purification_or_filtering_from_idt",
-    "derive_bounded_correlation_from_idt",
+    "extend_purification_filtering_to_carrier_theorem",
+    "extend_bounded_correlation_to_carrier_theorem",
     "exclude_noncomplex_jordan_carriers",
     "exclude_generic_gpt_cones",
 )
@@ -5006,6 +5020,180 @@ def check_context_product_exhaustion_gate(gate: FiniteGate) -> list[Issue]:
                 Issue(
                     "context_product_exhaustion_admissibility_mismatch",
                     f"{gate.identifier}: candidate {candidate_id} expected IDT admissibility {expected_admissible}, computed {computed_admissible}",
+                )
+            ]
+    return []
+
+
+def check_idt_purification_filtering_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    conditions = require_string_tuple(gate.payload.get("idt_conditions", []), f"{gate.identifier}.idt_conditions")
+    if set(conditions) != set(IDT_PURIFICATION_FILTERING_CONDITIONS):
+        return [
+            Issue(
+                "idt_purification_filtering_conditions_mismatch",
+                f"{gate.identifier}: IDT conditions must match the purification/filtering route set",
+            )
+        ]
+
+    purification_samples = require_list(gate.payload.get("purification_samples"), f"{gate.identifier}.purification_samples")
+    if not purification_samples:
+        raise ManifestError("purification/filtering gate requires at least one purification sample")
+    for index, item in enumerate(purification_samples):
+        sample = require_mapping(item, f"{gate.identifier}.purification_samples[{index}]")
+        sample_id = require_string(sample.get("id"), f"{gate.identifier}.purification_samples[{index}].id")
+        amplitudes = parse_vector(sample.get("schmidt_amplitudes"), f"{gate.identifier}.purification_samples[{index}].schmidt_amplitudes")
+        expected_marginal = parse_real_list(
+            sample.get("expected_marginal"),
+            f"{gate.identifier}.purification_samples[{index}].expected_marginal",
+        )
+        environment_dimension = parse_positive_integer(
+            sample.get("environment_dimension"),
+            f"{gate.identifier}.purification_samples[{index}].environment_dimension",
+        )
+        expected_recoverable = parse_bool(
+            sample.get("expected_recoverable_extension"),
+            f"{gate.identifier}.purification_samples[{index}].expected_recoverable_extension",
+        )
+        if len(amplitudes) != len(expected_marginal):
+            raise ManifestError(f"{gate.identifier}: purification sample {sample_id} amplitude/marginal size mismatch")
+        computed_marginal = amplitude_probabilities(amplitudes, tolerance)
+        support_size = sum(1 for probability in computed_marginal if probability > tolerance)
+        computed_recoverable = environment_dimension >= support_size
+        if computed_recoverable != expected_recoverable:
+            return [
+                Issue(
+                    "idt_purification_filtering_recoverability_mismatch",
+                    (
+                        f"{gate.identifier}: purification sample {sample_id} expected recoverable="
+                        f"{expected_recoverable}, computed {computed_recoverable}"
+                    ),
+                )
+            ]
+        for marginal_index, probability in enumerate(computed_marginal):
+            if abs(probability - expected_marginal[marginal_index]) > tolerance:
+                return [
+                    Issue(
+                        "idt_purification_filtering_marginal_mismatch",
+                        (
+                            f"{gate.identifier}: purification sample {sample_id} marginal {marginal_index} "
+                            f"expected {expected_marginal[marginal_index]:g}, computed {probability:g}"
+                        ),
+                    )
+                ]
+
+    filtering_samples = require_list(gate.payload.get("filtering_samples"), f"{gate.identifier}.filtering_samples")
+    if not filtering_samples:
+        raise ManifestError("purification/filtering gate requires at least one filtering sample")
+    for index, item in enumerate(filtering_samples):
+        sample = require_mapping(item, f"{gate.identifier}.filtering_samples[{index}]")
+        sample_id = require_string(sample.get("id"), f"{gate.identifier}.filtering_samples[{index}].id")
+        prior = parse_nonnegative_real_list(sample.get("prior"), f"{gate.identifier}.filtering_samples[{index}].prior")
+        filter_indices = parse_index_tuple(
+            sample.get("filter_indices"),
+            f"{gate.identifier}.filtering_samples[{index}].filter_indices",
+        )
+        expected_acceptance = parse_unit_interval(
+            sample.get("expected_acceptance_probability"),
+            f"{gate.identifier}.filtering_samples[{index}].expected_acceptance_probability",
+        )
+        expected_posterior = parse_real_list(
+            sample.get("expected_posterior"),
+            f"{gate.identifier}.filtering_samples[{index}].expected_posterior",
+        )
+        expected_filter_admissible = parse_bool(
+            sample.get("expected_filter_admissible"),
+            f"{gate.identifier}.filtering_samples[{index}].expected_filter_admissible",
+        )
+        if abs(sum(prior) - 1.0) > tolerance:
+            raise ManifestError(f"{gate.identifier}: filtering sample {sample_id} prior must be normalized")
+        if len(expected_posterior) != len(filter_indices):
+            raise ManifestError(f"{gate.identifier}: filtering sample {sample_id} posterior/filter size mismatch")
+        if any(index_value >= len(prior) for index_value in filter_indices):
+            raise ManifestError(f"{gate.identifier}: filtering sample {sample_id} filter index out of range")
+        acceptance = sum(prior[index_value] for index_value in filter_indices)
+        computed_filter_admissible = acceptance > tolerance
+        if abs(acceptance - expected_acceptance) > tolerance:
+            return [
+                Issue(
+                    "idt_purification_filtering_acceptance_mismatch",
+                    (
+                        f"{gate.identifier}: filtering sample {sample_id} expected acceptance "
+                        f"{expected_acceptance:g}, computed {acceptance:g}"
+                    ),
+                )
+            ]
+        if computed_filter_admissible != expected_filter_admissible:
+            return [
+                Issue(
+                    "idt_purification_filtering_admissibility_mismatch",
+                    (
+                        f"{gate.identifier}: filtering sample {sample_id} expected admissible="
+                        f"{expected_filter_admissible}, computed {computed_filter_admissible}"
+                    ),
+                )
+            ]
+        if not computed_filter_admissible:
+            continue
+        posterior = [prior[index_value] / acceptance for index_value in filter_indices]
+        for posterior_index, probability in enumerate(posterior):
+            if abs(probability - expected_posterior[posterior_index]) > tolerance:
+                return [
+                    Issue(
+                        "idt_purification_filtering_posterior_mismatch",
+                        (
+                            f"{gate.identifier}: filtering sample {sample_id} posterior {posterior_index} "
+                            f"expected {expected_posterior[posterior_index]:g}, computed {probability:g}"
+                        ),
+                    )
+                ]
+    return []
+
+
+def check_idt_bounded_correlation_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    conditions = require_string_tuple(gate.payload.get("idt_conditions", []), f"{gate.identifier}.idt_conditions")
+    if set(conditions) != set(IDT_BOUNDED_CORRELATION_CONDITIONS):
+        return [
+            Issue(
+                "idt_bounded_correlation_conditions_mismatch",
+                f"{gate.identifier}: IDT conditions must match the bounded-correlation route set",
+            )
+        ]
+
+    max_abs_s = parse_positive_real(gate.payload.get("max_abs_s"), f"{gate.identifier}.max_abs_s")
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if len(samples) < 2:
+        raise ManifestError("bounded-correlation gate requires at least two samples")
+
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        sample_id = require_string(sample.get("id"), f"{gate.identifier}.samples[{index}].id")
+        correlations = parse_real_list(sample.get("correlations"), f"{gate.identifier}.samples[{index}].correlations")
+        if len(correlations) != 4:
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} requires four CHSH correlations")
+        for correlation_index, correlation in enumerate(correlations):
+            if correlation < -1.0 - tolerance or correlation > 1.0 + tolerance:
+                raise ManifestError(f"{gate.identifier}: sample {sample_id} correlation {correlation_index} must be in [-1, 1]")
+        expected_abs_s = parse_nonnegative_real(sample.get("expected_abs_s"), f"{gate.identifier}.samples[{index}].expected_abs_s")
+        expected_status = require_string(sample.get("expected_status"), f"{gate.identifier}.samples[{index}].expected_status")
+        if expected_status not in DISTINGUISHABILITY_GEOMETRY_STATUSES:
+            raise ManifestError(f"{gate.identifier}.samples[{index}].expected_status is unknown")
+
+        computed_abs_s = abs(correlations[0] + correlations[1] + correlations[2] - correlations[3])
+        if abs(computed_abs_s - expected_abs_s) > tolerance:
+            return [
+                Issue(
+                    "idt_bounded_correlation_chsh_mismatch",
+                    f"{gate.identifier}: sample {sample_id} expected |S|={expected_abs_s:g}, computed {computed_abs_s:g}",
+                )
+            ]
+        computed_status = "survives" if computed_abs_s <= max_abs_s + tolerance else "rejected"
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "idt_bounded_correlation_status_mismatch",
+                    f"{gate.identifier}: sample {sample_id} expected {expected_status}, computed {computed_status}",
                 )
             ]
     return []
@@ -12061,6 +12249,8 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "local_tomography_separator": check_local_tomography_separator_gate,
     "idt_local_tomography_derivation": check_idt_local_tomography_derivation_gate,
     "context_product_exhaustion": check_context_product_exhaustion_gate,
+    "idt_purification_filtering": check_idt_purification_filtering_gate,
+    "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

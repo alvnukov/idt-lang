@@ -85,6 +85,8 @@ from theory_verifier.core import (
     CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES,
     DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS,
     GPT_SEPARATOR_PRINCIPLES,
+    IDT_BOUNDED_CORRELATION_CONDITIONS,
+    IDT_PURIFICATION_FILTERING_CONDITIONS,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
@@ -2916,6 +2918,84 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"context_product_exhaustion_admissibility_mismatch"})
 
+    def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_idt_purification_filtering",
+                        "type": "idt_purification_filtering",
+                        "idt_conditions": list(IDT_PURIFICATION_FILTERING_CONDITIONS),
+                        "purification_samples": [
+                            {
+                                "id": "two_branch_extension",
+                                "schmidt_amplitudes": [0.8, 0.6],
+                                "expected_marginal": [0.64, 0.36],
+                                "environment_dimension": 2,
+                                "expected_recoverable_extension": True,
+                            }
+                        ],
+                        "filtering_samples": [
+                            {
+                                "id": "bad_two_cell_filter",
+                                "prior": [0.2, 0.3, 0.5],
+                                "filter_indices": [1, 2],
+                                "expected_acceptance_probability": 0.8,
+                                "expected_posterior": [0.5, 0.5],
+                                "expected_filter_admissible": True,
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_purification_filtering_posterior_mismatch"})
+
+    def test_idt_bounded_correlation_rejects_boxworld_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_idt_bounded_correlation",
+                        "type": "idt_bounded_correlation",
+                        "tolerance": 1.0e-10,
+                        "idt_conditions": list(IDT_BOUNDED_CORRELATION_CONDITIONS),
+                        "max_abs_s": 2.8284271247461903,
+                        "samples": [
+                            {
+                                "id": "pr_box_like",
+                                "correlations": [1.0, 1.0, 1.0, -1.0],
+                                "expected_abs_s": 4.0,
+                                "expected_status": "survives",
+                            },
+                            {
+                                "id": "tsirelson_edge",
+                                "correlations": [
+                                    0.7071067811865476,
+                                    0.7071067811865476,
+                                    0.7071067811865476,
+                                    -0.7071067811865476,
+                                ],
+                                "expected_abs_s": 2.8284271247461903,
+                                "expected_status": "survives",
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_bounded_correlation_status_mismatch"})
+
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(
             {
@@ -2987,7 +3067,7 @@ class TheoryVerifierTests(unittest.TestCase):
                                 "status": "underdetermined",
                                 "blocking_obstructions": [
                                     "extend_context_product_exhaustion_to_carrier_theorem",
-                                    "derive_purification_or_filtering_from_idt",
+                                    "extend_purification_filtering_to_carrier_theorem",
                                     "exclude_noncomplex_jordan_carriers",
                                 ],
                             },
@@ -2996,7 +3076,8 @@ class TheoryVerifierTests(unittest.TestCase):
                                 "status": "underdetermined",
                                 "blocking_obstructions": [
                                     "extend_context_product_exhaustion_to_carrier_theorem",
-                                    "derive_bounded_correlation_from_idt",
+                                    "extend_purification_filtering_to_carrier_theorem",
+                                    "extend_bounded_correlation_to_carrier_theorem",
                                     "exclude_generic_gpt_cones",
                                 ],
                             },
