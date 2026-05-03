@@ -182,6 +182,17 @@ MEASUREMENT_FACTICITY_ROUTE_CONDITIONS = (
     "stable_record_facticity",
 )
 
+CONTINUUM_ACTION_FRONTIER_REQUIREMENTS = (
+    "finite_generator_reconstruction",
+    "finite_translation_relation",
+    "finite_weyl_relation",
+    "strong_continuity_modulus",
+    "generator_difference_convergence",
+    "calibrated_action_holdout",
+    "first_principles_hbar_lock",
+    "field_mode_limit",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
@@ -5627,6 +5638,70 @@ def check_qm_core_recompile_route_gate(gate: FiniteGate) -> list[Issue]:
                     f"{gate.identifier}: expected {expected_finite_gate_reference_count} finite gate refs, "
                     f"got {finite_gate_reference_count}"
                 ),
+            )
+        ]
+    return []
+
+
+def check_continuum_action_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    requirements = require_string_tuple(gate.payload.get("requirements", []), f"{gate.identifier}.requirements")
+    if set(requirements) != set(CONTINUUM_ACTION_FRONTIER_REQUIREMENTS):
+        return [
+            Issue(
+                "continuum_action_frontier_requirements_mismatch",
+                f"{gate.identifier}: requirements must match the continuum/action frontier set",
+            )
+        ]
+    components = require_list(gate.payload.get("components"), f"{gate.identifier}.components")
+    if len(components) != len(requirements):
+        raise ManifestError(f"{gate.identifier}: components must cover every continuum/action frontier requirement")
+    status_by_requirement: dict[str, str] = {}
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate.identifier}.components[{index}]")
+        requirement = require_string(component.get("requirement"), f"{gate.identifier}.components[{index}].requirement")
+        status = require_string(component.get("status"), f"{gate.identifier}.components[{index}].status")
+        if requirement not in CONTINUUM_ACTION_FRONTIER_REQUIREMENTS:
+            return [
+                Issue(
+                    "continuum_action_frontier_unknown_requirement",
+                    f"{gate.identifier}: unknown requirement {requirement}",
+                )
+            ]
+        if status not in {"supported", "blocked", "open"}:
+            raise ManifestError(f"{gate.identifier}: component {requirement} has unknown status {status!r}")
+        if requirement in status_by_requirement:
+            return [
+                Issue(
+                    "continuum_action_frontier_duplicate_requirement",
+                    f"{gate.identifier}: duplicate requirement {requirement}",
+                )
+            ]
+        status_by_requirement[requirement] = status
+    missing = sorted(set(requirements) - set(status_by_requirement))
+    if missing:
+        return [
+            Issue(
+                "continuum_action_frontier_component_missing",
+                f"{gate.identifier}: missing components: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_extension_status"), f"{gate.identifier}.expected_extension_status")
+    if expected_status not in {"blocked", "finite_supported", "derived"}:
+        raise ManifestError(f"{gate.identifier}: expected_extension_status is unknown")
+    has_blocked = any(status == "blocked" for status in status_by_requirement.values())
+    has_open = any(status == "open" for status in status_by_requirement.values())
+    if has_blocked:
+        computed_status = "blocked"
+    elif has_open:
+        computed_status = "finite_supported"
+    else:
+        computed_status = "derived"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "continuum_action_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
     return []
@@ -12690,6 +12765,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "born_quadratic_readout_route": check_born_quadratic_readout_route_gate,
     "tensor_composition_route": check_tensor_composition_route_gate,
     "qm_core_recompile_route": check_qm_core_recompile_route_gate,
+    "continuum_action_frontier": check_continuum_action_frontier_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "triple_path_sorkin_parameter": check_triple_path_sorkin_parameter_gate,

@@ -138,6 +138,16 @@ It records the shared six-operation core, the required finite route gates, the
 six universal kernels, the 35 covered experiments, and the 35 finite gate
 references. This turns the old bench summary into an explicit manifest contract.
 
+The continuum/action-scale frontier is now executable as:
+
+`continuum_action_frontier_demo`.
+
+It confirms that finite generator reconstruction, translation relation, Weyl
+relation, strong-continuity modulus, generator-difference convergence, and the
+calibrated action holdout are supported. It keeps the full extension blocked
+because first-principles `hbar_I` remains blocked and field-mode limits remain
+open.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -443,6 +453,10 @@ Status:
 Status:
 
 `qm_core_recompile_route_executable`
+
+Status:
+
+`continuum_action_frontier_executable`
 
 Status:
 

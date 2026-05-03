@@ -12,6 +12,7 @@ from theory_verifier.core import (
     BORN_READOUT_ROUTE_CONDITIONS,
     CLOCK_VACUUM_POLE_REQUIRED_SYMBOLS,
     CLOCK_VACUUM_POLE_TARGET,
+    CONTINUUM_ACTION_FRONTIER_REQUIREMENTS,
     CROSS_UPDATE_CONTRACTION_SELECTION_REQUIRED_SYMBOLS,
     CROSS_UPDATE_CONTRACTION_SELECTION_TARGET,
     ELL0_EMERGENCE_CLEARANCE_REQUIRED_SYMBOLS,
@@ -3248,6 +3249,36 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"qm_core_recompile_routes_mismatch"})
+
+    def test_continuum_action_frontier_rejects_premature_extension(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_continuum_action_frontier",
+                        "type": "continuum_action_frontier",
+                        "requirements": list(CONTINUUM_ACTION_FRONTIER_REQUIREMENTS),
+                        "components": [
+                            {"requirement": "finite_generator_reconstruction", "status": "supported"},
+                            {"requirement": "finite_translation_relation", "status": "supported"},
+                            {"requirement": "finite_weyl_relation", "status": "supported"},
+                            {"requirement": "strong_continuity_modulus", "status": "supported"},
+                            {"requirement": "generator_difference_convergence", "status": "supported"},
+                            {"requirement": "calibrated_action_holdout", "status": "supported"},
+                            {"requirement": "first_principles_hbar_lock", "status": "blocked"},
+                            {"requirement": "field_mode_limit", "status": "open"},
+                        ],
+                        "expected_extension_status": "derived",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"continuum_action_frontier_status_mismatch"})
 
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(

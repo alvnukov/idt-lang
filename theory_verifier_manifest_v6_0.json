@@ -2863,10 +2863,11 @@
       "evidence_refs": [
         "hbar_I",
         "phase_action_anchor_pattern",
-        "hbar_known_gate_holdout_demo"
+        "hbar_known_gate_holdout_demo",
+        "continuum_action_frontier_demo"
       ],
-      "open_gap": "The finite core does not derive infinite-dimensional limits, Schrödinger dynamics, field modes, or first-principles hbar.",
-      "claim_boundary": "This is outside the finite-core proof and must stay blocked while hbar_I and continuum construction remain open."
+      "open_gap": "Finite generator, translation, Weyl, continuity, and calibrated action checks exist, but first-principles hbar and field-mode limits remain blocked/open.",
+      "claim_boundary": "The continuum/action frontier is executable; full QM must stay blocked while hbar_I and field-mode construction remain open."
     }
   ],
   "finite_gates": [
@@ -4312,6 +4313,31 @@
       "omega": 1.25,
       "steps": [0.2, 0.1, 0.05],
       "max_error": 1.0e-10
+    },
+    {
+      "id": "continuum_action_frontier_demo",
+      "type": "continuum_action_frontier",
+      "requirements": [
+        "finite_generator_reconstruction",
+        "finite_translation_relation",
+        "finite_weyl_relation",
+        "strong_continuity_modulus",
+        "generator_difference_convergence",
+        "calibrated_action_holdout",
+        "first_principles_hbar_lock",
+        "field_mode_limit"
+      ],
+      "components": [
+        {"requirement": "finite_generator_reconstruction", "status": "supported"},
+        {"requirement": "finite_translation_relation", "status": "supported"},
+        {"requirement": "finite_weyl_relation", "status": "supported"},
+        {"requirement": "strong_continuity_modulus", "status": "supported"},
+        {"requirement": "generator_difference_convergence", "status": "supported"},
+        {"requirement": "calibrated_action_holdout", "status": "supported"},
+        {"requirement": "first_principles_hbar_lock", "status": "blocked"},
+        {"requirement": "field_mode_limit", "status": "open"}
+      ],
+      "expected_extension_status": "blocked"
     },
     {
       "id": "action_standard_provenance_demo",

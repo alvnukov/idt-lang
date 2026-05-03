@@ -626,6 +626,10 @@ disturbance bounds, and recoverability loss thresholds.
 The `qm_core_recompile_route_demo` now turns the 35-experiment bench into an
 explicit finite-core contract: six shared operations, six universal kernels, 35
 experiments, 35 finite gate references, and the required route gates.
+The `continuum_action_frontier_demo` now makes the last full-QM blocker
+executable: finite generator/translation/Weyl/continuity checks and calibrated
+action holdout are supported, while first-principles `hbar_I` and field-mode
+limits still block full closure.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles
