@@ -535,11 +535,25 @@ to the carrier-selection proof route. The route records two finite exclusions:
 1. PR-box-like correlation resource;
 2. boxworld-like GPT carrier.
 
-It still remains `finite_witnessed`, not `formal_proof`, because finite
-CHSH-bound samples must be extended to arbitrary admissible correlation
-resources, the bounded-correlation screen must be forced by IDT invariants,
-and the GPT separator must exclude all non-Hilbert carrier candidates rather
-than only sample families.
+It is now backed by the conditional theorem card:
+
+`bounded_correlation_screen_rejects_superquantum_boxes`.
+
+The executable verifier is:
+
+`bounded_correlation_screen_theorem_demo`.
+
+Under finite context families, single joint-context facticity, normalized
+context amplitudes, no global counterfactual table, stable correlation
+invariants, and declared GPT separator principles, Tsirelson-bounded samples
+survive while superquantum counterexamples are rejected. The theorem records:
+
+1. surviving classical and Tsirelson-edge cases;
+2. rejected PR-box-like and boxworld-like cases.
+
+It is now `conditional_proof`, not `formal_proof`, because the GPT separator
+principles and full bounded-correlation screen are still assumptions of this
+route rather than consequences of the IDT primitives alone.
 
 The fourth lemma route is now executable as:
 

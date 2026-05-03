@@ -146,9 +146,18 @@ The third lemma route is now manifest-backed:
 
 `bounded_correlation_carrier_lemma_route_demo`
 
-It records bounded-correlation conditions, GPT separator principles, finite
-exclusions, expected exclusion count, and remaining generalization gaps for
-the third carrier-selection lemma.
+The third conditional separator theorem is now manifest-backed:
+
+`bounded_correlation_screen_rejects_superquantum_boxes`
+
+Its executable verifier is:
+
+`bounded_correlation_screen_theorem_demo`
+
+It promotes the bounded-correlation route from finite witness to
+`conditional_proof`: under stable-correlation and declared GPT-principle
+assumptions, classical and Tsirelson-edge samples survive, while PR-box-like
+and boxworld-like cases are rejected.
 
 The fourth lemma route is now manifest-backed:
 

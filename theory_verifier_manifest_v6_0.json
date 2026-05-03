@@ -2977,6 +2977,37 @@
       ]
     },
     {
+      "id": "bounded_correlation_screen_rejects_superquantum_boxes",
+      "statement": "For any finite IDT correlation context family, if single joint-context facticity, normalized context amplitudes, no global counterfactual table, stable correlation invariants, and the declared GPT separator principles hold, then Tsirelson-bounded correlation samples survive while PR-box-like and boxworld-like superquantum cases are rejected.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_context_family",
+        "single_joint_context_facticity",
+        "normalized_context_amplitudes",
+        "no_global_counterfactual_table",
+        "stable_correlation_invariant",
+        "declared_gpt_separator_principles"
+      ],
+      "dependencies": [
+        "bounded_correlation_screen_theorem_demo",
+        "idt_bounded_correlation_demo",
+        "gpt_principle_separator_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "bounded_correlation_screen_theorem_demo",
+      "known_failures": [
+        "does not prove universal carrier selection",
+        "does not derive all GPT separator principles from IDT primitives alone"
+      ],
+      "physical_scope": "Finite bounded-correlation separator under declared correlation and GPT-principle assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
@@ -4030,6 +4061,43 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "bounded_correlation_screen_theorem_demo",
+      "type": "bounded_correlation_screen_theorem",
+      "target_theorem_card": "bounded_correlation_screen_rejects_superquantum_boxes",
+      "assumptions": [
+        "finite_context_family",
+        "single_joint_context_facticity",
+        "normalized_context_amplitudes",
+        "no_global_counterfactual_table",
+        "stable_correlation_invariant",
+        "declared_gpt_separator_principles"
+      ],
+      "conclusions": [
+        "tsirelson_bounded_correlation_screen",
+        "pr_box_like_resource_rejection",
+        "boxworld_like_gpt_rejection"
+      ],
+      "evidence_refs": [
+        "idt_bounded_correlation_demo",
+        "gpt_principle_separator_demo"
+      ],
+      "surviving_cases": [
+        "classical_edge",
+        "tsirelson_edge"
+      ],
+      "rejected_cases": [
+        "pr_box_like",
+        "boxworld_like_gpt"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "idt_purification_filtering_demo",
       "type": "idt_purification_filtering",
       "tolerance": 1.0e-10,
@@ -4361,13 +4429,15 @@
         },
         {
           "id": "extend_bounded_correlation_to_carrier_theorem",
-          "status": "finite_witnessed",
+          "status": "conditional_proof",
           "evidence_refs": [
             "bounded_correlation_carrier_lemma_route_demo",
+            "bounded_correlation_screen_rejects_superquantum_boxes",
+            "bounded_correlation_screen_theorem_demo",
             "idt_bounded_correlation_demo",
             "gpt_principle_separator_demo"
           ],
-          "open_gap": "Finite bounded-correlation screen exists, but it is not yet a universal carrier-selection theorem."
+          "open_gap": "Bounded-correlation now has a conditional superquantum-rejection theorem, but it is not a universal carrier-selection theorem."
         },
         {
           "id": "extend_noncomplex_jordan_exclusion_to_classification_theorem",
@@ -4481,17 +4551,21 @@
         "idt_bounded_correlation_demo",
         "gpt_principle_separator_demo"
       ],
+      "conditional_theorem_refs": [
+        "bounded_correlation_screen_rejects_superquantum_boxes",
+        "bounded_correlation_screen_theorem_demo"
+      ],
       "excluded_counterexamples": [
         "pr_box_like",
         "boxworld_like_gpt"
       ],
       "expected_exclusion_count": 2,
       "open_generalization_gaps": [
-        "extend finite CHSH-bound samples to arbitrary admissible correlation resources",
-        "prove the bounded-correlation screen is forced by IDT stable-correlation invariants",
-        "show GPT separator principles jointly exclude all non-Hilbert carrier candidates rather than sample families"
+        "conditional theorem still assumes declared GPT separator principles",
+        "bounded-correlation screen is not yet derived from IDT primitives alone for all admissible resources",
+        "complex Hilbert carrier is not selected from IDT primitives alone"
       ],
-      "expected_lemma_status": "finite_witnessed"
+      "expected_lemma_status": "conditional_proof"
     },
     {
       "id": "noncomplex_jordan_classification_lemma_route_demo",

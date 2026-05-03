@@ -7,6 +7,9 @@ from theory_verifier.core import (
     ACTION_STANDARD_REQUIRED_GATES,
     ACTION_STANDARD_REQUIRED_SYMBOLS,
     ACTION_STANDARD_TARGET,
+    BOUNDED_CORRELATION_THEOREM_ASSUMPTIONS,
+    BOUNDED_CORRELATION_THEOREM_CONCLUSIONS,
+    BOUNDED_CORRELATION_THEOREM_FORBIDDEN_UPGRADES,
     CALIBRATED_QM_REQUIRED_SYMBOLS,
     CALIBRATED_QM_TARGET,
     BORN_READOUT_ROUTE_CONDITIONS,
@@ -3109,6 +3112,41 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"purification_filtering_theorem_status_mismatch"})
 
+    def test_bounded_correlation_theorem_rejects_bad_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_bounded_correlation_theorem",
+                        "type": "bounded_correlation_screen_theorem",
+                        "target_theorem_card": "bounded_correlation_screen_rejects_superquantum_boxes",
+                        "assumptions": list(BOUNDED_CORRELATION_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(BOUNDED_CORRELATION_THEOREM_CONCLUSIONS),
+                        "evidence_refs": [
+                            "idt_bounded_correlation_demo",
+                            "gpt_principle_separator_demo",
+                        ],
+                        "surviving_cases": [
+                            "classical_edge",
+                            "tsirelson_edge",
+                        ],
+                        "rejected_cases": [
+                            "pr_box_like",
+                            "boxworld_like_gpt",
+                        ],
+                        "forbidden_upgrades": list(BOUNDED_CORRELATION_THEOREM_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"bounded_correlation_theorem_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -3716,6 +3754,32 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"purification_filtering_theorem_card_status_mismatch"})
+
+    def test_bounded_correlation_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "bounded_correlation_screen_rejects_superquantum_boxes",
+                        "statement": "conditional separator",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": [],
+                        "proof_status": "formal_proof",
+                        "verifier": "bounded_correlation_screen_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"bounded_correlation_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(
