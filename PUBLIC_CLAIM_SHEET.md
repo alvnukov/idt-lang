@@ -64,6 +64,7 @@ The main current successes are bounded and methodological:
    prediction protocol, failure ledger, compact core, and theorem cards remain
    partial rather than complete. Its evidence references must resolve to real
    manifest objects, schema surfaces, verifier checks, or Markdown sections.
+   Full-QM frontier blockers now have first-class theorem cards.
 
 ## What The Verifier Catches
 
@@ -106,8 +107,9 @@ Current public classification:
 
 The next public milestone is not a stronger slogan.
 
-The immediate language milestone is to promote prediction records, failure
-records, and theorem cards into first-class manifest objects.
+The immediate language milestone is to promote prediction and failure records
+into first-class manifest objects, and then extend theorem cards beyond the
+full-QM frontier.
 
 The next physics milestone remains one pre-registered, non-refitted bridge that
 survives an independent holdout gate. The most promising current route is

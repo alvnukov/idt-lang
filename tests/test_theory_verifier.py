@@ -3312,6 +3312,56 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"full_qm_closure_frontier_status_mismatch"})
 
+    def test_full_qm_frontier_requires_theorem_cards(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "full_qm_frontier_without_cards",
+                        "type": "full_qm_closure_frontier",
+                        "requirements": list(FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS),
+                        "components": [
+                            {"requirement": requirement, "status": "open"}
+                            for requirement in FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS
+                        ],
+                        "expected_full_qm_status": "target",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"full_qm_frontier_theorem_card_missing"})
+
+    def test_theorem_card_rejects_ungrounded_dependency(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "bad_theorem_card",
+                        "statement": "A bad card depends on a missing graph node.",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": ["missing_theorem_dependency"],
+                        "proof_status": "open",
+                        "verifier": "",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"theorem_card_dependency_missing"})
+
     def test_gpt_principle_separator_rejects_bad_candidate_status(self) -> None:
         manifest = parse_manifest(
             {

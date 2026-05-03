@@ -159,6 +159,11 @@ composition, first-principles `hbar_I`, and field-mode continuum limits. The
 gate rejects any premature `derived` status while any listed obligation remains
 blocked or open.
 
+The full-QM frontier blockers are now also represented as first-class theorem
+cards in the manifest. The verifier requires each frontier requirement to have
+a grounded card before the frontier can be treated as an auditable research
+graph.
+
 Status:
 
 `finite_qm_core_route_order_declared`
@@ -472,6 +477,10 @@ Status:
 Status:
 
 `full_qm_closure_frontier_executable`
+
+Status:
+
+`full_qm_frontier_theorem_cards_grounded`
 
 Status:
 

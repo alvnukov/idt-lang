@@ -40,7 +40,7 @@ It tracks seven surfaces:
 | `prediction_protocol` | `partial` | sector gates carry prediction fields, but no first-class prediction object exists |
 | `failure_ledger` | `partial` | useful exclusions exist as gates/prose, but not as a top-level ledger |
 | `minimal_core_kernel` | `partial` | the core is spread across sections 170-172 |
-| `theorem_cards` | `partial` | QM proof obligations exist, but theorem cards are not uniform |
+| `theorem_cards` | `partial` | full-QM closure theorem cards exist, but bridge and gate cards are not uniform |
 
 The contract status is therefore:
 
@@ -64,6 +64,24 @@ point to one of:
 Status:
 
 `idt_metalang_evidence_refs_grounded`
+
+The first first-class theorem-card pass covers the full-QM closure frontier:
+
+1. `universal_carrier_selection_theorem`;
+2. `hilbert_carrier_derivation`;
+3. `universal_born_rule_theorem`;
+4. `wigner_reversible_inheritance_theorem`;
+5. `apparatus_facticity_theorem`;
+6. `monoidal_tensor_composition_theorem`;
+7. `first_principles_hbar_lock`;
+8. `field_mode_continuum_limit`.
+
+These cards do not close QM. They make each remaining blocker explicit,
+typed, grounded, and separately inspectable.
+
+Status:
+
+`full_qm_frontier_theorem_cards_grounded`
 
 ### 173.2. Required IDT-Core Kernel
 

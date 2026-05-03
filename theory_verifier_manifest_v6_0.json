@@ -2871,6 +2871,133 @@
       "claim_boundary": "The full-QM closure frontier is executable; full QM must stay blocked while any required theorem frontier remains blocked or open."
     }
   ],
+  "theorem_cards": [
+    {
+      "id": "universal_carrier_selection_theorem",
+      "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
+      "role": "theorem",
+      "assumptions": ["QM_EXPERIMENT_REQUIRED_PRIMITIVES"],
+      "dependencies": [
+        "carrier_selection_frontier_demo",
+        "generic_gpt_closure_separator_demo",
+        "noncomplex_jordan_separator_demo"
+      ],
+      "proof_status": "open",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["carrier not selected by current finite screens"],
+      "physical_scope": "Full-QM carrier derivation.",
+      "forbidden_claims": ["complex Hilbert carrier derived from IDT"]
+    },
+    {
+      "id": "hilbert_carrier_derivation",
+      "statement": "The complex Hilbert carrier must be derived as the selected carrier, not inserted as the calculation language.",
+      "role": "theorem",
+      "assumptions": ["universal_carrier_selection_theorem"],
+      "dependencies": ["universal_carrier_selection_theorem"],
+      "proof_status": "blocked",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["carrier selection theorem remains open"],
+      "physical_scope": "Full-QM carrier derivation.",
+      "forbidden_claims": ["Hilbert space derived while carrier selection is open"]
+    },
+    {
+      "id": "universal_born_rule_theorem",
+      "statement": "The Born readout must follow universally from the selected carrier, additivity, and facticized readout context.",
+      "role": "theorem",
+      "assumptions": ["hilbert_carrier_derivation"],
+      "dependencies": [
+        "born_quadratic_readout_route_demo",
+        "hilbert_carrier_derivation",
+        "measurement_facticity_route_demo"
+      ],
+      "proof_status": "open",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["finite quadratic route is not a universal Born theorem"],
+      "physical_scope": "Full-QM probability rule derivation.",
+      "forbidden_claims": ["Born rule universally derived from finite route alone"]
+    },
+    {
+      "id": "wigner_reversible_inheritance_theorem",
+      "statement": "Reversible inheritance symmetries must force the allowed unitary or antiunitary context maps.",
+      "role": "theorem",
+      "assumptions": ["hilbert_carrier_derivation"],
+      "dependencies": [
+        "unitary_graph_walk_demo",
+        "one_parameter_unitary_flow_demo",
+        "hilbert_carrier_derivation"
+      ],
+      "proof_status": "open",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["finite unitary gates do not yet prove Wigner inheritance"],
+      "physical_scope": "Full-QM reversible dynamics.",
+      "forbidden_claims": ["unitarity universally derived from finite gate coverage"]
+    },
+    {
+      "id": "apparatus_facticity_theorem",
+      "statement": "Stable measurement records must be derived from apparatus-context dynamics and facticity, not only modeled by finite readout gates.",
+      "role": "theorem",
+      "assumptions": ["measurement_facticity_route_demo"],
+      "dependencies": [
+        "measurement_facticity_route_demo",
+        "pointer_sector_stability_demo",
+        "premeasurement_decoherence_demo",
+        "recoverability_loss_demo"
+      ],
+      "proof_status": "open",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["finite facticity route is not a full apparatus theorem"],
+      "physical_scope": "Full-QM measurement and record formation.",
+      "forbidden_claims": ["measurement problem solved by finite facticity gates alone"]
+    },
+    {
+      "id": "monoidal_tensor_composition_theorem",
+      "statement": "Composite contexts must obey a derived monoidal tensor law rather than a casewise product rule.",
+      "role": "theorem",
+      "assumptions": ["universal_carrier_selection_theorem"],
+      "dependencies": [
+        "tensor_composition_route_demo",
+        "context_product_exhaustion_demo",
+        "idt_local_tomography_derivation_demo"
+      ],
+      "proof_status": "open",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["finite tensor route is not the full monoidal theorem"],
+      "physical_scope": "Full-QM composite systems.",
+      "forbidden_claims": ["tensor product derived from finite route alone"]
+    },
+    {
+      "id": "first_principles_hbar_lock",
+      "statement": "The action scale hbar_I must be derived from IDT primitives rather than imported from observed hbar or a calibrated anchor.",
+      "role": "theorem",
+      "assumptions": ["action_standard_work_time_closure_I"],
+      "dependencies": [
+        "continuum_action_frontier_demo",
+        "hbar_I",
+        "calibrated_hbar_I"
+      ],
+      "proof_status": "blocked",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["hbar_I remains blocked while calibrated_hbar_I is only an anchor"],
+      "physical_scope": "Full-QM action scale.",
+      "forbidden_claims": ["first-principles hbar_I derived from calibrated_hbar_I"]
+    },
+    {
+      "id": "field_mode_continuum_limit",
+      "statement": "Finite context dynamics must extend to field-mode and continuum limits without importing the target QFT structure.",
+      "role": "theorem",
+      "assumptions": ["continuum_action_frontier_demo"],
+      "dependencies": [
+        "continuum_action_frontier_demo",
+        "one_parameter_unitary_flow_demo",
+        "strong_continuity_modulus_demo"
+      ],
+      "proof_status": "open",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": ["finite continuum checks do not yet construct field modes"],
+      "physical_scope": "Full-QM continuum and field-mode extension.",
+      "forbidden_claims": ["field-mode continuum limit derived from finite checks alone"]
+    }
+  ],
   "finite_gates": [
     {
       "id": "gamma_demo_psd",
@@ -5450,9 +5577,12 @@
           "status": "partial",
           "evidence_refs": [
             "qm_core_proof_obligations",
+            "theorem_cards",
+            "theorem_cards.proof_status",
+            "universal_carrier_selection_theorem",
             "full_qm_closure_frontier_demo"
           ],
-          "open_gap": "Theorem obligations exist for QM, but theorem/bridge/gate cards are not yet a uniform machine-readable object."
+          "open_gap": "First-class theorem cards now cover the full-QM closure frontier, but bridge and gate cards are not yet uniform across the whole research graph."
         }
       ],
       "expected_contract_status": "partial"

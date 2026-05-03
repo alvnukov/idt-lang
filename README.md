@@ -62,7 +62,8 @@ Current auditable results:
   implemented, while proof-status, prediction, failure-ledger, compact-core,
   and theorem-card surfaces remain explicitly partial; its evidence references
   are grounded against real manifest objects, schema surfaces, verifier checks,
-  or Markdown sections.
+  or Markdown sections, and full-QM frontier blockers now have first-class
+  theorem cards.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants

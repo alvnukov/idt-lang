@@ -373,11 +373,35 @@ RESEARCH_GRAPH_CONTRACT_SCHEMA_REFS = (
     "derivations.depends_on",
     "qm_core_proof_obligations",
     "qm_core_proof_obligations.status",
+    "theorem_cards",
+    "theorem_cards.proof_status",
 )
 
 RESEARCH_GRAPH_CONTRACT_CHECK_REFS = (
     "derivation graph cycles",
     "forbidden input paths",
+)
+
+THEOREM_CARD_ROLE_VALUES = (
+    "primitive",
+    "definition",
+    "axiom",
+    "bridge",
+    "calibration",
+    "readout",
+    "gate",
+    "prediction",
+    "failure",
+    "theorem",
+)
+
+THEOREM_CARD_PROOF_STATUS_VALUES = (
+    "formal_proof",
+    "finite_verifier_pass",
+    "numerical_evidence",
+    "calibrated_match",
+    "open",
+    "blocked",
 )
 
 SECTOR_ROLE_TAXONOMY_TARGET = "sector_role_taxonomy_I"
@@ -1174,6 +1198,20 @@ class QMCoreProofObligation:
 
 
 @dataclass(frozen=True)
+class TheoremCard:
+    identifier: str
+    statement: str
+    role: str
+    assumptions: tuple[str, ...]
+    dependencies: tuple[str, ...]
+    proof_status: str
+    verifier: str
+    known_failures: tuple[str, ...]
+    physical_scope: str
+    forbidden_claims: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class PhaseActionScaleCycle:
     identifier: str
     role: str
@@ -1200,6 +1238,7 @@ class Manifest:
     qm_experiments: tuple[QMExperimentCoverage, ...]
     qm_universal_patterns: tuple[QMUniversalPattern, ...]
     qm_core_proof_obligations: tuple[QMCoreProofObligation, ...]
+    theorem_cards: tuple[TheoremCard, ...]
 
 
 @dataclass(frozen=True)
@@ -1289,6 +1328,7 @@ def parse_manifest(raw: object) -> Manifest:
     qm_experiments = parse_qm_experiments(root.get("qm_experiments", []))
     qm_universal_patterns = parse_qm_universal_patterns(root.get("qm_universal_patterns", []))
     qm_core_proof_obligations = parse_qm_core_proof_obligations(root.get("qm_core_proof_obligations", []))
+    theorem_cards = parse_theorem_cards(root.get("theorem_cards", []))
     return Manifest(
         symbols=symbols,
         equations=equations,
@@ -1298,6 +1338,7 @@ def parse_manifest(raw: object) -> Manifest:
         qm_experiments=qm_experiments,
         qm_universal_patterns=qm_universal_patterns,
         qm_core_proof_obligations=qm_core_proof_obligations,
+        theorem_cards=theorem_cards,
     )
 
 
@@ -1501,6 +1542,46 @@ def parse_qm_core_proof_obligations(raw: object) -> tuple[QMCoreProofObligation,
     return tuple(obligations)
 
 
+def parse_theorem_cards(raw: object) -> tuple[TheoremCard, ...]:
+    items = require_list(raw, "theorem_cards")
+    cards: list[TheoremCard] = []
+    for index, item in enumerate(items):
+        item_map = require_mapping(item, f"theorem_cards[{index}]")
+        cards.append(
+            TheoremCard(
+                identifier=require_string(item_map.get("id"), f"theorem_cards[{index}].id"),
+                statement=require_string(item_map.get("statement"), f"theorem_cards[{index}].statement"),
+                role=require_string(item_map.get("role"), f"theorem_cards[{index}].role"),
+                assumptions=require_string_tuple(
+                    item_map.get("assumptions", []),
+                    f"theorem_cards[{index}].assumptions",
+                ),
+                dependencies=require_string_tuple(
+                    item_map.get("dependencies", []),
+                    f"theorem_cards[{index}].dependencies",
+                ),
+                proof_status=require_string(
+                    item_map.get("proof_status"),
+                    f"theorem_cards[{index}].proof_status",
+                ),
+                verifier=require_string(item_map.get("verifier"), f"theorem_cards[{index}].verifier"),
+                known_failures=require_string_tuple(
+                    item_map.get("known_failures", []),
+                    f"theorem_cards[{index}].known_failures",
+                ),
+                physical_scope=require_string(
+                    item_map.get("physical_scope"),
+                    f"theorem_cards[{index}].physical_scope",
+                ),
+                forbidden_claims=require_string_tuple(
+                    item_map.get("forbidden_claims", []),
+                    f"theorem_cards[{index}].forbidden_claims",
+                ),
+            )
+        )
+    return tuple(cards)
+
+
 def verify_manifest(manifest: Manifest) -> VerificationReport:
     checks: list[str] = []
     issues: list[Issue] = []
@@ -1531,6 +1612,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_qm_core_proof_obligations(manifest))
     checks.append("QM core proof obligations")
+
+    issues.extend(check_theorem_cards(manifest))
+    checks.append("theorem cards")
 
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
@@ -2251,6 +2335,63 @@ def check_qm_core_proof_obligations(manifest: Manifest) -> list[Issue]:
                 )
             )
 
+    return issues
+
+
+def check_theorem_cards(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    theorem_ids = {card.identifier for card in manifest.theorem_cards}
+    known_refs = research_graph_known_evidence_refs(manifest)
+    seen: set[str] = set()
+
+    for card in manifest.theorem_cards:
+        if card.identifier in seen:
+            issues.append(Issue("theorem_card_duplicate", f"{card.identifier}: duplicate theorem card"))
+        seen.add(card.identifier)
+        if not card.statement.strip():
+            issues.append(Issue("theorem_card_statement_missing", f"{card.identifier}: statement is missing"))
+        if card.role not in THEOREM_CARD_ROLE_VALUES:
+            issues.append(Issue("theorem_card_role_unknown", f"{card.identifier}: unknown role {card.role!r}"))
+        if card.proof_status not in THEOREM_CARD_PROOF_STATUS_VALUES:
+            issues.append(
+                Issue(
+                    "theorem_card_proof_status_unknown",
+                    f"{card.identifier}: unknown proof status {card.proof_status!r}",
+                )
+            )
+        if not card.physical_scope.strip():
+            issues.append(
+                Issue(
+                    "theorem_card_physical_scope_missing",
+                    f"{card.identifier}: physical scope is missing",
+                )
+            )
+        if card.verifier and card.verifier not in known_refs:
+            issues.append(
+                Issue(
+                    "theorem_card_verifier_missing",
+                    f"{card.identifier}: verifier ref {card.verifier!r} is not grounded",
+                )
+            )
+        missing_dependencies = [dependency for dependency in card.dependencies if dependency not in known_refs]
+        if missing_dependencies:
+            issues.append(
+                Issue(
+                    "theorem_card_dependency_missing",
+                    f"{card.identifier}: dependencies are not grounded: {', '.join(missing_dependencies)}",
+                )
+            )
+
+    full_qm_frontiers = [gate for gate in manifest.finite_gates if gate.gate_type == "full_qm_closure_frontier"]
+    if full_qm_frontiers:
+        missing_cards = sorted(set(FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS) - theorem_ids)
+        if missing_cards:
+            issues.append(
+                Issue(
+                    "full_qm_frontier_theorem_card_missing",
+                    f"full-QM frontier requirements without theorem cards: {', '.join(missing_cards)}",
+                )
+            )
     return issues
 
 
@@ -3817,6 +3958,7 @@ def research_graph_known_evidence_refs(manifest: Manifest) -> set[str]:
     refs.update(experiment.identifier for experiment in manifest.qm_experiments)
     refs.update(pattern.identifier for pattern in manifest.qm_universal_patterns)
     refs.update(obligation.identifier for obligation in manifest.qm_core_proof_obligations)
+    refs.update(card.identifier for card in manifest.theorem_cards)
     return refs
 
 

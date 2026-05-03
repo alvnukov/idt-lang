@@ -658,7 +658,8 @@ language-level diagnosis: claim roles and dependency DAG are implemented, while
 proof-status axis, prediction protocol, failure ledger, compact core kernel,
 and theorem cards remain partial rather than complete. Its evidence references
 are grounded against existing manifest objects, schema surfaces, verifier
-checks, or Markdown sections.
+checks, or Markdown sections. The first theorem-card pass now covers the
+full-QM closure frontier blockers as first-class manifest objects.
 
 ---
 
