@@ -357,6 +357,32 @@ NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES = (
     "does_not_close_uniform_witness_bound",
 )
 
+UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS = (
+    "finite_context_signature",
+    "bounded_context_arity",
+    "finite_route_generator_basis",
+    "no_new_primitive_effects_under_route_closure",
+)
+
+UNIFORM_WITNESS_BOUND_ROUTE_CONCLUSIONS = (
+    "uniform_finite_route_witness_bound",
+    "nonfinite_route_families_reduce_to_bounded_generator_witnesses",
+)
+
+UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES = (
+    "context_product_route",
+    "state_effect_route",
+    "recoverable_filter_route",
+    "bounded_correlation_route",
+)
+
+UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_Hilbert_carrier",
+    "does_not_close_nonfinite_gpt_residual_as_formal_proof",
+)
+
 TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -1966,6 +1992,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_no_emergent_joint_only_invariant_theorem_grounding(manifest))
     checks.append("no-emergent joint-only invariant theorem grounding")
 
+    issues.extend(check_uniform_witness_bound_theorem_grounding(manifest))
+    checks.append("uniform witness-bound theorem grounding")
+
     issues.extend(check_born_readout_theorem_grounding(manifest))
     checks.append("Born readout theorem grounding")
 
@@ -3342,6 +3371,62 @@ def check_no_emergent_joint_only_invariant_theorem_grounding(manifest: Manifest)
             Issue(
                 "no_emergent_joint_only_invariant_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing no-emergence forbidden upgrades",
+            )
+        )
+    return issues
+
+
+def check_uniform_witness_bound_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("finite_signature_closure_implies_uniform_route_witness_bound")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "uniform_witness_bound_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "uniform_witness_bound_route_demo",
+        "nonfinite_gpt_residual_frontier_demo",
+        "finite_route_coverage_reduces_broader_generic_gpt_cone",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "uniform_witness_bound_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "uniform_witness_bound_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    if not set(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS).issubset(set(theorem_card.assumptions)):
+        issues.append(
+            Issue(
+                "uniform_witness_bound_theorem_card_assumption_missing",
+                f"{theorem_card.identifier}: missing uniform witness-bound assumptions",
+            )
+        )
+    if not set(UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES).issubset(set(theorem_card.forbidden_claims)):
+        issues.append(
+            Issue(
+                "uniform_witness_bound_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing uniform witness-bound forbidden upgrades",
             )
         )
     return issues
@@ -7401,6 +7486,115 @@ def check_no_emergent_joint_only_invariant_route_gate(gate: FiniteGate) -> list[
             Issue(
                 "no_emergent_joint_only_invariant_route_status_mismatch",
                 f"{gate.identifier}: no-emergence route must remain conditional_proof",
+            )
+        ]
+    return []
+
+
+def check_uniform_witness_bound_route_gate(gate: FiniteGate) -> list[Issue]:
+    target_obligation = require_string(gate.payload.get("target_obligation"), f"{gate.identifier}.target_obligation")
+    if target_obligation != "idt_derivation_of_uniform_witness_bound":
+        return [
+            Issue(
+                "uniform_witness_bound_route_target_mismatch",
+                f"{gate.identifier}: target obligation must be idt_derivation_of_uniform_witness_bound",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS):
+        return [
+            Issue(
+                "uniform_witness_bound_route_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the uniform witness-bound route boundary",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(UNIFORM_WITNESS_BOUND_ROUTE_CONCLUSIONS):
+        return [
+            Issue(
+                "uniform_witness_bound_route_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must only establish a conditional uniform witness bound",
+            )
+        ]
+
+    uniform_bound = parse_positive_integer(gate.payload.get("uniform_bound"), f"{gate.identifier}.uniform_bound")
+    route_families = require_list(gate.payload.get("route_families"), f"{gate.identifier}.route_families")
+    if len(route_families) != len(UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES):
+        raise ManifestError(f"{gate.identifier}: route_families must cover every uniform witness-bound route family")
+
+    seen: set[str] = set()
+    for index, item in enumerate(route_families):
+        family = require_mapping(item, f"{gate.identifier}.route_families[{index}]")
+        family_id = require_string(family.get("id"), f"{gate.identifier}.route_families[{index}].id")
+        witness_bound = parse_positive_integer(
+            family.get("witness_bound"),
+            f"{gate.identifier}.route_families[{index}].witness_bound",
+        )
+        evidence_refs = require_string_tuple(
+            family.get("evidence_refs", []),
+            f"{gate.identifier}.route_families[{index}].evidence_refs",
+        )
+        expected_within_bound = parse_bool(
+            family.get("expected_within_bound"),
+            f"{gate.identifier}.route_families[{index}].expected_within_bound",
+        )
+        if family_id not in UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES:
+            return [
+                Issue(
+                    "uniform_witness_bound_route_unknown_family",
+                    f"{gate.identifier}: unknown route family {family_id}",
+                )
+            ]
+        if family_id in seen:
+            return [
+                Issue(
+                    "uniform_witness_bound_route_duplicate_family",
+                    f"{gate.identifier}: duplicate route family {family_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "uniform_witness_bound_route_evidence_missing",
+                    f"{gate.identifier}: route family {family_id} must cite evidence",
+                )
+            ]
+        computed_within_bound = witness_bound <= uniform_bound
+        if computed_within_bound != expected_within_bound:
+            return [
+                Issue(
+                    "uniform_witness_bound_route_family_status_mismatch",
+                    f"{gate.identifier}: route family {family_id} expected within_bound={expected_within_bound}, computed {computed_within_bound}",
+                )
+            ]
+        seen.add(family_id)
+
+    missing = sorted(set(UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES) - seen)
+    if missing:
+        return [
+            Issue(
+                "uniform_witness_bound_route_family_missing",
+                f"{gate.identifier}: missing route families: {', '.join(missing)}",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "uniform_witness_bound_route_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the residual boundary",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_obligation_status"), f"{gate.identifier}.expected_obligation_status")
+    if expected_status != "conditional_proof":
+        return [
+            Issue(
+                "uniform_witness_bound_route_status_mismatch",
+                f"{gate.identifier}: uniform witness-bound route must remain conditional_proof",
             )
         ]
     return []
@@ -16150,6 +16344,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "nonfinite_gpt_residual_compactness": check_nonfinite_gpt_residual_compactness_gate,
     "nonfinite_gpt_residual_frontier": check_nonfinite_gpt_residual_frontier_gate,
     "no_emergent_joint_only_invariant_route": check_no_emergent_joint_only_invariant_route_gate,
+    "uniform_witness_bound_route": check_uniform_witness_bound_route_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

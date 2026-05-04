@@ -514,12 +514,22 @@ The residual is now decomposed by:
 
 `nonfinite_gpt_residual_frontier_demo`.
 
-It records one conditional route and two still-open IDT derivations:
+It records three conditional routes:
 
 1. `uniform_route_witness_compactness`, backed by
    `uniform_route_witness_compactness_closes_nonfinite_gpt_residual`;
 2. `idt_derivation_of_uniform_witness_bound`;
 3. `idt_derivation_of_no_emergent_joint_only_invariants`.
+
+The second item is now reduced to:
+
+`finite_signature_closure_implies_uniform_route_witness_bound`.
+
+It says that a finite context signature, bounded context arity, finite route
+generator basis, and no new primitive effects under route closure give a
+uniform finite witness bound for the registered route families. This is still
+conditional: those grammar/closure assumptions are not yet formal IDT
+derivations.
 
 The third item is now reduced to a conditional separator:
 
@@ -534,8 +544,8 @@ fixture remains the concrete rejected witness for this failure mode.
 The compactness route says that a uniform finite witness bound, preservation of
 facticized readout separation under limits, and exclusion of emergent
 joint-only invariants would reduce the residual back to the finite
-route-covered screen. Those assumptions are not yet derived from IDT
-primitives, so this is a real blocker rather than a closed theorem.
+route-covered screen. The frontier still remains `open` because these are
+conditional routes, not formal derivations from IDT primitives.
 
 This is the current reason `universal_carrier_selection_theorem` cannot be
 upgraded to `conditional_proof` or `formal_proof`.

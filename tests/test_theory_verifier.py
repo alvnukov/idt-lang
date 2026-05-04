@@ -40,6 +40,10 @@ from theory_verifier.core import (
     NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS,
     NO_EMERGENT_JOINT_ONLY_INVARIANT_CONCLUSIONS,
     NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES,
+    UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS,
+    UNIFORM_WITNESS_BOUND_ROUTE_CONCLUSIONS,
+    UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES,
+    UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES,
     GENERIC_GPT_THEOREM_ASSUMPTIONS,
     GENERIC_GPT_THEOREM_CONCLUSIONS,
     GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
@@ -3594,6 +3598,72 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"no_emergent_joint_only_invariant_route_status_mismatch"})
 
+    def test_uniform_witness_bound_route_rejects_too_small_bound(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_uniform_witness_bound_route",
+                        "type": "uniform_witness_bound_route",
+                        "target_obligation": "idt_derivation_of_uniform_witness_bound",
+                        "assumptions": list(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS),
+                        "conclusions": list(UNIFORM_WITNESS_BOUND_ROUTE_CONCLUSIONS),
+                        "uniform_bound": 3,
+                        "route_families": [
+                            {
+                                "id": family,
+                                "witness_bound": 4 if index == 0 else 3,
+                                "evidence_refs": ["broader_generic_gpt_cone_frontier_demo"],
+                                "expected_within_bound": True,
+                            }
+                            for index, family in enumerate(UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES)
+                        ],
+                        "forbidden_upgrades": list(UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES),
+                        "expected_obligation_status": "conditional_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"uniform_witness_bound_route_family_status_mismatch"})
+
+    def test_uniform_witness_bound_route_rejects_formal_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_uniform_witness_bound_status",
+                        "type": "uniform_witness_bound_route",
+                        "target_obligation": "idt_derivation_of_uniform_witness_bound",
+                        "assumptions": list(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS),
+                        "conclusions": list(UNIFORM_WITNESS_BOUND_ROUTE_CONCLUSIONS),
+                        "uniform_bound": 4,
+                        "route_families": [
+                            {
+                                "id": family,
+                                "witness_bound": 4,
+                                "evidence_refs": ["broader_generic_gpt_cone_frontier_demo"],
+                                "expected_within_bound": True,
+                            }
+                            for family in UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES
+                        ],
+                        "forbidden_upgrades": list(UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES),
+                        "expected_obligation_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"uniform_witness_bound_route_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -4585,6 +4655,36 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"no_emergent_joint_only_invariant_theorem_card_status_mismatch"})
+
+    def test_uniform_witness_bound_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "finite_signature_closure_implies_uniform_route_witness_bound",
+                        "statement": "finite signature closure implies a uniform witness bound",
+                        "role": "theorem",
+                        "assumptions": list(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS),
+                        "dependencies": [
+                            "uniform_witness_bound_route_demo",
+                            "nonfinite_gpt_residual_frontier_demo",
+                            "finite_route_coverage_reduces_broader_generic_gpt_cone",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "uniform_witness_bound_route_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"uniform_witness_bound_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(
