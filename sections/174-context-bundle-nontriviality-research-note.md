@@ -13880,3 +13880,104 @@ does_not_derive_tensor_composition
 does_not_derive_hbar_I
 does_not_treat_route_draft_as_formal_proof
 ```
+
+### 174.276. Hilbert/Born/Unitary/Tensor Inevitability Route
+
+The four target QM structures were tested together:
+
+```text
+Hilbert-like representation
+Born-like readout
+Unitary-like reversible dynamics
+Tensor-like composite structure
+```
+
+Machine-readable route draft:
+
+```text
+Proofs/QMClosure/QMInevitabilityRouteDraft.json
+```
+
+Executable validator:
+
+```text
+script = scripts/evaluate_qm_inevitability_route.py
+verdict = CONDITIONAL_INEVITABILITY_ROUTE_VALIDATED
+proof_status = OPEN_PRIMITIVE_CLAUSE_PROOFS_MISSING
+cgsc_route_draft = ROUTE_DRAFT_VALIDATED
+full_qm_closure = PROOF_ARTIFACTS_MISSING
+targets = 4
+conditional_targets = 4
+open_targets = 0
+failed_targets = 0
+imported_targets = 0
+missing_clause_proofs = 20
+missing_proof_artifacts = 20
+draft_checks_failed = 0
+```
+
+Per-target status:
+
+```text
+hilbert_representation:
+  route = CONDITIONAL_REPRESENTATION_ROUTE
+  missing_clause_proofs = 6
+  missing_artifacts = 6
+
+born_readout:
+  route = CONDITIONAL_BORN_ROUTE
+  missing_clause_proofs = 5
+  missing_artifacts = 4
+
+unitary_dynamics:
+  route = CONDITIONAL_DYNAMICS_ROUTE
+  missing_clause_proofs = 4
+  missing_artifacts = 5
+
+tensor_composition:
+  route = CONDITIONAL_COMPOSITE_ROUTE
+  missing_clause_proofs = 5
+  missing_artifacts = 5
+```
+
+Interpretation:
+
+```text
+All four target structures now have validated conditional non-imported routes.
+No target route imports Hilbert, Born, unitary dynamics, or tensor composition.
+
+But inevitability is not proved.
+The route is open because the CGSC clauses are candidate clauses, not formal
+theorems from primitives, and the full-QM proof obligations are not registered
+as machine-checkable proof artifacts.
+```
+
+This is the current exact blocker:
+
+```text
+primitives
+=> CGSC clauses
+=> target proof obligations
+=> Hilbert/Born/unitary/tensor
+```
+
+The last two arrows are now organized as a validated conditional route. The
+first arrow is still the real proof problem.
+
+Next broad step:
+
+```text
+derive or refute the seven CGSC clauses from the primitive base as one package.
+```
+
+Forbidden upgrade:
+
+```text
+does_not_prove_full_QM_I
+does_not_derive_Hilbert_space_as_formal_proof
+does_not_derive_Born_rule_as_formal_proof
+does_not_derive_unitary_dynamics_as_formal_proof
+does_not_derive_tensor_composition_as_formal_proof
+does_not_derive_hbar_I
+does_not_treat_conditional_inevitability_route_as_proof
+```

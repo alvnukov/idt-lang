@@ -1,0 +1,152 @@
+{
+  "artifact_id": "qm_inevitability_route_draft",
+  "artifact_status": "route_draft_not_formal_proof",
+  "theorem_card": {
+    "id": "hilbert_born_unitary_tensor_follow_from_primitives_route",
+    "statement": "Hilbert representation, Born readout, unitary dynamics, and tensor/composite structure follow from IDT primitives only if context-generated stable closure clauses are proved from the primitive base and the existing conditional route obligations become machine-checkable proof artifacts.",
+    "role": "full_qm_inevitability_route",
+    "proof_status": "open",
+    "verifier": "scripts/evaluate_qm_inevitability_route.py",
+    "dependencies": [
+      "Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json",
+      "scripts/evaluate_context_generated_stable_closure_route_draft.py",
+      "scripts/evaluate_full_qm_proof_attempt.py",
+      "scripts/evaluate_full_qm_proof_closure.py",
+      "scripts/evaluate_representation_classification_attempt.py",
+      "scripts/evaluate_born_readout_attempt.py",
+      "scripts/evaluate_unitary_dynamics_attempt.py",
+      "scripts/evaluate_general_composite_attempt.py",
+      "sections/01-primitives.md"
+    ],
+    "assumptions": [
+      "finite_generation",
+      "facticizable_separation",
+      "exposed_context_decomposition",
+      "reversible_route_closure",
+      "coherent_refinement_flow",
+      "composite_route_generation",
+      "import_boundary"
+    ],
+    "known_failures": [
+      "context_generated_stable_closure_clauses_not_proved_from_primitives",
+      "full_qm_proof_closure_remains_proof_artifacts_missing",
+      "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
+      "physical_hbar_I_not_derived"
+    ],
+    "physical_scope": "mathematical QM structure route only; physical action scale remains calibrated or separately blocked",
+    "forbidden_claims": [
+      "does_not_prove_full_QM_I",
+      "does_not_derive_Hilbert_space_as_formal_proof",
+      "does_not_derive_Born_rule_as_formal_proof",
+      "does_not_derive_unitary_dynamics_as_formal_proof",
+      "does_not_derive_tensor_composition_as_formal_proof",
+      "does_not_derive_hbar_I",
+      "does_not_import_Hilbert_Born_unitary_tensor_or_Stone",
+      "does_not_treat_route_draft_as_formal_proof"
+    ]
+  },
+  "proof_route": {
+    "id": "qm_inevitability_proof_route",
+    "target_theorem": "hilbert_born_unitary_tensor_follow_from_primitives_route",
+    "expected_route_status": "open",
+    "primitive_route": "context_generated_stable_closure_proof_route",
+    "targets": [
+      {
+        "id": "hilbert_representation",
+        "structure": "Hilbert-like representation",
+        "expected_live_route": "CONDITIONAL_REPRESENTATION_ROUTE",
+        "expected_status": "conditional_route_ready",
+        "route_script": "scripts/evaluate_representation_classification_attempt.py",
+        "required_clauses": [
+          "finite_generation",
+          "facticizable_separation",
+          "exposed_context_decomposition",
+          "reversible_route_closure",
+          "composite_route_generation",
+          "import_boundary"
+        ],
+        "proof_obligations": [
+          "finite_projection_determinacy",
+          "projective_consistency",
+          "nonunital_stable_distinguishability",
+          "spectral_decomposition",
+          "rich_d_cl_reversible_symmetry",
+          "local_tomography"
+        ],
+        "open_gap": "Representation route is conditional until required clauses and proof obligations are machine-checked."
+      },
+      {
+        "id": "born_readout",
+        "structure": "Born-like readout",
+        "expected_live_route": "CONDITIONAL_BORN_ROUTE",
+        "expected_status": "conditional_route_ready",
+        "route_script": "scripts/evaluate_born_readout_attempt.py",
+        "required_clauses": [
+          "finite_generation",
+          "facticizable_separation",
+          "exposed_context_decomposition",
+          "coherent_refinement_flow",
+          "import_boundary"
+        ],
+        "proof_obligations": [
+          "context_normalization",
+          "exclusivity_additivity",
+          "coarse_graining_consistency",
+          "operational_equivalence_probability"
+        ],
+        "open_gap": "Born route is conditional until finite readout obligations are derived from primitives rather than supplied as readout assumptions."
+      },
+      {
+        "id": "unitary_dynamics",
+        "structure": "Unitary-like reversible dynamics",
+        "expected_live_route": "CONDITIONAL_DYNAMICS_ROUTE",
+        "expected_status": "conditional_route_ready",
+        "route_script": "scripts/evaluate_unitary_dynamics_attempt.py",
+        "required_clauses": [
+          "exposed_context_decomposition",
+          "reversible_route_closure",
+          "coherent_refinement_flow",
+          "import_boundary"
+        ],
+        "proof_obligations": [
+          "d_cl_automorphism_dynamics",
+          "overlap_preservation_dynamics",
+          "projective_action",
+          "continuous_inheritance_family",
+          "generator_closure"
+        ],
+        "open_gap": "Unitary route is conditional until reversible route closure, continuity, and generator closure are proved without Wigner/Stone/unitary imports."
+      },
+      {
+        "id": "tensor_composition",
+        "structure": "Tensor-like composite structure",
+        "expected_live_route": "CONDITIONAL_COMPOSITE_ROUTE",
+        "expected_status": "conditional_route_ready",
+        "route_script": "scripts/evaluate_general_composite_attempt.py",
+        "required_clauses": [
+          "finite_generation",
+          "facticizable_separation",
+          "coherent_refinement_flow",
+          "composite_route_generation",
+          "import_boundary"
+        ],
+        "proof_obligations": [
+          "product_context_exhaustion",
+          "local_tomography",
+          "monoidal_associativity",
+          "entanglement_closure",
+          "projective_limit_consistency"
+        ],
+        "open_gap": "Tensor/composite route is conditional until product contexts, monoidal coherence, entanglement closure, and projective limits are proved without Hilbert tensor import."
+      }
+    ],
+    "negative_controls": [
+      "complex_hilbert_representation_assumed",
+      "born_rule_assumed",
+      "unitary_evolution_assumed",
+      "hilbert_tensor_product_assumed",
+      "stone_theorem",
+      "spectral_theorem"
+    ]
+  }
+}
