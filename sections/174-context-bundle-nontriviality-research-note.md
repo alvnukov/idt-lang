@@ -13090,3 +13090,192 @@ conditional proof artifact without importing Hilbert tensor products.
 
 If it fails, the composite route needs a deeper primitive for context-product
 coherence.
+
+### 174.268. Monoidal Bridge Theorem Draft
+
+The monoidal associativity scaffold has been strengthened.
+
+New Lean theorem:
+
+```text
+encoded_context_product_assoc_up_to_operational_equivalence
+product_context_expr_assoc_up_to_flatten
+```
+
+Artifact:
+
+```text
+Proofs/QMClosure/MonoidalAssociativityDraft.lean
+```
+
+Statement shape:
+
+```text
+Given any context product with a finite encoding such that
+
+  encode(product(a,b)) = encode(a) ++ encode(b),
+
+then product is associative up to operational equivalence induced by the
+encoding.
+```
+
+This is stronger than the original list-only scaffold:
+
+```text
+old:
+  list append is associative
+
+new:
+  any append-compatible encoded context product is associative up to encoded
+  operational equivalence
+```
+
+Current proof status:
+
+```text
+conditional_bridge_proof
+```
+
+What is proved:
+
+```text
+append-compatible finite encoding
+=> monoidal associativity up to encoding equivalence
+
+free finite context-product syntax
+=> append-compatible finite flattening
+=> associativity up to flattening equivalence
+```
+
+What remains unproved:
+
+```text
+IDT admissible context product
+=> append-compatible finite encoding
+
+IDT admissible context product
+=> embedding into free finite context-product syntax or an equivalent quotient
+```
+
+This remaining bridge is the actual scientific/mathematical obligation. It
+must be derived from IDT context/product rules, not from Hilbert tensor
+products.
+
+Updated proof-card draft:
+
+```text
+id: monoidal_associativity_encoded_context_product_bridge
+claim_refs:
+  - full_qm_proof_closure.monoidal_associativity
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/MonoidalAssociativityDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/MonoidalAssociativityDraft.lean
+statement: >
+  Any context product admitting an append-compatible finite encoding is
+  associative up to operational equivalence induced by that encoding.
+open_gaps:
+  - prove IDT admissible context products admit append-compatible finite
+    encodings
+  - prove the encoding equivalence matches IDT operational equivalence
+forbidden_upgrades:
+  - does_not_assume_hilbert_tensor_product
+  - does_not_assume_quantum_channel_composition
+  - does_not_upgrade_monoidal_associativity_to_formal_proof
+```
+
+Interpretation:
+
+```text
+The obstruction has moved one level lower.
+The algebraic associativity part is now checkable.
+The remaining problem is deriving the finite product encoding from IDT
+primitives.
+```
+
+Stronger localization after the syntax theorem:
+
+```text
+The algebraic monoidal part is no longer the blocker.
+The blocker is an IDT embedding/coherence theorem:
+
+  admissible_context_product
+  -> ContextProductExpr-like finite syntax
+  -> flattening equivalence matches operational equivalence.
+```
+
+This bridge is not present in the current manifest. Existing executable
+objects cover finite Cartesian product-context exhaustion and local tomography
+separation, but they do not yet prove that every admissible context product has
+the required free-product syntax or quotient coherence.
+
+### 174.269. Finite Context-Product Encoding Witness
+
+Executable finite witness:
+
+```text
+script = scripts/evaluate_context_product_encoding_bridge.py
+verdict = FINITE_CARTESIAN_ENCODING_WITNESS
+gate = context_product_exhaustion_demo
+passed = 2
+failed = 0
+```
+
+The evaluator checks the finite product-context data already present in
+`context_product_exhaustion_demo`.
+
+For each candidate it verifies:
+
+```text
+declared product contexts = left_contexts x right_contexts
+```
+
+Result:
+
+```text
+exhausted_product_readout_composite:
+  left = 2
+  right = 2
+  declared = 4
+  expected = 4
+  PASS
+
+hidden_joint_invariant_composite:
+  left = 2
+  right = 2
+  declared = 4
+  expected = 4
+  PASS
+```
+
+This proves only the finite encoding layer:
+
+```text
+finite Cartesian product-context table
+=> pair/list encoding witness
+```
+
+It does not prove product-context exhaustion for stable invariants. The hidden
+joint candidate still fails the invariant-exhaustion layer even though its
+declared product-context table has a valid finite encoding.
+
+Current monoidal route status:
+
+```text
+finite Cartesian product table
+=> pair/list encoding witness
+=> append-compatible syntax theorem
+=> associativity up to encoding equivalence
+```
+
+Remaining universal gap:
+
+```text
+arbitrary IDT admissible context product
+=> finite Cartesian product table or free-product syntax quotient
+```
+
+Therefore this is not `formal_proof` for `monoidal_associativity`, but it is a
+real finite bridge witness for the current executable context-product gate.
