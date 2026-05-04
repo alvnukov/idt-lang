@@ -3,7 +3,7 @@
   "artifact_status": "semantic_content_wall_not_formal_proof",
   "wall": {
     "id": "cgsc_semantic_content_wall",
-    "expected_verdict": "SEMANTIC_GROUNDING_KERNEL_REGISTERED",
+    "expected_verdict": "SEMANTIC_GROUNDING_TOY_WALL_REGISTERED",
     "proof_status": "blocked",
     "lean_file": "Proofs/QMClosure/CGSCSemanticContentWall.lean",
     "wall_checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
@@ -13,12 +13,18 @@
     "decorative_wall_checker_command": "lake build Proofs.QMClosure.CGSCTypedDecorativeWall",
     "grounded_kernel_file": "Proofs/QMClosure/CGSCGroundedSemanticExtensions.lean",
     "grounded_kernel_checker_command": "lake build Proofs.QMClosure.CGSCGroundedSemanticExtensions",
+    "full_assembly_file": "Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean",
+    "full_assembly_checker_command": "lake build Proofs.QMClosure.FullQMAssemblyFromGroundedSources",
+    "grounded_toy_wall_file": "Proofs/QMClosure/CGSCGroundedToyWall.lean",
+    "grounded_toy_wall_checker_command": "lake build Proofs.QMClosure.CGSCGroundedToyWall",
     "dependencies": [
       "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
       "Proofs/QMClosure/CGSCSemanticContentWall.lean",
       "Proofs/QMClosure/CGSCTypedSemanticExtensions.lean",
       "Proofs/QMClosure/CGSCTypedDecorativeWall.lean",
       "Proofs/QMClosure/CGSCGroundedSemanticExtensions.lean",
+      "Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean",
+      "Proofs/QMClosure/CGSCGroundedToyWall.lean",
       "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "scripts/evaluate_cgsc_semantic_content_wall.py"
     ],
@@ -34,7 +40,9 @@
     "typed_contract": "typed_semantic_extension_base_has_no_vacuity",
     "decorative_wall": "typed_contract_still_admits_decorative_true_extensions",
     "grounded_kernel": "grounded_semantic_extension_base_yields_six_extension_statements",
-    "required_fix": "prove grounded semantic source predicates from B0 or successor primitives before any formal proof upgrade",
+    "full_assembly": "grounded_semantic_sources_yield_full_qm_obligation_bundle",
+    "grounded_toy_wall": "grounded_kernel_admits_toy_full_qm_obligation_bundle",
+    "required_fix": "prove universally scoped grounded semantic source predicates from B0 or successor primitives before any formal proof upgrade",
     "forbidden_claims": [
       "does_not_prove_CGSC",
       "does_not_prove_full_QM_I",

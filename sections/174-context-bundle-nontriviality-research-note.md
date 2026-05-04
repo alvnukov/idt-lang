@@ -14787,3 +14787,74 @@ B0 or successor primitives
 => six CGSC extension statements
 => CGSC package obligations
 ```
+
+### 174.287. Full QM Assembly And Toy-Grounding Wall
+
+The current proof graph can now assemble the whole QM closure bundle from a
+grounded CGSC semantic extension base:
+
+```text
+Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean
+```
+
+Machine-checked theorem:
+
+```text
+grounded_semantic_sources_yield_full_qm_obligation_bundle
+```
+
+This packages all 21 current full-QM closure obligations:
+
+```text
+finite projection / projective consistency / NUSD / gluing / spectrality
+Born-readout normalization / additivity / coarse graining / equivalence
+reversible dynamics / overlap / projective action / continuity / generator
+product exhaustion / local tomography / monoidal associativity / entanglement
+projective limits / physical phase-scale boundary
+```
+
+However, the same pass also found the next wall:
+
+```text
+Proofs/QMClosure/CGSCGroundedToyWall.lean
+```
+
+Machine-checked negative control:
+
+```text
+grounded_kernel_admits_toy_full_qm_obligation_bundle
+```
+
+Meaning:
+
+```text
+grounded source satisfiability:
+  enough to assemble the theorem mechanically;
+  not enough to prove QM.
+
+why:
+  a small Bool/Unit toy source model can satisfy the grounded source shape and
+  produce the full obligation bundle.
+
+therefore:
+  the remaining proof target is not "find any grounded sources";
+  it is "derive universally scoped grounded sources from the primitive base".
+```
+
+The next theorem must quantify over the admissible primitive-generated context
+universe, not over a freely chosen toy source model:
+
+```text
+B0 or successor primitives
+=> universal admissible context/source kernel
+=> grounded semantic sources for all admissible readouts/routes/composites
+=> full QM obligation bundle
+```
+
+So the honest status is:
+
+```text
+full assembly from grounded sources: machine-checked conditional theorem
+toy-grounding wall: machine-checked negative control
+QM from primitives: still open
+```

@@ -301,7 +301,7 @@ def validate_draft(
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
         "cgsc_primitive_derivation_not_closed",
-        "cgsc_grounded_semantic_source_proofs_missing",
+        "cgsc_universal_grounded_semantic_source_proofs_missing",
         "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
@@ -392,7 +392,7 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "prove the grounded semantic source predicates from B0 or successor primitives, "
+            "prove universally scoped grounded semantic source predicates from B0 or successor primitives, "
             "then close CGSC primitive derivation and promote conditional artifacts to formal primitive proofs"
         ),
     )

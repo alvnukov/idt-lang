@@ -9518,6 +9518,94 @@
             "does_not_claim_grounded_sources_are_proved_from_B0",
             "does_not_mark_grounded_kernel_as_CGSC_proof"
           ]
+        },
+        {
+          "id": "full_qm_assembly_from_grounded_sources_conditional_artifact",
+          "statement": "Conditional Lean artifact assembling all 21 current full-QM closure obligations from a GroundedCGSCSemanticExtensionBase. This proves only the assembly theorem from grounded sources; it does not prove those sources from IDT primitives and therefore is not a full_QM_I proof.",
+          "scope": "conditional_full_qm_obligation_bundle_from_grounded_sources",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.FullQMAssemblyFromGroundedSources"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "full_qm_grounded_source_assembly"
+          ],
+          "claim_refs": [
+            "full_qm_assembly.grounded_sources_to_21_obligations",
+            "full_qm_proof_closure.finite_projection_determinacy",
+            "full_qm_proof_closure.projective_consistency",
+            "full_qm_proof_closure.nonunital_stable_distinguishability",
+            "full_qm_proof_closure.conservative_projective_gluing",
+            "full_qm_proof_closure.spectral_decomposition",
+            "full_qm_proof_closure.rich_d_cl_reversible_symmetry",
+            "full_qm_proof_closure.context_normalization",
+            "full_qm_proof_closure.exclusivity_additivity",
+            "full_qm_proof_closure.coarse_graining_consistency",
+            "full_qm_proof_closure.operational_equivalence_probability",
+            "full_qm_proof_closure.d_cl_automorphism_dynamics",
+            "full_qm_proof_closure.overlap_preservation_dynamics",
+            "full_qm_proof_closure.projective_action",
+            "full_qm_proof_closure.continuous_inheritance_family",
+            "full_qm_proof_closure.generator_closure",
+            "full_qm_proof_closure.product_context_exhaustion",
+            "full_qm_proof_closure.local_tomography",
+            "full_qm_proof_closure.monoidal_associativity",
+            "full_qm_proof_closure.entanglement_closure",
+            "full_qm_proof_closure.projective_limit_consistency",
+            "full_qm_proof_closure.physical_phase_scale_boundary"
+          ],
+          "theorem": "IDT.QMClosure.grounded_semantic_sources_yield_full_qm_obligation_bundle",
+          "open_gaps": [
+            "universally scoped grounded semantic source predicates still require proof from B0 or successor primitives",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_grounded_sources_are_proved_from_B0",
+            "does_not_mark_conditional_assembly_as_QM_proof"
+          ]
+        },
+        {
+          "id": "cgsc_grounded_toy_wall_failure_artifact",
+          "statement": "Lean failure-ledger artifact showing that the grounded semantic kernel can still be satisfied by a small Bool/Unit toy source model and mechanically assemble the full-QM obligation bundle. Therefore grounded source satisfiability alone is not a proof of QM; the source kernel must be universally scoped and derived from primitives.",
+          "scope": "failure_ledger_no_toy_grounded_full_qm_upgrade",
+          "proof_kind": "proof_sketch",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCGroundedToyWall.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCGroundedToyWall"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_grounded_toy_wall"
+          ],
+          "claim_refs": [
+            "cgsc_grounded_toy_wall.toy_grounded_bundle_detected"
+          ],
+          "theorem": "IDT.QMClosure.grounded_kernel_admits_toy_full_qm_obligation_bundle",
+          "open_gaps": [
+            "rule out freely chosen toy source models by deriving universally scoped grounded sources from B0 or successor primitives",
+            "this card is a failure-ledger guard, not a full_QM_I proof"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_toy_grounded_sources_as_QM_proof",
+            "does_not_mark_grounded_source_satisfiability_as_primitive_derivation"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

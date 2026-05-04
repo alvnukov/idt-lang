@@ -351,7 +351,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks_failed=draft_failed,
         draft_checks=draft_checks,
         next_blocker=(
-            "prove the grounded semantic source predicates from B0 or successor primitives; "
+            "prove universally scoped grounded semantic source predicates from B0 or successor primitives; "
             "the finite-sector residual is rejected by admissibility, not a substitute for full-QM proof"
         ),
     )
