@@ -383,6 +383,18 @@ UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES = (
     "does_not_close_nonfinite_gpt_residual_as_formal_proof",
 )
 
+UNIFORM_WITNESS_BOUND_ASSUMPTION_FRONTIER_STATUSES = (
+    "open",
+    "conditional_support",
+    "formal_proof",
+)
+
+UNIFORM_WITNESS_BOUND_ASSUMPTION_FRONTIER_RESULTS = (
+    "open",
+    "conditional_basis",
+    "formalized",
+)
+
 TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -7596,6 +7608,97 @@ def check_uniform_witness_bound_route_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "uniform_witness_bound_route_status_mismatch",
                 f"{gate.identifier}: uniform witness-bound route must remain conditional_proof",
+            )
+        ]
+    return []
+
+
+def check_uniform_witness_bound_assumption_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_theorem = require_string(gate.payload.get("target_theorem"), f"{gate.identifier}.target_theorem")
+    if target_theorem != "finite_signature_closure_implies_uniform_route_witness_bound":
+        return [
+            Issue(
+                "uniform_witness_bound_assumption_frontier_target_mismatch",
+                f"{gate.identifier}: target theorem must be finite_signature_closure_implies_uniform_route_witness_bound",
+            )
+        ]
+
+    assumptions = require_list(gate.payload.get("assumptions"), f"{gate.identifier}.assumptions")
+    if len(assumptions) != len(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS):
+        raise ManifestError(f"{gate.identifier}: assumptions must cover every uniform witness-bound route assumption")
+
+    status_by_assumption: dict[str, str] = {}
+    for index, item in enumerate(assumptions):
+        assumption = require_mapping(item, f"{gate.identifier}.assumptions[{index}]")
+        assumption_id = require_string(assumption.get("id"), f"{gate.identifier}.assumptions[{index}].id")
+        status = require_string(assumption.get("status"), f"{gate.identifier}.assumptions[{index}].status")
+        evidence_refs = require_string_tuple(
+            assumption.get("evidence_refs", []),
+            f"{gate.identifier}.assumptions[{index}].evidence_refs",
+        )
+        open_gap = require_string(assumption.get("open_gap", ""), f"{gate.identifier}.assumptions[{index}].open_gap")
+        if assumption_id not in UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS:
+            return [
+                Issue(
+                    "uniform_witness_bound_assumption_frontier_unknown_assumption",
+                    f"{gate.identifier}: unknown assumption {assumption_id}",
+                )
+            ]
+        if status not in UNIFORM_WITNESS_BOUND_ASSUMPTION_FRONTIER_STATUSES:
+            raise ManifestError(f"{gate.identifier}: assumption {assumption_id} has unknown status {status!r}")
+        if assumption_id in status_by_assumption:
+            return [
+                Issue(
+                    "uniform_witness_bound_assumption_frontier_duplicate_assumption",
+                    f"{gate.identifier}: duplicate assumption {assumption_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "uniform_witness_bound_assumption_frontier_evidence_missing",
+                    f"{gate.identifier}: assumption {assumption_id} must cite evidence",
+                )
+            ]
+        if status != "formal_proof" and not open_gap:
+            return [
+                Issue(
+                    "uniform_witness_bound_assumption_frontier_gap_missing",
+                    f"{gate.identifier}: non-formal assumption {assumption_id} must declare an open gap",
+                )
+            ]
+        if status == "formal_proof" and open_gap:
+            return [
+                Issue(
+                    "uniform_witness_bound_assumption_frontier_gap_on_formal_assumption",
+                    f"{gate.identifier}: formal assumption {assumption_id} must not declare an open gap",
+                )
+            ]
+        status_by_assumption[assumption_id] = status
+
+    missing = sorted(set(UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS) - set(status_by_assumption))
+    if missing:
+        return [
+            Issue(
+                "uniform_witness_bound_assumption_frontier_assumption_missing",
+                f"{gate.identifier}: missing assumptions: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_frontier_status"), f"{gate.identifier}.expected_frontier_status")
+    if expected_status not in UNIFORM_WITNESS_BOUND_ASSUMPTION_FRONTIER_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_frontier_status is unknown")
+    if all(status == "formal_proof" for status in status_by_assumption.values()):
+        computed_status = "formalized"
+    elif all(status in {"conditional_support", "formal_proof"} for status in status_by_assumption.values()):
+        computed_status = "conditional_basis"
+    else:
+        computed_status = "open"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "uniform_witness_bound_assumption_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
     return []
@@ -16346,6 +16449,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "nonfinite_gpt_residual_frontier": check_nonfinite_gpt_residual_frontier_gate,
     "no_emergent_joint_only_invariant_route": check_no_emergent_joint_only_invariant_route_gate,
     "uniform_witness_bound_route": check_uniform_witness_bound_route_gate,
+    "uniform_witness_bound_assumption_frontier": check_uniform_witness_bound_assumption_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

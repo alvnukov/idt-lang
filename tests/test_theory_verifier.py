@@ -3693,6 +3693,35 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"uniform_witness_bound_route_status_mismatch"})
 
+    def test_uniform_witness_bound_assumption_frontier_reports_conditional_basis(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "stale_uniform_witness_assumption_frontier",
+                        "type": "uniform_witness_bound_assumption_frontier",
+                        "target_theorem": "finite_signature_closure_implies_uniform_route_witness_bound",
+                        "assumptions": [
+                            {
+                                "id": assumption,
+                                "status": "conditional_support",
+                                "evidence_refs": ["uniform_witness_bound_route_demo"],
+                                "open_gap": "conditional support, not formal proof",
+                            }
+                            for assumption in UNIFORM_WITNESS_BOUND_ROUTE_ASSUMPTIONS
+                        ],
+                        "expected_frontier_status": "open",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"uniform_witness_bound_assumption_frontier_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {

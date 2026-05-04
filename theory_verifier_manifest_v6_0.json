@@ -3209,12 +3209,13 @@
       "dependencies": [
         "uniform_witness_bound_route_demo",
         "nonfinite_gpt_residual_frontier_demo",
-        "finite_route_coverage_reduces_broader_generic_gpt_cone"
+        "finite_route_coverage_reduces_broader_generic_gpt_cone",
+        "uniform_witness_bound_assumption_frontier_demo"
       ],
       "proof_status": "conditional_proof",
       "verifier": "uniform_witness_bound_route_demo",
       "known_failures": [
-        "conditional on finite context signature and bounded arity",
+        "uniform witness-bound assumptions have conditional support, not formal IDT-Core derivations",
         "does not prove the finite signature assumptions from IDT primitives alone",
         "does not close nonfinite GPT residual as a formal proof"
       ],
@@ -4833,6 +4834,54 @@
         "does_not_close_nonfinite_gpt_residual_as_formal_proof"
       ],
       "expected_obligation_status": "conditional_proof"
+    },
+    {
+      "id": "uniform_witness_bound_assumption_frontier_demo",
+      "type": "uniform_witness_bound_assumption_frontier",
+      "target_theorem": "finite_signature_closure_implies_uniform_route_witness_bound",
+      "assumptions": [
+        {
+          "id": "finite_context_signature",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "idt_metalang_research_graph_contract_demo",
+            "sections/173-idt-metalang-research-graph.md",
+            "sections/171-qm-experiment-language-ledger.md"
+          ],
+          "open_gap": "Finite context signature is supported by the current MetaLang graph and QM experiment-language ledger, but it is not yet a compact IDT-Core formal grammar derivation."
+        },
+        {
+          "id": "bounded_context_arity",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "context_product_exhaustion_demo",
+            "tomographic_state_effect_duality_theorem_demo"
+          ],
+          "open_gap": "Bounded arity is witnessed by registered finite route families but not yet derived as a global IDT grammar theorem."
+        },
+        {
+          "id": "finite_route_generator_basis",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "qm_core_recompile_route_demo",
+            "idt_metalang_research_graph_contract_demo"
+          ],
+          "open_gap": "The finite route generator basis is recorded by executable route families but not yet promoted to a formal IDT-Core basis theorem."
+        },
+        {
+          "id": "no_new_primitive_effects_under_route_closure",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "no_emergent_joint_only_invariant_route_demo",
+            "nonfinite_gpt_residual_frontier_demo"
+          ],
+          "open_gap": "No-new-primitive-effects closure is conditionally supported by the residual frontier, but it is not yet a formal closure theorem over the whole IDT grammar."
+        }
+      ],
+      "expected_frontier_status": "conditional_basis"
     },
     {
       "id": "idt_bounded_correlation_demo",

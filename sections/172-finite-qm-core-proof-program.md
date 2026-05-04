@@ -531,6 +531,14 @@ uniform finite witness bound for the registered route families. This is still
 conditional: those grammar/closure assumptions are not yet formal IDT
 derivations.
 
+Those assumptions are now tracked by:
+
+`uniform_witness_bound_assumption_frontier_demo`.
+
+It reports `conditional_basis`: every registered assumption has executable or
+documented support, but none has yet been promoted to a formal IDT-Core grammar
+derivation.
+
 The third item is now reduced to a conditional separator:
 
 `no_emergent_joint_only_invariants_under_context_product_exhaustion`.

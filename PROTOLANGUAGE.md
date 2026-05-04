@@ -667,6 +667,10 @@ The `finite_signature_closure_implies_uniform_route_witness_bound` theorem
 card and `uniform_witness_bound_route_demo` now reduce the uniform-bound
 obstruction to a conditional finite-signature/finite-generator route; it is not
 a formal IDT derivation of the bound.
+The `uniform_witness_bound_assumption_frontier_demo` now makes the remaining
+formalization gap explicit: finite signature, bounded arity, generator basis,
+and no-new-primitive-effects closure are at `conditional_basis`, not
+`formalized`.
 The `no_emergent_joint_only_invariants_under_context_product_exhaustion`
 theorem card and `no_emergent_joint_only_invariant_route_demo` now reduce the
 joint-only-invariant obstruction to a conditional separator under
