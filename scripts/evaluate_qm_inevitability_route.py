@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
+import scripts.evaluate_cgsc_primitive_derivation as cgsc_primitive  # noqa: E402
 import scripts.evaluate_context_generated_stable_closure_route_draft as cgsc_route  # noqa: E402
 import scripts.evaluate_full_qm_proof_closure as proof_closure  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
@@ -78,6 +79,7 @@ class InevitabilityRouteProbe:
     proof_status: ProofStatus
     draft_path: str
     cgsc_route_draft: str
+    cgsc_primitive_derivation: cgsc_primitive.Verdict
     full_qm_closure: proof_closure.ClosureVerdict
     targets: int
     conditional_targets: int
@@ -86,6 +88,7 @@ class InevitabilityRouteProbe:
     imported_targets: int
     missing_clause_proofs: int
     missing_proof_artifacts: int
+    missing_base_extensions: tuple[str, ...]
     draft_checks_passed: int
     draft_checks_failed: int
     target_checks: list[TargetCheck]
@@ -285,6 +288,7 @@ def validate_draft(
     forbidden_claims = string_tuple(theorem_card.get("forbidden_claims"), "theorem_card.forbidden_claims")
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
+        "cgsc_primitive_derivation_not_closed",
         "full_qm_proof_closure_remains_proof_artifacts_missing",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
@@ -319,6 +323,7 @@ def build_probe(
     proof_route = require_mapping(draft.get("proof_route"), "proof_route")
     target_specs = target_specs_from_draft(proof_route)
     cgsc_probe = cgsc_route.build_probe(cgsc_route.DEFAULT_DRAFT, manifest_path)
+    primitive_probe = cgsc_primitive.build_probe()
     closure = proof_closure.build_closure_attempt(manifest_path)
     clause_status_by_id = clause_statuses_from_cgsc_route()
     proof_status_by_id = proof_statuses_from_closure(closure)
@@ -355,6 +360,7 @@ def build_probe(
         proof_status=proof_status,
         draft_path=str(draft_path.relative_to(REPO_ROOT)),
         cgsc_route_draft=cgsc_probe.verdict,
+        cgsc_primitive_derivation=primitive_probe.verdict,
         full_qm_closure=closure.verdict,
         targets=len(target_checks),
         conditional_targets=conditional_targets,
@@ -363,13 +369,14 @@ def build_probe(
         imported_targets=imported_targets,
         missing_clause_proofs=missing_clause_proofs,
         missing_proof_artifacts=missing_proof_artifacts,
+        missing_base_extensions=primitive_probe.missing_base_extensions,
         draft_checks_passed=sum(1 for check in draft_checks if check.passed),
         draft_checks_failed=draft_failed,
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "prove the CGSC clauses from primitives, then promote the required full-QM obligations "
-            "to machine-checkable proof artifacts"
+            "close CGSC primitive derivation, including missing base extensions, then promote the required "
+            "full-QM obligations to machine-checkable proof artifacts"
         ),
     )
 
@@ -392,13 +399,17 @@ def main() -> int:
     print(
         f"qm_inevitability_route={probe.verdict} proof_status={probe.proof_status} "
         f"draft={probe.draft_path} cgsc_route_draft={probe.cgsc_route_draft} "
+        f"cgsc_primitive_derivation={probe.cgsc_primitive_derivation} "
         f"full_qm_closure={probe.full_qm_closure} targets={probe.targets} "
         f"conditional_targets={probe.conditional_targets} open_targets={probe.open_targets} "
         f"failed_targets={probe.failed_targets} imported_targets={probe.imported_targets} "
         f"missing_clause_proofs={probe.missing_clause_proofs} "
         f"missing_proof_artifacts={probe.missing_proof_artifacts} "
+        f"missing_base_extensions={len(probe.missing_base_extensions)} "
         f"draft_checks_failed={probe.draft_checks_failed}"
     )
+    if probe.missing_base_extensions:
+        print(f"MISSING_EXTENSIONS {','.join(probe.missing_base_extensions)}")
     print(f"NEXT {probe.next_blocker}")
     if args.show_targets:
         for target_check in probe.target_checks:

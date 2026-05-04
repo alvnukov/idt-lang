@@ -1,0 +1,93 @@
+{
+  "artifact_id": "cgsc_primitive_derivation_route_draft",
+  "artifact_status": "primitive_derivation_route_draft_not_formal_proof",
+  "theorem_card": {
+    "id": "context_generated_stable_closure_from_primitives_route",
+    "statement": "Context-generated stable closure is not yet derived from the current primitive base. The current B0 candidate supports finite generation and facticizable separation as candidate clauses, grounds the import boundary, and exposes four required base extensions.",
+    "role": "primitive_derivation_route",
+    "proof_status": "open",
+    "verifier": "scripts/evaluate_cgsc_primitive_derivation.py",
+    "dependencies": [
+      "Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json",
+      "scripts/evaluate_context_generated_stable_closure_route_draft.py",
+      "sections/01-primitives.md"
+    ],
+    "known_failures": [
+      "no_clause_formal_from_primitives",
+      "b0_lower_base_primitives_are_candidates",
+      "four_cgsc_clauses_require_base_extensions",
+      "full_qm_inevitability_route_remains_open"
+    ],
+    "physical_scope": "primitive-base derivation route for CGSC only",
+    "forbidden_claims": [
+      "does_not_prove_CGSC",
+      "does_not_prove_full_QM_I",
+      "does_not_derive_Hilbert_space",
+      "does_not_derive_Born_rule",
+      "does_not_derive_unitary_dynamics",
+      "does_not_derive_tensor_composition",
+      "does_not_treat_B0_candidate_support_as_formal_proof"
+    ]
+  },
+  "proof_route": {
+    "id": "cgsc_primitive_derivation_route",
+    "target_theorem": "context_generated_stable_closure_from_primitives_route",
+    "expected_route_status": "open",
+    "expected_probe_verdict": "PRIMITIVE_DERIVATION_NOT_CLOSED",
+    "clauses": [
+      {
+        "id": "finite_generation",
+        "expected_status": "B0_CANDIDATE_SUPPORTED",
+        "missing_base_extensions": []
+      },
+      {
+        "id": "facticizable_separation",
+        "expected_status": "B0_CANDIDATE_SUPPORTED",
+        "missing_base_extensions": []
+      },
+      {
+        "id": "exposed_context_decomposition",
+        "expected_status": "B0_EXTENSION_REQUIRED",
+        "missing_base_extensions": [
+          "complete_exposed_context_partition"
+        ]
+      },
+      {
+        "id": "reversible_route_closure",
+        "expected_status": "B0_EXTENSION_REQUIRED",
+        "missing_base_extensions": [
+          "reversible_context_automorphism_closure"
+        ]
+      },
+      {
+        "id": "coherent_refinement_flow",
+        "expected_status": "B0_EXTENSION_REQUIRED",
+        "missing_base_extensions": [
+          "coherent_refinement_compactness",
+          "generator_bookkeeping_without_stone"
+        ]
+      },
+      {
+        "id": "composite_route_generation",
+        "expected_status": "B0_EXTENSION_REQUIRED",
+        "missing_base_extensions": [
+          "product_context_generation_closure",
+          "no_hidden_joint_only_generation"
+        ]
+      },
+      {
+        "id": "import_boundary",
+        "expected_status": "BOUNDARY_GROUNDED",
+        "missing_base_extensions": []
+      }
+    ],
+    "missing_base_extensions": [
+      "coherent_refinement_compactness",
+      "complete_exposed_context_partition",
+      "generator_bookkeeping_without_stone",
+      "no_hidden_joint_only_generation",
+      "product_context_generation_closure",
+      "reversible_context_automorphism_closure"
+    ]
+  }
+}

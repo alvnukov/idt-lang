@@ -13981,3 +13981,104 @@ does_not_derive_tensor_composition_as_formal_proof
 does_not_derive_hbar_I
 does_not_treat_conditional_inevitability_route_as_proof
 ```
+
+### 174.277. CGSC Primitive-Derivation Broad Probe
+
+The seven CGSC clauses were tested together against the current primitive
+base and the context-first B0 candidate.
+
+Machine-readable route draft:
+
+```text
+Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json
+```
+
+Executable validator:
+
+```text
+script = scripts/evaluate_cgsc_primitive_derivation.py
+verdict = PRIMITIVE_DERIVATION_NOT_CLOSED
+cgsc_route_draft = ROUTE_DRAFT_VALIDATED
+clauses = 7
+formal = 0
+candidate_supported = 2
+extension_required = 4
+boundary_grounded = 1
+import_rejected = 0
+missing_base_extensions = 6
+route_draft_checks_failed = 0
+```
+
+Clause status:
+
+```text
+B0_CANDIDATE_SUPPORTED:
+  finite_generation
+  facticizable_separation
+
+B0_EXTENSION_REQUIRED:
+  exposed_context_decomposition
+  reversible_route_closure
+  coherent_refinement_flow
+  composite_route_generation
+
+BOUNDARY_GROUNDED:
+  import_boundary
+```
+
+Missing base extensions:
+
+```text
+complete_exposed_context_partition
+reversible_context_automorphism_closure
+coherent_refinement_compactness
+generator_bookkeeping_without_stone
+product_context_generation_closure
+no_hidden_joint_only_generation
+```
+
+The broad route now reads:
+
+```text
+current v6 core:
+  useful executable scaffold, not enough for CGSC proof
+
+B0 context-first candidate:
+  supports finite generation and facticizable separation as candidate clauses
+  grounds import boundary
+  lacks four closure mechanisms needed by the remaining clauses
+
+CGSC:
+  not derived from primitives yet
+```
+
+This updates the QM inevitability route:
+
+```text
+qm_inevitability_route = CONDITIONAL_INEVITABILITY_ROUTE_VALIDATED
+cgsc_primitive_derivation = PRIMITIVE_DERIVATION_NOT_CLOSED
+missing_base_extensions = 6
+```
+
+Interpretation:
+
+```text
+The next blocker is no longer vague "prove CGSC".
+It is the six missing base extensions above.
+
+If those extensions can be derived from B0, CGSC may become a theorem route.
+If they must be added as independent principles, the primitive base has to be
+expanded and the theory must admit that B0 alone was too weak.
+```
+
+Forbidden upgrade:
+
+```text
+does_not_prove_CGSC
+does_not_prove_full_QM_I
+does_not_derive_Hilbert_space
+does_not_derive_Born_rule
+does_not_derive_unitary_dynamics
+does_not_derive_tensor_composition
+does_not_treat_B0_candidate_support_as_formal_proof
+```
