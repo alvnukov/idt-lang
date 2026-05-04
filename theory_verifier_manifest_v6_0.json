@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.14.0",
+  "theory_version": "v6.15.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4704,6 +4704,49 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "nonfinite_gpt_residual_compactness_frontier_demo",
+      "type": "nonfinite_gpt_residual_compactness_frontier",
+      "target_theorem_card": "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+      "assumptions": [
+        {
+          "id": "uniform_finite_route_witness_bound",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "finite_signature_closure_implies_uniform_route_witness_bound",
+            "uniform_witness_bound_assumption_frontier_demo",
+            "uniform_witness_bound_route_demo"
+          ],
+          "open_gap": "Uniform finite route-witness bound is reduced to finite IDT-Core registry and route-grammar assumptions, but semantic no-new-effects closure still contains a nonfinite residual boundary."
+        },
+        {
+          "id": "limit_preserves_facticized_readout_separation",
+          "status": "open",
+          "evidence_refs": [
+            "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+            "nonfinite_gpt_residual_compactness_demo"
+          ],
+          "open_gap": "IDT has not yet supplied a formal proof that facticized readout separation is preserved under the nonfinite carrier limit."
+        },
+        {
+          "id": "no_emergent_unwitnessed_composite_invariant",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "no_emergent_joint_only_invariants_under_context_product_exhaustion",
+            "no_emergent_joint_only_invariant_route_demo",
+            "idt_core_semantic_no_new_effects_audit_demo"
+          ],
+          "open_gap": "Route-covered joint-only invariant rejection is formalized, but the unwitnessed nonfinite residual remains conditional."
+        }
+      ],
+      "expected_frontier_status": "open",
+      "forbidden_upgrades": [
+        "does_not_prove_compactness_closure",
+        "does_not_close_nonfinite_gpt_residual",
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I"
+      ]
+    },
+    {
       "id": "nonfinite_gpt_residual_frontier_demo",
       "type": "nonfinite_gpt_residual_frontier",
       "target_class": "nonfinite_unwitnessed_residual",
@@ -4713,9 +4756,10 @@
           "status": "conditional_proof",
           "evidence_refs": [
             "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
-            "nonfinite_gpt_residual_compactness_demo"
+            "nonfinite_gpt_residual_compactness_demo",
+            "nonfinite_gpt_residual_compactness_frontier_demo"
           ],
-          "open_gap": "The compactness route remains conditional until the uniform witness-bound and no-emergent-invariant routes are promoted to formal IDT derivations."
+          "open_gap": "The compactness route remains conditional until the uniform witness-bound, limit-preservation, and no-emergent-invariant routes are promoted to formal IDT derivations."
         },
         {
           "id": "idt_derivation_of_uniform_witness_bound",
@@ -4726,7 +4770,7 @@
             "broader_generic_gpt_cone_frontier_demo",
             "carrier_universal_quantifier_frontier_demo"
           ],
-          "open_gap": "The uniform witness-bound route is conditional on finite context signature, bounded arity, finite generator basis, and no new primitive effects under closure; these assumptions are not yet formal IDT derivations."
+          "open_gap": "The uniform witness-bound route is conditional on finite context signature, bounded arity, finite generator basis, and no new primitive effects under closure; these assumptions are not yet all formal IDT derivations."
         },
         {
           "id": "idt_derivation_of_no_emergent_joint_only_invariants",
@@ -4738,7 +4782,7 @@
             "real_hilbert_composite_hidden_joint_invariant",
             "broader_generic_gpt_cone_frontier_demo"
           ],
-          "open_gap": "The no-emergence route is conditional on context-product exhaustion and product-effect separation; it is not yet a formal IDT derivation."
+          "open_gap": "The no-emergence route is conditional on context-product exhaustion and product-effect separation; it is not yet a formal IDT derivation for the nonfinite residual."
         }
       ],
       "expected_residual_status": "conditional_reduction"
@@ -4926,8 +4970,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 224,
-      "expected_gate_type_digest": "3b76485eac64469eaa4e280ad6484d3995eb5f2bb2de5fb1637ac9c4cf888cf5",
+      "expected_gate_type_count": 225,
+      "expected_gate_type_digest": "4662ac5021fe69ecf32a35a9651216cc8bb2a278c9eeaa6ec92f46d86582f554",
       "expected_component_status": "formal_proof"
     },
     {

@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.14.0`.
+Current theory version: `v6.15.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 

@@ -521,6 +521,19 @@ It records three conditional routes:
 2. `idt_derivation_of_uniform_witness_bound`;
 3. `idt_derivation_of_no_emergent_joint_only_invariants`.
 
+The first item is now decomposed by:
+
+`nonfinite_gpt_residual_compactness_frontier_demo`.
+
+It tracks the three compactness assumptions separately:
+
+1. `uniform_finite_route_witness_bound` is `conditional_support`;
+2. `limit_preserves_facticized_readout_separation` remains `open`;
+3. `no_emergent_unwitnessed_composite_invariant` is `conditional_support`.
+
+This prevents the compactness theorem from being used as a hidden closure
+claim: the limit-preservation step is still an explicit open gap.
+
 The second item is now reduced to:
 
 `finite_signature_closure_implies_uniform_route_witness_bound`.

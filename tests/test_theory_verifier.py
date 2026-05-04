@@ -35,6 +35,9 @@ from theory_verifier.core import (
     BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
     NONFINITE_GPT_RESIDUAL_COMPACTNESS_ASSUMPTIONS,
     NONFINITE_GPT_RESIDUAL_COMPACTNESS_CONCLUSIONS,
+    NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENT_STATUS,
+    NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_FORBIDDEN_UPGRADES,
+    NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_REQUIRED_REFS,
     NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES,
     NONFINITE_GPT_RESIDUAL_FRONTIER_OBLIGATIONS,
     NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS,
@@ -279,6 +282,28 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_semantic_closure_status": "conditional_boundary",
             "forbidden_upgrades": list(IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES),
+        }
+
+    def nonfinite_gpt_residual_compactness_frontier_gate(self) -> dict[str, object]:
+        return {
+            "id": "test_nonfinite_gpt_residual_compactness_frontier",
+            "type": "nonfinite_gpt_residual_compactness_frontier",
+            "target_theorem_card": "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+            "assumptions": [
+                {
+                    "id": assumption_id,
+                    "status": expected_status,
+                    "evidence_refs": list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_REQUIRED_REFS[assumption_id]),
+                    "open_gap": (
+                        "Compactness support is not a formal derivation from IDT primitives."
+                        if expected_status == "conditional_support"
+                        else "Limit preservation for facticized readout separation is still open."
+                    ),
+                }
+                for assumption_id, expected_status in NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENT_STATUS.items()
+            ],
+            "expected_frontier_status": "open",
+            "forbidden_upgrades": list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_FORBIDDEN_UPGRADES),
         }
 
     def test_dimension_mismatch_is_reported(self) -> None:
@@ -3694,6 +3719,80 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_status_mismatch"})
+
+    def test_nonfinite_gpt_residual_compactness_frontier_reports_open_basis(self) -> None:
+        gate = self.nonfinite_gpt_residual_compactness_frontier_gate()
+        gate["expected_frontier_status"] = "conditional_basis"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_frontier_status_mismatch"})
+
+    def test_nonfinite_gpt_residual_compactness_frontier_rejects_premature_component_upgrade(self) -> None:
+        gate = self.nonfinite_gpt_residual_compactness_frontier_gate()
+        assumptions = gate["assumptions"]
+        if not isinstance(assumptions, list):
+            self.fail("assumptions must be a list")
+        limit_assumption = assumptions[1]
+        if not isinstance(limit_assumption, dict):
+            self.fail("limit assumption must be a mapping")
+        limit_assumption["status"] = "conditional_support"
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_frontier_component_status_mismatch"})
+
+    def test_nonfinite_gpt_residual_compactness_frontier_requires_exact_refs(self) -> None:
+        gate = self.nonfinite_gpt_residual_compactness_frontier_gate()
+        assumptions = gate["assumptions"]
+        if not isinstance(assumptions, list):
+            self.fail("assumptions must be a list")
+        uniform_assumption = assumptions[0]
+        if not isinstance(uniform_assumption, dict):
+            self.fail("uniform assumption must be a mapping")
+        uniform_assumption["evidence_refs"] = ["uniform_witness_bound_route_demo"]
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_frontier_refs_mismatch"})
+
+    def test_nonfinite_gpt_residual_compactness_frontier_rejects_forbidden_upgrade_overclaim(self) -> None:
+        gate = self.nonfinite_gpt_residual_compactness_frontier_gate()
+        gate["forbidden_upgrades"] = list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_FORBIDDEN_UPGRADES[:-1])
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_frontier_forbidden_upgrades_mismatch"})
 
     def test_no_emergent_joint_only_invariant_route_rejects_formal_status(self) -> None:
         manifest = parse_manifest(

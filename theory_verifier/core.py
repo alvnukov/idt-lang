@@ -331,6 +331,50 @@ NONFINITE_GPT_RESIDUAL_COMPACTNESS_CONCLUSIONS = (
     "unwitnessed_residual_rejected_by_effect_separation",
 )
 
+NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENTS = NONFINITE_GPT_RESIDUAL_COMPACTNESS_ASSUMPTIONS
+
+NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_STATUSES = (
+    "open",
+    "conditional_support",
+    "formal_proof",
+)
+
+NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENT_STATUS = {
+    "uniform_finite_route_witness_bound": "conditional_support",
+    "limit_preserves_facticized_readout_separation": "open",
+    "no_emergent_unwitnessed_composite_invariant": "conditional_support",
+}
+
+NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_REQUIRED_REFS = {
+    "uniform_finite_route_witness_bound": (
+        "finite_signature_closure_implies_uniform_route_witness_bound",
+        "uniform_witness_bound_assumption_frontier_demo",
+        "uniform_witness_bound_route_demo",
+    ),
+    "limit_preserves_facticized_readout_separation": (
+        "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+        "nonfinite_gpt_residual_compactness_demo",
+    ),
+    "no_emergent_unwitnessed_composite_invariant": (
+        "no_emergent_joint_only_invariants_under_context_product_exhaustion",
+        "no_emergent_joint_only_invariant_route_demo",
+        "idt_core_semantic_no_new_effects_audit_demo",
+    ),
+}
+
+NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_FORBIDDEN_UPGRADES = (
+    "does_not_prove_compactness_closure",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+)
+
+NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_RESULTS = (
+    "open",
+    "conditional_basis",
+    "formalized",
+)
+
 NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES = (
     "does_not_prove_universal_carrier_selection",
     "does_not_prove_full_QM_I",
@@ -7473,6 +7517,127 @@ def check_nonfinite_gpt_residual_compactness_gate(gate: FiniteGate) -> list[Issu
             Issue(
                 "nonfinite_gpt_residual_compactness_status_mismatch",
                 f"{gate.identifier}: compactness theorem must remain conditional_proof",
+            )
+        ]
+    return []
+
+
+def check_nonfinite_gpt_residual_compactness_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "uniform_route_witness_compactness_closes_nonfinite_gpt_residual":
+        return [
+            Issue(
+                "nonfinite_gpt_residual_compactness_frontier_target_mismatch",
+                f"{gate.identifier}: target card must be uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+            )
+        ]
+
+    assumptions = require_list(gate.payload.get("assumptions"), f"{gate.identifier}.assumptions")
+    if len(assumptions) != len(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENTS):
+        raise ManifestError(f"{gate.identifier}: assumptions must cover every compactness frontier component")
+
+    status_by_assumption: dict[str, str] = {}
+    for index, item in enumerate(assumptions):
+        assumption = require_mapping(item, f"{gate.identifier}.assumptions[{index}]")
+        assumption_id = require_string(assumption.get("id"), f"{gate.identifier}.assumptions[{index}].id")
+        status = require_string(assumption.get("status"), f"{gate.identifier}.assumptions[{index}].status")
+        evidence_refs = require_string_tuple(
+            assumption.get("evidence_refs", []),
+            f"{gate.identifier}.assumptions[{index}].evidence_refs",
+        )
+        open_gap = require_string(assumption.get("open_gap", ""), f"{gate.identifier}.assumptions[{index}].open_gap")
+        if assumption_id not in NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENTS:
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_unknown_assumption",
+                    f"{gate.identifier}: unknown compactness assumption {assumption_id}",
+                )
+            ]
+        if status not in NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_STATUSES:
+            raise ManifestError(f"{gate.identifier}: assumption {assumption_id} has unknown status {status!r}")
+        if assumption_id in status_by_assumption:
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_duplicate_assumption",
+                    f"{gate.identifier}: duplicate compactness assumption {assumption_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_evidence_missing",
+                    f"{gate.identifier}: assumption {assumption_id} must cite evidence refs",
+                )
+            ]
+        expected_refs = NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_REQUIRED_REFS[assumption_id]
+        if set(evidence_refs) != set(expected_refs):
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_refs_mismatch",
+                    f"{gate.identifier}: assumption {assumption_id} must cite the required frontier refs",
+                )
+            ]
+        expected_status = NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENT_STATUS[assumption_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_component_status_mismatch",
+                    f"{gate.identifier}: assumption {assumption_id} must remain {expected_status}",
+                )
+            ]
+        if status != "formal_proof" and not open_gap:
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_gap_missing",
+                    f"{gate.identifier}: non-formal compactness assumption {assumption_id} must declare an open gap",
+                )
+            ]
+        if status == "formal_proof" and open_gap:
+            return [
+                Issue(
+                    "nonfinite_gpt_residual_compactness_frontier_gap_on_formal_assumption",
+                    f"{gate.identifier}: formal compactness assumption {assumption_id} must not declare an open gap",
+                )
+            ]
+        status_by_assumption[assumption_id] = status
+
+    missing = sorted(set(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_COMPONENTS) - set(status_by_assumption))
+    if missing:
+        return [
+            Issue(
+                "nonfinite_gpt_residual_compactness_frontier_assumption_missing",
+                f"{gate.identifier}: missing compactness assumptions: {', '.join(missing)}",
+            )
+        ]
+
+    expected_frontier_status = require_string(
+        gate.payload.get("expected_frontier_status"),
+        f"{gate.identifier}.expected_frontier_status",
+    )
+    if expected_frontier_status not in NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_frontier_status is unknown")
+    if all(status == "formal_proof" for status in status_by_assumption.values()):
+        computed_status = "formalized"
+    elif all(status in {"conditional_support", "formal_proof"} for status in status_by_assumption.values()):
+        computed_status = "conditional_basis"
+    else:
+        computed_status = "open"
+    if computed_status != expected_frontier_status:
+        return [
+            Issue(
+                "nonfinite_gpt_residual_compactness_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_frontier_status}, computed {computed_status}",
+            )
+        ]
+
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "nonfinite_gpt_residual_compactness_frontier_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the nonfinite residual boundary",
             )
         ]
     return []
@@ -17420,6 +17585,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "generic_gpt_closure_theorem": check_generic_gpt_closure_theorem_gate,
     "broader_generic_gpt_cone_frontier": check_broader_generic_gpt_cone_frontier_gate,
     "nonfinite_gpt_residual_compactness": check_nonfinite_gpt_residual_compactness_gate,
+    "nonfinite_gpt_residual_compactness_frontier": check_nonfinite_gpt_residual_compactness_frontier_gate,
     "nonfinite_gpt_residual_frontier": check_nonfinite_gpt_residual_frontier_gate,
     "no_emergent_joint_only_invariant_route": check_no_emergent_joint_only_invariant_route_gate,
     "uniform_witness_bound_route": check_uniform_witness_bound_route_gate,
