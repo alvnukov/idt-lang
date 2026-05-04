@@ -287,6 +287,7 @@ def registryWitnesses : List RegistryWitness :=
       "combined_clock_rate",
       "composite_omega_bound",
       "conditional_inheritance_swap",
+      "context_first_primitive_base_revision",
       "context_product_carrier_lemma_route",
       "context_product_exhaustion",
       "context_product_local_tomography_theorem",
@@ -484,9 +485,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 235,
-    expectedDigest := "64ed61f7a305bb6975ec9dd170c7b119c953889cf6ae52d00f11233c7aab42d1",
-    computedDigest := "64ed61f7a305bb6975ec9dd170c7b119c953889cf6ae52d00f11233c7aab42d1"
+    expectedCount := 236,
+    expectedDigest := "c60c518589019c0425f9ecd82130aac10f73230f0dd461cdd9509053a6e03520",
+    computedDigest := "c60c518589019c0425f9ecd82130aac10f73230f0dd461cdd9509053a6e03520"
   },
   {
     id := "finite_primitive_sort_vocabulary",

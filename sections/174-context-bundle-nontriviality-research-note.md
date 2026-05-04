@@ -12403,3 +12403,66 @@ QM is not proved.
 The conditional full-QM route is closed at the top level.
 The formal closure wall is now exactly the 21 proof-artifact obligations.
 ```
+
+### 174.259. Closure Pass With Proof-Ledger Grounding
+
+The next one-pass closure attempt first repaired the lower proof-verification
+baseline. The generated Lean artifact had fallen out of sync with the manifest
+after the latest finite-gate registry changes.
+
+Repair command:
+
+```bash
+python3 scripts/sync_formal_proof_ledger.py --write
+```
+
+After regeneration, the proof runner passes:
+
+```text
+python3 scripts/sync_formal_proof_ledger.py --check  -> ok
+lake env lean Proofs/IDTCore.lean                    -> ok
+python3 -m theory_verifier --json ...                -> ok
+```
+
+This does not prove QM. It restores the trust boundary needed before any QM
+proof artifact can be accepted.
+
+The closure gate was then tightened so it reads the existing
+`formal_proof_ledger_audit` proof cards from the manifest. A closure artifact
+for a QM obligation must now be registered through the repository proof-ledger,
+not through an ad hoc local list.
+
+Accepted claim refs are:
+
+```text
+full_qm_proof_closure.<obligation_id>
+<obligation_id>
+```
+
+The grounded result remains:
+
+```text
+full_qm_proof_closure = PROOF_ARTIFACTS_MISSING
+route_status = CONDITIONAL_FULL_QM_ROUTE
+proved = 0
+missing_artifacts = 21
+incomplete_artifacts = 0
+imported_artifacts = 0
+```
+
+Therefore this pass still does not close QM.
+
+What it closes:
+
+```text
+1. proof-ledger baseline restored;
+2. closure gate is now connected to the real manifest proof-ledger;
+3. missing artifacts are verified against the repository ledger, not guessed;
+4. the next valid upgrade path is explicit.
+```
+
+What remains:
+
+```text
+All 21 closure obligations still require real machine-checkable proof cards.
+```

@@ -29,6 +29,7 @@ class ProofArtifact:
     theorem: str
     check_command: str
     verified: bool
+    source_card_id: str
 
 
 @dataclass(frozen=True)
@@ -188,7 +189,86 @@ OBLIGATIONS: tuple[ProofObligation, ...] = (
     ),
 )
 
-ARTIFACTS: dict[str, ProofArtifact] = {}
+DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
+FORMAL_PROOF_KINDS = ("machine_checked_finite_proof", "external_formal_proof")
+
+
+def require_mapping(value: object, field: str) -> dict[str, object]:
+    if not isinstance(value, dict):
+        raise ValueError(f"{field} must be an object")
+    return value
+
+
+def require_list(value: object, field: str) -> list[object]:
+    if not isinstance(value, list):
+        raise ValueError(f"{field} must be a list")
+    return value
+
+
+def require_string(value: object, field: str) -> str:
+    if not isinstance(value, str):
+        raise ValueError(f"{field} must be a string")
+    return value
+
+
+def require_string_tuple(value: object, field: str) -> tuple[str, ...]:
+    return tuple(require_string(item, f"{field}[]") for item in require_list(value, field))
+
+
+def obligation_ref(obligation_id: str) -> str:
+    return f"full_qm_proof_closure.{obligation_id}"
+
+
+def load_manifest(path: Path) -> dict[str, object]:
+    raw: object = json.loads(path.read_text(encoding="utf-8"))
+    return require_mapping(raw, "manifest")
+
+
+def proof_cards_from_manifest(manifest: dict[str, object]) -> list[dict[str, object]]:
+    cards: list[dict[str, object]] = []
+    for gate_index, raw_gate in enumerate(require_list(manifest.get("finite_gates", []), "finite_gates")):
+        gate = require_mapping(raw_gate, f"finite_gates[{gate_index}]")
+        if gate.get("type") != "formal_proof_ledger_audit":
+            continue
+        for card_index, raw_card in enumerate(require_list(gate.get("proof_cards", []), f"finite_gates[{gate_index}].proof_cards")):
+            cards.append(require_mapping(raw_card, f"finite_gates[{gate_index}].proof_cards[{card_index}]"))
+    return cards
+
+
+def artifact_from_card(card: dict[str, object], obligation: ProofObligation) -> ProofArtifact | None:
+    claim_refs = set(require_string_tuple(card.get("claim_refs", []), "proof_card.claim_refs"))
+    accepted_refs = {obligation.id, obligation_ref(obligation.id)}
+    if claim_refs.isdisjoint(accepted_refs):
+        return None
+    artifact_paths = require_string_tuple(card.get("artifact_paths", []), "proof_card.artifact_paths")
+    checker_commands = require_string_tuple(card.get("checker_commands", []), "proof_card.checker_commands")
+    proof_kind = require_string(card.get("proof_kind"), "proof_card.proof_kind")
+    backend = require_string(card.get("backend"), "proof_card.backend")
+    card_id = require_string(card.get("id"), "proof_card.id")
+    theorem = require_string(card.get("theorem", card_id), "proof_card.theorem")
+    artifact_path = artifact_paths[0] if artifact_paths else ""
+    check_command = checker_commands[0] if checker_commands else ""
+    return ProofArtifact(
+        system=backend,
+        file=artifact_path,
+        theorem=theorem,
+        check_command=check_command,
+        verified=proof_kind in FORMAL_PROOF_KINDS,
+        source_card_id=card_id,
+    )
+
+
+def build_artifact_registry(manifest_path: Path) -> dict[str, ProofArtifact]:
+    manifest = load_manifest(manifest_path)
+    proof_cards = proof_cards_from_manifest(manifest)
+    artifacts: dict[str, ProofArtifact] = {}
+    for obligation in OBLIGATIONS:
+        for card in proof_cards:
+            artifact = artifact_from_card(card, obligation)
+            if artifact is not None:
+                artifacts[obligation.id] = artifact
+                break
+    return artifacts
 
 
 def artifact_mentions_forbidden_import(artifact: ProofArtifact, obligation: ProofObligation) -> str | None:
@@ -204,8 +284,8 @@ def artifact_is_complete(artifact: ProofArtifact) -> bool:
     return all(field.strip() for field in fields) and artifact.verified
 
 
-def check_obligation(obligation: ProofObligation) -> ObligationCheck:
-    artifact = ARTIFACTS.get(obligation.id)
+def check_obligation(obligation: ProofObligation, artifacts: dict[str, ProofArtifact]) -> ObligationCheck:
+    artifact = artifacts.get(obligation.id)
     if artifact is None:
         return ObligationCheck(
             id=obligation.id,
@@ -249,7 +329,7 @@ def check_obligation(obligation: ProofObligation) -> ObligationCheck:
     )
 
 
-def build_closure_attempt() -> ClosureAttempt:
+def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAttempt:
     route_attempt = full_attempt.build_attempt()
     if route_attempt.verdict not in ("CONDITIONAL_FULL_QM_ROUTE", "FULL_QM_PROVED"):
         return ClosureAttempt(
@@ -261,7 +341,8 @@ def build_closure_attempt() -> ClosureAttempt:
             imported_artifacts=0,
             checks=[],
         )
-    checks = [check_obligation(obligation) for obligation in OBLIGATIONS]
+    artifacts = build_artifact_registry(manifest_path)
+    checks = [check_obligation(obligation, artifacts) for obligation in OBLIGATIONS]
     proved = sum(1 for check in checks if check.status == "PROVED")
     missing = sum(1 for check in checks if check.status == "MISSING_ARTIFACT")
     incomplete = sum(1 for check in checks if check.status == "INCOMPLETE_ARTIFACT")
@@ -285,13 +366,14 @@ def build_closure_attempt() -> ClosureAttempt:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Try to close the conditional full-QM route as a proof.")
+    parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
     parser.add_argument("--output-json", default="")
     return parser
 
 
 def main() -> int:
     args = build_parser().parse_args()
-    attempt = build_closure_attempt()
+    attempt = build_closure_attempt(Path(str(args.manifest)))
     print(
         f"full_qm_proof_closure={attempt.verdict} "
         f"route_status={attempt.route_status} proved={attempt.proved} "
