@@ -459,6 +459,10 @@ The executable audit is:
 
 `foundation_import_boundary_audit_demo`
 
+The primitive-core contract is:
+
+`idt_primitive_core_contract_demo`
+
 Its rule is:
 
 `no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim`
@@ -479,6 +483,34 @@ tensor composition -> monoidal_composition_obligation
 unitary map -> reversible_inheritance_obligation
 hbar bridge -> first_principles_action_scale_obligation
 ```
+
+The primitive-core contract locks the four carrier-neutral primitives with
+finite laws:
+
+```text
+history_space:
+  carrier_neutral_history_domain
+  event_bundle_identity
+
+event_algebra:
+  contains_empty_and_total_events
+  closed_under_finite_union
+  closed_under_complement
+
+readout_context_family:
+  contexts_are_event_partitions
+  readouts_are_carrier_neutral
+
+inheritance_act_family:
+  acts_map_contexts_to_contexts
+  acts_preserve_carrier_neutrality
+```
+
+These laws may depend only on `sections/01-primitives.md`. They may not cite
+`W`, `Gamma_I`, Born, Hilbert, tensor, unitary, `hbar_I`, calibrated `hbar_I`,
+or any explicit foundation import id. Each excluded import must instead point
+to a theorem card or QM proof obligation with its current open/blocked/target
+status preserved.
 
 The verifier also grounds the audit against live statuses: `full_QM_I` must
 remain `target`; `hbar_I` must remain `blocked`; carrier, Hilbert, Born,

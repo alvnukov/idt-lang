@@ -105,6 +105,42 @@ def FormalAssumptionWitness.valid (w : FormalAssumptionWitness) : Bool :=
     && w.openGap == ""
     && decide (w.evidenceRefs.length > 0)
 
+structure PrimitiveCoreWitness where
+  id : String
+  primitiveStatus : String
+  carrierStatus : String
+  laws : List String
+  expectedLaws : List String
+  allowedDependencies : List String
+  expectedAllowedDependencies : List String
+  forbiddenRefHits : List String
+deriving Repr
+
+def PrimitiveCoreWitness.valid (w : PrimitiveCoreWitness) : Bool :=
+  w.primitiveStatus == "idt_primitive"
+    && w.carrierStatus == "carrier_neutral"
+    && w.laws == w.expectedLaws
+    && w.allowedDependencies == w.expectedAllowedDependencies
+    && w.forbiddenRefHits == []
+    && decide (w.laws.Nodup)
+    && decide (w.laws.length > 0)
+
+structure ImportObligationWitness where
+  importId : String
+  obligationKind : String
+  target : String
+  requiredStatus : String
+  targetRefactor : String
+  proofBoundary : String
+deriving Repr
+
+def ImportObligationWitness.valid (w : ImportObligationWitness) : Bool :=
+  w.proofBoundary == "not_derived_from_idt_primitives"
+    && w.requiredStatus != "formal_proof"
+    && w.requiredStatus != "derived"
+    && decide (w.target.length > 0)
+    && decide (w.targetRefactor.length > 0)
+
 structure JointOnlyRejectionWitness where
   id : String
   status : String
@@ -279,6 +315,7 @@ def registryWitnesses : List RegistryWitness :=
       "ppn_light_bending",
       "ppn_perihelion",
       "premeasurement_decoherence",
+      "primitive_core_contract",
       "primitive_mass_anchor_inertia_response",
       "primitive_mass_anchor_no_quantum_gravity_input",
       "primitive_tick_clock_count",
@@ -385,9 +422,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 229,
-    expectedDigest := "f7cd7e86f33c5f81e86af17b0f1f6bb6e54eb730aa9b54c021705ec33a853454",
-    computedDigest := "f7cd7e86f33c5f81e86af17b0f1f6bb6e54eb730aa9b54c021705ec33a853454"
+    expectedCount := 230,
+    expectedDigest := "cf5f3397cb057bdb0ee59c9ff3ab6c4d2af5624311531c385035a70af75eff08",
+    computedDigest := "cf5f3397cb057bdb0ee59c9ff3ab6c4d2af5624311531c385035a70af75eff08"
   },
   {
     id := "finite_primitive_sort_vocabulary",
@@ -564,6 +601,152 @@ def formalAssumptionWitnesses : List FormalAssumptionWitness :=
   }
 ]
 
+def primitiveCoreWitnesses : List PrimitiveCoreWitness :=
+[
+  {
+    id := "history_space",
+    primitiveStatus := "idt_primitive",
+    carrierStatus := "carrier_neutral",
+    laws := [
+      "carrier_neutral_history_domain",
+      "event_bundle_identity"
+  ],
+    expectedLaws := [
+      "carrier_neutral_history_domain",
+      "event_bundle_identity"
+  ],
+    allowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    expectedAllowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    forbiddenRefHits := []
+  },
+  {
+    id := "event_algebra",
+    primitiveStatus := "idt_primitive",
+    carrierStatus := "carrier_neutral",
+    laws := [
+      "contains_empty_and_total_events",
+      "closed_under_finite_union",
+      "closed_under_complement"
+  ],
+    expectedLaws := [
+      "contains_empty_and_total_events",
+      "closed_under_finite_union",
+      "closed_under_complement"
+  ],
+    allowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    expectedAllowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    forbiddenRefHits := []
+  },
+  {
+    id := "readout_context_family",
+    primitiveStatus := "idt_primitive",
+    carrierStatus := "carrier_neutral",
+    laws := [
+      "contexts_are_event_partitions",
+      "readouts_are_carrier_neutral"
+  ],
+    expectedLaws := [
+      "contexts_are_event_partitions",
+      "readouts_are_carrier_neutral"
+  ],
+    allowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    expectedAllowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    forbiddenRefHits := []
+  },
+  {
+    id := "inheritance_act_family",
+    primitiveStatus := "idt_primitive",
+    carrierStatus := "carrier_neutral",
+    laws := [
+      "acts_map_contexts_to_contexts",
+      "acts_preserve_carrier_neutrality"
+  ],
+    expectedLaws := [
+      "acts_map_contexts_to_contexts",
+      "acts_preserve_carrier_neutrality"
+  ],
+    allowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    expectedAllowedDependencies := [
+      "sections/01-primitives.md"
+  ],
+    forbiddenRefHits := []
+  }
+]
+
+def importObligationWitnesses : List ImportObligationWitness :=
+[
+  {
+    importId := "complex_amplitude_carrier",
+    obligationKind := "theorem_card",
+    target := "universal_carrier_selection_theorem",
+    requiredStatus := "open",
+    targetRefactor := "carrier_neutral_K_I",
+    proofBoundary := "not_derived_from_idt_primitives"
+  },
+  {
+    importId := "psd_distinguishability_kernel",
+    obligationKind := "qm_core_obligation",
+    target := "distinguishability_geometry",
+    requiredStatus := "target",
+    targetRefactor := "positivity_obligation",
+    proofBoundary := "not_derived_from_idt_primitives"
+  },
+  {
+    importId := "quadratic_actualization_measure",
+    obligationKind := "theorem_card",
+    target := "universal_born_rule_theorem",
+    requiredStatus := "open",
+    targetRefactor := "born_rule_obligation",
+    proofBoundary := "not_derived_from_idt_primitives"
+  },
+  {
+    importId := "schur_inheritance_update",
+    obligationKind := "qm_core_obligation",
+    target := "measurement_facticity_mechanism",
+    requiredStatus := "regression_supported",
+    targetRefactor := "inheritance_update_obligation",
+    proofBoundary := "not_derived_from_idt_primitives"
+  },
+  {
+    importId := "tensor_composition_import",
+    obligationKind := "theorem_card",
+    target := "monoidal_tensor_composition_theorem",
+    requiredStatus := "open",
+    targetRefactor := "monoidal_composition_obligation",
+    proofBoundary := "not_derived_from_idt_primitives"
+  },
+  {
+    importId := "unitary_context_map_import",
+    obligationKind := "theorem_card",
+    target := "wigner_reversible_inheritance_theorem",
+    requiredStatus := "open",
+    targetRefactor := "reversible_inheritance_obligation",
+    proofBoundary := "not_derived_from_idt_primitives"
+  },
+  {
+    importId := "action_phase_hbar_bridge",
+    obligationKind := "qm_core_obligation",
+    target := "continuum_action_scale_extension",
+    requiredStatus := "blocked",
+    targetRefactor := "first_principles_action_scale_obligation",
+    proofBoundary := "not_derived_from_idt_primitives"
+  }
+]
+
 def jointOnlyRejectionWitness : JointOnlyRejectionWitness :=
 {
   id := "joint_only_invariant_rejection",
@@ -594,6 +777,8 @@ def currentSemanticProofChecks : List Bool :=
     generatorWitnesses.all GeneratorWitness.valid,
     noNewEffectWitnesses.all NoNewEffectWitness.valid,
     formalAssumptionWitnesses.all FormalAssumptionWitness.valid,
+    primitiveCoreWitnesses.all PrimitiveCoreWitness.valid,
+    importObligationWitnesses.all ImportObligationWitness.valid,
     jointOnlyRejectionWitness.valid
   ]
 
@@ -627,6 +812,14 @@ theorem current_no_new_effect_witnesses_valid :
 
 theorem current_formal_assumption_witnesses_valid :
     formalAssumptionWitnesses.all FormalAssumptionWitness.valid = true := by
+  native_decide
+
+theorem current_primitive_core_witnesses_valid :
+    primitiveCoreWitnesses.all PrimitiveCoreWitness.valid = true := by
+  native_decide
+
+theorem current_import_obligation_witnesses_valid :
+    importObligationWitnesses.all ImportObligationWitness.valid = true := by
   native_decide
 
 theorem current_joint_only_rejection_witness_valid :

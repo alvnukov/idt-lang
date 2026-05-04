@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.20.0`.
+Current theory version: `v6.21.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -69,7 +69,9 @@ The main current successes are bounded and methodological:
    QM imports such as complex amplitudes, PSD kernels, quadratic readout,
    tensor/product composition, unitary maps, and calibrated action phase from a
    carrier-neutral primitive core: history space, event algebra, readout
-   contexts, and inheritance acts.
+   contexts, and inheritance acts. The primitive core is now a first-class
+   contract: its laws may depend only on the primitive definition section, and
+   every excluded import is routed to an explicit theorem or proof obligation.
 9. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline

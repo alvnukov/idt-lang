@@ -64,6 +64,10 @@ Current auditable results:
   are grounded against real manifest objects, schema surfaces, verifier checks,
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
+- primitive-core contract: history space, event algebra, readout-context
+  family, and inheritance-act family are locked as carrier-neutral primitives;
+  QM imports are forbidden inside that core and are routed to explicit theorem
+  or proof obligations.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first

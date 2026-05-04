@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.20.0`
+Current version: `v6.21.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -789,6 +789,10 @@ are recorded as imports, assumptions, open obligations, or bridge/blocked
 objects, not as primitive derivations. The verifier now rejects relabeling these
 imports as primitives or as completed
 Hilbert/Born/tensor/unitary/first-principles-`hbar_I` derivations.
+The `idt_primitive_core_contract_demo` now makes that primitive layer a
+first-class machine-readable contract. It locks primitive laws and dependencies
+to the carrier-neutral core, forbids QM/import references inside the core, and
+routes each excluded import to an explicit theorem card or QM proof obligation.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are

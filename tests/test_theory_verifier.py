@@ -154,6 +154,10 @@ from theory_verifier.core import (
     IDT_CORE_RESIDUAL_BOUNDARY_SCOPE,
     IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES,
     IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
+    IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
+    IDT_PRIMITIVE_CORE_FORBIDDEN_REFS,
+    IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
+    IDT_PRIMITIVE_CORE_REQUIRED_LAWS,
     IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES,
     IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES,
     FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT,
@@ -463,6 +467,45 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_boundary_status": "imports_explicit",
             "forbidden_upgrades": list(FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES),
+        }
+
+    def primitive_core_contract_gate(self) -> dict[str, object]:
+        required_status_by_import = {
+            "complex_amplitude_carrier": "open",
+            "psd_distinguishability_kernel": "target",
+            "quadratic_actualization_measure": "open",
+            "schur_inheritance_update": "regression_supported",
+            "tensor_composition_import": "open",
+            "unitary_context_map_import": "open",
+            "action_phase_hbar_bridge": "blocked",
+        }
+        return {
+            "id": "test_primitive_core_contract",
+            "type": "primitive_core_contract",
+            "target_scope": "carrier_neutral_primitive_core",
+            "primitive_core": [
+                {
+                    "id": primitive_id,
+                    "primitive_status": "idt_primitive",
+                    "carrier_status": "carrier_neutral",
+                    "laws": list(IDT_PRIMITIVE_CORE_REQUIRED_LAWS[primitive_id]),
+                    "allowed_dependencies": list(IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES),
+                }
+                for primitive_id in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE
+            ],
+            "forbidden_import_refs": list(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS),
+            "import_obligations": [
+                {
+                    "import_id": import_id,
+                    "obligation_kind": IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id][0],
+                    "target": IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id][1],
+                    "required_status": required_status_by_import[import_id],
+                    "target_refactor": FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id],
+                    "proof_boundary": FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
+                }
+                for import_id in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS
+            ],
+            "expected_contract_status": "primitive_core_locked",
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -7156,6 +7199,67 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"foundation_import_boundary_theorem_status_mismatch"})
+
+    def test_primitive_core_contract_rejects_law_drift(self) -> None:
+        gate = self.primitive_core_contract_gate()
+        primitive_core = gate["primitive_core"]
+        if not isinstance(primitive_core, list):
+            self.fail("primitive_core must be a list")
+        first_primitive = primitive_core[0]
+        if not isinstance(first_primitive, dict):
+            self.fail("primitive entry must be a mapping")
+        first_primitive["laws"] = ["complex_amplitude_carrier"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"primitive_core_contract_laws_mismatch"})
+
+    def test_primitive_core_contract_rejects_import_overclaim(self) -> None:
+        gate = self.primitive_core_contract_gate()
+        import_obligations = gate["import_obligations"]
+        if not isinstance(import_obligations, list):
+            self.fail("import_obligations must be a list")
+        first_obligation = import_obligations[0]
+        if not isinstance(first_obligation, dict):
+            self.fail("import obligation must be a mapping")
+        first_obligation["required_status"] = "formal_proof"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"primitive_core_contract_import_overclaim"})
+
+    def test_primitive_core_contract_grounding_rejects_obligation_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "universal_born_rule_theorem":
+                continue
+            theorem_card["proof_status"] = "formal_proof"
+            break
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        finite_gates.append(self.primitive_core_contract_gate())
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"primitive_core_contract_obligation_status_mismatch"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(

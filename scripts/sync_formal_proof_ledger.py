@@ -18,6 +18,10 @@ from theory_verifier.core import (  # noqa: E402
     FINITE_GATE_CHECKS,
     IDT_CORE_CLAIM_ROLE_REGISTRY,
     IDT_CORE_ROUTE_FAMILY_REGISTRY,
+    IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
+    IDT_PRIMITIVE_CORE_FORBIDDEN_REFS,
+    IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
+    IDT_PRIMITIVE_CORE_REQUIRED_LAWS,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
     FiniteGate,
     Manifest,
@@ -82,6 +86,26 @@ class FormalAssumptionWitness:
     status: str
     evidence_refs: tuple[str, ...]
     open_gap: str
+
+
+@dataclass(frozen=True)
+class PrimitiveCoreWitness:
+    identifier: str
+    primitive_status: str
+    carrier_status: str
+    laws: tuple[str, ...]
+    allowed_dependencies: tuple[str, ...]
+    forbidden_ref_hits: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ImportObligationWitness:
+    import_id: str
+    obligation_kind: str
+    target: str
+    required_status: str
+    target_refactor: str
+    proof_boundary: str
 
 
 def lean_string(value: str) -> str:
@@ -308,6 +332,76 @@ def joint_only_rejection_witness(manifest: Manifest) -> JointOnlyRejectionWitnes
     raise ValueError(f"{semantic_gate.identifier}: missing joint_only_invariant_rejection")
 
 
+def primitive_core_witnesses(manifest: Manifest) -> tuple[PrimitiveCoreWitness, ...]:
+    gate = gate_by_id(manifest, "idt_primitive_core_contract_demo")
+    witnesses: list[PrimitiveCoreWitness] = []
+    forbidden_refs = set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS)
+    for index, raw_primitive in enumerate(require_list(gate.payload.get("primitive_core"), f"{gate.identifier}.primitive_core")):
+        primitive = require_mapping(raw_primitive, f"{gate.identifier}.primitive_core[{index}]")
+        primitive_id = require_string(primitive.get("id"), f"{gate.identifier}.primitive_core[{index}].id")
+        laws = require_string_tuple(primitive.get("laws", []), f"{gate.identifier}.{primitive_id}.laws")
+        allowed_dependencies = require_string_tuple(
+            primitive.get("allowed_dependencies", []),
+            f"{gate.identifier}.{primitive_id}.allowed_dependencies",
+        )
+        scanned = (primitive_id, *laws, *allowed_dependencies)
+        witnesses.append(
+            PrimitiveCoreWitness(
+                identifier=primitive_id,
+                primitive_status=require_string(
+                    primitive.get("primitive_status"),
+                    f"{gate.identifier}.{primitive_id}.primitive_status",
+                ),
+                carrier_status=require_string(
+                    primitive.get("carrier_status"),
+                    f"{gate.identifier}.{primitive_id}.carrier_status",
+                ),
+                laws=laws,
+                allowed_dependencies=allowed_dependencies,
+                forbidden_ref_hits=tuple(sorted(forbidden_ref for forbidden_ref in forbidden_refs if forbidden_ref in scanned)),
+            )
+        )
+    return tuple(witnesses)
+
+
+def import_obligation_witnesses(manifest: Manifest) -> tuple[ImportObligationWitness, ...]:
+    gate = gate_by_id(manifest, "idt_primitive_core_contract_demo")
+    witnesses: list[ImportObligationWitness] = []
+    for index, raw_obligation in enumerate(
+        require_list(gate.payload.get("import_obligations"), f"{gate.identifier}.import_obligations")
+    ):
+        obligation = require_mapping(raw_obligation, f"{gate.identifier}.import_obligations[{index}]")
+        import_id = require_string(obligation.get("import_id"), f"{gate.identifier}.import_obligations[{index}].import_id")
+        expected_kind, expected_target = IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id]
+        obligation_kind = require_string(
+            obligation.get("obligation_kind"),
+            f"{gate.identifier}.{import_id}.obligation_kind",
+        )
+        target = require_string(obligation.get("target"), f"{gate.identifier}.{import_id}.target")
+        if obligation_kind != expected_kind or target != expected_target:
+            raise ValueError(f"{gate.identifier}: import obligation target drift for {import_id}")
+        witnesses.append(
+            ImportObligationWitness(
+                import_id=import_id,
+                obligation_kind=obligation_kind,
+                target=target,
+                required_status=require_string(
+                    obligation.get("required_status"),
+                    f"{gate.identifier}.{import_id}.required_status",
+                ),
+                target_refactor=require_string(
+                    obligation.get("target_refactor"),
+                    f"{gate.identifier}.{import_id}.target_refactor",
+                ),
+                proof_boundary=require_string(
+                    obligation.get("proof_boundary"),
+                    f"{gate.identifier}.{import_id}.proof_boundary",
+                ),
+            )
+        )
+    return tuple(witnesses)
+
+
 def lean_list(items: Sequence[str], indent: str = "    ") -> str:
     if not items:
         return "[]"
@@ -371,6 +465,31 @@ def render_formal_assumption_witness(witness: FormalAssumptionWitness) -> str:
   }}"""
 
 
+def render_primitive_core_witness(witness: PrimitiveCoreWitness) -> str:
+    expected_laws = IDT_PRIMITIVE_CORE_REQUIRED_LAWS[witness.identifier]
+    return f"""  {{
+    id := {lean_string(witness.identifier)},
+    primitiveStatus := {lean_string(witness.primitive_status)},
+    carrierStatus := {lean_string(witness.carrier_status)},
+    laws := {lean_list(witness.laws, "      ")},
+    expectedLaws := {lean_list(expected_laws, "      ")},
+    allowedDependencies := {lean_list(witness.allowed_dependencies, "      ")},
+    expectedAllowedDependencies := {lean_list(IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES, "      ")},
+    forbiddenRefHits := {lean_list(witness.forbidden_ref_hits, "      ")}
+  }}"""
+
+
+def render_import_obligation_witness(witness: ImportObligationWitness) -> str:
+    return f"""  {{
+    importId := {lean_string(witness.import_id)},
+    obligationKind := {lean_string(witness.obligation_kind)},
+    target := {lean_string(witness.target)},
+    requiredStatus := {lean_string(witness.required_status)},
+    targetRefactor := {lean_string(witness.target_refactor)},
+    proofBoundary := {lean_string(witness.proof_boundary)}
+  }}"""
+
+
 def render_comma_list(items: Sequence[str]) -> str:
     return ",\n".join(items)
 
@@ -382,6 +501,8 @@ def render_lean(manifest: Manifest) -> str:
     generator_data = generator_witnesses(manifest)
     no_new_effect_data = no_new_effect_witnesses(manifest)
     assumption_data = assumption_witnesses(manifest)
+    primitive_core_data = primitive_core_witnesses(manifest)
+    import_obligation_data = import_obligation_witnesses(manifest)
     joint_witness = joint_only_rejection_witness(manifest)
     rendered_claim_refs = lean_list(claim_refs)
     rendered_registry_witnesses = render_comma_list([render_registry_witness(witness) for witness in registry_data])
@@ -392,6 +513,12 @@ def render_lean(manifest: Manifest) -> str:
     )
     rendered_assumption_witnesses = render_comma_list(
         [render_formal_assumption_witness(witness) for witness in assumption_data]
+    )
+    rendered_primitive_core_witnesses = render_comma_list(
+        [render_primitive_core_witness(witness) for witness in primitive_core_data]
+    )
+    rendered_import_obligation_witnesses = render_comma_list(
+        [render_import_obligation_witness(witness) for witness in import_obligation_data]
     )
     if claim_refs:
         cardinality_theorem = """theorem current_formal_claim_ledger_nonempty :
@@ -474,6 +601,42 @@ def FormalAssumptionWitness.valid (w : FormalAssumptionWitness) : Bool :=
     && w.openGap == ""
     && decide (w.evidenceRefs.length > 0)
 
+structure PrimitiveCoreWitness where
+  id : String
+  primitiveStatus : String
+  carrierStatus : String
+  laws : List String
+  expectedLaws : List String
+  allowedDependencies : List String
+  expectedAllowedDependencies : List String
+  forbiddenRefHits : List String
+deriving Repr
+
+def PrimitiveCoreWitness.valid (w : PrimitiveCoreWitness) : Bool :=
+  w.primitiveStatus == "idt_primitive"
+    && w.carrierStatus == "carrier_neutral"
+    && w.laws == w.expectedLaws
+    && w.allowedDependencies == w.expectedAllowedDependencies
+    && w.forbiddenRefHits == []
+    && decide (w.laws.Nodup)
+    && decide (w.laws.length > 0)
+
+structure ImportObligationWitness where
+  importId : String
+  obligationKind : String
+  target : String
+  requiredStatus : String
+  targetRefactor : String
+  proofBoundary : String
+deriving Repr
+
+def ImportObligationWitness.valid (w : ImportObligationWitness) : Bool :=
+  w.proofBoundary == "not_derived_from_idt_primitives"
+    && w.requiredStatus != "formal_proof"
+    && w.requiredStatus != "derived"
+    && decide (w.target.length > 0)
+    && decide (w.targetRefactor.length > 0)
+
 structure JointOnlyRejectionWitness where
   id : String
   status : String
@@ -517,6 +680,16 @@ def formalAssumptionWitnesses : List FormalAssumptionWitness :=
 {rendered_assumption_witnesses}
 ]
 
+def primitiveCoreWitnesses : List PrimitiveCoreWitness :=
+[
+{rendered_primitive_core_witnesses}
+]
+
+def importObligationWitnesses : List ImportObligationWitness :=
+[
+{rendered_import_obligation_witnesses}
+]
+
 def jointOnlyRejectionWitness : JointOnlyRejectionWitness :=
 {{
   id := {lean_string(joint_witness.identifier)},
@@ -535,6 +708,8 @@ def currentSemanticProofChecks : List Bool :=
     generatorWitnesses.all GeneratorWitness.valid,
     noNewEffectWitnesses.all NoNewEffectWitness.valid,
     formalAssumptionWitnesses.all FormalAssumptionWitness.valid,
+    primitiveCoreWitnesses.all PrimitiveCoreWitness.valid,
+    importObligationWitnesses.all ImportObligationWitness.valid,
     jointOnlyRejectionWitness.valid
   ]
 
@@ -566,6 +741,14 @@ theorem current_no_new_effect_witnesses_valid :
 
 theorem current_formal_assumption_witnesses_valid :
     formalAssumptionWitnesses.all FormalAssumptionWitness.valid = true := by
+  native_decide
+
+theorem current_primitive_core_witnesses_valid :
+    primitiveCoreWitnesses.all PrimitiveCoreWitness.valid = true := by
+  native_decide
+
+theorem current_import_obligation_witnesses_valid :
+    importObligationWitnesses.all ImportObligationWitness.valid = true := by
   native_decide
 
 theorem current_joint_only_rejection_witness_valid :

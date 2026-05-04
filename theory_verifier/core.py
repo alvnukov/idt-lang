@@ -906,6 +906,63 @@ FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE = (
     "inheritance_act_family",
 )
 
+IDT_PRIMITIVE_CORE_REQUIRED_LAWS: dict[str, tuple[str, ...]] = {
+    "history_space": (
+        "carrier_neutral_history_domain",
+        "event_bundle_identity",
+    ),
+    "event_algebra": (
+        "contains_empty_and_total_events",
+        "closed_under_finite_union",
+        "closed_under_complement",
+    ),
+    "readout_context_family": (
+        "contexts_are_event_partitions",
+        "readouts_are_carrier_neutral",
+    ),
+    "inheritance_act_family": (
+        "acts_map_contexts_to_contexts",
+        "acts_preserve_carrier_neutrality",
+    ),
+}
+
+IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES = (
+    "sections/01-primitives.md",
+)
+
+IDT_PRIMITIVE_CORE_FORBIDDEN_REFS = (
+    "W",
+    "Gamma_I",
+    "Born",
+    "Hilbert",
+    "tensor",
+    "unitary",
+    "hbar_I",
+    "calibrated_hbar_I",
+    "complex_amplitude_carrier",
+    "psd_distinguishability_kernel",
+    "quadratic_actualization_measure",
+    "schur_inheritance_update",
+    "tensor_composition_import",
+    "unitary_context_map_import",
+    "action_phase_hbar_bridge",
+)
+
+IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS: dict[str, tuple[str, str]] = {
+    "complex_amplitude_carrier": ("theorem_card", "universal_carrier_selection_theorem"),
+    "psd_distinguishability_kernel": ("qm_core_obligation", "distinguishability_geometry"),
+    "quadratic_actualization_measure": ("theorem_card", "universal_born_rule_theorem"),
+    "schur_inheritance_update": ("qm_core_obligation", "measurement_facticity_mechanism"),
+    "tensor_composition_import": ("theorem_card", "monoidal_tensor_composition_theorem"),
+    "unitary_context_map_import": ("theorem_card", "wigner_reversible_inheritance_theorem"),
+    "action_phase_hbar_bridge": ("qm_core_obligation", "continuum_action_scale_extension"),
+}
+
+IDT_PRIMITIVE_CORE_RESULTS = (
+    "primitive_core_locked",
+    "failed",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2507,6 +2564,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_foundation_import_boundary_grounding(manifest))
     checks.append("foundation import boundary grounding")
+
+    issues.extend(check_primitive_core_contract_grounding(manifest))
+    checks.append("primitive core contract grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -5722,6 +5782,50 @@ def check_foundation_import_boundary_grounding(manifest: Manifest) -> list[Issue
                     Issue(
                         "foundation_import_boundary_theorem_status_mismatch",
                         f"{gate.identifier}: {theorem_id} must remain {expected_status}",
+                    )
+                )
+    return issues
+
+
+def check_primitive_core_contract_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    theorem_status_by_id = {card.identifier: card.proof_status for card in manifest.theorem_cards}
+    obligation_status_by_id = {obligation.identifier: obligation.status for obligation in manifest.qm_core_proof_obligations}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "primitive_core_contract":
+            continue
+        import_obligations = require_list(gate.payload.get("import_obligations"), f"{gate.identifier}.import_obligations")
+        for index, raw_obligation in enumerate(import_obligations):
+            obligation = require_mapping(raw_obligation, f"{gate.identifier}.import_obligations[{index}]")
+            import_id = require_string(obligation.get("import_id"), f"{gate.identifier}.import_obligations[{index}].import_id")
+            obligation_kind = require_string(
+                obligation.get("obligation_kind"),
+                f"{gate.identifier}.import_obligations[{index}].obligation_kind",
+            )
+            target = require_string(obligation.get("target"), f"{gate.identifier}.import_obligations[{index}].target")
+            required_status = require_string(
+                obligation.get("required_status"),
+                f"{gate.identifier}.import_obligations[{index}].required_status",
+            )
+            if obligation_kind == "theorem_card":
+                actual_status = theorem_status_by_id.get(target)
+            elif obligation_kind == "qm_core_obligation":
+                actual_status = obligation_status_by_id.get(target)
+            else:
+                actual_status = None
+            if actual_status is None:
+                issues.append(
+                    Issue(
+                        "primitive_core_contract_obligation_target_missing",
+                        f"{gate.identifier}: import {import_id} targets missing obligation {target}",
+                    )
+                )
+                continue
+            if actual_status != required_status:
+                issues.append(
+                    Issue(
+                        "primitive_core_contract_obligation_status_mismatch",
+                        f"{gate.identifier}: import {import_id} target {target} must remain {required_status}",
                     )
                 )
     return issues
@@ -12857,6 +12961,197 @@ def check_foundation_import_boundary_audit_gate(gate: FiniteGate) -> list[Issue]
     return []
 
 
+def check_primitive_core_contract_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "carrier_neutral_primitive_core":
+        return [
+            Issue(
+                "primitive_core_contract_target_mismatch",
+                f"{gate.identifier}: target_scope must be carrier_neutral_primitive_core",
+            )
+        ]
+    primitive_core = require_list(gate.payload.get("primitive_core"), f"{gate.identifier}.primitive_core")
+    if len(primitive_core) != len(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        raise ManifestError(f"{gate.identifier}: primitive_core must cover every carrier-neutral primitive")
+    forbidden_refs = set(
+        require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs")
+    )
+    if forbidden_refs != set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS):
+        return [
+            Issue(
+                "primitive_core_contract_forbidden_refs_mismatch",
+                f"{gate.identifier}: forbidden_import_refs must lock the primitive/import boundary",
+            )
+        ]
+
+    seen_primitives: set[str] = set()
+    for index, raw_primitive in enumerate(primitive_core):
+        primitive = require_mapping(raw_primitive, f"{gate.identifier}.primitive_core[{index}]")
+        primitive_id = require_string(primitive.get("id"), f"{gate.identifier}.primitive_core[{index}].id")
+        primitive_status = require_string(
+            primitive.get("primitive_status"),
+            f"{gate.identifier}.primitive_core[{index}].primitive_status",
+        )
+        carrier_status = require_string(
+            primitive.get("carrier_status"),
+            f"{gate.identifier}.primitive_core[{index}].carrier_status",
+        )
+        laws = set(require_string_tuple(primitive.get("laws", []), f"{gate.identifier}.{primitive_id}.laws"))
+        allowed_dependencies = set(
+            require_string_tuple(
+                primitive.get("allowed_dependencies", []),
+                f"{gate.identifier}.{primitive_id}.allowed_dependencies",
+            )
+        )
+        if primitive_id not in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE:
+            return [
+                Issue(
+                    "primitive_core_contract_unknown_primitive",
+                    f"{gate.identifier}: unknown primitive {primitive_id}",
+                )
+            ]
+        if primitive_id in seen_primitives:
+            return [
+                Issue(
+                    "primitive_core_contract_duplicate_primitive",
+                    f"{gate.identifier}: duplicate primitive {primitive_id}",
+                )
+            ]
+        if primitive_status != "idt_primitive" or carrier_status != "carrier_neutral":
+            return [
+                Issue(
+                    "primitive_core_contract_status_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain an IDT carrier-neutral primitive",
+                )
+            ]
+        expected_laws = set(IDT_PRIMITIVE_CORE_REQUIRED_LAWS[primitive_id])
+        if laws != expected_laws:
+            return [
+                Issue(
+                    "primitive_core_contract_laws_mismatch",
+                    f"{gate.identifier}: {primitive_id} laws must match the primitive-core contract",
+                )
+            ]
+        if allowed_dependencies != set(IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES):
+            return [
+                Issue(
+                    "primitive_core_contract_dependency_mismatch",
+                    f"{gate.identifier}: {primitive_id} may depend only on the primitive definition section",
+                )
+            ]
+        primitive_strings = [primitive_id, primitive_status, carrier_status, *laws, *allowed_dependencies]
+        leaked_refs = [forbidden_ref for forbidden_ref in forbidden_refs if forbidden_ref in primitive_strings]
+        if leaked_refs:
+            return [
+                Issue(
+                    "primitive_core_contract_forbidden_ref_leak",
+                    f"{gate.identifier}: {primitive_id} leaks forbidden QM/import refs: {', '.join(sorted(leaked_refs))}",
+                )
+            ]
+        seen_primitives.add(primitive_id)
+
+    missing_primitives = sorted(set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE) - seen_primitives)
+    if missing_primitives:
+        return [
+            Issue(
+                "primitive_core_contract_primitive_missing",
+                f"{gate.identifier}: missing primitives: {', '.join(missing_primitives)}",
+            )
+        ]
+
+    import_obligations = require_list(gate.payload.get("import_obligations"), f"{gate.identifier}.import_obligations")
+    if len(import_obligations) != len(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS):
+        raise ManifestError(f"{gate.identifier}: import_obligations must cover every foundation import")
+    seen_imports: set[str] = set()
+    for index, raw_obligation in enumerate(import_obligations):
+        obligation = require_mapping(raw_obligation, f"{gate.identifier}.import_obligations[{index}]")
+        import_id = require_string(obligation.get("import_id"), f"{gate.identifier}.import_obligations[{index}].import_id")
+        obligation_kind = require_string(
+            obligation.get("obligation_kind"),
+            f"{gate.identifier}.import_obligations[{index}].obligation_kind",
+        )
+        target = require_string(obligation.get("target"), f"{gate.identifier}.import_obligations[{index}].target")
+        required_status = require_string(
+            obligation.get("required_status"),
+            f"{gate.identifier}.import_obligations[{index}].required_status",
+        )
+        target_refactor = require_string(
+            obligation.get("target_refactor"),
+            f"{gate.identifier}.import_obligations[{index}].target_refactor",
+        )
+        proof_boundary = require_string(
+            obligation.get("proof_boundary"),
+            f"{gate.identifier}.import_obligations[{index}].proof_boundary",
+        )
+        if import_id not in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS:
+            return [
+                Issue(
+                    "primitive_core_contract_unknown_import",
+                    f"{gate.identifier}: unknown import obligation {import_id}",
+                )
+            ]
+        if import_id in seen_imports:
+            return [
+                Issue(
+                    "primitive_core_contract_duplicate_import",
+                    f"{gate.identifier}: duplicate import obligation {import_id}",
+                )
+            ]
+        expected_kind, expected_target = IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id]
+        if obligation_kind != expected_kind or target != expected_target:
+            return [
+                Issue(
+                    "primitive_core_contract_import_target_mismatch",
+                    f"{gate.identifier}: {import_id} must target {expected_kind}:{expected_target}",
+                )
+            ]
+        if target_refactor != FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id]:
+            return [
+                Issue(
+                    "primitive_core_contract_target_refactor_mismatch",
+                    f"{gate.identifier}: {import_id} target_refactor must match the foundation boundary",
+                )
+            ]
+        if proof_boundary != FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY:
+            return [
+                Issue(
+                    "primitive_core_contract_proof_boundary_mismatch",
+                    f"{gate.identifier}: {import_id} must remain outside primitive derivation",
+                )
+            ]
+        if required_status in {"formal_proof", "derived"}:
+            return [
+                Issue(
+                    "primitive_core_contract_import_overclaim",
+                    f"{gate.identifier}: {import_id} cannot be treated as a completed primitive derivation",
+                )
+            ]
+        seen_imports.add(import_id)
+    missing_imports = sorted(set(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS) - seen_imports)
+    if missing_imports:
+        return [
+            Issue(
+                "primitive_core_contract_import_missing",
+                f"{gate.identifier}: missing import obligations: {', '.join(missing_imports)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_contract_status"),
+        f"{gate.identifier}.expected_contract_status",
+    )
+    if expected_status not in IDT_PRIMITIVE_CORE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_contract_status is unknown")
+    if expected_status != "primitive_core_locked":
+        return [
+            Issue(
+                "primitive_core_contract_status_result_mismatch",
+                f"{gate.identifier}: primitive core contract must remain locked",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -18681,6 +18976,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "qm_proof_anti_hallucination_audit": check_qm_proof_anti_hallucination_audit_gate,
     "idt_structural_compression_audit": check_idt_structural_compression_audit_gate,
     "foundation_import_boundary_audit": check_foundation_import_boundary_audit_gate,
+    "primitive_core_contract": check_primitive_core_contract_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
