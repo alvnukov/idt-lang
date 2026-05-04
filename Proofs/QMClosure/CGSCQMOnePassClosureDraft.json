@@ -8,6 +8,7 @@
       "Proofs/QMClosure/CGSCExtensionWallProbeDraft.json",
       "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
       "Proofs/QMClosure/CGSCPrimitiveBridgeDraft.json",
+      "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "Proofs/QMClosure/QMInevitabilityRouteDraft.json",
       "scripts/evaluate_cgsc_extension_wall_probe.py",
       "scripts/evaluate_cgsc_primitive_derivation.py",
@@ -32,6 +33,10 @@
       {
         "id": "cgsc_primitive_bridge",
         "expected": "CONDITIONAL_EXTENSION_BRIDGE_VALIDATED"
+      },
+      {
+        "id": "cgsc_semantic_content_wall",
+        "expected": "SEMANTIC_CONTENT_WALL_DETECTED"
       },
       {
         "id": "qm_inevitability_route",

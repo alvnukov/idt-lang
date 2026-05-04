@@ -1,0 +1,34 @@
+{
+  "artifact_id": "cgsc_semantic_content_wall_draft",
+  "artifact_status": "semantic_content_wall_not_formal_proof",
+  "wall": {
+    "id": "cgsc_semantic_content_wall",
+    "expected_verdict": "SEMANTIC_CONTENT_WALL_DETECTED",
+    "proof_status": "blocked",
+    "lean_file": "Proofs/QMClosure/CGSCSemanticContentWall.lean",
+    "checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
+    "dependencies": [
+      "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
+      "Proofs/QMClosure/CGSCSemanticContentWall.lean",
+      "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
+      "scripts/evaluate_cgsc_semantic_content_wall.py"
+    ],
+    "extension_witnesses": [
+      "complete_exposed_context_partition",
+      "reversible_context_automorphism_closure",
+      "coherent_refinement_compactness",
+      "generator_bookkeeping_without_stone",
+      "product_context_generation_closure",
+      "no_hidden_joint_only_generation"
+    ],
+    "degenerate_witness": "currentBridgeAdmitsDegenerateExtensionBase",
+    "required_fix": "replace unconstrained CheckedProp extension fields with typed semantic predicates and no-vacuity obligations before any formal proof upgrade",
+    "forbidden_claims": [
+      "does_not_prove_CGSC",
+      "does_not_prove_full_QM_I",
+      "does_not_treat_checked_prop_packaging_as_semantic_content",
+      "does_not_mark_vacuous_bridge_as_formal_proof",
+      "does_not_claim_extensions_are_proved_from_B0"
+    ]
+  }
+}

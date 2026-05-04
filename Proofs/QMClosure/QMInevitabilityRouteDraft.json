@@ -10,6 +10,7 @@
     "dependencies": [
       "Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json",
       "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
+      "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "scripts/evaluate_context_generated_stable_closure_route_draft.py",
       "scripts/evaluate_cgsc_primitive_derivation.py",
       "scripts/evaluate_full_qm_proof_attempt.py",
@@ -32,6 +33,7 @@
     "known_failures": [
       "context_generated_stable_closure_clauses_not_proved_from_primitives",
       "cgsc_primitive_derivation_not_closed",
+      "cgsc_semantic_content_wall_detected",
       "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
       "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
       "physical_hbar_I_not_derived"

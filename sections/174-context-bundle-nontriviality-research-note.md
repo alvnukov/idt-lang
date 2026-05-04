@@ -14556,3 +14556,72 @@ does_not_claim_CGSC_is_proved
 does_not_claim_full_QM_is_proved
 does_not_mark_conditional_bridge_as_formal_proof
 ```
+
+### 174.283. CGSC Semantic Content Wall
+
+The next broad check found a sharper wall inside the bridge itself:
+
+```text
+Proofs/QMClosure/CGSCSemanticContentWall.lean
+Proofs/QMClosure/CGSCSemanticContentWallDraft.json
+scripts/evaluate_cgsc_semantic_content_wall.py
+```
+
+The current Lean bridge is structurally useful, but its extension slots are
+still `CheckedProp` fields. That means the bridge can be satisfied by a
+degenerate all-`True` extension base unless each extension witness is replaced
+by a typed semantic predicate with a no-vacuity obligation.
+
+Current wall status:
+
+```text
+cgsc_semantic_content_wall = SEMANTIC_CONTENT_WALL_DETECTED
+lean = PASS
+extension_witnesses = 6
+draft_checks_failed = 0
+```
+
+This is not a regression. It prevents a false proof upgrade:
+
+```text
+bad route:
+  B0
+  => arbitrary CheckedProp packaging
+  => CGSC packages
+  => "QM proved"
+
+blocked route:
+  B0
+  => typed non-vacuous extension predicates
+  => six extension proofs
+  => CGSC packages
+  => conditional QM route can be reconsidered
+```
+
+The one-pass status remains:
+
+```text
+cgsc_qm_one_pass_closure = STRUCTURAL_ROUTE_READY_FORMALIZATION_WALL
+global_failed = 0
+conditional_artifacts = 21
+missing_formal_proof_artifacts = 0
+```
+
+But the next blocker is now more precise:
+
+```text
+replace schematic CheckedProp extension packaging with:
+  typed semantic predicates;
+  no-vacuity obligations;
+  proof obligations from B0 or a successor primitive base.
+```
+
+Forbidden upgrade:
+
+```text
+does_not_treat_checked_prop_packaging_as_semantic_content
+does_not_mark_vacuous_bridge_as_formal_proof
+does_not_claim_extensions_are_proved_from_B0
+does_not_claim_CGSC_is_proved
+does_not_claim_full_QM_is_proved
+```

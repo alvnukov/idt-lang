@@ -14,6 +14,7 @@ if str(REPO_ROOT) not in sys.path:
 import scripts.evaluate_cgsc_extension_wall_probe as extension_wall  # noqa: E402
 import scripts.evaluate_cgsc_primitive_bridge as primitive_bridge  # noqa: E402
 import scripts.evaluate_cgsc_primitive_derivation as primitive_derivation  # noqa: E402
+import scripts.evaluate_cgsc_semantic_content_wall as semantic_content_wall  # noqa: E402
 import scripts.evaluate_full_qm_proof_closure as full_qm_closure  # noqa: E402
 import scripts.evaluate_qm_inevitability_route as qm_inevitability  # noqa: E402
 import scripts.verify_finite_qm_route as finite_qm_gate  # noqa: E402
@@ -225,6 +226,7 @@ def global_requirement_checks(
     extension_probe: extension_wall.ExtensionWallProbe,
     primitive_probe: primitive_derivation.PrimitiveDerivationProbe,
     bridge_probe: primitive_bridge.BridgeProbe,
+    semantic_probe: semantic_content_wall.SemanticContentWallProbe,
     qm_probe: qm_inevitability.InevitabilityRouteProbe,
     full_probe: full_qm_closure.ClosureAttempt,
 ) -> list[GlobalCheck]:
@@ -233,6 +235,7 @@ def global_requirement_checks(
         "extension_wall_probe": extension_probe.verdict,
         "primitive_derivation": primitive_probe.verdict,
         "cgsc_primitive_bridge": bridge_probe.verdict,
+        "cgsc_semantic_content_wall": semantic_probe.verdict,
         "qm_inevitability_route": qm_probe.verdict,
         "full_qm_proof_closure": full_probe.verdict,
     }
@@ -291,6 +294,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
     extension_probe = extension_wall.build_probe()
     primitive_probe = primitive_derivation.build_probe()
     bridge_probe = primitive_bridge.build_probe()
+    semantic_probe = semantic_content_wall.build_probe()
     qm_probe = qm_inevitability.build_probe()
     full_probe = full_qm_closure.build_closure_attempt()
     target_by_id = target_statuses(qm_probe)
@@ -304,6 +308,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         extension_probe=extension_probe,
         primitive_probe=primitive_probe,
         bridge_probe=bridge_probe,
+        semantic_probe=semantic_probe,
         qm_probe=qm_probe,
         full_probe=full_probe,
     )
@@ -346,7 +351,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks_failed=draft_failed,
         draft_checks=draft_checks,
         next_blocker=(
-            "prove the six primitive-extension witnesses that feed the conditional bridge; "
+            "replace schematic CheckedProp extension packaging with typed non-vacuous semantic predicates, "
+            "then prove the six primitive-extension witnesses; "
             "the finite-sector residual is rejected by admissibility, not a substitute for full-QM proof"
         ),
     )

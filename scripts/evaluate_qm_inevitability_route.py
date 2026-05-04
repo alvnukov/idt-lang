@@ -13,6 +13,7 @@ if str(REPO_ROOT) not in sys.path:
 
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_cgsc_primitive_derivation as cgsc_primitive  # noqa: E402
+import scripts.evaluate_cgsc_semantic_content_wall as semantic_content_wall  # noqa: E402
 import scripts.evaluate_context_generated_stable_closure_route_draft as cgsc_route  # noqa: E402
 import scripts.evaluate_full_qm_proof_closure as proof_closure  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
@@ -81,6 +82,7 @@ class InevitabilityRouteProbe:
     draft_path: str
     cgsc_route_draft: str
     cgsc_primitive_derivation: cgsc_primitive.Verdict
+    cgsc_semantic_content_wall: semantic_content_wall.Verdict
     full_qm_closure: proof_closure.ClosureVerdict
     targets: int
     conditional_targets: int
@@ -299,6 +301,7 @@ def validate_draft(
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
         "cgsc_primitive_derivation_not_closed",
+        "cgsc_semantic_content_wall_detected",
         "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
@@ -334,6 +337,7 @@ def build_probe(
     target_specs = target_specs_from_draft(proof_route)
     cgsc_probe = cgsc_route.build_probe(cgsc_route.DEFAULT_DRAFT, manifest_path)
     primitive_probe = cgsc_primitive.build_probe()
+    semantic_probe = semantic_content_wall.build_probe()
     closure = proof_closure.build_closure_attempt(manifest_path)
     clause_status_by_id = clause_statuses_from_cgsc_route()
     proof_status_by_id = proof_statuses_from_closure(closure)
@@ -372,6 +376,7 @@ def build_probe(
         draft_path=str(draft_path.relative_to(REPO_ROOT)),
         cgsc_route_draft=cgsc_probe.verdict,
         cgsc_primitive_derivation=primitive_probe.verdict,
+        cgsc_semantic_content_wall=semantic_probe.verdict,
         full_qm_closure=closure.verdict,
         targets=len(target_checks),
         conditional_targets=conditional_targets,
@@ -387,8 +392,8 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "close CGSC primitive derivation, including missing base extensions, then promote the registered "
-            "conditional package artifacts to formal primitive proofs"
+            "replace schematic CheckedProp extension packaging with typed non-vacuous semantic predicates, "
+            "then close CGSC primitive derivation and promote conditional artifacts to formal primitive proofs"
         ),
     )
 
@@ -412,6 +417,7 @@ def main() -> int:
         f"qm_inevitability_route={probe.verdict} proof_status={probe.proof_status} "
         f"draft={probe.draft_path} cgsc_route_draft={probe.cgsc_route_draft} "
         f"cgsc_primitive_derivation={probe.cgsc_primitive_derivation} "
+        f"cgsc_semantic_content_wall={probe.cgsc_semantic_content_wall} "
         f"full_qm_closure={probe.full_qm_closure} targets={probe.targets} "
         f"conditional_targets={probe.conditional_targets} open_targets={probe.open_targets} "
         f"failed_targets={probe.failed_targets} imported_targets={probe.imported_targets} "

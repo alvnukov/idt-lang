@@ -7,5 +7,6 @@ lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
     `Proofs.QMClosure.CGSCPackageClosure,
-    `Proofs.QMClosure.CGSCPrimitiveBridge
+    `Proofs.QMClosure.CGSCPrimitiveBridge,
+    `Proofs.QMClosure.CGSCSemanticContentWall
   ]

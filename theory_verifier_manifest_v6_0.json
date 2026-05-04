@@ -9386,6 +9386,39 @@
             "six primitive-extension witnesses still require proof from B0 or successor primitives",
             "this card does not prove CGSC or full_QM_I"
           ]
+        },
+        {
+          "id": "cgsc_semantic_content_wall_failure_artifact",
+          "claim_refs": [
+            "cgsc_semantic_content_wall.vacuous_checked_prop_bridge_detected"
+          ],
+          "statement": "Lean failure-ledger artifact showing that the current CGSC primitive bridge admits a degenerate all-True extension base, so CheckedProp packaging alone is not semantic content and cannot be upgraded to a primitive proof.",
+          "theorem": "IDT.QMClosure.current_bridge_admits_vacuous_six_extension_witnesses",
+          "proof_kind": "proof_sketch",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCSemanticContentWall.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCSemanticContentWall"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_semantic_content_wall"
+          ],
+          "scope": "failure_ledger_no_vacuous_cgsc_extension_upgrade",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_checked_prop_packaging_as_semantic_content",
+            "does_not_mark_vacuous_bridge_as_formal_proof"
+          ],
+          "open_gaps": [
+            "typed semantic predicates and no-vacuity obligations are missing for the six CGSC extension witnesses",
+            "this card is a failure-ledger guard, not a CGSC proof"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"
