@@ -13279,3 +13279,118 @@ arbitrary IDT admissible context product
 
 Therefore this is not `formal_proof` for `monoidal_associativity`, but it is a
 real finite bridge witness for the current executable context-product gate.
+
+### 174.270. Finite Readout Normalization Bridge Draft
+
+The readout scaffold has been strengthened.
+
+New Lean objects:
+
+```text
+StableFiniteReadout
+NormalizedWeight
+normalizedReadout
+flattenReadoutBlocks
+coarseGrainBlocks
+```
+
+New Lean theorems:
+
+```text
+stable_finite_readout_has_positive_denominator
+stable_finite_readout_denominator_is_total
+normalized_readout_length_matches
+normalized_readout_common_denominator
+coarse_grain_blocks_preserve_total
+operational_equivalence_respecting_weight_function_preserves_weight
+```
+
+Artifact:
+
+```text
+Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+```
+
+What is proved:
+
+```text
+finite natural weights + positive total
+=> a normalized readout representation with common positive denominator
+
+explicit finite block coarse-graining
+=> total weight is preserved
+
+event weight function respects operational equivalence
+=> operationally equivalent events receive equal weights
+```
+
+This is stronger than the original readout scaffold because normalization is
+now represented as a checked finite object rather than only the statement that
+the total is a sum.
+
+What is not proved:
+
+```text
+IDT facticization
+=> finite natural weights
+
+IDT admissible readout context
+=> positive total
+
+IDT admissible coarse-graining
+=> the explicit block coarse-graining used here
+
+IDT operational equivalence
+=> a weight function that respects the equivalence relation
+
+finite common-denominator weights
+=> Born rule
+```
+
+Current proof status:
+
+```text
+conditional_bridge_proof
+```
+
+Updated proof-card draft:
+
+```text
+id: finite_readout_normalization_bridge
+claim_refs:
+  - full_qm_proof_closure.context_normalization
+  - full_qm_proof_closure.coarse_graining_consistency
+  - full_qm_proof_closure.operational_equivalence_probability
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+statement: >
+  Finite nonnegative readout weights with positive total admit a common
+  positive-denominator normalization representation, and explicit finite block
+  coarse-graining preserves total weight. Any event-weight function that
+  respects operational equivalence assigns equal weights to equivalent events.
+open_gaps:
+  - derive finite nonnegative weights from IDT facticization
+  - derive positive total from admissible readout contexts
+  - derive block coarse-graining from IDT admissible coarse-graining
+  - derive equivalence-respecting weight functions from IDT operational
+    equivalence
+  - connect common-denominator normalization to the probability layer without
+    assuming the Born rule
+forbidden_upgrades:
+  - does_not_prove_Born_rule
+  - does_not_assume_probability_axioms
+  - does_not_assume_hilbert_space
+  - does_not_upgrade_readout_obligations_to_formal_proof
+```
+
+Interpretation:
+
+```text
+The finite arithmetic normalization/coarse-graining part is now checkable.
+The remaining blocker is deriving the finite weight model from IDT
+facticization and readout admissibility.
+```
