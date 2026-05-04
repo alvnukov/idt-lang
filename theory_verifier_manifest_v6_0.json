@@ -9606,6 +9606,63 @@
             "does_not_treat_toy_grounded_sources_as_QM_proof",
             "does_not_mark_grounded_source_satisfiability_as_primitive_derivation"
           ]
+        },
+        {
+          "id": "universal_primitive_source_kernel_conditional_artifact",
+          "statement": "Conditional Lean artifact showing that a UniversalPrimitiveSourceKernel yields the full 21-obligation QM closure bundle while rejecting the current two-point Bool/Unit toy grounded source wall via AtLeastThree rank predicates. The kernel itself is still not derived from B0 or successor primitives.",
+          "scope": "conditional_full_qm_obligation_bundle_from_universal_primitive_source_kernel",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.UniversalPrimitiveSourceKernel"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "universal_primitive_source_kernel",
+            "two_point_toy_wall_rejection"
+          ],
+          "claim_refs": [
+            "universal_primitive_source_kernel.to_full_qm_obligation_bundle",
+            "full_qm_proof_closure.finite_projection_determinacy",
+            "full_qm_proof_closure.projective_consistency",
+            "full_qm_proof_closure.nonunital_stable_distinguishability",
+            "full_qm_proof_closure.conservative_projective_gluing",
+            "full_qm_proof_closure.spectral_decomposition",
+            "full_qm_proof_closure.rich_d_cl_reversible_symmetry",
+            "full_qm_proof_closure.context_normalization",
+            "full_qm_proof_closure.exclusivity_additivity",
+            "full_qm_proof_closure.coarse_graining_consistency",
+            "full_qm_proof_closure.operational_equivalence_probability",
+            "full_qm_proof_closure.d_cl_automorphism_dynamics",
+            "full_qm_proof_closure.overlap_preservation_dynamics",
+            "full_qm_proof_closure.projective_action",
+            "full_qm_proof_closure.continuous_inheritance_family",
+            "full_qm_proof_closure.generator_closure",
+            "full_qm_proof_closure.product_context_exhaustion",
+            "full_qm_proof_closure.local_tomography",
+            "full_qm_proof_closure.monoidal_associativity",
+            "full_qm_proof_closure.entanglement_closure",
+            "full_qm_proof_closure.projective_limit_consistency",
+            "full_qm_proof_closure.physical_phase_scale_boundary"
+          ],
+          "theorem": "IDT.QMClosure.universal_primitive_source_kernel_yields_full_qm_obligation_bundle",
+          "open_gaps": [
+            "derive the universal primitive source kernel from B0 or successor primitives",
+            "rule out higher-cardinality toy kernels and prove primitive-generated admissibility, not only two-point toy rejection",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_universal_kernel_is_proved_from_B0",
+            "does_not_mark_conditional_universal_kernel_as_QM_proof"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

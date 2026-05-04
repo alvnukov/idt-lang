@@ -3,7 +3,7 @@
   "artifact_status": "semantic_content_wall_not_formal_proof",
   "wall": {
     "id": "cgsc_semantic_content_wall",
-    "expected_verdict": "SEMANTIC_GROUNDING_TOY_WALL_REGISTERED",
+    "expected_verdict": "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED",
     "proof_status": "blocked",
     "lean_file": "Proofs/QMClosure/CGSCSemanticContentWall.lean",
     "wall_checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
@@ -17,6 +17,8 @@
     "full_assembly_checker_command": "lake build Proofs.QMClosure.FullQMAssemblyFromGroundedSources",
     "grounded_toy_wall_file": "Proofs/QMClosure/CGSCGroundedToyWall.lean",
     "grounded_toy_wall_checker_command": "lake build Proofs.QMClosure.CGSCGroundedToyWall",
+    "universal_kernel_file": "Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean",
+    "universal_kernel_checker_command": "lake build Proofs.QMClosure.UniversalPrimitiveSourceKernel",
     "dependencies": [
       "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
       "Proofs/QMClosure/CGSCSemanticContentWall.lean",
@@ -25,6 +27,7 @@
       "Proofs/QMClosure/CGSCGroundedSemanticExtensions.lean",
       "Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean",
       "Proofs/QMClosure/CGSCGroundedToyWall.lean",
+      "Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean",
       "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "scripts/evaluate_cgsc_semantic_content_wall.py"
     ],
@@ -42,7 +45,9 @@
     "grounded_kernel": "grounded_semantic_extension_base_yields_six_extension_statements",
     "full_assembly": "grounded_semantic_sources_yield_full_qm_obligation_bundle",
     "grounded_toy_wall": "grounded_kernel_admits_toy_full_qm_obligation_bundle",
-    "required_fix": "prove universally scoped grounded semantic source predicates from B0 or successor primitives before any formal proof upgrade",
+    "universal_kernel": "universal_primitive_source_kernel_yields_full_qm_obligation_bundle",
+    "universal_kernel_toy_rejection": "toy_grounded_kernel_has_no_universal_exposed_rank",
+    "required_fix": "derive the universal primitive source kernel from B0 or successor primitives before any formal proof upgrade",
     "forbidden_claims": [
       "does_not_prove_CGSC",
       "does_not_prove_full_QM_I",

@@ -14858,3 +14858,57 @@ full assembly from grounded sources: machine-checked conditional theorem
 toy-grounding wall: machine-checked negative control
 QM from primitives: still open
 ```
+
+### 174.288. Universal Primitive Source Kernel
+
+The two-point toy wall is now blocked by a stronger kernel:
+
+```text
+Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean
+```
+
+The kernel wraps a grounded CGSC semantic source base with primitive-generated
+scope and admissible-universe guards, plus anti-collapse rank predicates on the
+key context/fact types:
+
+```text
+AtLeastThree exposed.Context
+AtLeastThree reversible.Context
+AtLeastThree product.LocalContext
+AtLeastThree noHiddenJoint.LocalFact
+```
+
+Machine-checked assembly theorem:
+
+```text
+universal_primitive_source_kernel_yields_full_qm_obligation_bundle
+```
+
+Machine-checked rejection of the current toy wall:
+
+```text
+bool_has_no_at_least_three
+toy_grounded_kernel_has_no_universal_exposed_rank
+toy_grounded_kernel_has_no_universal_reversible_rank
+toy_grounded_kernel_has_no_universal_product_rank
+toy_grounded_kernel_has_no_universal_local_fact_rank
+```
+
+This removes the specific Bool/Unit toy counter-route from the previous pass.
+It still does not prove QM, because the universal kernel itself is not yet
+derived from B0 or successor primitives.
+
+Current exact target:
+
+```text
+B0 or successor primitives
+=> UniversalPrimitiveSourceKernel
+=> full QM obligation bundle
+```
+
+Remaining honest blocker:
+
+```text
+derive the universal primitive source kernel from primitives;
+rule out higher-cardinality toy kernels, not only the current two-point toy.
+```

@@ -13,5 +13,6 @@ lean_lib Proofs where
     `Proofs.QMClosure.CGSCTypedDecorativeWall,
     `Proofs.QMClosure.CGSCGroundedSemanticExtensions,
     `Proofs.QMClosure.FullQMAssemblyFromGroundedSources,
-    `Proofs.QMClosure.CGSCGroundedToyWall
+    `Proofs.QMClosure.CGSCGroundedToyWall,
+    `Proofs.QMClosure.UniversalPrimitiveSourceKernel
   ]
