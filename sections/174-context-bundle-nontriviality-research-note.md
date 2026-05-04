@@ -12297,3 +12297,109 @@ physical scale:
 The next phase should therefore not search for another top-level QM bridge.
 It should convert these conditional obligations into theorem cards and
 machine-checkable proof artifacts.
+
+### 174.258. Full QM Proof Closure Attempt
+
+This pass tries the strongest honest upgrade available now:
+
+```text
+CONDITIONAL_FULL_QM_ROUTE
+=> FULL_QM_PROVED
+```
+
+The upgrade rule is deliberately strict:
+
+```text
+no machine-checkable proof artifact
+=> no formal proof upgrade
+```
+
+The current route aggregator reports:
+
+```text
+full_qm_proof_attempt = CONDITIONAL_FULL_QM_ROUTE
+pass = 1
+conditional = 7
+open = 0
+failed = 0
+```
+
+This is substantial. It means the top-level route has no remaining open cells,
+but all seven non-finite cells are conditional theorem routes.
+
+The closure gate expands those conditions into 21 proof obligations:
+
+```text
+finite_projection_determinacy
+projective_consistency
+nonunital_stable_distinguishability
+conservative_projective_gluing
+spectral_decomposition
+rich_d_cl_reversible_symmetry
+context_normalization
+exclusivity_additivity
+coarse_graining_consistency
+operational_equivalence_probability
+d_cl_automorphism_dynamics
+overlap_preservation_dynamics
+projective_action
+continuous_inheritance_family
+generator_closure
+product_context_exhaustion
+local_tomography
+monoidal_associativity
+entanglement_closure
+projective_limit_consistency
+physical_phase_scale_boundary
+```
+
+Executable result:
+
+```text
+full_qm_proof_closure = PROOF_ARTIFACTS_MISSING
+route_status = CONDITIONAL_FULL_QM_ROUTE
+proved = 0
+missing_artifacts = 21
+incomplete_artifacts = 0
+imported_artifacts = 0
+```
+
+Therefore the one-pass full-proof attempt did not prove QM.
+
+It did close a different and useful question:
+
+```text
+The remaining blocker is no longer an unspecified top-level route gap.
+The blocker is a finite list of missing proof artifacts for the conditional
+theorem obligations.
+```
+
+The next proof phase must produce artifacts of this kind:
+
+```text
+proof_artifact:
+  system: Lean4 or another declared checker
+  file: repository path
+  theorem: checker-visible theorem name
+  check_command: reproducible local command
+  verified: true
+```
+
+Forbidden closure moves:
+
+```text
+declare the 21 obligations as axioms
+assume Hilbert space to prove Hilbert selection
+assume Born probabilities to prove Born readout
+assume unitary dynamics to prove reversible inheritance
+assume tensor products to prove composite structure
+derive hbar_I by renaming a calibrated quantum scale
+```
+
+Current honest status:
+
+```text
+QM is not proved.
+The conditional full-QM route is closed at the top level.
+The formal closure wall is now exactly the 21 proof-artifact obligations.
+```
