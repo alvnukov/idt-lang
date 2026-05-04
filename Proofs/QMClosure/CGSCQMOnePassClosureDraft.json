@@ -1,0 +1,94 @@
+{
+  "artifact_id": "cgsc_qm_one_pass_closure_draft",
+  "artifact_status": "one_pass_closure_attempt_not_formal_proof",
+  "attempt": {
+    "id": "cgsc_qm_one_pass_closure",
+    "expected_verdict": "STRUCTURAL_ROUTE_READY_FORMALIZATION_WALL",
+    "dependencies": [
+      "Proofs/QMClosure/CGSCExtensionWallProbeDraft.json",
+      "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
+      "Proofs/QMClosure/QMInevitabilityRouteDraft.json",
+      "scripts/evaluate_cgsc_extension_wall_probe.py",
+      "scripts/evaluate_cgsc_primitive_derivation.py",
+      "scripts/evaluate_qm_inevitability_route.py",
+      "scripts/evaluate_full_qm_proof_closure.py",
+      "scripts/verify_finite_qm_route.py",
+      "sections/174-context-bundle-nontriviality-research-note.md"
+    ],
+    "global_requirements": [
+      {
+        "id": "finite_qm_route_gate",
+        "expected": "PASS"
+      },
+      {
+        "id": "extension_wall_probe",
+        "expected": "EXTENSION_WALL_LOCALIZED"
+      },
+      {
+        "id": "primitive_derivation",
+        "expected": "PRIMITIVE_DERIVATION_NOT_CLOSED"
+      },
+      {
+        "id": "qm_inevitability_route",
+        "expected": "CONDITIONAL_INEVITABILITY_ROUTE_VALIDATED"
+      },
+      {
+        "id": "full_qm_proof_closure",
+        "expected": "PROOF_ARTIFACTS_MISSING"
+      }
+    ],
+    "packages": [
+      {
+        "id": "finite_exposed_context_completion",
+        "expected_status": "CANDIDATE_EVIDENCED",
+        "evidence": [
+          "kernel.additive",
+          "overlap.unique",
+          "residual_closure.fpd_plus_projective_consistency",
+          "fpd_projective.combined"
+        ],
+        "open_residuals": []
+      },
+      {
+        "id": "route_automorphism_and_refinement_coherence",
+        "expected_status": "CANDIDATE_EVIDENCED",
+        "evidence": [
+          "phase_j.canonical_quadrature",
+          "route.normalized_orientation_overlap",
+          "compressed_qm.phase_bundle_route",
+          "qm_target.unitary_dynamics"
+        ],
+        "open_residuals": []
+      },
+      {
+        "id": "generated_composite_no_hidden_joint_closure",
+        "expected_status": "CANDIDATE_EVIDENCED_WITH_OPEN_RESIDUAL",
+        "evidence": [
+          "compressed_qm.phase_bundle_route",
+          "finite_sector.complex_route",
+          "finite_sector.real_control",
+          "finite_sector.quaternionic_control",
+          "finite_sector.boxworld_control",
+          "finite_sector.generic_gpt_control",
+          "finite_sector.route_closed_residual",
+          "qm_target.tensor_composition"
+        ],
+        "open_residuals": [
+          "finite_sector.route_closed_residual"
+        ]
+      }
+    ],
+    "formal_closure_requirements": [
+      "CGSC_DERIVED_FROM_PRIMITIVES",
+      "FULL_QM_PROVED",
+      "machine_checked_proof_artifacts_for_all_qm_obligations"
+    ],
+    "forbidden_claims": [
+      "does_not_claim_CGSC_is_proved",
+      "does_not_claim_full_QM_is_proved",
+      "does_not_mark_conditional_routes_as_formal_proof",
+      "does_not_import_Hilbert_Born_unitary_tensor_or_Stone",
+      "does_not_treat_open_residual_as_closed"
+    ]
+  }
+}

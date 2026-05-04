@@ -14185,3 +14185,125 @@ does_not_derive_unitary_dynamics
 does_not_derive_tensor_composition
 does_not_treat_extension_wall_localization_as_wall_removal
 ```
+
+### 174.279. CGSC/QM One-Pass Closure Attempt
+
+A single broad closure attempt was added to test the whole current route in one
+place:
+
+```text
+Proofs/QMClosure/CGSCQMOnePassClosureDraft.json
+scripts/evaluate_cgsc_qm_one_pass_closure.py
+```
+
+The attempt combines:
+
+```text
+finite QM route gate
+CGSC extension wall probe
+CGSC primitive derivation probe
+QM inevitability route probe
+full QM proof-ledger closure
+```
+
+Result:
+
+```text
+cgsc_qm_one_pass_closure = STRUCTURAL_ROUTE_READY_FORMALIZATION_WALL
+proof_status = not_formal_proof
+global_failed = 0
+packages = 3
+package_evidenced = 2
+package_open_residual = 1
+package_blocked = 0
+finite_gate_failures = 0
+missing_formal_proof_artifacts = 21
+open_residuals = 1
+draft_checks_failed = 0
+```
+
+Global requirements all matched the expected state:
+
+```text
+finite_qm_route_gate:
+  PASS
+
+extension_wall_probe:
+  EXTENSION_WALL_LOCALIZED
+
+primitive_derivation:
+  PRIMITIVE_DERIVATION_NOT_CLOSED
+
+qm_inevitability_route:
+  CONDITIONAL_INEVITABILITY_ROUTE_VALIDATED
+
+full_qm_proof_closure:
+  PROOF_ARTIFACTS_MISSING
+```
+
+Package status:
+
+```text
+CANDIDATE_EVIDENCED:
+  finite_exposed_context_completion
+  route_automorphism_and_refinement_coherence
+
+CANDIDATE_EVIDENCED_WITH_OPEN_RESIDUAL:
+  generated_composite_no_hidden_joint_closure
+
+OPEN_RESIDUAL:
+  finite_sector.route_closed_residual
+```
+
+The useful conclusion is sharp:
+
+```text
+No fatal structural wall was detected in the current broad route.
+CGSC/QM is still not formally closed.
+The next wall is now a formalization/residual wall, not a vague conceptual wall.
+```
+
+The residual wall is:
+
+```text
+finite_sector.route_closed_residual:
+  a route-closed finite residual passes the declared finite screens but lacks a
+  theorem proving it is equivalent to the complex finite route or rejected by
+  the same no-hidden-joint rule.
+```
+
+The formal wall is:
+
+```text
+21 full-QM proof obligations lack machine-checkable proof artifacts.
+```
+
+Therefore the route is:
+
+```text
+structurally ready for proof formalization:
+  yes
+
+CGSC proved from primitives:
+  no
+
+full QM proved:
+  no
+
+fatal import wall found:
+  no
+
+remaining blocker:
+  prove or reject finite_sector.route_closed_residual and produce machine-
+  checkable proof artifacts for the registered obligations
+```
+
+Forbidden upgrade:
+
+```text
+does_not_claim_CGSC_is_proved
+does_not_claim_full_QM_is_proved
+does_not_mark_conditional_routes_as_formal_proof
+does_not_import_Hilbert_Born_unitary_tensor_or_Stone
+does_not_treat_open_residual_as_closed
+```
