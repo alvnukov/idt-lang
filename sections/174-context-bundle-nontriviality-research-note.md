@@ -14592,8 +14592,8 @@ bad route:
 
 blocked route:
   B0
-  => typed non-vacuous extension predicates
-  => six extension proofs
+  => grounded semantic source predicates
+  => six extension proofs bound to those sources
   => CGSC packages
   => conditional QM route can be reconsidered
 ```
@@ -14613,6 +14613,7 @@ But the next blocker is now more precise:
 replace schematic CheckedProp extension packaging with:
   typed semantic predicates;
   no-vacuity obligations;
+  grounded semantic source binding;
   proof obligations from B0 or a successor primitive base.
 ```
 
@@ -14692,4 +14693,97 @@ Forbidden upgrade:
 does_not_claim_typed_extensions_are_proved_from_B0
 does_not_mark_semantic_contract_as_CGSC_proof
 does_not_claim_full_QM_is_proved
+```
+
+### 174.285. Typed Decorative Semantic Wall
+
+The typed contract removes the one-object/all-True vacuity failure, but it is
+not yet enough for a QM proof. A second negative control shows that decorative
+typed content can still be placed beside all-True `CheckedProp` obligations:
+
+```text
+Proofs/QMClosure/CGSCTypedDecorativeWall.lean
+```
+
+Machine-checked witness:
+
+```text
+typed_contract_still_admits_decorative_true_extensions
+decorative_typed_base_yields_conditional_package_obligations
+```
+
+Meaning:
+
+```text
+Typed non-vacuity alone:
+  not sufficient for proof upgrade.
+
+Required next step:
+  bind each QM closure obligation to grounded semantic source predicates,
+  not to arbitrary CheckedProp fields carried beside a witness.
+```
+
+This changes the real target. We should not try to prove "six typed witnesses
+exist" as the next theorem. The correct theorem must be stronger:
+
+```text
+B0 or successor primitives
+=> grounded semantic source predicates
+=> CGSC extension obligations as definitions/theorems over those sources
+=> CGSC packages
+=> full-QM closure obligations
+```
+
+Until that binding exists, any formal upgrade would still be structurally
+forgeable.
+
+### 174.286. Grounded Semantic Extension Kernel
+
+The next proof object binds the six CGSC extension slots to semantic source
+predicates instead of arbitrary `CheckedProp` payloads:
+
+```text
+Proofs/QMClosure/CGSCGroundedSemanticExtensions.lean
+```
+
+It introduces one grounded source for each extension family:
+
+```text
+completeExposedSource
+reversibleSource
+refinementSource
+generatorSource
+productSource
+noHiddenJointSource
+```
+
+The generated extension records are computed from those sources. This removes
+the previous pattern:
+
+```text
+witness exists beside arbitrary obligation statement
+```
+
+and replaces it with:
+
+```text
+obligation statement is the semantic source predicate
+```
+
+Machine-checked artifacts:
+
+```text
+grounded_semantic_extension_base_yields_six_extension_statements
+grounded_semantic_extension_base_blocks_decorative_relations
+grounded_semantic_extension_base_yields_package_import_guards
+```
+
+This is still not a proof of QM from B0. It is the stricter theorem shape that
+the next primitive-base proof must instantiate:
+
+```text
+B0 or successor primitives
+=> grounded semantic source predicates
+=> six CGSC extension statements
+=> CGSC package obligations
 ```

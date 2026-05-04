@@ -9,5 +9,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,
     `Proofs.QMClosure.CGSCSemanticContentWall,
-    `Proofs.QMClosure.CGSCTypedSemanticExtensions
+    `Proofs.QMClosure.CGSCTypedSemanticExtensions,
+    `Proofs.QMClosure.CGSCTypedDecorativeWall,
+    `Proofs.QMClosure.CGSCGroundedSemanticExtensions
   ]

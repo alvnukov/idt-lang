@@ -9452,6 +9452,72 @@
             "typed semantic extension predicates still require proof from B0 or successor primitives",
             "this card registers no-vacuity semantics but does not prove CGSC or full_QM_I"
           ]
+        },
+        {
+          "id": "cgsc_typed_decorative_wall_failure_artifact",
+          "statement": "Lean failure-ledger artifact showing that the typed semantic no-vacuity contract can still be satisfied by decorative Bool/Unit witnesses with all-True CheckedProp obligations. Therefore typed witness existence alone cannot be upgraded to CGSC or full-QM proof; each obligation must be grounded in semantic source predicates.",
+          "scope": "failure_ledger_no_decorative_typed_cgsc_upgrade",
+          "proof_kind": "proof_sketch",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCTypedDecorativeWall.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCTypedDecorativeWall"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_typed_decorative_wall"
+          ],
+          "claim_refs": [
+            "cgsc_typed_decorative_wall.decorative_true_extensions_detected"
+          ],
+          "theorem": "IDT.QMClosure.typed_contract_still_admits_decorative_true_extensions",
+          "open_gaps": [
+            "ground each CGSC/QM closure obligation in semantic source predicates rather than arbitrary CheckedProp fields",
+            "this card is a failure-ledger guard, not a CGSC or full_QM_I proof"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_typed_nonvacuity_as_semantic_grounding",
+            "does_not_mark_decorative_typed_witnesses_as_CGSC_proof"
+          ]
+        },
+        {
+          "id": "cgsc_grounded_semantic_extension_kernel_conditional_artifact",
+          "statement": "Conditional Lean artifact that replaces arbitrary typed extension payloads with grounded semantic source predicates for all six CGSC extension families. The generated extension obligations are computed from those sources and include anti-decorative relation boundaries, but the sources still require proof from B0 or successor primitives before any CGSC/full-QM upgrade.",
+          "scope": "conditional_grounded_cgsc_semantic_extension_kernel",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCGroundedSemanticExtensions.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCGroundedSemanticExtensions"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_grounded_semantic_extension_kernel"
+          ],
+          "claim_refs": [
+            "cgsc_grounded_semantic_extensions.grounded_kernel_to_six_extension_statements"
+          ],
+          "theorem": "IDT.QMClosure.grounded_semantic_extension_base_yields_six_extension_statements",
+          "open_gaps": [
+            "grounded semantic source predicates still require proof from B0 or successor primitives",
+            "this card does not prove CGSC or full_QM_I"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_grounded_sources_are_proved_from_B0",
+            "does_not_mark_grounded_kernel_as_CGSC_proof"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

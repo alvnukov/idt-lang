@@ -14,6 +14,8 @@ ALLOWED_EXACT_COMMANDS = {
     ("lake", "build", "Proofs.QMClosure.CGSCPrimitiveBridge"),
     ("lake", "build", "Proofs.QMClosure.CGSCSemanticContentWall"),
     ("lake", "build", "Proofs.QMClosure.CGSCTypedSemanticExtensions"),
+    ("lake", "build", "Proofs.QMClosure.CGSCTypedDecorativeWall"),
+    ("lake", "build", "Proofs.QMClosure.CGSCGroundedSemanticExtensions"),
     ("python3", "scripts/sync_formal_proof_ledger.py", "--check"),
     ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json"),
 }
