@@ -11538,3 +11538,255 @@ with status:
 ```text
 candidate_conditional_proof
 ```
+
+### 174.243. One-Pass Full-QM Proof Attempt
+
+A single full-stack proof-attempt evaluator was added:
+
+```text
+scripts/evaluate_full_qm_proof_attempt.py
+```
+
+It does not attempt to prove QM by prose. It audits the current theorem stack:
+
+```text
+finite route gate
+-> route-closed residual closure
+-> FPD/projective-consistency derivation
+-> universal representation theorem
+-> universal Born readout theorem
+-> unitary dynamics theorem
+-> general composite theorem
+-> physical phase-scale boundary
+```
+
+Result:
+
+```text
+full_qm_proof_attempt = CONDITIONAL_ROUTE_ADVANCED
+pass = 1
+conditional = 2
+open = 5
+failed = 0
+```
+
+Passed:
+
+```text
+finite_route_gate:
+  checks = 31
+```
+
+Conditional:
+
+```text
+finite_route_residual_closure:
+  closed if finite projection determinacy and projective consistency hold.
+
+fpd_projective_derivation:
+  NUSD plus conservative projective gluing is a non-Hilbert derivation
+  candidate for those two closure principles.
+```
+
+Open:
+
+```text
+universal_representation_theorem:
+  prove all finite-projectively determined carriers satisfying the route
+  contract are complex-Hilbert-like.
+
+universal_born_readout_theorem:
+  extend finite normalized-overlap screens to a universal Born readout theorem.
+
+unitary_dynamics_theorem:
+  derive reversible inheritance dynamics without assuming unitarity.
+
+general_composite_theorem:
+  prove product-context exhaustion/tensor composition for arbitrary admissible
+  finite and projective-limit composites.
+
+physical_phase_scale_boundary:
+  keep hbar_I as calibration or prove an independent action-scale theorem.
+```
+
+### 174.244. Full-QM Attempt Verdict
+
+The one-pass proof attempt did not prove full QM.
+
+It did produce a cleaner theorem map:
+
+```text
+current route is not blocked by a failed finite gate;
+current route is not blocked by known finite carrier controls;
+current route is conditional on two lower closure principles;
+full QM remains open at five named theorem obligations.
+```
+
+This is a useful result because the failure is not vague:
+
+```text
+No failed check.
+No hidden Hilbert import in the current conditional route.
+Five explicit missing theorems.
+```
+
+The next mathematically meaningful target is:
+
+```text
+universal_representation_theorem
+```
+
+because without it, the route cannot honestly upgrade from:
+
+```text
+finite route and conditional carrier pressure
+```
+
+to:
+
+```text
+complex Hilbert carrier selected.
+```
+
+### 174.245. Representation Theorem Attempt
+
+The next one-pass target was the first open theorem from the full-QM proof
+attempt:
+
+```text
+universal_representation_theorem
+```
+
+Evaluator:
+
+```text
+scripts/evaluate_representation_classification_attempt.py
+```
+
+It tests whether the current route can reach a complex-Hilbert-like
+representation without directly importing Hilbert space.
+
+Routes tested:
+
+```text
+finite_route_only;
+fpd_projective_closed_route;
+spectral_without_symmetry;
+symmetry_without_spectral;
+spectral_symmetry_route;
+imported_complex_hilbert_representation.
+```
+
+Result:
+
+```text
+route = spectral_symmetry_route
+verdict = CONDITIONAL_REPRESENTATION_ROUTE
+passed = 8/8
+imports = none
+```
+
+The conditional route requires:
+
+```text
+1. finite route contract;
+2. FPD/projective residual closure;
+3. phase-bundle J;
+4. normalized overlap;
+5. local tomography;
+6. spectral decomposition into orthogonal exposed contexts;
+7. rich D_cl-preserving reversible symmetry.
+```
+
+Controls:
+
+```text
+spectral_without_symmetry:
+  OPEN_WALL
+
+symmetry_without_spectral:
+  OPEN_WALL
+
+fpd_projective_closed_route:
+  OPEN_WALL
+
+imported_complex_hilbert_representation:
+  IMPORTED_HIT
+```
+
+### 174.246. Meaning Of The Representation Attempt
+
+The representation wall did not disappear.
+
+It split into two sharper obligations:
+
+```text
+spectral_decomposition_theorem:
+  finite stable states decompose into orthogonal exposed context records.
+
+rich_reversible_symmetry_theorem:
+  D_cl automorphisms are rich enough to connect pure exposed contexts while
+  preserving normalized overlap and route structure.
+```
+
+If both are proved, the route has a non-imported representation theorem
+candidate.
+
+If either fails, complex-Hilbert carrier selection remains blocked.
+
+This is progress because the missing theorem is no longer:
+
+```text
+some representation theorem
+```
+
+but:
+
+```text
+spectrality + rich reversible D_cl symmetry
+```
+
+with direct Hilbert import rejected by the executable control.
+
+### 174.247. Updated One-Pass Full-QM Attempt
+
+After the representation pass:
+
+```text
+full_qm_proof_attempt = CONDITIONAL_ROUTE_ADVANCED
+pass = 1
+conditional = 3
+open = 4
+failed = 0
+```
+
+Conditional:
+
+```text
+finite_route_residual_closure
+fpd_projective_derivation
+universal_representation_theorem
+```
+
+Still open:
+
+```text
+universal_born_readout_theorem
+unitary_dynamics_theorem
+general_composite_theorem
+physical_phase_scale_boundary
+```
+
+This still does not prove QM.
+
+But the one-pass strategy made progress:
+
+```text
+universal_representation_theorem moved from OPEN to CONDITIONAL.
+```
+
+The next full-proof pass should attack the next open theorem:
+
+```text
+universal_born_readout_theorem
+```
