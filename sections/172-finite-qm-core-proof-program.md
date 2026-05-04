@@ -488,10 +488,12 @@ It separates the current carrier classes into:
 2. non-complex Jordan families, which are rejected by the conditional separator;
 3. the unconstrained generic GPT cone, which is rejected by the conditional
    closure theorem;
-4. route-closed GPT subtheories, which remain underdetermined;
+4. route-closed GPT subtheories, which collapse to complex-Hilbert-like under
+   the finite route-closed sub-frontier;
 5. the broader generic GPT cone, which remains underdetermined.
 
-Because the last two classes are not closed, the universal quantifier remains:
+Because the broader generic GPT cone is not closed, the universal quantifier
+remains:
 
 `open`.
 
@@ -508,7 +510,7 @@ This sub-frontier records what route-closed GPT already inherits:
 2. no unwitnessed effect-cone degrees;
 3. bounded composite correlations.
 
-It also records the two still-open closure requirements:
+It also records the two closure requirements:
 
 1. tomographic state-effect duality;
 2. reversible filter closure.
@@ -526,8 +528,28 @@ survives because effects separate all stable state parameters; a rank-deficient
 matrix is rejected because it leaves a hidden effect kernel.
 
 This moves tomographic state-effect duality to `conditional_proof` for the
-finite route-closed screen. Route-closed GPT still remains `underdetermined`
-because reversible filter closure is open.
+finite route-closed screen.
+
+Reversible filter closure is now backed by:
+
+`recoverable_support_update_implies_reversible_filter_closure`
+
+and its executable verifier:
+
+`reversible_filter_closure_theorem_demo`.
+
+The theorem checks finite recoverable support updates. A nonzero-support filter
+with a bijective support witness survives as reversible on its facticized
+support. Zero-support and nonbijective filter witnesses are rejected.
+
+This moves reversible filter closure to `conditional_proof` for the finite
+route-closed screen. With both route-closed GPT requirements conditional, the
+route-closed GPT sub-frontier now reports:
+
+`collapses_to_complex_hilbert_like`.
+
+The universal carrier quantifier still remains `open` because the broader
+generic GPT cone is not exhausted.
 
 The first proof route toward the universal carrier-selection theorem is now
 executable as:
@@ -676,14 +698,13 @@ The executable verifier is:
 `generic_gpt_closure_theorem_demo`.
 
 Under the finite candidate family and declared route-closure assumptions, the
-unconstrained generic GPT cone is rejected. The theorem also keeps two blockers
-explicit:
+unconstrained generic GPT cone is rejected. The theorem delegates route-closed
+GPT to its sub-frontier and keeps the remaining blocker explicit:
 
-1. route-closed GPT subtheory remains underdetermined;
-2. generic GPT cone remains underdetermined.
+1. generic GPT cone remains underdetermined.
 
-It is now `conditional_proof`, not `formal_proof`, because these
-underdetermined candidates still block universal carrier selection.
+It is now `conditional_proof`, not `formal_proof`, because the broader generic
+GPT cone still blocks universal carrier selection.
 
 Status:
 

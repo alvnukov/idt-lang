@@ -61,6 +61,9 @@ from theory_verifier.core import (
     NON_EXACT_HOLONOMY_SOURCE_TARGET,
     RHO_CHI_PROTOCOL_REQUIRED_SYMBOLS,
     RHO_CHI_PROTOCOL_TARGET,
+    REVERSIBLE_FILTER_CLOSURE_THEOREM_ASSUMPTIONS,
+    REVERSIBLE_FILTER_CLOSURE_THEOREM_CONCLUSIONS,
+    REVERSIBLE_FILTER_CLOSURE_THEOREM_FORBIDDEN_UPGRADES,
     ROUTE_CLOSED_GPT_FRONTIER_INHERITED_SUPPORT,
     ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS,
     SECTOR_ROLE_TAXONOMY_REQUIRED_SYMBOLS,
@@ -3272,6 +3275,91 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"purification_filtering_theorem_status_mismatch"})
 
+    def test_reversible_filter_closure_theorem_rejects_nonbijective_survivor(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_reversible_filter_closure",
+                        "type": "reversible_filter_closure_theorem",
+                        "target_theorem_card": "recoverable_support_update_implies_reversible_filter_closure",
+                        "assumptions": list(REVERSIBLE_FILTER_CLOSURE_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(REVERSIBLE_FILTER_CLOSURE_THEOREM_CONCLUSIONS),
+                        "samples": [
+                            {
+                                "id": "good_filter",
+                                "prior": [0.2, 0.3, 0.5],
+                                "filter_indices": [1, 2],
+                                "reversible_image_indices": [2, 1],
+                                "expected_acceptance_probability": 0.8,
+                                "expected_status": "survives",
+                            },
+                            {
+                                "id": "bad_nonbijective_claimed_survivor",
+                                "prior": [0.2, 0.3, 0.5],
+                                "filter_indices": [1, 2],
+                                "reversible_image_indices": [1, 1],
+                                "expected_acceptance_probability": 0.8,
+                                "expected_status": "survives",
+                            },
+                            {
+                                "id": "zero_support",
+                                "prior": [1.0, 0.0, 0.0],
+                                "filter_indices": [1, 2],
+                                "reversible_image_indices": [2, 1],
+                                "expected_acceptance_probability": 0.0,
+                                "expected_status": "rejected",
+                            },
+                        ],
+                        "evidence_refs": [
+                            "purification_filtering_implies_recoverable_support_update",
+                            "purification_filtering_recoverable_support_theorem_demo",
+                            "idt_purification_filtering_demo",
+                        ],
+                        "forbidden_upgrades": list(REVERSIBLE_FILTER_CLOSURE_THEOREM_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "conditional_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"reversible_filter_closure_status_mismatch"})
+
+    def test_reversible_filter_closure_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "recoverable_support_update_implies_reversible_filter_closure",
+                        "statement": "badly upgraded reversible filter closure",
+                        "role": "theorem",
+                        "assumptions": list(REVERSIBLE_FILTER_CLOSURE_THEOREM_ASSUMPTIONS),
+                        "dependencies": [
+                            "reversible_filter_closure_theorem_demo",
+                            "purification_filtering_implies_recoverable_support_update",
+                            "purification_filtering_recoverable_support_theorem_demo",
+                            "idt_purification_filtering_demo",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "reversible_filter_closure_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(REVERSIBLE_FILTER_CLOSURE_THEOREM_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"reversible_filter_closure_theorem_card_status_mismatch"})
+
     def test_bounded_correlation_theorem_rejects_bad_status(self) -> None:
         manifest = parse_manifest(
             {
@@ -3357,7 +3445,6 @@ class TheoryVerifierTests(unittest.TestCase):
                         ],
                         "rejected_cases": ["unconstrained_generic_gpt_cone"],
                         "remaining_underdetermined_candidates": [
-                            "route_closed_gpt_subtheory",
                             "generic_gpt_cone",
                         ],
                         "forbidden_upgrades": list(GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES),

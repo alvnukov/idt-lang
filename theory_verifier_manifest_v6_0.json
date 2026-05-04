@@ -2978,6 +2978,38 @@
       ]
     },
     {
+      "id": "recoverable_support_update_implies_reversible_filter_closure",
+      "statement": "For a finite route-closed GPT subtheory, if filtering is a support-restricted recoverable update with nonzero support and the support witness is bijective, then the filter is reversible on its facticized support. Zero-support and nonbijective filter witnesses are rejected.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_context_family",
+        "recoverable_extension_context",
+        "support_restricted_filter_update",
+        "nonzero_filter_support",
+        "bijective_support_witness"
+      ],
+      "dependencies": [
+        "reversible_filter_closure_theorem_demo",
+        "purification_filtering_implies_recoverable_support_update",
+        "purification_filtering_recoverable_support_theorem_demo",
+        "idt_purification_filtering_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "reversible_filter_closure_theorem_demo",
+      "known_failures": [
+        "does not prove universal carrier selection",
+        "does not derive Hilbert carrier",
+        "does not close broader generic GPT cone"
+      ],
+      "physical_scope": "Finite route-closed GPT reversible filter closure under recoverable support-update and bijective-witness assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_broader_generic_gpt_cone"
+      ]
+    },
+    {
       "id": "bounded_correlation_screen_rejects_superquantum_boxes",
       "statement": "For any finite IDT correlation context family, if single joint-context facticity, normalized context amplitudes, no global counterfactual table, stable correlation invariants, and the declared GPT separator principles hold, then Tsirelson-bounded correlation samples survive while PR-box-like and boxworld-like superquantum cases are rejected.",
       "role": "theorem",
@@ -3040,7 +3072,7 @@
     },
     {
       "id": "generic_gpt_closure_rejects_unconstrained_cone",
-      "statement": "For the finite generic-GPT closure screen, if route-witness completeness, no unwitnessed effect-cone degrees, tomographic state-effect duality, reversible filter closure, and bounded composite correlations are required, then the unconstrained generic GPT cone is rejected while route-closed GPT subtheories and the broader generic GPT cone remain underdetermined.",
+      "statement": "For the finite generic-GPT closure screen, if route-witness completeness, no unwitnessed effect-cone degrees, tomographic state-effect duality, reversible filter closure, and bounded composite correlations are required, then the unconstrained generic GPT cone is rejected while the route-closed GPT case is delegated to its sub-frontier and the broader generic GPT cone remains underdetermined.",
       "role": "theorem",
       "assumptions": [
         "finite_candidate_family",
@@ -3058,7 +3090,7 @@
       "proof_status": "conditional_proof",
       "verifier": "generic_gpt_closure_theorem_demo",
       "known_failures": [
-        "route-closed GPT subtheory remains underdetermined",
+        "route-closed GPT subtheory requires sub-frontier closure",
         "generic GPT cone remains underdetermined",
         "does not prove universal carrier selection"
       ],
@@ -4249,6 +4281,62 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "reversible_filter_closure_theorem_demo",
+      "type": "reversible_filter_closure_theorem",
+      "target_theorem_card": "recoverable_support_update_implies_reversible_filter_closure",
+      "tolerance": 1e-10,
+      "assumptions": [
+        "finite_context_family",
+        "recoverable_extension_context",
+        "support_restricted_filter_update",
+        "nonzero_filter_support",
+        "bijective_support_witness"
+      ],
+      "conclusions": [
+        "reversible_filter_closure",
+        "zero_support_filter_rejection",
+        "nonbijective_filter_witness_rejection"
+      ],
+      "samples": [
+        {
+          "id": "two_cell_reversible_filter",
+          "prior": [0.2, 0.3, 0.5],
+          "filter_indices": [1, 2],
+          "reversible_image_indices": [2, 1],
+          "expected_acceptance_probability": 0.8,
+          "expected_status": "survives"
+        },
+        {
+          "id": "zero_support_filter",
+          "prior": [1.0, 0.0, 0.0],
+          "filter_indices": [1, 2],
+          "reversible_image_indices": [2, 1],
+          "expected_acceptance_probability": 0.0,
+          "expected_status": "rejected"
+        },
+        {
+          "id": "nonbijective_filter_witness",
+          "prior": [0.2, 0.3, 0.5],
+          "filter_indices": [1, 2],
+          "reversible_image_indices": [1, 1],
+          "expected_acceptance_probability": 0.8,
+          "expected_status": "rejected"
+        }
+      ],
+      "evidence_refs": [
+        "purification_filtering_implies_recoverable_support_update",
+        "purification_filtering_recoverable_support_theorem_demo",
+        "idt_purification_filtering_demo"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_broader_generic_gpt_cone"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "bounded_correlation_screen_theorem_demo",
       "type": "bounded_correlation_screen_theorem",
       "target_theorem_card": "bounded_correlation_screen_rejects_superquantum_boxes",
@@ -4335,7 +4423,7 @@
       ],
       "conclusions": [
         "unconstrained_generic_gpt_cone_rejection",
-        "route_closed_gpt_subtheory_remains_underdetermined",
+        "route_closed_gpt_subtheory_delegated_to_subfrontier",
         "generic_gpt_cone_remains_underdetermined"
       ],
       "evidence_refs": [
@@ -4346,7 +4434,6 @@
         "unconstrained_generic_gpt_cone"
       ],
       "remaining_underdetermined_candidates": [
-        "route_closed_gpt_subtheory",
         "generic_gpt_cone"
       ],
       "forbidden_upgrades": [
@@ -4695,14 +4782,15 @@
         },
         {
           "id": "route_closed_gpt_subtheory",
-          "status": "underdetermined",
+          "status": "collapses_to_complex_hilbert_like",
           "evidence_refs": [
             "route_closed_gpt_subtheory_frontier_demo",
+            "recoverable_support_update_implies_reversible_filter_closure",
             "route_witness_completeness_implies_tomographic_state_effect_duality",
             "generic_gpt_closure_rejects_unconstrained_cone",
             "generic_gpt_closure_separator_demo"
           ],
-          "open_gap": "Route-closed GPT subtheories now have conditional tomographic state-effect duality, but reversible filter closure remains open."
+          "open_gap": ""
         },
         {
           "id": "broader_generic_gpt_cone",
@@ -4742,15 +4830,21 @@
         },
         {
           "id": "reversible_filter_closure",
-          "status": "open",
+          "status": "conditional_proof",
           "evidence_refs": [
+            "recoverable_support_update_implies_reversible_filter_closure",
+            "reversible_filter_closure_theorem_demo",
             "generic_gpt_closure_separator_demo",
             "purification_filtering_implies_recoverable_support_update"
           ],
-          "next_proof_obligation": "Prove reversible filter closure for route-closed GPT subtheories from IDT filtering/facticity structure, or keep route-closed GPT underdetermined."
+          "conditional_theorem_refs": [
+            "recoverable_support_update_implies_reversible_filter_closure",
+            "reversible_filter_closure_theorem_demo"
+          ],
+          "next_proof_obligation": ""
         }
       ],
-      "expected_status": "underdetermined"
+      "expected_status": "collapses_to_complex_hilbert_like"
     },
     {
       "id": "carrier_selection_proof_route_demo",
@@ -4981,12 +5075,10 @@
       ],
       "expected_exclusion_count": 1,
       "remaining_underdetermined_candidates": [
-        "route_closed_gpt_subtheory",
         "generic_gpt_cone"
       ],
-      "expected_underdetermined_count": 2,
+      "expected_underdetermined_count": 1,
       "open_generalization_gaps": [
-        "route-closed GPT subtheory remains underdetermined",
         "generic GPT cone remains underdetermined",
         "complex Hilbert carrier is not selected from IDT primitives alone"
       ],

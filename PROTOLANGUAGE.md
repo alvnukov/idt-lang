@@ -650,15 +650,20 @@ Hilbert-like structure survives the current screens, but no carrier is selected
 while the universal carrier/classification theorem remains open.
 The `carrier_universal_quantifier_frontier_demo` now makes the universal
 carrier quantifier explicit: non-complex Jordan and unconstrained generic GPT
-classes are rejected, complex Hilbert-like structure survives, and route-closed
-plus broader generic GPT classes remain underdetermined.
+classes are rejected, complex Hilbert-like structure survives, route-closed GPT
+collapses to complex-Hilbert-like under its finite sub-frontier, and the broader
+generic GPT class remains underdetermined.
 The `route_closed_gpt_subtheory_frontier_demo` now splits the route-closed GPT
 blocker into two proof obligations: tomographic state-effect duality and
 reversible filter closure.
 The `route_witness_completeness_implies_tomographic_state_effect_duality`
 theorem card and `tomographic_state_effect_duality_theorem_demo` now promote
 the first of those obligations to `conditional_proof` using finite
-state-effect witness rank; reversible filter closure remains open.
+state-effect witness rank. The
+`recoverable_support_update_implies_reversible_filter_closure` theorem card and
+`reversible_filter_closure_theorem_demo` now promote the second obligation to
+`conditional_proof` using nonzero-support filters with bijective support
+witnesses.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

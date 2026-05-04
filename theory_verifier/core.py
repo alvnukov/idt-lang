@@ -166,6 +166,27 @@ PURIFICATION_FILTERING_THEOREM_FORBIDDEN_UPGRADES = (
     "does_not_select_complex_Hilbert_from_IDT_primitives_alone",
 )
 
+REVERSIBLE_FILTER_CLOSURE_THEOREM_ASSUMPTIONS = (
+    "finite_context_family",
+    "recoverable_extension_context",
+    "support_restricted_filter_update",
+    "nonzero_filter_support",
+    "bijective_support_witness",
+)
+
+REVERSIBLE_FILTER_CLOSURE_THEOREM_CONCLUSIONS = (
+    "reversible_filter_closure",
+    "zero_support_filter_rejection",
+    "nonbijective_filter_witness_rejection",
+)
+
+REVERSIBLE_FILTER_CLOSURE_THEOREM_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_Hilbert_carrier",
+    "does_not_close_broader_generic_gpt_cone",
+)
+
 IDT_BOUNDED_CORRELATION_CONDITIONS = (
     "single_joint_context_facticity",
     "normalized_context_amplitudes",
@@ -244,7 +265,7 @@ GENERIC_GPT_THEOREM_ASSUMPTIONS = (
 
 GENERIC_GPT_THEOREM_CONCLUSIONS = (
     "unconstrained_generic_gpt_cone_rejection",
-    "route_closed_gpt_subtheory_remains_underdetermined",
+    "route_closed_gpt_subtheory_delegated_to_subfrontier",
     "generic_gpt_cone_remains_underdetermined",
 )
 
@@ -407,6 +428,7 @@ CARRIER_QUANTIFIER_FRONTIER_CLASSES = (
 CARRIER_QUANTIFIER_STATUSES = {
     "survives",
     "rejected",
+    "collapses_to_complex_hilbert_like",
     "underdetermined",
     "out_of_scope",
 }
@@ -1842,6 +1864,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_purification_filtering_theorem_grounding(manifest))
     checks.append("purification-filtering theorem grounding")
 
+    issues.extend(check_reversible_filter_closure_theorem_grounding(manifest))
+    checks.append("reversible filter closure theorem grounding")
+
     issues.extend(check_bounded_correlation_theorem_grounding(manifest))
     checks.append("bounded-correlation theorem grounding")
 
@@ -2851,6 +2876,63 @@ def check_purification_filtering_theorem_grounding(manifest: Manifest) -> list[I
         issues.append(
             Issue(
                 "purification_filtering_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
+    return issues
+
+
+def check_reversible_filter_closure_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("recoverable_support_update_implies_reversible_filter_closure")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "reversible_filter_closure_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "reversible_filter_closure_theorem_demo",
+        "purification_filtering_implies_recoverable_support_update",
+        "purification_filtering_recoverable_support_theorem_demo",
+        "idt_purification_filtering_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "reversible_filter_closure_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "reversible_filter_closure_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    if not set(REVERSIBLE_FILTER_CLOSURE_THEOREM_ASSUMPTIONS).issubset(set(theorem_card.assumptions)):
+        issues.append(
+            Issue(
+                "reversible_filter_closure_theorem_card_assumption_missing",
+                f"{theorem_card.identifier}: missing assumptions from reversible filter closure boundary",
+            )
+        )
+    if not set(REVERSIBLE_FILTER_CLOSURE_THEOREM_FORBIDDEN_UPGRADES).issubset(set(theorem_card.forbidden_claims)):
+        issues.append(
+            Issue(
+                "reversible_filter_closure_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
             )
         )
@@ -6366,6 +6448,128 @@ def check_purification_filtering_recoverable_support_theorem_gate(gate: FiniteGa
     return []
 
 
+def check_reversible_filter_closure_theorem_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "recoverable_support_update_implies_reversible_filter_closure":
+        return [
+            Issue(
+                "reversible_filter_closure_theorem_target_mismatch",
+                f"{gate.identifier}: target card must be recoverable_support_update_implies_reversible_filter_closure",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(REVERSIBLE_FILTER_CLOSURE_THEOREM_ASSUMPTIONS):
+        return [
+            Issue(
+                "reversible_filter_closure_theorem_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the conditional reversible filter closure theorem",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(REVERSIBLE_FILTER_CLOSURE_THEOREM_CONCLUSIONS):
+        return [
+            Issue(
+                "reversible_filter_closure_theorem_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must match reversible closure and rejected filter witnesses",
+            )
+        ]
+
+    samples = require_list(gate.payload.get("samples"), f"{gate.identifier}.samples")
+    if len(samples) < 3:
+        raise ManifestError(f"{gate.identifier}: samples must include reversible, zero-support, and nonbijective witnesses")
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    accepted = 0
+    rejected = 0
+    for index, item in enumerate(samples):
+        sample = require_mapping(item, f"{gate.identifier}.samples[{index}]")
+        sample_id = require_string(sample.get("id"), f"{gate.identifier}.samples[{index}].id")
+        prior = parse_nonnegative_real_list(sample.get("prior"), f"{gate.identifier}.samples[{index}].prior")
+        filter_indices = parse_index_tuple(sample.get("filter_indices"), f"{gate.identifier}.samples[{index}].filter_indices")
+        image_indices = parse_index_tuple(sample.get("reversible_image_indices"), f"{gate.identifier}.samples[{index}].reversible_image_indices")
+        expected_acceptance = parse_unit_interval(
+            sample.get("expected_acceptance_probability"),
+            f"{gate.identifier}.samples[{index}].expected_acceptance_probability",
+        )
+        expected_status = require_string(sample.get("expected_status"), f"{gate.identifier}.samples[{index}].expected_status")
+        if expected_status not in {"survives", "rejected"}:
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} expected_status is unknown")
+        if abs(sum(prior) - 1.0) > tolerance:
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} prior must be normalized")
+        if len(filter_indices) != len(image_indices):
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} filter/image size mismatch")
+        if any(index_value >= len(prior) for index_value in filter_indices):
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} filter index out of range")
+        if any(index_value >= len(prior) for index_value in image_indices):
+            raise ManifestError(f"{gate.identifier}: sample {sample_id} image index out of range")
+        acceptance = sum(prior[index_value] for index_value in filter_indices)
+        if abs(acceptance - expected_acceptance) > tolerance:
+            return [
+                Issue(
+                    "reversible_filter_closure_acceptance_mismatch",
+                    f"{gate.identifier}: sample {sample_id} expected acceptance {expected_acceptance:g}, computed {acceptance:g}",
+                )
+            ]
+        nonzero_support = acceptance > tolerance
+        support_unique = len(set(filter_indices)) == len(filter_indices)
+        image_unique = len(set(image_indices)) == len(image_indices)
+        support_preserved = set(filter_indices) == set(image_indices)
+        computed_status = "survives" if nonzero_support and support_unique and image_unique and support_preserved else "rejected"
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "reversible_filter_closure_status_mismatch",
+                    f"{gate.identifier}: sample {sample_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
+        if computed_status == "survives":
+            accepted += 1
+        if computed_status == "rejected":
+            rejected += 1
+    if accepted == 0 or rejected < 2:
+        return [
+            Issue(
+                "reversible_filter_closure_separator_incomplete",
+                f"{gate.identifier}: theorem gate must include one survivor and rejected zero-support/nonbijective samples",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("evidence_refs", []), f"{gate.identifier}.evidence_refs")
+    required_evidence = {
+        "purification_filtering_implies_recoverable_support_update",
+        "purification_filtering_recoverable_support_theorem_demo",
+        "idt_purification_filtering_demo",
+    }
+    if set(evidence_refs) != required_evidence:
+        return [
+            Issue(
+                "reversible_filter_closure_theorem_evidence_mismatch",
+                f"{gate.identifier}: evidence refs must link recoverable support theorem and purification/filtering gate",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(REVERSIBLE_FILTER_CLOSURE_THEOREM_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "reversible_filter_closure_theorem_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM claim boundary",
+            )
+        ]
+
+    expected_theorem_status = require_string(gate.payload.get("expected_theorem_status"), f"{gate.identifier}.expected_theorem_status")
+    computed_theorem_status = "conditional_proof"
+    if expected_theorem_status != computed_theorem_status:
+        return [
+            Issue(
+                "reversible_filter_closure_theorem_status_mismatch",
+                f"{gate.identifier}: expected {expected_theorem_status}, computed {computed_theorem_status}",
+            )
+        ]
+    return []
+
+
 def check_bounded_correlation_screen_theorem_gate(gate: FiniteGate) -> list[Issue]:
     target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
     if target_card != "bounded_correlation_screen_rejects_superquantum_boxes":
@@ -6571,11 +6775,11 @@ def check_generic_gpt_closure_theorem_gate(gate: FiniteGate) -> list[Issue]:
         gate.payload.get("remaining_underdetermined_candidates", []),
         f"{gate.identifier}.remaining_underdetermined_candidates",
     )
-    if set(remaining_underdetermined) != {"route_closed_gpt_subtheory", "generic_gpt_cone"}:
+    if set(remaining_underdetermined) != {"generic_gpt_cone"}:
         return [
             Issue(
                 "generic_gpt_theorem_underdetermined_cases_mismatch",
-                f"{gate.identifier}: remaining underdetermination must include route_closed_gpt_subtheory and generic_gpt_cone",
+                f"{gate.identifier}: remaining underdetermination must include only generic_gpt_cone",
             )
         ]
 
@@ -15336,6 +15540,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "context_product_local_tomography_theorem": check_context_product_local_tomography_theorem_gate,
     "tomographic_state_effect_duality_theorem": check_tomographic_state_effect_duality_theorem_gate,
     "purification_filtering_recoverable_support_theorem": check_purification_filtering_recoverable_support_theorem_gate,
+    "reversible_filter_closure_theorem": check_reversible_filter_closure_theorem_gate,
     "bounded_correlation_screen_theorem": check_bounded_correlation_screen_theorem_gate,
     "noncomplex_jordan_separator_theorem": check_noncomplex_jordan_separator_theorem_gate,
     "generic_gpt_closure_theorem": check_generic_gpt_closure_theorem_gate,
