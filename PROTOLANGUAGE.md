@@ -705,6 +705,10 @@ The `generic_gpt_classification_lemma_route_demo` now starts the fifth lemma
 route below that theorem route: generic GPT witnesses exclude the unconstrained
 generic cone while explicitly retaining route-closed and generic GPT
 underdetermination.
+The `generic_gpt_closure_rejects_unconstrained_cone` theorem card now promotes
+this fifth route to a `conditional_proof`: under the finite candidate family and
+declared route-closure assumptions, the unconstrained generic GPT cone is
+rejected while route-closed and generic GPT underdetermination remain blockers.
 The verifier now locks `universal_carrier_selection_theorem` directly to
 `carrier_selection_proof_route_demo`, so a theorem card cannot claim
 `formal_proof` while the route remains `open`.

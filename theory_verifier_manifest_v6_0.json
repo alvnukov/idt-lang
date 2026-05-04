@@ -3038,6 +3038,38 @@
       ]
     },
     {
+      "id": "generic_gpt_closure_rejects_unconstrained_cone",
+      "statement": "For the finite generic-GPT closure screen, if route-witness completeness, no unwitnessed effect-cone degrees, tomographic state-effect duality, reversible filter closure, and bounded composite correlations are required, then the unconstrained generic GPT cone is rejected while route-closed GPT subtheories and the broader generic GPT cone remain underdetermined.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_candidate_family",
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "tomographic_state_effect_duality",
+        "reversible_filter_closure",
+        "bounded_composite_correlations"
+      ],
+      "dependencies": [
+        "generic_gpt_closure_theorem_demo",
+        "generic_gpt_closure_separator_demo",
+        "carrier_selection_frontier_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "generic_gpt_closure_theorem_demo",
+      "known_failures": [
+        "route-closed GPT subtheory remains underdetermined",
+        "generic GPT cone remains underdetermined",
+        "does not prove universal carrier selection"
+      ],
+      "physical_scope": "Finite generic-GPT closure separator under declared route-closure assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
@@ -4164,6 +4196,42 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "generic_gpt_closure_theorem_demo",
+      "type": "generic_gpt_closure_theorem",
+      "target_theorem_card": "generic_gpt_closure_rejects_unconstrained_cone",
+      "assumptions": [
+        "finite_candidate_family",
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "tomographic_state_effect_duality",
+        "reversible_filter_closure",
+        "bounded_composite_correlations"
+      ],
+      "conclusions": [
+        "unconstrained_generic_gpt_cone_rejection",
+        "route_closed_gpt_subtheory_remains_underdetermined",
+        "generic_gpt_cone_remains_underdetermined"
+      ],
+      "evidence_refs": [
+        "generic_gpt_closure_separator_demo",
+        "carrier_selection_frontier_demo"
+      ],
+      "rejected_cases": [
+        "unconstrained_generic_gpt_cone"
+      ],
+      "remaining_underdetermined_candidates": [
+        "route_closed_gpt_subtheory",
+        "generic_gpt_cone"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "idt_purification_filtering_demo",
       "type": "idt_purification_filtering",
       "tolerance": 1.0e-10,
@@ -4518,13 +4586,15 @@
         },
         {
           "id": "extend_generic_gpt_exclusion_to_classification_theorem",
-          "status": "finite_witnessed",
+          "status": "conditional_proof",
           "evidence_refs": [
             "generic_gpt_classification_lemma_route_demo",
+            "generic_gpt_closure_rejects_unconstrained_cone",
+            "generic_gpt_closure_theorem_demo",
             "generic_gpt_closure_separator_demo",
             "carrier_selection_frontier_demo"
           ],
-          "open_gap": "Generic GPT separator exists, but it is not yet a classification theorem."
+          "open_gap": "Generic GPT closure now has a conditional unconstrained-cone rejection theorem, but route-closed and generic GPT underdetermination still block universal carrier selection."
         }
       ],
       "expected_proof_status": "open"
@@ -4681,6 +4751,10 @@
         "generic_gpt_closure_separator_demo",
         "carrier_selection_frontier_demo"
       ],
+      "conditional_theorem_refs": [
+        "generic_gpt_closure_rejects_unconstrained_cone",
+        "generic_gpt_closure_theorem_demo"
+      ],
       "excluded_counterexamples": [
         "unconstrained_generic_gpt_cone"
       ],
@@ -4691,11 +4765,11 @@
       ],
       "expected_underdetermined_count": 2,
       "open_generalization_gaps": [
-        "promote finite generic GPT closure samples to a classification theorem",
-        "decide whether route-closed GPT subtheories collapse to complex Hilbert carriers under IDT primitives",
-        "prove no generic GPT cone survives all carrier-selection obligations outside complex Hilbert space"
+        "route-closed GPT subtheory remains underdetermined",
+        "generic GPT cone remains underdetermined",
+        "complex Hilbert carrier is not selected from IDT primitives alone"
       ],
-      "expected_lemma_status": "finite_witnessed"
+      "expected_lemma_status": "conditional_proof"
     },
     {
       "id": "triple_path_sorkin_parameter_demo",

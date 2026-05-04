@@ -181,9 +181,18 @@ The fifth lemma route is now manifest-backed:
 
 `generic_gpt_classification_lemma_route_demo`
 
-It records generic GPT closure conditions, finite exclusions, remaining
-underdetermined candidates, expected counts, and remaining classification gaps
-for the fifth carrier-selection lemma.
+The fifth conditional separator theorem is now manifest-backed:
+
+`generic_gpt_closure_rejects_unconstrained_cone`
+
+Its executable verifier is:
+
+`generic_gpt_closure_theorem_demo`
+
+It promotes the generic-GPT route from finite witness to `conditional_proof`:
+the unconstrained generic GPT cone is rejected, while the route-closed GPT
+subtheory and the broader generic GPT cone remain explicit underdetermined
+blockers. This is the current frontier for universal carrier selection.
 
 The verifier now also checks carrier-selection theorem grounding directly:
 `universal_carrier_selection_theorem` must match

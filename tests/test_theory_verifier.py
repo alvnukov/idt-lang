@@ -26,6 +26,9 @@ from theory_verifier.core import (
     ELL0_PHYSICAL_CANDIDATE_REQUIRED_SYMBOLS,
     ELL0_PHYSICAL_CANDIDATE_TARGET,
     FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS,
+    GENERIC_GPT_THEOREM_ASSUMPTIONS,
+    GENERIC_GPT_THEOREM_CONCLUSIONS,
+    GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
     HBAR_ACTION_STANDARD_REQUIRED_GATES,
     HBAR_ACTION_STANDARD_REQUIRED_SYMBOLS,
     HBAR_ACTION_STANDARD_TARGET,
@@ -3180,6 +3183,38 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"noncomplex_jordan_theorem_status_mismatch"})
 
+    def test_generic_gpt_theorem_rejects_bad_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_generic_gpt_theorem",
+                        "type": "generic_gpt_closure_theorem",
+                        "target_theorem_card": "generic_gpt_closure_rejects_unconstrained_cone",
+                        "assumptions": list(GENERIC_GPT_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(GENERIC_GPT_THEOREM_CONCLUSIONS),
+                        "evidence_refs": [
+                            "generic_gpt_closure_separator_demo",
+                            "carrier_selection_frontier_demo",
+                        ],
+                        "rejected_cases": ["unconstrained_generic_gpt_cone"],
+                        "remaining_underdetermined_candidates": [
+                            "route_closed_gpt_subtheory",
+                            "generic_gpt_cone",
+                        ],
+                        "forbidden_upgrades": list(GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"generic_gpt_theorem_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -3839,6 +3874,32 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"noncomplex_jordan_theorem_card_status_mismatch"})
+
+    def test_generic_gpt_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "generic_gpt_closure_rejects_unconstrained_cone",
+                        "statement": "conditional separator",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": [],
+                        "proof_status": "formal_proof",
+                        "verifier": "generic_gpt_closure_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"generic_gpt_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

@@ -598,10 +598,23 @@ It also records two remaining underdetermined candidates:
 1. route-closed GPT subtheory;
 2. generic GPT cone.
 
-It still remains `finite_witnessed`, not `formal_proof`, because the generic
-GPT closure samples must be promoted to a classification theorem and the
-route-closed subtheory must be shown to collapse to the complex Hilbert carrier
-under IDT primitives.
+It is now backed by the conditional theorem card:
+
+`generic_gpt_closure_rejects_unconstrained_cone`.
+
+The executable verifier is:
+
+`generic_gpt_closure_theorem_demo`.
+
+Under the finite candidate family and declared route-closure assumptions, the
+unconstrained generic GPT cone is rejected. The theorem also keeps two blockers
+explicit:
+
+1. route-closed GPT subtheory remains underdetermined;
+2. generic GPT cone remains underdetermined.
+
+It is now `conditional_proof`, not `formal_proof`, because these
+underdetermined candidates still block universal carrier selection.
 
 Status:
 
