@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.26.0`
+Current version: `v7.0.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -217,6 +217,7 @@ The canonical theory modules are:
 172. [171. QM Experiment Language Ledger](sections/171-qm-experiment-language-ledger.md)
 173. [172. Finite QM Core Proof Program](sections/172-finite-qm-core-proof-program.md)
 174. [173. IDT MetaLang Research Graph](sections/173-idt-metalang-research-graph.md)
+175. [174. Context-Bundle Nontriviality Research Note](sections/174-context-bundle-nontriviality-research-note.md)
 
 ---
 
@@ -835,6 +836,14 @@ bounded arity witnesses, route-generator witnesses, no-new-effect witnesses,
 joint-only rejection scope, and proof-ledger consistency before rerunning the
 IDT verifier. This does not upgrade QM, Hilbert space, Born rule, tensor
 composition, unitary dynamics, or first-principles `hbar_I`.
+The `context_first_primitive_base_revision_demo` opens the v7.0 boundary: the
+candidate lower base is context-first rather than global-history-first. It
+tracks admissible context covers, local outcome-event presheaves, inheritance
+transition families, facticization witnesses, and stable distinguishability as
+lower-base candidates. The current v6 primitive core remains an executable
+scaffold until a migration gate recovers it as a readout interface or marks it
+as superseded. This does not derive Hilbert space, Born rule, GR, full QM,
+`hbar_I`, or `G_I`.
 
 ---
 

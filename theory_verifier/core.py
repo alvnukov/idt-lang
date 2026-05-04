@@ -1193,6 +1193,51 @@ HILBERT_BELL_GRAVITY_SCALE_FORBIDDEN_UPGRADES = (
     "does_not_treat_scale_suppression_as_derivation",
 )
 
+CONTEXT_FIRST_PRIMITIVE_BASE_TARGET_SCOPE = "v7_context_first_lower_base"
+CONTEXT_FIRST_PRIMITIVE_BASE_RULE = "no_primitive_global_structure_and_derived_readout_interfaces"
+
+CONTEXT_FIRST_LOWER_BASE_PRIMITIVES: dict[str, str] = {
+    "admissible_context_cover": "lower_base_candidate",
+    "local_outcome_event_presheaf": "lower_base_candidate",
+    "inheritance_transition_family": "lower_base_candidate",
+    "facticization_witness_relation": "lower_base_candidate",
+    "stable_distinguishability_relation": "lower_base_candidate",
+}
+
+CONTEXT_FIRST_DERIVED_INTERFACES: dict[str, str] = {
+    "history_space": "derived_interface_obligation",
+    "event_algebra": "derived_interface_obligation",
+    "global_fact_table": "forbidden_as_primitive",
+    "hilbert_carrier": "representation_obligation",
+    "probability_readout_measure": "theorem_obligation",
+    "metric_spacetime": "projection_obligation",
+}
+
+CONTEXT_FIRST_BASE_PRINCIPLES: dict[str, str] = {
+    "local_facticity": "v7_base_principle_candidate",
+    "no_primitive_global_section": "v7_base_principle_candidate",
+    "overlap_discipline": "v7_base_principle_candidate",
+    "obstruction_physicality": "v7_base_principle_candidate",
+    "finite_witness_discipline": "v7_base_principle_candidate",
+    "minimal_carrier_selection": "v7_base_principle_candidate",
+    "scale_projection_boundary": "v7_base_principle_candidate",
+}
+
+CONTEXT_FIRST_PRIMITIVE_BASE_RESULTS = (
+    "context_first_base_migration_candidate",
+    "failed",
+)
+
+CONTEXT_FIRST_PRIMITIVE_BASE_FORBIDDEN_UPGRADES = (
+    "does_not_replace_v6_core_without_migration_gate",
+    "does_not_prove_Hilbert_carrier",
+    "does_not_prove_Born_rule",
+    "does_not_prove_GR_or_metric_spacetime",
+    "does_not_close_full_QM_I",
+    "does_not_derive_hbar_I_or_G_I",
+    "does_not_treat_candidate_base_as_formal_proof",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2812,6 +2857,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_hilbert_bell_gravity_scale_probe_grounding(manifest))
     checks.append("Hilbert-Bell-gravity scale probe grounding")
+
+    issues.extend(check_context_first_primitive_base_grounding(manifest))
+    checks.append("context-first primitive base grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -6202,6 +6250,26 @@ def check_hilbert_bell_gravity_scale_probe_grounding(manifest: Manifest) -> list
                 issues.append(
                     Issue(
                         "hilbert_bell_gravity_scale_probe_ref_unresolved",
+                        f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
+                    )
+                )
+    return issues
+
+
+def check_context_first_primitive_base_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "context_first_primitive_base_revision":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "context_first_primitive_base"))
+        for field_name in ("previous_core_refs", "target_refs"):
+            for field_path, reference in iter_named_string_refs(gate.payload, field_name):
+                if reference in known_refs or research_graph_doc_ref_exists(reference):
+                    continue
+                issues.append(
+                    Issue(
+                        "context_first_primitive_base_ref_unresolved",
                         f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
                     )
                 )
@@ -14508,6 +14576,219 @@ def check_hilbert_bell_gravity_scale_probe_gate(gate: FiniteGate) -> list[Issue]
     return []
 
 
+def check_context_first_primitive_base_revision_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != CONTEXT_FIRST_PRIMITIVE_BASE_TARGET_SCOPE:
+        return [
+            Issue(
+                "context_first_primitive_base_target_mismatch",
+                f"{gate.identifier}: target_scope must be {CONTEXT_FIRST_PRIMITIVE_BASE_TARGET_SCOPE}",
+            )
+        ]
+    base_rule = require_string(gate.payload.get("base_rule"), f"{gate.identifier}.base_rule")
+    if base_rule != CONTEXT_FIRST_PRIMITIVE_BASE_RULE:
+        return [
+            Issue(
+                "context_first_primitive_base_rule_mismatch",
+                f"{gate.identifier}: base_rule must forbid primitive global structure",
+            )
+        ]
+    previous_core_refs = require_string_tuple(
+        gate.payload.get("previous_core_refs", []),
+        f"{gate.identifier}.previous_core_refs",
+    )
+    if "idt_primitive_core_contract_demo" not in previous_core_refs:
+        return [
+            Issue(
+                "context_first_primitive_base_previous_core_missing",
+                f"{gate.identifier}: previous_core_refs must cite idt_primitive_core_contract_demo",
+            )
+        ]
+
+    lower_base_primitives = require_list(
+        gate.payload.get("lower_base_primitives"),
+        f"{gate.identifier}.lower_base_primitives",
+    )
+    seen_primitives: set[str] = set()
+    for index, raw_primitive in enumerate(lower_base_primitives):
+        primitive = require_mapping(raw_primitive, f"{gate.identifier}.lower_base_primitives[{index}]")
+        primitive_id = require_string(primitive.get("id"), f"{gate.identifier}.lower_base_primitives[{index}].id")
+        if primitive_id not in CONTEXT_FIRST_LOWER_BASE_PRIMITIVES:
+            return [
+                Issue(
+                    "context_first_primitive_base_unknown_primitive",
+                    f"{gate.identifier}: unknown lower-base primitive {primitive_id}",
+                )
+            ]
+        if primitive_id in seen_primitives:
+            return [
+                Issue(
+                    "context_first_primitive_base_duplicate_primitive",
+                    f"{gate.identifier}: duplicate lower-base primitive {primitive_id}",
+                )
+            ]
+        status = require_string(primitive.get("status"), f"{gate.identifier}.{primitive_id}.status")
+        expected_status = CONTEXT_FIRST_LOWER_BASE_PRIMITIVES[primitive_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "context_first_primitive_base_primitive_status_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain {expected_status}",
+                )
+            ]
+        statement = require_string(primitive.get("statement"), f"{gate.identifier}.{primitive_id}.statement")
+        evidence_refs = require_string_tuple(
+            primitive.get("evidence_refs", []),
+            f"{gate.identifier}.{primitive_id}.evidence_refs",
+        )
+        open_gap = require_string(primitive.get("open_gap"), f"{gate.identifier}.{primitive_id}.open_gap")
+        if not statement or not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "context_first_primitive_base_primitive_support_missing",
+                    f"{gate.identifier}: {primitive_id} must cite statement, evidence refs, and open gap",
+                )
+            ]
+        seen_primitives.add(primitive_id)
+    missing_primitives = sorted(set(CONTEXT_FIRST_LOWER_BASE_PRIMITIVES) - seen_primitives)
+    if missing_primitives:
+        return [
+            Issue(
+                "context_first_primitive_base_primitive_missing",
+                f"{gate.identifier}: missing lower-base primitives: {', '.join(missing_primitives)}",
+            )
+        ]
+
+    derived_interfaces = require_list(gate.payload.get("derived_interfaces"), f"{gate.identifier}.derived_interfaces")
+    seen_interfaces: set[str] = set()
+    for index, raw_interface in enumerate(derived_interfaces):
+        interface = require_mapping(raw_interface, f"{gate.identifier}.derived_interfaces[{index}]")
+        interface_id = require_string(interface.get("id"), f"{gate.identifier}.derived_interfaces[{index}].id")
+        if interface_id not in CONTEXT_FIRST_DERIVED_INTERFACES:
+            return [
+                Issue(
+                    "context_first_primitive_base_unknown_interface",
+                    f"{gate.identifier}: unknown derived interface {interface_id}",
+                )
+            ]
+        if interface_id in seen_interfaces:
+            return [
+                Issue(
+                    "context_first_primitive_base_duplicate_interface",
+                    f"{gate.identifier}: duplicate derived interface {interface_id}",
+                )
+            ]
+        status = require_string(interface.get("status"), f"{gate.identifier}.{interface_id}.status")
+        expected_status = CONTEXT_FIRST_DERIVED_INTERFACES[interface_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "context_first_primitive_base_interface_status_mismatch",
+                    f"{gate.identifier}: {interface_id} must remain {expected_status}",
+                )
+            ]
+        target_refs = require_string_tuple(
+            interface.get("target_refs", []),
+            f"{gate.identifier}.{interface_id}.target_refs",
+        )
+        evidence_refs = require_string_tuple(
+            interface.get("evidence_refs", []),
+            f"{gate.identifier}.{interface_id}.evidence_refs",
+        )
+        open_gap = require_string(interface.get("open_gap"), f"{gate.identifier}.{interface_id}.open_gap")
+        if not target_refs or not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "context_first_primitive_base_interface_support_missing",
+                    f"{gate.identifier}: {interface_id} must cite targets, evidence refs, and open gap",
+                )
+            ]
+        seen_interfaces.add(interface_id)
+    missing_interfaces = sorted(set(CONTEXT_FIRST_DERIVED_INTERFACES) - seen_interfaces)
+    if missing_interfaces:
+        return [
+            Issue(
+                "context_first_primitive_base_interface_missing",
+                f"{gate.identifier}: missing derived interfaces: {', '.join(missing_interfaces)}",
+            )
+        ]
+
+    principles = require_list(gate.payload.get("principles"), f"{gate.identifier}.principles")
+    seen_principles: set[str] = set()
+    for index, raw_principle in enumerate(principles):
+        principle = require_mapping(raw_principle, f"{gate.identifier}.principles[{index}]")
+        principle_id = require_string(principle.get("id"), f"{gate.identifier}.principles[{index}].id")
+        if principle_id not in CONTEXT_FIRST_BASE_PRINCIPLES:
+            return [
+                Issue(
+                    "context_first_primitive_base_unknown_principle",
+                    f"{gate.identifier}: unknown base principle {principle_id}",
+                )
+            ]
+        if principle_id in seen_principles:
+            return [
+                Issue(
+                    "context_first_primitive_base_duplicate_principle",
+                    f"{gate.identifier}: duplicate base principle {principle_id}",
+                )
+            ]
+        status = require_string(principle.get("status"), f"{gate.identifier}.{principle_id}.status")
+        expected_status = CONTEXT_FIRST_BASE_PRINCIPLES[principle_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "context_first_primitive_base_principle_status_mismatch",
+                    f"{gate.identifier}: {principle_id} must remain {expected_status}",
+                )
+            ]
+        evidence_refs = require_string_tuple(
+            principle.get("evidence_refs", []),
+            f"{gate.identifier}.{principle_id}.evidence_refs",
+        )
+        open_gap = require_string(principle.get("open_gap"), f"{gate.identifier}.{principle_id}.open_gap")
+        if not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "context_first_primitive_base_principle_support_missing",
+                    f"{gate.identifier}: {principle_id} must cite evidence refs and open gap",
+                )
+            ]
+        seen_principles.add(principle_id)
+    missing_principles = sorted(set(CONTEXT_FIRST_BASE_PRINCIPLES) - seen_principles)
+    if missing_principles:
+        return [
+            Issue(
+                "context_first_primitive_base_principle_missing",
+                f"{gate.identifier}: missing base principles: {', '.join(missing_principles)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_base_status"),
+        f"{gate.identifier}.expected_base_status",
+    )
+    if expected_status not in CONTEXT_FIRST_PRIMITIVE_BASE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_base_status is unknown")
+    if expected_status != "context_first_base_migration_candidate":
+        return [
+            Issue(
+                "context_first_primitive_base_status_mismatch",
+                f"{gate.identifier}: v7 base must remain a migration candidate",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(CONTEXT_FIRST_PRIMITIVE_BASE_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "context_first_primitive_base_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must prevent v7 base overclaim",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -20338,6 +20619,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "fundamental_unknownness_bridge_audit": check_fundamental_unknownness_bridge_audit_gate,
     "hilbert_spacetime_bridge_audit": check_hilbert_spacetime_bridge_audit_gate,
     "hilbert_bell_gravity_scale_probe": check_hilbert_bell_gravity_scale_probe_gate,
+    "context_first_primitive_base_revision": check_context_first_primitive_base_revision_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,

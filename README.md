@@ -65,9 +65,15 @@ Current auditable results:
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
 - primitive-core contract: history space, event algebra, readout-context
-  family, and inheritance-act family are locked as carrier-neutral primitives;
-  QM imports are forbidden inside that core and are routed to explicit theorem
-  or proof obligations.
+  family, and inheritance-act family remain the current executable
+  carrier-neutral v6 core; QM imports are forbidden inside that core and are
+  routed to explicit theorem or proof obligations. A lower context-first base
+  candidate is now documented as a migration target, not as a proof upgrade.
+- v7 context-first primitive-base boundary: admissible context covers, local
+  outcome-event presheaves, inheritance transition families, facticization
+  witnesses, and stable distinguishability are tracked as the lower-base
+  candidate. The v6 core must be recovered as a readout interface or explicitly
+  superseded before this becomes a completed migration.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

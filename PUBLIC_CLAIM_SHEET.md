@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.26.0`.
+Current theory version: `v7.0.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -105,6 +105,12 @@ The main current successes are bounded and methodological:
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized
    with the manifest, then runs Lean 4 and the IDT verifier.
+15. The v7 context-first primitive-base migration boundary is executable. It
+   records admissible contexts, local outcome-event presheaves, inheritance
+   transitions, facticization witnesses, and stable distinguishability as the
+   lower-base candidate, while keeping the v6 core as a verifier-facing
+   scaffold until a migration gate recovers or supersedes it. This does not
+   upgrade QM, Hilbert space, Born rule, GR, `hbar_I`, or `G_I`.
 
 ## What The Verifier Catches
 
@@ -121,6 +127,8 @@ The verifier is designed to reject progress by relabeling. It blocks:
    structures;
 8. a `formal_proof` marker without a proof-ledger card and machine-checkable
    proof artifacts.
+9. treating the v7 context-first base candidate as a completed proof of
+   Hilbert space, Born readout, GR, full QM, `hbar_I`, or `G_I`.
 
 ## What Is Explicitly Not Claimed
 
@@ -136,6 +144,8 @@ IDT currently does not claim:
 7. a derivation of complex Hilbert space, the universal Born rule, tensor
    composition, unitary dynamics, or first-principles `hbar_I` from IDT
    primitives.
+8. a completed migration from the v6 executable primitive core to the v7
+   context-first lower base.
 
 ## Derived, Conditional, Calibrated, Blocked
 

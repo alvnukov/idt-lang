@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.26.0",
+  "theory_version": "v7.0.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4968,8 +4968,8 @@
     },
     {
       "expected_component_status": "formal_proof",
-      "expected_gate_type_count": 235,
-      "expected_gate_type_digest": "64ed61f7a305bb6975ec9dd170c7b119c953889cf6ae52d00f11233c7aab42d1",
+      "expected_gate_type_count": 236,
+      "expected_gate_type_digest": "c60c518589019c0425f9ecd82130aac10f73230f0dd461cdd9509053a6e03520",
       "id": "idt_core_gate_type_registry_audit_demo",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
       "type": "idt_core_gate_type_registry_audit"
@@ -8955,6 +8955,221 @@
       ],
       "target_scope": "hilbert_bell_gravity_scale_hidden_common_source_search",
       "type": "hilbert_bell_gravity_scale_probe"
+    },
+    {
+      "id": "context_first_primitive_base_revision_demo",
+      "type": "context_first_primitive_base_revision",
+      "target_scope": "v7_context_first_lower_base",
+      "base_rule": "no_primitive_global_structure_and_derived_readout_interfaces",
+      "previous_core_refs": [
+        "idt_primitive_core_contract_demo",
+        "foundation_import_boundary_audit_demo"
+      ],
+      "lower_base_primitives": [
+        {
+          "id": "admissible_context_cover",
+          "statement": "Admissible contexts form the lower cover/category before global event algebra.",
+          "status": "lower_base_candidate",
+          "evidence_refs": [
+            "sections/01-primitives.md",
+            "sections/174-context-bundle-nontriviality-research-note.md"
+          ],
+          "open_gap": "The verifier still treats the v6 core as executable scaffold until migration closes."
+        },
+        {
+          "id": "local_outcome_event_presheaf",
+          "statement": "Outcome events are local sections over contexts before any global section is allowed.",
+          "status": "lower_base_candidate",
+          "evidence_refs": [
+            "sections/01-primitives.md",
+            "ks_contextuality_obstruction_demo"
+          ],
+          "open_gap": "A full presheaf semantics proof is not yet machine-checked."
+        },
+        {
+          "id": "inheritance_transition_family",
+          "statement": "Inheritance acts are transition families between contexts, not global dynamics over facts.",
+          "status": "lower_base_candidate",
+          "evidence_refs": [
+            "sections/01-primitives.md",
+            "fundamental_unknownness_bridge_audit_demo"
+          ],
+          "open_gap": "Reversible inheritance and continuum dynamics remain open obligations."
+        },
+        {
+          "id": "facticization_witness_relation",
+          "statement": "Facts require admissible readout witnesses instead of primitive global truth assignment.",
+          "status": "lower_base_candidate",
+          "evidence_refs": [
+            "facticizable_distinguishability_closure_frontier_demo",
+            "sections/01-primitives.md"
+          ],
+          "open_gap": "FDC is a frontier candidate, not a full facticity theorem."
+        },
+        {
+          "id": "stable_distinguishability_relation",
+          "statement": "Stable distinguishability is lower than carrier geometry and probability readout.",
+          "status": "lower_base_candidate",
+          "evidence_refs": [
+            "distinguishability_geometry_probe_demo",
+            "qm_wall_probe_demo"
+          ],
+          "open_gap": "Positive geometry and Born readout remain open theorem obligations."
+        }
+      ],
+      "derived_interfaces": [
+        {
+          "id": "history_space",
+          "status": "derived_interface_obligation",
+          "target_refs": [
+            "idt_primitive_core_contract_demo",
+            "sections/01-primitives.md"
+          ],
+          "evidence_refs": [
+            "sections/01-primitives.md"
+          ],
+          "open_gap": "History space must be recovered as inheritance traces or marked as superseded scaffold."
+        },
+        {
+          "id": "event_algebra",
+          "status": "derived_interface_obligation",
+          "target_refs": [
+            "idt_primitive_core_contract_demo",
+            "sections/01-primitives.md"
+          ],
+          "evidence_refs": [
+            "sections/01-primitives.md"
+          ],
+          "open_gap": "Global event algebra must be recovered from local context algebras plus gluing."
+        },
+        {
+          "id": "global_fact_table",
+          "status": "forbidden_as_primitive",
+          "target_refs": [
+            "ks_contextuality_obstruction_demo",
+            "bell_chsh_table_demo"
+          ],
+          "evidence_refs": [
+            "sections/174-context-bundle-nontriviality-research-note.md"
+          ],
+          "open_gap": "Global sections are allowed only when local sections glue."
+        },
+        {
+          "id": "hilbert_carrier",
+          "status": "representation_obligation",
+          "target_refs": [
+            "hilbert_carrier_derivation",
+            "universal_carrier_selection_theorem"
+          ],
+          "evidence_refs": [
+            "qm_wall_probe_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "open_gap": "Complex Hilbert remains selected-target scaffold, not primitive base."
+        },
+        {
+          "id": "probability_readout_measure",
+          "status": "theorem_obligation",
+          "target_refs": [
+            "universal_born_rule_theorem",
+            "born_quadratic_readout_route_demo"
+          ],
+          "evidence_refs": [
+            "qm_wall_probe_demo",
+            "born_quadratic_readout_route_demo"
+          ],
+          "open_gap": "Born/quadratic readout is an obligation, not a primitive probability postulate."
+        },
+        {
+          "id": "metric_spacetime",
+          "status": "projection_obligation",
+          "target_refs": [
+            "weak_field_clock_calculator_I",
+            "G_I",
+            "ppn_no_slip_validation_I"
+          ],
+          "evidence_refs": [
+            "hilbert_spacetime_bridge_audit_demo",
+            "hilbert_bell_gravity_scale_probe_demo"
+          ],
+          "open_gap": "Metric geometry remains a clock/source projection obligation."
+        }
+      ],
+      "principles": [
+        {
+          "id": "local_facticity",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "facticizable_distinguishability_closure_frontier_demo",
+            "sections/01-primitives.md"
+          ],
+          "open_gap": "Local facticity has not yet been promoted to a formal theorem."
+        },
+        {
+          "id": "no_primitive_global_section",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "ks_contextuality_obstruction_demo",
+            "sections/174-context-bundle-nontriviality-research-note.md"
+          ],
+          "open_gap": "The principle blocks overclaim but does not derive quantum correlations."
+        },
+        {
+          "id": "overlap_discipline",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "sections/174-context-bundle-nontriviality-research-note.md"
+          ],
+          "open_gap": "Overlap compatibility still needs a compact formal grammar."
+        },
+        {
+          "id": "obstruction_physicality",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "fundamental_unknownness_bridge_audit_demo",
+            "hilbert_spacetime_bridge_audit_demo"
+          ],
+          "open_gap": "Obstruction calculus is a target, not a completed physical law."
+        },
+        {
+          "id": "finite_witness_discipline",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "facticizable_distinguishability_closure_frontier_demo",
+            "qm_proof_anti_hallucination_audit_demo"
+          ],
+          "open_gap": "Nonfinite residuals remain an explicit blocker."
+        },
+        {
+          "id": "minimal_carrier_selection",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "carrier_selection_frontier_demo",
+            "carrier_selection_proof_route_demo"
+          ],
+          "open_gap": "Universal carrier selection remains open."
+        },
+        {
+          "id": "scale_projection_boundary",
+          "status": "v7_base_principle_candidate",
+          "evidence_refs": [
+            "hilbert_bell_gravity_scale_probe_demo",
+            "source_response_charge_normalization_demo"
+          ],
+          "open_gap": "Scale separation is not yet derived."
+        }
+      ],
+      "expected_base_status": "context_first_base_migration_candidate",
+      "forbidden_upgrades": [
+        "does_not_replace_v6_core_without_migration_gate",
+        "does_not_prove_Hilbert_carrier",
+        "does_not_prove_Born_rule",
+        "does_not_prove_GR_or_metric_spacetime",
+        "does_not_close_full_QM_I",
+        "does_not_derive_hbar_I_or_G_I",
+        "does_not_treat_candidate_base_as_formal_proof"
+      ]
     },
     {
       "id": "formal_proof_ledger_audit_demo",

@@ -141,6 +141,12 @@ from theory_verifier.core import (
     CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_ASSUMPTIONS,
     CONTEXT_PRODUCT_LOCAL_TOMOGRAPHY_THEOREM_CONCLUSIONS,
     CONTEXT_PRODUCT_EXHAUSTION_PRIMITIVES,
+    CONTEXT_FIRST_BASE_PRINCIPLES,
+    CONTEXT_FIRST_DERIVED_INTERFACES,
+    CONTEXT_FIRST_LOWER_BASE_PRIMITIVES,
+    CONTEXT_FIRST_PRIMITIVE_BASE_FORBIDDEN_UPGRADES,
+    CONTEXT_FIRST_PRIMITIVE_BASE_RULE,
+    CONTEXT_FIRST_PRIMITIVE_BASE_TARGET_SCOPE,
     DISTINGUISHABILITY_GEOMETRY_REQUIREMENTS,
     GENERIC_GPT_CLOSURE_CONDITIONS,
     GPT_SEPARATOR_PRINCIPLES,
@@ -1165,6 +1171,135 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_probe_status": "scale_hidden_common_source_candidate",
             "forbidden_upgrades": list(HILBERT_BELL_GRAVITY_SCALE_FORBIDDEN_UPGRADES),
+        }
+
+    def context_first_primitive_base_revision_gate(self) -> dict[str, object]:
+        primitive_specs: dict[str, dict[str, object]] = {
+            "admissible_context_cover": {
+                "statement": "Admissible contexts form the lower cover/category before global event algebra.",
+                "evidence_refs": ["sections/01-primitives.md", "sections/174-context-bundle-nontriviality-research-note.md"],
+                "open_gap": "The verifier still treats the v6 core as executable scaffold until migration closes.",
+            },
+            "local_outcome_event_presheaf": {
+                "statement": "Outcome events are local sections over contexts before any global section is allowed.",
+                "evidence_refs": ["sections/01-primitives.md", "ks_contextuality_obstruction_demo"],
+                "open_gap": "A full presheaf semantics proof is not yet machine-checked.",
+            },
+            "inheritance_transition_family": {
+                "statement": "Inheritance acts are transition families between contexts, not global dynamics over facts.",
+                "evidence_refs": ["sections/01-primitives.md", "fundamental_unknownness_bridge_audit_demo"],
+                "open_gap": "Reversible inheritance and continuum dynamics remain open obligations.",
+            },
+            "facticization_witness_relation": {
+                "statement": "Facts require admissible readout witnesses instead of primitive global truth assignment.",
+                "evidence_refs": ["facticizable_distinguishability_closure_frontier_demo", "sections/01-primitives.md"],
+                "open_gap": "FDC is a frontier candidate, not a full facticity theorem.",
+            },
+            "stable_distinguishability_relation": {
+                "statement": "Stable distinguishability is lower than carrier geometry and probability readout.",
+                "evidence_refs": ["distinguishability_geometry_probe_demo", "qm_wall_probe_demo"],
+                "open_gap": "Positive geometry and Born readout remain open theorem obligations.",
+            },
+        }
+        interface_specs: dict[str, dict[str, object]] = {
+            "history_space": {
+                "target_refs": ["idt_primitive_core_contract_demo", "sections/01-primitives.md"],
+                "evidence_refs": ["sections/01-primitives.md"],
+                "open_gap": "History space must be recovered as inheritance traces or marked as superseded scaffold.",
+            },
+            "event_algebra": {
+                "target_refs": ["idt_primitive_core_contract_demo", "sections/01-primitives.md"],
+                "evidence_refs": ["sections/01-primitives.md"],
+                "open_gap": "Global event algebra must be recovered from local context algebras plus gluing.",
+            },
+            "global_fact_table": {
+                "target_refs": ["ks_contextuality_obstruction_demo", "bell_chsh_table_demo"],
+                "evidence_refs": ["sections/174-context-bundle-nontriviality-research-note.md"],
+                "open_gap": "Global sections are allowed only when local sections glue.",
+            },
+            "hilbert_carrier": {
+                "target_refs": ["hilbert_carrier_derivation", "universal_carrier_selection_theorem"],
+                "evidence_refs": ["qm_wall_probe_demo", "context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "Complex Hilbert remains selected-target scaffold, not primitive base.",
+            },
+            "probability_readout_measure": {
+                "target_refs": ["universal_born_rule_theorem", "quadratic_actualization_measure"],
+                "evidence_refs": ["qm_wall_probe_demo", "born_quadratic_readout_route_demo"],
+                "open_gap": "Born/quadratic readout is an obligation, not a primitive probability postulate.",
+            },
+            "metric_spacetime": {
+                "target_refs": ["weak_field_clock_calculator_I", "G_I", "ppn_no_slip_validation_I"],
+                "evidence_refs": ["hilbert_spacetime_bridge_audit_demo", "hilbert_bell_gravity_scale_probe_demo"],
+                "open_gap": "Metric geometry remains a clock/source projection obligation.",
+            },
+        }
+        principle_specs: dict[str, dict[str, object]] = {
+            "local_facticity": {
+                "evidence_refs": ["facticizable_distinguishability_closure_frontier_demo", "sections/01-primitives.md"],
+                "open_gap": "Local facticity has not yet been promoted to a formal theorem.",
+            },
+            "no_primitive_global_section": {
+                "evidence_refs": ["ks_contextuality_obstruction_demo", "sections/174-context-bundle-nontriviality-research-note.md"],
+                "open_gap": "The principle blocks overclaim but does not derive quantum correlations.",
+            },
+            "overlap_discipline": {
+                "evidence_refs": ["context_product_exhaustion_demo", "sections/174-context-bundle-nontriviality-research-note.md"],
+                "open_gap": "Overlap compatibility still needs a compact formal grammar.",
+            },
+            "obstruction_physicality": {
+                "evidence_refs": ["fundamental_unknownness_bridge_audit_demo", "hilbert_spacetime_bridge_audit_demo"],
+                "open_gap": "Obstruction calculus is a target, not a completed physical law.",
+            },
+            "finite_witness_discipline": {
+                "evidence_refs": ["facticizable_distinguishability_closure_frontier_demo", "qm_proof_anti_hallucination_audit_demo"],
+                "open_gap": "Nonfinite residuals remain an explicit blocker.",
+            },
+            "minimal_carrier_selection": {
+                "evidence_refs": ["carrier_selection_frontier_demo", "carrier_selection_proof_route_demo"],
+                "open_gap": "Universal carrier selection remains open.",
+            },
+            "scale_projection_boundary": {
+                "evidence_refs": ["hilbert_bell_gravity_scale_probe_demo", "source_response_charge_normalization_demo"],
+                "open_gap": "Scale separation is not yet derived.",
+            },
+        }
+        return {
+            "id": "test_context_first_primitive_base_revision",
+            "type": "context_first_primitive_base_revision",
+            "target_scope": CONTEXT_FIRST_PRIMITIVE_BASE_TARGET_SCOPE,
+            "base_rule": CONTEXT_FIRST_PRIMITIVE_BASE_RULE,
+            "previous_core_refs": ["idt_primitive_core_contract_demo", "foundation_import_boundary_audit_demo"],
+            "lower_base_primitives": [
+                {
+                    "id": primitive_id,
+                    "statement": spec["statement"],
+                    "status": CONTEXT_FIRST_LOWER_BASE_PRIMITIVES[primitive_id],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for primitive_id, spec in primitive_specs.items()
+            ],
+            "derived_interfaces": [
+                {
+                    "id": interface_id,
+                    "status": CONTEXT_FIRST_DERIVED_INTERFACES[interface_id],
+                    "target_refs": spec["target_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for interface_id, spec in interface_specs.items()
+            ],
+            "principles": [
+                {
+                    "id": principle_id,
+                    "status": CONTEXT_FIRST_BASE_PRINCIPLES[principle_id],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for principle_id, spec in principle_specs.items()
+            ],
+            "expected_base_status": "context_first_base_migration_candidate",
+            "forbidden_upgrades": list(CONTEXT_FIRST_PRIMITIVE_BASE_FORBIDDEN_UPGRADES),
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -8219,6 +8354,60 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"hilbert_bell_gravity_scale_probe_ref_unresolved"})
+
+    def test_context_first_primitive_base_rejects_primitive_status_upgrade(self) -> None:
+        gate = self.context_first_primitive_base_revision_gate()
+        primitives = gate["lower_base_primitives"]
+        if not isinstance(primitives, list):
+            self.fail("lower_base_primitives must be a list")
+        first_primitive = primitives[0]
+        if not isinstance(first_primitive, dict):
+            self.fail("primitive must be a mapping")
+        first_primitive["status"] = "formal_proof"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_first_primitive_base_primitive_status_mismatch"})
+
+    def test_context_first_primitive_base_rejects_missing_derived_interface(self) -> None:
+        gate = self.context_first_primitive_base_revision_gate()
+        derived_interfaces = gate["derived_interfaces"]
+        if not isinstance(derived_interfaces, list):
+            self.fail("derived_interfaces must be a list")
+        derived_interfaces.pop()
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_first_primitive_base_interface_missing"})
+
+    def test_context_first_primitive_base_grounding_rejects_unknown_target_ref(self) -> None:
+        gate = self.context_first_primitive_base_revision_gate()
+        derived_interfaces = gate["derived_interfaces"]
+        if not isinstance(derived_interfaces, list):
+            self.fail("derived_interfaces must be a list")
+        first_interface = derived_interfaces[0]
+        if not isinstance(first_interface, dict):
+            self.fail("derived interface must be a mapping")
+        first_interface["target_refs"] = ["missing_context_first_target_ref"]
+        raw_manifest = json.loads((ROOT / "theory_verifier_manifest_v6_0.json").read_text(encoding="utf-8"))
+        raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], gate]
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"context_first_primitive_base_ref_unresolved"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(
