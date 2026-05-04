@@ -203,6 +203,28 @@ NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS = (
     "bounded_correlation_route",
 )
 
+NONCOMPLEX_JORDAN_THEOREM_ASSUMPTIONS = (
+    "finite_candidate_family",
+    "complex_phase_orientation",
+    "local_tomographic_composition",
+    "associative_tensor_composition",
+    "purification_filtering_route",
+    "bounded_correlation_route",
+)
+
+NONCOMPLEX_JORDAN_THEOREM_CONCLUSIONS = (
+    "real_hilbert_like_rejection",
+    "quaternionic_hilbert_like_rejection",
+    "exceptional_jordan_like_rejection",
+)
+
+NONCOMPLEX_JORDAN_THEOREM_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_prove_Born_rule",
+    "does_not_select_complex_Hilbert_from_IDT_primitives_alone",
+)
+
 GENERIC_GPT_CLOSURE_CONDITIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -1714,6 +1736,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_bounded_correlation_theorem_grounding(manifest))
     checks.append("bounded-correlation theorem grounding")
 
+    issues.extend(check_noncomplex_jordan_theorem_grounding(manifest))
+    checks.append("noncomplex-Jordan theorem grounding")
+
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
 
@@ -2743,6 +2768,55 @@ def check_bounded_correlation_theorem_grounding(manifest: Manifest) -> list[Issu
         issues.append(
             Issue(
                 "bounded_correlation_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
+    return issues
+
+
+def check_noncomplex_jordan_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("noncomplex_jordan_separator_rejects_noncomplex_samples")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "noncomplex_jordan_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "noncomplex_jordan_separator_theorem_demo",
+        "noncomplex_jordan_separator_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "noncomplex_jordan_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "noncomplex_jordan_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    forbidden_upgrades = set(theorem_card.forbidden_claims)
+    if not set(NONCOMPLEX_JORDAN_THEOREM_FORBIDDEN_UPGRADES).issubset(forbidden_upgrades):
+        issues.append(
+            Issue(
+                "noncomplex_jordan_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
             )
         )
@@ -6069,6 +6143,85 @@ def check_bounded_correlation_screen_theorem_gate(gate: FiniteGate) -> list[Issu
     return []
 
 
+def check_noncomplex_jordan_separator_theorem_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "noncomplex_jordan_separator_rejects_noncomplex_samples":
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_target_mismatch",
+                f"{gate.identifier}: target card must be noncomplex_jordan_separator_rejects_noncomplex_samples",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(NONCOMPLEX_JORDAN_THEOREM_ASSUMPTIONS):
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the conditional non-complex Jordan theorem",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(NONCOMPLEX_JORDAN_THEOREM_CONCLUSIONS):
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must match non-complex sample rejection claims",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("evidence_refs", []), f"{gate.identifier}.evidence_refs")
+    if set(evidence_refs) != {"noncomplex_jordan_separator_demo"}:
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_evidence_mismatch",
+                f"{gate.identifier}: evidence refs must link the non-complex Jordan separator gate",
+            )
+        ]
+
+    rejected_cases = require_string_tuple(gate.payload.get("rejected_cases", []), f"{gate.identifier}.rejected_cases")
+    if set(rejected_cases) != {"real_hilbert_like", "quaternionic_hilbert_like", "exceptional_jordan_like"}:
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_rejected_cases_mismatch",
+                f"{gate.identifier}: rejected cases must include real, quaternionic, and exceptional Jordan-like samples",
+            )
+        ]
+
+    remaining_underdetermined = require_string_tuple(
+        gate.payload.get("remaining_underdetermined_candidates", []),
+        f"{gate.identifier}.remaining_underdetermined_candidates",
+    )
+    if set(remaining_underdetermined) != {"generic_gpt_cone"}:
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_underdetermined_cases_mismatch",
+                f"{gate.identifier}: remaining underdetermination must include generic_gpt_cone",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(NONCOMPLEX_JORDAN_THEOREM_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM claim boundary",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_theorem_status"), f"{gate.identifier}.expected_theorem_status")
+    computed_status = "conditional_proof"
+    if expected_status != computed_status:
+        return [
+            Issue(
+                "noncomplex_jordan_theorem_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
 def check_idt_purification_filtering_gate(gate: FiniteGate) -> list[Issue]:
     tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
     conditions = require_string_tuple(gate.payload.get("idt_conditions", []), f"{gate.identifier}.idt_conditions")
@@ -7231,10 +7384,24 @@ def check_noncomplex_jordan_classification_lemma_route_gate(gate: FiniteGate) ->
         ]
 
     open_gaps = require_string_tuple(gate.payload.get("open_generalization_gaps", []), f"{gate.identifier}.open_generalization_gaps")
+    conditional_refs = require_string_tuple(gate.payload.get("conditional_theorem_refs", []), f"{gate.identifier}.conditional_theorem_refs")
     expected_status = require_string(gate.payload.get("expected_lemma_status"), f"{gate.identifier}.expected_lemma_status")
     if expected_status not in CARRIER_SELECTION_PROOF_ROUTE_LEMMA_STATUSES:
         raise ManifestError(f"{gate.identifier}: expected_lemma_status is unknown")
-    if open_gaps:
+    required_conditional_refs = {
+        "noncomplex_jordan_separator_rejects_noncomplex_samples",
+        "noncomplex_jordan_separator_theorem_demo",
+    }
+    if conditional_refs and set(conditional_refs) != required_conditional_refs:
+        return [
+            Issue(
+                "noncomplex_jordan_classification_lemma_conditional_refs_mismatch",
+                f"{gate.identifier}: conditional theorem refs must link the non-complex Jordan theorem",
+            )
+        ]
+    if conditional_refs:
+        computed_status = "conditional_proof"
+    elif open_gaps:
         computed_status = "finite_witnessed"
     else:
         computed_status = "formal_proof"
@@ -14342,6 +14509,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "context_product_local_tomography_theorem": check_context_product_local_tomography_theorem_gate,
     "purification_filtering_recoverable_support_theorem": check_purification_filtering_recoverable_support_theorem_gate,
     "bounded_correlation_screen_theorem": check_bounded_correlation_screen_theorem_gate,
+    "noncomplex_jordan_separator_theorem": check_noncomplex_jordan_separator_theorem_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

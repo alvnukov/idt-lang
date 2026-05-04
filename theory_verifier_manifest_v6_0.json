@@ -3008,6 +3008,36 @@
       ]
     },
     {
+      "id": "noncomplex_jordan_separator_rejects_noncomplex_samples",
+      "statement": "For the finite candidate family checked by the IDT non-complex Jordan separator, if complex phase orientation, local-tomographic composition, associative tensor composition, purification/filtering route, and bounded-correlation route are required, then real-Hilbert-like, quaternionic-Hilbert-like, and exceptional-Jordan-like samples are rejected while generic GPT underdetermination remains open.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_candidate_family",
+        "complex_phase_orientation",
+        "local_tomographic_composition",
+        "associative_tensor_composition",
+        "purification_filtering_route",
+        "bounded_correlation_route"
+      ],
+      "dependencies": [
+        "noncomplex_jordan_separator_theorem_demo",
+        "noncomplex_jordan_separator_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "noncomplex_jordan_separator_theorem_demo",
+      "known_failures": [
+        "generic GPT cone remains underdetermined",
+        "does not prove universal carrier selection"
+      ],
+      "physical_scope": "Finite non-complex Jordan separator under declared carrier-route assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
@@ -4098,6 +4128,42 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "noncomplex_jordan_separator_theorem_demo",
+      "type": "noncomplex_jordan_separator_theorem",
+      "target_theorem_card": "noncomplex_jordan_separator_rejects_noncomplex_samples",
+      "assumptions": [
+        "finite_candidate_family",
+        "complex_phase_orientation",
+        "local_tomographic_composition",
+        "associative_tensor_composition",
+        "purification_filtering_route",
+        "bounded_correlation_route"
+      ],
+      "conclusions": [
+        "real_hilbert_like_rejection",
+        "quaternionic_hilbert_like_rejection",
+        "exceptional_jordan_like_rejection"
+      ],
+      "evidence_refs": [
+        "noncomplex_jordan_separator_demo"
+      ],
+      "rejected_cases": [
+        "real_hilbert_like",
+        "quaternionic_hilbert_like",
+        "exceptional_jordan_like"
+      ],
+      "remaining_underdetermined_candidates": [
+        "generic_gpt_cone"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_prove_Born_rule",
+        "does_not_select_complex_Hilbert_from_IDT_primitives_alone"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "idt_purification_filtering_demo",
       "type": "idt_purification_filtering",
       "tolerance": 1.0e-10,
@@ -4441,12 +4507,14 @@
         },
         {
           "id": "extend_noncomplex_jordan_exclusion_to_classification_theorem",
-          "status": "finite_witnessed",
+          "status": "conditional_proof",
           "evidence_refs": [
             "noncomplex_jordan_classification_lemma_route_demo",
+            "noncomplex_jordan_separator_rejects_noncomplex_samples",
+            "noncomplex_jordan_separator_theorem_demo",
             "noncomplex_jordan_separator_demo"
           ],
-          "open_gap": "Non-complex Jordan separator exists, but it is not yet a classification theorem."
+          "open_gap": "Non-complex Jordan separator now has a conditional sample-classification theorem, but it is not a universal carrier-selection theorem."
         },
         {
           "id": "extend_generic_gpt_exclusion_to_classification_theorem",
@@ -4581,6 +4649,10 @@
       "finite_evidence_refs": [
         "noncomplex_jordan_separator_demo"
       ],
+      "conditional_theorem_refs": [
+        "noncomplex_jordan_separator_rejects_noncomplex_samples",
+        "noncomplex_jordan_separator_theorem_demo"
+      ],
       "excluded_counterexamples": [
         "real_hilbert_like",
         "quaternionic_hilbert_like",
@@ -4588,11 +4660,11 @@
       ],
       "expected_exclusion_count": 3,
       "open_generalization_gaps": [
-        "promote finite non-complex Jordan samples to a classification theorem",
-        "prove IDT conditions exclude all real, quaternionic, and exceptional Jordan carrier families",
-        "connect the classification theorem to the remaining generic GPT cone"
+        "conditional theorem still assumes the finite candidate family",
+        "generic GPT cone remains underdetermined",
+        "complex Hilbert carrier is not selected from IDT primitives alone"
       ],
-      "expected_lemma_status": "finite_witnessed"
+      "expected_lemma_status": "conditional_proof"
     },
     {
       "id": "generic_gpt_classification_lemma_route_demo",

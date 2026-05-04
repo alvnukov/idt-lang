@@ -695,7 +695,12 @@ survive, while PR-box-like and boxworld-like cases are rejected.
 The `noncomplex_jordan_classification_lemma_route_demo` now starts the fourth
 lemma route below that theorem route: non-complex Jordan witnesses exclude
 finite real, quaternionic, and exceptional carrier samples while leaving
-classification gaps open.
+classification gaps open. The
+`noncomplex_jordan_separator_rejects_noncomplex_samples` theorem card now
+promotes this fourth route to a `conditional_proof`: under the finite candidate
+family and declared composition/filtering/correlation route assumptions,
+real-Hilbert-like, quaternionic-Hilbert-like, and exceptional-Jordan-like
+samples are rejected while generic GPT remains underdetermined.
 The `generic_gpt_classification_lemma_route_demo` now starts the fifth lemma
 route below that theorem route: generic GPT witnesses exclude the unconstrained
 generic cone while explicitly retaining route-closed and generic GPT

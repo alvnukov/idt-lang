@@ -566,9 +566,22 @@ route. The route records three finite exclusions:
 2. quaternionic Hilbert-like carrier;
 3. exceptional Jordan-like carrier.
 
-It still remains `finite_witnessed`, not `formal_proof`, because the finite
-non-complex Jordan samples must be promoted to a classification theorem and
-connected to the remaining generic GPT cone.
+It is now backed by the conditional theorem card:
+
+`noncomplex_jordan_separator_rejects_noncomplex_samples`.
+
+The executable verifier is:
+
+`noncomplex_jordan_separator_theorem_demo`.
+
+Under a finite candidate family and the declared route requirements for
+complex phase orientation, local-tomographic composition, associative tensor
+composition, purification/filtering, and bounded correlations, the theorem
+rejects the real-Hilbert-like, quaternionic-Hilbert-like, and
+exceptional-Jordan-like samples.
+
+It is now `conditional_proof`, not `formal_proof`, because the generic GPT cone
+remains underdetermined and the finite candidate family is still assumed.
 
 The fifth lemma route is now executable as:
 

@@ -32,6 +32,9 @@ from theory_verifier.core import (
     MEASUREMENT_FACTICITY_ROUTE_CONDITIONS,
     JOINT_ACTION_GRAVITY_ANCHOR_REQUIRED_SYMBOLS,
     JOINT_ACTION_GRAVITY_ANCHOR_TARGET,
+    NONCOMPLEX_JORDAN_THEOREM_ASSUMPTIONS,
+    NONCOMPLEX_JORDAN_THEOREM_CONCLUSIONS,
+    NONCOMPLEX_JORDAN_THEOREM_FORBIDDEN_UPGRADES,
     PRIMITIVE_TICK_REQUIRED_GATES,
     PRIMITIVE_TICK_REQUIRED_SYMBOLS,
     PRIMITIVE_TICK_TARGET,
@@ -3147,6 +3150,36 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"bounded_correlation_theorem_status_mismatch"})
 
+    def test_noncomplex_jordan_theorem_rejects_bad_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_noncomplex_jordan_theorem",
+                        "type": "noncomplex_jordan_separator_theorem",
+                        "target_theorem_card": "noncomplex_jordan_separator_rejects_noncomplex_samples",
+                        "assumptions": list(NONCOMPLEX_JORDAN_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(NONCOMPLEX_JORDAN_THEOREM_CONCLUSIONS),
+                        "evidence_refs": ["noncomplex_jordan_separator_demo"],
+                        "rejected_cases": [
+                            "real_hilbert_like",
+                            "quaternionic_hilbert_like",
+                            "exceptional_jordan_like",
+                        ],
+                        "remaining_underdetermined_candidates": ["generic_gpt_cone"],
+                        "forbidden_upgrades": list(NONCOMPLEX_JORDAN_THEOREM_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"noncomplex_jordan_theorem_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -3780,6 +3813,32 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"bounded_correlation_theorem_card_status_mismatch"})
+
+    def test_noncomplex_jordan_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "noncomplex_jordan_separator_rejects_noncomplex_samples",
+                        "statement": "conditional separator",
+                        "role": "theorem",
+                        "assumptions": [],
+                        "dependencies": [],
+                        "proof_status": "formal_proof",
+                        "verifier": "noncomplex_jordan_separator_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": [],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"noncomplex_jordan_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

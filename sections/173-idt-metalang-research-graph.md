@@ -163,9 +163,19 @@ The fourth lemma route is now manifest-backed:
 
 `noncomplex_jordan_classification_lemma_route_demo`
 
-It records non-complex Jordan separator conditions, finite exclusions,
-expected exclusion count, and remaining classification gaps for the fourth
-carrier-selection lemma.
+The fourth conditional separator theorem is now manifest-backed:
+
+`noncomplex_jordan_separator_rejects_noncomplex_samples`
+
+Its executable verifier is:
+
+`noncomplex_jordan_separator_theorem_demo`
+
+It promotes the non-complex Jordan route from finite witness to
+`conditional_proof`: under the finite candidate family and declared
+composition/filtering/correlation route assumptions, real-Hilbert-like,
+quaternionic-Hilbert-like, and exceptional-Jordan-like samples are rejected
+while the generic GPT cone remains underdetermined.
 
 The fifth lemma route is now manifest-backed:
 
