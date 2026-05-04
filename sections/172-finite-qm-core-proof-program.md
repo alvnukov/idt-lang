@@ -544,8 +544,15 @@ fixture remains the concrete rejected witness for this failure mode.
 The compactness route says that a uniform finite witness bound, preservation of
 facticized readout separation under limits, and exclusion of emergent
 joint-only invariants would reduce the residual back to the finite
-route-covered screen. The frontier still remains `open` because these are
-conditional routes, not formal derivations from IDT primitives.
+route-covered screen.
+
+The residual frontier now reports:
+
+`conditional_reduction`.
+
+This means every registered residual obligation has a conditional route, but
+the residual is not `closed` because those routes are not formal derivations
+from IDT primitives.
 
 This is the current reason `universal_carrier_selection_theorem` cannot be
 upgraded to `conditional_proof` or `formal_proof`.

@@ -7396,13 +7396,14 @@ def check_nonfinite_gpt_residual_frontier_gate(gate: FiniteGate) -> list[Issue]:
         ]
 
     expected_status = require_string(gate.payload.get("expected_residual_status"), f"{gate.identifier}.expected_residual_status")
-    if expected_status not in {"open", "closed"}:
+    if expected_status not in {"open", "conditional_reduction", "closed"}:
         raise ManifestError(f"{gate.identifier}: expected_residual_status is unknown")
-    computed_status = (
-        "closed"
-        if all(status == "formal_proof" for status in status_by_obligation.values())
-        else "open"
-    )
+    if all(status == "formal_proof" for status in status_by_obligation.values()):
+        computed_status = "closed"
+    elif all(status in {"conditional_proof", "formal_proof"} for status in status_by_obligation.values()):
+        computed_status = "conditional_reduction"
+    else:
+        computed_status = "open"
     if computed_status != expected_status:
         return [
             Issue(

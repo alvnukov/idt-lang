@@ -4740,7 +4740,7 @@
           "open_gap": "The no-emergence route is conditional on context-product exhaustion and product-effect separation; it is not yet a formal IDT derivation."
         }
       ],
-      "expected_residual_status": "open"
+      "expected_residual_status": "conditional_reduction"
     },
     {
       "id": "no_emergent_joint_only_invariant_route_demo",

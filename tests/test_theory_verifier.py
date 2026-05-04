@@ -3542,6 +3542,35 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"nonfinite_gpt_residual_frontier_status_mismatch"})
 
+    def test_nonfinite_gpt_residual_frontier_reports_conditional_reduction(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "stale_nonfinite_residual_frontier",
+                        "type": "nonfinite_gpt_residual_frontier",
+                        "target_class": "nonfinite_unwitnessed_residual",
+                        "obligations": [
+                            {
+                                "id": obligation,
+                                "status": "conditional_proof",
+                                "evidence_refs": ["broader_generic_gpt_cone_frontier_demo"],
+                                "open_gap": "conditional route, not formal proof",
+                            }
+                            for obligation in NONFINITE_GPT_RESIDUAL_FRONTIER_OBLIGATIONS
+                        ],
+                        "expected_residual_status": "open",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_frontier_status_mismatch"})
+
     def test_nonfinite_gpt_residual_compactness_rejects_formal_status(self) -> None:
         manifest = parse_manifest(
             {

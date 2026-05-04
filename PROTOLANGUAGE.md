@@ -660,9 +660,9 @@ remaining nonfinite or unwitnessed residual keeps universal carrier selection
 open.
 The `uniform_route_witness_compactness_closes_nonfinite_gpt_residual` theorem
 card and `nonfinite_gpt_residual_frontier_demo` now turn that residual into
-explicit proof obligations: derive a uniform finite route-witness bound and
-exclude emergent joint-only invariants from IDT primitives, or keep universal
-carrier selection open.
+explicit proof obligations. With all registered residual obligations now backed
+by conditional routes, the frontier reports `conditional_reduction`, not
+`closed`.
 The `finite_signature_closure_implies_uniform_route_witness_bound` theorem
 card and `uniform_witness_bound_route_demo` now reduce the uniform-bound
 obstruction to a conditional finite-signature/finite-generator route; it is not
