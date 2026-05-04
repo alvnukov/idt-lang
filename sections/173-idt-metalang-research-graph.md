@@ -341,3 +341,100 @@ incremental:
 Status:
 
 `idt_metalang_strengthening_needed_without_physics_overclaim`
+
+### 173.8. QM Proof Anti-Hallucination Audit
+
+The next verifier layer is:
+
+`qm_proof_anti_hallucination_audit_demo`
+
+It treats a successful finite-QM verifier pass as evidence, not as a proof of
+full QM. The audit checks the live graph boundaries:
+
+1. `full_QM_I` remains `target`;
+2. `hbar_I` remains `blocked`;
+3. `universal_carrier_selection_theorem` remains `open`;
+4. `limit_preserves_facticized_readout_separation` remains `open` inside
+   `nonfinite_gpt_residual_compactness_frontier_demo`;
+5. every conditional theorem card retains a `does_not_prove_full_QM_I`
+   forbidden claim;
+6. negative controls are declared for premature full-QM, carrier-selection,
+   nonfinite-limit, and conditional-theorem upgrades.
+
+The audit status is:
+
+`passes_with_open_gaps`
+
+This is intentionally not `formal_proof`. It is an anti-self-deception check:
+if a future edit silently turns an open QM blocker into a derived result, the
+manifest should fail before the prose can overclaim.
+
+Status:
+
+`qm_proof_anti_hallucination_audit_added`
+
+### 173.9. Structural Compression Map
+
+Viewed as one structure, the current theory has a smaller repeated shape:
+
+```text
+typed claim
+  -> dependencies
+  -> finite witness or bridge
+  -> verifier gate
+  -> theorem/frontier card
+  -> forbidden upgrades
+```
+
+This suggests several candidate abstractions:
+
+1. `research_graph_kernel`;
+2. `finite_witness_gate_schema`;
+3. `conditional_separator_schema`;
+4. `frontier_obstruction_schema`;
+5. `calibrated_anchor_boundary_schema`;
+6. `failure_as_information_schema`.
+
+The executable audit is:
+
+`idt_structural_compression_audit_demo`
+
+Its rule is:
+
+`abstractions_may_not_change_claim_status_or_close_open_gap`
+
+That rule is the important part. Mathematical compression is allowed only when
+it preserves truth conditions. A shorter language that relabels a bridge as a
+derivation, hides an open frontier, or reduces verifier coverage is not a
+simplification; it is a false proof.
+
+The immediate compression opportunity is to factor the repeated
+conditional-separator pattern. Many current carrier-selection routes have the
+same logical form:
+
+```text
+assumptions
+  + finite witnesses
+  + rejected counterexamples
+  + retained forbidden upgrades
+  -> conditional separator
+```
+
+The full-QM and nonfinite residual frontiers have the dual form:
+
+```text
+required theorem set
+  + component statuses
+  + obstruction ledger
+  + forbidden upgrades
+  -> frontier status
+```
+
+These are good candidates for future reusable verifier schemas. They are not
+yet implemented as a generic kernel, so the current status is only:
+
+`candidate_map`
+
+Status:
+
+`idt_structural_compression_candidate_map_added`

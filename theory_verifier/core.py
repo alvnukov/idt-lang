@@ -4,7 +4,7 @@ import json
 import hashlib
 import math
 import zipfile
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
@@ -848,6 +848,55 @@ RESEARCH_GRAPH_CONTRACT_SCHEMA_REFS = (
 RESEARCH_GRAPH_CONTRACT_CHECK_REFS = (
     "derivation graph cycles",
     "forbidden input paths",
+)
+
+QM_PROOF_ANTI_HALLUCINATION_REQUIRED_CHECKS = (
+    "full_qm_claim_boundary",
+    "first_principles_hbar_boundary",
+    "carrier_selection_boundary",
+    "nonfinite_limit_gap_boundary",
+    "conditional_theorem_forbidden_claims",
+    "negative_controls_declared",
+)
+
+QM_PROOF_ANTI_HALLUCINATION_NEGATIVE_CONTROLS = (
+    "premature_full_qm_derived",
+    "premature_carrier_selection_formal",
+    "premature_nonfinite_limit_gap_upgrade",
+    "conditional_theorem_forbidden_claim_removal",
+)
+
+QM_PROOF_ANTI_HALLUCINATION_FORBIDDEN_UPGRADES = (
+    "does_not_prove_full_QM_I",
+    "does_not_prove_universal_carrier_selection",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_convert_conditional_theorems_to_formal_proofs",
+)
+
+QM_PROOF_ANTI_HALLUCINATION_RESULTS = (
+    "passes_with_open_gaps",
+    "failed",
+)
+
+IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES = (
+    "research_graph_kernel",
+    "finite_witness_gate_schema",
+    "conditional_separator_schema",
+    "frontier_obstruction_schema",
+    "calibrated_anchor_boundary_schema",
+    "failure_as_information_schema",
+)
+
+IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES = (
+    "does_not_change_claim_statuses",
+    "does_not_close_open_gaps",
+    "does_not_relabel_bridges_as_derivations",
+    "does_not_reduce_verifier_coverage",
+)
+
+IDT_STRUCTURAL_COMPRESSION_RESULTS = (
+    "candidate_map",
+    "implemented_kernel",
 )
 
 THEOREM_CARD_ROLE_VALUES = (
@@ -2322,6 +2371,12 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_research_graph_contract_grounding(manifest))
     checks.append("research graph contract grounding")
+
+    issues.extend(check_qm_proof_anti_hallucination_grounding(manifest))
+    checks.append("QM proof anti-hallucination grounding")
+
+    issues.extend(check_idt_structural_compression_grounding(manifest))
+    checks.append("IDT structural compression grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -5297,6 +5352,166 @@ def check_research_graph_contract_grounding(manifest: Manifest) -> list[Issue]:
                     )
                 )
     return issues
+
+
+def check_qm_proof_anti_hallucination_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    gates_by_id = {gate.identifier: gate for gate in manifest.finite_gates}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "qm_proof_anti_hallucination_audit":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "qm_proof_anti_hallucination"))
+        full_qm_symbol = manifest.symbols.get("full_QM_I")
+        if full_qm_symbol is None or full_qm_symbol.status != "target":
+            issues.append(
+                Issue(
+                    "qm_proof_anti_hallucination_full_qm_status_mismatch",
+                    f"{gate.identifier}: full_QM_I must remain target until the full-QM frontier closes",
+                )
+            )
+        hbar_symbol = manifest.symbols.get("hbar_I")
+        if hbar_symbol is None or hbar_symbol.status != "blocked":
+            issues.append(
+                Issue(
+                    "qm_proof_anti_hallucination_hbar_status_mismatch",
+                    f"{gate.identifier}: hbar_I must remain blocked until a first-principles action-scale lock exists",
+                )
+            )
+        carrier_card = cards_by_id.get("universal_carrier_selection_theorem")
+        if carrier_card is None or carrier_card.proof_status != "open":
+            issues.append(
+                Issue(
+                    "qm_proof_anti_hallucination_carrier_status_mismatch",
+                    f"{gate.identifier}: universal_carrier_selection_theorem must remain open",
+                )
+            )
+        full_qm_frontier = gates_by_id.get("full_qm_closure_frontier_demo")
+        if full_qm_frontier is None or full_qm_frontier.gate_type != "full_qm_closure_frontier":
+            issues.append(
+                Issue(
+                    "qm_proof_anti_hallucination_frontier_missing",
+                    f"{gate.identifier}: full_qm_closure_frontier_demo must be present",
+                )
+            )
+        else:
+            expected_status = require_string(
+                full_qm_frontier.payload.get("expected_full_qm_status"),
+                "full_qm_closure_frontier_demo.expected_full_qm_status",
+            )
+            if expected_status != "blocked":
+                issues.append(
+                    Issue(
+                        "qm_proof_anti_hallucination_frontier_status_mismatch",
+                        f"{gate.identifier}: full-QM frontier must remain blocked",
+                    )
+                )
+        compactness_frontier = gates_by_id.get("nonfinite_gpt_residual_compactness_frontier_demo")
+        if compactness_frontier is None:
+            issues.append(
+                Issue(
+                    "qm_proof_anti_hallucination_nonfinite_frontier_missing",
+                    f"{gate.identifier}: nonfinite compactness frontier must be present",
+                )
+            )
+        else:
+            issues.extend(check_nonfinite_limit_gap_open(gate.identifier, compactness_frontier))
+        missing_forbidden = [
+            card.identifier
+            for card in manifest.theorem_cards
+            if card.proof_status == "conditional_proof" and "does_not_prove_full_QM_I" not in card.forbidden_claims
+        ]
+        if missing_forbidden:
+            issues.append(
+                Issue(
+                    "qm_proof_anti_hallucination_conditional_forbidden_claim_missing",
+                    (
+                        f"{gate.identifier}: conditional theorem cards missing full-QM forbidden claim: "
+                        f"{', '.join(sorted(missing_forbidden))}"
+                    ),
+                )
+            )
+    return issues
+
+
+def check_nonfinite_limit_gap_open(gate_id: str, compactness_frontier: FiniteGate) -> list[Issue]:
+    if compactness_frontier.gate_type != "nonfinite_gpt_residual_compactness_frontier":
+        return [
+            Issue(
+                "qm_proof_anti_hallucination_nonfinite_frontier_type_mismatch",
+                f"{gate_id}: nonfinite compactness frontier has wrong gate type",
+            )
+        ]
+    assumptions = require_list(
+        compactness_frontier.payload.get("assumptions"),
+        "nonfinite_gpt_residual_compactness_frontier_demo.assumptions",
+    )
+    for index, item in enumerate(assumptions):
+        assumption = require_mapping(item, f"nonfinite_gpt_residual_compactness_frontier_demo.assumptions[{index}]")
+        assumption_id = require_string(
+            assumption.get("id"),
+            f"nonfinite_gpt_residual_compactness_frontier_demo.assumptions[{index}].id",
+        )
+        if assumption_id != "limit_preserves_facticized_readout_separation":
+            continue
+        status = require_string(
+            assumption.get("status"),
+            f"nonfinite_gpt_residual_compactness_frontier_demo.assumptions[{index}].status",
+        )
+        if status == "open":
+            return []
+        return [
+            Issue(
+                "qm_proof_anti_hallucination_limit_gap_status_mismatch",
+                f"{gate_id}: limit_preserves_facticized_readout_separation must remain open",
+            )
+        ]
+    return [
+        Issue(
+            "qm_proof_anti_hallucination_limit_gap_missing",
+            f"{gate_id}: compactness frontier must expose the limit-preservation gap",
+        )
+    ]
+
+
+def check_idt_structural_compression_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "idt_structural_compression_audit":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "idt_structural_compression"))
+    return issues
+
+
+def check_gate_evidence_refs_grounded(gate: FiniteGate, known_refs: set[str], issue_prefix: str) -> list[Issue]:
+    issues: list[Issue] = []
+    for field_path, evidence_ref in iter_evidence_refs(gate.payload):
+        if evidence_ref in known_refs or research_graph_doc_ref_exists(evidence_ref):
+            continue
+        issues.append(
+            Issue(
+                f"{issue_prefix}_evidence_unresolved",
+                f"{gate.identifier}: evidence ref {evidence_ref!r} at {field_path} is not grounded",
+            )
+        )
+    return issues
+
+
+def iter_evidence_refs(raw: object, prefix: str = "") -> Iterator[tuple[str, str]]:
+    if isinstance(raw, dict):
+        for key, value in raw.items():
+            child_prefix = f"{prefix}.{key}" if prefix else key
+            if key == "evidence_refs":
+                refs = require_string_tuple(value, child_prefix)
+                for index, evidence_ref in enumerate(refs):
+                    yield f"{child_prefix}[{index}]", evidence_ref
+            else:
+                yield from iter_evidence_refs(value, child_prefix)
+    elif isinstance(raw, list):
+        for index, value in enumerate(raw):
+            yield from iter_evidence_refs(value, f"{prefix}[{index}]")
 
 
 def research_graph_known_evidence_refs(manifest: Manifest) -> set[str]:
@@ -11992,6 +12207,216 @@ def check_research_graph_contract_gate(gate: FiniteGate) -> list[Issue]:
     return []
 
 
+def check_qm_proof_anti_hallucination_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_program = require_string(gate.payload.get("target_program"), f"{gate.identifier}.target_program")
+    if target_program != "full_QM_I":
+        return [
+            Issue(
+                "qm_proof_anti_hallucination_target_mismatch",
+                f"{gate.identifier}: target_program must be full_QM_I",
+            )
+        ]
+
+    checks = require_list(gate.payload.get("checks"), f"{gate.identifier}.checks")
+    if len(checks) != len(QM_PROOF_ANTI_HALLUCINATION_REQUIRED_CHECKS):
+        raise ManifestError(f"{gate.identifier}: checks must cover every anti-hallucination check")
+    seen: set[str] = set()
+    for index, item in enumerate(checks):
+        check = require_mapping(item, f"{gate.identifier}.checks[{index}]")
+        check_id = require_string(check.get("id"), f"{gate.identifier}.checks[{index}].id")
+        status = require_string(check.get("status"), f"{gate.identifier}.checks[{index}].status")
+        evidence_refs = require_string_tuple(
+            check.get("evidence_refs", []),
+            f"{gate.identifier}.checks[{index}].evidence_refs",
+        )
+        open_gap = require_string(check.get("open_gap", ""), f"{gate.identifier}.checks[{index}].open_gap")
+        if check_id not in QM_PROOF_ANTI_HALLUCINATION_REQUIRED_CHECKS:
+            return [
+                Issue(
+                    "qm_proof_anti_hallucination_unknown_check",
+                    f"{gate.identifier}: unknown anti-hallucination check {check_id}",
+                )
+            ]
+        if check_id in seen:
+            return [
+                Issue(
+                    "qm_proof_anti_hallucination_duplicate_check",
+                    f"{gate.identifier}: duplicate anti-hallucination check {check_id}",
+                )
+            ]
+        if status != "passed":
+            return [
+                Issue(
+                    "qm_proof_anti_hallucination_check_status_mismatch",
+                    f"{gate.identifier}: check {check_id} must be passed",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "qm_proof_anti_hallucination_evidence_missing",
+                    f"{gate.identifier}: check {check_id} must cite evidence refs",
+                )
+            ]
+        if check_id in {"carrier_selection_boundary", "nonfinite_limit_gap_boundary"} and not open_gap:
+            return [
+                Issue(
+                    "qm_proof_anti_hallucination_gap_missing",
+                    f"{gate.identifier}: check {check_id} must declare the remaining open gap",
+                )
+            ]
+        if check_id == "negative_controls_declared":
+            mutation_classes = require_string_tuple(
+                check.get("mutation_classes", []),
+                f"{gate.identifier}.checks[{index}].mutation_classes",
+            )
+            if set(mutation_classes) != set(QM_PROOF_ANTI_HALLUCINATION_NEGATIVE_CONTROLS):
+                return [
+                    Issue(
+                        "qm_proof_anti_hallucination_negative_controls_mismatch",
+                        f"{gate.identifier}: negative controls must cover the required mutation classes",
+                    )
+                ]
+        seen.add(check_id)
+
+    missing = sorted(set(QM_PROOF_ANTI_HALLUCINATION_REQUIRED_CHECKS) - seen)
+    if missing:
+        return [
+            Issue(
+                "qm_proof_anti_hallucination_check_missing",
+                f"{gate.identifier}: missing anti-hallucination checks: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_audit_status"), f"{gate.identifier}.expected_audit_status")
+    if expected_status not in QM_PROOF_ANTI_HALLUCINATION_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_audit_status is unknown")
+    if expected_status != "passes_with_open_gaps":
+        return [
+            Issue(
+                "qm_proof_anti_hallucination_status_mismatch",
+                f"{gate.identifier}: audit must pass only with explicit open gaps",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(QM_PROOF_ANTI_HALLUCINATION_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "qm_proof_anti_hallucination_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM boundary",
+            )
+        ]
+    return []
+
+
+def check_idt_structural_compression_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "whole_idt_research_graph":
+        return [
+            Issue(
+                "idt_structural_compression_target_mismatch",
+                f"{gate.identifier}: target_scope must be whole_idt_research_graph",
+            )
+        ]
+    compression_rule = require_string(gate.payload.get("compression_rule"), f"{gate.identifier}.compression_rule")
+    if compression_rule != "abstractions_may_not_change_claim_status_or_close_open_gap":
+        return [
+            Issue(
+                "idt_structural_compression_rule_mismatch",
+                f"{gate.identifier}: compression rule must preserve claim boundaries",
+            )
+        ]
+
+    schema_candidates = require_list(gate.payload.get("schema_candidates"), f"{gate.identifier}.schema_candidates")
+    if len(schema_candidates) != len(IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES):
+        raise ManifestError(f"{gate.identifier}: schema_candidates must cover every compression schema candidate")
+    seen: set[str] = set()
+    for index, item in enumerate(schema_candidates):
+        candidate = require_mapping(item, f"{gate.identifier}.schema_candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.schema_candidates[{index}].id")
+        status = require_string(candidate.get("status"), f"{gate.identifier}.schema_candidates[{index}].status")
+        evidence_refs = require_string_tuple(
+            candidate.get("evidence_refs", []),
+            f"{gate.identifier}.schema_candidates[{index}].evidence_refs",
+        )
+        retained_gap = require_string(
+            candidate.get("retained_gap"),
+            f"{gate.identifier}.schema_candidates[{index}].retained_gap",
+        )
+        if candidate_id not in IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES:
+            return [
+                Issue(
+                    "idt_structural_compression_unknown_schema",
+                    f"{gate.identifier}: unknown compression schema {candidate_id}",
+                )
+            ]
+        if candidate_id in seen:
+            return [
+                Issue(
+                    "idt_structural_compression_duplicate_schema",
+                    f"{gate.identifier}: duplicate compression schema {candidate_id}",
+                )
+            ]
+        if status != "candidate_abstraction":
+            return [
+                Issue(
+                    "idt_structural_compression_schema_status_mismatch",
+                    f"{gate.identifier}: schema {candidate_id} must remain candidate_abstraction",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "idt_structural_compression_evidence_missing",
+                    f"{gate.identifier}: schema {candidate_id} must cite evidence refs",
+                )
+            ]
+        if not retained_gap:
+            return [
+                Issue(
+                    "idt_structural_compression_gap_missing",
+                    f"{gate.identifier}: schema {candidate_id} must retain a gap or boundary",
+                )
+            ]
+        seen.add(candidate_id)
+
+    missing = sorted(set(IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES) - seen)
+    if missing:
+        return [
+            Issue(
+                "idt_structural_compression_schema_missing",
+                f"{gate.identifier}: missing compression schemas: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_compression_status"),
+        f"{gate.identifier}.expected_compression_status",
+    )
+    if expected_status not in IDT_STRUCTURAL_COMPRESSION_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_compression_status is unknown")
+    if expected_status != "candidate_map":
+        return [
+            Issue(
+                "idt_structural_compression_status_mismatch",
+                f"{gate.identifier}: structural compression must remain a candidate map until refactored",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "idt_structural_compression_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must prevent simplification from changing truth claims",
+            )
+        ]
+    return []
+
+
 def check_dimensionful_anchor_policy_gate(gate: FiniteGate) -> list[Issue]:
     entries = require_list(gate.payload.get("entries"), f"{gate.identifier}.entries")
     if not entries:
@@ -17666,6 +18091,8 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "sector_role_registry": check_sector_role_registry_gate,
     "sector_role_assignment_partition": check_sector_role_assignment_partition_gate,
     "research_graph_contract": check_research_graph_contract_gate,
+    "qm_proof_anti_hallucination_audit": check_qm_proof_anti_hallucination_audit_gate,
+    "idt_structural_compression_audit": check_idt_structural_compression_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
     "bridge_assumption_boundary": check_bridge_assumption_boundary_gate,

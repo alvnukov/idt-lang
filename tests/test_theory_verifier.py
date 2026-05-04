@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -149,6 +150,8 @@ from theory_verifier.core import (
     IDT_CORE_RESIDUAL_BOUNDARY_SCOPE,
     IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES,
     IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
+    IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES,
+    IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
@@ -156,6 +159,9 @@ from theory_verifier.core import (
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
     QM_CORE_RECOMPILE_REQUIRED_ROUTES,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
+    QM_PROOF_ANTI_HALLUCINATION_FORBIDDEN_UPGRADES,
+    QM_PROOF_ANTI_HALLUCINATION_NEGATIVE_CONTROLS,
+    QM_PROOF_ANTI_HALLUCINATION_REQUIRED_CHECKS,
     QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS,
     QM_APPARATUS_FACTICITY_REQUIRED_GATES,
     QM_APPARATUS_FACTICITY_REQUIRED_SYMBOLS,
@@ -304,6 +310,89 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_frontier_status": "open",
             "forbidden_upgrades": list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_FRONTIER_FORBIDDEN_UPGRADES),
+        }
+
+    def qm_proof_anti_hallucination_audit_gate(self) -> dict[str, object]:
+        evidence_refs_by_check = {
+            "full_qm_claim_boundary": ["full_QM_I", "full_qm_closure_frontier_demo"],
+            "first_principles_hbar_boundary": ["hbar_I", "first_principles_hbar_lock"],
+            "carrier_selection_boundary": [
+                "universal_carrier_selection_theorem",
+                "carrier_selection_proof_route_demo",
+            ],
+            "nonfinite_limit_gap_boundary": ["nonfinite_gpt_residual_compactness_frontier_demo"],
+            "conditional_theorem_forbidden_claims": ["theorem_cards"],
+            "negative_controls_declared": [
+                "full_qm_closure_frontier_demo",
+                "carrier_selection_proof_route_demo",
+                "nonfinite_gpt_residual_compactness_frontier_demo",
+            ],
+        }
+        return {
+            "id": "test_qm_proof_anti_hallucination_audit",
+            "type": "qm_proof_anti_hallucination_audit",
+            "target_program": "full_QM_I",
+            "checks": [
+                {
+                    "id": check_id,
+                    "status": "passed",
+                    "evidence_refs": evidence_refs_by_check[check_id],
+                    "open_gap": "Boundary remains open by design."
+                    if check_id in {"carrier_selection_boundary", "nonfinite_limit_gap_boundary"}
+                    else "",
+                    **(
+                        {"mutation_classes": list(QM_PROOF_ANTI_HALLUCINATION_NEGATIVE_CONTROLS)}
+                        if check_id == "negative_controls_declared"
+                        else {}
+                    ),
+                }
+                for check_id in QM_PROOF_ANTI_HALLUCINATION_REQUIRED_CHECKS
+            ],
+            "expected_audit_status": "passes_with_open_gaps",
+            "forbidden_upgrades": list(QM_PROOF_ANTI_HALLUCINATION_FORBIDDEN_UPGRADES),
+        }
+
+    def idt_structural_compression_audit_gate(self) -> dict[str, object]:
+        evidence_refs_by_schema = {
+            "research_graph_kernel": ["idt_metalang_research_graph_contract_demo"],
+            "finite_witness_gate_schema": [
+                "born_context_probability_tests",
+                "contextual_probability_readout_pattern",
+                "born_context_probability_table_demo",
+            ],
+            "conditional_separator_schema": [
+                "context_product_exhaustion_implies_local_tomography",
+                "bounded_correlation_screen_rejects_superquantum_boxes",
+            ],
+            "frontier_obstruction_schema": [
+                "full_qm_closure_frontier_demo",
+                "nonfinite_gpt_residual_frontier_demo",
+            ],
+            "calibrated_anchor_boundary_schema": [
+                "calibrated_hbar_I",
+                "dimensionful_anchor_policy_demo",
+            ],
+            "failure_as_information_schema": [
+                "real_hilbert_composite_hidden_joint_invariant",
+                "sparc_no_fit_claim_status_demo",
+            ],
+        }
+        return {
+            "id": "test_idt_structural_compression_audit",
+            "type": "idt_structural_compression_audit",
+            "target_scope": "whole_idt_research_graph",
+            "compression_rule": "abstractions_may_not_change_claim_status_or_close_open_gap",
+            "schema_candidates": [
+                {
+                    "id": schema_id,
+                    "status": "candidate_abstraction",
+                    "evidence_refs": evidence_refs_by_schema[schema_id],
+                    "retained_gap": "Candidate abstraction only; no claim status is changed.",
+                }
+                for schema_id in IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES
+            ],
+            "expected_compression_status": "candidate_map",
+            "forbidden_upgrades": list(IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES),
         }
 
     def test_dimension_mismatch_is_reported(self) -> None:
@@ -6786,6 +6875,102 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"research_graph_contract_evidence_unresolved"})
+
+    def test_qm_proof_anti_hallucination_rejects_bad_negative_controls(self) -> None:
+        gate = self.qm_proof_anti_hallucination_audit_gate()
+        checks = gate["checks"]
+        if not isinstance(checks, list):
+            self.fail("checks must be a list")
+        negative_control_check = checks[-1]
+        if not isinstance(negative_control_check, dict):
+            self.fail("negative control check must be a mapping")
+        negative_control_check["mutation_classes"] = ["premature_full_qm_derived"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_proof_anti_hallucination_negative_controls_mismatch"})
+
+    def test_qm_proof_anti_hallucination_grounding_rejects_premature_full_qm_status(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        symbols = raw_manifest["symbols"]
+        if not isinstance(symbols, dict):
+            self.fail("symbols must be a mapping")
+        full_qm = symbols["full_QM_I"]
+        if not isinstance(full_qm, dict):
+            self.fail("full_QM_I must be a mapping")
+        full_qm["status"] = "derived"
+
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_proof_anti_hallucination_full_qm_status_mismatch"})
+
+    def test_qm_proof_anti_hallucination_grounding_rejects_limit_gap_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        for gate in finite_gates:
+            if not isinstance(gate, dict) or gate.get("id") != "nonfinite_gpt_residual_compactness_frontier_demo":
+                continue
+            assumptions = gate["assumptions"]
+            if not isinstance(assumptions, list):
+                self.fail("assumptions must be a list")
+            for assumption in assumptions:
+                if not isinstance(assumption, dict):
+                    self.fail("assumption must be a mapping")
+                if assumption.get("id") == "limit_preserves_facticized_readout_separation":
+                    assumption["status"] = "conditional_support"
+                    break
+            break
+
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_proof_anti_hallucination_limit_gap_status_mismatch"})
+
+    def test_idt_structural_compression_rejects_implemented_kernel_claim(self) -> None:
+        gate = self.idt_structural_compression_audit_gate()
+        gate["expected_compression_status"] = "implemented_kernel"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_structural_compression_status_mismatch"})
+
+    def test_idt_structural_compression_rejects_empty_retained_gap(self) -> None:
+        gate = self.idt_structural_compression_audit_gate()
+        schema_candidates = gate["schema_candidates"]
+        if not isinstance(schema_candidates, list):
+            self.fail("schema_candidates must be a list")
+        first_schema = schema_candidates[0]
+        if not isinstance(first_schema, dict):
+            self.fail("schema candidate must be a mapping")
+        first_schema["retained_gap"] = ""
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_structural_compression_gap_missing"})
 
     def test_phase_branch_additivity_rejects_mismatch(self) -> None:
         manifest = parse_manifest(

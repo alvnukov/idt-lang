@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.15.0",
+  "theory_version": "v6.16.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4970,8 +4970,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 225,
-      "expected_gate_type_digest": "4662ac5021fe69ecf32a35a9651216cc8bb2a278c9eeaa6ec92f46d86582f554",
+      "expected_gate_type_count": 227,
+      "expected_gate_type_digest": "a0a0d8a467674313861ae8573549728f6748c8cd0778513bd06da5629a72f3fc",
       "expected_component_status": "formal_proof"
     },
     {
@@ -7447,6 +7447,148 @@
         }
       ],
       "expected_contract_status": "partial"
+    },
+    {
+      "id": "qm_proof_anti_hallucination_audit_demo",
+      "type": "qm_proof_anti_hallucination_audit",
+      "target_program": "full_QM_I",
+      "checks": [
+        {
+          "id": "full_qm_claim_boundary",
+          "status": "passed",
+          "evidence_refs": [
+            "full_QM_I",
+            "full_qm_closure_frontier_demo"
+          ],
+          "open_gap": ""
+        },
+        {
+          "id": "first_principles_hbar_boundary",
+          "status": "passed",
+          "evidence_refs": [
+            "hbar_I",
+            "first_principles_hbar_lock"
+          ],
+          "open_gap": ""
+        },
+        {
+          "id": "carrier_selection_boundary",
+          "status": "passed",
+          "evidence_refs": [
+            "universal_carrier_selection_theorem",
+            "carrier_selection_proof_route_demo"
+          ],
+          "open_gap": "Universal carrier selection remains open over the nonfinite or unwitnessed generic GPT residual."
+        },
+        {
+          "id": "nonfinite_limit_gap_boundary",
+          "status": "passed",
+          "evidence_refs": [
+            "nonfinite_gpt_residual_compactness_frontier_demo"
+          ],
+          "open_gap": "limit_preserves_facticized_readout_separation remains open and blocks nonfinite compactness closure."
+        },
+        {
+          "id": "conditional_theorem_forbidden_claims",
+          "status": "passed",
+          "evidence_refs": [
+            "theorem_cards"
+          ],
+          "open_gap": ""
+        },
+        {
+          "id": "negative_controls_declared",
+          "status": "passed",
+          "evidence_refs": [
+            "full_qm_closure_frontier_demo",
+            "carrier_selection_proof_route_demo",
+            "nonfinite_gpt_residual_compactness_frontier_demo"
+          ],
+          "open_gap": "",
+          "mutation_classes": [
+            "premature_full_qm_derived",
+            "premature_carrier_selection_formal",
+            "premature_nonfinite_limit_gap_upgrade",
+            "conditional_theorem_forbidden_claim_removal"
+          ]
+        }
+      ],
+      "expected_audit_status": "passes_with_open_gaps",
+      "forbidden_upgrades": [
+        "does_not_prove_full_QM_I",
+        "does_not_prove_universal_carrier_selection",
+        "does_not_close_nonfinite_gpt_residual",
+        "does_not_convert_conditional_theorems_to_formal_proofs"
+      ]
+    },
+    {
+      "id": "idt_structural_compression_audit_demo",
+      "type": "idt_structural_compression_audit",
+      "target_scope": "whole_idt_research_graph",
+      "compression_rule": "abstractions_may_not_change_claim_status_or_close_open_gap",
+      "schema_candidates": [
+        {
+          "id": "research_graph_kernel",
+          "status": "candidate_abstraction",
+          "evidence_refs": [
+            "idt_metalang_research_graph_contract_demo"
+          ],
+          "retained_gap": "The compact IDT-Core kernel is still distributed across sections and verifier contracts."
+        },
+        {
+          "id": "finite_witness_gate_schema",
+          "status": "candidate_abstraction",
+          "evidence_refs": [
+            "born_context_probability_tests",
+            "contextual_probability_readout_pattern",
+            "born_context_probability_table_demo"
+          ],
+          "retained_gap": "Finite witnesses remain compatibility checks, not universal theorem proofs."
+        },
+        {
+          "id": "conditional_separator_schema",
+          "status": "candidate_abstraction",
+          "evidence_refs": [
+            "context_product_exhaustion_implies_local_tomography",
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "retained_gap": "Conditional separators keep assumptions explicit and do not select the full QM carrier alone."
+        },
+        {
+          "id": "frontier_obstruction_schema",
+          "status": "candidate_abstraction",
+          "evidence_refs": [
+            "full_qm_closure_frontier_demo",
+            "nonfinite_gpt_residual_frontier_demo"
+          ],
+          "retained_gap": "Frontiers record blockers and must not be collapsed into derived claims."
+        },
+        {
+          "id": "calibrated_anchor_boundary_schema",
+          "status": "candidate_abstraction",
+          "evidence_refs": [
+            "calibrated_hbar_I",
+            "dimensionful_anchor_policy_demo"
+          ],
+          "retained_gap": "Calibrated anchors remain bridge assumptions unless a first-principles derivation exists."
+        },
+        {
+          "id": "failure_as_information_schema",
+          "status": "candidate_abstraction",
+          "evidence_refs": [
+            "real_hilbert_composite_hidden_joint_invariant",
+            "sparc_no_fit_claim_status_demo"
+          ],
+          "retained_gap": "Failures are useful exclusions but are not yet a top-level failure ledger."
+        }
+      ],
+      "expected_compression_status": "candidate_map",
+      "forbidden_upgrades": [
+        "does_not_change_claim_statuses",
+        "does_not_close_open_gaps",
+        "does_not_relabel_bridges_as_derivations",
+        "does_not_reduce_verifier_coverage"
+      ]
     },
     {
       "id": "phase_branch_additivity_demo",

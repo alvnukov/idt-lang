@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.15.0`
+Current version: `v6.16.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -771,6 +771,15 @@ The verifier now locks `universal_carrier_selection_theorem` directly to
 The `scripts/graph_query.py` helper now provides summary, show, refs, and
 SHA-guarded single-field edits for the file-based research graph without
 introducing a database as the source of truth.
+The `qm_proof_anti_hallucination_audit_demo` now checks the live QM proof graph
+against premature full-QM, carrier-selection, nonfinite-limit, and
+conditional-theorem upgrades. It passes only with explicit open gaps.
+The `idt_structural_compression_audit_demo` records the current whole-theory
+compression map as candidate abstractions: research graph kernel, finite
+witness gate schema, conditional separator schema, frontier obstruction schema,
+calibrated anchor boundary schema, and failure-as-information schema. The
+compression rule is strict: abstractions may not change claim statuses or close
+open gaps.
 
 ---
 
