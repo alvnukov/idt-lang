@@ -12466,3 +12466,627 @@ What remains:
 ```text
 All 21 closure obligations still require real machine-checkable proof cards.
 ```
+
+### 174.260. Monoidal Associativity Draft Artifact
+
+Low-level mechanical artifact:
+
+```text
+obligation = monoidal_associativity
+artifact = Proofs/QMClosure/MonoidalAssociativityDraft.lean
+checker = lake env lean Proofs/QMClosure/MonoidalAssociativityDraft.lean
+status = conditional scaffold, not formal closure
+```
+
+The artifact proves a narrow theorem:
+
+```text
+If a finite context product is encoded as list append, then the product
+operation is associative.
+```
+
+This is machine-checkable, but it is not yet a proof of the full IDT composite
+obligation. The missing bridge is:
+
+```text
+admissible IDT context products
+=> finite list-append encoding up to operational equivalence
+```
+
+Proof-card draft:
+
+```text
+id: monoidal_associativity_finite_context_product_draft
+claim_refs:
+  - full_qm_proof_closure.monoidal_associativity
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/MonoidalAssociativityDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/MonoidalAssociativityDraft.lean
+statement: >
+  Finite context products encoded as list append are associative.
+open_gaps:
+  - prove admissible IDT context products reduce to this finite encoding
+  - prove quotient/coherence under operational equivalence
+forbidden_upgrades:
+  - does_not_prove_full_QM_I
+  - does_not_assume_hilbert_tensor_product
+  - does_not_upgrade_monoidal_associativity_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+
+### 174.261. Projective Limit Consistency Scaffold Artifact
+
+Low-level mechanical artifact:
+
+```text
+obligation:
+  - projective_limit_consistency
+artifact = Proofs/QMClosure/ProjectiveLimitScaffoldDraft.lean
+checker = lake env lean Proofs/QMClosure/ProjectiveLimitScaffoldDraft.lean
+status = conditional scaffold, not formal closure
+```
+
+The artifact proves a narrow tower-compatibility lemma:
+
+```text
+if a finite tower is pairwise compatible by an explicit predicate, then it
+satisfies the encoded projective-limit consistency predicate.
+```
+
+Missing bridge:
+
+```text
+IDT finite/projective route tower
+=> FiniteTower encoding
+
+IDT admissible transition/refinement
+=> transition map in the scaffold
+
+IDT consistency under projective limits
+=> PairwiseCompatible, not assumed by hand
+```
+
+Proof-card draft:
+
+```text
+id: projective_limit_consistency_scaffold_draft
+claim_refs:
+  - full_qm_proof_closure.projective_limit_consistency
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/ProjectiveLimitScaffoldDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/ProjectiveLimitScaffoldDraft.lean
+statement: >
+  Explicit pairwise compatibility of an encoded finite tower implies the
+  encoded projective-limit consistency predicate.
+open_gaps:
+  - derive the finite tower from IDT route/refinement structure
+  - derive pairwise compatibility from IDT projective consistency
+  - extend from finite scaffold to the required projective-limit boundary
+forbidden_upgrades:
+  - does_not_assume_infinite_dimensional_hilbert_space
+  - does_not_assume_c_star_algebra
+  - does_not_upgrade_projective_limit_consistency_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+
+### 174.262. Phase Scale Boundary Scaffold Artifact
+
+Low-level mechanical artifact:
+
+```text
+obligation:
+  - physical_phase_scale_boundary
+artifact = Proofs/QMClosure/BoundaryScaffoldsDraft.lean
+checker = lake env lean Proofs/QMClosure/BoundaryScaffoldsDraft.lean
+status = conditional boundary scaffold, not formal hbar derivation
+```
+
+The artifact proves a narrow negative-boundary fact:
+
+```text
+calibratedAnchor = true
+firstPrinciplesDerivation = false
+```
+
+This is machine-checkable, but it deliberately does not derive `hbar_I`.
+
+Missing bridge:
+
+```text
+IDT physical phase/action scale boundary
+=> the ScaleBoundary encoding
+
+calibrated_hbar_I public claim
+=> calibratedAnchor = true
+
+blocked first-principles hbar_I claim
+=> firstPrinciplesDerivation = false
+```
+
+Proof-card draft:
+
+```text
+id: physical_phase_scale_boundary_scaffold_draft
+claim_refs:
+  - full_qm_proof_closure.physical_phase_scale_boundary
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/BoundaryScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/BoundaryScaffoldsDraft.lean
+statement: >
+  A calibrated-only boundary keeps calibrated action scale separate from a
+  first-principles derivation claim.
+open_gaps:
+  - connect the public calibrated_hbar_I boundary to the Lean ScaleBoundary
+  - keep first-principles hbar_I blocked until an independent action-scale
+    theorem exists
+forbidden_upgrades:
+  - does_not_derive_hbar_I
+  - does_not_use_planck_units_as_primitives
+  - does_not_upgrade_phase_scale_boundary_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+
+### 174.263. Composite / Local Tomography Scaffold Artifacts
+
+Low-level mechanical artifact:
+
+```text
+obligations:
+  - product_context_exhaustion
+  - local_tomography
+artifact = Proofs/QMClosure/CompositeScaffoldsDraft.lean
+checker = lake env lean Proofs/QMClosure/CompositeScaffoldsDraft.lean
+status = conditional scaffold, not formal closure
+```
+
+The artifact proves two narrow predicate/readout lemmas:
+
+```text
+if declared product readouts separate states, local tomography follows
+equal states agree on all declared readouts
+```
+
+This is machine-checkable and does not assume a Hilbert tensor product.
+
+Missing bridge:
+
+```text
+IDT product-context exhaustion
+=> a declared product readout family covering all stable composite facts
+
+IDT product readout separation
+=> SeparatesStates for the encoded product readout list
+
+IDT composite state identity
+=> equality in the scaffold state type
+```
+
+Proof-card draft:
+
+```text
+id: local_tomography_scaffold_draft
+claim_refs:
+  - full_qm_proof_closure.product_context_exhaustion
+  - full_qm_proof_closure.local_tomography
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/CompositeScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/CompositeScaffoldsDraft.lean
+statement: >
+  A declared product readout family that separates states yields local
+  tomography in a predicate-readout encoding.
+open_gaps:
+  - derive product-context exhaustion from IDT composite rules
+  - derive product readout separation from stable facticization witnesses
+  - connect scaffold equality to operational state identity
+forbidden_upgrades:
+  - does_not_assume_hilbert_tensor_product
+  - does_not_assume_trace_rule
+  - does_not_upgrade_composite_obligations_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+
+### 174.264. Projection / Conservative Gluing Scaffold Artifacts
+
+Low-level mechanical artifact:
+
+```text
+obligations:
+  - finite_projection_determinacy
+  - projective_consistency
+  - conservative_projective_gluing
+artifact = Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+checker = lake env lean Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+status = conditional scaffold, not formal closure
+```
+
+The artifact proves two narrow endomap lemmas:
+
+```text
+identity endomap is idempotent
+composition of commuting idempotent endomaps is idempotent
+commuting encoded projections have order-independent composition
+```
+
+This is machine-checkable and does not assume Hilbert projectors.
+
+Missing bridge:
+
+```text
+IDT finite projection determinacy
+=> idempotent endomap on a finite fact/readout carrier
+
+IDT conservative projective gluing
+=> composition of commuting idempotent endomaps
+
+IDT projective consistency
+=> commutation/coherence conditions rather than hidden Hilbert projectors
+```
+
+Proof-card draft:
+
+```text
+id: projection_idempotence_scaffold_draft
+claim_refs:
+  - full_qm_proof_closure.finite_projection_determinacy
+  - full_qm_proof_closure.projective_consistency
+  - full_qm_proof_closure.conservative_projective_gluing
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+statement: >
+  Identity is idempotent, and composition of commuting idempotent endomaps is
+  idempotent.
+open_gaps:
+  - derive finite projection endomaps from IDT facticization
+  - derive commutation/coherence from IDT conservative gluing
+  - connect the scaffold to projective consistency without Hilbert projectors
+forbidden_upgrades:
+  - does_not_assume_hilbert_projectors
+  - does_not_assume_born_rule
+  - does_not_upgrade_projection_obligations_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+
+### 174.265. Reversible Inheritance Scaffold Artifacts
+
+Low-level mechanical artifact:
+
+```text
+obligations:
+  - d_cl_automorphism_dynamics
+  - overlap_preservation_dynamics
+  - projective_action
+artifact = Proofs/QMClosure/InheritanceScaffoldsDraft.lean
+checker = lake env lean Proofs/QMClosure/InheritanceScaffoldsDraft.lean
+status = conditional scaffold, not formal closure
+```
+
+The artifact proves narrow preservation lemmas:
+
+```text
+identity preserves an arbitrary distinguishability relation
+composition of distinguishability-preserving maps preserves distinguishability
+identity preserves an arbitrary overlap function
+composition of overlap-preserving maps preserves overlap
+identity projective action is extensionally equal to the original fact
+```
+
+This is machine-checkable and carrier-neutral. It does not assume Hilbert
+space, unitary evolution, Wigner's theorem, Stone's theorem, or a Hamiltonian.
+
+Missing bridge:
+
+```text
+IDT reversible inheritance
+=> maps satisfying these preservation predicates
+
+IDT normalized overlap
+=> the abstract overlap function used in the scaffold
+
+IDT projective facts
+=> the predicate-level ProjectiveFact encoding
+
+continuous inheritance
+=> a continuity structure, absent from this finite scaffold
+
+generator closure
+=> a generator algebra, absent from this finite scaffold
+```
+
+Proof-card draft:
+
+```text
+id: reversible_inheritance_preservation_scaffold_draft
+claim_refs:
+  - full_qm_proof_closure.d_cl_automorphism_dynamics
+  - full_qm_proof_closure.overlap_preservation_dynamics
+  - full_qm_proof_closure.projective_action
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/InheritanceScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/InheritanceScaffoldsDraft.lean
+statement: >
+  Abstract inheritance maps that preserve supplied distinguishability and
+  overlap predicates remain closed under identity and composition, and identity
+  acts trivially on predicate-level projective facts.
+open_gaps:
+  - derive preservation predicates from IDT reversible inheritance
+  - derive projective fact encoding from IDT facticization
+  - formalize continuity and generator closure without importing unitary groups
+forbidden_upgrades:
+  - does_not_prove_unitary_dynamics
+  - does_not_assume_wigner_theorem
+  - does_not_assume_hilbert_space
+  - does_not_upgrade_dynamics_obligations_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+
+Reason:
+
+```text
+The Lean theorem is real, but it checks only the finite encoding scaffold.
+It cannot be registered as a formal proof for the closure obligation until the
+IDT admissibility-to-encoding bridge is also proved.
+```
+
+### 174.266. Born Readout Scaffold Artifacts
+
+Low-level mechanical artifact:
+
+```text
+obligations:
+  - context_normalization
+  - exclusivity_additivity
+  - coarse_graining_consistency
+  - operational_equivalence_probability
+artifact = Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+checker = lake env lean Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+status = conditional scaffold, not formal closure
+```
+
+The artifact proves four narrow finite-weight lemmas:
+
+```text
+contextTotal(readout) = readout.sum
+contextTotal(left ++ right) = contextTotal(left) + contextTotal(right)
+if coarse-graining preserves total by assumption, totals are equal
+if two weights are operationally equivalent by equality, they are equal
+```
+
+These are machine-checkable, but they are not a Born-rule proof.
+
+Missing bridge:
+
+```text
+IDT admissible readout context
+=> finite weight table with stable total
+
+IDT facticized exclusivity
+=> append-like disjoint finite composition
+
+IDT admissible coarse-graining
+=> total-preserving map, not assumed by hand
+
+IDT operational equivalence
+=> equality of the finite readout weight, not merely a declared equality
+```
+
+Proof-card draft:
+
+```text
+id: finite_readout_scaffold_draft
+claim_refs:
+  - full_qm_proof_closure.context_normalization
+  - full_qm_proof_closure.exclusivity_additivity
+  - full_qm_proof_closure.coarse_graining_consistency
+  - full_qm_proof_closure.operational_equivalence_probability
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/ReadoutScaffoldsDraft.lean
+statement: >
+  Finite natural-weight readout tables satisfy normalization-by-total,
+  append additivity, assumption-explicit coarse-graining stability, and
+  equality-explicit operational equivalence.
+open_gaps:
+  - derive finite readout weights from IDT facticization
+  - derive disjoint append from IDT exclusivity
+  - derive total-preserving coarse-graining from IDT admissibility
+  - derive weight equality from IDT operational equivalence
+forbidden_upgrades:
+  - does_not_prove_Born_rule
+  - does_not_assume_probability_axioms
+  - does_not_assume_hilbert_space
+  - does_not_upgrade_readout_obligations_to_formal_proof
+```
+
+Status:
+
+```text
+conditional
+```
+### 174.267. Strong Audit Of Low-Level Scaffolds
+
+Strong-model audit result:
+
+```text
+No scaffold added in 174.260-174.266 is a formal proof of a full-QM closure
+obligation.
+```
+
+They are still useful if treated correctly:
+
+```text
+Lean-checkable encoding sanity checks
+proof-card drafts
+future bridge theorem targets
+anti-overclaim guards
+```
+
+They are not:
+
+```text
+formal_proof
+FULL_QM_PROVED
+Born-rule proof
+Hilbert-carrier proof
+unitary-dynamics proof
+tensor-composition proof
+```
+
+Artifact classification:
+
+```text
+MonoidalAssociativityDraft:
+  safe scaffold;
+  real Lean theorem for list-append encoding;
+  missing IDT context-product-to-list bridge.
+
+ReadoutScaffoldsDraft:
+  safe but very weak scaffold;
+  checks finite natural-weight algebra;
+  missing derivation of weights, disjointness, coarse-graining preservation,
+  and operational-equivalence equality from IDT facticization.
+
+InheritanceScaffoldsDraft:
+  safe carrier-neutral scaffold;
+  checks preservation predicates under identity/composition;
+  missing derivation that reversible inheritance supplies those predicates;
+  does not touch continuity or generator closure.
+
+ProjectionScaffoldsDraft:
+  safe scaffold;
+  checks idempotent/commuting endomap algebra;
+  missing derivation of projective endomaps and commutation from IDT
+  projective consistency.
+
+CompositeScaffoldsDraft:
+  safe but mostly definitional scaffold;
+  local tomography follows from an explicit separation predicate;
+  missing product-context exhaustion and readout separation proofs.
+
+BoundaryScaffoldsDraft:
+  safe negative-boundary scaffold;
+  preserves calibrated-not-derived distinction;
+  does not derive hbar_I.
+
+ProjectiveLimitScaffoldDraft:
+  safe but definitional scaffold;
+  consistency follows from an explicit compatibility predicate;
+  missing derivation of compatibility from IDT refinement/projective route.
+```
+
+Closure-gate update:
+
+```text
+proof_kind = proof_sketch
+=> SKETCH_ARTIFACT
+=> still not PROVED
+```
+
+This prevents a future proof-ledger draft from being misreported as a broken
+formal artifact. It also prevents a sketch from reducing the formal proof
+burden.
+
+Current grounded closure status remains:
+
+```text
+full_qm_proof_closure = PROOF_ARTIFACTS_MISSING
+route_status = CONDITIONAL_FULL_QM_ROUTE
+proved = 0
+missing_artifacts = 21
+sketch_artifacts = 0
+incomplete_artifacts = 0
+imported_artifacts = 0
+```
+
+The `sketch_artifacts` count is currently zero because the scaffold drafts have
+not been registered in the manifest proof-ledger. That is correct for now:
+registration should wait until the project decides whether proof sketches
+belong in the public manifest.
+
+The actual strong-model blocker is:
+
+```text
+bridge theorems from IDT primitives to the Lean encodings.
+```
+
+Hard obligations that should not be attacked by low-level mechanical work:
+
+```text
+nonunital_stable_distinguishability
+spectral_decomposition
+rich_d_cl_reversible_symmetry
+continuous_inheritance_family
+generator_closure
+entanglement_closure
+```
+
+Reason:
+
+```text
+Any shallow scaffold for these would likely smuggle in Hilbert, spectral,
+unitary, continuity, generator, or tensor assumptions under new names.
+```
+
+Best next strong proof target:
+
+```text
+IDT admissible context product
+=> list-append-like finite product encoding up to operational equivalence
+```
+
+If this bridge works, `monoidal_associativity` can move from scaffold to a real
+conditional proof artifact without importing Hilbert tensor products.
+
+If it fails, the composite route needs a deeper primitive for context-product
+coherence.

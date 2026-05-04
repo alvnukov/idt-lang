@@ -19,7 +19,13 @@ ClosureVerdict = Literal[
     "IMPORTED_ASSUMPTION_REJECTED",
     "ROUTE_NOT_READY",
 ]
-CheckStatus = Literal["PROVED", "MISSING_ARTIFACT", "INCOMPLETE_ARTIFACT", "IMPORT_REJECTED"]
+CheckStatus = Literal[
+    "PROVED",
+    "MISSING_ARTIFACT",
+    "SKETCH_ARTIFACT",
+    "INCOMPLETE_ARTIFACT",
+    "IMPORT_REJECTED",
+]
 
 
 @dataclass(frozen=True)
@@ -28,6 +34,7 @@ class ProofArtifact:
     file: str
     theorem: str
     check_command: str
+    proof_kind: str
     verified: bool
     source_card_id: str
 
@@ -55,6 +62,7 @@ class ClosureAttempt:
     route_status: full_attempt.AttemptVerdict
     proved: int
     missing_artifacts: int
+    sketch_artifacts: int
     incomplete_artifacts: int
     imported_artifacts: int
     checks: list[ObligationCheck]
@@ -253,6 +261,7 @@ def artifact_from_card(card: dict[str, object], obligation: ProofObligation) -> 
         file=artifact_path,
         theorem=theorem,
         check_command=check_command,
+        proof_kind=proof_kind,
         verified=proof_kind in FORMAL_PROOF_KINDS,
         source_card_id=card_id,
     )
@@ -303,6 +312,14 @@ def check_obligation(obligation: ProofObligation, artifacts: dict[str, ProofArti
             reason=f"artifact mentions forbidden target import: {forbidden_import}",
             artifact=artifact,
         )
+    if artifact.proof_kind == "proof_sketch":
+        return ObligationCheck(
+            id=obligation.id,
+            cluster=obligation.cluster,
+            status="SKETCH_ARTIFACT",
+            reason="proof-ledger card is explicitly a proof sketch, not a formal proof",
+            artifact=artifact,
+        )
     if not artifact_is_complete(artifact):
         return ObligationCheck(
             id=obligation.id,
@@ -337,6 +354,7 @@ def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAtte
             route_status=route_attempt.verdict,
             proved=0,
             missing_artifacts=0,
+            sketch_artifacts=0,
             incomplete_artifacts=0,
             imported_artifacts=0,
             checks=[],
@@ -345,11 +363,12 @@ def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAtte
     checks = [check_obligation(obligation, artifacts) for obligation in OBLIGATIONS]
     proved = sum(1 for check in checks if check.status == "PROVED")
     missing = sum(1 for check in checks if check.status == "MISSING_ARTIFACT")
+    sketch = sum(1 for check in checks if check.status == "SKETCH_ARTIFACT")
     incomplete = sum(1 for check in checks if check.status == "INCOMPLETE_ARTIFACT")
     imported = sum(1 for check in checks if check.status == "IMPORT_REJECTED")
     if imported > 0:
         verdict: ClosureVerdict = "IMPORTED_ASSUMPTION_REJECTED"
-    elif missing > 0 or incomplete > 0:
+    elif missing > 0 or sketch > 0 or incomplete > 0:
         verdict = "PROOF_ARTIFACTS_MISSING"
     else:
         verdict = "FULL_QM_PROVED"
@@ -358,6 +377,7 @@ def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAtte
         route_status=route_attempt.verdict,
         proved=proved,
         missing_artifacts=missing,
+        sketch_artifacts=sketch,
         incomplete_artifacts=incomplete,
         imported_artifacts=imported,
         checks=checks,
@@ -378,6 +398,7 @@ def main() -> int:
         f"full_qm_proof_closure={attempt.verdict} "
         f"route_status={attempt.route_status} proved={attempt.proved} "
         f"missing_artifacts={attempt.missing_artifacts} "
+        f"sketch_artifacts={attempt.sketch_artifacts} "
         f"incomplete_artifacts={attempt.incomplete_artifacts} "
         f"imported_artifacts={attempt.imported_artifacts}"
     )
