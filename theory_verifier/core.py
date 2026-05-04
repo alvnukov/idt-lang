@@ -404,6 +404,9 @@ IDT_CORE_FINITE_SIGNATURE_COMPONENTS = (
 
 IDT_CORE_GATE_TYPE_REGISTRY_SOURCE = "theory_verifier.FINITE_GATE_CHECKS"
 IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS = "formal_proof"
+IDT_CORE_PRIMITIVE_SORT_REGISTRY_SOURCE = "theory_verifier.QM_EXPERIMENT_REQUIRED_PRIMITIVES"
+IDT_CORE_CLAIM_ROLE_REGISTRY_SOURCE = "theory_verifier.IDT_CORE_CLAIM_ROLE_REGISTRY"
+IDT_CORE_ROUTE_FAMILY_REGISTRY_SOURCE = "theory_verifier.IDT_CORE_ROUTE_FAMILY_REGISTRY"
 
 IDT_CORE_FINITE_SIGNATURE_STATUSES = (
     "open",
@@ -418,8 +421,12 @@ IDT_CORE_FINITE_SIGNATURE_RESULTS = (
 )
 
 
+def idt_core_registry_digest(items: tuple[str, ...]) -> str:
+    return hashlib.sha256("\n".join(items).encode("utf-8")).hexdigest()
+
+
 def idt_core_gate_type_registry_digest(gate_types: tuple[str, ...]) -> str:
-    return hashlib.sha256("\n".join(gate_types).encode("utf-8")).hexdigest()
+    return idt_core_registry_digest(gate_types)
 
 
 IDT_CORE_GRAMMAR_ASSUMPTION_COMPONENTS: dict[str, tuple[str, ...]] = {
@@ -821,6 +828,35 @@ THEOREM_CARD_PROOF_STATUS_VALUES = (
     "open",
     "blocked",
 )
+
+IDT_CORE_CLAIM_ROLE_REGISTRY = tuple(sorted({*SECTOR_ROLE_VALUES, *THEOREM_CARD_ROLE_VALUES}))
+
+IDT_CORE_ROUTE_FAMILY_REGISTRY = tuple(
+    sorted(
+        {
+            *UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES,
+            *QM_CORE_RECOMPILE_REQUIRED_ROUTES,
+            *CARRIER_SELECTION_LEMMA_ROUTE_REFS.values(),
+            "uniform_witness_bound_route_demo",
+            "no_emergent_joint_only_invariant_route_demo",
+        }
+    )
+)
+
+IDT_CORE_SIGNATURE_REGISTRY_SOURCES: dict[str, tuple[str, tuple[str, ...]]] = {
+    "finite_primitive_sort_vocabulary": (
+        IDT_CORE_PRIMITIVE_SORT_REGISTRY_SOURCE,
+        QM_EXPERIMENT_REQUIRED_PRIMITIVES,
+    ),
+    "finite_claim_role_vocabulary": (
+        IDT_CORE_CLAIM_ROLE_REGISTRY_SOURCE,
+        IDT_CORE_CLAIM_ROLE_REGISTRY,
+    ),
+    "finite_route_family_registry": (
+        IDT_CORE_ROUTE_FAMILY_REGISTRY_SOURCE,
+        IDT_CORE_ROUTE_FAMILY_REGISTRY,
+    ),
+}
 
 SECTOR_ROLE_TAXONOMY_TARGET = "sector_role_taxonomy_I"
 
@@ -7910,6 +7946,105 @@ def check_idt_core_gate_type_registry_audit_gate(gate: FiniteGate) -> list[Issue
             )
         ]
 
+    return []
+
+
+def check_idt_core_signature_registry_audit_gate(gate: FiniteGate) -> list[Issue]:
+    component_registries = require_list(
+        gate.payload.get("component_registries"),
+        f"{gate.identifier}.component_registries",
+    )
+    if len(component_registries) != len(IDT_CORE_SIGNATURE_REGISTRY_SOURCES):
+        raise ManifestError(f"{gate.identifier}: component_registries must cover every non-gate IDT-Core registry")
+
+    seen: set[str] = set()
+    for index, item in enumerate(component_registries):
+        registry = require_mapping(item, f"{gate.identifier}.component_registries[{index}]")
+        component_id = require_string(
+            registry.get("component_id"),
+            f"{gate.identifier}.component_registries[{index}].component_id",
+        )
+        registry_source = require_string(
+            registry.get("registry_source"),
+            f"{gate.identifier}.component_registries[{index}].registry_source",
+        )
+        expected_item_count = parse_positive_integer(
+            registry.get("expected_item_count"),
+            f"{gate.identifier}.component_registries[{index}].expected_item_count",
+        )
+        expected_item_digest = require_string(
+            registry.get("expected_item_digest"),
+            f"{gate.identifier}.component_registries[{index}].expected_item_digest",
+        )
+        expected_component_status = require_string(
+            registry.get("expected_component_status"),
+            f"{gate.identifier}.component_registries[{index}].expected_component_status",
+        )
+
+        source = IDT_CORE_SIGNATURE_REGISTRY_SOURCES.get(component_id)
+        if source is None:
+            return [
+                Issue(
+                    "idt_core_signature_registry_unknown_component",
+                    f"{gate.identifier}: unknown signature registry component {component_id}",
+                )
+            ]
+        if component_id in seen:
+            return [
+                Issue(
+                    "idt_core_signature_registry_duplicate_component",
+                    f"{gate.identifier}: duplicate signature registry component {component_id}",
+                )
+            ]
+        seen.add(component_id)
+
+        expected_source, registered_items = source
+        if registry_source != expected_source:
+            return [
+                Issue(
+                    "idt_core_signature_registry_source_mismatch",
+                    f"{gate.identifier}: {component_id} registry_source must be {expected_source}",
+                )
+            ]
+        if len(set(registered_items)) != len(registered_items):
+            return [
+                Issue(
+                    "idt_core_signature_registry_internal_duplicate",
+                    f"{gate.identifier}: {component_id} registry contains duplicate items",
+                )
+            ]
+        if expected_item_count != len(registered_items):
+            return [
+                Issue(
+                    "idt_core_signature_registry_count_mismatch",
+                    f"{gate.identifier}: {component_id} expected count {expected_item_count}, registered {len(registered_items)}",
+                )
+            ]
+
+        computed_digest = idt_core_registry_digest(registered_items)
+        if expected_item_digest != computed_digest:
+            return [
+                Issue(
+                    "idt_core_signature_registry_digest_mismatch",
+                    f"{gate.identifier}: {component_id} expected digest {expected_item_digest}, computed {computed_digest}",
+                )
+            ]
+        if expected_component_status != IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS:
+            return [
+                Issue(
+                    "idt_core_signature_registry_status_mismatch",
+                    f"{gate.identifier}: {component_id} expected_component_status must be formal_proof",
+                )
+            ]
+
+    missing = sorted(set(IDT_CORE_SIGNATURE_REGISTRY_SOURCES) - seen)
+    if missing:
+        return [
+            Issue(
+                "idt_core_signature_registry_component_missing",
+                f"{gate.identifier}: missing signature registry components: {', '.join(missing)}",
+            )
+        ]
     return []
 
 
@@ -16753,6 +16888,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "uniform_witness_bound_assumption_frontier": check_uniform_witness_bound_assumption_frontier_gate,
     "idt_core_finite_signature_frontier": check_idt_core_finite_signature_frontier_gate,
     "idt_core_gate_type_registry_audit": check_idt_core_gate_type_registry_audit_gate,
+    "idt_core_signature_registry_audit": check_idt_core_signature_registry_audit_gate,
     "idt_core_grammar_assumption_frontier": check_idt_core_grammar_assumption_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,

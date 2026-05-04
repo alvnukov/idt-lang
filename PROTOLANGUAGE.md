@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.11.0`
+Current version: `v6.12.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -668,18 +668,15 @@ card and `uniform_witness_bound_route_demo` now reduce the uniform-bound
 obstruction to a conditional finite-signature/finite-generator route; it is not
 a formal IDT derivation of the bound.
 The `uniform_witness_bound_assumption_frontier_demo` now makes the remaining
-formalization gap explicit: finite signature, bounded arity, generator basis,
-and no-new-primitive-effects closure are at `conditional_basis`, not
-`formalized`.
-The `idt_core_finite_signature_frontier_demo` decomposes the first of those
-assumptions into a conditional IDT-Core signature over primitive sorts, claim
-roles, gate types, and route families.
-Within that frontier, `finite_gate_type_registry` is now an executable
-`formal_proof` via `idt_core_gate_type_registry_audit_demo`, which snapshots
-the count and digest of the verifier's finite gate-type registry and checks
-them against `FINITE_GATE_CHECKS`; the overall finite signature remains
-conditional because the other IDT-Core signature components are not yet
-formalized.
+formalization gap explicit: finite signature is `formal_proof`, while bounded
+arity, generator basis, and no-new-primitive-effects closure remain at
+`conditional_support`.
+The `idt_core_finite_signature_frontier_demo` now formalizes the first of those
+assumptions as an executable IDT-Core signature over primitive sorts, claim
+roles, gate types, and route families. `idt_core_gate_type_registry_audit_demo`
+checks the live `FINITE_GATE_CHECKS` registry; `idt_core_signature_registry_audit_demo`
+checks the primitive-sort, claim-role, and route-family registries by count and
+digest.
 The `idt_core_bounded_arity_frontier_demo`,
 `idt_core_route_generator_basis_frontier_demo`, and
 `idt_core_no_new_primitive_effects_frontier_demo` now decompose the remaining

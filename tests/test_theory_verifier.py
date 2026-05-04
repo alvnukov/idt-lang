@@ -138,7 +138,9 @@ from theory_verifier.core import (
     GPT_SEPARATOR_PRINCIPLES,
     IDT_BOUNDED_CORRELATION_CONDITIONS,
     IDT_PURIFICATION_FILTERING_CONDITIONS,
+    IDT_CORE_SIGNATURE_REGISTRY_SOURCES,
     idt_core_gate_type_registry_digest,
+    idt_core_registry_digest,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
     NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
@@ -3823,6 +3825,96 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_core_gate_type_registry_status_mismatch"})
+
+    def test_idt_core_signature_registry_audit_rejects_stale_digest(self) -> None:
+        component_registries = [
+            {
+                "component_id": component_id,
+                "registry_source": source,
+                "expected_item_count": len(items),
+                "expected_item_digest": "0" * 64 if component_id == "finite_claim_role_vocabulary" else idt_core_registry_digest(items),
+                "expected_component_status": "formal_proof",
+            }
+            for component_id, (source, items) in IDT_CORE_SIGNATURE_REGISTRY_SOURCES.items()
+        ]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "stale_idt_core_signature_registry_audit",
+                        "type": "idt_core_signature_registry_audit",
+                        "component_registries": component_registries,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_signature_registry_digest_mismatch"})
+
+    def test_idt_core_signature_registry_audit_rejects_missing_component(self) -> None:
+        component_registries = [
+            {
+                "component_id": component_id,
+                "registry_source": source,
+                "expected_item_count": len(items),
+                "expected_item_digest": idt_core_registry_digest(items),
+                "expected_component_status": "formal_proof",
+            }
+            for component_id, (source, items) in IDT_CORE_SIGNATURE_REGISTRY_SOURCES.items()
+            if component_id != "finite_route_family_registry"
+        ]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "missing_idt_core_signature_registry_audit",
+                        "type": "idt_core_signature_registry_audit",
+                        "component_registries": component_registries,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"invalid_finite_gate"})
+
+    def test_idt_core_signature_registry_audit_rejects_nonformal_status(self) -> None:
+        component_registries = [
+            {
+                "component_id": component_id,
+                "registry_source": source,
+                "expected_item_count": len(items),
+                "expected_item_digest": idt_core_registry_digest(items),
+                "expected_component_status": "conditional_support"
+                if component_id == "finite_primitive_sort_vocabulary"
+                else "formal_proof",
+            }
+            for component_id, (source, items) in IDT_CORE_SIGNATURE_REGISTRY_SOURCES.items()
+        ]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "nonformal_idt_core_signature_registry_audit",
+                        "type": "idt_core_signature_registry_audit",
+                        "component_registries": component_registries,
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_signature_registry_status_mismatch"})
 
     def test_idt_core_grammar_assumption_frontier_reports_conditional_basis(self) -> None:
         target_assumption = "bounded_context_arity"

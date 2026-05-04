@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.11.0",
+  "theory_version": "v6.12.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4842,14 +4842,13 @@
       "assumptions": [
         {
           "id": "finite_context_signature",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
             "idt_core_finite_signature_frontier_demo",
-            "idt_metalang_research_graph_contract_demo",
-            "sections/173-idt-metalang-research-graph.md",
-            "sections/171-qm-experiment-language-ledger.md"
+            "idt_core_signature_registry_audit_demo",
+            "idt_core_gate_type_registry_audit_demo"
           ],
-          "open_gap": "Finite context signature now has an executable IDT-Core signature frontier at conditional_signature, but its components are not yet formal IDT-Core grammar theorems."
+          "open_gap": ""
         },
         {
           "id": "bounded_context_arity",
@@ -4894,22 +4893,19 @@
       "components": [
         {
           "id": "finite_primitive_sort_vocabulary",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
-            "QM_EXPERIMENT_REQUIRED_PRIMITIVES",
-            "sections/173-idt-metalang-research-graph.md",
-            "sections/171-qm-experiment-language-ledger.md"
+            "idt_core_signature_registry_audit_demo"
           ],
-          "open_gap": "Primitive sort vocabulary is explicit in QM primitive requirements and MetaLang docs, but not yet a compact formal IDT-Core grammar theorem."
+          "open_gap": ""
         },
         {
           "id": "finite_claim_role_vocabulary",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
-            "sector_role_registry_demo",
-            "idt_metalang_research_graph_contract_demo"
+            "idt_core_signature_registry_audit_demo"
           ],
-          "open_gap": "Claim role vocabulary is executable through sector-role gates, but not yet unified as an IDT-Core grammar theorem."
+          "open_gap": ""
         },
         {
           "id": "finite_gate_type_registry",
@@ -4921,24 +4917,49 @@
         },
         {
           "id": "finite_route_family_registry",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
-            "uniform_witness_bound_route_demo",
-            "qm_core_recompile_route_demo",
-            "nonfinite_gpt_residual_frontier_demo"
+            "idt_core_signature_registry_audit_demo"
           ],
-          "open_gap": "Route families are registered in the uniform witness route and QM core recompile route, but not yet formalized as an IDT-Core route-family grammar theorem."
+          "open_gap": ""
         }
       ],
-      "expected_signature_status": "conditional_signature"
+      "expected_signature_status": "formalized"
     },
     {
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 221,
-      "expected_gate_type_digest": "2bbdcfe4c187b47784440228915f9f95f566b0cfff3c701ebe05713b60bdfe2d",
+      "expected_gate_type_count": 222,
+      "expected_gate_type_digest": "9ebd95ef2c0c22bceb54faa72715ac1de6c491d47ec2908c3a2797f96986785b",
       "expected_component_status": "formal_proof"
+    },
+    {
+      "id": "idt_core_signature_registry_audit_demo",
+      "type": "idt_core_signature_registry_audit",
+      "component_registries": [
+        {
+          "component_id": "finite_primitive_sort_vocabulary",
+          "registry_source": "theory_verifier.QM_EXPERIMENT_REQUIRED_PRIMITIVES",
+          "expected_item_count": 6,
+          "expected_item_digest": "c546f18003389499566b2c953c14744646cf6d79a1d3314765e2bea3b63e7dc5",
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "component_id": "finite_claim_role_vocabulary",
+          "registry_source": "theory_verifier.IDT_CORE_CLAIM_ROLE_REGISTRY",
+          "expected_item_count": 17,
+          "expected_item_digest": "2a418a4b675ed8eb12a0a8b7d923ecd234e4dc5ee5168acf71f52cdc378296cf",
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "component_id": "finite_route_family_registry",
+          "registry_source": "theory_verifier.IDT_CORE_ROUTE_FAMILY_REGISTRY",
+          "expected_item_count": 21,
+          "expected_item_digest": "1db7ba1d6e45c4bb817f3cca9c9a8474a8b20fa0bce6b922a62aaf9d8728ea21",
+          "expected_component_status": "formal_proof"
+        }
+      ]
     },
     {
       "id": "idt_core_bounded_arity_frontier_demo",

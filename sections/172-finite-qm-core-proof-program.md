@@ -546,33 +546,36 @@ The four assumptions are now decomposed by:
 3. `idt_core_route_generator_basis_frontier_demo`;
 4. `idt_core_no_new_primitive_effects_frontier_demo`.
 
-The first reports `conditional_signature` over four IDT-Core components:
+The first now reports `formalized` over four IDT-Core components:
 
 1. finite primitive-sort vocabulary;
 2. finite claim-role vocabulary;
 3. finite gate-type registry;
 4. finite route-family registry.
 
-One component has now been promoted from conditional support to executable
-formal proof:
+The gate-type vocabulary is checked by:
 
-`finite_gate_type_registry`
-
-is checked by:
-
-`idt_core_gate_type_registry_audit_demo`.
+`idt_core_gate_type_registry_audit_demo`
 
 The audit snapshots the count and digest of the finite gate-type list exported
 by the verifier and compares them against the live `FINITE_GATE_CHECKS`
 registry. This proves that the gate-type vocabulary is a finite,
 machine-audited registry for this version of IDT-Core without embedding the
-entire registry list in the manifest. It does not formalize the remaining
-primitive-sort, claim-role, or route-family vocabularies.
+entire registry list in the manifest.
 
-The other three report `conditional_basis` for bounded arity, route-generator
-basis, and no-new-primitive-effects closure. This narrows the next proof work
-to formalizing compact IDT-Core grammar theorems rather than adding more QM
-experiment fixtures.
+The primitive-sort, claim-role, and route-family vocabularies are checked by:
+
+`idt_core_signature_registry_audit_demo`.
+
+That audit snapshots count and digest checks for
+`QM_EXPERIMENT_REQUIRED_PRIMITIVES`, the combined IDT claim-role registry, and
+the explicit IDT route-family registry. This closes the finite-signature
+assumption as an executable IDT-Core registry theorem.
+
+The other three uniform-witness assumptions still report `conditional_basis`
+for bounded arity, route-generator basis, and no-new-primitive-effects closure.
+This narrows the next proof work to formalizing those compact IDT-Core grammar
+theorems rather than adding more QM experiment fixtures.
 
 The third item is now reduced to a conditional separator:
 
