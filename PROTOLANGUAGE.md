@@ -648,6 +648,10 @@ are derived from IDT rather than assumed.
 The `carrier_selection_frontier_demo` makes that boundary executable: complex
 Hilbert-like structure survives the current screens, but no carrier is selected
 while the universal carrier/classification theorem remains open.
+The `carrier_universal_quantifier_frontier_demo` now makes the universal
+carrier quantifier explicit: non-complex Jordan and unconstrained generic GPT
+classes are rejected, complex Hilbert-like structure survives, and route-closed
+plus broader generic GPT classes remain underdetermined.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

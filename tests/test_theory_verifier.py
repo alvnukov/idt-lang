@@ -15,6 +15,7 @@ from theory_verifier.core import (
     BORN_READOUT_ROUTE_CONDITIONS,
     BORN_READOUT_THEOREM_ASSUMPTIONS,
     BORN_READOUT_THEOREM_FORBIDDEN_UPGRADES,
+    CARRIER_QUANTIFIER_FRONTIER_CLASSES,
     CLOCK_VACUUM_POLE_REQUIRED_SYMBOLS,
     CLOCK_VACUUM_POLE_TARGET,
     CONTINUUM_ACTION_FRONTIER_REQUIREMENTS,
@@ -3835,6 +3836,87 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"carrier_selection_frontier_selection_mismatch"})
+
+    def test_carrier_quantifier_frontier_rejects_premature_closure(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_carrier_quantifier_frontier",
+                        "type": "carrier_quantifier_frontier",
+                        "expected_selected_carrier": "complex_hilbert_like",
+                        "expected_quantifier_status": "closed",
+                        "classes": [
+                            {
+                                "id": "complex_hilbert_like",
+                                "status": "survives",
+                                "evidence_refs": ["carrier_selection_frontier_demo"],
+                                "open_gap": "",
+                            },
+                            {
+                                "id": "noncomplex_jordan_family",
+                                "status": "rejected",
+                                "evidence_refs": ["noncomplex_jordan_separator_demo"],
+                                "open_gap": "",
+                            },
+                            {
+                                "id": "unconstrained_generic_gpt_cone",
+                                "status": "rejected",
+                                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                                "open_gap": "",
+                            },
+                            {
+                                "id": "route_closed_gpt_subtheory",
+                                "status": "underdetermined",
+                                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                                "open_gap": "route-closed GPT remains underdetermined",
+                            },
+                            {
+                                "id": "broader_generic_gpt_cone",
+                                "status": "underdetermined",
+                                "evidence_refs": ["carrier_selection_frontier_demo"],
+                                "open_gap": "broader GPT remains underdetermined",
+                            },
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"carrier_quantifier_frontier_selection_mismatch"})
+
+    def test_carrier_quantifier_frontier_requires_all_classes(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "incomplete_carrier_quantifier_frontier",
+                        "type": "carrier_quantifier_frontier",
+                        "expected_selected_carrier": "none",
+                        "expected_quantifier_status": "open",
+                        "classes": [
+                            {
+                                "id": class_id,
+                                "status": "rejected",
+                                "evidence_refs": ["carrier_selection_frontier_demo"],
+                                "open_gap": "",
+                            }
+                            for class_id in CARRIER_QUANTIFIER_FRONTIER_CLASSES[:-1]
+                        ],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"invalid_finite_gate"})
 
     def test_carrier_selection_proof_route_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

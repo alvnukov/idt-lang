@@ -3107,6 +3107,7 @@
       "role": "theorem",
       "assumptions": ["QM_EXPERIMENT_REQUIRED_PRIMITIVES"],
       "dependencies": [
+        "carrier_universal_quantifier_frontier_demo",
         "carrier_selection_proof_route_demo",
         "carrier_selection_frontier_demo",
         "generic_gpt_closure_separator_demo",
@@ -3114,7 +3115,10 @@
       ],
       "proof_status": "open",
       "verifier": "full_qm_closure_frontier_demo",
-      "known_failures": ["carrier not selected by current finite screens"],
+      "known_failures": [
+        "carrier not selected by current finite screens",
+        "universal carrier quantifier remains open over route-closed and broader generic GPT classes"
+      ],
       "physical_scope": "Full-QM carrier derivation.",
       "forbidden_claims": ["complex Hilbert carrier derived from IDT"]
     },
@@ -4565,6 +4569,62 @@
             "extend_bounded_correlation_to_carrier_theorem",
             "extend_generic_gpt_exclusion_to_classification_theorem"
           ]
+        }
+      ]
+    },
+    {
+      "id": "carrier_universal_quantifier_frontier_demo",
+      "type": "carrier_quantifier_frontier",
+      "expected_selected_carrier": "none",
+      "expected_quantifier_status": "open",
+      "classes": [
+        {
+          "id": "complex_hilbert_like",
+          "status": "survives",
+          "evidence_refs": [
+            "carrier_selection_frontier_demo",
+            "noncomplex_jordan_separator_demo",
+            "generic_gpt_closure_separator_demo"
+          ],
+          "open_gap": ""
+        },
+        {
+          "id": "noncomplex_jordan_family",
+          "status": "rejected",
+          "evidence_refs": [
+            "noncomplex_jordan_separator_rejects_noncomplex_samples",
+            "noncomplex_jordan_separator_theorem_demo",
+            "noncomplex_jordan_separator_demo"
+          ],
+          "open_gap": ""
+        },
+        {
+          "id": "unconstrained_generic_gpt_cone",
+          "status": "rejected",
+          "evidence_refs": [
+            "generic_gpt_closure_rejects_unconstrained_cone",
+            "generic_gpt_closure_theorem_demo",
+            "generic_gpt_closure_separator_demo"
+          ],
+          "open_gap": ""
+        },
+        {
+          "id": "route_closed_gpt_subtheory",
+          "status": "underdetermined",
+          "evidence_refs": [
+            "generic_gpt_closure_rejects_unconstrained_cone",
+            "generic_gpt_closure_separator_demo"
+          ],
+          "open_gap": "Route-closed GPT subtheories satisfy current finite route-witness and bounded-correlation screens but do not yet collapse to complex Hilbert-like structure."
+        },
+        {
+          "id": "broader_generic_gpt_cone",
+          "status": "underdetermined",
+          "evidence_refs": [
+            "generic_gpt_closure_rejects_unconstrained_cone",
+            "carrier_selection_frontier_demo"
+          ],
+          "open_gap": "The broader generic GPT cone is not exhausted by current finite separators, so the universal carrier quantifier remains open."
         }
       ]
     },

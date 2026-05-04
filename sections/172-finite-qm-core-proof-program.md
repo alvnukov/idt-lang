@@ -478,6 +478,26 @@ The frontier status is therefore:
 
 `not_derived`.
 
+The universal quantifier over carrier classes is now executable as:
+
+`carrier_universal_quantifier_frontier_demo`.
+
+It separates the current carrier classes into:
+
+1. complex Hilbert-like structure, which survives the current screens;
+2. non-complex Jordan families, which are rejected by the conditional separator;
+3. the unconstrained generic GPT cone, which is rejected by the conditional
+   closure theorem;
+4. route-closed GPT subtheories, which remain underdetermined;
+5. the broader generic GPT cone, which remains underdetermined.
+
+Because the last two classes are not closed, the universal quantifier remains:
+
+`open`.
+
+This is the current reason `universal_carrier_selection_theorem` cannot be
+upgraded to `conditional_proof` or `formal_proof`.
+
 The first proof route toward the universal carrier-selection theorem is now
 executable as:
 

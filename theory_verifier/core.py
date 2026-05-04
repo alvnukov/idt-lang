@@ -377,6 +377,26 @@ CARRIER_SELECTION_FRONTIER_STATUSES = {
     "selected_by_current_gates",
 }
 
+CARRIER_QUANTIFIER_FRONTIER_CLASSES = (
+    "complex_hilbert_like",
+    "noncomplex_jordan_family",
+    "unconstrained_generic_gpt_cone",
+    "route_closed_gpt_subtheory",
+    "broader_generic_gpt_cone",
+)
+
+CARRIER_QUANTIFIER_STATUSES = {
+    "survives",
+    "rejected",
+    "underdetermined",
+    "out_of_scope",
+}
+
+CARRIER_QUANTIFIER_FRONTIER_STATUSES = {
+    "open",
+    "closed",
+}
+
 NON_DERIVED_DEPENDENCY_STATUSES = {
     "open",
     "blocked",
@@ -2649,6 +2669,20 @@ def check_carrier_selection_theorem_grounding(manifest: Manifest) -> list[Issue]
                     f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
                     f"does not match route status {expected_proof_status!r}"
                 ),
+            )
+        )
+
+    required_theorem_dependencies = {
+        "carrier_universal_quantifier_frontier_demo",
+        "carrier_selection_proof_route_demo",
+        "carrier_selection_frontier_demo",
+    }
+    if not required_theorem_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_theorem_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "carrier_selection_theorem_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
             )
         )
 
@@ -7315,6 +7349,93 @@ def check_carrier_selection_frontier_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "carrier_selection_frontier_status_mismatch",
                 f"{gate.identifier}: expected frontier status {expected_frontier_status}, computed {computed_frontier_status}",
+            )
+        ]
+    return []
+
+
+def check_carrier_quantifier_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    classes = require_list(gate.payload.get("classes"), f"{gate.identifier}.classes")
+    if len(classes) != len(CARRIER_QUANTIFIER_FRONTIER_CLASSES):
+        raise ManifestError(f"{gate.identifier}: classes must cover every carrier quantifier frontier class")
+
+    expected_selected = require_string(gate.payload.get("expected_selected_carrier"), f"{gate.identifier}.expected_selected_carrier")
+    expected_status = require_string(gate.payload.get("expected_quantifier_status"), f"{gate.identifier}.expected_quantifier_status")
+    if expected_status not in CARRIER_QUANTIFIER_FRONTIER_STATUSES:
+        raise ManifestError(f"{gate.identifier}.expected_quantifier_status is unknown")
+
+    status_by_class: dict[str, str] = {}
+    surviving: list[str] = []
+    unresolved: list[str] = []
+    for index, item in enumerate(classes):
+        carrier_class = require_mapping(item, f"{gate.identifier}.classes[{index}]")
+        class_id = require_string(carrier_class.get("id"), f"{gate.identifier}.classes[{index}].id")
+        status = require_string(carrier_class.get("status"), f"{gate.identifier}.classes[{index}].status")
+        evidence_refs = require_string_tuple(
+            carrier_class.get("evidence_refs", []),
+            f"{gate.identifier}.classes[{index}].evidence_refs",
+        )
+        open_gap = require_string(carrier_class.get("open_gap", ""), f"{gate.identifier}.classes[{index}].open_gap")
+        if class_id not in CARRIER_QUANTIFIER_FRONTIER_CLASSES:
+            return [
+                Issue(
+                    "carrier_quantifier_frontier_unknown_class",
+                    f"{gate.identifier}: unknown carrier class {class_id}",
+                )
+            ]
+        if status not in CARRIER_QUANTIFIER_STATUSES:
+            raise ManifestError(f"{gate.identifier}: class {class_id} has unknown status {status!r}")
+        if class_id in status_by_class:
+            return [
+                Issue(
+                    "carrier_quantifier_frontier_duplicate_class",
+                    f"{gate.identifier}: duplicate carrier class {class_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "carrier_quantifier_frontier_evidence_missing",
+                    f"{gate.identifier}: carrier class {class_id} must cite evidence",
+                )
+            ]
+        if status in {"underdetermined", "out_of_scope"} and not open_gap:
+            return [
+                Issue(
+                    "carrier_quantifier_frontier_gap_missing",
+                    f"{gate.identifier}: unresolved carrier class {class_id} must declare an open gap",
+                )
+            ]
+        if status == "survives":
+            surviving.append(class_id)
+        if status in {"underdetermined", "out_of_scope"}:
+            unresolved.append(class_id)
+        status_by_class[class_id] = status
+
+    missing = sorted(set(CARRIER_QUANTIFIER_FRONTIER_CLASSES) - set(status_by_class))
+    if missing:
+        return [
+            Issue(
+                "carrier_quantifier_frontier_class_missing",
+                f"{gate.identifier}: missing carrier classes: {', '.join(missing)}",
+            )
+        ]
+
+    computed_selected = surviving[0] if len(surviving) == 1 and not unresolved else "none"
+    if computed_selected != expected_selected:
+        return [
+            Issue(
+                "carrier_quantifier_frontier_selection_mismatch",
+                f"{gate.identifier}: expected selected carrier {expected_selected}, computed {computed_selected}",
+            )
+        ]
+
+    computed_status = "closed" if computed_selected != "none" else "open"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "carrier_quantifier_frontier_status_mismatch",
+                f"{gate.identifier}: expected quantifier status {expected_status}, computed {computed_status}",
             )
         ]
     return []
@@ -14848,6 +14969,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "full_qm_closure_frontier": check_full_qm_closure_frontier_gate,
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
+    "carrier_quantifier_frontier": check_carrier_quantifier_frontier_gate,
     "carrier_selection_proof_route": check_carrier_selection_proof_route_gate,
     "context_product_carrier_lemma_route": check_context_product_carrier_lemma_route_gate,
     "purification_filtering_carrier_lemma_route": check_purification_filtering_carrier_lemma_route_gate,
