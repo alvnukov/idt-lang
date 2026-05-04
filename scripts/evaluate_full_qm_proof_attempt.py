@@ -15,6 +15,7 @@ import scripts.evaluate_fpd_projective_derivation as fpd_projective  # noqa: E40
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
+import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
 import scripts.verify_finite_qm_route as finite_gate  # noqa: E402
 
 StepStatus = Literal["PASS", "CONDITIONAL", "OPEN", "FAIL"]
@@ -87,6 +88,13 @@ def find_born_route(route_name: str) -> born_attempt.RouteResult:
         if route.name == route_name:
             return born_attempt.evaluate_route(route)
     raise ValueError(f"unknown Born/readout route: {route_name}")
+
+
+def find_dynamics_route(route_name: str) -> dynamics_attempt.RouteResult:
+    for route in dynamics_attempt.ROUTES:
+        if route.name == route_name:
+            return dynamics_attempt.evaluate_route(route)
+    raise ValueError(f"unknown dynamics route: {route_name}")
 
 
 def build_residual_closure_step() -> ProofStep:
@@ -186,6 +194,21 @@ def build_universal_born_step() -> ProofStep:
 
 
 def build_dynamics_step() -> ProofStep:
+    route = find_dynamics_route("continuous_generator_route")
+    if route.verdict == "CONDITIONAL_DYNAMICS_ROUTE":
+        return ProofStep(
+            name="unitary_dynamics_theorem",
+            status="CONDITIONAL",
+            statement=(
+                "A non-imported dynamics route exists if reversible inheritance acts as D_cl automorphisms, "
+                "preserves normalized overlap, acts projectively, and has continuous generator closure."
+            ),
+            evidence=f"verdict={route.verdict}; passed={route.passed}/8; imports={len(route.imports)}",
+            remaining_obligation=(
+                "Prove D_cl automorphism, overlap preservation, projective action, continuity, and generator closure "
+                "as IDT theorem artifacts rather than assuming unitary evolution."
+            ),
+        )
     return ProofStep(
         name="unitary_dynamics_theorem",
         status="OPEN",

@@ -11931,3 +11931,143 @@ The next full-proof pass should attack:
 ```text
 unitary_dynamics_theorem
 ```
+
+### 174.251. Unitary / Generator Dynamics Attempt
+
+The next one-pass target was:
+
+```text
+unitary_dynamics_theorem
+```
+
+Evaluator:
+
+```text
+scripts/evaluate_unitary_dynamics_attempt.py
+```
+
+It tests whether reversible inheritance dynamics can be routed to
+unitary/antiunitary-like and generator-compatible maps without assuming
+unitary evolution.
+
+Routes tested:
+
+```text
+finite_unitary_gates_only;
+dcl_automorphism_only;
+wigner_like_symmetry_route;
+continuity_without_generator;
+continuous_generator_route;
+imported_unitary_dynamics.
+```
+
+Result:
+
+```text
+route = continuous_generator_route
+verdict = CONDITIONAL_DYNAMICS_ROUTE
+passed = 8/8
+imports = none
+```
+
+The conditional route requires:
+
+```text
+1. reversible D_cl automorphism;
+2. normalized-overlap / transition-probability preservation;
+3. projective action on operational rays/classes;
+4. continuous one-parameter reversible inheritance family;
+5. generator closure.
+```
+
+Controls:
+
+```text
+wigner_like_symmetry_route:
+  reaches the transition-preserving projective symmetry route, but lacks
+  continuity and generator closure.
+
+continuity_without_generator:
+  lacks a closed generator theorem.
+
+finite_unitary_gates_only:
+  finite gates are not a general dynamics theorem.
+
+imported_unitary_dynamics:
+  IMPORTED_HIT because it assumes unitary_evolution_assumed.
+```
+
+### 174.252. Meaning Of The Dynamics Attempt
+
+The dynamics wall did not disappear.
+
+It split into five sharper theorem obligations:
+
+```text
+dcl_automorphism_dynamics_theorem
+overlap_preservation_dynamics_theorem
+projective_action_theorem
+continuous_inheritance_family_theorem
+generator_closure_theorem
+```
+
+If those are proved, the route gives a non-imported dynamics theorem:
+
+```text
+D_cl-preserving reversible inheritance
+-> transition-preserving projective symmetry
+-> continuous generator-compatible dynamics.
+```
+
+If any fails, unitary/generator dynamics remains blocked.
+
+This is progress because:
+
+```text
+unitary dynamics is not inserted;
+the exact missing assumptions are explicit;
+the direct unitary import is rejected by executable control.
+```
+
+### 174.253. Updated One-Pass Full-QM Attempt After Dynamics Pass
+
+After the dynamics pass:
+
+```text
+full_qm_proof_attempt = CONDITIONAL_ROUTE_ADVANCED
+pass = 1
+conditional = 5
+open = 2
+failed = 0
+```
+
+Conditional:
+
+```text
+finite_route_residual_closure
+fpd_projective_derivation
+universal_representation_theorem
+universal_born_readout_theorem
+unitary_dynamics_theorem
+```
+
+Still open:
+
+```text
+general_composite_theorem
+physical_phase_scale_boundary
+```
+
+This still does not prove QM.
+
+But the pass made measurable progress:
+
+```text
+unitary_dynamics_theorem moved from OPEN to CONDITIONAL.
+```
+
+The next full-proof pass should attack:
+
+```text
+general_composite_theorem
+```
