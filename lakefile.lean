@@ -8,5 +8,6 @@ lean_lib Proofs where
     `Proofs.IDTCore,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,
-    `Proofs.QMClosure.CGSCSemanticContentWall
+    `Proofs.QMClosure.CGSCSemanticContentWall,
+    `Proofs.QMClosure.CGSCTypedSemanticExtensions
   ]

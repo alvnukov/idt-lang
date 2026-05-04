@@ -3,13 +3,16 @@
   "artifact_status": "semantic_content_wall_not_formal_proof",
   "wall": {
     "id": "cgsc_semantic_content_wall",
-    "expected_verdict": "SEMANTIC_CONTENT_WALL_DETECTED",
+    "expected_verdict": "SEMANTIC_CONTENT_CONTRACT_REGISTERED",
     "proof_status": "blocked",
     "lean_file": "Proofs/QMClosure/CGSCSemanticContentWall.lean",
-    "checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
+    "wall_checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
+    "typed_contract_file": "Proofs/QMClosure/CGSCTypedSemanticExtensions.lean",
+    "typed_contract_checker_command": "lake build Proofs.QMClosure.CGSCTypedSemanticExtensions",
     "dependencies": [
       "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
       "Proofs/QMClosure/CGSCSemanticContentWall.lean",
+      "Proofs/QMClosure/CGSCTypedSemanticExtensions.lean",
       "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "scripts/evaluate_cgsc_semantic_content_wall.py"
     ],
@@ -22,7 +25,8 @@
       "no_hidden_joint_only_generation"
     ],
     "degenerate_witness": "currentBridgeAdmitsDegenerateExtensionBase",
-    "required_fix": "replace unconstrained CheckedProp extension fields with typed semantic predicates and no-vacuity obligations before any formal proof upgrade",
+    "typed_contract": "typed_semantic_extension_base_has_no_vacuity",
+    "required_fix": "prove the typed non-vacuous semantic extension predicates from B0 or successor primitives before any formal proof upgrade",
     "forbidden_claims": [
       "does_not_prove_CGSC",
       "does_not_prove_full_QM_I",

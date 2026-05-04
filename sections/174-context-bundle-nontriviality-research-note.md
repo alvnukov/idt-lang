@@ -14625,3 +14625,71 @@ does_not_claim_extensions_are_proved_from_B0
 does_not_claim_CGSC_is_proved
 does_not_claim_full_QM_is_proved
 ```
+
+### 174.284. Typed Semantic Extension Contract
+
+The vacuity problem is now blocked by a typed semantic contract:
+
+```text
+Proofs/QMClosure/CGSCTypedSemanticExtensions.lean
+```
+
+The contract introduces typed semantic witnesses for all six extension slots:
+
+```text
+CompleteExposedContextPartitionSemantic
+ReversibleContextAutomorphismClosureSemantic
+CoherentRefinementCompactnessSemantic
+GeneratorBookkeepingWithoutStoneSemantic
+ProductContextGenerationClosureSemantic
+NoHiddenJointOnlyGenerationSemantic
+```
+
+Each witness carries domain-specific typed content, not just `CheckedProp`.
+The no-vacuity theorem checks concrete nontriviality obligations:
+
+```text
+typed_semantic_extension_base_has_no_vacuity
+```
+
+The semantic-content probe now reports:
+
+```text
+cgsc_semantic_content_wall = SEMANTIC_CONTENT_CONTRACT_REGISTERED
+legacy_wall = PASS
+typed_contract = PASS
+extension_witnesses = 6
+draft_checks_failed = 0
+```
+
+Meaning:
+
+```text
+old all-True CheckedProp route:
+  still detected as a negative control.
+
+typed semantic witness contract:
+  registered and machine-checked.
+
+proof from B0:
+  still missing.
+```
+
+This solves the packaging problem but not the primitive-derivation problem.
+The next proof target is now exact:
+
+```text
+B0 or successor primitives
+=> six typed, non-vacuous semantic extension witnesses
+=> CGSC primitive extension base
+=> three CGSC packages
+=> 21 conditional QM obligations
+```
+
+Forbidden upgrade:
+
+```text
+does_not_claim_typed_extensions_are_proved_from_B0
+does_not_mark_semantic_contract_as_CGSC_proof
+does_not_claim_full_QM_is_proved
+```

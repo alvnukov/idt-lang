@@ -36,7 +36,7 @@
       },
       {
         "id": "cgsc_semantic_content_wall",
-        "expected": "SEMANTIC_CONTENT_WALL_DETECTED"
+        "expected": "SEMANTIC_CONTENT_CONTRACT_REGISTERED"
       },
       {
         "id": "qm_inevitability_route",

@@ -12,8 +12,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DRAFT = REPO_ROOT / "Proofs/QMClosure/CGSCSemanticContentWallDraft.json"
 
 Verdict = Literal[
+    "SEMANTIC_CONTENT_CONTRACT_REGISTERED",
     "SEMANTIC_CONTENT_WALL_DETECTED",
     "LEAN_CHECK_FAILED",
+    "TYPED_CONTRACT_CHECK_FAILED",
     "WALL_DRAFT_INVALID",
 ]
 CheckStatus = Literal["PASS", "FAIL"]
@@ -33,7 +35,8 @@ REQUIRED_FORBIDDEN_CLAIMS = (
     "does_not_mark_vacuous_bridge_as_formal_proof",
     "does_not_claim_extensions_are_proved_from_B0",
 )
-CHECKER_COMMAND = "lake build Proofs.QMClosure.CGSCSemanticContentWall"
+LEGACY_WALL_COMMAND = "lake build Proofs.QMClosure.CGSCSemanticContentWall"
+TYPED_CONTRACT_COMMAND = "lake build Proofs.QMClosure.CGSCTypedSemanticExtensions"
 
 
 @dataclass(frozen=True)
@@ -55,9 +58,11 @@ class SemanticContentWallProbe:
     verdict: Verdict
     draft_path: str
     lean_file: str
+    typed_contract_file: str
     extension_witnesses: int
     draft_checks_failed: int
-    lean_check: LeanCheck
+    legacy_wall_check: LeanCheck
+    typed_contract_check: LeanCheck
     draft_checks: list[DraftCheck]
     next_blocker: str
 
@@ -115,7 +120,7 @@ def existing_dependency_refs(dependencies: tuple[str, ...]) -> DraftCheck:
 
 
 def run_lean_check(command: str) -> LeanCheck:
-    if command != CHECKER_COMMAND:
+    if command not in {LEGACY_WALL_COMMAND, TYPED_CONTRACT_COMMAND}:
         return LeanCheck(command=command, returncode=2, status="FAIL")
     completed = subprocess.run(
         shlex.split(command),
@@ -133,10 +138,20 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
     return [
         check_equals("artifact_status", draft.get("artifact_status"), "semantic_content_wall_not_formal_proof"),
         check_equals("wall_id", wall.get("id"), "cgsc_semantic_content_wall"),
-        check_equals("expected_verdict", wall.get("expected_verdict"), "SEMANTIC_CONTENT_WALL_DETECTED"),
+        check_equals("expected_verdict", wall.get("expected_verdict"), "SEMANTIC_CONTENT_CONTRACT_REGISTERED"),
         check_equals("proof_status", wall.get("proof_status"), "blocked"),
         check_equals("lean_file", wall.get("lean_file"), "Proofs/QMClosure/CGSCSemanticContentWall.lean"),
-        check_equals("checker_command", wall.get("checker_command"), CHECKER_COMMAND),
+        check_equals("wall_checker_command", wall.get("wall_checker_command"), LEGACY_WALL_COMMAND),
+        check_equals(
+            "typed_contract_file",
+            wall.get("typed_contract_file"),
+            "Proofs/QMClosure/CGSCTypedSemanticExtensions.lean",
+        ),
+        check_equals(
+            "typed_contract_checker_command",
+            wall.get("typed_contract_checker_command"),
+            TYPED_CONTRACT_COMMAND,
+        ),
         existing_dependency_refs(string_tuple(wall.get("dependencies"), "wall.dependencies")),
         check_set_equals(
             "extension_witnesses",
@@ -149,9 +164,14 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             "currentBridgeAdmitsDegenerateExtensionBase",
         ),
         check_equals(
+            "typed_contract",
+            wall.get("typed_contract"),
+            "typed_semantic_extension_base_has_no_vacuity",
+        ),
+        check_equals(
             "required_fix",
             wall.get("required_fix"),
-            "replace unconstrained CheckedProp extension fields with typed semantic predicates and no-vacuity obligations before any formal proof upgrade",
+            "prove the typed non-vacuous semantic extension predicates from B0 or successor primitives before any formal proof upgrade",
         ),
         check_set_equals(
             "forbidden_claims",
@@ -165,25 +185,32 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
     draft = load_draft(draft_path)
     wall = require_mapping(draft.get("wall"), "wall")
     draft_checks = validate_draft(draft, wall)
-    lean_check = run_lean_check(require_string(wall.get("checker_command"), "wall.checker_command"))
+    legacy_wall_check = run_lean_check(require_string(wall.get("wall_checker_command"), "wall.wall_checker_command"))
+    typed_contract_check = run_lean_check(
+        require_string(wall.get("typed_contract_checker_command"), "wall.typed_contract_checker_command")
+    )
     draft_failed = sum(1 for check in draft_checks if not check.passed)
     if draft_failed > 0:
         verdict: Verdict = "WALL_DRAFT_INVALID"
-    elif lean_check.status == "FAIL":
+    elif legacy_wall_check.status == "FAIL":
         verdict = "LEAN_CHECK_FAILED"
+    elif typed_contract_check.status == "FAIL":
+        verdict = "TYPED_CONTRACT_CHECK_FAILED"
     else:
-        verdict = "SEMANTIC_CONTENT_WALL_DETECTED"
+        verdict = "SEMANTIC_CONTENT_CONTRACT_REGISTERED"
     return SemanticContentWallProbe(
         verdict=verdict,
         draft_path=str(draft_path.relative_to(REPO_ROOT)),
         lean_file=require_string(wall.get("lean_file"), "wall.lean_file"),
+        typed_contract_file=require_string(wall.get("typed_contract_file"), "wall.typed_contract_file"),
         extension_witnesses=len(string_tuple(wall.get("extension_witnesses"), "wall.extension_witnesses")),
         draft_checks_failed=draft_failed,
-        lean_check=lean_check,
+        legacy_wall_check=legacy_wall_check,
+        typed_contract_check=typed_contract_check,
         draft_checks=draft_checks,
         next_blocker=(
-            "add typed semantic predicates and no-vacuity obligations for the six extension witnesses; "
-            "until then the bridge is schematic rather than a primitive proof route"
+            "prove the typed non-vacuous semantic extension predicates from B0 or successor primitives; "
+            "the vacuous CheckedProp route is blocked"
         ),
     )
 
@@ -200,7 +227,8 @@ def main() -> int:
     args = build_parser().parse_args()
     probe = build_probe(Path(str(args.draft)))
     print(
-        f"cgsc_semantic_content_wall={probe.verdict} lean={probe.lean_check.status} "
+        f"cgsc_semantic_content_wall={probe.verdict} "
+        f"legacy_wall={probe.legacy_wall_check.status} typed_contract={probe.typed_contract_check.status} "
         f"extension_witnesses={probe.extension_witnesses} draft_checks_failed={probe.draft_checks_failed}"
     )
     print(f"NEXT {probe.next_blocker}")
@@ -212,7 +240,7 @@ def main() -> int:
         with open(str(args.output_json), "w", encoding="utf-8") as handle:
             json.dump(asdict(probe), handle, indent=2, sort_keys=True)
             handle.write("\n")
-    if probe.verdict != "SEMANTIC_CONTENT_WALL_DETECTED":
+    if probe.verdict != "SEMANTIC_CONTENT_CONTRACT_REGISTERED":
         return 1
     return 0
 

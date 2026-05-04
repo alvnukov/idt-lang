@@ -9419,6 +9419,39 @@
             "typed semantic predicates and no-vacuity obligations are missing for the six CGSC extension witnesses",
             "this card is a failure-ledger guard, not a CGSC proof"
           ]
+        },
+        {
+          "id": "cgsc_typed_semantic_extension_contract_conditional_artifact",
+          "claim_refs": [
+            "cgsc_typed_semantic_extensions.no_vacuity_contract_registered"
+          ],
+          "statement": "Conditional Lean artifact registering typed semantic predicates and no-vacuity obligations for all six CGSC primitive-extension witnesses. This blocks the vacuous CheckedProp route but does not prove the typed predicates from B0.",
+          "theorem": "IDT.QMClosure.typed_semantic_extension_base_has_no_vacuity",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCTypedSemanticExtensions.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCTypedSemanticExtensions"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_typed_semantic_no_vacuity_contract"
+          ],
+          "scope": "conditional_typed_cgsc_extension_semantic_contract",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_typed_extensions_are_proved_from_B0",
+            "does_not_mark_semantic_contract_as_CGSC_proof"
+          ],
+          "open_gaps": [
+            "typed semantic extension predicates still require proof from B0 or successor primitives",
+            "this card registers no-vacuity semantics but does not prove CGSC or full_QM_I"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"
