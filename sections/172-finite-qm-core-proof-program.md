@@ -171,6 +171,19 @@ proof status:
 2. `formal_proof` is required before a component can become `supported`;
 3. every other proof status keeps the component `open`.
 
+The frontier now also carries an executable obstruction ledger. For every
+full-QM requirement the manifest must name:
+
+1. the blocker kind;
+2. the next proof obligation;
+3. the forbidden upgrade that would overstate the result.
+
+This makes the current wall explicit: the finite program can keep advancing
+through conditional theorem cards, but full closure remains blocked until the
+carrier, Born, symmetry, facticity, tensor, action-scale, and continuum
+obligations are discharged as theorem-level results rather than imported
+assumptions.
+
 Status:
 
 `finite_qm_core_route_order_declared`

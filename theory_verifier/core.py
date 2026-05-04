@@ -311,6 +311,17 @@ FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS = (
     "field_mode_continuum_limit",
 )
 
+FULL_QM_OBSTRUCTION_KINDS = (
+    "carrier_selection",
+    "imported_carrier",
+    "born_rule_derivation",
+    "symmetry_inheritance",
+    "apparatus_facticity",
+    "composition_law",
+    "calibration_not_derivation",
+    "continuum_limit",
+)
+
 CARRIER_SELECTION_OPEN_OBSTRUCTIONS = (
     "extend_context_product_exhaustion_to_carrier_theorem",
     "extend_purification_filtering_to_carrier_theorem",
@@ -7004,6 +7015,72 @@ def check_full_qm_closure_frontier_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "full_qm_closure_frontier_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    ledger_items = require_list(gate.payload.get("obstruction_ledger"), f"{gate.identifier}.obstruction_ledger")
+    if len(ledger_items) != len(requirements):
+        raise ManifestError(f"{gate.identifier}: obstruction_ledger must cover every full-QM closure requirement")
+    ledger_by_requirement: dict[str, str] = {}
+    for index, item in enumerate(ledger_items):
+        ledger = require_mapping(item, f"{gate.identifier}.obstruction_ledger[{index}]")
+        requirement = require_string(
+            ledger.get("requirement"),
+            f"{gate.identifier}.obstruction_ledger[{index}].requirement",
+        )
+        blocker_kind = require_string(
+            ledger.get("blocker_kind"),
+            f"{gate.identifier}.obstruction_ledger[{index}].blocker_kind",
+        )
+        if requirement not in FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS:
+            return [
+                Issue(
+                    "full_qm_obstruction_ledger_unknown_requirement",
+                    f"{gate.identifier}: obstruction ledger has unknown requirement {requirement}",
+                )
+            ]
+        if blocker_kind not in FULL_QM_OBSTRUCTION_KINDS:
+            return [
+                Issue(
+                    "full_qm_obstruction_ledger_unknown_kind",
+                    f"{gate.identifier}: obstruction ledger has unknown blocker kind {blocker_kind}",
+                )
+            ]
+        if requirement in ledger_by_requirement:
+            return [
+                Issue(
+                    "full_qm_obstruction_ledger_duplicate_requirement",
+                    f"{gate.identifier}: obstruction ledger duplicates {requirement}",
+                )
+            ]
+        next_obligation = require_string(
+            ledger.get("next_proof_obligation"),
+            f"{gate.identifier}.obstruction_ledger[{index}].next_proof_obligation",
+        )
+        forbidden_upgrade = require_string(
+            ledger.get("forbidden_upgrade"),
+            f"{gate.identifier}.obstruction_ledger[{index}].forbidden_upgrade",
+        )
+        if not next_obligation:
+            return [
+                Issue(
+                    "full_qm_obstruction_ledger_obligation_missing",
+                    f"{gate.identifier}: obstruction ledger for {requirement} must name the next proof obligation",
+                )
+            ]
+        if not forbidden_upgrade:
+            return [
+                Issue(
+                    "full_qm_obstruction_ledger_forbidden_upgrade_missing",
+                    f"{gate.identifier}: obstruction ledger for {requirement} must name the forbidden upgrade",
+                )
+            ]
+        ledger_by_requirement[requirement] = blocker_kind
+    missing_ledger = sorted(set(requirements) - set(ledger_by_requirement))
+    if missing_ledger:
+        return [
+            Issue(
+                "full_qm_obstruction_ledger_requirement_missing",
+                f"{gate.identifier}: obstruction ledger missing requirements: {', '.join(missing_ledger)}",
             )
         ]
     return []

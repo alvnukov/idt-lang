@@ -635,6 +635,9 @@ The `full_qm_closure_frontier_demo` now makes the global closure boundary
 executable: full QM remains blocked while carrier, Born, reversible-symmetry,
 facticity, tensor, first-principles `hbar_I`, or field-mode theorem obligations
 remain blocked or open.
+It now also carries a first-class obstruction ledger: every full-QM blocker must
+name its blocker kind, next proof obligation, and forbidden upgrade, so the
+research graph cannot silently convert imported assumptions into derivations.
 The `gpt_principle_separator_demo` now rejects boxworld-like GPT carriers under
 the declared cone/symmetry/filtering/bounded-correlation principles, while
 leaving Euclidean-Jordan and generic GPT ambiguity open until those principles

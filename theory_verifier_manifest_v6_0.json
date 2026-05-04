@@ -5113,6 +5113,56 @@
         {"requirement": "first_principles_hbar_lock", "status": "blocked"},
         {"requirement": "field_mode_continuum_limit", "status": "open"}
       ],
+      "obstruction_ledger": [
+        {
+          "requirement": "universal_carrier_selection_theorem",
+          "blocker_kind": "carrier_selection",
+          "next_proof_obligation": "Promote conditional carrier separator lemmas to a formal universal carrier-selection theorem or keep the theorem open.",
+          "forbidden_upgrade": "Do not claim complex Hilbert carrier selection while generic GPT underdetermination remains."
+        },
+        {
+          "requirement": "hilbert_carrier_derivation",
+          "blocker_kind": "imported_carrier",
+          "next_proof_obligation": "Derive Hilbert carrier structure from the selected operational carrier instead of importing it through W:H->C.",
+          "forbidden_upgrade": "Do not claim Hilbert space derivation while universal carrier selection is open."
+        },
+        {
+          "requirement": "universal_born_rule_theorem",
+          "blocker_kind": "born_rule_derivation",
+          "next_proof_obligation": "Promote finite quadratic readout route to a universal Born theorem using selected carrier and facticized readout contexts.",
+          "forbidden_upgrade": "Do not claim Born rule derivation from finite probability-table gates alone."
+        },
+        {
+          "requirement": "wigner_reversible_inheritance_theorem",
+          "blocker_kind": "symmetry_inheritance",
+          "next_proof_obligation": "Derive reversible symmetry inheritance for admissible context maps without assuming the target Hilbert automorphism theorem.",
+          "forbidden_upgrade": "Do not claim full QM dynamics while reversible-symmetry inheritance remains open."
+        },
+        {
+          "requirement": "apparatus_facticity_theorem",
+          "blocker_kind": "apparatus_facticity",
+          "next_proof_obligation": "Promote the finite measurement/facticity route to a theorem linking stable records, disturbance, and recoverability.",
+          "forbidden_upgrade": "Do not claim measurement postulates derived from finite apparatus gates alone."
+        },
+        {
+          "requirement": "monoidal_tensor_composition_theorem",
+          "blocker_kind": "composition_law",
+          "next_proof_obligation": "Promote finite tensor-composition witnesses to a monoidal composition theorem for admissible composites.",
+          "forbidden_upgrade": "Do not claim tensor product derivation from finite composition samples alone."
+        },
+        {
+          "requirement": "first_principles_hbar_lock",
+          "blocker_kind": "calibration_not_derivation",
+          "next_proof_obligation": "Replace calibrated action-scale anchor with a first-principles action-scale derivation or keep hbar_I blocked.",
+          "forbidden_upgrade": "Do not present calibrated_hbar_I as a derivation of hbar_I."
+        },
+        {
+          "requirement": "field_mode_continuum_limit",
+          "blocker_kind": "continuum_limit",
+          "next_proof_obligation": "Construct field-mode and continuum limits from finite context dynamics without importing target QFT structure.",
+          "forbidden_upgrade": "Do not claim continuum field QM from finite generator and holdout checks alone."
+        }
+      ],
       "expected_full_qm_status": "blocked"
     },
     {
