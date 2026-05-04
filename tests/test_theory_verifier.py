@@ -61,6 +61,8 @@ from theory_verifier.core import (
     NON_EXACT_HOLONOMY_SOURCE_TARGET,
     RHO_CHI_PROTOCOL_REQUIRED_SYMBOLS,
     RHO_CHI_PROTOCOL_TARGET,
+    ROUTE_CLOSED_GPT_FRONTIER_INHERITED_SUPPORT,
+    ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS,
     SECTOR_ROLE_TAXONOMY_REQUIRED_SYMBOLS,
     SECTOR_ROLE_TAXONOMY_TARGET,
     SPECTRAL_PRIMITIVE_REDUCTION_REQUIRED_SYMBOLS,
@@ -3917,6 +3919,66 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"invalid_finite_gate"})
+
+    def test_route_closed_gpt_frontier_rejects_premature_collapse(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_route_closed_gpt_frontier",
+                        "type": "route_closed_gpt_subtheory_frontier",
+                        "target_class": "route_closed_gpt_subtheory",
+                        "inherited_support": list(ROUTE_CLOSED_GPT_FRONTIER_INHERITED_SUPPORT),
+                        "open_requirements": [
+                            {
+                                "id": requirement,
+                                "status": "open",
+                                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                                "next_proof_obligation": "test obligation",
+                            }
+                            for requirement in ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS
+                        ],
+                        "expected_status": "collapses_to_complex_hilbert_like",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"route_closed_gpt_frontier_status_mismatch"})
+
+    def test_route_closed_gpt_frontier_rejects_closed_requirement(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_route_closed_gpt_requirement",
+                        "type": "route_closed_gpt_subtheory_frontier",
+                        "target_class": "route_closed_gpt_subtheory",
+                        "inherited_support": list(ROUTE_CLOSED_GPT_FRONTIER_INHERITED_SUPPORT),
+                        "open_requirements": [
+                            {
+                                "id": requirement,
+                                "status": "supported" if index == 0 else "open",
+                                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                                "next_proof_obligation": "test obligation",
+                            }
+                            for index, requirement in enumerate(ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS)
+                        ],
+                        "expected_status": "underdetermined",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"route_closed_gpt_frontier_requirement_status_mismatch"})
 
     def test_carrier_selection_proof_route_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

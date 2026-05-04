@@ -397,6 +397,23 @@ CARRIER_QUANTIFIER_FRONTIER_STATUSES = {
     "closed",
 }
 
+ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS = (
+    "tomographic_state_effect_duality",
+    "reversible_filter_closure",
+)
+
+ROUTE_CLOSED_GPT_FRONTIER_INHERITED_SUPPORT = (
+    "finite_route_witness_completeness",
+    "no_unwitnessed_effect_cone_degrees",
+    "bounded_composite_correlations",
+)
+
+ROUTE_CLOSED_GPT_FRONTIER_STATUSES = {
+    "underdetermined",
+    "collapses_to_complex_hilbert_like",
+    "rejected",
+}
+
 NON_DERIVED_DEPENDENCY_STATUSES = {
     "open",
     "blocked",
@@ -7436,6 +7453,111 @@ def check_carrier_quantifier_frontier_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "carrier_quantifier_frontier_status_mismatch",
                 f"{gate.identifier}: expected quantifier status {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_route_closed_gpt_subtheory_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_class = require_string(gate.payload.get("target_class"), f"{gate.identifier}.target_class")
+    if target_class != "route_closed_gpt_subtheory":
+        return [
+            Issue(
+                "route_closed_gpt_frontier_target_mismatch",
+                f"{gate.identifier}: target_class must be route_closed_gpt_subtheory",
+            )
+        ]
+
+    inherited_support = require_string_tuple(
+        gate.payload.get("inherited_support", []),
+        f"{gate.identifier}.inherited_support",
+    )
+    if set(inherited_support) != set(ROUTE_CLOSED_GPT_FRONTIER_INHERITED_SUPPORT):
+        return [
+            Issue(
+                "route_closed_gpt_frontier_inherited_support_mismatch",
+                f"{gate.identifier}: inherited support must match the route-closed GPT support set",
+            )
+        ]
+
+    requirements = require_list(gate.payload.get("open_requirements"), f"{gate.identifier}.open_requirements")
+    if len(requirements) != len(ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS):
+        raise ManifestError(f"{gate.identifier}: open_requirements must cover every route-closed GPT frontier requirement")
+
+    seen: set[str] = set()
+    for index, item in enumerate(requirements):
+        requirement = require_mapping(item, f"{gate.identifier}.open_requirements[{index}]")
+        requirement_id = require_string(
+            requirement.get("id"),
+            f"{gate.identifier}.open_requirements[{index}].id",
+        )
+        status = require_string(
+            requirement.get("status"),
+            f"{gate.identifier}.open_requirements[{index}].status",
+        )
+        evidence_refs = require_string_tuple(
+            requirement.get("evidence_refs", []),
+            f"{gate.identifier}.open_requirements[{index}].evidence_refs",
+        )
+        next_obligation = require_string(
+            requirement.get("next_proof_obligation", ""),
+            f"{gate.identifier}.open_requirements[{index}].next_proof_obligation",
+        )
+        if requirement_id not in ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS:
+            return [
+                Issue(
+                    "route_closed_gpt_frontier_unknown_requirement",
+                    f"{gate.identifier}: unknown route-closed GPT requirement {requirement_id}",
+                )
+            ]
+        if requirement_id in seen:
+            return [
+                Issue(
+                    "route_closed_gpt_frontier_duplicate_requirement",
+                    f"{gate.identifier}: duplicate route-closed GPT requirement {requirement_id}",
+                )
+            ]
+        if status != "open":
+            return [
+                Issue(
+                    "route_closed_gpt_frontier_requirement_status_mismatch",
+                    f"{gate.identifier}: requirement {requirement_id} must remain open until proven",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "route_closed_gpt_frontier_evidence_missing",
+                    f"{gate.identifier}: requirement {requirement_id} must cite evidence",
+                )
+            ]
+        if not next_obligation:
+            return [
+                Issue(
+                    "route_closed_gpt_frontier_obligation_missing",
+                    f"{gate.identifier}: requirement {requirement_id} must name the next proof obligation",
+                )
+            ]
+        seen.add(requirement_id)
+
+    missing = sorted(set(ROUTE_CLOSED_GPT_FRONTIER_REQUIREMENTS) - seen)
+    if missing:
+        return [
+            Issue(
+                "route_closed_gpt_frontier_requirement_missing",
+                f"{gate.identifier}: missing route-closed GPT requirements: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_status"), f"{gate.identifier}.expected_status")
+    if expected_status not in ROUTE_CLOSED_GPT_FRONTIER_STATUSES:
+        raise ManifestError(f"{gate.identifier}.expected_status is unknown")
+    computed_status = "underdetermined"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "route_closed_gpt_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
     return []
@@ -14970,6 +15092,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "gpt_principle_separator": check_gpt_principle_separator_gate,
     "carrier_selection_frontier": check_carrier_selection_frontier_gate,
     "carrier_quantifier_frontier": check_carrier_quantifier_frontier_gate,
+    "route_closed_gpt_subtheory_frontier": check_route_closed_gpt_subtheory_frontier_gate,
     "carrier_selection_proof_route": check_carrier_selection_proof_route_gate,
     "context_product_carrier_lemma_route": check_context_product_carrier_lemma_route_gate,
     "purification_filtering_carrier_lemma_route": check_purification_filtering_carrier_lemma_route_gate,

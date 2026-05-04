@@ -4612,6 +4612,7 @@
           "id": "route_closed_gpt_subtheory",
           "status": "underdetermined",
           "evidence_refs": [
+            "route_closed_gpt_subtheory_frontier_demo",
             "generic_gpt_closure_rejects_unconstrained_cone",
             "generic_gpt_closure_separator_demo"
           ],
@@ -4627,6 +4628,37 @@
           "open_gap": "The broader generic GPT cone is not exhausted by current finite separators, so the universal carrier quantifier remains open."
         }
       ]
+    },
+    {
+      "id": "route_closed_gpt_subtheory_frontier_demo",
+      "type": "route_closed_gpt_subtheory_frontier",
+      "target_class": "route_closed_gpt_subtheory",
+      "inherited_support": [
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "bounded_composite_correlations"
+      ],
+      "open_requirements": [
+        {
+          "id": "tomographic_state_effect_duality",
+          "status": "open",
+          "evidence_refs": [
+            "generic_gpt_closure_separator_demo",
+            "carrier_universal_quantifier_frontier_demo"
+          ],
+          "next_proof_obligation": "Prove that route-witness completeness and no unwitnessed effect-cone degrees force tomographic state-effect duality, or keep route-closed GPT underdetermined."
+        },
+        {
+          "id": "reversible_filter_closure",
+          "status": "open",
+          "evidence_refs": [
+            "generic_gpt_closure_separator_demo",
+            "purification_filtering_implies_recoverable_support_update"
+          ],
+          "next_proof_obligation": "Prove reversible filter closure for route-closed GPT subtheories from IDT filtering/facticity structure, or keep route-closed GPT underdetermined."
+        }
+      ],
+      "expected_status": "underdetermined"
     },
     {
       "id": "carrier_selection_proof_route_demo",

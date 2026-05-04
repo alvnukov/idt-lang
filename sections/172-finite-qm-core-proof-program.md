@@ -498,6 +498,24 @@ Because the last two classes are not closed, the universal quantifier remains:
 This is the current reason `universal_carrier_selection_theorem` cannot be
 upgraded to `conditional_proof` or `formal_proof`.
 
+The route-closed GPT blocker is now decomposed as:
+
+`route_closed_gpt_subtheory_frontier_demo`.
+
+This sub-frontier records what route-closed GPT already inherits:
+
+1. finite route-witness completeness;
+2. no unwitnessed effect-cone degrees;
+3. bounded composite correlations.
+
+It also records the two still-open closure requirements:
+
+1. tomographic state-effect duality;
+2. reversible filter closure.
+
+Until those requirements are proved from IDT structure, route-closed GPT remains
+`underdetermined`.
+
 The first proof route toward the universal carrier-selection theorem is now
 executable as:
 

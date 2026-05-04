@@ -652,6 +652,9 @@ The `carrier_universal_quantifier_frontier_demo` now makes the universal
 carrier quantifier explicit: non-complex Jordan and unconstrained generic GPT
 classes are rejected, complex Hilbert-like structure survives, and route-closed
 plus broader generic GPT classes remain underdetermined.
+The `route_closed_gpt_subtheory_frontier_demo` now splits the route-closed GPT
+blocker into two open proof obligations: tomographic state-effect duality and
+reversible filter closure.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping
