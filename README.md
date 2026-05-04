@@ -64,6 +64,25 @@ Current auditable results:
   are grounded against real manifest objects, schema surfaces, verifier checks,
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
+- primitive-core contract: history space, event algebra, readout-context
+  family, and inheritance-act family are locked as carrier-neutral primitives;
+  QM imports are forbidden inside that core and are routed to explicit theorem
+  or proof obligations.
+- facticizable distinguishability closure frontier: the candidate lower-level
+  principle says that stable inherited distinguishability must have finite
+  admissible readout witnesses; hidden joint invariants, global fact tables,
+  unconstrained GPT cones, and nonfinite residuals are tracked as negative
+  controls without closing QM.
+- QM wall probe: the verifier now audits the route to `full_QM_I` as diagnostic
+  cells. Primitive-core and context-product local tomography currently pass,
+  FDC/carrier/tensor/unitary/recompile cells remain open, and
+  Hilbert-carrier, Born-rule, and first-principles action-scale cells are
+  recorded as current walls rather than hidden upgrades.
+- proof-verification ledger: current `formal_proof` markers are finite
+  IDT-Core/meta-invariants only, and they must be covered by proof cards with
+  machine-checkable artifacts and commands. The current proof pipeline first
+  synchronizes the generated Lean finite-core semantic artifact against the
+  manifest, then runs Lean 4 plus the IDT verifier.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants
@@ -78,6 +97,11 @@ of nature.
 - `sections/` — modular theory body.
 - `scripts/graph_query.py` — file-based research graph query and cautious edit
   helper for the verifier manifest.
+- `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
+  semantic proof artifact from the current manifest.
+- `scripts/check_proofs.py` — runs proof-card checker commands.
+- `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
+- `Proofs/` — Lean proof artifacts.
 - `theory_verifier/` — executable manifest verifier.
 - `theory_verifier_manifest_v6_0.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.
@@ -110,7 +134,21 @@ python3 scripts/fetch_sparc_data.py
 Then run:
 
 ```bash
+python3 scripts/check_all.py
+```
+
+The proof-only lane is:
+
+```bash
+python3 scripts/check_proofs.py
+```
+
+The underlying checks are:
+
+```bash
 python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
+python3 scripts/sync_formal_proof_ledger.py --check
+lake env lean Proofs/IDTCore.lean
 python3 -m unittest discover -s tests
 ```
 
@@ -125,7 +163,7 @@ Optional development tools:
 ```bash
 python3 -m pip install -r requirements-dev.txt
 ruff check .
-mypy --strict theory_verifier tests
+mypy --strict theory_verifier tests scripts
 ```
 
 ## Public Claim Boundary

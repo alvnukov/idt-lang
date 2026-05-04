@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.16.0`.
+Current theory version: `v6.23.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -65,6 +65,28 @@ The main current successes are bounded and methodological:
    partial rather than complete. Its evidence references must resolve to real
    manifest objects, schema surfaces, verifier checks, or Markdown sections.
    Full-QM frontier blockers now have first-class theorem cards.
+8. The foundation import boundary is executable. The verifier separates current
+   QM imports such as complex amplitudes, PSD kernels, quadratic readout,
+   tensor/product composition, unitary maps, and calibrated action phase from a
+   carrier-neutral primitive core: history space, event algebra, readout
+   contexts, and inheritance acts. The primitive core is now a first-class
+   contract: its laws may depend only on the primitive definition section, and
+   every excluded import is routed to an explicit theorem or proof obligation.
+9. A new facticizable-distinguishability closure frontier is executable as a
+   candidate principle. It tests whether stable inherited distinguishability
+   must have finite admissible readout witnesses, while retaining negative
+   controls and open QM obligations.
+10. A new QM wall probe is executable. It audits the route to `full_QM_I` as
+   `pass`, `open`, or `wall` cells. The current diagnosis is
+   `current_wall_detected`: primitive-core and context-product tomography cells
+   pass, several selector/composition/dynamics cells remain open, and
+   Hilbert-carrier, Born-rule, and first-principles action-scale cells are
+   explicit current walls rather than hidden imports.
+11. The proof-verification boundary is executable. Current `formal_proof`
+   markers are finite IDT-Core/meta-invariants only, and they must be covered by
+   proof cards with machine-checkable artifacts and commands. The proof pipeline
+   checks that the generated Lean finite-core semantic artifact is synchronized
+   with the manifest, then runs Lean 4 and the IDT verifier.
 
 ## What The Verifier Catches
 
@@ -76,7 +98,11 @@ The verifier is designed to reject progress by relabeling. It blocks:
 4. a bridge assumption relabeled as a derived readout;
 5. SPARC residual claims that reuse the observed residual as their own source;
 6. full-QM claims while the action scale, generator, apparatus, and facticity
-   spine remain incomplete.
+   spine remain incomplete;
+7. relabeling current QM imports as primitive or first-principles derived
+   structures;
+8. a `formal_proof` marker without a proof-ledger card and machine-checkable
+   proof artifacts.
 
 ## What Is Explicitly Not Claimed
 
@@ -89,6 +115,9 @@ IDT currently does not claim:
 4. an explanation of dark matter or dark energy;
 5. experimental confirmation as a replacement theory;
 6. a successful SPARC galaxy-rotation fit.
+7. a derivation of complex Hilbert space, the universal Born rule, tensor
+   composition, unitary dynamics, or first-principles `hbar_I` from IDT
+   primitives.
 
 ## Derived, Conditional, Calibrated, Blocked
 

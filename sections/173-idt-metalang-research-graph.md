@@ -438,3 +438,264 @@ yet implemented as a generic kernel, so the current status is only:
 Status:
 
 `idt_structural_compression_candidate_map_added`
+
+### 173.10. Foundation Import Boundary
+
+The base layer must distinguish genuine IDT primitives from useful QM imports.
+The carrier-neutral primitive core is restricted here to history space, event
+algebra, readout-context family, and inheritance-act family. The current
+finite-QM programme still imports several structures:
+
+1. complex coherent amplitudes;
+2. a positive distinguishability kernel;
+3. a quadratic actualization measure;
+4. Schur-style inheritance update;
+5. tensor/product composition;
+6. unitary context maps;
+7. an action-phase bridge through `calibrated_hbar_I` while `hbar_I` remains
+   blocked.
+
+The executable audit is:
+
+`foundation_import_boundary_audit_demo`
+
+The primitive-core contract is:
+
+`idt_primitive_core_contract_demo`
+
+Its rule is:
+
+`no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim`
+
+This does not invalidate the existing QM gates. It classifies their carrier and
+readout assumptions honestly: finite gates remain evidence for compatibility,
+not derivations of the Hilbert carrier, the universal Born rule, monoidal
+tensor composition, Wigner/unitary dynamics, or first-principles `hbar_I`.
+
+Each import records a target refactor:
+
+```text
+complex amplitude carrier -> carrier_neutral_K_I
+PSD kernel -> positivity_obligation
+quadratic measure -> born_rule_obligation
+Schur update -> inheritance_update_obligation
+tensor composition -> monoidal_composition_obligation
+unitary map -> reversible_inheritance_obligation
+hbar bridge -> first_principles_action_scale_obligation
+```
+
+The primitive-core contract locks the four carrier-neutral primitives with
+finite laws:
+
+```text
+history_space:
+  carrier_neutral_history_domain
+  event_bundle_identity
+
+event_algebra:
+  contains_empty_and_total_events
+  closed_under_finite_union
+  closed_under_complement
+
+readout_context_family:
+  contexts_are_event_partitions
+  readouts_are_carrier_neutral
+
+inheritance_act_family:
+  acts_map_contexts_to_contexts
+  acts_preserve_carrier_neutrality
+```
+
+These laws may depend only on `sections/01-primitives.md`. They may not cite
+`W`, `Gamma_I`, Born, Hilbert, tensor, unitary, `hbar_I`, calibrated `hbar_I`,
+or any explicit foundation import id. Each excluded import must instead point
+to a theorem card or QM proof obligation with its current open/blocked/target
+status preserved.
+
+The verifier also grounds the audit against live statuses: `full_QM_I` must
+remain `target`; `hbar_I` must remain `blocked`; carrier, Hilbert, Born,
+Wigner/unitary, tensor, and first-principles-hbar theorem cards must remain open
+or blocked as declared.
+
+Status:
+
+`foundation_import_boundary_audit_added`
+
+### 173.11. Facticizable Distinguishability Closure Frontier
+
+The residual proof graph suggests a candidate lower-level principle:
+
+```text
+stable inherited distinguishability
+  -> finite admissible readout witness
+```
+
+The executable frontier is:
+
+`facticizable_distinguishability_closure_frontier_demo`
+
+Its rule is:
+
+`stable_inherited_distinguishability_requires_finite_readout_witness`
+
+The candidate is intentionally below QM imports. Its primitive basis is only:
+
+```text
+history_space
+event_algebra
+readout_context_family
+inheritance_act_family
+```
+
+The gate treats the principle as a frontier candidate, not as a proof of QM. It
+requires four condition surfaces:
+
+```text
+stable_inherited_distinguishability
+admissible_readout_facticization
+finite_route_witness_coverage
+no_unfacticizable_stable_invariant
+```
+
+and four negative controls:
+
+```text
+hidden_joint_only_invariant -> rejected_under_fdc
+global_noncontextual_fact_table -> rejected_under_fdc
+unconstrained_generic_gpt_cone -> rejected_under_fdc
+nonfinite_unwitnessed_residual -> remains_open
+```
+
+The frontier keeps universal carrier selection, Hilbert carrier derivation,
+Born rule, reversible dynamics, and tensor composition open or blocked as
+declared. It is useful exactly because it can fail without collapsing the rest
+of the finite proof graph.
+
+Status:
+
+`facticizable_distinguishability_closure_frontier_added`
+
+### 173.12. QM Wall Probe
+
+The route to `full_QM_I` now has an executable wall diagnostic:
+
+`qm_wall_probe_demo`
+
+The probe classifies each cell as:
+
+```text
+pass -> the current diagnostic target is supported without a hidden import
+open -> support exists, but an obligation/import/frontier remains live
+wall -> the current route is blocked by a declared proof or import boundary
+bad  -> the manifest is hiding an import or has an inconsistent status
+```
+
+The current result is:
+
+`current_wall_detected`
+
+The current pass cells are:
+
+```text
+primitive_core_boundary
+context_product_local_tomography
+probability_measure_layer
+```
+
+The current open cells are:
+
+```text
+fdc_lower_principle
+distinguishability_geometry
+measurement_facticity_mechanism
+carrier_selection
+tensor_composition
+reversible_dynamics
+experiment_recompile_from_core
+```
+
+The current wall cells are:
+
+```text
+hilbert_carrier_derivation
+born_rule_derivation
+continuum_action_scale
+```
+
+This does not prove that IDT cannot reach QM. It says something narrower and
+more useful: the current route cannot honestly claim full QM while Hilbert
+carrier structure, Born rule, and first-principles action scale remain blocked
+or imported.
+
+Status:
+
+`qm_wall_probe_added`
+
+### 173.13. Proof Verification Ledger
+
+The word `formal_proof` is now gated by an executable proof ledger and a
+generated Lean finite-core semantic artifact.
+
+The audit is:
+
+`formal_proof_ledger_audit_demo`
+
+Its rule is:
+
+```text
+formal_proof marker
+  -> proof card
+  -> declared artifact paths
+  -> declared checker commands
+  -> manifest-to-Lean semantic sync check
+  -> proof runner executes those commands
+```
+
+The current covered markers are finite IDT-Core/meta-invariants only. They are
+not proofs of QM, Hilbert space, Born rule, tensor composition, unitary
+dynamics, or first-principles `hbar_I`.
+
+The first backend is Lean 4. The repository pins:
+
+```text
+lean-toolchain
+lakefile.lean
+Proofs/IDTCore.lean
+```
+
+The Lean artifact is generated from the manifest and checked for exact sync by:
+
+```bash
+python3 scripts/sync_formal_proof_ledger.py --check
+```
+
+The proof runner is:
+
+```bash
+python3 scripts/check_proofs.py
+```
+
+and the one-command local pipeline is:
+
+```bash
+python3 scripts/check_all.py
+```
+
+The key discipline is negative: if a future edit adds a new `formal_proof`
+marker without adding a proof card, synchronized machine-checkable artifact, and
+required checker command, the verifier or proof runner must fail.
+
+The current Lean artifact checks finite semantic witnesses for:
+
+```text
+registry count/digest consistency
+bounded route arity
+finite route-generator basis
+empty new-primitive-effect witnesses
+finite joint-only rejection scope
+proof-ledger claim coverage
+```
+
+Status:
+
+`formal_proof_ledger_added`

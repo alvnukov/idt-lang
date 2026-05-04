@@ -1,5 +1,10 @@
 ## 2. Actualization Calculus
 
+This section defines the current executable readout calculus. It assumes the
+finite-QM scaffold \(W,\Gamma_I\); it does not by itself derive the complex
+carrier, positivity, quadratic readout, or Schur update from the carrier-neutral
+primitive core.
+
 For \(A,B\in\mathcal E\):
 
 $$

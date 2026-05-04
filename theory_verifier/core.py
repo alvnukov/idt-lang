@@ -899,6 +899,255 @@ IDT_STRUCTURAL_COMPRESSION_RESULTS = (
     "implemented_kernel",
 )
 
+FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE = (
+    "history_space",
+    "event_algebra",
+    "readout_context_family",
+    "inheritance_act_family",
+)
+
+IDT_PRIMITIVE_CORE_REQUIRED_LAWS: dict[str, tuple[str, ...]] = {
+    "history_space": (
+        "carrier_neutral_history_domain",
+        "event_bundle_identity",
+    ),
+    "event_algebra": (
+        "contains_empty_and_total_events",
+        "closed_under_finite_union",
+        "closed_under_complement",
+    ),
+    "readout_context_family": (
+        "contexts_are_event_partitions",
+        "readouts_are_carrier_neutral",
+    ),
+    "inheritance_act_family": (
+        "acts_map_contexts_to_contexts",
+        "acts_preserve_carrier_neutrality",
+    ),
+}
+
+IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES = (
+    "sections/01-primitives.md",
+)
+
+IDT_PRIMITIVE_CORE_FORBIDDEN_REFS = (
+    "W",
+    "Gamma_I",
+    "Born",
+    "Hilbert",
+    "tensor",
+    "unitary",
+    "hbar_I",
+    "calibrated_hbar_I",
+    "complex_amplitude_carrier",
+    "psd_distinguishability_kernel",
+    "quadratic_actualization_measure",
+    "schur_inheritance_update",
+    "tensor_composition_import",
+    "unitary_context_map_import",
+    "action_phase_hbar_bridge",
+)
+
+IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS: dict[str, tuple[str, str]] = {
+    "complex_amplitude_carrier": ("theorem_card", "universal_carrier_selection_theorem"),
+    "psd_distinguishability_kernel": ("qm_core_obligation", "distinguishability_geometry"),
+    "quadratic_actualization_measure": ("theorem_card", "universal_born_rule_theorem"),
+    "schur_inheritance_update": ("qm_core_obligation", "measurement_facticity_mechanism"),
+    "tensor_composition_import": ("theorem_card", "monoidal_tensor_composition_theorem"),
+    "unitary_context_map_import": ("theorem_card", "wigner_reversible_inheritance_theorem"),
+    "action_phase_hbar_bridge": ("qm_core_obligation", "continuum_action_scale_extension"),
+}
+
+IDT_PRIMITIVE_CORE_RESULTS = (
+    "primitive_core_locked",
+    "failed",
+)
+
+FDC_TARGET_PRINCIPLE = "facticizable_distinguishability_closure"
+FDC_CLOSURE_RULE = "stable_inherited_distinguishability_requires_finite_readout_witness"
+
+FDC_REQUIRED_CONDITIONS = (
+    "stable_inherited_distinguishability",
+    "admissible_readout_facticization",
+    "finite_route_witness_coverage",
+    "no_unfacticizable_stable_invariant",
+)
+
+FDC_REQUIRED_NEGATIVE_CONTROLS: dict[str, str] = {
+    "hidden_joint_only_invariant": "rejected_under_fdc",
+    "global_noncontextual_fact_table": "rejected_under_fdc",
+    "unconstrained_generic_gpt_cone": "rejected_under_fdc",
+    "nonfinite_unwitnessed_residual": "remains_open",
+}
+
+FDC_REQUIRED_OPEN_OBLIGATIONS: dict[str, str] = {
+    "universal_carrier_selection_theorem": "open",
+    "hilbert_carrier_derivation": "blocked",
+    "universal_born_rule_theorem": "open",
+    "wigner_reversible_inheritance_theorem": "open",
+    "monoidal_tensor_composition_theorem": "open",
+}
+
+FDC_FORBIDDEN_UPGRADES = (
+    "does_not_prove_full_QM_I",
+    "does_not_prove_Born_rule",
+    "does_not_select_Hilbert_carrier",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_import_QM_structures_as_primitives",
+)
+
+FDC_RESULTS = (
+    "frontier_candidate",
+    "failed",
+)
+
+QM_WALL_PROBE_TARGET = "full_QM_I"
+
+QM_WALL_PROBE_REQUIRED_NODE_RESULTS: dict[str, str] = {
+    "primitive_core_boundary": "pass",
+    "fdc_lower_principle": "open",
+    "context_product_local_tomography": "pass",
+    "distinguishability_geometry": "open",
+    "probability_measure_layer": "pass",
+    "measurement_facticity_mechanism": "open",
+    "carrier_selection": "open",
+    "hilbert_carrier_derivation": "wall",
+    "born_rule_derivation": "wall",
+    "tensor_composition": "open",
+    "reversible_dynamics": "open",
+    "experiment_recompile_from_core": "open",
+    "continuum_action_scale": "wall",
+}
+
+QM_WALL_PROBE_REQUIRED_IMPORT_REFS: dict[str, tuple[str, ...]] = {
+    "primitive_core_boundary": (),
+    "fdc_lower_principle": (),
+    "context_product_local_tomography": (),
+    "distinguishability_geometry": ("psd_distinguishability_kernel",),
+    "probability_measure_layer": (),
+    "measurement_facticity_mechanism": ("schur_inheritance_update",),
+    "carrier_selection": ("complex_amplitude_carrier",),
+    "hilbert_carrier_derivation": ("complex_amplitude_carrier",),
+    "born_rule_derivation": ("quadratic_actualization_measure",),
+    "tensor_composition": ("tensor_composition_import",),
+    "reversible_dynamics": ("unitary_context_map_import",),
+    "experiment_recompile_from_core": (
+        "complex_amplitude_carrier",
+        "quadratic_actualization_measure",
+        "tensor_composition_import",
+        "unitary_context_map_import",
+    ),
+    "continuum_action_scale": ("action_phase_hbar_bridge",),
+}
+
+QM_WALL_PROBE_TARGET_KINDS = (
+    "finite_gate_field",
+    "qm_core_obligation",
+    "symbol",
+    "theorem_card",
+)
+
+QM_WALL_PROBE_PASS_STATUSES = (
+    "conditional_proof",
+    "derived_conditional",
+    "finite_verifier_pass",
+    "formal_proof",
+    "primitive_core_locked",
+    "regression_supported",
+)
+
+QM_WALL_PROBE_OPEN_STATUSES = (
+    "frontier_candidate",
+    "open",
+    "target",
+)
+
+QM_WALL_PROBE_WALL_STATUSES = (
+    "blocked",
+)
+
+QM_WALL_PROBE_NODE_RESULTS = (
+    "pass",
+    "open",
+    "wall",
+    "bad",
+)
+
+QM_WALL_PROBE_RESULTS = (
+    "current_wall_detected",
+    "open_frontier",
+    "closed_no_wall_detected",
+    "hidden_import_failure",
+)
+
+QM_WALL_PROBE_FORBIDDEN_UPGRADES = (
+    "does_not_prove_full_QM_I",
+    "does_not_prove_absence_of_future_wall",
+    "does_not_treat_open_as_pass",
+    "does_not_hide_QM_imports",
+    "does_not_upgrade_blocked_to_open_without_proof",
+    "does_not_reclassify_candidate_principles_as_formal_proof",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
+    "complex_amplitude_carrier",
+    "psd_distinguishability_kernel",
+    "quadratic_actualization_measure",
+    "schur_inheritance_update",
+    "tensor_composition_import",
+    "unitary_context_map_import",
+    "action_phase_hbar_bridge",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT: dict[str, str] = {
+    "complex_amplitude_carrier": "qm_import",
+    "psd_distinguishability_kernel": "core_assumption",
+    "quadratic_actualization_measure": "core_assumption",
+    "schur_inheritance_update": "core_assumption",
+    "tensor_composition_import": "open_obligation",
+    "unitary_context_map_import": "open_obligation",
+    "action_phase_hbar_bridge": "bridge_assumption_or_blocked",
+}
+
+FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT: dict[str, str] = {
+    "complex_amplitude_carrier": "carrier_neutral_K_I",
+    "psd_distinguishability_kernel": "positivity_obligation",
+    "quadratic_actualization_measure": "born_rule_obligation",
+    "schur_inheritance_update": "inheritance_update_obligation",
+    "tensor_composition_import": "monoidal_composition_obligation",
+    "unitary_context_map_import": "reversible_inheritance_obligation",
+    "action_phase_hbar_bridge": "first_principles_action_scale_obligation",
+}
+
+FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY = "not_derived_from_idt_primitives"
+
+FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES = (
+    "does_not_treat_complex_carrier_as_primitive",
+    "does_not_treat_born_rule_as_primitive",
+    "does_not_treat_hilbert_space_as_derived",
+    "does_not_convert_calibrated_hbar_to_first_principles",
+    "does_not_close_full_QM_I",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_RESULTS = (
+    "imports_explicit",
+    "failed",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_SYMBOL_STATUSES: dict[str, str] = {
+    "full_QM_I": "target",
+    "hbar_I": "blocked",
+}
+
+FOUNDATION_IMPORT_BOUNDARY_THEOREM_STATUSES: dict[str, str] = {
+    "universal_carrier_selection_theorem": "open",
+    "hilbert_carrier_derivation": "blocked",
+    "universal_born_rule_theorem": "open",
+    "wigner_reversible_inheritance_theorem": "open",
+    "monoidal_tensor_composition_theorem": "open",
+    "first_principles_hbar_lock": "blocked",
+}
+
 THEOREM_CARD_ROLE_VALUES = (
     "primitive",
     "definition",
@@ -920,6 +1169,59 @@ THEOREM_CARD_PROOF_STATUS_VALUES = (
     "calibrated_match",
     "open",
     "blocked",
+)
+
+FORMAL_PROOF_STATUS_FIELDS = (
+    "status",
+    "proof_status",
+    "expected_component_status",
+    "expected_assumption_status",
+    "expected_obligation_status",
+    "expected_theorem_status",
+    "expected_lemma_status",
+    "expected_proof_status",
+)
+
+PROOF_LEDGER_BACKEND_VALUES = (
+    "lean4",
+    "idt_verifier",
+)
+
+PROOF_LEDGER_PROOF_KIND_VALUES = (
+    "machine_checked_finite_proof",
+    "external_formal_proof",
+    "conditional_proof",
+    "proof_sketch",
+)
+
+PROOF_LEDGER_FORMAL_PROOF_KINDS = (
+    "machine_checked_finite_proof",
+    "external_formal_proof",
+)
+
+PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES = (
+    "does_not_allow_formal_proof_without_proof_card",
+    "does_not_allow_unchecked_proof_card_for_formal_claim",
+    "does_not_convert_conditional_or_sketch_to_formal_proof",
+    "does_not_prove_full_QM_I",
+)
+
+PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS = (
+    "python3 scripts/sync_formal_proof_ledger.py --check",
+    "lake env lean Proofs/IDTCore.lean",
+    "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json",
+)
+
+PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS = (
+    "formal_claim_manifest_sync",
+    "lean_finite_core_semantic_checks",
+    "lean4_kernel",
+    "idt_verifier_manifest",
+)
+
+PROOF_LEDGER_AUDIT_RESULTS = (
+    "formal_claims_covered",
+    "failed",
 )
 
 IDT_CORE_CLAIM_ROLE_REGISTRY = tuple(sorted({*SECTOR_ROLE_VALUES, *THEOREM_CARD_ROLE_VALUES}))
@@ -1755,6 +2057,11 @@ class FiniteGate:
 
 
 @dataclass(frozen=True)
+class FormalClaim:
+    reference: str
+
+
+@dataclass(frozen=True)
 class QMExperimentCoverage:
     identifier: str
     title: str
@@ -2210,6 +2517,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_theorem_cards(manifest))
     checks.append("theorem cards")
 
+    issues.extend(check_formal_proof_ledger_coverage(manifest))
+    checks.append("formal proof ledger coverage")
+
     issues.extend(check_carrier_selection_theorem_grounding(manifest))
     checks.append("carrier-selection theorem grounding")
 
@@ -2377,6 +2687,18 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_idt_structural_compression_grounding(manifest))
     checks.append("IDT structural compression grounding")
+
+    issues.extend(check_foundation_import_boundary_grounding(manifest))
+    checks.append("foundation import boundary grounding")
+
+    issues.extend(check_primitive_core_contract_grounding(manifest))
+    checks.append("primitive core contract grounding")
+
+    issues.extend(check_facticizable_distinguishability_closure_grounding(manifest))
+    checks.append("facticizable distinguishability closure grounding")
+
+    issues.extend(check_qm_wall_probe_grounding(manifest))
+    checks.append("QM wall probe grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -5307,6 +5629,89 @@ def check_finite_gate(gate: FiniteGate) -> list[Issue]:
     raise ManifestError(f"unknown finite gate type {gate.gate_type!r}")
 
 
+def check_formal_proof_ledger_coverage(manifest: Manifest) -> list[Issue]:
+    formal_claim_refs = {claim.reference for claim in iter_formal_claims(manifest)}
+    proof_ledger_gates = [gate for gate in manifest.finite_gates if gate.gate_type == "formal_proof_ledger_audit"]
+    if formal_claim_refs and not proof_ledger_gates:
+        return [
+            Issue(
+                "formal_proof_ledger_missing",
+                "formal proof claims exist but no formal_proof_ledger_audit gate is declared",
+            )
+        ]
+
+    covered_refs: set[str] = set()
+    declared_refs: set[str] = set()
+    for gate in proof_ledger_gates:
+        proof_cards = require_list(gate.payload.get("proof_cards"), f"{gate.identifier}.proof_cards")
+        for index, raw_card in enumerate(proof_cards):
+            card = require_mapping(raw_card, f"{gate.identifier}.proof_cards[{index}]")
+            proof_kind = require_string(
+                card.get("proof_kind"),
+                f"{gate.identifier}.proof_cards[{index}].proof_kind",
+            )
+            claim_refs = set(
+                require_string_tuple(
+                    card.get("claim_refs", []),
+                    f"{gate.identifier}.proof_cards[{index}].claim_refs",
+                )
+            )
+            declared_refs.update(claim_refs)
+            if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS:
+                covered_refs.update(claim_refs)
+
+    missing = sorted(formal_claim_refs - covered_refs)
+    if missing:
+        return [
+            Issue(
+                "formal_proof_ledger_claim_uncovered",
+                f"formal proof claims are not covered by machine-checked proof cards: {', '.join(missing)}",
+            )
+        ]
+    stale = sorted(declared_refs - formal_claim_refs)
+    if stale:
+        return [
+            Issue(
+                "formal_proof_ledger_claim_stale",
+                f"proof cards cite claims that are not currently formal_proof: {', '.join(stale)}",
+            )
+        ]
+    return []
+
+
+def iter_formal_claims(manifest: Manifest) -> Iterator[FormalClaim]:
+    for card in manifest.theorem_cards:
+        if card.proof_status == "formal_proof":
+            yield FormalClaim(f"theorem_cards.{card.identifier}.proof_status")
+    for gate in manifest.finite_gates:
+        yield from iter_formal_claims_in_payload(gate.identifier, gate.payload)
+
+
+def iter_formal_claims_in_payload(gate_id: str, raw: object) -> Iterator[FormalClaim]:
+    if isinstance(raw, dict):
+        local_id = formal_claim_local_id(raw)
+        for field in FORMAL_PROOF_STATUS_FIELDS:
+            if raw.get(field) != "formal_proof":
+                continue
+            if local_id is None:
+                yield FormalClaim(f"finite_gates.{gate_id}.{field}")
+            else:
+                yield FormalClaim(f"finite_gates.{gate_id}.{local_id}.{field}")
+        for value in raw.values():
+            yield from iter_formal_claims_in_payload(gate_id, value)
+    elif isinstance(raw, list):
+        for value in raw:
+            yield from iter_formal_claims_in_payload(gate_id, value)
+
+
+def formal_claim_local_id(raw: dict[str, object]) -> str | None:
+    for field in ("id", "component_id", "target_assumption", "target_theorem", "target_obligation"):
+        value = raw.get(field)
+        if isinstance(value, str):
+            return value
+    return None
+
+
 def check_research_graph_contract_grounding(manifest: Manifest) -> list[Issue]:
     issues: list[Issue] = []
     known_refs = research_graph_known_evidence_refs(manifest)
@@ -5483,6 +5888,189 @@ def check_idt_structural_compression_grounding(manifest: Manifest) -> list[Issue
             continue
         issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "idt_structural_compression"))
     return issues
+
+
+def check_foundation_import_boundary_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "foundation_import_boundary_audit":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "foundation_import_boundary"))
+        for symbol_id, expected_status in FOUNDATION_IMPORT_BOUNDARY_SYMBOL_STATUSES.items():
+            symbol = manifest.symbols.get(symbol_id)
+            if symbol is None or symbol.status != expected_status:
+                issues.append(
+                    Issue(
+                        "foundation_import_boundary_symbol_status_mismatch",
+                        f"{gate.identifier}: {symbol_id} must remain {expected_status}",
+                    )
+                )
+        for theorem_id, expected_status in FOUNDATION_IMPORT_BOUNDARY_THEOREM_STATUSES.items():
+            card = cards_by_id.get(theorem_id)
+            if card is None or card.proof_status != expected_status:
+                issues.append(
+                    Issue(
+                        "foundation_import_boundary_theorem_status_mismatch",
+                        f"{gate.identifier}: {theorem_id} must remain {expected_status}",
+                    )
+                )
+    return issues
+
+
+def check_primitive_core_contract_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    theorem_status_by_id = {card.identifier: card.proof_status for card in manifest.theorem_cards}
+    obligation_status_by_id = {obligation.identifier: obligation.status for obligation in manifest.qm_core_proof_obligations}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "primitive_core_contract":
+            continue
+        import_obligations = require_list(gate.payload.get("import_obligations"), f"{gate.identifier}.import_obligations")
+        for index, raw_obligation in enumerate(import_obligations):
+            obligation = require_mapping(raw_obligation, f"{gate.identifier}.import_obligations[{index}]")
+            import_id = require_string(obligation.get("import_id"), f"{gate.identifier}.import_obligations[{index}].import_id")
+            obligation_kind = require_string(
+                obligation.get("obligation_kind"),
+                f"{gate.identifier}.import_obligations[{index}].obligation_kind",
+            )
+            target = require_string(obligation.get("target"), f"{gate.identifier}.import_obligations[{index}].target")
+            required_status = require_string(
+                obligation.get("required_status"),
+                f"{gate.identifier}.import_obligations[{index}].required_status",
+            )
+            if obligation_kind == "theorem_card":
+                actual_status = theorem_status_by_id.get(target)
+            elif obligation_kind == "qm_core_obligation":
+                actual_status = obligation_status_by_id.get(target)
+            else:
+                actual_status = None
+            if actual_status is None:
+                issues.append(
+                    Issue(
+                        "primitive_core_contract_obligation_target_missing",
+                        f"{gate.identifier}: import {import_id} targets missing obligation {target}",
+                    )
+                )
+                continue
+            if actual_status != required_status:
+                issues.append(
+                    Issue(
+                        "primitive_core_contract_obligation_status_mismatch",
+                        f"{gate.identifier}: import {import_id} target {target} must remain {required_status}",
+                    )
+                )
+    return issues
+
+
+def check_facticizable_distinguishability_closure_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    theorem_status_by_id = {card.identifier: card.proof_status for card in manifest.theorem_cards}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "facticizable_distinguishability_closure_frontier":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "fdc_frontier"))
+        for theorem_id, expected_status in FDC_REQUIRED_OPEN_OBLIGATIONS.items():
+            if theorem_status_by_id.get(theorem_id) != expected_status:
+                issues.append(
+                    Issue(
+                        "fdc_frontier_obligation_status_mismatch",
+                        f"{gate.identifier}: {theorem_id} must remain {expected_status}",
+                )
+            )
+    return issues
+
+
+def check_qm_wall_probe_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "qm_wall_probe":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "qm_wall_probe"))
+        nodes = require_list(gate.payload.get("nodes"), f"{gate.identifier}.nodes")
+        for node_index, raw_node in enumerate(nodes):
+            node = require_mapping(raw_node, f"{gate.identifier}.nodes[{node_index}]")
+            node_id = require_string(node.get("id"), f"{gate.identifier}.nodes[{node_index}].id")
+            dependency_refs = require_string_tuple(
+                node.get("dependency_refs", []),
+                f"{gate.identifier}.{node_id}.dependency_refs",
+            )
+            for dependency_ref in dependency_refs:
+                if dependency_ref in known_refs or research_graph_doc_ref_exists(dependency_ref):
+                    continue
+                issues.append(
+                    Issue(
+                        "qm_wall_probe_dependency_unresolved",
+                        f"{gate.identifier}: {node_id} dependency ref {dependency_ref!r} is not grounded",
+                    )
+                )
+            target_refs = require_list(node.get("target_refs"), f"{gate.identifier}.{node_id}.target_refs")
+            for target_index, raw_ref in enumerate(target_refs):
+                target_ref = require_mapping(raw_ref, f"{gate.identifier}.{node_id}.target_refs[{target_index}]")
+                actual_status = resolve_qm_wall_probe_target_status(manifest, gate.identifier, node_id, target_ref)
+                if actual_status is None:
+                    issues.append(
+                        Issue(
+                            "qm_wall_probe_target_missing",
+                            f"{gate.identifier}: {node_id} target ref is not grounded",
+                        )
+                    )
+                    continue
+                expected_status = require_string(
+                    target_ref.get("expected_status"),
+                    f"{gate.identifier}.{node_id}.target_refs[{target_index}].expected_status",
+                )
+                if actual_status != expected_status:
+                    issues.append(
+                        Issue(
+                            "qm_wall_probe_target_status_mismatch",
+                            (
+                                f"{gate.identifier}: {node_id} expected target status {expected_status}, "
+                                f"got {actual_status}"
+                            ),
+                        )
+                    )
+    return issues
+
+
+def resolve_qm_wall_probe_target_status(
+    manifest: Manifest,
+    gate_id: str,
+    node_id: str,
+    target_ref: dict[str, object],
+) -> str | None:
+    target_kind = require_string(target_ref.get("kind"), f"{gate_id}.{node_id}.target_ref.kind")
+    target_id = require_string(target_ref.get("id"), f"{gate_id}.{node_id}.target_ref.id")
+    if target_kind == "symbol":
+        symbol = manifest.symbols.get(target_id)
+        if symbol is None:
+            return None
+        return symbol.status
+    if target_kind == "theorem_card":
+        card_by_id = {card.identifier: card for card in manifest.theorem_cards}
+        card = card_by_id.get(target_id)
+        if card is None:
+            return None
+        return card.proof_status
+    if target_kind == "qm_core_obligation":
+        obligation_by_id = {obligation.identifier: obligation for obligation in manifest.qm_core_proof_obligations}
+        obligation = obligation_by_id.get(target_id)
+        if obligation is None:
+            return None
+        return obligation.status
+    if target_kind == "finite_gate_field":
+        field = require_string(target_ref.get("field"), f"{gate_id}.{node_id}.target_ref.field")
+        gate_by_id = {gate.identifier: gate for gate in manifest.finite_gates}
+        referenced_gate = gate_by_id.get(target_id)
+        if referenced_gate is None:
+            return None
+        value = referenced_gate.payload.get(field)
+        if not isinstance(value, str):
+            return None
+        return value
+    return None
 
 
 def check_gate_evidence_refs_grounded(gate: FiniteGate, known_refs: set[str], issue_prefix: str) -> list[Issue]:
@@ -12417,6 +13005,943 @@ def check_idt_structural_compression_audit_gate(gate: FiniteGate) -> list[Issue]
     return []
 
 
+def check_foundation_import_boundary_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "primitive_vs_qm_import_boundary":
+        return [
+            Issue(
+                "foundation_import_boundary_target_mismatch",
+                f"{gate.identifier}: target_scope must be primitive_vs_qm_import_boundary",
+            )
+        ]
+    boundary_rule = require_string(gate.payload.get("boundary_rule"), f"{gate.identifier}.boundary_rule")
+    if boundary_rule != "no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim":
+        return [
+            Issue(
+                "foundation_import_boundary_rule_mismatch",
+                f"{gate.identifier}: boundary_rule must forbid primitive/derived relabels of QM imports",
+            )
+        ]
+
+    primitive_core = require_list(gate.payload.get("primitive_core"), f"{gate.identifier}.primitive_core")
+    if len(primitive_core) != len(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        raise ManifestError(f"{gate.identifier}: primitive_core must cover every carrier-neutral primitive")
+    primitive_seen: set[str] = set()
+    for index, item in enumerate(primitive_core):
+        primitive_entry = require_mapping(item, f"{gate.identifier}.primitive_core[{index}]")
+        primitive_id = require_string(
+            primitive_entry.get("id"),
+            f"{gate.identifier}.primitive_core[{index}].id",
+        )
+        primitive_status = require_string(
+            primitive_entry.get("primitive_status"),
+            f"{gate.identifier}.primitive_core[{index}].primitive_status",
+        )
+        carrier_status = require_string(
+            primitive_entry.get("carrier_status"),
+            f"{gate.identifier}.primitive_core[{index}].carrier_status",
+        )
+        evidence_refs = require_string_tuple(
+            primitive_entry.get("evidence_refs", []),
+            f"{gate.identifier}.primitive_core[{index}].evidence_refs",
+        )
+        if primitive_id not in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE:
+            return [
+                Issue(
+                    "foundation_import_boundary_unknown_primitive",
+                    f"{gate.identifier}: unknown carrier-neutral primitive {primitive_id}",
+                )
+            ]
+        if primitive_id in primitive_seen:
+            return [
+                Issue(
+                    "foundation_import_boundary_duplicate_primitive",
+                    f"{gate.identifier}: duplicate carrier-neutral primitive {primitive_id}",
+                )
+            ]
+        if primitive_status != "idt_primitive":
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_status_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain an IDT primitive",
+                )
+            ]
+        if carrier_status != "carrier_neutral":
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_carrier_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain carrier-neutral",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_evidence_missing",
+                    f"{gate.identifier}: {primitive_id} must cite evidence refs",
+                )
+            ]
+        primitive_seen.add(primitive_id)
+
+    missing_primitives = sorted(set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE) - primitive_seen)
+    if missing_primitives:
+        return [
+            Issue(
+                "foundation_import_boundary_primitive_missing",
+                f"{gate.identifier}: missing carrier-neutral primitives: {', '.join(missing_primitives)}",
+            )
+        ]
+
+    imports = require_list(gate.payload.get("imports"), f"{gate.identifier}.imports")
+    if len(imports) != len(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS):
+        raise ManifestError(f"{gate.identifier}: imports must cover every foundation import boundary entry")
+
+    seen: set[str] = set()
+    for index, item in enumerate(imports):
+        import_entry = require_mapping(item, f"{gate.identifier}.imports[{index}]")
+        import_id = require_string(import_entry.get("id"), f"{gate.identifier}.imports[{index}].id")
+        import_status = require_string(
+            import_entry.get("import_status"),
+            f"{gate.identifier}.imports[{index}].import_status",
+        )
+        evidence_refs = require_string_tuple(
+            import_entry.get("evidence_refs", []),
+            f"{gate.identifier}.imports[{index}].evidence_refs",
+        )
+        target_refactor = require_string(
+            import_entry.get("target_refactor"),
+            f"{gate.identifier}.imports[{index}].target_refactor",
+        )
+        proof_boundary = require_string(
+            import_entry.get("proof_boundary"),
+            f"{gate.identifier}.imports[{index}].proof_boundary",
+        )
+        if import_id not in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS:
+            return [
+                Issue(
+                    "foundation_import_boundary_unknown_import",
+                    f"{gate.identifier}: unknown foundation import {import_id}",
+                )
+            ]
+        if import_id in seen:
+            return [
+                Issue(
+                    "foundation_import_boundary_duplicate_import",
+                    f"{gate.identifier}: duplicate foundation import {import_id}",
+                )
+            ]
+        if import_status == "primitive_derivation":
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_relabel",
+                    f"{gate.identifier}: {import_id} cannot be classified as a primitive derivation",
+                )
+            ]
+        expected_status = FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT[import_id]
+        if import_status != expected_status:
+            return [
+                Issue(
+                    "foundation_import_boundary_status_mismatch",
+                    f"{gate.identifier}: {import_id} must be classified as {expected_status}",
+                )
+            ]
+        expected_target_refactor = FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id]
+        if target_refactor != expected_target_refactor:
+            return [
+                Issue(
+                    "foundation_import_boundary_target_refactor_mismatch",
+                    f"{gate.identifier}: {import_id} must target {expected_target_refactor}",
+                )
+            ]
+        if proof_boundary != FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY:
+            return [
+                Issue(
+                    "foundation_import_boundary_proof_boundary_mismatch",
+                    f"{gate.identifier}: {import_id} must be marked as not derived from IDT primitives",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "foundation_import_boundary_evidence_missing",
+                    f"{gate.identifier}: {import_id} must cite evidence refs",
+                )
+            ]
+        seen.add(import_id)
+
+    missing = sorted(set(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS) - seen)
+    if missing:
+        return [
+            Issue(
+                "foundation_import_boundary_import_missing",
+                f"{gate.identifier}: missing foundation import entries: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_boundary_status"),
+        f"{gate.identifier}.expected_boundary_status",
+    )
+    if expected_status not in FOUNDATION_IMPORT_BOUNDARY_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_boundary_status is unknown")
+    if expected_status != "imports_explicit":
+        return [
+            Issue(
+                "foundation_import_boundary_expected_status_mismatch",
+                f"{gate.identifier}: foundation imports must remain explicit, not closed",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "foundation_import_boundary_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the primitive/import boundary",
+            )
+        ]
+    return []
+
+
+def check_primitive_core_contract_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "carrier_neutral_primitive_core":
+        return [
+            Issue(
+                "primitive_core_contract_target_mismatch",
+                f"{gate.identifier}: target_scope must be carrier_neutral_primitive_core",
+            )
+        ]
+    primitive_core = require_list(gate.payload.get("primitive_core"), f"{gate.identifier}.primitive_core")
+    if len(primitive_core) != len(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        raise ManifestError(f"{gate.identifier}: primitive_core must cover every carrier-neutral primitive")
+    forbidden_refs = set(
+        require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs")
+    )
+    if forbidden_refs != set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS):
+        return [
+            Issue(
+                "primitive_core_contract_forbidden_refs_mismatch",
+                f"{gate.identifier}: forbidden_import_refs must lock the primitive/import boundary",
+            )
+        ]
+
+    seen_primitives: set[str] = set()
+    for index, raw_primitive in enumerate(primitive_core):
+        primitive = require_mapping(raw_primitive, f"{gate.identifier}.primitive_core[{index}]")
+        primitive_id = require_string(primitive.get("id"), f"{gate.identifier}.primitive_core[{index}].id")
+        primitive_status = require_string(
+            primitive.get("primitive_status"),
+            f"{gate.identifier}.primitive_core[{index}].primitive_status",
+        )
+        carrier_status = require_string(
+            primitive.get("carrier_status"),
+            f"{gate.identifier}.primitive_core[{index}].carrier_status",
+        )
+        laws = set(require_string_tuple(primitive.get("laws", []), f"{gate.identifier}.{primitive_id}.laws"))
+        allowed_dependencies = set(
+            require_string_tuple(
+                primitive.get("allowed_dependencies", []),
+                f"{gate.identifier}.{primitive_id}.allowed_dependencies",
+            )
+        )
+        if primitive_id not in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE:
+            return [
+                Issue(
+                    "primitive_core_contract_unknown_primitive",
+                    f"{gate.identifier}: unknown primitive {primitive_id}",
+                )
+            ]
+        if primitive_id in seen_primitives:
+            return [
+                Issue(
+                    "primitive_core_contract_duplicate_primitive",
+                    f"{gate.identifier}: duplicate primitive {primitive_id}",
+                )
+            ]
+        if primitive_status != "idt_primitive" or carrier_status != "carrier_neutral":
+            return [
+                Issue(
+                    "primitive_core_contract_status_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain an IDT carrier-neutral primitive",
+                )
+            ]
+        expected_laws = set(IDT_PRIMITIVE_CORE_REQUIRED_LAWS[primitive_id])
+        if laws != expected_laws:
+            return [
+                Issue(
+                    "primitive_core_contract_laws_mismatch",
+                    f"{gate.identifier}: {primitive_id} laws must match the primitive-core contract",
+                )
+            ]
+        if allowed_dependencies != set(IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES):
+            return [
+                Issue(
+                    "primitive_core_contract_dependency_mismatch",
+                    f"{gate.identifier}: {primitive_id} may depend only on the primitive definition section",
+                )
+            ]
+        primitive_strings = [primitive_id, primitive_status, carrier_status, *laws, *allowed_dependencies]
+        leaked_refs = [forbidden_ref for forbidden_ref in forbidden_refs if forbidden_ref in primitive_strings]
+        if leaked_refs:
+            return [
+                Issue(
+                    "primitive_core_contract_forbidden_ref_leak",
+                    f"{gate.identifier}: {primitive_id} leaks forbidden QM/import refs: {', '.join(sorted(leaked_refs))}",
+                )
+            ]
+        seen_primitives.add(primitive_id)
+
+    missing_primitives = sorted(set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE) - seen_primitives)
+    if missing_primitives:
+        return [
+            Issue(
+                "primitive_core_contract_primitive_missing",
+                f"{gate.identifier}: missing primitives: {', '.join(missing_primitives)}",
+            )
+        ]
+
+    import_obligations = require_list(gate.payload.get("import_obligations"), f"{gate.identifier}.import_obligations")
+    if len(import_obligations) != len(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS):
+        raise ManifestError(f"{gate.identifier}: import_obligations must cover every foundation import")
+    seen_imports: set[str] = set()
+    for index, raw_obligation in enumerate(import_obligations):
+        obligation = require_mapping(raw_obligation, f"{gate.identifier}.import_obligations[{index}]")
+        import_id = require_string(obligation.get("import_id"), f"{gate.identifier}.import_obligations[{index}].import_id")
+        obligation_kind = require_string(
+            obligation.get("obligation_kind"),
+            f"{gate.identifier}.import_obligations[{index}].obligation_kind",
+        )
+        target = require_string(obligation.get("target"), f"{gate.identifier}.import_obligations[{index}].target")
+        required_status = require_string(
+            obligation.get("required_status"),
+            f"{gate.identifier}.import_obligations[{index}].required_status",
+        )
+        target_refactor = require_string(
+            obligation.get("target_refactor"),
+            f"{gate.identifier}.import_obligations[{index}].target_refactor",
+        )
+        proof_boundary = require_string(
+            obligation.get("proof_boundary"),
+            f"{gate.identifier}.import_obligations[{index}].proof_boundary",
+        )
+        if import_id not in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS:
+            return [
+                Issue(
+                    "primitive_core_contract_unknown_import",
+                    f"{gate.identifier}: unknown import obligation {import_id}",
+                )
+            ]
+        if import_id in seen_imports:
+            return [
+                Issue(
+                    "primitive_core_contract_duplicate_import",
+                    f"{gate.identifier}: duplicate import obligation {import_id}",
+                )
+            ]
+        expected_kind, expected_target = IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id]
+        if obligation_kind != expected_kind or target != expected_target:
+            return [
+                Issue(
+                    "primitive_core_contract_import_target_mismatch",
+                    f"{gate.identifier}: {import_id} must target {expected_kind}:{expected_target}",
+                )
+            ]
+        if target_refactor != FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id]:
+            return [
+                Issue(
+                    "primitive_core_contract_target_refactor_mismatch",
+                    f"{gate.identifier}: {import_id} target_refactor must match the foundation boundary",
+                )
+            ]
+        if proof_boundary != FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY:
+            return [
+                Issue(
+                    "primitive_core_contract_proof_boundary_mismatch",
+                    f"{gate.identifier}: {import_id} must remain outside primitive derivation",
+                )
+            ]
+        if required_status in {"formal_proof", "derived"}:
+            return [
+                Issue(
+                    "primitive_core_contract_import_overclaim",
+                    f"{gate.identifier}: {import_id} cannot be treated as a completed primitive derivation",
+                )
+            ]
+        seen_imports.add(import_id)
+    missing_imports = sorted(set(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS) - seen_imports)
+    if missing_imports:
+        return [
+            Issue(
+                "primitive_core_contract_import_missing",
+                f"{gate.identifier}: missing import obligations: {', '.join(missing_imports)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_contract_status"),
+        f"{gate.identifier}.expected_contract_status",
+    )
+    if expected_status not in IDT_PRIMITIVE_CORE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_contract_status is unknown")
+    if expected_status != "primitive_core_locked":
+        return [
+            Issue(
+                "primitive_core_contract_status_result_mismatch",
+                f"{gate.identifier}: primitive core contract must remain locked",
+            )
+        ]
+    return []
+
+
+def check_facticizable_distinguishability_closure_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_principle = require_string(gate.payload.get("target_principle"), f"{gate.identifier}.target_principle")
+    if target_principle != FDC_TARGET_PRINCIPLE:
+        return [
+            Issue(
+                "fdc_frontier_target_mismatch",
+                f"{gate.identifier}: target_principle must be {FDC_TARGET_PRINCIPLE}",
+            )
+        ]
+    closure_rule = require_string(gate.payload.get("closure_rule"), f"{gate.identifier}.closure_rule")
+    if closure_rule != FDC_CLOSURE_RULE:
+        return [
+            Issue(
+                "fdc_frontier_rule_mismatch",
+                f"{gate.identifier}: closure_rule must be {FDC_CLOSURE_RULE}",
+            )
+        ]
+    primitive_basis = set(require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis"))
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "fdc_frontier_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+    forbidden_refs = set(require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs"))
+    if forbidden_refs != set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS):
+        return [
+            Issue(
+                "fdc_frontier_forbidden_refs_mismatch",
+                f"{gate.identifier}: forbidden_import_refs must match the primitive-core import boundary",
+            )
+        ]
+
+    conditions = require_list(gate.payload.get("conditions"), f"{gate.identifier}.conditions")
+    seen_conditions: set[str] = set()
+    for index, raw_condition in enumerate(conditions):
+        condition = require_mapping(raw_condition, f"{gate.identifier}.conditions[{index}]")
+        condition_id = require_string(condition.get("id"), f"{gate.identifier}.conditions[{index}].id")
+        status = require_string(condition.get("status"), f"{gate.identifier}.conditions[{index}].status")
+        evidence_refs = require_string_tuple(
+            condition.get("evidence_refs", []),
+            f"{gate.identifier}.conditions[{index}].evidence_refs",
+        )
+        open_gap = require_string(condition.get("open_gap"), f"{gate.identifier}.conditions[{index}].open_gap")
+        if condition_id not in FDC_REQUIRED_CONDITIONS:
+            return [
+                Issue(
+                    "fdc_frontier_unknown_condition",
+                    f"{gate.identifier}: unknown FDC condition {condition_id}",
+                )
+            ]
+        if condition_id in seen_conditions:
+            return [
+                Issue(
+                    "fdc_frontier_duplicate_condition",
+                    f"{gate.identifier}: duplicate FDC condition {condition_id}",
+                )
+            ]
+        if status != "candidate_principle":
+            return [
+                Issue(
+                    "fdc_frontier_condition_status_mismatch",
+                    f"{gate.identifier}: {condition_id} must remain candidate_principle",
+                )
+            ]
+        if not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "fdc_frontier_condition_boundary_missing",
+                    f"{gate.identifier}: {condition_id} must cite evidence and retain an open-gap boundary",
+                )
+            ]
+        scanned = (condition_id, status, open_gap, *evidence_refs)
+        leaked_refs = [
+            forbidden_ref for forbidden_ref in forbidden_refs if any(forbidden_ref in scanned_item for scanned_item in scanned)
+        ]
+        if leaked_refs:
+            return [
+                Issue(
+                    "fdc_frontier_forbidden_ref_leak",
+                    f"{gate.identifier}: {condition_id} leaks forbidden refs: {', '.join(sorted(leaked_refs))}",
+                )
+            ]
+        seen_conditions.add(condition_id)
+    missing_conditions = sorted(set(FDC_REQUIRED_CONDITIONS) - seen_conditions)
+    if missing_conditions:
+        return [
+            Issue(
+                "fdc_frontier_condition_missing",
+                f"{gate.identifier}: missing FDC conditions: {', '.join(missing_conditions)}",
+            )
+        ]
+
+    negative_controls = require_list(gate.payload.get("negative_controls"), f"{gate.identifier}.negative_controls")
+    seen_controls: set[str] = set()
+    for index, raw_control in enumerate(negative_controls):
+        control = require_mapping(raw_control, f"{gate.identifier}.negative_controls[{index}]")
+        control_id = require_string(control.get("id"), f"{gate.identifier}.negative_controls[{index}].id")
+        expected_result = require_string(
+            control.get("expected_result"),
+            f"{gate.identifier}.negative_controls[{index}].expected_result",
+        )
+        evidence_refs = require_string_tuple(
+            control.get("evidence_refs", []),
+            f"{gate.identifier}.negative_controls[{index}].evidence_refs",
+        )
+        retained_boundary = require_string(
+            control.get("retained_boundary"),
+            f"{gate.identifier}.negative_controls[{index}].retained_boundary",
+        )
+        if control_id not in FDC_REQUIRED_NEGATIVE_CONTROLS:
+            return [
+                Issue(
+                    "fdc_frontier_unknown_negative_control",
+                    f"{gate.identifier}: unknown FDC negative control {control_id}",
+                )
+            ]
+        if control_id in seen_controls:
+            return [
+                Issue(
+                    "fdc_frontier_duplicate_negative_control",
+                    f"{gate.identifier}: duplicate FDC negative control {control_id}",
+                )
+            ]
+        if expected_result != FDC_REQUIRED_NEGATIVE_CONTROLS[control_id]:
+            return [
+                Issue(
+                    "fdc_frontier_negative_control_result_mismatch",
+                    f"{gate.identifier}: {control_id} must be {FDC_REQUIRED_NEGATIVE_CONTROLS[control_id]}",
+                )
+            ]
+        if not evidence_refs or not retained_boundary:
+            return [
+                Issue(
+                    "fdc_frontier_negative_control_boundary_missing",
+                    f"{gate.identifier}: {control_id} must cite evidence and retain a boundary",
+                )
+            ]
+        seen_controls.add(control_id)
+    missing_controls = sorted(set(FDC_REQUIRED_NEGATIVE_CONTROLS) - seen_controls)
+    if missing_controls:
+        return [
+            Issue(
+                "fdc_frontier_negative_control_missing",
+                f"{gate.identifier}: missing FDC negative controls: {', '.join(missing_controls)}",
+            )
+        ]
+
+    open_obligations = {
+        require_string(item.get("id"), f"{gate.identifier}.open_obligations[].id"): require_string(
+            item.get("required_status"),
+            f"{gate.identifier}.open_obligations[].required_status",
+        )
+        for item in (
+            require_mapping(raw_item, f"{gate.identifier}.open_obligations[]")
+            for raw_item in require_list(gate.payload.get("open_obligations"), f"{gate.identifier}.open_obligations")
+        )
+    }
+    if open_obligations != FDC_REQUIRED_OPEN_OBLIGATIONS:
+        return [
+            Issue(
+                "fdc_frontier_open_obligations_mismatch",
+                f"{gate.identifier}: open_obligations must preserve the current QM-proof frontier",
+            )
+        ]
+    forbidden_upgrades = set(require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades"))
+    if forbidden_upgrades != set(FDC_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "fdc_frontier_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must prevent FDC from becoming a hidden QM import",
+            )
+        ]
+    expected_status = require_string(gate.payload.get("expected_frontier_status"), f"{gate.identifier}.expected_frontier_status")
+    if expected_status not in FDC_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_frontier_status is unknown")
+    if expected_status != "frontier_candidate":
+        return [
+            Issue(
+                "fdc_frontier_status_mismatch",
+                f"{gate.identifier}: FDC must remain a frontier_candidate",
+            )
+        ]
+    return []
+
+
+def qm_wall_probe_result_from_statuses(statuses: tuple[str, ...], imported_refs: tuple[str, ...] = ()) -> str:
+    if not statuses:
+        return "bad"
+    if any(status in QM_WALL_PROBE_WALL_STATUSES for status in statuses):
+        return "wall"
+    if any(status in QM_WALL_PROBE_OPEN_STATUSES for status in statuses):
+        return "open"
+    if all(status in QM_WALL_PROBE_PASS_STATUSES for status in statuses):
+        if imported_refs:
+            return "open"
+        return "pass"
+    return "bad"
+
+
+def qm_wall_probe_status_from_results(results: tuple[str, ...]) -> str:
+    if not results or any(result == "bad" for result in results):
+        return "hidden_import_failure"
+    if any(result == "wall" for result in results):
+        return "current_wall_detected"
+    if any(result == "open" for result in results):
+        return "open_frontier"
+    return "closed_no_wall_detected"
+
+
+def check_qm_wall_probe_gate(gate: FiniteGate) -> list[Issue]:
+    target = require_string(gate.payload.get("target"), f"{gate.identifier}.target")
+    if target != QM_WALL_PROBE_TARGET:
+        return [
+            Issue(
+                "qm_wall_probe_target_mismatch",
+                f"{gate.identifier}: target must be {QM_WALL_PROBE_TARGET}",
+            )
+        ]
+
+    primitive_basis = set(
+        require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis")
+    )
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "qm_wall_probe_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+
+    forbidden_refs = set(
+        require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs")
+    )
+    if forbidden_refs != set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS):
+        return [
+            Issue(
+                "qm_wall_probe_forbidden_refs_mismatch",
+                f"{gate.identifier}: forbidden_import_refs must match the primitive-core import boundary",
+            )
+        ]
+
+    nodes = require_list(gate.payload.get("nodes"), f"{gate.identifier}.nodes")
+    seen_nodes: set[str] = set()
+    results: list[str] = []
+    for node_index, raw_node in enumerate(nodes):
+        node = require_mapping(raw_node, f"{gate.identifier}.nodes[{node_index}]")
+        node_id = require_string(node.get("id"), f"{gate.identifier}.nodes[{node_index}].id")
+        if node_id not in QM_WALL_PROBE_REQUIRED_NODE_RESULTS:
+            return [
+                Issue(
+                    "qm_wall_probe_unknown_node",
+                    f"{gate.identifier}: unknown wall-probe node {node_id}",
+                )
+            ]
+        if node_id in seen_nodes:
+            return [
+                Issue(
+                    "qm_wall_probe_duplicate_node",
+                    f"{gate.identifier}: duplicate wall-probe node {node_id}",
+                )
+            ]
+        question = require_string(node.get("question"), f"{gate.identifier}.{node_id}.question")
+        result = require_string(node.get("result"), f"{gate.identifier}.{node_id}.result")
+        if result not in QM_WALL_PROBE_NODE_RESULTS:
+            return [
+                Issue(
+                    "qm_wall_probe_unknown_result",
+                    f"{gate.identifier}: {node_id} has unknown result {result}",
+                )
+            ]
+        expected_result = QM_WALL_PROBE_REQUIRED_NODE_RESULTS[node_id]
+        if result != expected_result:
+            return [
+                Issue(
+                    "qm_wall_probe_node_result_mismatch",
+                    f"{gate.identifier}: {node_id} must remain {expected_result}",
+                )
+            ]
+        imported_refs = tuple(
+            require_string_tuple(
+                node.get("imported_structure_refs", []),
+                f"{gate.identifier}.{node_id}.imported_structure_refs",
+            )
+        )
+        expected_import_refs = QM_WALL_PROBE_REQUIRED_IMPORT_REFS[node_id]
+        if imported_refs != expected_import_refs:
+            return [
+                Issue(
+                    "qm_wall_probe_import_refs_mismatch",
+                    f"{gate.identifier}: {node_id} must expose its exact imported-structure refs",
+                )
+            ]
+        unknown_imports = sorted(set(imported_refs) - set(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS))
+        if unknown_imports:
+            return [
+                Issue(
+                    "qm_wall_probe_unknown_import_ref",
+                    f"{gate.identifier}: {node_id} cites unknown imports: {', '.join(unknown_imports)}",
+                )
+            ]
+        if result == "pass" and imported_refs:
+            return [
+                Issue(
+                    "qm_wall_probe_hidden_import_as_pass",
+                    f"{gate.identifier}: {node_id} cannot pass while citing imported QM structure",
+                )
+            ]
+        dependency_refs = require_string_tuple(
+            node.get("dependency_refs", []),
+            f"{gate.identifier}.{node_id}.dependency_refs",
+        )
+        evidence_refs = require_string_tuple(node.get("evidence_refs", []), f"{gate.identifier}.{node_id}.evidence_refs")
+        if not question or not dependency_refs or not evidence_refs:
+            return [
+                Issue(
+                    "qm_wall_probe_node_support_missing",
+                    f"{gate.identifier}: {node_id} must include a question, dependency_refs, and evidence_refs",
+                )
+            ]
+        target_refs = require_list(node.get("target_refs"), f"{gate.identifier}.{node_id}.target_refs")
+        target_statuses: list[str] = []
+        for target_index, raw_target_ref in enumerate(target_refs):
+            target_ref = require_mapping(raw_target_ref, f"{gate.identifier}.{node_id}.target_refs[{target_index}]")
+            target_kind = require_string(target_ref.get("kind"), f"{gate.identifier}.{node_id}.target_refs[{target_index}].kind")
+            if target_kind not in QM_WALL_PROBE_TARGET_KINDS:
+                return [
+                    Issue(
+                        "qm_wall_probe_unknown_target_kind",
+                        f"{gate.identifier}: {node_id} target kind {target_kind} is unsupported",
+                    )
+                ]
+            if target_kind == "finite_gate_field":
+                require_string(target_ref.get("field"), f"{gate.identifier}.{node_id}.target_refs[{target_index}].field")
+            target_statuses.append(
+                require_string(
+                    target_ref.get("expected_status"),
+                    f"{gate.identifier}.{node_id}.target_refs[{target_index}].expected_status",
+                )
+            )
+        computed_result = qm_wall_probe_result_from_statuses(tuple(target_statuses), imported_refs)
+        if computed_result != result:
+            return [
+                Issue(
+                    "qm_wall_probe_computed_result_mismatch",
+                    f"{gate.identifier}: {node_id} expected result {result}, computed {computed_result}",
+                )
+            ]
+        open_gap = require_string(node.get("open_gap"), f"{gate.identifier}.{node_id}.open_gap")
+        if result == "pass" and open_gap:
+            return [
+                Issue(
+                    "qm_wall_probe_pass_gap_mismatch",
+                    f"{gate.identifier}: {node_id} cannot retain an open gap when classified pass",
+                )
+            ]
+        if result != "pass" and not open_gap:
+            return [
+                Issue(
+                    "qm_wall_probe_gap_missing",
+                    f"{gate.identifier}: {node_id} must keep a wall/open-gap explanation",
+                )
+            ]
+        seen_nodes.add(node_id)
+        results.append(result)
+
+    missing_nodes = sorted(set(QM_WALL_PROBE_REQUIRED_NODE_RESULTS) - seen_nodes)
+    if missing_nodes:
+        return [
+            Issue(
+                "qm_wall_probe_node_missing",
+                f"{gate.identifier}: missing wall-probe nodes: {', '.join(missing_nodes)}",
+            )
+        ]
+
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(QM_WALL_PROBE_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "qm_wall_probe_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must prevent hidden full-QM closure",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_probe_status"), f"{gate.identifier}.expected_probe_status")
+    if expected_status not in QM_WALL_PROBE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_probe_status is unknown")
+    computed_status = qm_wall_probe_status_from_results(tuple(results))
+    if expected_status != computed_status:
+        return [
+            Issue(
+                "qm_wall_probe_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "current_formal_proof_claims":
+        return [
+            Issue(
+                "formal_proof_ledger_target_mismatch",
+                f"{gate.identifier}: target_scope must be current_formal_proof_claims",
+            )
+        ]
+
+    proof_cards = require_list(gate.payload.get("proof_cards"), f"{gate.identifier}.proof_cards")
+    if not proof_cards:
+        raise ManifestError(f"{gate.identifier}: proof_cards must not be empty")
+    seen: set[str] = set()
+    for index, raw_card in enumerate(proof_cards):
+        card = require_mapping(raw_card, f"{gate.identifier}.proof_cards[{index}]")
+        card_id = require_string(card.get("id"), f"{gate.identifier}.proof_cards[{index}].id")
+        proof_kind = require_string(
+            card.get("proof_kind"),
+            f"{gate.identifier}.proof_cards[{index}].proof_kind",
+        )
+        backend = require_string(card.get("backend"), f"{gate.identifier}.proof_cards[{index}].backend")
+        claim_refs = require_string_tuple(
+            card.get("claim_refs", []),
+            f"{gate.identifier}.proof_cards[{index}].claim_refs",
+        )
+        statement = require_string(card.get("statement"), f"{gate.identifier}.proof_cards[{index}].statement")
+        artifact_paths = require_string_tuple(
+            card.get("artifact_paths", []),
+            f"{gate.identifier}.proof_cards[{index}].artifact_paths",
+        )
+        checker_commands = require_string_tuple(
+            card.get("checker_commands", []),
+            f"{gate.identifier}.proof_cards[{index}].checker_commands",
+        )
+        machine_checks = require_string_tuple(
+            card.get("machine_checks", []),
+            f"{gate.identifier}.proof_cards[{index}].machine_checks",
+        )
+        open_gaps = require_string_tuple(
+            card.get("open_gaps", []),
+            f"{gate.identifier}.proof_cards[{index}].open_gaps",
+        )
+        forbidden_upgrades = set(
+            require_string_tuple(
+                card.get("forbidden_upgrades", []),
+                f"{gate.identifier}.proof_cards[{index}].forbidden_upgrades",
+            )
+        )
+        if card_id in seen:
+            return [
+                Issue(
+                    "formal_proof_ledger_duplicate_card",
+                    f"{gate.identifier}: duplicate proof card {card_id}",
+                )
+            ]
+        seen.add(card_id)
+        if proof_kind not in PROOF_LEDGER_PROOF_KIND_VALUES:
+            raise ManifestError(f"{gate.identifier}: proof card {card_id} has unknown proof_kind {proof_kind!r}")
+        if backend not in PROOF_LEDGER_BACKEND_VALUES:
+            raise ManifestError(f"{gate.identifier}: proof card {card_id} has unknown backend {backend!r}")
+        if not claim_refs:
+            return [
+                Issue(
+                    "formal_proof_ledger_claim_refs_missing",
+                    f"{gate.identifier}: proof card {card_id} must cite claim_refs",
+                )
+            ]
+        if not statement.strip():
+            return [
+                Issue(
+                    "formal_proof_ledger_statement_missing",
+                    f"{gate.identifier}: proof card {card_id} must state the proved claim",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and open_gaps:
+            return [
+                Issue(
+                    "formal_proof_ledger_gap_on_formal_card",
+                    f"{gate.identifier}: formal proof card {card_id} must not declare open_gaps",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and (not artifact_paths or not checker_commands or not machine_checks):
+            return [
+                Issue(
+                    "formal_proof_ledger_machine_check_missing",
+                    f"{gate.identifier}: formal proof card {card_id} must declare artifacts, commands, and checks",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and not set(
+            PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS
+        ).issubset(set(checker_commands)):
+            return [
+                Issue(
+                    "formal_proof_ledger_checker_commands_incomplete",
+                    f"{gate.identifier}: proof card {card_id} must run the required proof-ledger commands",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and not set(
+            PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS
+        ).issubset(set(machine_checks)):
+            return [
+                Issue(
+                    "formal_proof_ledger_machine_checks_incomplete",
+                    f"{gate.identifier}: proof card {card_id} must declare the required proof-ledger checks",
+                )
+            ]
+        for artifact_path in artifact_paths:
+            if not proof_artifact_exists(artifact_path):
+                return [
+                    Issue(
+                        "formal_proof_ledger_artifact_missing",
+                        f"{gate.identifier}: proof card {card_id} artifact {artifact_path!r} is missing",
+                    )
+                ]
+        if not set(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES).issubset(forbidden_upgrades):
+            return [
+                Issue(
+                    "formal_proof_ledger_forbidden_upgrades_incomplete",
+                    f"{gate.identifier}: proof card {card_id} must preserve proof-ledger forbidden upgrades",
+                )
+            ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_ledger_status"),
+        f"{gate.identifier}.expected_ledger_status",
+    )
+    if expected_status not in PROOF_LEDGER_AUDIT_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_ledger_status is unknown")
+    if expected_status != "formal_claims_covered":
+        return [
+            Issue(
+                "formal_proof_ledger_status_mismatch",
+                f"{gate.identifier}: expected ledger status must be formal_claims_covered",
+            )
+        ]
+    return []
+
+
+def proof_artifact_exists(artifact_path: str) -> bool:
+    path = Path(artifact_path)
+    if path.is_absolute():
+        return path.is_file()
+    repo_root = Path(__file__).resolve().parent.parent
+    return (repo_root / path).is_file()
+
+
 def check_dimensionful_anchor_policy_gate(gate: FiniteGate) -> list[Issue]:
     entries = require_list(gate.payload.get("entries"), f"{gate.identifier}.entries")
     if not entries:
@@ -18093,6 +19618,11 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "research_graph_contract": check_research_graph_contract_gate,
     "qm_proof_anti_hallucination_audit": check_qm_proof_anti_hallucination_audit_gate,
     "idt_structural_compression_audit": check_idt_structural_compression_audit_gate,
+    "foundation_import_boundary_audit": check_foundation_import_boundary_audit_gate,
+    "primitive_core_contract": check_primitive_core_contract_gate,
+    "facticizable_distinguishability_closure_frontier": check_facticizable_distinguishability_closure_frontier_gate,
+    "qm_wall_probe": check_qm_wall_probe_gate,
+    "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
     "bridge_assumption_boundary": check_bridge_assumption_boundary_gate,

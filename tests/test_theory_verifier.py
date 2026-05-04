@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import io
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
+from scripts.check_proofs import is_allowed_checker_command
+from scripts.sync_formal_proof_ledger import check_ledger, write_ledger
 from theory_verifier.core import (
     ACTION_STANDARD_REQUIRED_GATES,
     ACTION_STANDARD_REQUIRED_SYMBOLS,
@@ -150,10 +154,34 @@ from theory_verifier.core import (
     IDT_CORE_RESIDUAL_BOUNDARY_SCOPE,
     IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES,
     IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
+    FDC_CLOSURE_RULE,
+    FDC_FORBIDDEN_UPGRADES,
+    FDC_REQUIRED_CONDITIONS,
+    FDC_REQUIRED_NEGATIVE_CONTROLS,
+    FDC_REQUIRED_OPEN_OBLIGATIONS,
+    FDC_TARGET_PRINCIPLE,
+    IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
+    IDT_PRIMITIVE_CORE_FORBIDDEN_REFS,
+    IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
+    IDT_PRIMITIVE_CORE_REQUIRED_LAWS,
     IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES,
     IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES,
+    FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT,
+    FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES,
+    FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE,
+    FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
+    FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS,
+    FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT,
+    QM_WALL_PROBE_FORBIDDEN_UPGRADES,
+    QM_WALL_PROBE_REQUIRED_IMPORT_REFS,
+    QM_WALL_PROBE_REQUIRED_NODE_RESULTS,
+    QM_WALL_PROBE_TARGET,
+    PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES,
+    PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS,
+    PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
+    iter_formal_claims,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
     NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
@@ -393,6 +421,407 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_compression_status": "candidate_map",
             "forbidden_upgrades": list(IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES),
+        }
+
+    def foundation_import_boundary_audit_gate(self) -> dict[str, object]:
+        evidence_refs_by_import = {
+            "complex_amplitude_carrier": [
+                "sections/01-primitives.md",
+                "universal_carrier_selection_theorem",
+                "hilbert_carrier_derivation",
+            ],
+            "psd_distinguishability_kernel": ["sections/02-actualization.md"],
+            "quadratic_actualization_measure": [
+                "sections/02-actualization.md",
+                "finite_born_quadratic_readout_survivor",
+                "universal_born_rule_theorem",
+            ],
+            "schur_inheritance_update": ["sections/02-actualization.md"],
+            "tensor_composition_import": [
+                "monoidal_tensor_composition_theorem",
+                "tensor_composition_route_demo",
+            ],
+            "unitary_context_map_import": [
+                "wigner_reversible_inheritance_theorem",
+                "unitary_network_probability_demo",
+            ],
+            "action_phase_hbar_bridge": [
+                "hbar_I",
+                "calibrated_hbar_I",
+                "first_principles_hbar_lock",
+            ],
+        }
+        return {
+            "id": "test_foundation_import_boundary_audit",
+            "type": "foundation_import_boundary_audit",
+            "target_scope": "primitive_vs_qm_import_boundary",
+            "boundary_rule": "no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim",
+            "primitive_core": [
+                {
+                    "id": primitive_id,
+                    "primitive_status": "idt_primitive",
+                    "carrier_status": "carrier_neutral",
+                    "evidence_refs": ["sections/01-primitives.md"],
+                }
+                for primitive_id in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE
+            ],
+            "imports": [
+                {
+                    "id": import_id,
+                    "import_status": FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT[import_id],
+                    "evidence_refs": evidence_refs_by_import[import_id],
+                    "target_refactor": FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id],
+                    "proof_boundary": FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
+                }
+                for import_id in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS
+            ],
+            "expected_boundary_status": "imports_explicit",
+            "forbidden_upgrades": list(FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES),
+        }
+
+    def primitive_core_contract_gate(self) -> dict[str, object]:
+        required_status_by_import = {
+            "complex_amplitude_carrier": "open",
+            "psd_distinguishability_kernel": "target",
+            "quadratic_actualization_measure": "open",
+            "schur_inheritance_update": "regression_supported",
+            "tensor_composition_import": "open",
+            "unitary_context_map_import": "open",
+            "action_phase_hbar_bridge": "blocked",
+        }
+        return {
+            "id": "test_primitive_core_contract",
+            "type": "primitive_core_contract",
+            "target_scope": "carrier_neutral_primitive_core",
+            "primitive_core": [
+                {
+                    "id": primitive_id,
+                    "primitive_status": "idt_primitive",
+                    "carrier_status": "carrier_neutral",
+                    "laws": list(IDT_PRIMITIVE_CORE_REQUIRED_LAWS[primitive_id]),
+                    "allowed_dependencies": list(IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES),
+                }
+                for primitive_id in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE
+            ],
+            "forbidden_import_refs": list(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS),
+            "import_obligations": [
+                {
+                    "import_id": import_id,
+                    "obligation_kind": IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id][0],
+                    "target": IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS[import_id][1],
+                    "required_status": required_status_by_import[import_id],
+                    "target_refactor": FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id],
+                    "proof_boundary": FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
+                }
+                for import_id in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS
+            ],
+            "expected_contract_status": "primitive_core_locked",
+        }
+
+    def facticizable_distinguishability_closure_frontier_gate(self) -> dict[str, object]:
+        evidence_refs_by_condition = {
+            "stable_inherited_distinguishability": ["distinguishability_geometry_probe_demo"],
+            "admissible_readout_facticization": ["measurement_facticity_route_demo"],
+            "finite_route_witness_coverage": [
+                "context_product_exhaustion_demo",
+                "idt_core_route_grammar_audit_demo",
+            ],
+            "no_unfacticizable_stable_invariant": [
+                "idt_core_semantic_no_new_effects_audit_demo",
+                "no_emergent_joint_only_invariant_route_demo",
+            ],
+        }
+        gap_by_condition = {
+            condition_id: "Candidate closure principle; this is not yet a universal derivation of QM."
+            for condition_id in FDC_REQUIRED_CONDITIONS
+        }
+        evidence_refs_by_control = {
+            "hidden_joint_only_invariant": [
+                "real_hilbert_composite_hidden_joint_invariant_demo",
+                "context_product_exhaustion_implies_local_tomography",
+            ],
+            "global_noncontextual_fact_table": [
+                "ks_contextuality_obstruction_demo",
+                "multipartite_contextuality_demo",
+            ],
+            "unconstrained_generic_gpt_cone": ["generic_gpt_closure_separator_demo"],
+            "nonfinite_unwitnessed_residual": ["nonfinite_gpt_residual_frontier_demo"],
+        }
+        return {
+            "id": "test_facticizable_distinguishability_closure_frontier",
+            "type": "facticizable_distinguishability_closure_frontier",
+            "target_principle": FDC_TARGET_PRINCIPLE,
+            "closure_rule": FDC_CLOSURE_RULE,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "forbidden_import_refs": list(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS),
+            "conditions": [
+                {
+                    "id": condition_id,
+                    "status": "candidate_principle",
+                    "evidence_refs": evidence_refs_by_condition[condition_id],
+                    "open_gap": gap_by_condition[condition_id],
+                }
+                for condition_id in FDC_REQUIRED_CONDITIONS
+            ],
+            "negative_controls": [
+                {
+                    "id": control_id,
+                    "expected_result": expected_result,
+                    "evidence_refs": evidence_refs_by_control[control_id],
+                    "retained_boundary": "Negative control only; this does not close full QM.",
+                }
+                for control_id, expected_result in FDC_REQUIRED_NEGATIVE_CONTROLS.items()
+            ],
+            "open_obligations": [
+                {"id": obligation_id, "required_status": required_status}
+                for obligation_id, required_status in FDC_REQUIRED_OPEN_OBLIGATIONS.items()
+            ],
+            "expected_frontier_status": "frontier_candidate",
+            "forbidden_upgrades": list(FDC_FORBIDDEN_UPGRADES),
+        }
+
+    def qm_wall_probe_gate(self) -> dict[str, object]:
+        node_specs: dict[str, dict[str, object]] = {
+            "primitive_core_boundary": {
+                "question": "Is the primitive core free of direct QM carrier imports?",
+                "target_refs": [
+                    {
+                        "kind": "finite_gate_field",
+                        "id": "idt_primitive_core_contract_demo",
+                        "field": "expected_contract_status",
+                        "expected_status": "primitive_core_locked",
+                    }
+                ],
+                "dependency_refs": ["idt_primitive_core_contract_demo"],
+                "evidence_refs": ["idt_primitive_core_contract_demo"],
+                "open_gap": "",
+            },
+            "fdc_lower_principle": {
+                "question": "Does FDC currently close as a lower-level principle?",
+                "target_refs": [
+                    {
+                        "kind": "finite_gate_field",
+                        "id": "facticizable_distinguishability_closure_frontier_demo",
+                        "field": "expected_frontier_status",
+                        "expected_status": "frontier_candidate",
+                    }
+                ],
+                "dependency_refs": ["facticizable_distinguishability_closure_frontier_demo"],
+                "evidence_refs": ["facticizable_distinguishability_closure_frontier_demo"],
+                "open_gap": "FDC is a candidate principle, not a completed full-QM derivation.",
+            },
+            "context_product_local_tomography": {
+                "question": "Does context-product exhaustion provide a checked local-tomography separator?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "context_product_exhaustion_implies_local_tomography",
+                        "expected_status": "conditional_proof",
+                    }
+                ],
+                "dependency_refs": [
+                    "context_product_exhaustion_implies_local_tomography",
+                    "context_product_exhaustion_demo",
+                ],
+                "evidence_refs": ["context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "",
+            },
+            "distinguishability_geometry": {
+                "question": "Is the positive distinguishability geometry derived from carrier-neutral primitives?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "distinguishability_geometry",
+                        "expected_status": "target",
+                    }
+                ],
+                "dependency_refs": ["distinguishability_geometry", "distinguishability_geometry_probe_demo"],
+                "evidence_refs": ["distinguishability_geometry_probe_demo"],
+                "open_gap": "The PSD geometry is still an explicit obligation, not a primitive-core theorem.",
+            },
+            "probability_measure_layer": {
+                "question": "Is a finite operational probability layer regression-supported?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "probability_measure_layer",
+                        "expected_status": "regression_supported",
+                    }
+                ],
+                "dependency_refs": ["probability_measure_layer"],
+                "evidence_refs": ["born_context_probability_table_demo"],
+                "open_gap": "",
+            },
+            "measurement_facticity_mechanism": {
+                "question": "Is the finite measurement facticity mechanism regression-supported?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "measurement_facticity_mechanism",
+                        "expected_status": "regression_supported",
+                    }
+                ],
+                "dependency_refs": ["measurement_facticity_mechanism", "measurement_facticity_route_demo"],
+                "evidence_refs": ["measurement_facticity_route_demo"],
+                "open_gap": "Measurement facticity is regression-supported but still carries the Schur update import.",
+            },
+            "carrier_selection": {
+                "question": "Is a universal carrier selector proved without importing the complex carrier?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "universal_carrier_selection_theorem",
+                        "expected_status": "open",
+                    }
+                ],
+                "dependency_refs": ["universal_carrier_selection_theorem"],
+                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                "open_gap": "Carrier selection remains open; current finite separators are not a universal theorem.",
+            },
+            "hilbert_carrier_derivation": {
+                "question": "Is Hilbert-space carrier structure derived from IDT primitives?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "hilbert_carrier_derivation",
+                        "expected_status": "blocked",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "hilbert_carrier_derivation",
+                        "expected_status": "blocked",
+                    },
+                ],
+                "dependency_refs": ["hilbert_carrier_derivation"],
+                "evidence_refs": ["idt_primitive_core_contract_demo"],
+                "open_gap": "Hilbert carrier derivation is currently blocked by the carrier import boundary.",
+            },
+            "born_rule_derivation": {
+                "question": "Is the Born rule derived rather than supplied by a quadratic readout obligation?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "universal_born_rule_theorem",
+                        "expected_status": "open",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "born_rule_derivation",
+                        "expected_status": "blocked",
+                    },
+                ],
+                "dependency_refs": ["universal_born_rule_theorem", "born_rule_derivation"],
+                "evidence_refs": ["finite_born_quadratic_readout_survivor"],
+                "open_gap": "The universal Born derivation is blocked at the quadratic actualization obligation.",
+            },
+            "tensor_composition": {
+                "question": "Is monoidal tensor composition proved from the primitive core?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "monoidal_tensor_composition_theorem",
+                        "expected_status": "open",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "tensor_composition_law",
+                        "expected_status": "target",
+                    },
+                ],
+                "dependency_refs": ["monoidal_tensor_composition_theorem", "tensor_composition_law"],
+                "evidence_refs": ["context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "Tensor composition is still a target/open obligation.",
+            },
+            "reversible_dynamics": {
+                "question": "Is reversible dynamics derived as Wigner/unitary structure?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "wigner_reversible_inheritance_theorem",
+                        "expected_status": "open",
+                    }
+                ],
+                "dependency_refs": ["wigner_reversible_inheritance_theorem", "reversible_inheritance_symmetry"],
+                "evidence_refs": ["unitary_measurement_context_demo"],
+                "open_gap": "Wigner-style reversible inheritance remains open.",
+            },
+            "experiment_recompile_from_core": {
+                "question": "Are all 35 QM experiments recompiled from the primitive core without QM imports?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "recompile_35_from_core",
+                        "expected_status": "target",
+                    }
+                ],
+                "dependency_refs": ["recompile_35_from_core"],
+                "evidence_refs": ["qm_core_recompile_route_demo"],
+                "open_gap": "The 35-experiment corpus is covered by gates, but not yet recompiled from the primitive core.",
+            },
+            "continuum_action_scale": {
+                "question": "Is hbar/action scale locked from first principles?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "first_principles_hbar_lock",
+                        "expected_status": "blocked",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "continuum_action_scale_extension",
+                        "expected_status": "blocked",
+                    },
+                ],
+                "dependency_refs": ["first_principles_hbar_lock", "continuum_action_scale_extension"],
+                "evidence_refs": ["hbar_I"],
+                "open_gap": "The action scale remains blocked as a first-principles derivation.",
+            },
+        }
+        return {
+            "id": "test_qm_wall_probe",
+            "type": "qm_wall_probe",
+            "target": QM_WALL_PROBE_TARGET,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "forbidden_import_refs": list(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS),
+            "nodes": [
+                {
+                    "id": node_id,
+                    "question": spec["question"],
+                    "result": QM_WALL_PROBE_REQUIRED_NODE_RESULTS[node_id],
+                    "target_refs": spec["target_refs"],
+                    "dependency_refs": spec["dependency_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "imported_structure_refs": list(QM_WALL_PROBE_REQUIRED_IMPORT_REFS[node_id]),
+                    "open_gap": spec["open_gap"],
+                }
+                for node_id, spec in node_specs.items()
+            ],
+            "expected_probe_status": "current_wall_detected",
+            "forbidden_upgrades": list(QM_WALL_PROBE_FORBIDDEN_UPGRADES),
+        }
+
+    def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
+        if claim_refs is None:
+            claim_refs = ["finite_gates.example.component.status"]
+        return {
+            "id": "test_formal_proof_ledger_audit",
+            "type": "formal_proof_ledger_audit",
+            "target_scope": "current_formal_proof_claims",
+            "proof_cards": [
+                {
+                    "id": "test_machine_checked_finite_ledger",
+                    "claim_refs": claim_refs,
+                    "proof_kind": "machine_checked_finite_proof",
+                    "backend": "lean4",
+                    "statement": "Current finite formal-proof claims are covered by machine-checkable artifacts.",
+                    "artifact_paths": ["Proofs/IDTCore.lean"],
+                    "checker_commands": list(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS),
+                    "machine_checks": list(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS),
+                    "forbidden_upgrades": list(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES),
+                    "open_gaps": [],
+                }
+            ],
+            "expected_ledger_status": "formal_claims_covered",
         }
 
     def test_dimension_mismatch_is_reported(self) -> None:
@@ -6971,6 +7400,453 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_structural_compression_gap_missing"})
+
+    def test_foundation_import_boundary_rejects_primitive_relabel(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        imports = gate["imports"]
+        if not isinstance(imports, list):
+            self.fail("imports must be a list")
+        first_import = imports[0]
+        if not isinstance(first_import, dict):
+            self.fail("import entry must be a mapping")
+        first_import["import_status"] = "primitive_derivation"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_primitive_relabel"})
+
+    def test_foundation_import_boundary_rejects_non_neutral_core_primitive(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        primitive_core = gate["primitive_core"]
+        if not isinstance(primitive_core, list):
+            self.fail("primitive_core must be a list")
+        first_primitive = primitive_core[0]
+        if not isinstance(first_primitive, dict):
+            self.fail("primitive entry must be a mapping")
+        first_primitive["carrier_status"] = "complex_hilbert_carrier"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_primitive_carrier_mismatch"})
+
+    def test_foundation_import_boundary_rejects_missing_import(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        imports = gate["imports"]
+        if not isinstance(imports, list):
+            self.fail("imports must be a list")
+        imports.pop()
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"invalid_finite_gate"})
+
+    def test_foundation_import_boundary_rejects_forbidden_upgrade_drift(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        gate["forbidden_upgrades"] = ["does_not_close_full_QM_I"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_forbidden_upgrades_mismatch"})
+
+    def test_foundation_import_boundary_grounding_rejects_hilbert_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "hilbert_carrier_derivation":
+                continue
+            theorem_card["proof_status"] = "formal_proof"
+            break
+
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_theorem_status_mismatch"})
+
+    def test_primitive_core_contract_rejects_law_drift(self) -> None:
+        gate = self.primitive_core_contract_gate()
+        primitive_core = gate["primitive_core"]
+        if not isinstance(primitive_core, list):
+            self.fail("primitive_core must be a list")
+        first_primitive = primitive_core[0]
+        if not isinstance(first_primitive, dict):
+            self.fail("primitive entry must be a mapping")
+        first_primitive["laws"] = ["complex_amplitude_carrier"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"primitive_core_contract_laws_mismatch"})
+
+    def test_primitive_core_contract_rejects_import_overclaim(self) -> None:
+        gate = self.primitive_core_contract_gate()
+        import_obligations = gate["import_obligations"]
+        if not isinstance(import_obligations, list):
+            self.fail("import_obligations must be a list")
+        first_obligation = import_obligations[0]
+        if not isinstance(first_obligation, dict):
+            self.fail("import obligation must be a mapping")
+        first_obligation["required_status"] = "formal_proof"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"primitive_core_contract_import_overclaim"})
+
+    def test_primitive_core_contract_grounding_rejects_obligation_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "universal_born_rule_theorem":
+                continue
+            theorem_card["proof_status"] = "formal_proof"
+            break
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        finite_gates.append(self.primitive_core_contract_gate())
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"primitive_core_contract_obligation_status_mismatch"})
+
+    def test_fdc_frontier_rejects_forbidden_import_ref_leak(self) -> None:
+        gate = self.facticizable_distinguishability_closure_frontier_gate()
+        conditions = gate["conditions"]
+        if not isinstance(conditions, list):
+            self.fail("conditions must be a list")
+        first_condition = conditions[0]
+        if not isinstance(first_condition, dict):
+            self.fail("condition must be a mapping")
+        first_condition["open_gap"] = "Uses Born"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fdc_frontier_forbidden_ref_leak"})
+
+    def test_fdc_frontier_rejects_negative_control_drift(self) -> None:
+        gate = self.facticizable_distinguishability_closure_frontier_gate()
+        negative_controls = gate["negative_controls"]
+        if not isinstance(negative_controls, list):
+            self.fail("negative_controls must be a list")
+        first_control = negative_controls[0]
+        if not isinstance(first_control, dict):
+            self.fail("negative control must be a mapping")
+        first_control["expected_result"] = "survives"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fdc_frontier_negative_control_result_mismatch"})
+
+    def test_fdc_frontier_grounding_rejects_carrier_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "universal_carrier_selection_theorem":
+                continue
+            theorem_card["proof_status"] = "formal_proof"
+            break
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        finite_gates.append(self.facticizable_distinguishability_closure_frontier_gate())
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fdc_frontier_obligation_status_mismatch"})
+
+    def test_qm_wall_probe_rejects_hidden_import_as_pass(self) -> None:
+        gate = self.qm_wall_probe_gate()
+        nodes = gate["nodes"]
+        if not isinstance(nodes, list):
+            self.fail("nodes must be a list")
+        for node in nodes:
+            if not isinstance(node, dict) or node.get("id") != "carrier_selection":
+                continue
+            node["result"] = "pass"
+            break
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_node_result_mismatch"})
+
+    def test_qm_wall_probe_rejects_missing_node(self) -> None:
+        gate = self.qm_wall_probe_gate()
+        nodes = gate["nodes"]
+        if not isinstance(nodes, list):
+            self.fail("nodes must be a list")
+        nodes.pop()
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_node_missing"})
+
+    def test_qm_wall_probe_rejects_import_ref_drift(self) -> None:
+        gate = self.qm_wall_probe_gate()
+        nodes = gate["nodes"]
+        if not isinstance(nodes, list):
+            self.fail("nodes must be a list")
+        for node in nodes:
+            if not isinstance(node, dict) or node.get("id") != "born_rule_derivation":
+                continue
+            node["imported_structure_refs"] = []
+            break
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_import_refs_mismatch"})
+
+    def test_qm_wall_probe_grounding_rejects_hilbert_status_drift(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "hilbert_carrier_derivation":
+                continue
+            theorem_card["proof_status"] = "open"
+            break
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        finite_gates.append(self.qm_wall_probe_gate())
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_target_status_mismatch"})
+
+    def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "example_formal_claim",
+                        "type": "formal_proof_ledger_audit",
+                        "target_scope": "current_formal_proof_claims",
+                        "proof_cards": [
+                            {
+                                "id": "stale_card",
+                                "claim_refs": ["finite_gates.other.component.status"],
+                                "proof_kind": "machine_checked_finite_proof",
+                                "backend": "lean4",
+                                "statement": "Stale claim ref.",
+                                "artifact_paths": ["Proofs/IDTCore.lean"],
+                                "checker_commands": list(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS),
+                                "machine_checks": list(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS),
+                                "forbidden_upgrades": list(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES),
+                                "open_gaps": [],
+                            }
+                        ],
+                        "expected_ledger_status": "formal_claims_covered",
+                    },
+                    {
+                        "id": "formal_claim_gate",
+                        "type": "bridge_assumption_boundary",
+                        "entries": [],
+                        "status": "formal_proof",
+                    },
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_claim_uncovered"})
+
+    def test_formal_proof_ledger_rejects_missing_artifact(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate()
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["artifact_paths"] = ["Proofs/missing.lean"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_artifact_missing"})
+
+    def test_formal_proof_ledger_rejects_missing_required_checker_command(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate()
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["checker_commands"] = ["lake env lean Proofs/IDTCore.lean"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_checker_commands_incomplete"})
+
+    def test_formal_proof_ledger_rejects_missing_required_machine_check(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate()
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["machine_checks"] = ["lean4_kernel", "idt_verifier_manifest"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_machine_checks_incomplete"})
+
+    def test_current_formal_claims_have_proof_ledger_coverage(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest = parse_manifest_text(manifest_path)
+        claim_refs = sorted({claim.reference for claim in iter_formal_claims(manifest)})
+        self.assertTrue(claim_refs)
+        ledger_gates = [gate for gate in manifest.finite_gates if gate.gate_type == "formal_proof_ledger_audit"]
+        self.assertEqual(1, len(ledger_gates))
+        proof_cards = ledger_gates[0].payload["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        covered_refs: set[str] = set()
+        for raw_card in proof_cards:
+            if not isinstance(raw_card, dict):
+                self.fail("proof card must be a mapping")
+            raw_claim_refs = raw_card.get("claim_refs")
+            if not isinstance(raw_claim_refs, list):
+                self.fail("claim_refs must be a list")
+            covered_refs.update(ref for ref in raw_claim_refs if isinstance(ref, str))
+            checker_commands = raw_card.get("checker_commands")
+            if not isinstance(checker_commands, list):
+                self.fail("checker_commands must be a list")
+            self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS).issubset(set(checker_commands)))
+            machine_checks = raw_card.get("machine_checks")
+            if not isinstance(machine_checks, list):
+                self.fail("machine_checks must be a list")
+            self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS).issubset(set(machine_checks)))
+        self.assertEqual(claim_refs, sorted(covered_refs))
+
+    def test_proof_runner_allowlist_accepts_only_safe_checker_commands(self) -> None:
+        self.assertTrue(
+            is_allowed_checker_command(("python3", "scripts/sync_formal_proof_ledger.py", "--check"))
+        )
+        self.assertTrue(is_allowed_checker_command(("lake", "env", "lean", "Proofs/IDTCore.lean")))
+        self.assertTrue(
+            is_allowed_checker_command(
+                ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json")
+            )
+        )
+        self.assertFalse(is_allowed_checker_command(("python3", "-c", "print('unsafe')")))
+        self.assertFalse(is_allowed_checker_command(("lake", "env", "lean", "../Proofs/IDTCore.lean")))
+
+    def test_formal_proof_ledger_sync_detects_stale_generated_file(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        with tempfile.TemporaryDirectory() as raw_tmp_dir:
+            lean_path = Path(raw_tmp_dir) / "IDTCore.lean"
+            self.assertEqual(0, write_ledger(manifest_path, lean_path, io.StringIO()))
+            self.assertEqual(0, check_ledger(manifest_path, lean_path, io.StringIO()))
+            lean_path.write_text(lean_path.read_text(encoding="utf-8") + "\n-- stale\n", encoding="utf-8")
+            self.assertEqual(1, check_ledger(manifest_path, lean_path, io.StringIO()))
 
     def test_phase_branch_additivity_rejects_mismatch(self) -> None:
         manifest = parse_manifest(

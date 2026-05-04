@@ -1,12 +1,13 @@
-## 3. QM Without QM Primitives
+## 3. QM Readouts Without Completed QM Primitive Derivations
 
-The following must not be taken as primitives:
+The following must not be taken as primitive derivations:
 
 $$
 \psi,\quad \hat H,\quad \text{Born rule as postulate},\quad \text{collapse}
 $$
 
-They must arise as readouts.
+They are readout targets or imported scaffold objects until the corresponding
+carrier, probability, generator, and facticity theorem obligations are closed.
 
 ### 3.1. Born-like readout
 
@@ -25,7 +26,9 @@ $$
 \right\|^2
 $$
 
-The Born rule is not a postulate here; it is the diagonal readout of a positive inherited kernel.
+In the current scaffold, the Born-like table is the diagonal readout of a
+positive inherited kernel. This is not yet a universal derivation of the Born
+rule from carrier-neutral IDT primitives.
 
 ### 3.2. Interference
 

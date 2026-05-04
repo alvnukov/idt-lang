@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.16.0`
+Current version: `v6.23.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -780,6 +780,42 @@ witness gate schema, conditional separator schema, frontier obstruction schema,
 calibrated anchor boundary schema, and failure-as-information schema. The
 compression rule is strict: abstractions may not change claim statuses or close
 open gaps.
+The `foundation_import_boundary_audit_demo` now separates genuine IDT
+primitives from current QM imports. The carrier-neutral primitive core is
+history space, event algebra, readout-context family, and inheritance-act
+family. Complex amplitudes, PSD kernels, quadratic actualization, Schur update,
+tensor composition, unitary context maps, and the calibrated action-phase bridge
+are recorded as imports, assumptions, open obligations, or bridge/blocked
+objects, not as primitive derivations. The verifier now rejects relabeling these
+imports as primitives or as completed
+Hilbert/Born/tensor/unitary/first-principles-`hbar_I` derivations.
+The `idt_primitive_core_contract_demo` now makes that primitive layer a
+first-class machine-readable contract. It locks primitive laws and dependencies
+to the carrier-neutral core, forbids QM/import references inside the core, and
+routes each excluded import to an explicit theorem card or QM proof obligation.
+The `facticizable_distinguishability_closure_frontier_demo` now records the
+candidate lower-level principle suggested by the residual proof graph:
+stable inherited distinguishability must have a finite admissible readout
+witness. The gate keeps this as a frontier candidate, runs negative controls for
+hidden joint-only invariants, global noncontextual fact tables, unconstrained
+GPT cones, and nonfinite unwitnessed residuals, and forbids upgrading the result
+into Hilbert, Born, full-QM, or nonfinite closure.
+The `qm_wall_probe_demo` now turns the question "will the QM route hit a wall?"
+into an executable diagnostic. It classifies the route to `full_QM_I` by cells:
+primitive-core and context-product local tomography currently pass, FDC and
+several selector/composition/dynamics cells remain open, and Hilbert carrier,
+Born rule, and first-principles action scale are current walls. This is not a
+proof that no future route exists; it is a guard against treating open or
+blocked imports as if they were primitive-core derivations.
+The `formal_proof_ledger_audit_demo` now makes proof verification executable:
+every current `formal_proof` marker must be covered by a proof card with
+machine-checkable artifacts and checker commands. The current covered claims are
+finite IDT-Core/meta-invariants only. The proof pipeline now generates a Lean
+finite-core semantic artifact from the manifest and checks registry witnesses,
+bounded arity witnesses, route-generator witnesses, no-new-effect witnesses,
+joint-only rejection scope, and proof-ledger consistency before rerunning the
+IDT verifier. This does not upgrade QM, Hilbert space, Born rule, tensor
+composition, unitary dynamics, or first-principles `hbar_I`.
 
 ---
 
