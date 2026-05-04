@@ -13686,3 +13686,119 @@ does_not_derive_Born_rule
 does_not_derive_unitary_dynamics
 does_not_treat_candidate_unifying_principle_as_formal_proof
 ```
+
+### 174.274. Context-Generated Stable Closure Contract
+
+The candidate principle was promoted from a pattern name to an executable
+contract probe.
+
+Executable probe:
+
+```text
+script = scripts/evaluate_context_generated_stable_closure.py
+verdict = CONDITIONAL_MULTI_WALL_CLOSURE_CANDIDATE
+principle = context_generated_stable_closure
+status = candidate_principle_not_formal_proof
+pattern = PATTERN_CANDIDATE_FOUND
+targets = 6
+conditional = 6
+missing = 0
+target_import_rejections = 0
+controls = 6
+rejected_controls = 6
+survived_controls = 0
+```
+
+Candidate clauses:
+
+```text
+finite_generation:
+  Stable physical structures must have finite context/readout/refinement
+  generation routes or be outside physical scope.
+
+facticizable_separation:
+  A stable distinction that can affect a readout must be separated by an
+  admissible finite facticizable witness.
+
+exposed_context_decomposition:
+  Finite generated stable states decompose into mutually exclusive exposed
+  context records when the context family supplies a complete facticizable
+  partition.
+
+reversible_route_closure:
+  Admissible reversible inheritance acts are route automorphisms preserving
+  D_cl, normalized overlap, and exposed context records.
+
+coherent_refinement_flow:
+  Compatible finite refinement families add no new stable directions and admit
+  generator-compatible bookkeeping without importing a continuum generator.
+
+composite_route_generation:
+  Composite facts, including non-product facts, must be generated inside
+  admissible product/context refinement routes rather than by hidden joint-only
+  carrier degrees.
+
+import_boundary:
+  The candidate principle may not cite Hilbert, Born, unitary, tensor, Stone,
+  or spectral theorem imports.
+```
+
+Conditional target coverage:
+
+```text
+nonunital_stable_distinguishability:
+  covered if readout-relevant stable distinctions require finite facticizable
+  witnesses.
+
+spectral_decomposition:
+  covered only as exposed-context decomposition, not as an imported spectral
+  theorem.
+
+rich_d_cl_reversible_symmetry:
+  covered if reversible inheritance acts close on exposed-context D_cl routes.
+
+continuous_inheritance_family:
+  covered only as coherent finite-refinement flow, not as a supplied Lie group.
+
+generator_closure:
+  covered only as bookkeeping of coherent refinement, not as Hamiltonian import.
+
+entanglement_closure:
+  covered only for non-product facts generated inside composite context routes.
+```
+
+Negative controls:
+
+```text
+hidden_hilbert_carrier_import: rejected
+born_rule_import: rejected
+unitary_group_import: rejected
+hilbert_tensor_product_import: rejected
+stone_generator_import: rejected
+spectral_theorem_import: rejected
+```
+
+Current interpretation:
+
+```text
+This is the first broad candidate that conditionally covers all six structural
+QM walls while rejecting the obvious target imports.
+
+It still does not prove QM.
+It does not prove the clauses from primitives.
+It does not prove Hilbert, Born, unitary dynamics, tensor composition, or hbar.
+
+The next step is to turn these seven clauses into a theorem-card/proof-route
+draft and test each clause against IDT primitives before any status upgrade.
+```
+
+Forbidden upgrade:
+
+```text
+does_not_prove_full_QM_I
+does_not_derive_Hilbert_space
+does_not_derive_Born_rule
+does_not_derive_unitary_dynamics
+does_not_derive_tensor_composition
+does_not_treat_candidate_principle_as_formal_proof
+```
