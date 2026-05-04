@@ -13394,3 +13394,104 @@ The finite arithmetic normalization/coarse-graining part is now checkable.
 The remaining blocker is deriving the finite weight model from IDT
 facticization and readout admissibility.
 ```
+
+### 174.271. Conservative Projection Gluing Bridge Draft
+
+The projection scaffold has been strengthened.
+
+New Lean objects:
+
+```text
+FixedBy
+```
+
+New Lean theorems:
+
+```text
+commuting_idempotent_composition_fixed_by_left
+commuting_idempotent_composition_fixed_by_right
+jointly_fixed_value_survives_composition
+```
+
+Artifact:
+
+```text
+Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+```
+
+What is proved:
+
+```text
+commuting idempotent endomaps
+=> their composition is fixed by the left projection
+=> their composition is fixed by the right projection
+=> a value already fixed by both projections survives the composition
+```
+
+This strengthens the finite gluing scaffold:
+
+```text
+old:
+  composition of commuting idempotents is idempotent
+
+new:
+  composition of commuting idempotents lands in the jointly fixed part and
+  preserves already jointly fixed values
+```
+
+What is not proved:
+
+```text
+IDT projective restriction
+=> idempotent endomap
+
+IDT structure-preserving restriction
+=> commuting endomaps
+
+IDT conservative projective gluing
+=> jointly fixed part semantics
+
+NUSD
+=> no unwitnessed stable distinction outside this projection semantics
+```
+
+Current proof status:
+
+```text
+conditional_bridge_proof
+```
+
+Updated proof-card draft:
+
+```text
+id: conservative_projection_gluing_bridge
+claim_refs:
+  - full_qm_proof_closure.projective_consistency
+  - full_qm_proof_closure.conservative_projective_gluing
+proof_kind: proof_sketch
+backend: lean4
+artifact_paths:
+  - Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+checker_commands:
+  - lake env lean Proofs/QMClosure/ProjectionScaffoldsDraft.lean
+statement: >
+  Commuting idempotent endomaps compose conservatively: the composite is fixed
+  by both projections and preserves values already fixed by both.
+open_gaps:
+  - derive IDT projective restrictions as idempotent endomaps
+  - derive commutation from IDT projective consistency
+  - derive jointly fixed semantics from IDT conservative gluing
+  - derive NUSD rather than assuming it
+forbidden_upgrades:
+  - does_not_assume_hilbert_projectors
+  - does_not_assume_complex_hilbert_completion
+  - does_not_upgrade_projective_obligations_to_formal_proof
+```
+
+Interpretation:
+
+```text
+The endomap algebra for conservative gluing is now checkable.
+The remaining blocker is deriving this endomap semantics from IDT projection
+and NUSD rules.
+```
