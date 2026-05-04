@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.12.0`
+Current version: `v6.13.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -668,19 +668,19 @@ card and `uniform_witness_bound_route_demo` now reduce the uniform-bound
 obstruction to a conditional finite-signature/finite-generator route; it is not
 a formal IDT derivation of the bound.
 The `uniform_witness_bound_assumption_frontier_demo` now makes the remaining
-formalization gap explicit: finite signature is `formal_proof`, while bounded
-arity, generator basis, and no-new-primitive-effects closure remain at
-`conditional_support`.
+formalization gap explicit: finite signature, bounded arity, and route
+generator basis are `formal_proof`, while semantic no-new-primitive-effects
+closure remains at `conditional_support`.
 The `idt_core_finite_signature_frontier_demo` now formalizes the first of those
 assumptions as an executable IDT-Core signature over primitive sorts, claim
 roles, gate types, and route families. `idt_core_gate_type_registry_audit_demo`
 checks the live `FINITE_GATE_CHECKS` registry; `idt_core_signature_registry_audit_demo`
 checks the primitive-sort, claim-role, and route-family registries by count and
 digest.
-The `idt_core_bounded_arity_frontier_demo`,
-`idt_core_route_generator_basis_frontier_demo`, and
-`idt_core_no_new_primitive_effects_frontier_demo` now decompose the remaining
-uniform-witness assumptions into executable conditional-basis frontiers.
+The `idt_core_route_grammar_audit_demo` now formalizes bounded arity and route
+generator basis for the registered route families and also closes the syntactic
+finite-effect/route-closure part of no-new-effects. Joint-only invariant
+rejection and nonfinite residual closure remain conditional.
 The `no_emergent_joint_only_invariants_under_context_product_exhaustion`
 theorem card and `no_emergent_joint_only_invariant_route_demo` now reduce the
 joint-only-invariant obstruction to a conditional separator under

@@ -139,6 +139,10 @@ from theory_verifier.core import (
     IDT_BOUNDED_CORRELATION_CONDITIONS,
     IDT_PURIFICATION_FILTERING_CONDITIONS,
     IDT_CORE_SIGNATURE_REGISTRY_SOURCES,
+    IDT_CORE_ARITY_COMPONENT_ROUTE_MAP,
+    IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP,
+    IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES,
+    IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
@@ -186,6 +190,46 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertEqual(35, bench.experiment_count)
         self.assertEqual(35, bench.finite_gate_reference_count)
         self.assertEqual(QM_UNIVERSAL_PATTERN_REQUIRED_OPERATIONS, bench.shared_operations)
+
+    def idt_core_route_grammar_audit_gate(self) -> dict[str, object]:
+        return {
+            "id": "test_idt_core_route_grammar_audit",
+            "type": "idt_core_route_grammar_audit",
+            "uniform_bound": 4,
+            "arity_components": [
+                {
+                    "id": component_id,
+                    "route_family": route_family,
+                    "arity_bound": 3 if route_family == "recoverable_filter_route" else 4,
+                    "evidence_refs": [route_family],
+                    "expected_component_status": "formal_proof",
+                }
+                for component_id, route_family in IDT_CORE_ARITY_COMPONENT_ROUTE_MAP.items()
+            ],
+            "generator_components": [
+                {
+                    "id": component_id,
+                    "route_family": route_family,
+                    "generator_refs": [route_family, f"{component_id}_basis"],
+                    "evidence_refs": [route_family],
+                    "expected_component_status": "formal_proof",
+                }
+                for component_id, route_family in IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP.items()
+            ],
+            "no_new_effect_components": [
+                {
+                    "id": component_id,
+                    "closed_over_sources": [
+                        "theory_verifier.QM_EXPERIMENT_REQUIRED_PRIMITIVES",
+                        "theory_verifier.IDT_CORE_ROUTE_FAMILY_REGISTRY",
+                    ],
+                    "new_primitive_effects": [],
+                    "expected_component_status": "formal_proof",
+                }
+                for component_id in IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS
+            ],
+            "forbidden_upgrades": list(IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES),
+        }
 
     def test_dimension_mismatch_is_reported(self) -> None:
         manifest = parse_manifest(
@@ -3915,6 +3959,87 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_core_signature_registry_status_mismatch"})
+
+    def test_idt_core_route_grammar_audit_rejects_arity_over_uniform_bound(self) -> None:
+        gate = self.idt_core_route_grammar_audit_gate()
+        arity_components = gate["arity_components"]
+        if not isinstance(arity_components, list):
+            self.fail("arity_components must be a list")
+        first_component = arity_components[0]
+        if not isinstance(first_component, dict):
+            self.fail("arity component must be a mapping")
+        first_component["arity_bound"] = 5
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_route_grammar_arity_bound_exceeded"})
+
+    def test_idt_core_route_grammar_audit_rejects_missing_generator_refs(self) -> None:
+        gate = self.idt_core_route_grammar_audit_gate()
+        generator_components = gate["generator_components"]
+        if not isinstance(generator_components, list):
+            self.fail("generator_components must be a list")
+        first_component = generator_components[0]
+        if not isinstance(first_component, dict):
+            self.fail("generator component must be a mapping")
+        first_component["generator_refs"] = []
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_route_grammar_generator_missing"})
+
+    def test_idt_core_route_grammar_audit_rejects_new_primitive_effect_leak(self) -> None:
+        gate = self.idt_core_route_grammar_audit_gate()
+        no_new_effect_components = gate["no_new_effect_components"]
+        if not isinstance(no_new_effect_components, list):
+            self.fail("no_new_effect_components must be a list")
+        first_component = no_new_effect_components[0]
+        if not isinstance(first_component, dict):
+            self.fail("no-new-effect component must be a mapping")
+        first_component["new_primitive_effects"] = ["hidden_joint_effect"]
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_route_grammar_new_primitive_effect_leak"})
+
+    def test_idt_core_route_grammar_audit_rejects_forbidden_upgrade_overclaim(self) -> None:
+        gate = self.idt_core_route_grammar_audit_gate()
+        gate["forbidden_upgrades"] = list(IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES[:-1])
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_route_grammar_forbidden_upgrades_mismatch"})
 
     def test_idt_core_grammar_assumption_frontier_reports_conditional_basis(self) -> None:
         target_assumption = "bounded_context_arity"

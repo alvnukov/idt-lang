@@ -858,6 +858,32 @@ IDT_CORE_SIGNATURE_REGISTRY_SOURCES: dict[str, tuple[str, tuple[str, ...]]] = {
     ),
 }
 
+IDT_CORE_ARITY_COMPONENT_ROUTE_MAP: dict[str, str] = {
+    "context_product_arity_bound": "context_product_route",
+    "state_effect_witness_arity_bound": "state_effect_route",
+    "recoverable_filter_arity_bound": "recoverable_filter_route",
+    "bounded_correlation_arity_bound": "bounded_correlation_route",
+}
+
+IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP: dict[str, str] = {
+    "context_product_generators": "context_product_route",
+    "state_effect_generators": "state_effect_route",
+    "recoverable_filter_generators": "recoverable_filter_route",
+    "bounded_correlation_generators": "bounded_correlation_route",
+}
+
+IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS = (
+    "finite_effect_registry",
+    "route_closure_effect_audit",
+)
+
+IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES = (
+    "does_not_prove_no_emergent_joint_only_invariants",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+)
+
 SECTOR_ROLE_TAXONOMY_TARGET = "sector_role_taxonomy_I"
 
 SECTOR_ROLE_TAXONOMY_REQUIRED_SYMBOLS = (
@@ -8043,6 +8069,284 @@ def check_idt_core_signature_registry_audit_gate(gate: FiniteGate) -> list[Issue
             Issue(
                 "idt_core_signature_registry_component_missing",
                 f"{gate.identifier}: missing signature registry components: {', '.join(missing)}",
+            )
+        ]
+    return []
+
+
+def check_idt_core_route_grammar_audit_gate(gate: FiniteGate) -> list[Issue]:
+    uniform_bound = parse_positive_integer(gate.payload.get("uniform_bound"), f"{gate.identifier}.uniform_bound")
+    arity_components = require_list(gate.payload.get("arity_components"), f"{gate.identifier}.arity_components")
+    generator_components = require_list(
+        gate.payload.get("generator_components"),
+        f"{gate.identifier}.generator_components",
+    )
+    no_new_effect_components = require_list(
+        gate.payload.get("no_new_effect_components"),
+        f"{gate.identifier}.no_new_effect_components",
+    )
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+
+    if forbidden_upgrades != set(IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "idt_core_route_grammar_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must preserve the route grammar audit claim boundary",
+            )
+        ]
+
+    arity_issues = check_idt_core_route_grammar_arity_components(gate.identifier, arity_components, uniform_bound)
+    if arity_issues:
+        return arity_issues
+
+    generator_issues = check_idt_core_route_grammar_generator_components(gate.identifier, generator_components)
+    if generator_issues:
+        return generator_issues
+
+    return check_idt_core_route_grammar_no_new_effect_components(gate.identifier, no_new_effect_components)
+
+
+def check_idt_core_route_grammar_arity_components(
+    gate_id: str,
+    components: list[object],
+    uniform_bound: int,
+) -> list[Issue]:
+    if len(components) != len(IDT_CORE_ARITY_COMPONENT_ROUTE_MAP):
+        raise ManifestError(f"{gate_id}: arity_components must cover every bounded-arity component")
+
+    seen: set[str] = set()
+    route_families: set[str] = set()
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate_id}.arity_components[{index}]")
+        component_id = require_string(component.get("id"), f"{gate_id}.arity_components[{index}].id")
+        route_family = require_string(component.get("route_family"), f"{gate_id}.arity_components[{index}].route_family")
+        arity_bound = parse_positive_integer(component.get("arity_bound"), f"{gate_id}.arity_components[{index}].arity_bound")
+        expected_status = require_string(
+            component.get("expected_component_status"),
+            f"{gate_id}.arity_components[{index}].expected_component_status",
+        )
+        evidence_refs = require_string_tuple(
+            component.get("evidence_refs", []),
+            f"{gate_id}.arity_components[{index}].evidence_refs",
+        )
+
+        expected_route_family = IDT_CORE_ARITY_COMPONENT_ROUTE_MAP.get(component_id)
+        if expected_route_family is None:
+            return [
+                Issue(
+                    "idt_core_route_grammar_unknown_arity_component",
+                    f"{gate_id}: unknown bounded-arity component {component_id}",
+                )
+            ]
+        if component_id in seen:
+            return [
+                Issue(
+                    "idt_core_route_grammar_duplicate_arity_component",
+                    f"{gate_id}: duplicate bounded-arity component {component_id}",
+                )
+            ]
+        seen.add(component_id)
+        if route_family != expected_route_family:
+            return [
+                Issue(
+                    "idt_core_route_grammar_arity_route_mismatch",
+                    f"{gate_id}: {component_id} must bind to {expected_route_family}",
+                )
+            ]
+        if arity_bound > uniform_bound:
+            return [
+                Issue(
+                    "idt_core_route_grammar_arity_bound_exceeded",
+                    f"{gate_id}: {component_id} arity bound {arity_bound} exceeds uniform bound {uniform_bound}",
+                )
+            ]
+        if expected_status != IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS:
+            return [
+                Issue(
+                    "idt_core_route_grammar_arity_status_mismatch",
+                    f"{gate_id}: {component_id} expected_component_status must be formal_proof",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "idt_core_route_grammar_arity_evidence_missing",
+                    f"{gate_id}: {component_id} must cite evidence refs",
+                )
+            ]
+        route_families.add(route_family)
+
+    missing = sorted(set(IDT_CORE_ARITY_COMPONENT_ROUTE_MAP) - seen)
+    if missing:
+        return [
+            Issue(
+                "idt_core_route_grammar_arity_component_missing",
+                f"{gate_id}: missing bounded-arity components: {', '.join(missing)}",
+            )
+        ]
+    if route_families != set(UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES):
+        return [
+            Issue(
+                "idt_core_route_grammar_arity_route_coverage_mismatch",
+                f"{gate_id}: bounded arity route families must match uniform witness route families",
+            )
+        ]
+    return []
+
+
+def check_idt_core_route_grammar_generator_components(gate_id: str, components: list[object]) -> list[Issue]:
+    if len(components) != len(IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP):
+        raise ManifestError(f"{gate_id}: generator_components must cover every route-generator component")
+
+    seen: set[str] = set()
+    route_families: set[str] = set()
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate_id}.generator_components[{index}]")
+        component_id = require_string(component.get("id"), f"{gate_id}.generator_components[{index}].id")
+        route_family = require_string(component.get("route_family"), f"{gate_id}.generator_components[{index}].route_family")
+        generator_refs = require_string_tuple(
+            component.get("generator_refs", []),
+            f"{gate_id}.generator_components[{index}].generator_refs",
+        )
+        expected_status = require_string(
+            component.get("expected_component_status"),
+            f"{gate_id}.generator_components[{index}].expected_component_status",
+        )
+        evidence_refs = require_string_tuple(
+            component.get("evidence_refs", []),
+            f"{gate_id}.generator_components[{index}].evidence_refs",
+        )
+
+        expected_route_family = IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP.get(component_id)
+        if expected_route_family is None:
+            return [
+                Issue(
+                    "idt_core_route_grammar_unknown_generator_component",
+                    f"{gate_id}: unknown route-generator component {component_id}",
+                )
+            ]
+        if component_id in seen:
+            return [
+                Issue(
+                    "idt_core_route_grammar_duplicate_generator_component",
+                    f"{gate_id}: duplicate route-generator component {component_id}",
+                )
+            ]
+        seen.add(component_id)
+        if route_family != expected_route_family:
+            return [
+                Issue(
+                    "idt_core_route_grammar_generator_route_mismatch",
+                    f"{gate_id}: {component_id} must bind to {expected_route_family}",
+                )
+            ]
+        if not generator_refs:
+            return [
+                Issue(
+                    "idt_core_route_grammar_generator_missing",
+                    f"{gate_id}: {component_id} must declare at least one generator ref",
+                )
+            ]
+        if expected_status != IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS:
+            return [
+                Issue(
+                    "idt_core_route_grammar_generator_status_mismatch",
+                    f"{gate_id}: {component_id} expected_component_status must be formal_proof",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "idt_core_route_grammar_generator_evidence_missing",
+                    f"{gate_id}: {component_id} must cite evidence refs",
+                )
+            ]
+        route_families.add(route_family)
+
+    missing = sorted(set(IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP) - seen)
+    if missing:
+        return [
+            Issue(
+                "idt_core_route_grammar_generator_component_missing",
+                f"{gate_id}: missing route-generator components: {', '.join(missing)}",
+            )
+        ]
+    if route_families != set(UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES):
+        return [
+            Issue(
+                "idt_core_route_grammar_generator_route_coverage_mismatch",
+                f"{gate_id}: generator route families must match uniform witness route families",
+            )
+        ]
+    return []
+
+
+def check_idt_core_route_grammar_no_new_effect_components(gate_id: str, components: list[object]) -> list[Issue]:
+    if len(components) != len(IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS):
+        raise ManifestError(f"{gate_id}: no_new_effect_components must cover every syntactic no-new-effect component")
+
+    seen: set[str] = set()
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate_id}.no_new_effect_components[{index}]")
+        component_id = require_string(component.get("id"), f"{gate_id}.no_new_effect_components[{index}].id")
+        closed_over_sources = require_string_tuple(
+            component.get("closed_over_sources", []),
+            f"{gate_id}.no_new_effect_components[{index}].closed_over_sources",
+        )
+        new_primitive_effects = require_string_tuple(
+            component.get("new_primitive_effects", []),
+            f"{gate_id}.no_new_effect_components[{index}].new_primitive_effects",
+        )
+        expected_status = require_string(
+            component.get("expected_component_status"),
+            f"{gate_id}.no_new_effect_components[{index}].expected_component_status",
+        )
+
+        if component_id not in IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS:
+            return [
+                Issue(
+                    "idt_core_route_grammar_unknown_no_new_effect_component",
+                    f"{gate_id}: unknown syntactic no-new-effect component {component_id}",
+                )
+            ]
+        if component_id in seen:
+            return [
+                Issue(
+                    "idt_core_route_grammar_duplicate_no_new_effect_component",
+                    f"{gate_id}: duplicate syntactic no-new-effect component {component_id}",
+                )
+            ]
+        seen.add(component_id)
+        if not closed_over_sources:
+            return [
+                Issue(
+                    "idt_core_route_grammar_no_new_effect_source_missing",
+                    f"{gate_id}: {component_id} must declare closed-over sources",
+                )
+            ]
+        if new_primitive_effects:
+            return [
+                Issue(
+                    "idt_core_route_grammar_new_primitive_effect_leak",
+                    f"{gate_id}: {component_id} declares new primitive effects: {', '.join(new_primitive_effects)}",
+                )
+            ]
+        if expected_status != IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS:
+            return [
+                Issue(
+                    "idt_core_route_grammar_no_new_effect_status_mismatch",
+                    f"{gate_id}: {component_id} expected_component_status must be formal_proof",
+                )
+            ]
+
+    missing = sorted(set(IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS) - seen)
+    if missing:
+        return [
+            Issue(
+                "idt_core_route_grammar_no_new_effect_component_missing",
+                f"{gate_id}: missing syntactic no-new-effect components: {', '.join(missing)}",
             )
         ]
     return []
@@ -16889,6 +17193,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "idt_core_finite_signature_frontier": check_idt_core_finite_signature_frontier_gate,
     "idt_core_gate_type_registry_audit": check_idt_core_gate_type_registry_audit_gate,
     "idt_core_signature_registry_audit": check_idt_core_signature_registry_audit_gate,
+    "idt_core_route_grammar_audit": check_idt_core_route_grammar_audit_gate,
     "idt_core_grammar_assumption_frontier": check_idt_core_grammar_assumption_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,

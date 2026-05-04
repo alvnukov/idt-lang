@@ -535,9 +535,9 @@ Those assumptions are now tracked by:
 
 `uniform_witness_bound_assumption_frontier_demo`.
 
-It reports `conditional_basis`: every registered assumption has executable or
-documented support, but none has yet been promoted to a formal IDT-Core grammar
-derivation.
+It still reports `conditional_basis`: finite signature, bounded arity, and
+finite route-generator basis are now formalized, but semantic no-new-effects
+closure remains conditional.
 
 The four assumptions are now decomposed by:
 
@@ -572,10 +572,23 @@ That audit snapshots count and digest checks for
 the explicit IDT route-family registry. This closes the finite-signature
 assumption as an executable IDT-Core registry theorem.
 
-The other three uniform-witness assumptions still report `conditional_basis`
-for bounded arity, route-generator basis, and no-new-primitive-effects closure.
-This narrows the next proof work to formalizing those compact IDT-Core grammar
-theorems rather than adding more QM experiment fixtures.
+The route-grammar assumptions are now checked by:
+
+`idt_core_route_grammar_audit_demo`.
+
+That audit verifies finite arity bounds for the four registered route families,
+finite generator refs for the same families, and syntactic no-new-effect
+closure for the finite effect registry and route-closure audit. Therefore:
+
+1. `bounded_context_arity` is `formal_proof`;
+2. `finite_route_generator_basis` is `formal_proof`;
+3. `no_new_primitive_effects_under_route_closure` remains
+   `conditional_support`.
+
+The remaining gap is deliberately semantic, not syntactic: joint-only invariant
+rejection and nonfinite residual closure are still conditional. This narrows
+the next proof work to the semantic no-new-effects theorem rather than adding
+more QM experiment fixtures.
 
 The third item is now reduced to a conditional separator:
 

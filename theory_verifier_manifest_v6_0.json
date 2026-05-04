@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.12.0",
+  "theory_version": "v6.13.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4852,36 +4852,32 @@
         },
         {
           "id": "bounded_context_arity",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
             "idt_core_bounded_arity_frontier_demo",
-            "uniform_witness_bound_route_demo",
-            "context_product_exhaustion_demo",
-            "tomographic_state_effect_duality_theorem_demo"
+            "idt_core_route_grammar_audit_demo"
           ],
-          "open_gap": "Bounded context arity now has an executable IDT-Core arity frontier at conditional_basis, but its components are not formal IDT-Core grammar theorems."
+          "open_gap": ""
         },
         {
           "id": "finite_route_generator_basis",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
             "idt_core_route_generator_basis_frontier_demo",
-            "uniform_witness_bound_route_demo",
-            "qm_core_recompile_route_demo",
-            "idt_metalang_research_graph_contract_demo"
+            "idt_core_route_grammar_audit_demo"
           ],
-          "open_gap": "Finite route generator basis now has an executable IDT-Core generator frontier at conditional_basis, but its components are not formal IDT-Core basis theorems."
+          "open_gap": ""
         },
         {
           "id": "no_new_primitive_effects_under_route_closure",
           "status": "conditional_support",
           "evidence_refs": [
             "idt_core_no_new_primitive_effects_frontier_demo",
-            "uniform_witness_bound_route_demo",
+            "idt_core_route_grammar_audit_demo",
             "no_emergent_joint_only_invariant_route_demo",
             "nonfinite_gpt_residual_frontier_demo"
           ],
-          "open_gap": "No-new-primitive-effects closure now has an executable IDT-Core closure frontier at conditional_basis, but its components are not formal IDT-Core closure theorems."
+          "open_gap": "Syntactic no-new-effect closure is formalized, but semantic joint-only invariant rejection and nonfinite residual closure remain conditional."
         }
       ],
       "expected_frontier_status": "conditional_basis"
@@ -4930,8 +4926,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 222,
-      "expected_gate_type_digest": "9ebd95ef2c0c22bceb54faa72715ac1de6c491d47ec2908c3a2797f96986785b",
+      "expected_gate_type_count": 223,
+      "expected_gate_type_digest": "29365428d47a73ef176bed09faf659aed5e18531e334f7fe89e7e74419ea4a93",
       "expected_component_status": "formal_proof"
     },
     {
@@ -4962,48 +4958,185 @@
       ]
     },
     {
+      "id": "idt_core_route_grammar_audit_demo",
+      "type": "idt_core_route_grammar_audit",
+      "uniform_bound": 4,
+      "arity_components": [
+        {
+          "id": "context_product_arity_bound",
+          "route_family": "context_product_route",
+          "arity_bound": 4,
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "state_effect_witness_arity_bound",
+          "route_family": "state_effect_route",
+          "arity_bound": 4,
+          "evidence_refs": [
+            "tomographic_state_effect_duality_theorem_demo",
+            "route_witness_completeness_implies_tomographic_state_effect_duality"
+          ],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "recoverable_filter_arity_bound",
+          "route_family": "recoverable_filter_route",
+          "arity_bound": 3,
+          "evidence_refs": [
+            "reversible_filter_closure_theorem_demo",
+            "recoverable_support_update_implies_reversible_filter_closure"
+          ],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "bounded_correlation_arity_bound",
+          "route_family": "bounded_correlation_route",
+          "arity_bound": 4,
+          "evidence_refs": [
+            "bounded_correlation_screen_theorem_demo",
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "expected_component_status": "formal_proof"
+        }
+      ],
+      "generator_components": [
+        {
+          "id": "context_product_generators",
+          "route_family": "context_product_route",
+          "generator_refs": [
+            "context_product_exhaustion_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "context_product_exhaustion_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "state_effect_generators",
+          "route_family": "state_effect_route",
+          "generator_refs": [
+            "tomographic_state_effect_duality_theorem_demo",
+            "route_witness_completeness_implies_tomographic_state_effect_duality"
+          ],
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "tomographic_state_effect_duality_theorem_demo",
+            "route_witness_completeness_implies_tomographic_state_effect_duality"
+          ],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "recoverable_filter_generators",
+          "route_family": "recoverable_filter_route",
+          "generator_refs": [
+            "reversible_filter_closure_theorem_demo",
+            "recoverable_support_update_implies_reversible_filter_closure"
+          ],
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "reversible_filter_closure_theorem_demo",
+            "recoverable_support_update_implies_reversible_filter_closure"
+          ],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "bounded_correlation_generators",
+          "route_family": "bounded_correlation_route",
+          "generator_refs": [
+            "bounded_correlation_screen_theorem_demo",
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "bounded_correlation_screen_theorem_demo",
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "expected_component_status": "formal_proof"
+        }
+      ],
+      "no_new_effect_components": [
+        {
+          "id": "finite_effect_registry",
+          "closed_over_sources": [
+            "idt_core_finite_signature_frontier_demo",
+            "theory_verifier.QM_EXPERIMENT_REQUIRED_PRIMITIVES",
+            "theory_verifier.IDT_CORE_ROUTE_FAMILY_REGISTRY"
+          ],
+          "new_primitive_effects": [],
+          "expected_component_status": "formal_proof"
+        },
+        {
+          "id": "route_closure_effect_audit",
+          "closed_over_sources": [
+            "uniform_witness_bound_route_demo",
+            "idt_core_route_grammar_audit_demo",
+            "nonfinite_gpt_residual_frontier_demo"
+          ],
+          "new_primitive_effects": [],
+          "expected_component_status": "formal_proof"
+        }
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_no_emergent_joint_only_invariants",
+        "does_not_close_nonfinite_gpt_residual",
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I"
+      ]
+    },
+    {
       "id": "idt_core_bounded_arity_frontier_demo",
       "type": "idt_core_grammar_assumption_frontier",
       "target_assumption": "bounded_context_arity",
       "components": [
         {
           "id": "context_product_arity_bound",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
             "context_product_exhaustion_demo",
             "context_product_exhaustion_implies_local_tomography"
           ],
-          "open_gap": "Context-product arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+          "open_gap": ""
         },
         {
           "id": "state_effect_witness_arity_bound",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
             "tomographic_state_effect_duality_theorem_demo",
             "route_witness_completeness_implies_tomographic_state_effect_duality"
           ],
-          "open_gap": "State-effect witness arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+          "open_gap": ""
         },
         {
           "id": "recoverable_filter_arity_bound",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
             "reversible_filter_closure_theorem_demo",
             "recoverable_support_update_implies_reversible_filter_closure"
           ],
-          "open_gap": "Recoverable filter arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+          "open_gap": ""
         },
         {
           "id": "bounded_correlation_arity_bound",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
             "bounded_correlation_screen_theorem_demo",
             "bounded_correlation_screen_rejects_superquantum_boxes"
           ],
-          "open_gap": "Bounded-correlation arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+          "open_gap": ""
         }
       ],
-      "expected_assumption_status": "conditional_basis"
+      "expected_assumption_status": "formalized"
     },
     {
       "id": "idt_core_route_generator_basis_frontier_demo",
@@ -5012,42 +5145,50 @@
       "components": [
         {
           "id": "context_product_generators",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
+            "uniform_witness_bound_route_demo",
             "context_product_exhaustion_demo",
-            "uniform_witness_bound_route_demo"
+            "context_product_exhaustion_implies_local_tomography"
           ],
-          "open_gap": "Context-product generators are registered, but not yet a formal IDT-Core basis theorem."
+          "open_gap": ""
         },
         {
           "id": "state_effect_generators",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
+            "uniform_witness_bound_route_demo",
             "tomographic_state_effect_duality_theorem_demo",
-            "uniform_witness_bound_route_demo"
+            "route_witness_completeness_implies_tomographic_state_effect_duality"
           ],
-          "open_gap": "State-effect generators are registered, but not yet a formal IDT-Core basis theorem."
+          "open_gap": ""
         },
         {
           "id": "recoverable_filter_generators",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
+            "uniform_witness_bound_route_demo",
             "reversible_filter_closure_theorem_demo",
-            "uniform_witness_bound_route_demo"
+            "recoverable_support_update_implies_reversible_filter_closure"
           ],
-          "open_gap": "Recoverable-filter generators are registered, but not yet a formal IDT-Core basis theorem."
+          "open_gap": ""
         },
         {
           "id": "bounded_correlation_generators",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_route_grammar_audit_demo",
+            "uniform_witness_bound_route_demo",
             "bounded_correlation_screen_theorem_demo",
-            "uniform_witness_bound_route_demo"
+            "bounded_correlation_screen_rejects_superquantum_boxes"
           ],
-          "open_gap": "Bounded-correlation generators are registered, but not yet a formal IDT-Core basis theorem."
+          "open_gap": ""
         }
       ],
-      "expected_assumption_status": "conditional_basis"
+      "expected_assumption_status": "formalized"
     },
     {
       "id": "idt_core_no_new_primitive_effects_frontier_demo",
@@ -5056,21 +5197,21 @@
       "components": [
         {
           "id": "finite_effect_registry",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
-            "idt_core_finite_signature_frontier_demo",
-            "uniform_witness_bound_assumption_frontier_demo"
+            "idt_core_route_grammar_audit_demo",
+            "idt_core_finite_signature_frontier_demo"
           ],
-          "open_gap": "The effect registry is finite under the current signature frontier, but not yet a formal IDT-Core closure theorem."
+          "open_gap": ""
         },
         {
           "id": "route_closure_effect_audit",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
-            "uniform_witness_bound_route_demo",
-            "nonfinite_gpt_residual_frontier_demo"
+            "idt_core_route_grammar_audit_demo",
+            "uniform_witness_bound_route_demo"
           ],
-          "open_gap": "Route closure is audited by residual gates, but not yet a formal no-new-effects theorem."
+          "open_gap": ""
         },
         {
           "id": "joint_only_invariant_rejection",
@@ -5079,7 +5220,7 @@
             "no_emergent_joint_only_invariant_route_demo",
             "no_emergent_joint_only_invariants_under_context_product_exhaustion"
           ],
-          "open_gap": "Joint-only invariant rejection is conditional, not yet a formal global IDT-Core theorem."
+          "open_gap": "Joint-only invariant rejection remains a conditional separator, not a formal global IDT-Core closure theorem."
         },
         {
           "id": "residual_frontier_no_new_effect_boundary",
@@ -5088,7 +5229,7 @@
             "nonfinite_gpt_residual_frontier_demo",
             "broader_generic_gpt_cone_frontier_demo"
           ],
-          "open_gap": "Residual frontier boundaries prevent overclaiming, but are not yet formal closure proofs."
+          "open_gap": "Residual frontier boundaries prevent overclaiming but do not yet close the semantic nonfinite/no-new-effects theorem."
         }
       ],
       "expected_assumption_status": "conditional_basis"
