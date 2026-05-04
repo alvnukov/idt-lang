@@ -141,6 +141,46 @@ def ImportObligationWitness.valid (w : ImportObligationWitness) : Bool :=
     && decide (w.target.length > 0)
     && decide (w.targetRefactor.length > 0)
 
+structure FDCConditionWitness where
+  id : String
+  status : String
+  expectedStatus : String
+  evidenceRefs : List String
+  openGap : String
+  forbiddenRefHits : List String
+deriving Repr
+
+def FDCConditionWitness.valid (w : FDCConditionWitness) : Bool :=
+  w.status == w.expectedStatus
+    && w.expectedStatus == "candidate_principle"
+    && w.forbiddenRefHits == []
+    && decide (w.evidenceRefs.length > 0)
+    && decide (w.openGap.length > 0)
+
+structure FDCNegativeControlWitness where
+  id : String
+  expectedResult : String
+  requiredResult : String
+  evidenceRefs : List String
+  retainedBoundary : String
+deriving Repr
+
+def FDCNegativeControlWitness.valid (w : FDCNegativeControlWitness) : Bool :=
+  w.expectedResult == w.requiredResult
+    && decide (w.evidenceRefs.length > 0)
+    && decide (w.retainedBoundary.length > 0)
+
+structure FDCOpenObligationWitness where
+  id : String
+  requiredStatus : String
+  expectedRequiredStatus : String
+deriving Repr
+
+def FDCOpenObligationWitness.valid (w : FDCOpenObligationWitness) : Bool :=
+  w.requiredStatus == w.expectedRequiredStatus
+    && w.requiredStatus != "formal_proof"
+    && w.requiredStatus != "derived"
+
 structure JointOnlyRejectionWitness where
   id : String
   status : String
@@ -255,6 +295,7 @@ def registryWitnesses : List RegistryWitness :=
       "ell0_no_gravity_input",
       "ell0_radar_consistency",
       "ell0_tick_bound",
+      "facticizable_distinguishability_closure_frontier",
       "finite_weyl_relation",
       "fixed_point_component_status",
       "fixed_point_step_free_parameter_audit",
@@ -422,9 +463,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 230,
-    expectedDigest := "cf5f3397cb057bdb0ee59c9ff3ab6c4d2af5624311531c385035a70af75eff08",
-    computedDigest := "cf5f3397cb057bdb0ee59c9ff3ab6c4d2af5624311531c385035a70af75eff08"
+    expectedCount := 231,
+    expectedDigest := "40409046d8a344fd5e650caf43625ad7df64d8396b2c6106304cf7b62832849b",
+    computedDigest := "40409046d8a344fd5e650caf43625ad7df64d8396b2c6106304cf7b62832849b"
   },
   {
     id := "finite_primitive_sort_vocabulary",
@@ -747,6 +788,136 @@ def importObligationWitnesses : List ImportObligationWitness :=
   }
 ]
 
+def fdcTargetPrinciple : String := "facticizable_distinguishability_closure"
+
+def fdcClosureRule : String := "stable_inherited_distinguishability_requires_finite_readout_witness"
+
+def fdcForbiddenUpgrades : List String :=
+  [
+    "does_not_prove_full_QM_I",
+    "does_not_prove_Born_rule",
+    "does_not_select_Hilbert_carrier",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_import_QM_structures_as_primitives"
+  ]
+
+def fdcConditionWitnesses : List FDCConditionWitness :=
+[
+  {
+    id := "stable_inherited_distinguishability",
+    status := "candidate_principle",
+    expectedStatus := "candidate_principle",
+    evidenceRefs := [
+      "distinguishability_geometry_probe_demo"
+  ],
+    openGap := "Candidate IDT closure principle; this is not yet a universal derivation of QM.",
+    forbiddenRefHits := []
+  },
+  {
+    id := "admissible_readout_facticization",
+    status := "candidate_principle",
+    expectedStatus := "candidate_principle",
+    evidenceRefs := [
+      "measurement_facticity_route_demo"
+  ],
+    openGap := "Candidate IDT closure principle; this is not yet a universal derivation of QM.",
+    forbiddenRefHits := []
+  },
+  {
+    id := "finite_route_witness_coverage",
+    status := "candidate_principle",
+    expectedStatus := "candidate_principle",
+    evidenceRefs := [
+      "context_product_exhaustion_demo",
+      "idt_core_route_grammar_audit_demo"
+  ],
+    openGap := "Candidate IDT closure principle; this is not yet a universal derivation of QM.",
+    forbiddenRefHits := []
+  },
+  {
+    id := "no_unfacticizable_stable_invariant",
+    status := "candidate_principle",
+    expectedStatus := "candidate_principle",
+    evidenceRefs := [
+      "idt_core_semantic_no_new_effects_audit_demo",
+      "no_emergent_joint_only_invariant_route_demo"
+  ],
+    openGap := "Candidate IDT closure principle; this is not yet a universal derivation of QM.",
+    forbiddenRefHits := []
+  }
+]
+
+def fdcNegativeControlWitnesses : List FDCNegativeControlWitness :=
+[
+  {
+    id := "hidden_joint_only_invariant",
+    expectedResult := "rejected_under_fdc",
+    requiredResult := "rejected_under_fdc",
+    evidenceRefs := [
+      "real_hilbert_composite_hidden_joint_invariant_demo",
+      "context_product_exhaustion_implies_local_tomography"
+  ],
+    retainedBoundary := "Negative control only; this does not close full QM or import QM structure as primitive."
+  },
+  {
+    id := "global_noncontextual_fact_table",
+    expectedResult := "rejected_under_fdc",
+    requiredResult := "rejected_under_fdc",
+    evidenceRefs := [
+      "ks_contextuality_obstruction_demo",
+      "multipartite_contextuality_demo"
+  ],
+    retainedBoundary := "Negative control only; this does not close full QM or import QM structure as primitive."
+  },
+  {
+    id := "unconstrained_generic_gpt_cone",
+    expectedResult := "rejected_under_fdc",
+    requiredResult := "rejected_under_fdc",
+    evidenceRefs := [
+      "generic_gpt_closure_separator_demo"
+  ],
+    retainedBoundary := "Negative control only; this does not close full QM or import QM structure as primitive."
+  },
+  {
+    id := "nonfinite_unwitnessed_residual",
+    expectedResult := "remains_open",
+    requiredResult := "remains_open",
+    evidenceRefs := [
+      "nonfinite_gpt_residual_frontier_demo"
+  ],
+    retainedBoundary := "Negative control only; this does not close full QM or import QM structure as primitive."
+  }
+]
+
+def fdcOpenObligationWitnesses : List FDCOpenObligationWitness :=
+[
+  {
+    id := "universal_carrier_selection_theorem",
+    requiredStatus := "open",
+    expectedRequiredStatus := "open"
+  },
+  {
+    id := "hilbert_carrier_derivation",
+    requiredStatus := "blocked",
+    expectedRequiredStatus := "blocked"
+  },
+  {
+    id := "universal_born_rule_theorem",
+    requiredStatus := "open",
+    expectedRequiredStatus := "open"
+  },
+  {
+    id := "wigner_reversible_inheritance_theorem",
+    requiredStatus := "open",
+    expectedRequiredStatus := "open"
+  },
+  {
+    id := "monoidal_tensor_composition_theorem",
+    requiredStatus := "open",
+    expectedRequiredStatus := "open"
+  }
+]
+
 def jointOnlyRejectionWitness : JointOnlyRejectionWitness :=
 {
   id := "joint_only_invariant_rejection",
@@ -779,6 +950,12 @@ def currentSemanticProofChecks : List Bool :=
     formalAssumptionWitnesses.all FormalAssumptionWitness.valid,
     primitiveCoreWitnesses.all PrimitiveCoreWitness.valid,
     importObligationWitnesses.all ImportObligationWitness.valid,
+    fdcTargetPrinciple == "facticizable_distinguishability_closure",
+    fdcClosureRule == "stable_inherited_distinguishability_requires_finite_readout_witness",
+    fdcForbiddenUpgrades.length == 5,
+    fdcConditionWitnesses.all FDCConditionWitness.valid,
+    fdcNegativeControlWitnesses.all FDCNegativeControlWitness.valid,
+    fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid,
     jointOnlyRejectionWitness.valid
   ]
 
@@ -820,6 +997,18 @@ theorem current_primitive_core_witnesses_valid :
 
 theorem current_import_obligation_witnesses_valid :
     importObligationWitnesses.all ImportObligationWitness.valid = true := by
+  native_decide
+
+theorem current_fdc_condition_witnesses_valid :
+    fdcConditionWitnesses.all FDCConditionWitness.valid = true := by
+  native_decide
+
+theorem current_fdc_negative_control_witnesses_valid :
+    fdcNegativeControlWitnesses.all FDCNegativeControlWitness.valid = true := by
+  native_decide
+
+theorem current_fdc_open_obligation_witnesses_valid :
+    fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid = true := by
   native_decide
 
 theorem current_joint_only_rejection_witness_valid :

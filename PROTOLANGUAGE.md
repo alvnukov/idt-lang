@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.21.0`
+Current version: `v6.22.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -793,6 +793,13 @@ The `idt_primitive_core_contract_demo` now makes that primitive layer a
 first-class machine-readable contract. It locks primitive laws and dependencies
 to the carrier-neutral core, forbids QM/import references inside the core, and
 routes each excluded import to an explicit theorem card or QM proof obligation.
+The `facticizable_distinguishability_closure_frontier_demo` now records the
+candidate lower-level principle suggested by the residual proof graph:
+stable inherited distinguishability must have a finite admissible readout
+witness. The gate keeps this as a frontier candidate, runs negative controls for
+hidden joint-only invariants, global noncontextual fact tables, unconstrained
+GPT cones, and nonfinite unwitnessed residuals, and forbids upgrading the result
+into Hilbert, Born, full-QM, or nonfinite closure.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are

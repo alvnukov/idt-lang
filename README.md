@@ -68,6 +68,11 @@ Current auditable results:
   family, and inheritance-act family are locked as carrier-neutral primitives;
   QM imports are forbidden inside that core and are routed to explicit theorem
   or proof obligations.
+- facticizable distinguishability closure frontier: the candidate lower-level
+  principle says that stable inherited distinguishability must have finite
+  admissible readout witnesses; hidden joint invariants, global fact tables,
+  unconstrained GPT cones, and nonfinite residuals are tracked as negative
+  controls without closing QM.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first

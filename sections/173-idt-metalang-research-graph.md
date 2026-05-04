@@ -521,7 +521,61 @@ Status:
 
 `foundation_import_boundary_audit_added`
 
-### 173.11. Proof Verification Ledger
+### 173.11. Facticizable Distinguishability Closure Frontier
+
+The residual proof graph suggests a candidate lower-level principle:
+
+```text
+stable inherited distinguishability
+  -> finite admissible readout witness
+```
+
+The executable frontier is:
+
+`facticizable_distinguishability_closure_frontier_demo`
+
+Its rule is:
+
+`stable_inherited_distinguishability_requires_finite_readout_witness`
+
+The candidate is intentionally below QM imports. Its primitive basis is only:
+
+```text
+history_space
+event_algebra
+readout_context_family
+inheritance_act_family
+```
+
+The gate treats the principle as a frontier candidate, not as a proof of QM. It
+requires four condition surfaces:
+
+```text
+stable_inherited_distinguishability
+admissible_readout_facticization
+finite_route_witness_coverage
+no_unfacticizable_stable_invariant
+```
+
+and four negative controls:
+
+```text
+hidden_joint_only_invariant -> rejected_under_fdc
+global_noncontextual_fact_table -> rejected_under_fdc
+unconstrained_generic_gpt_cone -> rejected_under_fdc
+nonfinite_unwitnessed_residual -> remains_open
+```
+
+The frontier keeps universal carrier selection, Hilbert carrier derivation,
+Born rule, reversible dynamics, and tensor composition open or blocked as
+declared. It is useful exactly because it can fail without collapsing the rest
+of the finite proof graph.
+
+Status:
+
+`facticizable_distinguishability_closure_frontier_added`
+
+### 173.12. Proof Verification Ledger
 
 The word `formal_proof` is now gated by an executable proof ledger and a
 generated Lean finite-core semantic artifact.

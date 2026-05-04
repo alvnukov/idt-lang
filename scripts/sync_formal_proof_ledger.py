@@ -16,6 +16,11 @@ sys.path.insert(0, str(ROOT))
 
 from theory_verifier.core import (  # noqa: E402
     FINITE_GATE_CHECKS,
+    FDC_CLOSURE_RULE,
+    FDC_FORBIDDEN_UPGRADES,
+    FDC_REQUIRED_NEGATIVE_CONTROLS,
+    FDC_REQUIRED_OPEN_OBLIGATIONS,
+    FDC_TARGET_PRINCIPLE,
     IDT_CORE_CLAIM_ROLE_REGISTRY,
     IDT_CORE_ROUTE_FAMILY_REGISTRY,
     IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
@@ -106,6 +111,29 @@ class ImportObligationWitness:
     required_status: str
     target_refactor: str
     proof_boundary: str
+
+
+@dataclass(frozen=True)
+class FDCConditionWitness:
+    identifier: str
+    status: str
+    evidence_refs: tuple[str, ...]
+    open_gap: str
+    forbidden_ref_hits: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class FDCNegativeControlWitness:
+    identifier: str
+    expected_result: str
+    evidence_refs: tuple[str, ...]
+    retained_boundary: str
+
+
+@dataclass(frozen=True)
+class FDCOpenObligationWitness:
+    identifier: str
+    required_status: str
 
 
 def lean_string(value: str) -> str:
@@ -402,6 +430,66 @@ def import_obligation_witnesses(manifest: Manifest) -> tuple[ImportObligationWit
     return tuple(witnesses)
 
 
+def fdc_condition_witnesses(manifest: Manifest) -> tuple[FDCConditionWitness, ...]:
+    gate = gate_by_id(manifest, "facticizable_distinguishability_closure_frontier_demo")
+    forbidden_refs = set(require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs"))
+    witnesses: list[FDCConditionWitness] = []
+    for index, raw_condition in enumerate(require_list(gate.payload.get("conditions"), f"{gate.identifier}.conditions")):
+        condition = require_mapping(raw_condition, f"{gate.identifier}.conditions[{index}]")
+        condition_id = require_string(condition.get("id"), f"{gate.identifier}.conditions[{index}].id")
+        status = require_string(condition.get("status"), f"{gate.identifier}.{condition_id}.status")
+        evidence_refs = require_string_tuple(condition.get("evidence_refs", []), f"{gate.identifier}.{condition_id}.evidence_refs")
+        open_gap = require_string(condition.get("open_gap"), f"{gate.identifier}.{condition_id}.open_gap")
+        scanned = (condition_id, status, open_gap, *evidence_refs)
+        witnesses.append(
+            FDCConditionWitness(
+                identifier=condition_id,
+                status=status,
+                evidence_refs=evidence_refs,
+                open_gap=open_gap,
+                forbidden_ref_hits=tuple(sorted(forbidden_ref for forbidden_ref in forbidden_refs if forbidden_ref in scanned)),
+            )
+        )
+    return tuple(witnesses)
+
+
+def fdc_negative_control_witnesses(manifest: Manifest) -> tuple[FDCNegativeControlWitness, ...]:
+    gate = gate_by_id(manifest, "facticizable_distinguishability_closure_frontier_demo")
+    witnesses: list[FDCNegativeControlWitness] = []
+    for index, raw_control in enumerate(require_list(gate.payload.get("negative_controls"), f"{gate.identifier}.negative_controls")):
+        control = require_mapping(raw_control, f"{gate.identifier}.negative_controls[{index}]")
+        control_id = require_string(control.get("id"), f"{gate.identifier}.negative_controls[{index}].id")
+        witnesses.append(
+            FDCNegativeControlWitness(
+                identifier=control_id,
+                expected_result=require_string(control.get("expected_result"), f"{gate.identifier}.{control_id}.expected_result"),
+                evidence_refs=require_string_tuple(control.get("evidence_refs", []), f"{gate.identifier}.{control_id}.evidence_refs"),
+                retained_boundary=require_string(
+                    control.get("retained_boundary"),
+                    f"{gate.identifier}.{control_id}.retained_boundary",
+                ),
+            )
+        )
+    return tuple(witnesses)
+
+
+def fdc_open_obligation_witnesses(manifest: Manifest) -> tuple[FDCOpenObligationWitness, ...]:
+    gate = gate_by_id(manifest, "facticizable_distinguishability_closure_frontier_demo")
+    witnesses: list[FDCOpenObligationWitness] = []
+    for index, raw_obligation in enumerate(require_list(gate.payload.get("open_obligations"), f"{gate.identifier}.open_obligations")):
+        obligation = require_mapping(raw_obligation, f"{gate.identifier}.open_obligations[{index}]")
+        witnesses.append(
+            FDCOpenObligationWitness(
+                identifier=require_string(obligation.get("id"), f"{gate.identifier}.open_obligations[{index}].id"),
+                required_status=require_string(
+                    obligation.get("required_status"),
+                    f"{gate.identifier}.open_obligations[{index}].required_status",
+                ),
+            )
+        )
+    return tuple(witnesses)
+
+
 def lean_list(items: Sequence[str], indent: str = "    ") -> str:
     if not items:
         return "[]"
@@ -490,6 +578,37 @@ def render_import_obligation_witness(witness: ImportObligationWitness) -> str:
   }}"""
 
 
+def render_fdc_condition_witness(witness: FDCConditionWitness) -> str:
+    return f"""  {{
+    id := {lean_string(witness.identifier)},
+    status := {lean_string(witness.status)},
+    expectedStatus := "candidate_principle",
+    evidenceRefs := {lean_list(witness.evidence_refs, "      ")},
+    openGap := {lean_string(witness.open_gap)},
+    forbiddenRefHits := {lean_list(witness.forbidden_ref_hits, "      ")}
+  }}"""
+
+
+def render_fdc_negative_control_witness(witness: FDCNegativeControlWitness) -> str:
+    expected_result = FDC_REQUIRED_NEGATIVE_CONTROLS[witness.identifier]
+    return f"""  {{
+    id := {lean_string(witness.identifier)},
+    expectedResult := {lean_string(witness.expected_result)},
+    requiredResult := {lean_string(expected_result)},
+    evidenceRefs := {lean_list(witness.evidence_refs, "      ")},
+    retainedBoundary := {lean_string(witness.retained_boundary)}
+  }}"""
+
+
+def render_fdc_open_obligation_witness(witness: FDCOpenObligationWitness) -> str:
+    required_status = FDC_REQUIRED_OPEN_OBLIGATIONS[witness.identifier]
+    return f"""  {{
+    id := {lean_string(witness.identifier)},
+    requiredStatus := {lean_string(witness.required_status)},
+    expectedRequiredStatus := {lean_string(required_status)}
+  }}"""
+
+
 def render_comma_list(items: Sequence[str]) -> str:
     return ",\n".join(items)
 
@@ -503,6 +622,9 @@ def render_lean(manifest: Manifest) -> str:
     assumption_data = assumption_witnesses(manifest)
     primitive_core_data = primitive_core_witnesses(manifest)
     import_obligation_data = import_obligation_witnesses(manifest)
+    fdc_condition_data = fdc_condition_witnesses(manifest)
+    fdc_negative_control_data = fdc_negative_control_witnesses(manifest)
+    fdc_open_obligation_data = fdc_open_obligation_witnesses(manifest)
     joint_witness = joint_only_rejection_witness(manifest)
     rendered_claim_refs = lean_list(claim_refs)
     rendered_registry_witnesses = render_comma_list([render_registry_witness(witness) for witness in registry_data])
@@ -519,6 +641,15 @@ def render_lean(manifest: Manifest) -> str:
     )
     rendered_import_obligation_witnesses = render_comma_list(
         [render_import_obligation_witness(witness) for witness in import_obligation_data]
+    )
+    rendered_fdc_condition_witnesses = render_comma_list(
+        [render_fdc_condition_witness(witness) for witness in fdc_condition_data]
+    )
+    rendered_fdc_negative_control_witnesses = render_comma_list(
+        [render_fdc_negative_control_witness(witness) for witness in fdc_negative_control_data]
+    )
+    rendered_fdc_open_obligation_witnesses = render_comma_list(
+        [render_fdc_open_obligation_witness(witness) for witness in fdc_open_obligation_data]
     )
     if claim_refs:
         cardinality_theorem = """theorem current_formal_claim_ledger_nonempty :
@@ -637,6 +768,46 @@ def ImportObligationWitness.valid (w : ImportObligationWitness) : Bool :=
     && decide (w.target.length > 0)
     && decide (w.targetRefactor.length > 0)
 
+structure FDCConditionWitness where
+  id : String
+  status : String
+  expectedStatus : String
+  evidenceRefs : List String
+  openGap : String
+  forbiddenRefHits : List String
+deriving Repr
+
+def FDCConditionWitness.valid (w : FDCConditionWitness) : Bool :=
+  w.status == w.expectedStatus
+    && w.expectedStatus == "candidate_principle"
+    && w.forbiddenRefHits == []
+    && decide (w.evidenceRefs.length > 0)
+    && decide (w.openGap.length > 0)
+
+structure FDCNegativeControlWitness where
+  id : String
+  expectedResult : String
+  requiredResult : String
+  evidenceRefs : List String
+  retainedBoundary : String
+deriving Repr
+
+def FDCNegativeControlWitness.valid (w : FDCNegativeControlWitness) : Bool :=
+  w.expectedResult == w.requiredResult
+    && decide (w.evidenceRefs.length > 0)
+    && decide (w.retainedBoundary.length > 0)
+
+structure FDCOpenObligationWitness where
+  id : String
+  requiredStatus : String
+  expectedRequiredStatus : String
+deriving Repr
+
+def FDCOpenObligationWitness.valid (w : FDCOpenObligationWitness) : Bool :=
+  w.requiredStatus == w.expectedRequiredStatus
+    && w.requiredStatus != "formal_proof"
+    && w.requiredStatus != "derived"
+
 structure JointOnlyRejectionWitness where
   id : String
   status : String
@@ -690,6 +861,28 @@ def importObligationWitnesses : List ImportObligationWitness :=
 {rendered_import_obligation_witnesses}
 ]
 
+def fdcTargetPrinciple : String := {lean_string(FDC_TARGET_PRINCIPLE)}
+
+def fdcClosureRule : String := {lean_string(FDC_CLOSURE_RULE)}
+
+def fdcForbiddenUpgrades : List String :=
+  {lean_list(FDC_FORBIDDEN_UPGRADES)}
+
+def fdcConditionWitnesses : List FDCConditionWitness :=
+[
+{rendered_fdc_condition_witnesses}
+]
+
+def fdcNegativeControlWitnesses : List FDCNegativeControlWitness :=
+[
+{rendered_fdc_negative_control_witnesses}
+]
+
+def fdcOpenObligationWitnesses : List FDCOpenObligationWitness :=
+[
+{rendered_fdc_open_obligation_witnesses}
+]
+
 def jointOnlyRejectionWitness : JointOnlyRejectionWitness :=
 {{
   id := {lean_string(joint_witness.identifier)},
@@ -710,6 +903,12 @@ def currentSemanticProofChecks : List Bool :=
     formalAssumptionWitnesses.all FormalAssumptionWitness.valid,
     primitiveCoreWitnesses.all PrimitiveCoreWitness.valid,
     importObligationWitnesses.all ImportObligationWitness.valid,
+    fdcTargetPrinciple == "facticizable_distinguishability_closure",
+    fdcClosureRule == "stable_inherited_distinguishability_requires_finite_readout_witness",
+    fdcForbiddenUpgrades.length == 5,
+    fdcConditionWitnesses.all FDCConditionWitness.valid,
+    fdcNegativeControlWitnesses.all FDCNegativeControlWitness.valid,
+    fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid,
     jointOnlyRejectionWitness.valid
   ]
 
@@ -749,6 +948,18 @@ theorem current_primitive_core_witnesses_valid :
 
 theorem current_import_obligation_witnesses_valid :
     importObligationWitnesses.all ImportObligationWitness.valid = true := by
+  native_decide
+
+theorem current_fdc_condition_witnesses_valid :
+    fdcConditionWitnesses.all FDCConditionWitness.valid = true := by
+  native_decide
+
+theorem current_fdc_negative_control_witnesses_valid :
+    fdcNegativeControlWitnesses.all FDCNegativeControlWitness.valid = true := by
+  native_decide
+
+theorem current_fdc_open_obligation_witnesses_valid :
+    fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid = true := by
   native_decide
 
 theorem current_joint_only_rejection_witness_valid :

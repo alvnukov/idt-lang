@@ -963,6 +963,44 @@ IDT_PRIMITIVE_CORE_RESULTS = (
     "failed",
 )
 
+FDC_TARGET_PRINCIPLE = "facticizable_distinguishability_closure"
+FDC_CLOSURE_RULE = "stable_inherited_distinguishability_requires_finite_readout_witness"
+
+FDC_REQUIRED_CONDITIONS = (
+    "stable_inherited_distinguishability",
+    "admissible_readout_facticization",
+    "finite_route_witness_coverage",
+    "no_unfacticizable_stable_invariant",
+)
+
+FDC_REQUIRED_NEGATIVE_CONTROLS: dict[str, str] = {
+    "hidden_joint_only_invariant": "rejected_under_fdc",
+    "global_noncontextual_fact_table": "rejected_under_fdc",
+    "unconstrained_generic_gpt_cone": "rejected_under_fdc",
+    "nonfinite_unwitnessed_residual": "remains_open",
+}
+
+FDC_REQUIRED_OPEN_OBLIGATIONS: dict[str, str] = {
+    "universal_carrier_selection_theorem": "open",
+    "hilbert_carrier_derivation": "blocked",
+    "universal_born_rule_theorem": "open",
+    "wigner_reversible_inheritance_theorem": "open",
+    "monoidal_tensor_composition_theorem": "open",
+}
+
+FDC_FORBIDDEN_UPGRADES = (
+    "does_not_prove_full_QM_I",
+    "does_not_prove_Born_rule",
+    "does_not_select_Hilbert_carrier",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_import_QM_structures_as_primitives",
+)
+
+FDC_RESULTS = (
+    "frontier_candidate",
+    "failed",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2567,6 +2605,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_primitive_core_contract_grounding(manifest))
     checks.append("primitive core contract grounding")
+
+    issues.extend(check_facticizable_distinguishability_closure_grounding(manifest))
+    checks.append("facticizable distinguishability closure grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -5826,6 +5867,25 @@ def check_primitive_core_contract_grounding(manifest: Manifest) -> list[Issue]:
                     Issue(
                         "primitive_core_contract_obligation_status_mismatch",
                         f"{gate.identifier}: import {import_id} target {target} must remain {required_status}",
+                    )
+                )
+    return issues
+
+
+def check_facticizable_distinguishability_closure_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    theorem_status_by_id = {card.identifier: card.proof_status for card in manifest.theorem_cards}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "facticizable_distinguishability_closure_frontier":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "fdc_frontier"))
+        for theorem_id, expected_status in FDC_REQUIRED_OPEN_OBLIGATIONS.items():
+            if theorem_status_by_id.get(theorem_id) != expected_status:
+                issues.append(
+                    Issue(
+                        "fdc_frontier_obligation_status_mismatch",
+                        f"{gate.identifier}: {theorem_id} must remain {expected_status}",
                     )
                 )
     return issues
@@ -13152,6 +13212,193 @@ def check_primitive_core_contract_gate(gate: FiniteGate) -> list[Issue]:
     return []
 
 
+def check_facticizable_distinguishability_closure_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_principle = require_string(gate.payload.get("target_principle"), f"{gate.identifier}.target_principle")
+    if target_principle != FDC_TARGET_PRINCIPLE:
+        return [
+            Issue(
+                "fdc_frontier_target_mismatch",
+                f"{gate.identifier}: target_principle must be {FDC_TARGET_PRINCIPLE}",
+            )
+        ]
+    closure_rule = require_string(gate.payload.get("closure_rule"), f"{gate.identifier}.closure_rule")
+    if closure_rule != FDC_CLOSURE_RULE:
+        return [
+            Issue(
+                "fdc_frontier_rule_mismatch",
+                f"{gate.identifier}: closure_rule must be {FDC_CLOSURE_RULE}",
+            )
+        ]
+    primitive_basis = set(require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis"))
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "fdc_frontier_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+    forbidden_refs = set(require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs"))
+    if forbidden_refs != set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS):
+        return [
+            Issue(
+                "fdc_frontier_forbidden_refs_mismatch",
+                f"{gate.identifier}: forbidden_import_refs must match the primitive-core import boundary",
+            )
+        ]
+
+    conditions = require_list(gate.payload.get("conditions"), f"{gate.identifier}.conditions")
+    seen_conditions: set[str] = set()
+    for index, raw_condition in enumerate(conditions):
+        condition = require_mapping(raw_condition, f"{gate.identifier}.conditions[{index}]")
+        condition_id = require_string(condition.get("id"), f"{gate.identifier}.conditions[{index}].id")
+        status = require_string(condition.get("status"), f"{gate.identifier}.conditions[{index}].status")
+        evidence_refs = require_string_tuple(
+            condition.get("evidence_refs", []),
+            f"{gate.identifier}.conditions[{index}].evidence_refs",
+        )
+        open_gap = require_string(condition.get("open_gap"), f"{gate.identifier}.conditions[{index}].open_gap")
+        if condition_id not in FDC_REQUIRED_CONDITIONS:
+            return [
+                Issue(
+                    "fdc_frontier_unknown_condition",
+                    f"{gate.identifier}: unknown FDC condition {condition_id}",
+                )
+            ]
+        if condition_id in seen_conditions:
+            return [
+                Issue(
+                    "fdc_frontier_duplicate_condition",
+                    f"{gate.identifier}: duplicate FDC condition {condition_id}",
+                )
+            ]
+        if status != "candidate_principle":
+            return [
+                Issue(
+                    "fdc_frontier_condition_status_mismatch",
+                    f"{gate.identifier}: {condition_id} must remain candidate_principle",
+                )
+            ]
+        if not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "fdc_frontier_condition_boundary_missing",
+                    f"{gate.identifier}: {condition_id} must cite evidence and retain an open-gap boundary",
+                )
+            ]
+        scanned = (condition_id, status, open_gap, *evidence_refs)
+        leaked_refs = [
+            forbidden_ref for forbidden_ref in forbidden_refs if any(forbidden_ref in scanned_item for scanned_item in scanned)
+        ]
+        if leaked_refs:
+            return [
+                Issue(
+                    "fdc_frontier_forbidden_ref_leak",
+                    f"{gate.identifier}: {condition_id} leaks forbidden refs: {', '.join(sorted(leaked_refs))}",
+                )
+            ]
+        seen_conditions.add(condition_id)
+    missing_conditions = sorted(set(FDC_REQUIRED_CONDITIONS) - seen_conditions)
+    if missing_conditions:
+        return [
+            Issue(
+                "fdc_frontier_condition_missing",
+                f"{gate.identifier}: missing FDC conditions: {', '.join(missing_conditions)}",
+            )
+        ]
+
+    negative_controls = require_list(gate.payload.get("negative_controls"), f"{gate.identifier}.negative_controls")
+    seen_controls: set[str] = set()
+    for index, raw_control in enumerate(negative_controls):
+        control = require_mapping(raw_control, f"{gate.identifier}.negative_controls[{index}]")
+        control_id = require_string(control.get("id"), f"{gate.identifier}.negative_controls[{index}].id")
+        expected_result = require_string(
+            control.get("expected_result"),
+            f"{gate.identifier}.negative_controls[{index}].expected_result",
+        )
+        evidence_refs = require_string_tuple(
+            control.get("evidence_refs", []),
+            f"{gate.identifier}.negative_controls[{index}].evidence_refs",
+        )
+        retained_boundary = require_string(
+            control.get("retained_boundary"),
+            f"{gate.identifier}.negative_controls[{index}].retained_boundary",
+        )
+        if control_id not in FDC_REQUIRED_NEGATIVE_CONTROLS:
+            return [
+                Issue(
+                    "fdc_frontier_unknown_negative_control",
+                    f"{gate.identifier}: unknown FDC negative control {control_id}",
+                )
+            ]
+        if control_id in seen_controls:
+            return [
+                Issue(
+                    "fdc_frontier_duplicate_negative_control",
+                    f"{gate.identifier}: duplicate FDC negative control {control_id}",
+                )
+            ]
+        if expected_result != FDC_REQUIRED_NEGATIVE_CONTROLS[control_id]:
+            return [
+                Issue(
+                    "fdc_frontier_negative_control_result_mismatch",
+                    f"{gate.identifier}: {control_id} must be {FDC_REQUIRED_NEGATIVE_CONTROLS[control_id]}",
+                )
+            ]
+        if not evidence_refs or not retained_boundary:
+            return [
+                Issue(
+                    "fdc_frontier_negative_control_boundary_missing",
+                    f"{gate.identifier}: {control_id} must cite evidence and retain a boundary",
+                )
+            ]
+        seen_controls.add(control_id)
+    missing_controls = sorted(set(FDC_REQUIRED_NEGATIVE_CONTROLS) - seen_controls)
+    if missing_controls:
+        return [
+            Issue(
+                "fdc_frontier_negative_control_missing",
+                f"{gate.identifier}: missing FDC negative controls: {', '.join(missing_controls)}",
+            )
+        ]
+
+    open_obligations = {
+        require_string(item.get("id"), f"{gate.identifier}.open_obligations[].id"): require_string(
+            item.get("required_status"),
+            f"{gate.identifier}.open_obligations[].required_status",
+        )
+        for item in (
+            require_mapping(raw_item, f"{gate.identifier}.open_obligations[]")
+            for raw_item in require_list(gate.payload.get("open_obligations"), f"{gate.identifier}.open_obligations")
+        )
+    }
+    if open_obligations != FDC_REQUIRED_OPEN_OBLIGATIONS:
+        return [
+            Issue(
+                "fdc_frontier_open_obligations_mismatch",
+                f"{gate.identifier}: open_obligations must preserve the current QM-proof frontier",
+            )
+        ]
+    forbidden_upgrades = set(require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades"))
+    if forbidden_upgrades != set(FDC_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "fdc_frontier_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must prevent FDC from becoming a hidden QM import",
+            )
+        ]
+    expected_status = require_string(gate.payload.get("expected_frontier_status"), f"{gate.identifier}.expected_frontier_status")
+    if expected_status not in FDC_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_frontier_status is unknown")
+    if expected_status != "frontier_candidate":
+        return [
+            Issue(
+                "fdc_frontier_status_mismatch",
+                f"{gate.identifier}: FDC must remain a frontier_candidate",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -18977,6 +19224,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "idt_structural_compression_audit": check_idt_structural_compression_audit_gate,
     "foundation_import_boundary_audit": check_foundation_import_boundary_audit_gate,
     "primitive_core_contract": check_primitive_core_contract_gate,
+    "facticizable_distinguishability_closure_frontier": check_facticizable_distinguishability_closure_frontier_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,

@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.21.0`.
+Current theory version: `v6.22.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -72,7 +72,11 @@ The main current successes are bounded and methodological:
    contexts, and inheritance acts. The primitive core is now a first-class
    contract: its laws may depend only on the primitive definition section, and
    every excluded import is routed to an explicit theorem or proof obligation.
-9. The proof-verification boundary is executable. Current `formal_proof`
+9. A new facticizable-distinguishability closure frontier is executable as a
+   candidate principle. It tests whether stable inherited distinguishability
+   must have finite admissible readout witnesses, while retaining negative
+   controls and open QM obligations.
+10. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized

@@ -154,6 +154,12 @@ from theory_verifier.core import (
     IDT_CORE_RESIDUAL_BOUNDARY_SCOPE,
     IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES,
     IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
+    FDC_CLOSURE_RULE,
+    FDC_FORBIDDEN_UPGRADES,
+    FDC_REQUIRED_CONDITIONS,
+    FDC_REQUIRED_NEGATIVE_CONTROLS,
+    FDC_REQUIRED_OPEN_OBLIGATIONS,
+    FDC_TARGET_PRINCIPLE,
     IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
     IDT_PRIMITIVE_CORE_FORBIDDEN_REFS,
     IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
@@ -506,6 +512,68 @@ class TheoryVerifierTests(unittest.TestCase):
                 for import_id in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS
             ],
             "expected_contract_status": "primitive_core_locked",
+        }
+
+    def facticizable_distinguishability_closure_frontier_gate(self) -> dict[str, object]:
+        evidence_refs_by_condition = {
+            "stable_inherited_distinguishability": ["distinguishability_geometry_probe_demo"],
+            "admissible_readout_facticization": ["measurement_facticity_route_demo"],
+            "finite_route_witness_coverage": [
+                "context_product_exhaustion_demo",
+                "idt_core_route_grammar_audit_demo",
+            ],
+            "no_unfacticizable_stable_invariant": [
+                "idt_core_semantic_no_new_effects_audit_demo",
+                "no_emergent_joint_only_invariant_route_demo",
+            ],
+        }
+        gap_by_condition = {
+            condition_id: "Candidate closure principle; this is not yet a universal derivation of QM."
+            for condition_id in FDC_REQUIRED_CONDITIONS
+        }
+        evidence_refs_by_control = {
+            "hidden_joint_only_invariant": [
+                "real_hilbert_composite_hidden_joint_invariant_demo",
+                "context_product_exhaustion_implies_local_tomography",
+            ],
+            "global_noncontextual_fact_table": [
+                "ks_contextuality_obstruction_demo",
+                "multipartite_contextuality_demo",
+            ],
+            "unconstrained_generic_gpt_cone": ["generic_gpt_closure_separator_demo"],
+            "nonfinite_unwitnessed_residual": ["nonfinite_gpt_residual_frontier_demo"],
+        }
+        return {
+            "id": "test_facticizable_distinguishability_closure_frontier",
+            "type": "facticizable_distinguishability_closure_frontier",
+            "target_principle": FDC_TARGET_PRINCIPLE,
+            "closure_rule": FDC_CLOSURE_RULE,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "forbidden_import_refs": list(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS),
+            "conditions": [
+                {
+                    "id": condition_id,
+                    "status": "candidate_principle",
+                    "evidence_refs": evidence_refs_by_condition[condition_id],
+                    "open_gap": gap_by_condition[condition_id],
+                }
+                for condition_id in FDC_REQUIRED_CONDITIONS
+            ],
+            "negative_controls": [
+                {
+                    "id": control_id,
+                    "expected_result": expected_result,
+                    "evidence_refs": evidence_refs_by_control[control_id],
+                    "retained_boundary": "Negative control only; this does not close full QM.",
+                }
+                for control_id, expected_result in FDC_REQUIRED_NEGATIVE_CONTROLS.items()
+            ],
+            "open_obligations": [
+                {"id": obligation_id, "required_status": required_status}
+                for obligation_id, required_status in FDC_REQUIRED_OPEN_OBLIGATIONS.items()
+            ],
+            "expected_frontier_status": "frontier_candidate",
+            "forbidden_upgrades": list(FDC_FORBIDDEN_UPGRADES),
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -7260,6 +7328,67 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"primitive_core_contract_obligation_status_mismatch"})
+
+    def test_fdc_frontier_rejects_forbidden_import_ref_leak(self) -> None:
+        gate = self.facticizable_distinguishability_closure_frontier_gate()
+        conditions = gate["conditions"]
+        if not isinstance(conditions, list):
+            self.fail("conditions must be a list")
+        first_condition = conditions[0]
+        if not isinstance(first_condition, dict):
+            self.fail("condition must be a mapping")
+        first_condition["open_gap"] = "Uses Born"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fdc_frontier_forbidden_ref_leak"})
+
+    def test_fdc_frontier_rejects_negative_control_drift(self) -> None:
+        gate = self.facticizable_distinguishability_closure_frontier_gate()
+        negative_controls = gate["negative_controls"]
+        if not isinstance(negative_controls, list):
+            self.fail("negative_controls must be a list")
+        first_control = negative_controls[0]
+        if not isinstance(first_control, dict):
+            self.fail("negative control must be a mapping")
+        first_control["expected_result"] = "survives"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fdc_frontier_negative_control_result_mismatch"})
+
+    def test_fdc_frontier_grounding_rejects_carrier_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "universal_carrier_selection_theorem":
+                continue
+            theorem_card["proof_status"] = "formal_proof"
+            break
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        finite_gates.append(self.facticizable_distinguishability_closure_frontier_gate())
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fdc_frontier_obligation_status_mismatch"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(
