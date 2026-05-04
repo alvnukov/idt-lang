@@ -1,0 +1,108 @@
+{
+  "artifact_id": "cgsc_extension_wall_probe_draft",
+  "artifact_status": "extension_wall_probe_not_formal_proof",
+  "probe": {
+    "id": "cgsc_extension_wall_probe",
+    "expected_verdict": "EXTENSION_WALL_LOCALIZED",
+    "dependencies": [
+      "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
+      "scripts/evaluate_cgsc_primitive_derivation.py",
+      "sections/01-primitives.md",
+      "sections/174-context-bundle-nontriviality-research-note.md"
+    ],
+    "packages": [
+      {
+        "id": "finite_exposed_context_completion",
+        "expected_status": "OPEN_EXTENSION",
+        "covers": [
+          "complete_exposed_context_partition"
+        ],
+        "required_clauses": [
+          "exposed_context_decomposition"
+        ],
+        "open_obligation": "derive complete exposed finite context partition from B0 context cover, overlap discipline, and facticizable separation without importing spectral decomposition",
+        "candidate_imports": [],
+        "forbidden_imports": [
+          "spectral_theorem",
+          "complex_hilbert_space"
+        ]
+      },
+      {
+        "id": "route_automorphism_and_refinement_coherence",
+        "expected_status": "OPEN_EXTENSION",
+        "covers": [
+          "coherent_refinement_compactness",
+          "generator_bookkeeping_without_stone",
+          "reversible_context_automorphism_closure"
+        ],
+        "required_clauses": [
+          "reversible_route_closure",
+          "coherent_refinement_flow"
+        ],
+        "open_obligation": "derive reversible context automorphisms, coherent refinement compactness, and generator bookkeeping from inheritance transitions without importing unitary group or Stone theorem",
+        "candidate_imports": [],
+        "forbidden_imports": [
+          "generator_assumed",
+          "stone_theorem",
+          "unitary_group"
+        ]
+      },
+      {
+        "id": "generated_composite_no_hidden_joint_closure",
+        "expected_status": "OPEN_EXTENSION",
+        "covers": [
+          "no_hidden_joint_only_generation",
+          "product_context_generation_closure"
+        ],
+        "required_clauses": [
+          "composite_route_generation"
+        ],
+        "open_obligation": "derive generated composite context closure and no hidden joint-only generation without importing Hilbert tensor product or Born readout",
+        "candidate_imports": [],
+        "forbidden_imports": [
+          "born_rule",
+          "complex_hilbert_space",
+          "hilbert_tensor_product"
+        ]
+      }
+    ],
+    "negative_controls": [
+      {
+        "id": "spectral_theorem_import_control",
+        "attempted_import": "spectral_theorem",
+        "target_package": "finite_exposed_context_completion",
+        "expected_status": "REJECTED_CONTROL"
+      },
+      {
+        "id": "unitary_group_import_control",
+        "attempted_import": "unitary_group",
+        "target_package": "route_automorphism_and_refinement_coherence",
+        "expected_status": "REJECTED_CONTROL"
+      },
+      {
+        "id": "stone_generator_import_control",
+        "attempted_import": "stone_theorem",
+        "target_package": "route_automorphism_and_refinement_coherence",
+        "expected_status": "REJECTED_CONTROL"
+      },
+      {
+        "id": "hilbert_tensor_product_import_control",
+        "attempted_import": "hilbert_tensor_product",
+        "target_package": "generated_composite_no_hidden_joint_closure",
+        "expected_status": "REJECTED_CONTROL"
+      },
+      {
+        "id": "born_rule_import_control",
+        "attempted_import": "born_rule",
+        "target_package": "generated_composite_no_hidden_joint_closure",
+        "expected_status": "REJECTED_CONTROL"
+      },
+      {
+        "id": "complex_hilbert_carrier_import_control",
+        "attempted_import": "complex_hilbert_space",
+        "target_package": "generated_composite_no_hidden_joint_closure",
+        "expected_status": "REJECTED_CONTROL"
+      }
+    ]
+  }
+}

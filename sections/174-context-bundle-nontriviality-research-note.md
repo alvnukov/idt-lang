@@ -14082,3 +14082,106 @@ does_not_derive_unitary_dynamics
 does_not_derive_tensor_composition
 does_not_treat_B0_candidate_support_as_formal_proof
 ```
+
+### 174.278. CGSC Extension Wall Probe
+
+The six missing base extensions were tested as one broad front rather than as
+six isolated micro-obligations.
+
+Machine-readable wall-probe draft:
+
+```text
+Proofs/QMClosure/CGSCExtensionWallProbeDraft.json
+```
+
+Executable validator:
+
+```text
+script = scripts/evaluate_cgsc_extension_wall_probe.py
+verdict = EXTENSION_WALL_LOCALIZED
+primitive_derivation = PRIMITIVE_DERIVATION_NOT_CLOSED
+missing_extensions = 6
+extension_packages = 3
+covered_extensions = 6
+uncovered_extensions = 0
+fatal_imports = 0
+rejected_controls = 6
+failed_controls = 0
+draft_checks_failed = 0
+```
+
+The six missing extensions compress into three base-extension packages:
+
+```text
+finite_exposed_context_completion:
+  covers:
+    complete_exposed_context_partition
+  open obligation:
+    derive complete exposed finite context partition from B0 context cover,
+    overlap discipline, and facticizable separation without importing spectral
+    decomposition
+
+route_automorphism_and_refinement_coherence:
+  covers:
+    reversible_context_automorphism_closure
+    coherent_refinement_compactness
+    generator_bookkeeping_without_stone
+  open obligation:
+    derive reversible context automorphisms, coherent refinement compactness,
+    and generator bookkeeping from inheritance transitions without importing
+    unitary group or Stone theorem
+
+generated_composite_no_hidden_joint_closure:
+  covers:
+    product_context_generation_closure
+    no_hidden_joint_only_generation
+  open obligation:
+    derive generated composite context closure and no hidden joint-only
+    generation without importing Hilbert tensor product or Born readout
+```
+
+Negative controls rejected as imports:
+
+```text
+spectral_theorem
+unitary_group
+stone_theorem
+hilbert_tensor_product
+born_rule
+complex_hilbert_space
+```
+
+Interpretation:
+
+```text
+There is a wall ahead, but it is localized rather than diffuse.
+
+No fatal contradiction or mandatory QM import is currently detected.
+However, CGSC is not derived from primitives until the three extension packages
+above are proved from B0 or admitted as explicit new base principles.
+```
+
+This means the next broad proof pass should not target Hilbert/Born/unitary/
+tensor directly. It should target the three extension packages as the actual
+primitive-base bottleneck:
+
+```text
+B0
+=> finite exposed context completion
+=> route automorphism/refinement coherence
+=> generated composite no-hidden-joint closure
+=> CGSC
+=> conditional Hilbert/Born/unitary/tensor route
+```
+
+Forbidden upgrade:
+
+```text
+does_not_prove_CGSC
+does_not_prove_full_QM_I
+does_not_derive_Hilbert_space
+does_not_derive_Born_rule
+does_not_derive_unitary_dynamics
+does_not_derive_tensor_composition
+does_not_treat_extension_wall_localization_as_wall_removal
+```
