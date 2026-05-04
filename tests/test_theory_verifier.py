@@ -152,6 +152,12 @@ from theory_verifier.core import (
     IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
     IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES,
     IDT_STRUCTURAL_COMPRESSION_SCHEMA_CANDIDATES,
+    FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT,
+    FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES,
+    FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE,
+    FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
+    FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS,
+    FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
@@ -393,6 +399,62 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_compression_status": "candidate_map",
             "forbidden_upgrades": list(IDT_STRUCTURAL_COMPRESSION_FORBIDDEN_UPGRADES),
+        }
+
+    def foundation_import_boundary_audit_gate(self) -> dict[str, object]:
+        evidence_refs_by_import = {
+            "complex_amplitude_carrier": [
+                "sections/01-primitives.md",
+                "universal_carrier_selection_theorem",
+                "hilbert_carrier_derivation",
+            ],
+            "psd_distinguishability_kernel": ["sections/02-actualization.md"],
+            "quadratic_actualization_measure": [
+                "sections/02-actualization.md",
+                "finite_born_quadratic_readout_survivor",
+                "universal_born_rule_theorem",
+            ],
+            "schur_inheritance_update": ["sections/02-actualization.md"],
+            "tensor_composition_import": [
+                "monoidal_tensor_composition_theorem",
+                "tensor_composition_route_demo",
+            ],
+            "unitary_context_map_import": [
+                "wigner_reversible_inheritance_theorem",
+                "unitary_network_probability_demo",
+            ],
+            "action_phase_hbar_bridge": [
+                "hbar_I",
+                "calibrated_hbar_I",
+                "first_principles_hbar_lock",
+            ],
+        }
+        return {
+            "id": "test_foundation_import_boundary_audit",
+            "type": "foundation_import_boundary_audit",
+            "target_scope": "primitive_vs_qm_import_boundary",
+            "boundary_rule": "no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim",
+            "primitive_core": [
+                {
+                    "id": primitive_id,
+                    "primitive_status": "idt_primitive",
+                    "carrier_status": "carrier_neutral",
+                    "evidence_refs": ["sections/01-primitives.md"],
+                }
+                for primitive_id in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE
+            ],
+            "imports": [
+                {
+                    "id": import_id,
+                    "import_status": FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT[import_id],
+                    "evidence_refs": evidence_refs_by_import[import_id],
+                    "target_refactor": FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id],
+                    "proof_boundary": FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
+                }
+                for import_id in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS
+            ],
+            "expected_boundary_status": "imports_explicit",
+            "forbidden_upgrades": list(FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES),
         }
 
     def test_dimension_mismatch_is_reported(self) -> None:
@@ -6971,6 +7033,97 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_structural_compression_gap_missing"})
+
+    def test_foundation_import_boundary_rejects_primitive_relabel(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        imports = gate["imports"]
+        if not isinstance(imports, list):
+            self.fail("imports must be a list")
+        first_import = imports[0]
+        if not isinstance(first_import, dict):
+            self.fail("import entry must be a mapping")
+        first_import["import_status"] = "primitive_derivation"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_primitive_relabel"})
+
+    def test_foundation_import_boundary_rejects_non_neutral_core_primitive(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        primitive_core = gate["primitive_core"]
+        if not isinstance(primitive_core, list):
+            self.fail("primitive_core must be a list")
+        first_primitive = primitive_core[0]
+        if not isinstance(first_primitive, dict):
+            self.fail("primitive entry must be a mapping")
+        first_primitive["carrier_status"] = "complex_hilbert_carrier"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_primitive_carrier_mismatch"})
+
+    def test_foundation_import_boundary_rejects_missing_import(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        imports = gate["imports"]
+        if not isinstance(imports, list):
+            self.fail("imports must be a list")
+        imports.pop()
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"invalid_finite_gate"})
+
+    def test_foundation_import_boundary_rejects_forbidden_upgrade_drift(self) -> None:
+        gate = self.foundation_import_boundary_audit_gate()
+        gate["forbidden_upgrades"] = ["does_not_close_full_QM_I"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_forbidden_upgrades_mismatch"})
+
+    def test_foundation_import_boundary_grounding_rejects_hilbert_upgrade(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "hilbert_carrier_derivation":
+                continue
+            theorem_card["proof_status"] = "formal_proof"
+            break
+
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"foundation_import_boundary_theorem_status_mismatch"})
 
     def test_phase_branch_additivity_rejects_mismatch(self) -> None:
         manifest = parse_manifest(

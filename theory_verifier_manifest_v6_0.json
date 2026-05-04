@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.16.0",
+  "theory_version": "v6.17.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4970,8 +4970,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 227,
-      "expected_gate_type_digest": "a0a0d8a467674313861ae8573549728f6748c8cd0778513bd06da5629a72f3fc",
+      "expected_gate_type_count": 228,
+      "expected_gate_type_digest": "64cacc24c89f350035807c64e3b3c622ea24edcd58c281808e746afe6884fe28",
       "expected_component_status": "formal_proof"
     },
     {
@@ -7588,6 +7588,127 @@
         "does_not_close_open_gaps",
         "does_not_relabel_bridges_as_derivations",
         "does_not_reduce_verifier_coverage"
+      ]
+    },
+    {
+      "id": "foundation_import_boundary_audit_demo",
+      "type": "foundation_import_boundary_audit",
+      "target_scope": "primitive_vs_qm_import_boundary",
+      "boundary_rule": "no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim",
+      "primitive_core": [
+        {
+          "id": "history_space",
+          "primitive_status": "idt_primitive",
+          "carrier_status": "carrier_neutral",
+          "evidence_refs": [
+            "sections/01-primitives.md"
+          ]
+        },
+        {
+          "id": "event_algebra",
+          "primitive_status": "idt_primitive",
+          "carrier_status": "carrier_neutral",
+          "evidence_refs": [
+            "sections/01-primitives.md"
+          ]
+        },
+        {
+          "id": "readout_context_family",
+          "primitive_status": "idt_primitive",
+          "carrier_status": "carrier_neutral",
+          "evidence_refs": [
+            "sections/01-primitives.md"
+          ]
+        },
+        {
+          "id": "inheritance_act_family",
+          "primitive_status": "idt_primitive",
+          "carrier_status": "carrier_neutral",
+          "evidence_refs": [
+            "sections/01-primitives.md"
+          ]
+        }
+      ],
+      "imports": [
+        {
+          "id": "complex_amplitude_carrier",
+          "import_status": "qm_import",
+          "evidence_refs": [
+            "sections/01-primitives.md",
+            "universal_carrier_selection_theorem",
+            "hilbert_carrier_derivation"
+          ],
+          "target_refactor": "carrier_neutral_K_I",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        },
+        {
+          "id": "psd_distinguishability_kernel",
+          "import_status": "core_assumption",
+          "evidence_refs": [
+            "sections/02-actualization.md"
+          ],
+          "target_refactor": "positivity_obligation",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        },
+        {
+          "id": "quadratic_actualization_measure",
+          "import_status": "core_assumption",
+          "evidence_refs": [
+            "sections/02-actualization.md",
+            "finite_born_quadratic_readout_survivor",
+            "universal_born_rule_theorem"
+          ],
+          "target_refactor": "born_rule_obligation",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        },
+        {
+          "id": "schur_inheritance_update",
+          "import_status": "core_assumption",
+          "evidence_refs": [
+            "sections/02-actualization.md"
+          ],
+          "target_refactor": "inheritance_update_obligation",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        },
+        {
+          "id": "tensor_composition_import",
+          "import_status": "open_obligation",
+          "evidence_refs": [
+            "monoidal_tensor_composition_theorem",
+            "tensor_composition_route_demo"
+          ],
+          "target_refactor": "monoidal_composition_obligation",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        },
+        {
+          "id": "unitary_context_map_import",
+          "import_status": "open_obligation",
+          "evidence_refs": [
+            "wigner_reversible_inheritance_theorem",
+            "unitary_network_probability_demo"
+          ],
+          "target_refactor": "reversible_inheritance_obligation",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        },
+        {
+          "id": "action_phase_hbar_bridge",
+          "import_status": "bridge_assumption_or_blocked",
+          "evidence_refs": [
+            "hbar_I",
+            "calibrated_hbar_I",
+            "first_principles_hbar_lock"
+          ],
+          "target_refactor": "first_principles_action_scale_obligation",
+          "proof_boundary": "not_derived_from_idt_primitives"
+        }
+      ],
+      "expected_boundary_status": "imports_explicit",
+      "forbidden_upgrades": [
+        "does_not_treat_complex_carrier_as_primitive",
+        "does_not_treat_born_rule_as_primitive",
+        "does_not_treat_hilbert_space_as_derived",
+        "does_not_convert_calibrated_hbar_to_first_principles",
+        "does_not_close_full_QM_I"
       ]
     },
     {

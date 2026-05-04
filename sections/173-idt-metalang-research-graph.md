@@ -438,3 +438,53 @@ yet implemented as a generic kernel, so the current status is only:
 Status:
 
 `idt_structural_compression_candidate_map_added`
+
+### 173.10. Foundation Import Boundary
+
+The base layer must distinguish genuine IDT primitives from useful QM imports.
+The carrier-neutral primitive core is restricted here to history space, event
+algebra, readout-context family, and inheritance-act family. The current
+finite-QM programme still imports several structures:
+
+1. complex coherent amplitudes;
+2. a positive distinguishability kernel;
+3. a quadratic actualization measure;
+4. Schur-style inheritance update;
+5. tensor/product composition;
+6. unitary context maps;
+7. an action-phase bridge through `calibrated_hbar_I` while `hbar_I` remains
+   blocked.
+
+The executable audit is:
+
+`foundation_import_boundary_audit_demo`
+
+Its rule is:
+
+`no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim`
+
+This does not invalidate the existing QM gates. It classifies their carrier and
+readout assumptions honestly: finite gates remain evidence for compatibility,
+not derivations of the Hilbert carrier, the universal Born rule, monoidal
+tensor composition, Wigner/unitary dynamics, or first-principles `hbar_I`.
+
+Each import records a target refactor:
+
+```text
+complex amplitude carrier -> carrier_neutral_K_I
+PSD kernel -> positivity_obligation
+quadratic measure -> born_rule_obligation
+Schur update -> inheritance_update_obligation
+tensor composition -> monoidal_composition_obligation
+unitary map -> reversible_inheritance_obligation
+hbar bridge -> first_principles_action_scale_obligation
+```
+
+The verifier also grounds the audit against live statuses: `full_QM_I` must
+remain `target`; `hbar_I` must remain `blocked`; carrier, Hilbert, Born,
+Wigner/unitary, tensor, and first-principles-hbar theorem cards must remain open
+or blocked as declared.
+
+Status:
+
+`foundation_import_boundary_audit_added`

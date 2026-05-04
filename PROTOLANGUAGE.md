@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.16.0`
+Current version: `v6.17.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -780,6 +780,15 @@ witness gate schema, conditional separator schema, frontier obstruction schema,
 calibrated anchor boundary schema, and failure-as-information schema. The
 compression rule is strict: abstractions may not change claim statuses or close
 open gaps.
+The `foundation_import_boundary_audit_demo` now separates genuine IDT
+primitives from current QM imports. The carrier-neutral primitive core is
+history space, event algebra, readout-context family, and inheritance-act
+family. Complex amplitudes, PSD kernels, quadratic actualization, Schur update,
+tensor composition, unitary context maps, and the calibrated action-phase bridge
+are recorded as imports, assumptions, open obligations, or bridge/blocked
+objects, not as primitive derivations. The verifier now rejects relabeling these
+imports as primitives or as completed
+Hilbert/Born/tensor/unitary/first-principles-`hbar_I` derivations.
 
 ---
 

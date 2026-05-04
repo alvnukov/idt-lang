@@ -899,6 +899,72 @@ IDT_STRUCTURAL_COMPRESSION_RESULTS = (
     "implemented_kernel",
 )
 
+FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE = (
+    "history_space",
+    "event_algebra",
+    "readout_context_family",
+    "inheritance_act_family",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
+    "complex_amplitude_carrier",
+    "psd_distinguishability_kernel",
+    "quadratic_actualization_measure",
+    "schur_inheritance_update",
+    "tensor_composition_import",
+    "unitary_context_map_import",
+    "action_phase_hbar_bridge",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT: dict[str, str] = {
+    "complex_amplitude_carrier": "qm_import",
+    "psd_distinguishability_kernel": "core_assumption",
+    "quadratic_actualization_measure": "core_assumption",
+    "schur_inheritance_update": "core_assumption",
+    "tensor_composition_import": "open_obligation",
+    "unitary_context_map_import": "open_obligation",
+    "action_phase_hbar_bridge": "bridge_assumption_or_blocked",
+}
+
+FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT: dict[str, str] = {
+    "complex_amplitude_carrier": "carrier_neutral_K_I",
+    "psd_distinguishability_kernel": "positivity_obligation",
+    "quadratic_actualization_measure": "born_rule_obligation",
+    "schur_inheritance_update": "inheritance_update_obligation",
+    "tensor_composition_import": "monoidal_composition_obligation",
+    "unitary_context_map_import": "reversible_inheritance_obligation",
+    "action_phase_hbar_bridge": "first_principles_action_scale_obligation",
+}
+
+FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY = "not_derived_from_idt_primitives"
+
+FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES = (
+    "does_not_treat_complex_carrier_as_primitive",
+    "does_not_treat_born_rule_as_primitive",
+    "does_not_treat_hilbert_space_as_derived",
+    "does_not_convert_calibrated_hbar_to_first_principles",
+    "does_not_close_full_QM_I",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_RESULTS = (
+    "imports_explicit",
+    "failed",
+)
+
+FOUNDATION_IMPORT_BOUNDARY_SYMBOL_STATUSES: dict[str, str] = {
+    "full_QM_I": "target",
+    "hbar_I": "blocked",
+}
+
+FOUNDATION_IMPORT_BOUNDARY_THEOREM_STATUSES: dict[str, str] = {
+    "universal_carrier_selection_theorem": "open",
+    "hilbert_carrier_derivation": "blocked",
+    "universal_born_rule_theorem": "open",
+    "wigner_reversible_inheritance_theorem": "open",
+    "monoidal_tensor_composition_theorem": "open",
+    "first_principles_hbar_lock": "blocked",
+}
+
 THEOREM_CARD_ROLE_VALUES = (
     "primitive",
     "definition",
@@ -2377,6 +2443,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_idt_structural_compression_grounding(manifest))
     checks.append("IDT structural compression grounding")
+
+    issues.extend(check_foundation_import_boundary_grounding(manifest))
+    checks.append("foundation import boundary grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -5482,6 +5551,35 @@ def check_idt_structural_compression_grounding(manifest: Manifest) -> list[Issue
         if gate.gate_type != "idt_structural_compression_audit":
             continue
         issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "idt_structural_compression"))
+    return issues
+
+
+def check_foundation_import_boundary_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "foundation_import_boundary_audit":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "foundation_import_boundary"))
+        for symbol_id, expected_status in FOUNDATION_IMPORT_BOUNDARY_SYMBOL_STATUSES.items():
+            symbol = manifest.symbols.get(symbol_id)
+            if symbol is None or symbol.status != expected_status:
+                issues.append(
+                    Issue(
+                        "foundation_import_boundary_symbol_status_mismatch",
+                        f"{gate.identifier}: {symbol_id} must remain {expected_status}",
+                    )
+                )
+        for theorem_id, expected_status in FOUNDATION_IMPORT_BOUNDARY_THEOREM_STATUSES.items():
+            card = cards_by_id.get(theorem_id)
+            if card is None or card.proof_status != expected_status:
+                issues.append(
+                    Issue(
+                        "foundation_import_boundary_theorem_status_mismatch",
+                        f"{gate.identifier}: {theorem_id} must remain {expected_status}",
+                    )
+                )
     return issues
 
 
@@ -12417,6 +12515,204 @@ def check_idt_structural_compression_audit_gate(gate: FiniteGate) -> list[Issue]
     return []
 
 
+def check_foundation_import_boundary_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "primitive_vs_qm_import_boundary":
+        return [
+            Issue(
+                "foundation_import_boundary_target_mismatch",
+                f"{gate.identifier}: target_scope must be primitive_vs_qm_import_boundary",
+            )
+        ]
+    boundary_rule = require_string(gate.payload.get("boundary_rule"), f"{gate.identifier}.boundary_rule")
+    if boundary_rule != "no_qm_import_may_be_counted_as_idt_primitive_or_derived_claim":
+        return [
+            Issue(
+                "foundation_import_boundary_rule_mismatch",
+                f"{gate.identifier}: boundary_rule must forbid primitive/derived relabels of QM imports",
+            )
+        ]
+
+    primitive_core = require_list(gate.payload.get("primitive_core"), f"{gate.identifier}.primitive_core")
+    if len(primitive_core) != len(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        raise ManifestError(f"{gate.identifier}: primitive_core must cover every carrier-neutral primitive")
+    primitive_seen: set[str] = set()
+    for index, item in enumerate(primitive_core):
+        primitive_entry = require_mapping(item, f"{gate.identifier}.primitive_core[{index}]")
+        primitive_id = require_string(
+            primitive_entry.get("id"),
+            f"{gate.identifier}.primitive_core[{index}].id",
+        )
+        primitive_status = require_string(
+            primitive_entry.get("primitive_status"),
+            f"{gate.identifier}.primitive_core[{index}].primitive_status",
+        )
+        carrier_status = require_string(
+            primitive_entry.get("carrier_status"),
+            f"{gate.identifier}.primitive_core[{index}].carrier_status",
+        )
+        evidence_refs = require_string_tuple(
+            primitive_entry.get("evidence_refs", []),
+            f"{gate.identifier}.primitive_core[{index}].evidence_refs",
+        )
+        if primitive_id not in FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE:
+            return [
+                Issue(
+                    "foundation_import_boundary_unknown_primitive",
+                    f"{gate.identifier}: unknown carrier-neutral primitive {primitive_id}",
+                )
+            ]
+        if primitive_id in primitive_seen:
+            return [
+                Issue(
+                    "foundation_import_boundary_duplicate_primitive",
+                    f"{gate.identifier}: duplicate carrier-neutral primitive {primitive_id}",
+                )
+            ]
+        if primitive_status != "idt_primitive":
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_status_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain an IDT primitive",
+                )
+            ]
+        if carrier_status != "carrier_neutral":
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_carrier_mismatch",
+                    f"{gate.identifier}: {primitive_id} must remain carrier-neutral",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_evidence_missing",
+                    f"{gate.identifier}: {primitive_id} must cite evidence refs",
+                )
+            ]
+        primitive_seen.add(primitive_id)
+
+    missing_primitives = sorted(set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE) - primitive_seen)
+    if missing_primitives:
+        return [
+            Issue(
+                "foundation_import_boundary_primitive_missing",
+                f"{gate.identifier}: missing carrier-neutral primitives: {', '.join(missing_primitives)}",
+            )
+        ]
+
+    imports = require_list(gate.payload.get("imports"), f"{gate.identifier}.imports")
+    if len(imports) != len(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS):
+        raise ManifestError(f"{gate.identifier}: imports must cover every foundation import boundary entry")
+
+    seen: set[str] = set()
+    for index, item in enumerate(imports):
+        import_entry = require_mapping(item, f"{gate.identifier}.imports[{index}]")
+        import_id = require_string(import_entry.get("id"), f"{gate.identifier}.imports[{index}].id")
+        import_status = require_string(
+            import_entry.get("import_status"),
+            f"{gate.identifier}.imports[{index}].import_status",
+        )
+        evidence_refs = require_string_tuple(
+            import_entry.get("evidence_refs", []),
+            f"{gate.identifier}.imports[{index}].evidence_refs",
+        )
+        target_refactor = require_string(
+            import_entry.get("target_refactor"),
+            f"{gate.identifier}.imports[{index}].target_refactor",
+        )
+        proof_boundary = require_string(
+            import_entry.get("proof_boundary"),
+            f"{gate.identifier}.imports[{index}].proof_boundary",
+        )
+        if import_id not in FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS:
+            return [
+                Issue(
+                    "foundation_import_boundary_unknown_import",
+                    f"{gate.identifier}: unknown foundation import {import_id}",
+                )
+            ]
+        if import_id in seen:
+            return [
+                Issue(
+                    "foundation_import_boundary_duplicate_import",
+                    f"{gate.identifier}: duplicate foundation import {import_id}",
+                )
+            ]
+        if import_status == "primitive_derivation":
+            return [
+                Issue(
+                    "foundation_import_boundary_primitive_relabel",
+                    f"{gate.identifier}: {import_id} cannot be classified as a primitive derivation",
+                )
+            ]
+        expected_status = FOUNDATION_IMPORT_BOUNDARY_EXPECTED_STATUS_BY_IMPORT[import_id]
+        if import_status != expected_status:
+            return [
+                Issue(
+                    "foundation_import_boundary_status_mismatch",
+                    f"{gate.identifier}: {import_id} must be classified as {expected_status}",
+                )
+            ]
+        expected_target_refactor = FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT[import_id]
+        if target_refactor != expected_target_refactor:
+            return [
+                Issue(
+                    "foundation_import_boundary_target_refactor_mismatch",
+                    f"{gate.identifier}: {import_id} must target {expected_target_refactor}",
+                )
+            ]
+        if proof_boundary != FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY:
+            return [
+                Issue(
+                    "foundation_import_boundary_proof_boundary_mismatch",
+                    f"{gate.identifier}: {import_id} must be marked as not derived from IDT primitives",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "foundation_import_boundary_evidence_missing",
+                    f"{gate.identifier}: {import_id} must cite evidence refs",
+                )
+            ]
+        seen.add(import_id)
+
+    missing = sorted(set(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS) - seen)
+    if missing:
+        return [
+            Issue(
+                "foundation_import_boundary_import_missing",
+                f"{gate.identifier}: missing foundation import entries: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_boundary_status"),
+        f"{gate.identifier}.expected_boundary_status",
+    )
+    if expected_status not in FOUNDATION_IMPORT_BOUNDARY_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_boundary_status is unknown")
+    if expected_status != "imports_explicit":
+        return [
+            Issue(
+                "foundation_import_boundary_expected_status_mismatch",
+                f"{gate.identifier}: foundation imports must remain explicit, not closed",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "foundation_import_boundary_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the primitive/import boundary",
+            )
+        ]
+    return []
+
+
 def check_dimensionful_anchor_policy_gate(gate: FiniteGate) -> list[Issue]:
     entries = require_list(gate.payload.get("entries"), f"{gate.identifier}.entries")
     if not entries:
@@ -18093,6 +18389,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "research_graph_contract": check_research_graph_contract_gate,
     "qm_proof_anti_hallucination_audit": check_qm_proof_anti_hallucination_audit_gate,
     "idt_structural_compression_audit": check_idt_structural_compression_audit_gate,
+    "foundation_import_boundary_audit": check_foundation_import_boundary_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
     "bridge_assumption_boundary": check_bridge_assumption_boundary_gate,

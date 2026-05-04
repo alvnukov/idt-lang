@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.16.0`.
+Current theory version: `v6.17.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -65,6 +65,11 @@ The main current successes are bounded and methodological:
    partial rather than complete. Its evidence references must resolve to real
    manifest objects, schema surfaces, verifier checks, or Markdown sections.
    Full-QM frontier blockers now have first-class theorem cards.
+8. The foundation import boundary is executable. The verifier separates current
+   QM imports such as complex amplitudes, PSD kernels, quadratic readout,
+   tensor/product composition, unitary maps, and calibrated action phase from a
+   carrier-neutral primitive core: history space, event algebra, readout
+   contexts, and inheritance acts.
 
 ## What The Verifier Catches
 
@@ -76,7 +81,9 @@ The verifier is designed to reject progress by relabeling. It blocks:
 4. a bridge assumption relabeled as a derived readout;
 5. SPARC residual claims that reuse the observed residual as their own source;
 6. full-QM claims while the action scale, generator, apparatus, and facticity
-   spine remain incomplete.
+   spine remain incomplete;
+7. relabeling current QM imports as primitive or first-principles derived
+   structures.
 
 ## What Is Explicitly Not Claimed
 
@@ -89,6 +96,9 @@ IDT currently does not claim:
 4. an explanation of dark matter or dark energy;
 5. experimental confirmation as a replacement theory;
 6. a successful SPARC galaxy-rotation fit.
+7. a derivation of complex Hilbert space, the universal Born rule, tensor
+   composition, unitary dynamics, or first-principles `hbar_I` from IDT
+   primitives.
 
 ## Derived, Conditional, Calibrated, Blocked
 
