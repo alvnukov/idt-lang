@@ -3134,6 +3134,35 @@
       ]
     },
     {
+      "id": "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+      "statement": "For a nonfinite or unwitnessed GPT residual, if IDT supplies a uniform finite route-witness bound, limit preservation of facticized readout separation, and no emergent unwitnessed composite invariant, then the residual reduces to the finite route-covered screen rather than remaining an independent carrier class.",
+      "role": "theorem",
+      "assumptions": [
+        "uniform_finite_route_witness_bound",
+        "limit_preserves_facticized_readout_separation",
+        "no_emergent_unwitnessed_composite_invariant"
+      ],
+      "dependencies": [
+        "nonfinite_gpt_residual_compactness_demo",
+        "broader_generic_gpt_cone_frontier_demo",
+        "finite_route_coverage_reduces_broader_generic_gpt_cone"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "nonfinite_gpt_residual_compactness_demo",
+      "known_failures": [
+        "uniform finite route-witness bound is not yet derived from IDT primitives",
+        "no-emergent-joint-only-invariant condition is not yet derived from IDT primitives",
+        "does not prove universal carrier selection"
+      ],
+      "physical_scope": "Conditional compactness route for eliminating the nonfinite or unwitnessed GPT carrier residual.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_nonfinite_generic_gpt_residual_without_IDT_derivations"
+      ]
+    },
+    {
       "id": "route_witness_completeness_implies_tomographic_state_effect_duality",
       "statement": "For a finite route-closed GPT subtheory, if route witnesses are complete, no effect-cone degrees are unwitnessed, a local-tomographic state basis is fixed, and the state-effect witness matrix has full column rank, then effects separate stable state parameters and tomographic state-effect duality holds for that finite route.",
       "role": "theorem",
@@ -3199,9 +3228,12 @@
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
-      "assumptions": ["QM_EXPERIMENT_REQUIRED_PRIMITIVES"],
+      "assumptions": [
+        "QM_EXPERIMENT_REQUIRED_PRIMITIVES"
+      ],
       "dependencies": [
         "carrier_universal_quantifier_frontier_demo",
+        "nonfinite_gpt_residual_frontier_demo",
         "carrier_selection_proof_route_demo",
         "carrier_selection_frontier_demo",
         "generic_gpt_closure_separator_demo",
@@ -3211,10 +3243,12 @@
       "verifier": "full_qm_closure_frontier_demo",
       "known_failures": [
         "carrier not selected by current finite screens",
-        "universal carrier quantifier remains open over route-closed and broader generic GPT classes"
+        "universal carrier quantifier remains open over the nonfinite or unwitnessed generic GPT residual"
       ],
       "physical_scope": "Full-QM carrier derivation.",
-      "forbidden_claims": ["complex Hilbert carrier derived from IDT"]
+      "forbidden_claims": [
+        "complex Hilbert carrier derived from IDT"
+      ]
     },
     {
       "id": "hilbert_carrier_derivation",
@@ -4575,6 +4609,68 @@
       ]
     },
     {
+      "id": "nonfinite_gpt_residual_compactness_demo",
+      "type": "nonfinite_gpt_residual_compactness",
+      "target_theorem_card": "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+      "assumptions": [
+        "uniform_finite_route_witness_bound",
+        "limit_preserves_facticized_readout_separation",
+        "no_emergent_unwitnessed_composite_invariant"
+      ],
+      "conclusions": [
+        "nonfinite_limit_residual_reduces_to_finite_route_screen",
+        "unwitnessed_residual_rejected_by_effect_separation"
+      ],
+      "evidence_refs": [
+        "broader_generic_gpt_cone_frontier_demo",
+        "finite_route_coverage_reduces_broader_generic_gpt_cone",
+        "route_witness_completeness_implies_tomographic_state_effect_duality"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_nonfinite_generic_gpt_residual_without_IDT_derivations"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
+      "id": "nonfinite_gpt_residual_frontier_demo",
+      "type": "nonfinite_gpt_residual_frontier",
+      "target_class": "nonfinite_unwitnessed_residual",
+      "obligations": [
+        {
+          "id": "uniform_route_witness_compactness",
+          "status": "conditional_proof",
+          "evidence_refs": [
+            "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+            "nonfinite_gpt_residual_compactness_demo"
+          ],
+          "open_gap": "The compactness route is conditional until IDT derives the required uniform bound and no-emergence assumptions."
+        },
+        {
+          "id": "idt_derivation_of_uniform_witness_bound",
+          "status": "open",
+          "evidence_refs": [
+            "broader_generic_gpt_cone_frontier_demo",
+            "carrier_universal_quantifier_frontier_demo"
+          ],
+          "open_gap": "IDT has not yet derived a uniform finite witness bound for arbitrary nonfinite GPT carrier families."
+        },
+        {
+          "id": "idt_derivation_of_no_emergent_joint_only_invariants",
+          "status": "open",
+          "evidence_refs": [
+            "context_product_exhaustion_implies_local_tomography",
+            "real_hilbert_composite_hidden_joint_invariant",
+            "broader_generic_gpt_cone_frontier_demo"
+          ],
+          "open_gap": "IDT has not yet derived a universal exclusion of emergent joint-only invariants beyond the finite witness screen."
+        }
+      ],
+      "expected_residual_status": "open"
+    },
+    {
       "id": "idt_bounded_correlation_demo",
       "type": "idt_bounded_correlation",
       "tolerance": 1.0e-10,
@@ -4883,6 +4979,7 @@
           "evidence_refs": [
             "finite_route_coverage_reduces_broader_generic_gpt_cone",
             "broader_generic_gpt_cone_frontier_demo",
+            "nonfinite_gpt_residual_frontier_demo",
             "generic_gpt_closure_rejects_unconstrained_cone",
             "carrier_selection_frontier_demo"
           ],
@@ -4992,11 +5089,13 @@
           "evidence_refs": [
             "generic_gpt_classification_lemma_route_demo",
             "generic_gpt_closure_rejects_unconstrained_cone",
+            "finite_route_coverage_reduces_broader_generic_gpt_cone",
+            "nonfinite_gpt_residual_frontier_demo",
             "generic_gpt_closure_theorem_demo",
             "generic_gpt_closure_separator_demo",
             "carrier_selection_frontier_demo"
           ],
-          "open_gap": "Generic GPT closure now has a conditional unconstrained-cone rejection theorem, but route-closed and generic GPT underdetermination still block universal carrier selection."
+          "open_gap": "Generic GPT closure now rejects unconstrained and finite route-incomplete slices, while finite route-closed slices collapse to complex-Hilbert-like structure. The nonfinite or unwitnessed residual still blocks universal carrier selection."
         }
       ],
       "expected_proof_status": "open"
@@ -5166,7 +5265,7 @@
       ],
       "expected_underdetermined_count": 1,
       "open_generalization_gaps": [
-        "generic GPT cone remains underdetermined",
+        "nonfinite or unwitnessed generic GPT residual remains open",
         "complex Hilbert carrier is not selected from IDT primitives alone"
       ],
       "expected_lemma_status": "conditional_proof"
@@ -5504,21 +5603,45 @@
         "field_mode_continuum_limit"
       ],
       "components": [
-        {"requirement": "universal_carrier_selection_theorem", "status": "open"},
-        {"requirement": "hilbert_carrier_derivation", "status": "blocked"},
-        {"requirement": "universal_born_rule_theorem", "status": "open"},
-        {"requirement": "wigner_reversible_inheritance_theorem", "status": "open"},
-        {"requirement": "apparatus_facticity_theorem", "status": "open"},
-        {"requirement": "monoidal_tensor_composition_theorem", "status": "open"},
-        {"requirement": "first_principles_hbar_lock", "status": "blocked"},
-        {"requirement": "field_mode_continuum_limit", "status": "open"}
+        {
+          "requirement": "universal_carrier_selection_theorem",
+          "status": "open"
+        },
+        {
+          "requirement": "hilbert_carrier_derivation",
+          "status": "blocked"
+        },
+        {
+          "requirement": "universal_born_rule_theorem",
+          "status": "open"
+        },
+        {
+          "requirement": "wigner_reversible_inheritance_theorem",
+          "status": "open"
+        },
+        {
+          "requirement": "apparatus_facticity_theorem",
+          "status": "open"
+        },
+        {
+          "requirement": "monoidal_tensor_composition_theorem",
+          "status": "open"
+        },
+        {
+          "requirement": "first_principles_hbar_lock",
+          "status": "blocked"
+        },
+        {
+          "requirement": "field_mode_continuum_limit",
+          "status": "open"
+        }
       ],
       "obstruction_ledger": [
         {
           "requirement": "universal_carrier_selection_theorem",
           "blocker_kind": "carrier_selection",
-          "next_proof_obligation": "Promote conditional carrier separator lemmas to a formal universal carrier-selection theorem or keep the theorem open.",
-          "forbidden_upgrade": "Do not claim complex Hilbert carrier selection while generic GPT underdetermination remains."
+          "next_proof_obligation": "Close nonfinite_gpt_residual_frontier_demo by deriving a uniform route-witness bound and excluding emergent joint-only invariants from IDT primitives, or keep the theorem open.",
+          "forbidden_upgrade": "Do not claim complex Hilbert carrier selection while the nonfinite or unwitnessed GPT residual remains open."
         },
         {
           "requirement": "hilbert_carrier_derivation",

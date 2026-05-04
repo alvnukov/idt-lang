@@ -25,6 +25,19 @@ SAFE_EDIT_FIELDS: dict[str, frozenset[str]] = {
     "theorem_cards": frozenset({"proof_status", "physical_scope"}),
 }
 
+LIST_OBJECT_COLLECTIONS = frozenset(
+    {
+        "equations",
+        "derivations",
+        "forbidden_paths",
+        "qm_experiments",
+        "qm_universal_patterns",
+        "qm_core_proof_obligations",
+        "theorem_cards",
+        "finite_gates",
+    }
+)
+
 STATUS_VALUES = frozenset(
     {
         "primitive",
@@ -44,6 +57,7 @@ STATUS_VALUES = frozenset(
 PROOF_STATUS_VALUES = frozenset(
     {
         "formal_proof",
+        "conditional_proof",
         "finite_verifier_pass",
         "numerical_evidence",
         "calibrated_match",
@@ -146,6 +160,71 @@ def edit_field(path: Path, collection: str, identifier: str, field: str, value: 
         start, end = find_object_line_range(text.splitlines(), collection, identifier)
         updated = replace_string_field(text, start, end, field, old_value, value)
         atomic_write_text(path, updated)
+        return manifest_sha256(path)
+
+
+def add_object(path: Path, collection: str, raw_object: str, after_id: str, expect_sha: str) -> str:
+    if collection not in LIST_OBJECT_COLLECTIONS:
+        raise GraphQueryError(f"{collection!r} is not an appendable list-object collection")
+    new_object = parse_json_mapping(raw_object, "object")
+    identifier = require_string(new_object.get("id"), "object.id")
+    with manifest_lock(path):
+        before_sha = manifest_sha256(path)
+        if before_sha != expect_sha:
+            raise GraphQueryError(f"manifest sha mismatch: expected {expect_sha}, got {before_sha}")
+        manifest = load_json(path)
+        existing = [
+            item
+            for item in iter_graph_objects(manifest)
+            if item.collection == collection and item.identifier == identifier
+        ]
+        if existing:
+            raise GraphQueryError(f"{collection} already has object id {identifier!r}")
+        anchor = [
+            item
+            for item in iter_graph_objects(manifest)
+            if item.collection == collection and item.identifier == after_id
+        ]
+        if len(anchor) != 1:
+            raise GraphQueryError(f"expected exactly one {collection} anchor with id {after_id!r}")
+        text = path.read_text(encoding="utf-8")
+        lines = text.splitlines(keepends=True)
+        _start, end = find_object_line_range(text.splitlines(), collection, after_id)
+        anchor_has_comma = lines[end].rstrip("\n").rstrip().endswith(",")
+        if not anchor_has_comma:
+            lines[end] = lines[end].rstrip("\n") + ",\n"
+        new_block = format_list_object(new_object, trailing_comma=anchor_has_comma)
+        lines[end + 1 : end + 1] = [line + "\n" for line in new_block.splitlines()]
+        atomic_write_text(path, "".join(lines))
+        return manifest_sha256(path)
+
+
+def replace_object(path: Path, collection: str, identifier: str, raw_object: str, expect_sha: str) -> str:
+    if collection not in LIST_OBJECT_COLLECTIONS:
+        raise GraphQueryError(f"{collection!r} is not a replaceable list-object collection")
+    new_object = parse_json_mapping(raw_object, "object")
+    new_identifier = require_string(new_object.get("id"), "object.id")
+    if new_identifier != identifier:
+        raise GraphQueryError(f"replacement id {new_identifier!r} does not match target id {identifier!r}")
+    with manifest_lock(path):
+        before_sha = manifest_sha256(path)
+        if before_sha != expect_sha:
+            raise GraphQueryError(f"manifest sha mismatch: expected {expect_sha}, got {before_sha}")
+        manifest = load_json(path)
+        matches = [
+            item
+            for item in iter_graph_objects(manifest)
+            if item.collection == collection and item.identifier == identifier
+        ]
+        if len(matches) != 1:
+            raise GraphQueryError(f"expected exactly one {collection} object with id {identifier!r}")
+        text = path.read_text(encoding="utf-8")
+        lines = text.splitlines(keepends=True)
+        start, end = find_object_line_range(text.splitlines(), collection, identifier)
+        has_comma = lines[end].rstrip("\n").rstrip().endswith(",")
+        new_block = format_list_object(new_object, trailing_comma=has_comma)
+        lines[start : end + 1] = [line + "\n" for line in new_block.splitlines()]
+        atomic_write_text(path, "".join(lines))
         return manifest_sha256(path)
 
 
@@ -314,10 +393,34 @@ def require_mapping(value: object, field: str) -> dict[str, object]:
     return output
 
 
+def require_string(value: object, field: str) -> str:
+    if not isinstance(value, str):
+        raise GraphQueryError(f"{field} must be a string")
+    if not value.strip():
+        raise GraphQueryError(f"{field} must not be empty")
+    return value
+
+
 def require_list(value: object, field: str) -> list[object]:
     if not isinstance(value, list):
         raise GraphQueryError(f"{field} must be a list")
     return list(value)
+
+
+def parse_json_mapping(raw: str, field: str) -> dict[str, object]:
+    try:
+        value = json.loads(raw)
+    except json.JSONDecodeError as error:
+        raise GraphQueryError(f"{field} must be valid JSON: {error}") from error
+    return require_mapping(value, field)
+
+
+def format_list_object(value: dict[str, object], trailing_comma: bool) -> str:
+    raw = json.dumps(value, indent=2)
+    lines = ["    " + line for line in raw.splitlines()]
+    if trailing_comma:
+        lines[-1] += ","
+    return "\n".join(lines)
 
 
 def print_json(value: object, output: TextIO) -> None:
@@ -345,6 +448,18 @@ def build_parser() -> argparse.ArgumentParser:
     edit_parser.add_argument("--field", required=True)
     edit_parser.add_argument("--value", required=True)
     edit_parser.add_argument("--expect-sha", required=True)
+
+    add_parser = subparsers.add_parser("add-object", help="Atomically add one JSON object after an existing id.")
+    add_parser.add_argument("--collection", required=True)
+    add_parser.add_argument("--after-id", required=True)
+    add_parser.add_argument("--json", required=True)
+    add_parser.add_argument("--expect-sha", required=True)
+
+    replace_parser = subparsers.add_parser("replace-object", help="Atomically replace one JSON object by id.")
+    replace_parser.add_argument("--collection", required=True)
+    replace_parser.add_argument("--id", required=True)
+    replace_parser.add_argument("--json", required=True)
+    replace_parser.add_argument("--expect-sha", required=True)
     return parser
 
 
@@ -371,6 +486,24 @@ def main(argv: Sequence[str] | None = None, output: TextIO | None = None) -> int
                 args.id,
                 args.field,
                 args.value,
+                args.expect_sha,
+            )
+            print_json({"ok": True, "sha256": new_sha}, stream)
+        elif args.command == "add-object":
+            new_sha = add_object(
+                manifest_path,
+                args.collection,
+                args.json,
+                args.after_id,
+                args.expect_sha,
+            )
+            print_json({"ok": True, "sha256": new_sha}, stream)
+        elif args.command == "replace-object":
+            new_sha = replace_object(
+                manifest_path,
+                args.collection,
+                args.id,
+                args.json,
                 args.expect_sha,
             )
             print_json({"ok": True, "sha256": new_sha}, stream)

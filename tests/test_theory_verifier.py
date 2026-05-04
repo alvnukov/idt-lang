@@ -33,6 +33,10 @@ from theory_verifier.core import (
     BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS,
     BROADER_GENERIC_GPT_THEOREM_CONCLUSIONS,
     BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
+    NONFINITE_GPT_RESIDUAL_COMPACTNESS_ASSUMPTIONS,
+    NONFINITE_GPT_RESIDUAL_COMPACTNESS_CONCLUSIONS,
+    NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES,
+    NONFINITE_GPT_RESIDUAL_FRONTIER_OBLIGATIONS,
     GENERIC_GPT_THEOREM_ASSUMPTIONS,
     GENERIC_GPT_THEOREM_CONCLUSIONS,
     GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
@@ -3502,6 +3506,59 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"broader_generic_gpt_frontier_status_mismatch"})
 
+    def test_nonfinite_gpt_residual_frontier_rejects_premature_closure(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_nonfinite_residual_frontier",
+                        "type": "nonfinite_gpt_residual_frontier",
+                        "target_class": "nonfinite_unwitnessed_residual",
+                        "obligations": [
+                            {
+                                "id": obligation,
+                                "status": "conditional_proof" if index == 0 else "open",
+                                "evidence_refs": ["broader_generic_gpt_cone_frontier_demo"],
+                                "open_gap": "still open",
+                            }
+                            for index, obligation in enumerate(NONFINITE_GPT_RESIDUAL_FRONTIER_OBLIGATIONS)
+                        ],
+                        "expected_residual_status": "closed",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_frontier_status_mismatch"})
+
+    def test_nonfinite_gpt_residual_compactness_rejects_formal_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_nonfinite_residual_compactness",
+                        "type": "nonfinite_gpt_residual_compactness",
+                        "target_theorem_card": "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+                        "assumptions": list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_ASSUMPTIONS),
+                        "conclusions": list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_CONCLUSIONS),
+                        "evidence_refs": ["broader_generic_gpt_cone_frontier_demo"],
+                        "forbidden_upgrades": list(NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -4433,6 +4490,36 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"broader_generic_gpt_theorem_card_status_mismatch"})
+
+    def test_nonfinite_gpt_residual_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "uniform_route_witness_compactness_closes_nonfinite_gpt_residual",
+                        "statement": "compactness route closes the nonfinite residual",
+                        "role": "theorem",
+                        "assumptions": list(NONFINITE_GPT_RESIDUAL_COMPACTNESS_ASSUMPTIONS),
+                        "dependencies": [
+                            "nonfinite_gpt_residual_compactness_demo",
+                            "broader_generic_gpt_cone_frontier_demo",
+                            "finite_route_coverage_reduces_broader_generic_gpt_cone",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "nonfinite_gpt_residual_compactness_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"nonfinite_gpt_residual_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

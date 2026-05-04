@@ -658,6 +658,11 @@ The `finite_route_coverage_reduces_broader_generic_gpt_cone` theorem card and
 broader-GPT slices are rejected, finite route-closed slices collapse, and the
 remaining nonfinite or unwitnessed residual keeps universal carrier selection
 open.
+The `uniform_route_witness_compactness_closes_nonfinite_gpt_residual` theorem
+card and `nonfinite_gpt_residual_frontier_demo` now turn that residual into
+explicit proof obligations: derive a uniform finite route-witness bound and
+exclude emergent joint-only invariants from IDT primitives, or keep universal
+carrier selection open.
 The `route_closed_gpt_subtheory_frontier_demo` now splits the route-closed GPT
 blocker into two proof obligations: tomographic state-effect duality and
 reversible filter closure.
