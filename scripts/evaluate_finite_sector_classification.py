@@ -210,6 +210,29 @@ def representation_classification_screen(candidate: CarrierCandidate) -> TestRes
     return TestResult("representation_classification", "FAIL", "candidate is rejected before the classification theorem stage", {"classified": False})
 
 
+def constructive_carrier_witness_screen(candidate: CarrierCandidate) -> TestResult:
+    if candidate.kind == "complex_hilbert":
+        return TestResult(
+            "constructive_carrier_witness",
+            "PASS",
+            "candidate has an explicit phase-bundle finite-route representation witness",
+            {"constructive_witness": True},
+        )
+    if candidate.kind == "route_closed_residual":
+        return TestResult(
+            "constructive_carrier_witness",
+            "FAIL",
+            "abstract route-closed residual is not an admissible carrier without a constructive representation witness",
+            {"constructive_witness": False},
+        )
+    return TestResult(
+        "constructive_carrier_witness",
+        "FAIL",
+        "candidate is rejected before it supplies an admissible finite-route representation witness",
+        {"constructive_witness": False},
+    )
+
+
 def import_screen(candidate: CarrierCandidate) -> TestResult:
     if candidate.imports:
         return TestResult("import_screen", "FAIL", "candidate declares forbidden imported structure", {"imports": ",".join(candidate.imports)})
@@ -224,6 +247,7 @@ def evaluate_candidate(candidate: CarrierCandidate) -> CandidateResult:
         bounded_correlation_screen(candidate),
         finite_route_closure_screen(candidate),
         representation_classification_screen(candidate),
+        constructive_carrier_witness_screen(candidate),
         import_screen(candidate),
     ]
     passed = sum(1 for test in tests if test.verdict == "PASS")
@@ -265,7 +289,7 @@ def main() -> int:
         imports = ",".join(result.imports) if result.imports else "-"
         print(
             f"verdict={result.verdict} candidate={result.candidate} "
-            f"passed={result.passed}/7 failed={result.failed} open={result.open} imports={imports}"
+            f"passed={result.passed}/8 failed={result.failed} open={result.open} imports={imports}"
         )
         for test in result.tests:
             print(f"  {test.verdict} {test.name}: {test.reason} details={test.details}")

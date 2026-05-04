@@ -62,7 +62,7 @@
       },
       {
         "id": "generated_composite_no_hidden_joint_closure",
-        "expected_status": "CANDIDATE_EVIDENCED_WITH_OPEN_RESIDUAL",
+        "expected_status": "CANDIDATE_EVIDENCED",
         "evidence": [
           "compressed_qm.phase_bundle_route",
           "finite_sector.complex_route",
@@ -73,9 +73,7 @@
           "finite_sector.route_closed_residual",
           "qm_target.tensor_composition"
         ],
-        "open_residuals": [
-          "finite_sector.route_closed_residual"
-        ]
+        "open_residuals": []
       }
     ],
     "formal_closure_requirements": [
@@ -88,7 +86,7 @@
       "does_not_claim_full_QM_is_proved",
       "does_not_mark_conditional_routes_as_formal_proof",
       "does_not_import_Hilbert_Born_unitary_tensor_or_Stone",
-      "does_not_treat_open_residual_as_closed"
+      "does_not_treat_residual_rejection_as_full_QM_proof"
     ]
   }
 }

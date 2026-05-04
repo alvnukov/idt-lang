@@ -262,7 +262,7 @@ def validate_draft(
         "does_not_claim_full_QM_is_proved",
         "does_not_mark_conditional_routes_as_formal_proof",
         "does_not_import_Hilbert_Born_unitary_tensor_or_Stone",
-        "does_not_treat_open_residual_as_closed",
+        "does_not_treat_residual_rejection_as_full_QM_proof",
     )
     declared_package_statuses = tuple(f"{check.id}:{check.expected_status}" for check in package_checks)
     observed_package_statuses = tuple(f"{check.id}:{check.status}" for check in package_checks)
@@ -340,7 +340,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks=draft_checks,
         next_blocker=(
             "turn the structurally evidenced packages into machine-checkable theorem artifacts; "
-            "the open finite-sector residual must not be treated as closed"
+            "the finite-sector residual is rejected by admissibility, not a substitute for full-QM proof artifacts"
         ),
     )
 

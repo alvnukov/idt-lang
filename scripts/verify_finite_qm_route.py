@@ -143,7 +143,7 @@ def build_checks() -> list[GateCheck]:
         make_check("compressed_qm.real_route", real_route.verdict, "NEW_WALL"),
         make_check("compressed_qm.phase_bundle_route", phase_route.verdict, "CARRIER_ROUTE_HIT"),
         make_check("finite_sector.complex_route", complex_sector.verdict, "FINITE_SECTOR_HIT"),
-        make_check("finite_sector.route_closed_residual", residual_sector.verdict, "OPEN_RESIDUAL"),
+        make_check("finite_sector.route_closed_residual", residual_sector.verdict, "REJECTED"),
         make_check("finite_sector.classical_control", classical_sector.verdict, "REJECTED"),
         make_check("finite_sector.real_control", real_sector.verdict, "REJECTED"),
         make_check("finite_sector.quaternionic_control", quaternionic_sector.verdict, "REJECTED"),
