@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.17.0`
+Current version: `v6.18.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -789,6 +789,13 @@ are recorded as imports, assumptions, open obligations, or bridge/blocked
 objects, not as primitive derivations. The verifier now rejects relabeling these
 imports as primitives or as completed
 Hilbert/Born/tensor/unitary/first-principles-`hbar_I` derivations.
+The `formal_proof_ledger_audit_demo` now makes proof verification executable:
+every current `formal_proof` marker must be covered by a proof card with
+machine-checkable artifacts and checker commands. The current covered claims are
+finite IDT-Core/meta-invariants only. The proof pipeline runs the Lean 4 kernel
+against `Proofs/IDTCore.lean` and reruns the IDT verifier; this does not upgrade
+QM, Hilbert space, Born rule, tensor composition, unitary dynamics, or
+first-principles `hbar_I`.
 
 ---
 

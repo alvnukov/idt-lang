@@ -64,6 +64,10 @@ Current auditable results:
   are grounded against real manifest objects, schema surfaces, verifier checks,
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
+- proof-verification ledger: current `formal_proof` markers are finite
+  IDT-Core/meta-invariants only, and they must be covered by proof cards with
+  machine-checkable artifacts and commands. The current proof pipeline runs
+  Lean 4 plus the IDT verifier.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants
@@ -78,6 +82,9 @@ of nature.
 - `sections/` — modular theory body.
 - `scripts/graph_query.py` — file-based research graph query and cautious edit
   helper for the verifier manifest.
+- `scripts/check_proofs.py` — runs proof-card checker commands.
+- `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
+- `Proofs/` — Lean proof artifacts.
 - `theory_verifier/` — executable manifest verifier.
 - `theory_verifier_manifest_v6_0.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.
@@ -108,6 +115,18 @@ python3 scripts/fetch_sparc_data.py
 ```
 
 Then run:
+
+```bash
+python3 scripts/check_all.py
+```
+
+The proof-only lane is:
+
+```bash
+python3 scripts/check_proofs.py
+```
+
+The underlying checks are:
 
 ```bash
 python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json

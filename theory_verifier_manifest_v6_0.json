@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.17.0",
+  "theory_version": "v6.18.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4970,8 +4970,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 228,
-      "expected_gate_type_digest": "64cacc24c89f350035807c64e3b3c622ea24edcd58c281808e746afe6884fe28",
+      "expected_gate_type_count": 229,
+      "expected_gate_type_digest": "f7cd7e86f33c5f81e86af17b0f1f6bb6e54eb730aa9b54c021705ec33a853454",
       "expected_component_status": "formal_proof"
     },
     {
@@ -7710,6 +7710,74 @@
         "does_not_convert_calibrated_hbar_to_first_principles",
         "does_not_close_full_QM_I"
       ]
+    },
+    {
+      "id": "formal_proof_ledger_audit_demo",
+      "type": "formal_proof_ledger_audit",
+      "target_scope": "current_formal_proof_claims",
+      "proof_cards": [
+        {
+          "id": "idt_core_current_formal_claims_machine_checked",
+          "claim_refs": [
+            "finite_gates.idt_core_bounded_arity_frontier_demo.bounded_correlation_arity_bound.status",
+            "finite_gates.idt_core_bounded_arity_frontier_demo.context_product_arity_bound.status",
+            "finite_gates.idt_core_bounded_arity_frontier_demo.recoverable_filter_arity_bound.status",
+            "finite_gates.idt_core_bounded_arity_frontier_demo.state_effect_witness_arity_bound.status",
+            "finite_gates.idt_core_finite_signature_frontier_demo.finite_claim_role_vocabulary.status",
+            "finite_gates.idt_core_finite_signature_frontier_demo.finite_gate_type_registry.status",
+            "finite_gates.idt_core_finite_signature_frontier_demo.finite_primitive_sort_vocabulary.status",
+            "finite_gates.idt_core_finite_signature_frontier_demo.finite_route_family_registry.status",
+            "finite_gates.idt_core_gate_type_registry_audit_demo.idt_core_gate_type_registry_audit_demo.expected_component_status",
+            "finite_gates.idt_core_no_new_primitive_effects_frontier_demo.finite_effect_registry.status",
+            "finite_gates.idt_core_no_new_primitive_effects_frontier_demo.joint_only_invariant_rejection.status",
+            "finite_gates.idt_core_no_new_primitive_effects_frontier_demo.route_closure_effect_audit.status",
+            "finite_gates.idt_core_route_generator_basis_frontier_demo.bounded_correlation_generators.status",
+            "finite_gates.idt_core_route_generator_basis_frontier_demo.context_product_generators.status",
+            "finite_gates.idt_core_route_generator_basis_frontier_demo.recoverable_filter_generators.status",
+            "finite_gates.idt_core_route_generator_basis_frontier_demo.state_effect_generators.status",
+            "finite_gates.idt_core_route_grammar_audit_demo.bounded_correlation_arity_bound.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.bounded_correlation_generators.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.context_product_arity_bound.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.context_product_generators.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.finite_effect_registry.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.recoverable_filter_arity_bound.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.recoverable_filter_generators.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.route_closure_effect_audit.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.state_effect_generators.expected_component_status",
+            "finite_gates.idt_core_route_grammar_audit_demo.state_effect_witness_arity_bound.expected_component_status",
+            "finite_gates.idt_core_semantic_no_new_effects_audit_demo.joint_only_invariant_rejection.status",
+            "finite_gates.idt_core_signature_registry_audit_demo.finite_claim_role_vocabulary.expected_component_status",
+            "finite_gates.idt_core_signature_registry_audit_demo.finite_primitive_sort_vocabulary.expected_component_status",
+            "finite_gates.idt_core_signature_registry_audit_demo.finite_route_family_registry.expected_component_status",
+            "finite_gates.uniform_witness_bound_assumption_frontier_demo.bounded_context_arity.status",
+            "finite_gates.uniform_witness_bound_assumption_frontier_demo.finite_context_signature.status",
+            "finite_gates.uniform_witness_bound_assumption_frontier_demo.finite_route_generator_basis.status"
+          ],
+          "proof_kind": "machine_checked_finite_proof",
+          "backend": "lean4",
+          "statement": "The current IDT-Core formal_proof markers are finite/meta-level claims only; they are covered by the IDT verifier and a Lean-checked proof-ledger artifact, and they do not prove QM, Hilbert space, Born rule, or hbar_I.",
+          "artifact_paths": [
+            "Proofs/IDTCore.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "idt_verifier_manifest"
+          ],
+          "scope": "current_finite_idt_core_meta_invariants",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I"
+          ],
+          "open_gaps": []
+        }
+      ],
+      "expected_ledger_status": "formal_claims_covered"
     },
     {
       "id": "phase_branch_additivity_demo",

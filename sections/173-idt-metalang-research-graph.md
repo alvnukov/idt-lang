@@ -488,3 +488,53 @@ or blocked as declared.
 Status:
 
 `foundation_import_boundary_audit_added`
+
+### 173.11. Proof Verification Ledger
+
+The word `formal_proof` is now gated by an executable proof ledger.
+
+The audit is:
+
+`formal_proof_ledger_audit_demo`
+
+Its rule is:
+
+```text
+formal_proof marker
+  -> proof card
+  -> declared artifact paths
+  -> declared checker commands
+  -> proof runner executes those commands
+```
+
+The current covered markers are finite IDT-Core/meta-invariants only. They are
+not proofs of QM, Hilbert space, Born rule, tensor composition, unitary
+dynamics, or first-principles `hbar_I`.
+
+The first backend is Lean 4. The repository pins:
+
+```text
+lean-toolchain
+lakefile.lean
+Proofs/IDTCore.lean
+```
+
+The proof runner is:
+
+```bash
+python3 scripts/check_proofs.py
+```
+
+and the one-command local pipeline is:
+
+```bash
+python3 scripts/check_all.py
+```
+
+The key discipline is negative: if a future edit adds a new `formal_proof`
+marker without adding a proof card and machine-checkable artifact, the verifier
+must fail.
+
+Status:
+
+`formal_proof_ledger_added`

@@ -158,8 +158,10 @@ from theory_verifier.core import (
     FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
     FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS,
     FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT,
+    PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
+    iter_formal_claims,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
     NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
@@ -455,6 +457,33 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_boundary_status": "imports_explicit",
             "forbidden_upgrades": list(FOUNDATION_IMPORT_BOUNDARY_FORBIDDEN_UPGRADES),
+        }
+
+    def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
+        if claim_refs is None:
+            claim_refs = ["finite_gates.example.component.status"]
+        return {
+            "id": "test_formal_proof_ledger_audit",
+            "type": "formal_proof_ledger_audit",
+            "target_scope": "current_formal_proof_claims",
+            "proof_cards": [
+                {
+                    "id": "test_machine_checked_finite_ledger",
+                    "claim_refs": claim_refs,
+                    "proof_kind": "machine_checked_finite_proof",
+                    "backend": "lean4",
+                    "statement": "Current finite formal-proof claims are covered by machine-checkable artifacts.",
+                    "artifact_paths": ["Proofs/IDTCore.lean"],
+                    "checker_commands": [
+                        "lake env lean Proofs/IDTCore.lean",
+                        "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json",
+                    ],
+                    "machine_checks": ["lean4_kernel", "idt_verifier_manifest"],
+                    "forbidden_upgrades": list(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES),
+                    "open_gaps": [],
+                }
+            ],
+            "expected_ledger_status": "formal_claims_covered",
         }
 
     def test_dimension_mismatch_is_reported(self) -> None:
@@ -7124,6 +7153,87 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"foundation_import_boundary_theorem_status_mismatch"})
+
+    def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "example_formal_claim",
+                        "type": "formal_proof_ledger_audit",
+                        "target_scope": "current_formal_proof_claims",
+                        "proof_cards": [
+                            {
+                                "id": "stale_card",
+                                "claim_refs": ["finite_gates.other.component.status"],
+                                "proof_kind": "machine_checked_finite_proof",
+                                "backend": "lean4",
+                                "statement": "Stale claim ref.",
+                                "artifact_paths": ["Proofs/IDTCore.lean"],
+                                "checker_commands": ["lake env lean Proofs/IDTCore.lean"],
+                                "machine_checks": ["lean4_kernel"],
+                                "forbidden_upgrades": list(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES),
+                                "open_gaps": [],
+                            }
+                        ],
+                        "expected_ledger_status": "formal_claims_covered",
+                    },
+                    {
+                        "id": "formal_claim_gate",
+                        "type": "bridge_assumption_boundary",
+                        "entries": [],
+                        "status": "formal_proof",
+                    },
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_claim_uncovered"})
+
+    def test_formal_proof_ledger_rejects_missing_artifact(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate()
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["artifact_paths"] = ["Proofs/missing.lean"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_artifact_missing"})
+
+    def test_current_formal_claims_have_proof_ledger_coverage(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest = parse_manifest_text(manifest_path)
+        claim_refs = sorted({claim.reference for claim in iter_formal_claims(manifest)})
+        self.assertTrue(claim_refs)
+        ledger_gates = [gate for gate in manifest.finite_gates if gate.gate_type == "formal_proof_ledger_audit"]
+        self.assertEqual(1, len(ledger_gates))
+        proof_cards = ledger_gates[0].payload["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        covered_refs: set[str] = set()
+        for raw_card in proof_cards:
+            if not isinstance(raw_card, dict):
+                self.fail("proof card must be a mapping")
+            raw_claim_refs = raw_card.get("claim_refs")
+            if not isinstance(raw_claim_refs, list):
+                self.fail("claim_refs must be a list")
+            covered_refs.update(ref for ref in raw_claim_refs if isinstance(ref, str))
+        self.assertEqual(claim_refs, sorted(covered_refs))
 
     def test_phase_branch_additivity_rejects_mismatch(self) -> None:
         manifest = parse_manifest(

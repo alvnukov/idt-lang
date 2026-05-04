@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.17.0`.
+Current theory version: `v6.18.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -70,6 +70,10 @@ The main current successes are bounded and methodological:
    tensor/product composition, unitary maps, and calibrated action phase from a
    carrier-neutral primitive core: history space, event algebra, readout
    contexts, and inheritance acts.
+9. The proof-verification boundary is executable. Current `formal_proof`
+   markers are finite IDT-Core/meta-invariants only, and they must be covered by
+   proof cards with machine-checkable artifacts and commands. The proof pipeline
+   runs Lean 4 and the IDT verifier.
 
 ## What The Verifier Catches
 
@@ -83,7 +87,9 @@ The verifier is designed to reject progress by relabeling. It blocks:
 6. full-QM claims while the action scale, generator, apparatus, and facticity
    spine remain incomplete;
 7. relabeling current QM imports as primitive or first-principles derived
-   structures.
+   structures;
+8. a `formal_proof` marker without a proof-ledger card and machine-checkable
+   proof artifacts.
 
 ## What Is Explicitly Not Claimed
 

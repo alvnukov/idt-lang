@@ -609,6 +609,15 @@ or unwitnessed GPT residual as `conditional_support` and explicitly forbids
 upgrading this result into global no-new-effects closure, universal carrier
 selection, or full QM.
 
+As of v6.18, every current `formal_proof` marker is also covered by:
+
+`formal_proof_ledger_audit_demo`
+
+The proof ledger requires machine-checkable proof cards. The current card runs
+the Lean 4 artifact `Proofs/IDTCore.lean` and the IDT verifier. This keeps these
+claims at the finite IDT-Core/meta-invariant level; it does not turn them into
+physics theorem proofs.
+
 The remaining gap is now narrower: nonfinite residual closure is still
 conditional. This narrows the next proof work to the nonfinite residual
 boundary rather than adding more QM experiment fixtures.

@@ -988,6 +988,46 @@ THEOREM_CARD_PROOF_STATUS_VALUES = (
     "blocked",
 )
 
+FORMAL_PROOF_STATUS_FIELDS = (
+    "status",
+    "proof_status",
+    "expected_component_status",
+    "expected_assumption_status",
+    "expected_obligation_status",
+    "expected_theorem_status",
+    "expected_lemma_status",
+    "expected_proof_status",
+)
+
+PROOF_LEDGER_BACKEND_VALUES = (
+    "lean4",
+    "idt_verifier",
+)
+
+PROOF_LEDGER_PROOF_KIND_VALUES = (
+    "machine_checked_finite_proof",
+    "external_formal_proof",
+    "conditional_proof",
+    "proof_sketch",
+)
+
+PROOF_LEDGER_FORMAL_PROOF_KINDS = (
+    "machine_checked_finite_proof",
+    "external_formal_proof",
+)
+
+PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES = (
+    "does_not_allow_formal_proof_without_proof_card",
+    "does_not_allow_unchecked_proof_card_for_formal_claim",
+    "does_not_convert_conditional_or_sketch_to_formal_proof",
+    "does_not_prove_full_QM_I",
+)
+
+PROOF_LEDGER_AUDIT_RESULTS = (
+    "formal_claims_covered",
+    "failed",
+)
+
 IDT_CORE_CLAIM_ROLE_REGISTRY = tuple(sorted({*SECTOR_ROLE_VALUES, *THEOREM_CARD_ROLE_VALUES}))
 
 IDT_CORE_ROUTE_FAMILY_REGISTRY = tuple(
@@ -1821,6 +1861,11 @@ class FiniteGate:
 
 
 @dataclass(frozen=True)
+class FormalClaim:
+    reference: str
+
+
+@dataclass(frozen=True)
 class QMExperimentCoverage:
     identifier: str
     title: str
@@ -2275,6 +2320,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_theorem_cards(manifest))
     checks.append("theorem cards")
+
+    issues.extend(check_formal_proof_ledger_coverage(manifest))
+    checks.append("formal proof ledger coverage")
 
     issues.extend(check_carrier_selection_theorem_grounding(manifest))
     checks.append("carrier-selection theorem grounding")
@@ -5374,6 +5422,89 @@ def check_finite_gate(gate: FiniteGate) -> list[Issue]:
     if checker is not None:
         return checker(gate)
     raise ManifestError(f"unknown finite gate type {gate.gate_type!r}")
+
+
+def check_formal_proof_ledger_coverage(manifest: Manifest) -> list[Issue]:
+    formal_claim_refs = {claim.reference for claim in iter_formal_claims(manifest)}
+    proof_ledger_gates = [gate for gate in manifest.finite_gates if gate.gate_type == "formal_proof_ledger_audit"]
+    if formal_claim_refs and not proof_ledger_gates:
+        return [
+            Issue(
+                "formal_proof_ledger_missing",
+                "formal proof claims exist but no formal_proof_ledger_audit gate is declared",
+            )
+        ]
+
+    covered_refs: set[str] = set()
+    declared_refs: set[str] = set()
+    for gate in proof_ledger_gates:
+        proof_cards = require_list(gate.payload.get("proof_cards"), f"{gate.identifier}.proof_cards")
+        for index, raw_card in enumerate(proof_cards):
+            card = require_mapping(raw_card, f"{gate.identifier}.proof_cards[{index}]")
+            proof_kind = require_string(
+                card.get("proof_kind"),
+                f"{gate.identifier}.proof_cards[{index}].proof_kind",
+            )
+            claim_refs = set(
+                require_string_tuple(
+                    card.get("claim_refs", []),
+                    f"{gate.identifier}.proof_cards[{index}].claim_refs",
+                )
+            )
+            declared_refs.update(claim_refs)
+            if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS:
+                covered_refs.update(claim_refs)
+
+    missing = sorted(formal_claim_refs - covered_refs)
+    if missing:
+        return [
+            Issue(
+                "formal_proof_ledger_claim_uncovered",
+                f"formal proof claims are not covered by machine-checked proof cards: {', '.join(missing)}",
+            )
+        ]
+    stale = sorted(declared_refs - formal_claim_refs)
+    if stale:
+        return [
+            Issue(
+                "formal_proof_ledger_claim_stale",
+                f"proof cards cite claims that are not currently formal_proof: {', '.join(stale)}",
+            )
+        ]
+    return []
+
+
+def iter_formal_claims(manifest: Manifest) -> Iterator[FormalClaim]:
+    for card in manifest.theorem_cards:
+        if card.proof_status == "formal_proof":
+            yield FormalClaim(f"theorem_cards.{card.identifier}.proof_status")
+    for gate in manifest.finite_gates:
+        yield from iter_formal_claims_in_payload(gate.identifier, gate.payload)
+
+
+def iter_formal_claims_in_payload(gate_id: str, raw: object) -> Iterator[FormalClaim]:
+    if isinstance(raw, dict):
+        local_id = formal_claim_local_id(raw)
+        for field in FORMAL_PROOF_STATUS_FIELDS:
+            if raw.get(field) != "formal_proof":
+                continue
+            if local_id is None:
+                yield FormalClaim(f"finite_gates.{gate_id}.{field}")
+            else:
+                yield FormalClaim(f"finite_gates.{gate_id}.{local_id}.{field}")
+        for value in raw.values():
+            yield from iter_formal_claims_in_payload(gate_id, value)
+    elif isinstance(raw, list):
+        for value in raw:
+            yield from iter_formal_claims_in_payload(gate_id, value)
+
+
+def formal_claim_local_id(raw: dict[str, object]) -> str | None:
+    for field in ("id", "component_id", "target_assumption", "target_theorem", "target_obligation"):
+        value = raw.get(field)
+        if isinstance(value, str):
+            return value
+    return None
 
 
 def check_research_graph_contract_grounding(manifest: Manifest) -> list[Issue]:
@@ -12713,6 +12844,135 @@ def check_foundation_import_boundary_audit_gate(gate: FiniteGate) -> list[Issue]
     return []
 
 
+def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != "current_formal_proof_claims":
+        return [
+            Issue(
+                "formal_proof_ledger_target_mismatch",
+                f"{gate.identifier}: target_scope must be current_formal_proof_claims",
+            )
+        ]
+
+    proof_cards = require_list(gate.payload.get("proof_cards"), f"{gate.identifier}.proof_cards")
+    if not proof_cards:
+        raise ManifestError(f"{gate.identifier}: proof_cards must not be empty")
+    seen: set[str] = set()
+    for index, raw_card in enumerate(proof_cards):
+        card = require_mapping(raw_card, f"{gate.identifier}.proof_cards[{index}]")
+        card_id = require_string(card.get("id"), f"{gate.identifier}.proof_cards[{index}].id")
+        proof_kind = require_string(
+            card.get("proof_kind"),
+            f"{gate.identifier}.proof_cards[{index}].proof_kind",
+        )
+        backend = require_string(card.get("backend"), f"{gate.identifier}.proof_cards[{index}].backend")
+        claim_refs = require_string_tuple(
+            card.get("claim_refs", []),
+            f"{gate.identifier}.proof_cards[{index}].claim_refs",
+        )
+        statement = require_string(card.get("statement"), f"{gate.identifier}.proof_cards[{index}].statement")
+        artifact_paths = require_string_tuple(
+            card.get("artifact_paths", []),
+            f"{gate.identifier}.proof_cards[{index}].artifact_paths",
+        )
+        checker_commands = require_string_tuple(
+            card.get("checker_commands", []),
+            f"{gate.identifier}.proof_cards[{index}].checker_commands",
+        )
+        machine_checks = require_string_tuple(
+            card.get("machine_checks", []),
+            f"{gate.identifier}.proof_cards[{index}].machine_checks",
+        )
+        open_gaps = require_string_tuple(
+            card.get("open_gaps", []),
+            f"{gate.identifier}.proof_cards[{index}].open_gaps",
+        )
+        forbidden_upgrades = set(
+            require_string_tuple(
+                card.get("forbidden_upgrades", []),
+                f"{gate.identifier}.proof_cards[{index}].forbidden_upgrades",
+            )
+        )
+        if card_id in seen:
+            return [
+                Issue(
+                    "formal_proof_ledger_duplicate_card",
+                    f"{gate.identifier}: duplicate proof card {card_id}",
+                )
+            ]
+        seen.add(card_id)
+        if proof_kind not in PROOF_LEDGER_PROOF_KIND_VALUES:
+            raise ManifestError(f"{gate.identifier}: proof card {card_id} has unknown proof_kind {proof_kind!r}")
+        if backend not in PROOF_LEDGER_BACKEND_VALUES:
+            raise ManifestError(f"{gate.identifier}: proof card {card_id} has unknown backend {backend!r}")
+        if not claim_refs:
+            return [
+                Issue(
+                    "formal_proof_ledger_claim_refs_missing",
+                    f"{gate.identifier}: proof card {card_id} must cite claim_refs",
+                )
+            ]
+        if not statement.strip():
+            return [
+                Issue(
+                    "formal_proof_ledger_statement_missing",
+                    f"{gate.identifier}: proof card {card_id} must state the proved claim",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and open_gaps:
+            return [
+                Issue(
+                    "formal_proof_ledger_gap_on_formal_card",
+                    f"{gate.identifier}: formal proof card {card_id} must not declare open_gaps",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and (not artifact_paths or not checker_commands or not machine_checks):
+            return [
+                Issue(
+                    "formal_proof_ledger_machine_check_missing",
+                    f"{gate.identifier}: formal proof card {card_id} must declare artifacts, commands, and checks",
+                )
+            ]
+        for artifact_path in artifact_paths:
+            if not proof_artifact_exists(artifact_path):
+                return [
+                    Issue(
+                        "formal_proof_ledger_artifact_missing",
+                        f"{gate.identifier}: proof card {card_id} artifact {artifact_path!r} is missing",
+                    )
+                ]
+        if not set(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES).issubset(forbidden_upgrades):
+            return [
+                Issue(
+                    "formal_proof_ledger_forbidden_upgrades_incomplete",
+                    f"{gate.identifier}: proof card {card_id} must preserve proof-ledger forbidden upgrades",
+                )
+            ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_ledger_status"),
+        f"{gate.identifier}.expected_ledger_status",
+    )
+    if expected_status not in PROOF_LEDGER_AUDIT_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_ledger_status is unknown")
+    if expected_status != "formal_claims_covered":
+        return [
+            Issue(
+                "formal_proof_ledger_status_mismatch",
+                f"{gate.identifier}: expected ledger status must be formal_claims_covered",
+            )
+        ]
+    return []
+
+
+def proof_artifact_exists(artifact_path: str) -> bool:
+    path = Path(artifact_path)
+    if path.is_absolute():
+        return path.is_file()
+    repo_root = Path(__file__).resolve().parent.parent
+    return (repo_root / path).is_file()
+
+
 def check_dimensionful_anchor_policy_gate(gate: FiniteGate) -> list[Issue]:
     entries = require_list(gate.payload.get("entries"), f"{gate.identifier}.entries")
     if not entries:
@@ -18390,6 +18650,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "qm_proof_anti_hallucination_audit": check_qm_proof_anti_hallucination_audit_gate,
     "idt_structural_compression_audit": check_idt_structural_compression_audit_gate,
     "foundation_import_boundary_audit": check_foundation_import_boundary_audit_gate,
+    "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
     "bridge_assumption_boundary": check_bridge_assumption_boundary_gate,
