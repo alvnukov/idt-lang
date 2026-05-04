@@ -7,6 +7,7 @@
     "dependencies": [
       "Proofs/QMClosure/CGSCExtensionWallProbeDraft.json",
       "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
+      "Proofs/QMClosure/CGSCPrimitiveBridgeDraft.json",
       "Proofs/QMClosure/QMInevitabilityRouteDraft.json",
       "scripts/evaluate_cgsc_extension_wall_probe.py",
       "scripts/evaluate_cgsc_primitive_derivation.py",
@@ -27,6 +28,10 @@
       {
         "id": "primitive_derivation",
         "expected": "PRIMITIVE_DERIVATION_NOT_CLOSED"
+      },
+      {
+        "id": "cgsc_primitive_bridge",
+        "expected": "CONDITIONAL_EXTENSION_BRIDGE_VALIDATED"
       },
       {
         "id": "qm_inevitability_route",

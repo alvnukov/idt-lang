@@ -14486,3 +14486,73 @@ does_not_claim_full_QM_is_proved
 does_not_mark_conditional_proof_cards_as_machine_checked_finite_proof
 does_not_import_Hilbert_Born_unitary_tensor_or_Stone
 ```
+
+### 174.282. CGSC Primitive-Extension Bridge Pass
+
+The next broad pass inserted a machine-checked bridge between the primitive
+extension wall and the conditional CGSC package artifacts:
+
+```text
+Proofs/QMClosure/CGSCPrimitiveBridge.lean
+Proofs/QMClosure/CGSCPrimitiveBridgeDraft.json
+scripts/evaluate_cgsc_primitive_bridge.py
+```
+
+The bridge is intentionally conditional. It proves the wiring:
+
+```text
+B0 candidate base
++ six primitive-extension witnesses
+=> three CGSC packages
+=> 21 full-QM closure obligations
+```
+
+It does not prove the six primitive-extension witnesses from B0.
+
+Current bridge status:
+
+```text
+cgsc_primitive_bridge = CONDITIONAL_EXTENSION_BRIDGE_VALIDATED
+lean = PASS
+extensions = 6
+packages = 3
+obligations = 21
+upstream_failed = 0
+draft_checks_failed = 0
+```
+
+The one-pass closure now includes this bridge as a global requirement:
+
+```text
+cgsc_qm_one_pass_closure = STRUCTURAL_ROUTE_READY_FORMALIZATION_WALL
+global_failed = 0
+conditional_artifacts = 21
+missing_formal_proof_artifacts = 0
+open_residuals = 0
+```
+
+The remaining wall is now sharper:
+
+```text
+prove or reject these six extension witnesses:
+  complete_exposed_context_partition
+  reversible_context_automorphism_closure
+  coherent_refinement_compactness
+  generator_bookkeeping_without_stone
+  product_context_generation_closure
+  no_hidden_joint_only_generation
+```
+
+If those six are proved from B0 or a successor primitive base, the existing
+Lean bridge supplies the route into the three CGSC packages. If one of them is
+unprovable without importing Hilbert/Born/unitary/tensor/Stone/spectral
+structure, the wall becomes fatal for the current primitive base.
+
+Forbidden upgrade:
+
+```text
+does_not_claim_extensions_are_proved_from_B0
+does_not_claim_CGSC_is_proved
+does_not_claim_full_QM_is_proved
+does_not_mark_conditional_bridge_as_formal_proof
+```

@@ -9353,6 +9353,39 @@
             "package assumptions are conditional and still require proof from primitives",
             "this card does not prove full_QM_I"
           ]
+        },
+        {
+          "id": "cgsc_primitive_extension_bridge_conditional_artifact",
+          "claim_refs": [
+            "cgsc_primitive_bridge.six_extension_base_to_cgsc_package_closure"
+          ],
+          "statement": "Conditional Lean bridge from B0 candidate plus six primitive-extension witnesses into the three CGSC package artifacts covering the 21 full-QM closure obligations. This does not prove the six extensions from B0.",
+          "theorem": "IDT.QMClosure.cgscPackageClosureFromPrimitiveExtensionBase",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPrimitiveBridge.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCPrimitiveBridge"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_primitive_extension_bridge"
+          ],
+          "scope": "conditional_b0_extension_bridge_to_cgsc_package_closure",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_extensions_are_proved_from_B0",
+            "does_not_mark_conditional_bridge_as_formal_proof"
+          ],
+          "open_gaps": [
+            "six primitive-extension witnesses still require proof from B0 or successor primitives",
+            "this card does not prove CGSC or full_QM_I"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

@@ -4,4 +4,8 @@ open Lake DSL
 package IDTProofs where
 
 lean_lib Proofs where
-  roots := #[`Proofs.IDTCore]
+  roots := #[
+    `Proofs.IDTCore,
+    `Proofs.QMClosure.CGSCPackageClosure,
+    `Proofs.QMClosure.CGSCPrimitiveBridge
+  ]

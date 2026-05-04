@@ -1,0 +1,126 @@
+{
+  "artifact_id": "cgsc_primitive_extension_bridge_draft",
+  "artifact_status": "conditional_extension_bridge_not_formal_proof",
+  "bridge": {
+    "id": "cgsc_primitive_extension_bridge",
+    "expected_verdict": "CONDITIONAL_EXTENSION_BRIDGE_VALIDATED",
+    "proof_status": "conditional_proof",
+    "lean_file": "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
+    "checker_command": "lake build Proofs.QMClosure.CGSCPrimitiveBridge",
+    "dependencies": [
+      "Proofs/QMClosure/CGSCPackageClosure.lean",
+      "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
+      "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
+      "Proofs/QMClosure/CGSCExtensionWallProbeDraft.json",
+      "scripts/evaluate_cgsc_primitive_bridge.py",
+      "scripts/evaluate_cgsc_extension_wall_probe.py",
+      "scripts/evaluate_full_qm_proof_closure.py"
+    ],
+    "upstream_requirements": [
+      {
+        "id": "extension_wall_probe",
+        "expected": "EXTENSION_WALL_LOCALIZED"
+      },
+      {
+        "id": "primitive_derivation",
+        "expected": "PRIMITIVE_DERIVATION_NOT_CLOSED"
+      },
+      {
+        "id": "full_qm_proof_closure",
+        "expected": "CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED"
+      }
+    ],
+    "extensions": [
+      {
+        "id": "complete_exposed_context_partition",
+        "package": "finite_exposed_context_completion"
+      },
+      {
+        "id": "reversible_context_automorphism_closure",
+        "package": "route_automorphism_and_refinement_coherence"
+      },
+      {
+        "id": "coherent_refinement_compactness",
+        "package": "route_automorphism_and_refinement_coherence"
+      },
+      {
+        "id": "generator_bookkeeping_without_stone",
+        "package": "route_automorphism_and_refinement_coherence"
+      },
+      {
+        "id": "product_context_generation_closure",
+        "package": "generated_composite_no_hidden_joint_closure"
+      },
+      {
+        "id": "no_hidden_joint_only_generation",
+        "package": "generated_composite_no_hidden_joint_closure"
+      }
+    ],
+    "package_map": [
+      {
+        "id": "finite_exposed_context_completion",
+        "extensions": [
+          "complete_exposed_context_partition"
+        ],
+        "obligations": [
+          "finite_projection_determinacy",
+          "projective_consistency",
+          "nonunital_stable_distinguishability",
+          "conservative_projective_gluing",
+          "spectral_decomposition",
+          "context_normalization",
+          "exclusivity_additivity",
+          "coarse_graining_consistency",
+          "operational_equivalence_probability",
+          "physical_phase_scale_boundary"
+        ]
+      },
+      {
+        "id": "route_automorphism_and_refinement_coherence",
+        "extensions": [
+          "reversible_context_automorphism_closure",
+          "coherent_refinement_compactness",
+          "generator_bookkeeping_without_stone"
+        ],
+        "obligations": [
+          "rich_d_cl_reversible_symmetry",
+          "d_cl_automorphism_dynamics",
+          "overlap_preservation_dynamics",
+          "projective_action",
+          "continuous_inheritance_family",
+          "generator_closure"
+        ]
+      },
+      {
+        "id": "generated_composite_no_hidden_joint_closure",
+        "extensions": [
+          "product_context_generation_closure",
+          "no_hidden_joint_only_generation"
+        ],
+        "obligations": [
+          "product_context_exhaustion",
+          "local_tomography",
+          "monoidal_associativity",
+          "entanglement_closure",
+          "projective_limit_consistency"
+        ]
+      }
+    ],
+    "forbidden_imports": [
+      "born_rule",
+      "complex_hilbert_space",
+      "generator_assumed",
+      "hilbert_tensor_product",
+      "spectral_theorem",
+      "stone_theorem",
+      "unitary_group"
+    ],
+    "forbidden_claims": [
+      "does_not_prove_CGSC",
+      "does_not_prove_full_QM_I",
+      "does_not_claim_extensions_are_proved_from_B0",
+      "does_not_mark_conditional_bridge_as_formal_proof",
+      "does_not_import_Hilbert_Born_unitary_tensor_or_Stone"
+    ]
+  }
+}

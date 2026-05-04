@@ -11,6 +11,7 @@ from typing import TypedDict
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "theory_verifier_manifest_v6_0.json"
 ALLOWED_EXACT_COMMANDS = {
+    ("lake", "build", "Proofs.QMClosure.CGSCPrimitiveBridge"),
     ("python3", "scripts/sync_formal_proof_ledger.py", "--check"),
     ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json"),
 }
