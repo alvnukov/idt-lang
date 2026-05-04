@@ -12071,3 +12071,229 @@ The next full-proof pass should attack:
 ```text
 general_composite_theorem
 ```
+
+### 174.254. General Composite Theorem Attempt
+
+The next pass attacked:
+
+```text
+general_composite_theorem
+```
+
+Evaluator:
+
+```text
+scripts/evaluate_general_composite_attempt.py
+```
+
+It tests whether the finite product/tomography screens can be lifted to
+arbitrary finite and projective-limit composites without importing the Hilbert
+tensor product.
+
+Routes tested:
+
+```text
+finite_qubit_product_screen;
+monoidal_without_entanglement;
+finite_entanglement_without_limits;
+general_projective_composite_route;
+imported_tensor_product.
+```
+
+Result:
+
+```text
+route = general_projective_composite_route
+verdict = CONDITIONAL_COMPOSITE_ROUTE
+passed = 9/9
+imports = none
+```
+
+The conditional route requires:
+
+```text
+1. finite tensor/product multiplicativity;
+2. product-context exhaustion;
+3. local tomography;
+4. no hidden joint-only invariants;
+5. monoidal associativity/unit/symmetry coherence;
+6. entanglement closure inside the same finite route contract;
+7. projective-limit consistency.
+```
+
+Controls:
+
+```text
+finite_qubit_product_screen:
+  does not establish arbitrary composites.
+
+monoidal_without_entanglement:
+  lacks entanglement and projective-limit closure.
+
+finite_entanglement_without_limits:
+  lacks projective-limit consistency.
+
+imported_tensor_product:
+  IMPORTED_HIT because it assumes hilbert_tensor_product_assumed.
+```
+
+### 174.255. Physical Phase-Scale Boundary Attempt
+
+The same pass also attacked:
+
+```text
+physical_phase_scale_boundary
+```
+
+Evaluator:
+
+```text
+scripts/evaluate_phase_scale_boundary_attempt.py
+```
+
+It tests whether the mathematical QM route can connect to physical phase scale
+without pretending to derive `hbar_I`.
+
+Routes tested:
+
+```text
+mathematical_qm_only;
+calibrated_phase_scale_boundary;
+first_principles_action_scale_route;
+imported_physical_hbar.
+```
+
+Result:
+
+```text
+route = calibrated_phase_scale_boundary
+verdict = CONDITIONAL_SCALE_BOUNDARY
+passed = 8/8
+imports = none
+```
+
+The boundary route requires:
+
+```text
+1. scale-free mathematical QM route;
+2. explicit calibrated_hbar_I anchor;
+3. no first-principles hbar_I claim;
+4. phase/action dimension consistency;
+5. empirical our-universe anchor bridge.
+```
+
+Rejected:
+
+```text
+first_principles_action_scale_route:
+  fails because first-principles hbar_I remains outside the accepted proof
+  boundary.
+
+imported_physical_hbar:
+  IMPORTED_HIT because it treats hbar as derived/imported.
+```
+
+### 174.256. Full-QM Route Status After Composite And Scale Pass
+
+After these two attempts:
+
+```text
+full_qm_proof_attempt = CONDITIONAL_FULL_QM_ROUTE
+pass = 1
+conditional = 7
+open = 0
+failed = 0
+```
+
+This is the first pass where every top-level full-QM cell has a route:
+
+```text
+finite_route_gate:
+  PASS
+
+finite_route_residual_closure:
+  CONDITIONAL
+
+fpd_projective_derivation:
+  CONDITIONAL
+
+universal_representation_theorem:
+  CONDITIONAL
+
+universal_born_readout_theorem:
+  CONDITIONAL
+
+unitary_dynamics_theorem:
+  CONDITIONAL
+
+general_composite_theorem:
+  CONDITIONAL
+
+physical_phase_scale_boundary:
+  CONDITIONAL
+```
+
+This is not:
+
+```text
+FULL_QM_PROVED
+```
+
+because each conditional cell still requires theorem artifacts.
+
+It is:
+
+```text
+CONDITIONAL_FULL_QM_ROUTE
+```
+
+Meaning:
+
+```text
+No top-level full-QM route cell is currently open.
+No top-level full-QM route cell currently fails.
+The remaining work is to prove the named conditional obligations, not to find
+an unknown missing top-level bridge.
+```
+
+### 174.257. Exact Remaining Proof Burden
+
+The conditional full-QM route now depends on these theorem clusters:
+
+```text
+closure:
+  finite_projection_determinacy
+  projective_consistency
+  NUSD
+  conservative_projective_gluing
+
+representation:
+  spectral_decomposition
+  rich_D_cl_reversible_symmetry
+
+Born/readout:
+  context_normalization
+  exclusivity_additivity
+  coarse_graining_consistency
+  operational_equivalence_probability
+
+dynamics:
+  D_cl_automorphism_dynamics
+  overlap_preservation_dynamics
+  projective_action
+  continuous_inheritance_family
+  generator_closure
+
+composites:
+  monoidal_associativity
+  entanglement_closure
+  projective_limit_consistency
+
+physical scale:
+  calibrated_hbar_I boundary
+  or a future independent action-scale theorem
+```
+
+The next phase should therefore not search for another top-level QM bridge.
+It should convert these conditional obligations into theorem cards and
+machine-checkable proof artifacts.

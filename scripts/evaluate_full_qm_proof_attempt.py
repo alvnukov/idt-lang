@@ -13,13 +13,15 @@ if str(REPO_ROOT) not in sys.path:
 
 import scripts.evaluate_fpd_projective_derivation as fpd_projective  # noqa: E402
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
+import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
+import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
 import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
 import scripts.verify_finite_qm_route as finite_gate  # noqa: E402
 
 StepStatus = Literal["PASS", "CONDITIONAL", "OPEN", "FAIL"]
-AttemptVerdict = Literal["FULL_QM_PROVED", "CONDITIONAL_ROUTE_ADVANCED", "BLOCKED"]
+AttemptVerdict = Literal["FULL_QM_PROVED", "CONDITIONAL_FULL_QM_ROUTE", "CONDITIONAL_ROUTE_ADVANCED", "BLOCKED"]
 
 
 @dataclass(frozen=True)
@@ -95,6 +97,20 @@ def find_dynamics_route(route_name: str) -> dynamics_attempt.RouteResult:
         if route.name == route_name:
             return dynamics_attempt.evaluate_route(route)
     raise ValueError(f"unknown dynamics route: {route_name}")
+
+
+def find_composite_route(route_name: str) -> composite_attempt.RouteResult:
+    for route in composite_attempt.ROUTES:
+        if route.name == route_name:
+            return composite_attempt.evaluate_route(route)
+    raise ValueError(f"unknown composite route: {route_name}")
+
+
+def find_phase_scale_route(route_name: str) -> phase_scale_attempt.RouteResult:
+    for route in phase_scale_attempt.ROUTES:
+        if route.name == route_name:
+            return phase_scale_attempt.evaluate_route(route)
+    raise ValueError(f"unknown phase-scale route: {route_name}")
 
 
 def build_residual_closure_step() -> ProofStep:
@@ -221,6 +237,20 @@ def build_dynamics_step() -> ProofStep:
 
 
 def build_general_composite_step() -> ProofStep:
+    route = find_composite_route("general_projective_composite_route")
+    if route.verdict == "CONDITIONAL_COMPOSITE_ROUTE":
+        return ProofStep(
+            name="general_composite_theorem",
+            status="CONDITIONAL",
+            statement=(
+                "A non-imported general-composite route exists if product-context exhaustion, local tomography, "
+                "monoidal coherence, entanglement closure, and projective-limit consistency are proved."
+            ),
+            evidence=f"verdict={route.verdict}; passed={route.passed}/9; imports={len(route.imports)}",
+            remaining_obligation=(
+                "Prove the composite obligations as IDT theorem artifacts rather than assuming a Hilbert tensor product."
+            ),
+        )
     return ProofStep(
         name="general_composite_theorem",
         status="OPEN",
@@ -231,6 +261,19 @@ def build_general_composite_step() -> ProofStep:
 
 
 def build_physical_scale_step() -> ProofStep:
+    route = find_phase_scale_route("calibrated_phase_scale_boundary")
+    if route.verdict == "CONDITIONAL_SCALE_BOUNDARY":
+        return ProofStep(
+            name="physical_phase_scale_boundary",
+            status="CONDITIONAL",
+            statement=(
+                "Physical phase scale is connected by an explicit calibrated_hbar_I boundary while first-principles hbar_I remains unclaimed."
+            ),
+            evidence=f"verdict={route.verdict}; passed={route.passed}/8; imports={len(route.imports)}",
+            remaining_obligation=(
+                "Either keep hbar_I as a calibrated anchor for physical QM or prove an independent action-scale theorem later."
+            ),
+        )
     return ProofStep(
         name="physical_phase_scale_boundary",
         status="OPEN",
@@ -259,6 +302,8 @@ def build_attempt() -> ProofAttempt:
         verdict: AttemptVerdict = "BLOCKED"
     elif open_count == 0 and conditional == 0:
         verdict = "FULL_QM_PROVED"
+    elif open_count == 0:
+        verdict = "CONDITIONAL_FULL_QM_ROUTE"
     else:
         verdict = "CONDITIONAL_ROUTE_ADVANCED"
     return ProofAttempt(
