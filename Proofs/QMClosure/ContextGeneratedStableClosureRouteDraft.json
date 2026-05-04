@@ -1,0 +1,129 @@
+{
+  "artifact_id": "context_generated_stable_closure_route_draft",
+  "artifact_status": "route_draft_not_formal_proof",
+  "theorem_card": {
+    "id": "context_generated_stable_closure_conditionally_covers_qm_structural_walls",
+    "statement": "If context-generated stable closure holds, then the six current QM structural walls are conditionally covered without importing Hilbert, Born, unitary, tensor, Stone, or spectral-theorem structure.",
+    "role": "candidate_unifying_principle_route",
+    "proof_status": "open",
+    "verifier": "scripts/evaluate_context_generated_stable_closure.py",
+    "dependencies": [
+      "scripts/evaluate_qm_hard_wall_probe.py",
+      "scripts/evaluate_qm_structural_wall_patterns.py",
+      "scripts/evaluate_context_generated_stable_closure.py",
+      "sections/01-primitives.md"
+    ],
+    "assumptions": [
+      "finite_generation",
+      "facticizable_separation",
+      "exposed_context_decomposition",
+      "reversible_route_closure",
+      "coherent_refinement_flow",
+      "composite_route_generation",
+      "import_boundary"
+    ],
+    "known_failures": [
+      "clauses_not_proved_from_primitives",
+      "no_machine_checked_formal_proof",
+      "full_qm_proof_closure_remains_proof_artifacts_missing"
+    ],
+    "physical_scope": "candidate primitive-base route for finite QM structural-wall closure only",
+    "forbidden_claims": [
+      "does_not_prove_full_QM_I",
+      "does_not_derive_Hilbert_space",
+      "does_not_derive_Born_rule",
+      "does_not_derive_unitary_dynamics",
+      "does_not_derive_tensor_composition",
+      "does_not_derive_hbar_I",
+      "does_not_treat_candidate_principle_as_formal_proof"
+    ]
+  },
+  "proof_route": {
+    "id": "context_generated_stable_closure_proof_route",
+    "target_theorem": "context_generated_stable_closure_conditionally_covers_qm_structural_walls",
+    "expected_route_status": "open",
+    "clauses": [
+      {
+        "id": "finite_generation",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "history_space",
+          "event_algebra",
+          "readout_context_family",
+          "inheritance_act_family"
+        ],
+        "open_gap": "Prove that all stable physical structures have finite context/readout/refinement generation routes or are outside physical scope."
+      },
+      {
+        "id": "facticizable_separation",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "readout_context_family",
+          "inheritance_act_family"
+        ],
+        "open_gap": "Prove that every readout-relevant stable distinction has an admissible finite facticizable witness."
+      },
+      {
+        "id": "exposed_context_decomposition",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "event_algebra",
+          "readout_context_family"
+        ],
+        "open_gap": "Prove exposed-context decomposition from finite generated stable states without importing the spectral theorem."
+      },
+      {
+        "id": "reversible_route_closure",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "inheritance_act_family",
+          "readout_context_family"
+        ],
+        "open_gap": "Prove that admissible reversible inheritance acts close as route automorphisms preserving D_cl, normalized overlap, and exposed contexts."
+      },
+      {
+        "id": "coherent_refinement_flow",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "history_space",
+          "inheritance_act_family"
+        ],
+        "open_gap": "Prove that compatible finite refinement families add no new stable directions and admit generator-compatible bookkeeping without importing Stone or Hamiltonian structure."
+      },
+      {
+        "id": "composite_route_generation",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "event_algebra",
+          "readout_context_family",
+          "inheritance_act_family"
+        ],
+        "open_gap": "Prove that composite facts, including non-product facts, are generated inside admissible product/context refinement routes."
+      },
+      {
+        "id": "import_boundary",
+        "status": "candidate_clause",
+        "primitive_grounding": [
+          "sections/01-primitives.md"
+        ],
+        "open_gap": "Keep Hilbert, Born, unitary, tensor, Stone, spectral theorem, and hbar as forbidden imports for this route."
+      }
+    ],
+    "targets": [
+      "nonunital_stable_distinguishability",
+      "spectral_decomposition",
+      "rich_d_cl_reversible_symmetry",
+      "continuous_inheritance_family",
+      "generator_closure",
+      "entanglement_closure"
+    ],
+    "negative_controls": [
+      "hidden_hilbert_carrier_import",
+      "born_rule_import",
+      "unitary_group_import",
+      "hilbert_tensor_product_import",
+      "stone_generator_import",
+      "spectral_theorem_import"
+    ]
+  }
+}

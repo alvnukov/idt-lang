@@ -13802,3 +13802,81 @@ does_not_derive_unitary_dynamics
 does_not_derive_tensor_composition
 does_not_treat_candidate_principle_as_formal_proof
 ```
+
+### 174.275. Context-Generated Stable Closure Route Draft
+
+The candidate principle now has a machine-readable theorem-card/proof-route
+draft.
+
+Artifact:
+
+```text
+Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json
+```
+
+Validator:
+
+```text
+script = scripts/evaluate_context_generated_stable_closure_route_draft.py
+verdict = ROUTE_DRAFT_VALIDATED
+contract = CONDITIONAL_MULTI_WALL_CLOSURE_CANDIDATE
+checks_passed = 16
+checks_failed = 0
+```
+
+The draft is intentionally not registered as a manifest theorem card yet. It
+has:
+
+```text
+artifact_status = route_draft_not_formal_proof
+theorem_card.proof_status = open
+proof_route.expected_route_status = open
+all clauses.status = candidate_clause
+```
+
+The validator checks:
+
+```text
+1. the theorem-card id and proof route id match;
+2. proof_status stays open;
+3. dependency refs are grounded in the repository;
+4. forbidden claims include all current no-upgrade boundaries;
+5. known failures keep the primitive-proof gap explicit;
+6. all seven candidate clauses are present;
+7. all clause primitive-grounding refs match the executable contract;
+8. all six structural walls are listed as route targets;
+9. all six negative controls are listed;
+10. the live contract probe remains
+    CONDITIONAL_MULTI_WALL_CLOSURE_CANDIDATE.
+```
+
+This is stronger than a prose note because the draft must stay synchronized
+with the executable contract probe. It is still weaker than a theorem proof:
+
+```text
+the clauses are not proved from primitives;
+no Lean/formal artifact proves the route;
+full_qm_proof_closure remains PROOF_ARTIFACTS_MISSING.
+```
+
+Current broad status:
+
+```text
+The six structural walls have one coherent candidate closure principle and a
+validated proof-route draft.
+
+The next blocker is clause derivation from the primitive base, not experiment
+coverage and not manifest bookkeeping.
+```
+
+Forbidden upgrade:
+
+```text
+does_not_prove_full_QM_I
+does_not_derive_Hilbert_space
+does_not_derive_Born_rule
+does_not_derive_unitary_dynamics
+does_not_derive_tensor_composition
+does_not_derive_hbar_I
+does_not_treat_route_draft_as_formal_proof
+```
