@@ -504,6 +504,7 @@ formal_proof marker
   -> proof card
   -> declared artifact paths
   -> declared checker commands
+  -> manifest-to-Lean sync check
   -> proof runner executes those commands
 ```
 
@@ -519,6 +520,12 @@ lakefile.lean
 Proofs/IDTCore.lean
 ```
 
+The Lean ledger is generated from the manifest and checked for exact sync by:
+
+```bash
+python3 scripts/sync_formal_proof_ledger.py --check
+```
+
 The proof runner is:
 
 ```bash
@@ -532,8 +539,8 @@ python3 scripts/check_all.py
 ```
 
 The key discipline is negative: if a future edit adds a new `formal_proof`
-marker without adding a proof card and machine-checkable artifact, the verifier
-must fail.
+marker without adding a proof card, synchronized machine-checkable artifact, and
+required checker command, the verifier or proof runner must fail.
 
 Status:
 

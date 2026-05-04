@@ -1023,6 +1023,18 @@ PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES = (
     "does_not_prove_full_QM_I",
 )
 
+PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS = (
+    "python3 scripts/sync_formal_proof_ledger.py --check",
+    "lake env lean Proofs/IDTCore.lean",
+    "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json",
+)
+
+PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS = (
+    "formal_claim_manifest_sync",
+    "lean4_kernel",
+    "idt_verifier_manifest",
+)
+
 PROOF_LEDGER_AUDIT_RESULTS = (
     "formal_claims_covered",
     "failed",
@@ -12931,6 +12943,24 @@ def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
                 Issue(
                     "formal_proof_ledger_machine_check_missing",
                     f"{gate.identifier}: formal proof card {card_id} must declare artifacts, commands, and checks",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and not set(
+            PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS
+        ).issubset(set(checker_commands)):
+            return [
+                Issue(
+                    "formal_proof_ledger_checker_commands_incomplete",
+                    f"{gate.identifier}: proof card {card_id} must run the required proof-ledger commands",
+                )
+            ]
+        if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS and not set(
+            PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS
+        ).issubset(set(machine_checks)):
+            return [
+                Issue(
+                    "formal_proof_ledger_machine_checks_incomplete",
+                    f"{gate.identifier}: proof card {card_id} must declare the required proof-ledger checks",
                 )
             ]
         for artifact_path in artifact_paths:

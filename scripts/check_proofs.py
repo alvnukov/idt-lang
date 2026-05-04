@@ -10,6 +10,10 @@ from typing import TypedDict
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "theory_verifier_manifest_v6_0.json"
+ALLOWED_EXACT_COMMANDS = {
+    ("python3", "scripts/sync_formal_proof_ledger.py", "--check"),
+    ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json"),
+}
 
 
 class ProofCommandResult(TypedDict):
@@ -69,9 +73,30 @@ def iter_checker_commands(manifest: dict[str, object]) -> list[str]:
     return commands
 
 
+def is_safe_relative_proof_path(value: str) -> bool:
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts:
+        return False
+    return len(path.parts) >= 2 and path.parts[0] == "Proofs" and path.suffix == ".lean"
+
+
+def is_allowed_checker_command(parts: tuple[str, ...]) -> bool:
+    if parts in ALLOWED_EXACT_COMMANDS:
+        return True
+    return len(parts) == 4 and parts[:3] == ("lake", "env", "lean") and is_safe_relative_proof_path(parts[3])
+
+
+def command_parts(command: str) -> tuple[str, ...]:
+    parts = tuple(shlex.split(command))
+    if not is_allowed_checker_command(parts):
+        raise ValueError(f"checker command is not allowlisted: {command!r}")
+    return parts
+
+
 def run_command(command: str) -> ProofCommandResult:
+    parts = command_parts(command)
     completed = subprocess.run(
-        shlex.split(command),
+        parts,
         cwd=ROOT,
         check=False,
         text=True,
@@ -92,7 +117,12 @@ def main() -> int:
 
     results: list[ProofCommandResult] = []
     for command in commands:
-        result = run_command(command)
+        try:
+            result = run_command(command)
+        except ValueError as error:
+            failed = {"command": command, "returncode": 2}
+            print(json.dumps({"ok": False, "error": str(error), "failed": failed, "commands": results}, indent=2))
+            return 2
         results.append(result)
         if result["returncode"] != 0:
             print(json.dumps({"ok": False, "failed": result, "commands": results}, indent=2))

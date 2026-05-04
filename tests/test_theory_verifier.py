@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import io
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
+from scripts.check_proofs import is_allowed_checker_command
+from scripts.sync_formal_proof_ledger import check_ledger, write_ledger
 from theory_verifier.core import (
     ACTION_STANDARD_REQUIRED_GATES,
     ACTION_STANDARD_REQUIRED_SYMBOLS,
@@ -159,6 +163,8 @@ from theory_verifier.core import (
     FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS,
     FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT,
     PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES,
+    PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS,
+    PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
     iter_formal_claims,
@@ -474,11 +480,8 @@ class TheoryVerifierTests(unittest.TestCase):
                     "backend": "lean4",
                     "statement": "Current finite formal-proof claims are covered by machine-checkable artifacts.",
                     "artifact_paths": ["Proofs/IDTCore.lean"],
-                    "checker_commands": [
-                        "lake env lean Proofs/IDTCore.lean",
-                        "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json",
-                    ],
-                    "machine_checks": ["lean4_kernel", "idt_verifier_manifest"],
+                    "checker_commands": list(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS),
+                    "machine_checks": list(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS),
                     "forbidden_upgrades": list(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES),
                     "open_gaps": [],
                 }
@@ -7174,8 +7177,8 @@ class TheoryVerifierTests(unittest.TestCase):
                                 "backend": "lean4",
                                 "statement": "Stale claim ref.",
                                 "artifact_paths": ["Proofs/IDTCore.lean"],
-                                "checker_commands": ["lake env lean Proofs/IDTCore.lean"],
-                                "machine_checks": ["lean4_kernel"],
+                                "checker_commands": list(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS),
+                                "machine_checks": list(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS),
                                 "forbidden_upgrades": list(PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES),
                                 "open_gaps": [],
                             }
@@ -7215,6 +7218,48 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"formal_proof_ledger_artifact_missing"})
 
+    def test_formal_proof_ledger_rejects_missing_required_checker_command(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate()
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["checker_commands"] = ["lake env lean Proofs/IDTCore.lean"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_checker_commands_incomplete"})
+
+    def test_formal_proof_ledger_rejects_missing_required_machine_check(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate()
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["machine_checks"] = ["lean4_kernel", "idt_verifier_manifest"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_machine_checks_incomplete"})
+
     def test_current_formal_claims_have_proof_ledger_coverage(self) -> None:
         manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
         manifest = parse_manifest_text(manifest_path)
@@ -7233,7 +7278,37 @@ class TheoryVerifierTests(unittest.TestCase):
             if not isinstance(raw_claim_refs, list):
                 self.fail("claim_refs must be a list")
             covered_refs.update(ref for ref in raw_claim_refs if isinstance(ref, str))
+            checker_commands = raw_card.get("checker_commands")
+            if not isinstance(checker_commands, list):
+                self.fail("checker_commands must be a list")
+            self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS).issubset(set(checker_commands)))
+            machine_checks = raw_card.get("machine_checks")
+            if not isinstance(machine_checks, list):
+                self.fail("machine_checks must be a list")
+            self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS).issubset(set(machine_checks)))
         self.assertEqual(claim_refs, sorted(covered_refs))
+
+    def test_proof_runner_allowlist_accepts_only_safe_checker_commands(self) -> None:
+        self.assertTrue(
+            is_allowed_checker_command(("python3", "scripts/sync_formal_proof_ledger.py", "--check"))
+        )
+        self.assertTrue(is_allowed_checker_command(("lake", "env", "lean", "Proofs/IDTCore.lean")))
+        self.assertTrue(
+            is_allowed_checker_command(
+                ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json")
+            )
+        )
+        self.assertFalse(is_allowed_checker_command(("python3", "-c", "print('unsafe')")))
+        self.assertFalse(is_allowed_checker_command(("lake", "env", "lean", "../Proofs/IDTCore.lean")))
+
+    def test_formal_proof_ledger_sync_detects_stale_generated_file(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        with tempfile.TemporaryDirectory() as raw_tmp_dir:
+            lean_path = Path(raw_tmp_dir) / "IDTCore.lean"
+            self.assertEqual(0, write_ledger(manifest_path, lean_path, io.StringIO()))
+            self.assertEqual(0, check_ledger(manifest_path, lean_path, io.StringIO()))
+            lean_path.write_text(lean_path.read_text(encoding="utf-8") + "\n-- stale\n", encoding="utf-8")
+            self.assertEqual(1, check_ledger(manifest_path, lean_path, io.StringIO()))
 
     def test_phase_branch_additivity_rejects_mismatch(self) -> None:
         manifest = parse_manifest(

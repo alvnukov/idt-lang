@@ -66,8 +66,9 @@ Current auditable results:
   theorem cards.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
-  machine-checkable artifacts and commands. The current proof pipeline runs
-  Lean 4 plus the IDT verifier.
+  machine-checkable artifacts and commands. The current proof pipeline first
+  synchronizes the generated Lean ledger against the manifest, then runs Lean 4
+  plus the IDT verifier.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants
@@ -82,6 +83,8 @@ of nature.
 - `sections/` — modular theory body.
 - `scripts/graph_query.py` — file-based research graph query and cautious edit
   helper for the verifier manifest.
+- `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean ledger of
+  current `formal_proof` claims from the manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
 - `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
 - `Proofs/` — Lean proof artifacts.
@@ -130,6 +133,8 @@ The underlying checks are:
 
 ```bash
 python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
+python3 scripts/sync_formal_proof_ledger.py --check
+lake env lean Proofs/IDTCore.lean
 python3 -m unittest discover -s tests
 ```
 
@@ -144,7 +149,7 @@ Optional development tools:
 ```bash
 python3 -m pip install -r requirements-dev.txt
 ruff check .
-mypy --strict theory_verifier tests
+mypy --strict theory_verifier tests scripts
 ```
 
 ## Public Claim Boundary

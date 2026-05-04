@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.18.0",
+  "theory_version": "v6.19.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -7755,15 +7755,18 @@
           ],
           "proof_kind": "machine_checked_finite_proof",
           "backend": "lean4",
-          "statement": "The current IDT-Core formal_proof markers are finite/meta-level claims only; they are covered by the IDT verifier and a Lean-checked proof-ledger artifact, and they do not prove QM, Hilbert space, Born rule, or hbar_I.",
+          "statement": "Current finite formal-proof claims are generated from the manifest, synchronized into a Lean ledger, checked by the Lean kernel, and rechecked by the IDT verifier. This proves only the current finite IDT-Core/meta-level proof ledger, not QM, Hilbert space, Born rule, or hbar.",
           "artifact_paths": [
-            "Proofs/IDTCore.lean"
+            "Proofs/IDTCore.lean",
+            "scripts/sync_formal_proof_ledger.py"
           ],
           "checker_commands": [
+            "python3 scripts/sync_formal_proof_ledger.py --check",
             "lake env lean Proofs/IDTCore.lean",
             "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json"
           ],
           "machine_checks": [
+            "formal_claim_manifest_sync",
             "lean4_kernel",
             "idt_verifier_manifest"
           ],
