@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.25.0`
+Current version: `v6.26.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -820,6 +820,12 @@ structure, Bell contextual correlations, and spacetime geometry may be readout
 projections of a deeper clock-context-source/holonomy layer. The gate forbids
 using GR as a primitive foundation and keeps Hilbert, Bell derivation, metric
 spacetime, `hbar_I`, `G_I`, and full QM open or blocked as declared.
+The `hilbert_bell_gravity_scale_probe_demo` now records the broader
+scale-hidden version of that hypothesis: the same common-source mechanism may
+affect sectors beyond QM, while current finite QM gates expose only the
+Hilbert/Bell projection because gravity-facing clock/source response is
+scale-separated. This is a research route and current hard wall, not a
+derivation of Hilbert space, Bell correlations, GR, `hbar_I`, or `G_I`.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are

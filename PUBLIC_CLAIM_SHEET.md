@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.25.0`.
+Current theory version: `v6.26.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -94,7 +94,13 @@ The main current successes are bounded and methodological:
    geometry may be different readout projections of a deeper
    clock-context-source/holonomy layer. It also enforces the boundary that GR is
    treated only as a reflection or limit candidate, not as a primitive source.
-13. The proof-verification boundary is executable. Current `formal_proof`
+13. A Hilbert/Bell/gravity scale probe is executable. It records the broader
+   candidate that the same base mechanism may affect more than QM, while
+   ordinary finite QM gates only expose the Hilbert/Bell projection because the
+   gravity-facing clock/source response is scale-separated. The probe keeps
+   this as a hard-wall common-source route, not as a derivation of Hilbert,
+   Bell correlations, GR, `hbar_I`, or `G_I`.
+14. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized

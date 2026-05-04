@@ -87,6 +87,10 @@ Current auditable results:
   is now tracked with an explicit GR-reflection boundary. Metric/GR structure
   may only enter as a readout or limit candidate of deeper clock-source-context
   structure, not as a primitive foundation.
+- Hilbert/Bell/gravity scale probe: the broader candidate link is tracked as a
+  scale-hidden common-source route. QM-scale gates may expose Hilbert/Bell
+  readouts while gravity-facing clock/source response remains suppressed or
+  unresolved; this is recorded as a hard-wall research route, not a proof.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first

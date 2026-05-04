@@ -165,6 +165,11 @@ from theory_verifier.core import (
     FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES,
     FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS,
     FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES,
+    HILBERT_BELL_GRAVITY_SCALE_FORBIDDEN_UPGRADES,
+    HILBERT_BELL_GRAVITY_SCALE_PROBE_RULE,
+    HILBERT_BELL_GRAVITY_SCALE_PROBE_TARGET_SCOPE,
+    HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS,
+    HILBERT_BELL_GRAVITY_SCALE_REQUIRED_ROUTE_STATUS,
     HILBERT_SPACETIME_BRIDGE_RULE,
     HILBERT_SPACETIME_BRIDGE_TARGET_SCOPE,
     HILBERT_SPACETIME_FORBIDDEN_UPGRADES,
@@ -1021,6 +1026,145 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_bridge_status": "candidate_map_with_gr_reflection_boundary",
             "forbidden_upgrades": list(HILBERT_SPACETIME_FORBIDDEN_UPGRADES),
+        }
+
+    def hilbert_bell_gravity_scale_probe_gate(self) -> dict[str, object]:
+        mechanism_specs: dict[str, dict[str, object]] = {
+            "context_source_selection": {
+                "statement": "Context/source selection is the shared candidate layer below Hilbert, Bell, and clock readouts.",
+                "hilbert_refs": ["hilbert_carrier_derivation", "context_product_exhaustion_implies_local_tomography"],
+                "bell_refs": ["bell_chsh_table_demo", "ks_contextuality_obstruction_demo"],
+                "gravity_refs": ["primitive_tick_clock_count_demo", "source_response_packet_universality_demo"],
+                "evidence_refs": ["fundamental_unknownness_bridge_audit_demo", "foundation_import_boundary_audit_demo"],
+                "scale_role": "Selection is scale-neutral until a clock/source or carrier readout is attached.",
+                "open_gap": "The shared selector is a candidate mechanism, not a derived primitive dynamics.",
+            },
+            "holonomy_phase_curvature_readout": {
+                "statement": "Holonomy is the common finite witness form for phase-like and curvature-like readouts.",
+                "hilbert_refs": ["phase_cost_from_kernel_holonomy_demo", "ab_holonomy_phase_demo"],
+                "bell_refs": ["bell_chsh_from_amplitudes_demo", "spin_bell_angle_model_demo"],
+                "gravity_refs": ["non_exact_holonomy_source_demo", "cycle_holonomy_composition_demo"],
+                "evidence_refs": ["holonomy_selector_class_registry_demo", "phase_branch_no_postfit_demo"],
+                "scale_role": "At QM scale it appears as phase; at gravity scale it is only a curvature/source candidate.",
+                "open_gap": "Holonomy commonality does not derive Hilbert, Bell, metric geometry, or action scale.",
+            },
+            "composite_witness_locality": {
+                "statement": "Locality is screened through composite witnesses, not imported from metric spacetime.",
+                "hilbert_refs": ["context_product_exhaustion_implies_local_tomography", "context_product_exhaustion_demo"],
+                "bell_refs": ["bounded_correlation_screen_rejects_superquantum_boxes", "bell_chsh_from_amplitudes_demo"],
+                "gravity_refs": ["source_stress_packet_closure_I", "geometry_response_factor_closure_I"],
+                "evidence_refs": ["context_product_exhaustion_demo", "hilbert_spacetime_bridge_audit_demo"],
+                "scale_role": "Metric locality is treated as a later projection of witness constraints.",
+                "open_gap": "Composite witness exhaustion is conditional and does not select the universal carrier.",
+            },
+            "clock_response_scale_separation": {
+                "statement": "Clock/source response may hide the gravity-facing projection inside ordinary finite QM readouts.",
+                "hilbert_refs": ["qm_wall_probe_demo", "first_principles_hbar_lock"],
+                "bell_refs": ["spin_bell_angle_model_demo"],
+                "gravity_refs": ["primitive_tick_clock_count_demo", "weak_field_clock_calculator_I", "G_I"],
+                "evidence_refs": ["source_response_charge_normalization_demo", "primitive_tick_clock_count_demo"],
+                "scale_role": "Gravity-facing response is scale-separated from current finite QM gates.",
+                "open_gap": "Scale separation is a candidate explanation, not a derived suppression theorem.",
+            },
+            "residual_holdout_screen": {
+                "statement": "Residuals are the shared guardrail against confusing hidden-scale structure with proof.",
+                "hilbert_refs": ["nonfinite_gpt_residual_frontier_demo", "qm_wall_probe_demo"],
+                "bell_refs": ["bounded_correlation_screen_rejects_superquantum_boxes"],
+                "gravity_refs": ["galaxy_residual_no_postfit_demo", "G_candidate_no_postfit_holdout_demo"],
+                "evidence_refs": ["nonfinite_gpt_residual_frontier_demo", "galaxy_residual_no_postfit_demo"],
+                "scale_role": "Any hidden-scale route must survive holdout/residual screens before status upgrade.",
+                "open_gap": "Residual discipline exposes candidates; it does not close the common-source route.",
+            },
+        }
+        route_specs: dict[str, dict[str, object]] = {
+            "qm_projection_route": {
+                "mechanism_refs": [
+                    "context_source_selection",
+                    "holonomy_phase_curvature_readout",
+                    "composite_witness_locality",
+                ],
+                "target_refs": [
+                    "hilbert_carrier_derivation",
+                    "bell_chsh_from_amplitudes_demo",
+                    "spin_bell_angle_model_demo",
+                    "context_product_exhaustion_implies_local_tomography",
+                ],
+                "evidence_refs": ["qm_wall_probe_demo", "hilbert_spacetime_bridge_audit_demo"],
+                "scale_separation": "Finite QM gates can expose Hilbert/Bell readouts without resolving gravity-scale response.",
+                "open_gap": "The route is finite-executable only at readout level; Hilbert carrier remains blocked.",
+            },
+            "gravity_projection_route": {
+                "mechanism_refs": [
+                    "clock_response_scale_separation",
+                    "holonomy_phase_curvature_readout",
+                    "residual_holdout_screen",
+                ],
+                "target_refs": ["weak_field_clock_calculator_I", "G_I", "ppn_no_slip_validation_I"],
+                "evidence_refs": ["source_response_charge_normalization_demo", "ppn_gamma_no_slip_demo"],
+                "scale_separation": "Gravity enters as clock/source limit, not as a primitive explanation of Bell or Hilbert.",
+                "open_gap": "Metric/GR remains a reflection-limit candidate rather than a foundation.",
+            },
+            "scale_hidden_coupling_route": {
+                "mechanism_refs": [
+                    "clock_response_scale_separation",
+                    "residual_holdout_screen",
+                    "context_source_selection",
+                ],
+                "target_refs": ["first_principles_hbar_lock", "joint_action_gravity_anchor_I", "nonfinite_gpt_residual_frontier_demo"],
+                "evidence_refs": [
+                    "action_scale_gauge_obstruction_demo",
+                    "action_standard_independence_demo",
+                    "G_candidate_no_calibrated_input_demo",
+                ],
+                "scale_separation": "The same substrate may affect broader sectors while remaining invisible to present QM gates.",
+                "open_gap": "No suppression law or independent action/gravity scale has been derived.",
+            },
+            "unified_common_source_route": {
+                "mechanism_refs": list(HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS),
+                "target_refs": ["universal_carrier_selection_theorem", "hilbert_carrier_derivation", "full_QM_I", "G_I"],
+                "evidence_refs": [
+                    "fundamental_unknownness_bridge_audit_demo",
+                    "hilbert_spacetime_bridge_audit_demo",
+                    "qm_wall_probe_demo",
+                ],
+                "scale_separation": "A common source would need one account of QM-scale facts and gravity-scale reflections.",
+                "open_gap": "This is the current hard wall, not a proof of a unified substrate.",
+            },
+        }
+        return {
+            "id": "test_hilbert_bell_gravity_scale_probe",
+            "type": "hilbert_bell_gravity_scale_probe",
+            "target_scope": HILBERT_BELL_GRAVITY_SCALE_PROBE_TARGET_SCOPE,
+            "bridge_rule": HILBERT_BELL_GRAVITY_SCALE_PROBE_RULE,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "mechanisms": [
+                {
+                    "id": mechanism_id,
+                    "statement": spec["statement"],
+                    "status": HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS[mechanism_id],
+                    "hilbert_refs": spec["hilbert_refs"],
+                    "bell_refs": spec["bell_refs"],
+                    "gravity_refs": spec["gravity_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "scale_role": spec["scale_role"],
+                    "open_gap": spec["open_gap"],
+                }
+                for mechanism_id, spec in mechanism_specs.items()
+            ],
+            "routes": [
+                {
+                    "id": route_id,
+                    "status": HILBERT_BELL_GRAVITY_SCALE_REQUIRED_ROUTE_STATUS[route_id],
+                    "mechanism_refs": spec["mechanism_refs"],
+                    "target_refs": spec["target_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "scale_separation": spec["scale_separation"],
+                    "open_gap": spec["open_gap"],
+                }
+                for route_id, spec in route_specs.items()
+            ],
+            "expected_probe_status": "scale_hidden_common_source_candidate",
+            "forbidden_upgrades": list(HILBERT_BELL_GRAVITY_SCALE_FORBIDDEN_UPGRADES),
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -8024,6 +8168,57 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"hilbert_spacetime_bridge_ref_unresolved"})
+
+    def test_hilbert_bell_gravity_scale_probe_rejects_rule_drift(self) -> None:
+        gate = self.hilbert_bell_gravity_scale_probe_gate()
+        gate["bridge_rule"] = "common_source_is_proven"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"hilbert_bell_gravity_scale_probe_rule_mismatch"})
+
+    def test_hilbert_bell_gravity_scale_probe_rejects_mechanism_upgrade(self) -> None:
+        gate = self.hilbert_bell_gravity_scale_probe_gate()
+        mechanisms = gate["mechanisms"]
+        if not isinstance(mechanisms, list):
+            self.fail("mechanisms must be a list")
+        first_mechanism = mechanisms[0]
+        if not isinstance(first_mechanism, dict):
+            self.fail("mechanism must be a mapping")
+        first_mechanism["status"] = "formal_proof"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"hilbert_bell_gravity_scale_probe_mechanism_status_mismatch"})
+
+    def test_hilbert_bell_gravity_scale_probe_grounding_rejects_unknown_gravity_ref(self) -> None:
+        gate = self.hilbert_bell_gravity_scale_probe_gate()
+        mechanisms = gate["mechanisms"]
+        if not isinstance(mechanisms, list):
+            self.fail("mechanisms must be a list")
+        first_mechanism = mechanisms[0]
+        if not isinstance(first_mechanism, dict):
+            self.fail("mechanism must be a mapping")
+        first_mechanism["gravity_refs"] = ["missing_gravity_ref"]
+        raw_manifest = json.loads((ROOT / "theory_verifier_manifest_v6_0.json").read_text(encoding="utf-8"))
+        raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], gate]
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"hilbert_bell_gravity_scale_probe_ref_unresolved"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(

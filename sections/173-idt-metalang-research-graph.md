@@ -724,7 +724,52 @@ Status:
 
 `hilbert_spacetime_bridge_audit_added`
 
-### 173.15. Proof Verification Ledger
+### 173.15. Hilbert/Bell/Gravity Scale Probe
+
+The broader scale-hidden bridge hypothesis is now explicit as:
+
+`hilbert_bell_gravity_scale_probe_demo`
+
+The rule is:
+
+```text
+common_source_may_be_scale_suppressed_in_qm_but_must_not_be_promoted_without_artifact
+```
+
+The probe records a sharper version of the current intuition: Hilbert carrier
+structure, Bell contextual correlations, and gravity-facing clock/source
+response may be different projections of one lower mechanism, but finite QM
+gates may only expose the Hilbert/Bell projection because the gravity-facing
+response is scale-separated.
+
+The current candidate mechanisms are:
+
+```text
+context_source_selection -> candidate_common_mechanism
+holonomy_phase_curvature_readout -> candidate_common_mechanism
+composite_witness_locality -> finite_executable_underived
+clock_response_scale_separation -> candidate_scale_hidden_route
+residual_holdout_screen -> regression_supported_candidate
+```
+
+The current route map is:
+
+```text
+qm_projection_route -> finite_executable_underived
+gravity_projection_route -> reflection_limit_candidate
+scale_hidden_coupling_route -> candidate_scale_suppressed_route
+unified_common_source_route -> current_hard_wall
+```
+
+This does not claim that the common source is proven. It only makes the route
+auditable and forbids upgrading scale suppression into a derivation of Hilbert
+space, Bell correlations, GR, `hbar_I`, `G_I`, or full QM.
+
+Status:
+
+`hilbert_bell_gravity_scale_probe_added`
+
+### 173.16. Proof Verification Ledger
 
 The word `formal_proof` is now gated by an executable proof ledger and a
 generated Lean finite-core semantic artifact.

@@ -1158,6 +1158,41 @@ HILBERT_SPACETIME_FORBIDDEN_UPGRADES = (
     "does_not_close_full_QM_I",
 )
 
+HILBERT_BELL_GRAVITY_SCALE_PROBE_TARGET_SCOPE = "hilbert_bell_gravity_scale_hidden_common_source_search"
+HILBERT_BELL_GRAVITY_SCALE_PROBE_RULE = (
+    "common_source_may_be_scale_suppressed_in_qm_but_must_not_be_promoted_without_artifact"
+)
+
+HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS: dict[str, str] = {
+    "context_source_selection": "candidate_common_mechanism",
+    "holonomy_phase_curvature_readout": "candidate_common_mechanism",
+    "composite_witness_locality": "finite_executable_underived",
+    "clock_response_scale_separation": "candidate_scale_hidden_route",
+    "residual_holdout_screen": "regression_supported_candidate",
+}
+
+HILBERT_BELL_GRAVITY_SCALE_REQUIRED_ROUTE_STATUS: dict[str, str] = {
+    "qm_projection_route": "finite_executable_underived",
+    "gravity_projection_route": "reflection_limit_candidate",
+    "scale_hidden_coupling_route": "candidate_scale_suppressed_route",
+    "unified_common_source_route": "current_hard_wall",
+}
+
+HILBERT_BELL_GRAVITY_SCALE_PROBE_RESULTS = (
+    "scale_hidden_common_source_candidate",
+    "failed",
+)
+
+HILBERT_BELL_GRAVITY_SCALE_FORBIDDEN_UPGRADES = (
+    "does_not_prove_Hilbert_carrier",
+    "does_not_prove_Bell_correlations_from_primitives",
+    "does_not_prove_GR_or_metric_spacetime",
+    "does_not_use_GR_as_primitive",
+    "does_not_derive_hbar_I_or_G_I",
+    "does_not_close_full_QM_I",
+    "does_not_treat_scale_suppression_as_derivation",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2774,6 +2809,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_hilbert_spacetime_bridge_grounding(manifest))
     checks.append("Hilbert spacetime bridge grounding")
+
+    issues.extend(check_hilbert_bell_gravity_scale_probe_grounding(manifest))
+    checks.append("Hilbert-Bell-gravity scale probe grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -6144,6 +6182,26 @@ def check_hilbert_spacetime_bridge_grounding(manifest: Manifest) -> list[Issue]:
                 issues.append(
                     Issue(
                         "hilbert_spacetime_bridge_ref_unresolved",
+                        f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
+                    )
+                )
+    return issues
+
+
+def check_hilbert_bell_gravity_scale_probe_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "hilbert_bell_gravity_scale_probe":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "hilbert_bell_gravity_scale_probe"))
+        for field_name in ("hilbert_refs", "bell_refs", "gravity_refs", "target_refs"):
+            for field_path, reference in iter_named_string_refs(gate.payload, field_name):
+                if reference in known_refs or research_graph_doc_ref_exists(reference):
+                    continue
+                issues.append(
+                    Issue(
+                        "hilbert_bell_gravity_scale_probe_ref_unresolved",
                         f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
                     )
                 )
@@ -14267,6 +14325,189 @@ def check_hilbert_spacetime_bridge_audit_gate(gate: FiniteGate) -> list[Issue]:
     return []
 
 
+def check_hilbert_bell_gravity_scale_probe_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != HILBERT_BELL_GRAVITY_SCALE_PROBE_TARGET_SCOPE:
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_target_mismatch",
+                f"{gate.identifier}: target_scope must be {HILBERT_BELL_GRAVITY_SCALE_PROBE_TARGET_SCOPE}",
+            )
+        ]
+    bridge_rule = require_string(gate.payload.get("bridge_rule"), f"{gate.identifier}.bridge_rule")
+    if bridge_rule != HILBERT_BELL_GRAVITY_SCALE_PROBE_RULE:
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_rule_mismatch",
+                f"{gate.identifier}: bridge_rule must keep scale-hidden common source claims provisional",
+            )
+        ]
+    primitive_basis = set(
+        require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis")
+    )
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+
+    mechanisms = require_list(gate.payload.get("mechanisms"), f"{gate.identifier}.mechanisms")
+    seen_mechanisms: set[str] = set()
+    for index, raw_mechanism in enumerate(mechanisms):
+        mechanism = require_mapping(raw_mechanism, f"{gate.identifier}.mechanisms[{index}]")
+        mechanism_id = require_string(mechanism.get("id"), f"{gate.identifier}.mechanisms[{index}].id")
+        if mechanism_id not in HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_unknown_mechanism",
+                    f"{gate.identifier}: unknown mechanism {mechanism_id}",
+                )
+            ]
+        if mechanism_id in seen_mechanisms:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_duplicate_mechanism",
+                    f"{gate.identifier}: duplicate mechanism {mechanism_id}",
+                )
+            ]
+        status = require_string(mechanism.get("status"), f"{gate.identifier}.{mechanism_id}.status")
+        expected_status = HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS[mechanism_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_mechanism_status_mismatch",
+                    f"{gate.identifier}: {mechanism_id} must remain {expected_status}",
+                )
+            ]
+        hilbert_refs = require_string_tuple(
+            mechanism.get("hilbert_refs", []),
+            f"{gate.identifier}.{mechanism_id}.hilbert_refs",
+        )
+        bell_refs = require_string_tuple(
+            mechanism.get("bell_refs", []),
+            f"{gate.identifier}.{mechanism_id}.bell_refs",
+        )
+        gravity_refs = require_string_tuple(
+            mechanism.get("gravity_refs", []),
+            f"{gate.identifier}.{mechanism_id}.gravity_refs",
+        )
+        evidence_refs = require_string_tuple(
+            mechanism.get("evidence_refs", []),
+            f"{gate.identifier}.{mechanism_id}.evidence_refs",
+        )
+        scale_role = require_string(mechanism.get("scale_role"), f"{gate.identifier}.{mechanism_id}.scale_role")
+        open_gap = require_string(mechanism.get("open_gap"), f"{gate.identifier}.{mechanism_id}.open_gap")
+        if not hilbert_refs or not bell_refs or not gravity_refs or not evidence_refs or not scale_role or not open_gap:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_mechanism_support_missing",
+                    (
+                        f"{gate.identifier}: {mechanism_id} must cite Hilbert, Bell, gravity, evidence, "
+                        "scale role, and open gap"
+                    ),
+                )
+            ]
+        seen_mechanisms.add(mechanism_id)
+    missing_mechanisms = sorted(set(HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS) - seen_mechanisms)
+    if missing_mechanisms:
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_mechanism_missing",
+                f"{gate.identifier}: missing mechanisms: {', '.join(missing_mechanisms)}",
+            )
+        ]
+
+    routes = require_list(gate.payload.get("routes"), f"{gate.identifier}.routes")
+    seen_routes: set[str] = set()
+    for index, raw_route in enumerate(routes):
+        route = require_mapping(raw_route, f"{gate.identifier}.routes[{index}]")
+        route_id = require_string(route.get("id"), f"{gate.identifier}.routes[{index}].id")
+        if route_id not in HILBERT_BELL_GRAVITY_SCALE_REQUIRED_ROUTE_STATUS:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_unknown_route",
+                    f"{gate.identifier}: unknown route {route_id}",
+                )
+            ]
+        if route_id in seen_routes:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_duplicate_route",
+                    f"{gate.identifier}: duplicate route {route_id}",
+                )
+            ]
+        status = require_string(route.get("status"), f"{gate.identifier}.{route_id}.status")
+        expected_status = HILBERT_BELL_GRAVITY_SCALE_REQUIRED_ROUTE_STATUS[route_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_route_status_mismatch",
+                    f"{gate.identifier}: {route_id} must remain {expected_status}",
+                )
+            ]
+        mechanism_refs = set(
+            require_string_tuple(route.get("mechanism_refs", []), f"{gate.identifier}.{route_id}.mechanism_refs")
+        )
+        target_refs = require_string_tuple(route.get("target_refs", []), f"{gate.identifier}.{route_id}.target_refs")
+        evidence_refs = require_string_tuple(route.get("evidence_refs", []), f"{gate.identifier}.{route_id}.evidence_refs")
+        scale_separation = require_string(
+            route.get("scale_separation"),
+            f"{gate.identifier}.{route_id}.scale_separation",
+        )
+        open_gap = require_string(route.get("open_gap"), f"{gate.identifier}.{route_id}.open_gap")
+        if not mechanism_refs or not target_refs or not evidence_refs or not scale_separation or not open_gap:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_route_support_missing",
+                    (
+                        f"{gate.identifier}: {route_id} must cite mechanisms, targets, evidence, "
+                        "scale separation, and open gap"
+                    ),
+                )
+            ]
+        unknown_mechanism_refs = sorted(mechanism_refs - set(HILBERT_BELL_GRAVITY_SCALE_REQUIRED_MECHANISMS))
+        if unknown_mechanism_refs:
+            return [
+                Issue(
+                    "hilbert_bell_gravity_scale_probe_route_mechanism_unknown",
+                    f"{gate.identifier}: {route_id} cites unknown mechanisms: {', '.join(unknown_mechanism_refs)}",
+                )
+            ]
+        seen_routes.add(route_id)
+    missing_routes = sorted(set(HILBERT_BELL_GRAVITY_SCALE_REQUIRED_ROUTE_STATUS) - seen_routes)
+    if missing_routes:
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_route_missing",
+                f"{gate.identifier}: missing routes: {', '.join(missing_routes)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_probe_status"), f"{gate.identifier}.expected_probe_status")
+    if expected_status not in HILBERT_BELL_GRAVITY_SCALE_PROBE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_probe_status is unknown")
+    if expected_status != "scale_hidden_common_source_candidate":
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_status_mismatch",
+                f"{gate.identifier}: probe must remain a scale-hidden common-source candidate",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(HILBERT_BELL_GRAVITY_SCALE_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "hilbert_bell_gravity_scale_probe_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must block Hilbert/Bell/gravity overclaim",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -20096,6 +20337,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "qm_wall_probe": check_qm_wall_probe_gate,
     "fundamental_unknownness_bridge_audit": check_fundamental_unknownness_bridge_audit_gate,
     "hilbert_spacetime_bridge_audit": check_hilbert_spacetime_bridge_audit_gate,
+    "hilbert_bell_gravity_scale_probe": check_hilbert_bell_gravity_scale_probe_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,
