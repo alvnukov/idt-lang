@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.13.0`
+Current version: `v6.14.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -679,8 +679,10 @@ checks the primitive-sort, claim-role, and route-family registries by count and
 digest.
 The `idt_core_route_grammar_audit_demo` now formalizes bounded arity and route
 generator basis for the registered route families and also closes the syntactic
-finite-effect/route-closure part of no-new-effects. Joint-only invariant
-rejection and nonfinite residual closure remain conditional.
+finite-effect/route-closure part of no-new-effects.
+The `idt_core_semantic_no_new_effects_audit_demo` now formalizes route-covered
+joint-only invariant rejection for finite context-product composites, while
+explicitly keeping nonfinite residual closure conditional.
 The `no_emergent_joint_only_invariants_under_context_product_exhaustion`
 theorem card and `no_emergent_joint_only_invariant_route_demo` now reduce the
 joint-only-invariant obstruction to a conditional separator under

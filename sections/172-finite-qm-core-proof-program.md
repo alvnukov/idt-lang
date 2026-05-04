@@ -582,13 +582,23 @@ closure for the finite effect registry and route-closure audit. Therefore:
 
 1. `bounded_context_arity` is `formal_proof`;
 2. `finite_route_generator_basis` is `formal_proof`;
-3. `no_new_primitive_effects_under_route_closure` remains
-   `conditional_support`.
+3. the syntactic finite-effect and route-closure part of
+   `no_new_primitive_effects_under_route_closure` is `formal_proof`.
 
-The remaining gap is deliberately semantic, not syntactic: joint-only invariant
-rejection and nonfinite residual closure are still conditional. This narrows
-the next proof work to the semantic no-new-effects theorem rather than adding
-more QM experiment fixtures.
+The semantic no-new-effects boundary is now checked by:
+
+`idt_core_semantic_no_new_effects_audit_demo`.
+
+That audit promotes route-covered joint-only invariant rejection to
+`formal_proof` for finite context-product composites, using the context-product
+separator and the rebit hidden-invariant witness. It also keeps the nonfinite
+or unwitnessed GPT residual as `conditional_support` and explicitly forbids
+upgrading this result into global no-new-effects closure, universal carrier
+selection, or full QM.
+
+The remaining gap is now narrower: nonfinite residual closure is still
+conditional. This narrows the next proof work to the nonfinite residual
+boundary rather than adding more QM experiment fixtures.
 
 The third item is now reduced to a conditional separator:
 

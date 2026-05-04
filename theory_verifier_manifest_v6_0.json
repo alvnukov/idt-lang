@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.13.0",
+  "theory_version": "v6.14.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4873,11 +4873,11 @@
           "status": "conditional_support",
           "evidence_refs": [
             "idt_core_no_new_primitive_effects_frontier_demo",
+            "idt_core_semantic_no_new_effects_audit_demo",
             "idt_core_route_grammar_audit_demo",
-            "no_emergent_joint_only_invariant_route_demo",
             "nonfinite_gpt_residual_frontier_demo"
           ],
-          "open_gap": "Syntactic no-new-effect closure is formalized, but semantic joint-only invariant rejection and nonfinite residual closure remain conditional."
+          "open_gap": "Finite and route-covered semantic no-new-effect checks are formalized, but nonfinite residual closure remains conditional."
         }
       ],
       "expected_frontier_status": "conditional_basis"
@@ -4926,8 +4926,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 223,
-      "expected_gate_type_digest": "29365428d47a73ef176bed09faf659aed5e18531e334f7fe89e7e74419ea4a93",
+      "expected_gate_type_count": 224,
+      "expected_gate_type_digest": "3b76485eac64469eaa4e280ad6484d3995eb5f2bb2de5fb1637ac9c4cf888cf5",
       "expected_component_status": "formal_proof"
     },
     {
@@ -5091,6 +5091,61 @@
       ]
     },
     {
+      "id": "idt_core_semantic_no_new_effects_audit_demo",
+      "type": "idt_core_semantic_no_new_effects_audit",
+      "target_assumption": "no_new_primitive_effects_under_route_closure",
+      "components": [
+        {
+          "id": "joint_only_invariant_rejection",
+          "status": "formal_proof",
+          "evidence_refs": [
+            "no_emergent_joint_only_invariant_route_demo",
+            "context_product_exhaustion_implies_local_tomography",
+            "real_hilbert_composite_hidden_joint_invariant_demo"
+          ],
+          "open_gap": "",
+          "scope": "finite_route_covered_context_product_composites",
+          "assumptions": [
+            "context_product_exhaustion",
+            "product_effect_separation",
+            "stable_invariant_witness_completeness",
+            "facticized_readout_closure"
+          ],
+          "separator_refs": [
+            "context_product_exhaustion_implies_local_tomography",
+            "context_product_local_tomography_theorem_demo",
+            "context_product_exhaustion_demo"
+          ],
+          "rejected_witness_refs": [
+            "real_hilbert_composite_hidden_joint_invariant",
+            "real_hilbert_composite_hidden_joint_invariant_demo"
+          ]
+        },
+        {
+          "id": "residual_frontier_no_new_effect_boundary",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "nonfinite_gpt_residual_frontier_demo",
+            "broader_generic_gpt_cone_frontier_demo"
+          ],
+          "open_gap": "Nonfinite or unwitnessed GPT residual closure remains conditional; the audit only guards the boundary against closure claims.",
+          "scope": "nonfinite_or_unwitnessed_gpt_residual",
+          "residual_refs": [
+            "nonfinite_gpt_residual_frontier_demo",
+            "broader_generic_gpt_cone_frontier_demo"
+          ],
+          "closure_claimed": false
+        }
+      ],
+      "expected_semantic_closure_status": "conditional_boundary",
+      "forbidden_upgrades": [
+        "does_not_prove_global_no_new_effects_closure",
+        "does_not_close_nonfinite_gpt_residual",
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I"
+      ]
+    },
+    {
       "id": "idt_core_bounded_arity_frontier_demo",
       "type": "idt_core_grammar_assumption_frontier",
       "target_assumption": "bounded_context_arity",
@@ -5215,21 +5270,23 @@
         },
         {
           "id": "joint_only_invariant_rejection",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
+            "idt_core_semantic_no_new_effects_audit_demo",
             "no_emergent_joint_only_invariant_route_demo",
             "no_emergent_joint_only_invariants_under_context_product_exhaustion"
           ],
-          "open_gap": "Joint-only invariant rejection remains a conditional separator, not a formal global IDT-Core closure theorem."
+          "open_gap": ""
         },
         {
           "id": "residual_frontier_no_new_effect_boundary",
           "status": "conditional_support",
           "evidence_refs": [
+            "idt_core_semantic_no_new_effects_audit_demo",
             "nonfinite_gpt_residual_frontier_demo",
             "broader_generic_gpt_cone_frontier_demo"
           ],
-          "open_gap": "Residual frontier boundaries prevent overclaiming but do not yet close the semantic nonfinite/no-new-effects theorem."
+          "open_gap": "Nonfinite residual closure remains conditional; the boundary is audited to prevent overclaiming, not to close the residual."
         }
       ],
       "expected_assumption_status": "conditional_basis"

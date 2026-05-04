@@ -884,6 +884,27 @@ IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES = (
     "does_not_prove_full_QM_I",
 )
 
+IDT_CORE_SEMANTIC_NO_NEW_EFFECT_COMPONENTS = (
+    "joint_only_invariant_rejection",
+    "residual_frontier_no_new_effect_boundary",
+)
+
+IDT_CORE_JOINT_ONLY_REJECTION_SCOPE = "finite_route_covered_context_product_composites"
+IDT_CORE_RESIDUAL_BOUNDARY_SCOPE = "nonfinite_or_unwitnessed_gpt_residual"
+
+IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES = (
+    "does_not_prove_global_no_new_effects_closure",
+    "does_not_close_nonfinite_gpt_residual",
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+)
+
+IDT_CORE_SEMANTIC_NO_NEW_EFFECT_RESULTS = (
+    "open",
+    "conditional_boundary",
+    "formalized",
+)
+
 SECTOR_ROLE_TAXONOMY_TARGET = "sector_role_taxonomy_I"
 
 SECTOR_ROLE_TAXONOMY_REQUIRED_SYMBOLS = (
@@ -8350,6 +8371,219 @@ def check_idt_core_route_grammar_no_new_effect_components(gate_id: str, componen
             )
         ]
     return []
+
+
+def check_idt_core_semantic_no_new_effects_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_assumption = require_string(gate.payload.get("target_assumption"), f"{gate.identifier}.target_assumption")
+    if target_assumption != "no_new_primitive_effects_under_route_closure":
+        return [
+            Issue(
+                "idt_core_semantic_no_new_effects_target_mismatch",
+                f"{gate.identifier}: target_assumption must be no_new_primitive_effects_under_route_closure",
+            )
+        ]
+
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "idt_core_semantic_no_new_effects_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must preserve the semantic no-new-effects boundary",
+            )
+        ]
+
+    components = require_list(gate.payload.get("components"), f"{gate.identifier}.components")
+    if len(components) != len(IDT_CORE_SEMANTIC_NO_NEW_EFFECT_COMPONENTS):
+        raise ManifestError(f"{gate.identifier}: components must cover every semantic no-new-effect component")
+
+    seen: set[str] = set()
+    status_by_component: dict[str, str] = {}
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate.identifier}.components[{index}]")
+        component_id = require_string(component.get("id"), f"{gate.identifier}.components[{index}].id")
+        status = require_string(component.get("status"), f"{gate.identifier}.components[{index}].status")
+        evidence_refs = require_string_tuple(
+            component.get("evidence_refs", []),
+            f"{gate.identifier}.components[{index}].evidence_refs",
+        )
+        open_gap = require_string(component.get("open_gap", ""), f"{gate.identifier}.components[{index}].open_gap")
+
+        if component_id not in IDT_CORE_SEMANTIC_NO_NEW_EFFECT_COMPONENTS:
+            return [
+                Issue(
+                    "idt_core_semantic_no_new_effects_unknown_component",
+                    f"{gate.identifier}: unknown semantic no-new-effect component {component_id}",
+                )
+            ]
+        if component_id in seen:
+            return [
+                Issue(
+                    "idt_core_semantic_no_new_effects_duplicate_component",
+                    f"{gate.identifier}: duplicate semantic no-new-effect component {component_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "idt_core_semantic_no_new_effects_evidence_missing",
+                    f"{gate.identifier}: {component_id} must cite evidence refs",
+                )
+            ]
+
+        if component_id == "joint_only_invariant_rejection":
+            issue = check_idt_core_joint_only_rejection_component(gate.identifier, component, status, open_gap)
+        else:
+            issue = check_idt_core_residual_boundary_component(gate.identifier, component, status, open_gap)
+        if issue is not None:
+            return [issue]
+
+        seen.add(component_id)
+        status_by_component[component_id] = status
+
+    missing = sorted(set(IDT_CORE_SEMANTIC_NO_NEW_EFFECT_COMPONENTS) - seen)
+    if missing:
+        return [
+            Issue(
+                "idt_core_semantic_no_new_effects_component_missing",
+                f"{gate.identifier}: missing semantic no-new-effect components: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_semantic_closure_status"),
+        f"{gate.identifier}.expected_semantic_closure_status",
+    )
+    if expected_status not in IDT_CORE_SEMANTIC_NO_NEW_EFFECT_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_semantic_closure_status is unknown")
+    if all(status == "formal_proof" for status in status_by_component.values()):
+        computed_status = "formalized"
+    elif all(status in {"conditional_support", "formal_proof"} for status in status_by_component.values()):
+        computed_status = "conditional_boundary"
+    else:
+        computed_status = "open"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "idt_core_semantic_no_new_effects_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_idt_core_joint_only_rejection_component(
+    gate_id: str,
+    component: dict[str, object],
+    status: str,
+    open_gap: str,
+) -> Issue | None:
+    if status != "formal_proof":
+        return Issue(
+            "idt_core_semantic_no_new_effects_joint_rejection_status_mismatch",
+            f"{gate_id}: joint_only_invariant_rejection must be formal_proof for route-covered composites",
+        )
+    if open_gap:
+        return Issue(
+            "idt_core_semantic_no_new_effects_gap_on_formal_component",
+            f"{gate_id}: joint_only_invariant_rejection must not declare an open gap",
+        )
+    scope = require_string(component.get("scope"), f"{gate_id}.joint_only_invariant_rejection.scope")
+    if scope != IDT_CORE_JOINT_ONLY_REJECTION_SCOPE:
+        return Issue(
+            "idt_core_semantic_no_new_effects_joint_rejection_scope_mismatch",
+            f"{gate_id}: joint_only_invariant_rejection scope must be {IDT_CORE_JOINT_ONLY_REJECTION_SCOPE}",
+        )
+    assumptions = set(
+        require_string_tuple(
+            component.get("assumptions", []),
+            f"{gate_id}.joint_only_invariant_rejection.assumptions",
+        )
+    )
+    if assumptions != set(NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS):
+        return Issue(
+            "idt_core_semantic_no_new_effects_joint_rejection_assumptions_mismatch",
+            f"{gate_id}: joint_only_invariant_rejection assumptions must match the no-emergence route boundary",
+        )
+    separator_refs = set(
+        require_string_tuple(
+            component.get("separator_refs", []),
+            f"{gate_id}.joint_only_invariant_rejection.separator_refs",
+        )
+    )
+    required_separator_refs = {
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "context_product_exhaustion_demo",
+    }
+    if separator_refs != required_separator_refs:
+        return Issue(
+            "idt_core_semantic_no_new_effects_joint_rejection_separator_mismatch",
+            f"{gate_id}: joint_only_invariant_rejection must cite the context-product separator refs",
+        )
+    rejected_witness_refs = set(
+        require_string_tuple(
+            component.get("rejected_witness_refs", []),
+            f"{gate_id}.joint_only_invariant_rejection.rejected_witness_refs",
+        )
+    )
+    required_witness_refs = {
+        "real_hilbert_composite_hidden_joint_invariant",
+        "real_hilbert_composite_hidden_joint_invariant_demo",
+    }
+    if rejected_witness_refs != required_witness_refs:
+        return Issue(
+            "idt_core_semantic_no_new_effects_joint_rejection_witness_mismatch",
+            f"{gate_id}: joint_only_invariant_rejection must cite the hidden joint invariant witness",
+        )
+    return None
+
+
+def check_idt_core_residual_boundary_component(
+    gate_id: str,
+    component: dict[str, object],
+    status: str,
+    open_gap: str,
+) -> Issue | None:
+    if status != "conditional_support":
+        return Issue(
+            "idt_core_semantic_no_new_effects_residual_status_mismatch",
+            f"{gate_id}: residual_frontier_no_new_effect_boundary must remain conditional_support",
+        )
+    if not open_gap:
+        return Issue(
+            "idt_core_semantic_no_new_effects_residual_gap_missing",
+            f"{gate_id}: residual_frontier_no_new_effect_boundary must declare the remaining semantic gap",
+        )
+    scope = require_string(component.get("scope"), f"{gate_id}.residual_frontier_no_new_effect_boundary.scope")
+    if scope != IDT_CORE_RESIDUAL_BOUNDARY_SCOPE:
+        return Issue(
+            "idt_core_semantic_no_new_effects_residual_scope_mismatch",
+            f"{gate_id}: residual_frontier_no_new_effect_boundary scope must be {IDT_CORE_RESIDUAL_BOUNDARY_SCOPE}",
+        )
+    residual_refs = set(
+        require_string_tuple(
+            component.get("residual_refs", []),
+            f"{gate_id}.residual_frontier_no_new_effect_boundary.residual_refs",
+        )
+    )
+    required_residual_refs = {"nonfinite_gpt_residual_frontier_demo", "broader_generic_gpt_cone_frontier_demo"}
+    if residual_refs != required_residual_refs:
+        return Issue(
+            "idt_core_semantic_no_new_effects_residual_refs_mismatch",
+            f"{gate_id}: residual boundary must cite the nonfinite and broader GPT residual frontiers",
+        )
+    closure_claimed = parse_bool(
+        component.get("closure_claimed"),
+        f"{gate_id}.residual_frontier_no_new_effect_boundary.closure_claimed",
+    )
+    if closure_claimed:
+        return Issue(
+            "idt_core_semantic_no_new_effects_residual_overclaim",
+            f"{gate_id}: residual boundary must not claim semantic closure",
+        )
+    return None
 
 
 def check_idt_core_grammar_assumption_frontier_gate(gate: FiniteGate) -> list[Issue]:
@@ -17194,6 +17428,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "idt_core_gate_type_registry_audit": check_idt_core_gate_type_registry_audit_gate,
     "idt_core_signature_registry_audit": check_idt_core_signature_registry_audit_gate,
     "idt_core_route_grammar_audit": check_idt_core_route_grammar_audit_gate,
+    "idt_core_semantic_no_new_effects_audit": check_idt_core_semantic_no_new_effects_audit_gate,
     "idt_core_grammar_assumption_frontier": check_idt_core_grammar_assumption_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,

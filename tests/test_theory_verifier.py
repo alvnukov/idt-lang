@@ -142,6 +142,9 @@ from theory_verifier.core import (
     IDT_CORE_ARITY_COMPONENT_ROUTE_MAP,
     IDT_CORE_GENERATOR_COMPONENT_ROUTE_MAP,
     IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES,
+    IDT_CORE_JOINT_ONLY_REJECTION_SCOPE,
+    IDT_CORE_RESIDUAL_BOUNDARY_SCOPE,
+    IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES,
     IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
@@ -229,6 +232,53 @@ class TheoryVerifierTests(unittest.TestCase):
                 for component_id in IDT_CORE_SYNTACTIC_NO_NEW_EFFECT_COMPONENTS
             ],
             "forbidden_upgrades": list(IDT_CORE_ROUTE_GRAMMAR_AUDIT_FORBIDDEN_UPGRADES),
+        }
+
+    def idt_core_semantic_no_new_effects_audit_gate(self) -> dict[str, object]:
+        return {
+            "id": "test_idt_core_semantic_no_new_effects_audit",
+            "type": "idt_core_semantic_no_new_effects_audit",
+            "target_assumption": "no_new_primitive_effects_under_route_closure",
+            "components": [
+                {
+                    "id": "joint_only_invariant_rejection",
+                    "status": "formal_proof",
+                    "evidence_refs": [
+                        "no_emergent_joint_only_invariant_route_demo",
+                        "context_product_exhaustion_implies_local_tomography",
+                        "real_hilbert_composite_hidden_joint_invariant_demo",
+                    ],
+                    "open_gap": "",
+                    "scope": IDT_CORE_JOINT_ONLY_REJECTION_SCOPE,
+                    "assumptions": list(NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS),
+                    "separator_refs": [
+                        "context_product_exhaustion_implies_local_tomography",
+                        "context_product_local_tomography_theorem_demo",
+                        "context_product_exhaustion_demo",
+                    ],
+                    "rejected_witness_refs": [
+                        "real_hilbert_composite_hidden_joint_invariant",
+                        "real_hilbert_composite_hidden_joint_invariant_demo",
+                    ],
+                },
+                {
+                    "id": "residual_frontier_no_new_effect_boundary",
+                    "status": "conditional_support",
+                    "evidence_refs": [
+                        "nonfinite_gpt_residual_frontier_demo",
+                        "broader_generic_gpt_cone_frontier_demo",
+                    ],
+                    "open_gap": "Nonfinite or unwitnessed residual closure remains conditional.",
+                    "scope": IDT_CORE_RESIDUAL_BOUNDARY_SCOPE,
+                    "residual_refs": [
+                        "nonfinite_gpt_residual_frontier_demo",
+                        "broader_generic_gpt_cone_frontier_demo",
+                    ],
+                    "closure_claimed": False,
+                },
+            ],
+            "expected_semantic_closure_status": "conditional_boundary",
+            "forbidden_upgrades": list(IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES),
         }
 
     def test_dimension_mismatch_is_reported(self) -> None:
@@ -4040,6 +4090,88 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_core_route_grammar_forbidden_upgrades_mismatch"})
+
+    def test_idt_core_semantic_no_new_effects_audit_rejects_universal_joint_scope(self) -> None:
+        gate = self.idt_core_semantic_no_new_effects_audit_gate()
+        components = gate["components"]
+        if not isinstance(components, list):
+            self.fail("components must be a list")
+        joint_component = components[0]
+        if not isinstance(joint_component, dict):
+            self.fail("joint component must be a mapping")
+        joint_component["scope"] = "universal_all_composites"
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_semantic_no_new_effects_joint_rejection_scope_mismatch"})
+
+    def test_idt_core_semantic_no_new_effects_audit_rejects_residual_formal_status(self) -> None:
+        gate = self.idt_core_semantic_no_new_effects_audit_gate()
+        components = gate["components"]
+        if not isinstance(components, list):
+            self.fail("components must be a list")
+        residual_component = components[1]
+        if not isinstance(residual_component, dict):
+            self.fail("residual component must be a mapping")
+        residual_component["status"] = "formal_proof"
+        residual_component["open_gap"] = ""
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_semantic_no_new_effects_residual_status_mismatch"})
+
+    def test_idt_core_semantic_no_new_effects_audit_rejects_residual_closure_claim(self) -> None:
+        gate = self.idt_core_semantic_no_new_effects_audit_gate()
+        components = gate["components"]
+        if not isinstance(components, list):
+            self.fail("components must be a list")
+        residual_component = components[1]
+        if not isinstance(residual_component, dict):
+            self.fail("residual component must be a mapping")
+        residual_component["closure_claimed"] = True
+
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_semantic_no_new_effects_residual_overclaim"})
+
+    def test_idt_core_semantic_no_new_effects_audit_rejects_forbidden_upgrade_overclaim(self) -> None:
+        gate = self.idt_core_semantic_no_new_effects_audit_gate()
+        gate["forbidden_upgrades"] = list(IDT_CORE_SEMANTIC_NO_NEW_EFFECT_FORBIDDEN_UPGRADES[:-1])
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_semantic_no_new_effects_forbidden_upgrades_mismatch"})
 
     def test_idt_core_grammar_assumption_frontier_reports_conditional_basis(self) -> None:
         target_assumption = "bounded_context_arity"
