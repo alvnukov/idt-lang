@@ -4844,11 +4844,12 @@
           "id": "finite_context_signature",
           "status": "conditional_support",
           "evidence_refs": [
+            "idt_core_finite_signature_frontier_demo",
             "idt_metalang_research_graph_contract_demo",
             "sections/173-idt-metalang-research-graph.md",
             "sections/171-qm-experiment-language-ledger.md"
           ],
-          "open_gap": "Finite context signature is supported by the current MetaLang graph and QM experiment-language ledger, but it is not yet a compact IDT-Core formal grammar derivation."
+          "open_gap": "Finite context signature now has an executable IDT-Core signature frontier at conditional_signature, but its components are not yet formal IDT-Core grammar theorems."
         },
         {
           "id": "bounded_context_arity",
@@ -4882,6 +4883,52 @@
         }
       ],
       "expected_frontier_status": "conditional_basis"
+    },
+    {
+      "id": "idt_core_finite_signature_frontier_demo",
+      "type": "idt_core_finite_signature_frontier",
+      "target_assumption": "finite_context_signature",
+      "components": [
+        {
+          "id": "finite_primitive_sort_vocabulary",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "QM_EXPERIMENT_REQUIRED_PRIMITIVES",
+            "sections/173-idt-metalang-research-graph.md",
+            "sections/171-qm-experiment-language-ledger.md"
+          ],
+          "open_gap": "Primitive sort vocabulary is explicit in QM primitive requirements and MetaLang docs, but not yet a compact formal IDT-Core grammar theorem."
+        },
+        {
+          "id": "finite_claim_role_vocabulary",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "sector_role_registry_demo",
+            "idt_metalang_research_graph_contract_demo"
+          ],
+          "open_gap": "Claim role vocabulary is executable through sector-role gates, but not yet unified as an IDT-Core grammar theorem."
+        },
+        {
+          "id": "finite_gate_type_registry",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "theory_verifier finite gate checks",
+            "idt_metalang_research_graph_contract_demo"
+          ],
+          "open_gap": "Gate types are executable in the verifier registry, but not yet exported as a first-class IDT-Core finite signature object."
+        },
+        {
+          "id": "finite_route_family_registry",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "qm_core_recompile_route_demo",
+            "nonfinite_gpt_residual_frontier_demo"
+          ],
+          "open_gap": "Route families are registered in the uniform witness route and QM core recompile route, but not yet formalized as an IDT-Core route-family grammar theorem."
+        }
+      ],
+      "expected_signature_status": "conditional_signature"
     },
     {
       "id": "idt_bounded_correlation_demo",

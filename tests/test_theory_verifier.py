@@ -44,6 +44,7 @@ from theory_verifier.core import (
     UNIFORM_WITNESS_BOUND_ROUTE_CONCLUSIONS,
     UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES,
     UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES,
+    IDT_CORE_FINITE_SIGNATURE_COMPONENTS,
     GENERIC_GPT_THEOREM_ASSUMPTIONS,
     GENERIC_GPT_THEOREM_CONCLUSIONS,
     GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
@@ -3721,6 +3722,35 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"uniform_witness_bound_assumption_frontier_status_mismatch"})
+
+    def test_idt_core_finite_signature_frontier_reports_conditional_signature(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "stale_idt_core_signature_frontier",
+                        "type": "idt_core_finite_signature_frontier",
+                        "target_assumption": "finite_context_signature",
+                        "components": [
+                            {
+                                "id": component,
+                                "status": "conditional_support",
+                                "evidence_refs": ["idt_metalang_research_graph_contract_demo"],
+                                "open_gap": "conditional component, not formal proof",
+                            }
+                            for component in IDT_CORE_FINITE_SIGNATURE_COMPONENTS
+                        ],
+                        "expected_signature_status": "open",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_finite_signature_frontier_status_mismatch"})
 
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(

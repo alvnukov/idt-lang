@@ -395,6 +395,25 @@ UNIFORM_WITNESS_BOUND_ASSUMPTION_FRONTIER_RESULTS = (
     "formalized",
 )
 
+IDT_CORE_FINITE_SIGNATURE_COMPONENTS = (
+    "finite_primitive_sort_vocabulary",
+    "finite_claim_role_vocabulary",
+    "finite_gate_type_registry",
+    "finite_route_family_registry",
+)
+
+IDT_CORE_FINITE_SIGNATURE_STATUSES = (
+    "open",
+    "conditional_support",
+    "formal_proof",
+)
+
+IDT_CORE_FINITE_SIGNATURE_RESULTS = (
+    "open",
+    "conditional_signature",
+    "formalized",
+)
+
 TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -7698,6 +7717,97 @@ def check_uniform_witness_bound_assumption_frontier_gate(gate: FiniteGate) -> li
         return [
             Issue(
                 "uniform_witness_bound_assumption_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_idt_core_finite_signature_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_assumption = require_string(gate.payload.get("target_assumption"), f"{gate.identifier}.target_assumption")
+    if target_assumption != "finite_context_signature":
+        return [
+            Issue(
+                "idt_core_finite_signature_frontier_target_mismatch",
+                f"{gate.identifier}: target assumption must be finite_context_signature",
+            )
+        ]
+
+    components = require_list(gate.payload.get("components"), f"{gate.identifier}.components")
+    if len(components) != len(IDT_CORE_FINITE_SIGNATURE_COMPONENTS):
+        raise ManifestError(f"{gate.identifier}: components must cover every IDT-Core finite-signature component")
+
+    status_by_component: dict[str, str] = {}
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate.identifier}.components[{index}]")
+        component_id = require_string(component.get("id"), f"{gate.identifier}.components[{index}].id")
+        status = require_string(component.get("status"), f"{gate.identifier}.components[{index}].status")
+        evidence_refs = require_string_tuple(
+            component.get("evidence_refs", []),
+            f"{gate.identifier}.components[{index}].evidence_refs",
+        )
+        open_gap = require_string(component.get("open_gap", ""), f"{gate.identifier}.components[{index}].open_gap")
+        if component_id not in IDT_CORE_FINITE_SIGNATURE_COMPONENTS:
+            return [
+                Issue(
+                    "idt_core_finite_signature_frontier_unknown_component",
+                    f"{gate.identifier}: unknown finite-signature component {component_id}",
+                )
+            ]
+        if status not in IDT_CORE_FINITE_SIGNATURE_STATUSES:
+            raise ManifestError(f"{gate.identifier}: component {component_id} has unknown status {status!r}")
+        if component_id in status_by_component:
+            return [
+                Issue(
+                    "idt_core_finite_signature_frontier_duplicate_component",
+                    f"{gate.identifier}: duplicate finite-signature component {component_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "idt_core_finite_signature_frontier_evidence_missing",
+                    f"{gate.identifier}: component {component_id} must cite evidence",
+                )
+            ]
+        if status != "formal_proof" and not open_gap:
+            return [
+                Issue(
+                    "idt_core_finite_signature_frontier_gap_missing",
+                    f"{gate.identifier}: non-formal component {component_id} must declare an open gap",
+                )
+            ]
+        if status == "formal_proof" and open_gap:
+            return [
+                Issue(
+                    "idt_core_finite_signature_frontier_gap_on_formal_component",
+                    f"{gate.identifier}: formal component {component_id} must not declare an open gap",
+                )
+            ]
+        status_by_component[component_id] = status
+
+    missing = sorted(set(IDT_CORE_FINITE_SIGNATURE_COMPONENTS) - set(status_by_component))
+    if missing:
+        return [
+            Issue(
+                "idt_core_finite_signature_frontier_component_missing",
+                f"{gate.identifier}: missing finite-signature components: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_signature_status"), f"{gate.identifier}.expected_signature_status")
+    if expected_status not in IDT_CORE_FINITE_SIGNATURE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_signature_status is unknown")
+    if all(status == "formal_proof" for status in status_by_component.values()):
+        computed_status = "formalized"
+    elif all(status in {"conditional_support", "formal_proof"} for status in status_by_component.values()):
+        computed_status = "conditional_signature"
+    else:
+        computed_status = "open"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "idt_core_finite_signature_frontier_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
@@ -16450,6 +16560,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "no_emergent_joint_only_invariant_route": check_no_emergent_joint_only_invariant_route_gate,
     "uniform_witness_bound_route": check_uniform_witness_bound_route_gate,
     "uniform_witness_bound_assumption_frontier": check_uniform_witness_bound_assumption_frontier_gate,
+    "idt_core_finite_signature_frontier": check_idt_core_finite_signature_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

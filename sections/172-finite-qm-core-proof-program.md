@@ -539,6 +539,20 @@ It reports `conditional_basis`: every registered assumption has executable or
 documented support, but none has yet been promoted to a formal IDT-Core grammar
 derivation.
 
+The first assumption, `finite_context_signature`, is now decomposed by:
+
+`idt_core_finite_signature_frontier_demo`.
+
+It reports `conditional_signature` over four IDT-Core components:
+
+1. finite primitive-sort vocabulary;
+2. finite claim-role vocabulary;
+3. finite gate-type registry;
+4. finite route-family registry.
+
+This narrows the next proof work to formalizing those compact IDT-Core
+signature components.
+
 The third item is now reduced to a conditional separator:
 
 `no_emergent_joint_only_invariants_under_context_product_exhaustion`.

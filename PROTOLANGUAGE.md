@@ -671,6 +671,9 @@ The `uniform_witness_bound_assumption_frontier_demo` now makes the remaining
 formalization gap explicit: finite signature, bounded arity, generator basis,
 and no-new-primitive-effects closure are at `conditional_basis`, not
 `formalized`.
+The `idt_core_finite_signature_frontier_demo` decomposes the first of those
+assumptions into a conditional IDT-Core signature over primitive sorts, claim
+roles, gate types, and route families.
 The `no_emergent_joint_only_invariants_under_context_product_exhaustion`
 theorem card and `no_emergent_joint_only_invariant_route_demo` now reduce the
 joint-only-invariant obstruction to a conditional separator under
