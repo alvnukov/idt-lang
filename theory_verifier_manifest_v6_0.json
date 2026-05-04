@@ -3103,6 +3103,37 @@
       ]
     },
     {
+      "id": "finite_route_coverage_reduces_broader_generic_gpt_cone",
+      "statement": "For the finite broader-GPT carrier screen, if a candidate is covered by the declared route-witness screen, then route-incomplete slices are rejected by the generic-GPT closure separator and route-closed slices collapse to complex-Hilbert-like structure through the route-closed sub-frontier. The nonfinite or unwitnessed residual remains underdetermined.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_candidate_family",
+        "declared_route_witness_screen",
+        "route_closed_subfrontier",
+        "nonfinite_residual_boundary"
+      ],
+      "dependencies": [
+        "broader_generic_gpt_cone_frontier_demo",
+        "generic_gpt_closure_rejects_unconstrained_cone",
+        "route_closed_gpt_subtheory_frontier_demo",
+        "carrier_universal_quantifier_frontier_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "broader_generic_gpt_cone_frontier_demo",
+      "known_failures": [
+        "nonfinite or unwitnessed generic GPT residual remains underdetermined",
+        "does not prove universal carrier selection",
+        "does not derive Hilbert carrier"
+      ],
+      "physical_scope": "Finite route-covered broader generic-GPT carrier reduction under declared route-witness assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_nonfinite_generic_gpt_residual"
+      ]
+    },
+    {
       "id": "route_witness_completeness_implies_tomographic_state_effect_duality",
       "statement": "For a finite route-closed GPT subtheory, if route witnesses are complete, no effect-cone degrees are unwitnessed, a local-tomographic state basis is fixed, and the state-effect witness matrix has full column rank, then effects separate stable state parameters and tomographic state-effect duality holds for that finite route.",
       "role": "theorem",
@@ -4490,6 +4521,60 @@
       ]
     },
     {
+      "id": "broader_generic_gpt_cone_frontier_demo",
+      "type": "broader_generic_gpt_cone_frontier",
+      "target_theorem_card": "finite_route_coverage_reduces_broader_generic_gpt_cone",
+      "assumptions": [
+        "finite_candidate_family",
+        "declared_route_witness_screen",
+        "route_closed_subfrontier",
+        "nonfinite_residual_boundary"
+      ],
+      "conclusions": [
+        "finite_route_incomplete_slice_rejected",
+        "finite_route_closed_slice_collapses_to_complex_hilbert_like",
+        "nonfinite_unwitnessed_residual_remains_underdetermined"
+      ],
+      "slices": [
+        {
+          "id": "finite_route_incomplete_slice",
+          "status": "rejected",
+          "evidence_refs": [
+            "generic_gpt_closure_rejects_unconstrained_cone",
+            "generic_gpt_closure_theorem_demo",
+            "generic_gpt_closure_separator_demo"
+          ],
+          "residual_gap": ""
+        },
+        {
+          "id": "finite_route_closed_slice",
+          "status": "collapses_to_complex_hilbert_like",
+          "evidence_refs": [
+            "route_closed_gpt_subtheory_frontier_demo",
+            "route_witness_completeness_implies_tomographic_state_effect_duality",
+            "recoverable_support_update_implies_reversible_filter_closure"
+          ],
+          "residual_gap": ""
+        },
+        {
+          "id": "nonfinite_unwitnessed_residual",
+          "status": "underdetermined",
+          "evidence_refs": [
+            "carrier_universal_quantifier_frontier_demo",
+            "generic_gpt_closure_rejects_unconstrained_cone"
+          ],
+          "residual_gap": "Nonfinite or unwitnessed GPT carrier residual is outside the current finite route-witness screen."
+        }
+      ],
+      "expected_frontier_status": "reduced_to_nonfinite_residual",
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_nonfinite_generic_gpt_residual"
+      ]
+    },
+    {
       "id": "idt_bounded_correlation_demo",
       "type": "idt_bounded_correlation",
       "tolerance": 1.0e-10,
@@ -4796,10 +4881,12 @@
           "id": "broader_generic_gpt_cone",
           "status": "underdetermined",
           "evidence_refs": [
+            "finite_route_coverage_reduces_broader_generic_gpt_cone",
+            "broader_generic_gpt_cone_frontier_demo",
             "generic_gpt_closure_rejects_unconstrained_cone",
             "carrier_selection_frontier_demo"
           ],
-          "open_gap": "The broader generic GPT cone is not exhausted by current finite separators, so the universal carrier quantifier remains open."
+          "open_gap": "The broader generic GPT cone is reduced to a nonfinite or unwitnessed residual outside the current finite route-witness screen, so the universal carrier quantifier remains open."
         }
       ]
     },

@@ -276,6 +276,38 @@ GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES = (
     "does_not_select_complex_Hilbert_from_IDT_primitives_alone",
 )
 
+BROADER_GENERIC_GPT_FRONTIER_SLICES = (
+    "finite_route_incomplete_slice",
+    "finite_route_closed_slice",
+    "nonfinite_unwitnessed_residual",
+)
+
+BROADER_GENERIC_GPT_FRONTIER_STATUSES = (
+    "rejected",
+    "collapses_to_complex_hilbert_like",
+    "underdetermined",
+)
+
+BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS = (
+    "finite_candidate_family",
+    "declared_route_witness_screen",
+    "route_closed_subfrontier",
+    "nonfinite_residual_boundary",
+)
+
+BROADER_GENERIC_GPT_THEOREM_CONCLUSIONS = (
+    "finite_route_incomplete_slice_rejected",
+    "finite_route_closed_slice_collapses_to_complex_hilbert_like",
+    "nonfinite_unwitnessed_residual_remains_underdetermined",
+)
+
+BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_Hilbert_carrier",
+    "does_not_close_nonfinite_generic_gpt_residual",
+)
+
 TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -1876,6 +1908,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_generic_gpt_theorem_grounding(manifest))
     checks.append("generic-GPT theorem grounding")
 
+    issues.extend(check_broader_generic_gpt_theorem_grounding(manifest))
+    checks.append("broader generic-GPT theorem grounding")
+
     issues.extend(check_born_readout_theorem_grounding(manifest))
     checks.append("Born readout theorem grounding")
 
@@ -3082,6 +3117,63 @@ def check_generic_gpt_theorem_grounding(manifest: Manifest) -> list[Issue]:
         issues.append(
             Issue(
                 "generic_gpt_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
+    return issues
+
+
+def check_broader_generic_gpt_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("finite_route_coverage_reduces_broader_generic_gpt_cone")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "broader_generic_gpt_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "broader_generic_gpt_cone_frontier_demo",
+        "generic_gpt_closure_rejects_unconstrained_cone",
+        "route_closed_gpt_subtheory_frontier_demo",
+        "carrier_universal_quantifier_frontier_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "broader_generic_gpt_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "broader_generic_gpt_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    if not set(BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS).issubset(set(theorem_card.assumptions)):
+        issues.append(
+            Issue(
+                "broader_generic_gpt_theorem_card_assumption_missing",
+                f"{theorem_card.identifier}: missing assumptions from broader generic-GPT boundary",
+            )
+        )
+    if not set(BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES).issubset(set(theorem_card.forbidden_claims)):
+        issues.append(
+            Issue(
+                "broader_generic_gpt_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
             )
         )
@@ -6799,6 +6891,124 @@ def check_generic_gpt_closure_theorem_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "generic_gpt_theorem_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_broader_generic_gpt_cone_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "finite_route_coverage_reduces_broader_generic_gpt_cone":
+        return [
+            Issue(
+                "broader_generic_gpt_frontier_target_mismatch",
+                f"{gate.identifier}: target card must be finite_route_coverage_reduces_broader_generic_gpt_cone",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS):
+        return [
+            Issue(
+                "broader_generic_gpt_frontier_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the broader generic-GPT theorem boundary",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(BROADER_GENERIC_GPT_THEOREM_CONCLUSIONS):
+        return [
+            Issue(
+                "broader_generic_gpt_frontier_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must reduce only finite route-covered broader GPT slices",
+            )
+        ]
+
+    slices = require_list(gate.payload.get("slices"), f"{gate.identifier}.slices")
+    if len(slices) != len(BROADER_GENERIC_GPT_FRONTIER_SLICES):
+        raise ManifestError(f"{gate.identifier}: slices must cover every broader generic-GPT frontier slice")
+    status_by_slice: dict[str, str] = {}
+    for index, item in enumerate(slices):
+        frontier_slice = require_mapping(item, f"{gate.identifier}.slices[{index}]")
+        slice_id = require_string(frontier_slice.get("id"), f"{gate.identifier}.slices[{index}].id")
+        status = require_string(frontier_slice.get("status"), f"{gate.identifier}.slices[{index}].status")
+        evidence_refs = require_string_tuple(
+            frontier_slice.get("evidence_refs", []),
+            f"{gate.identifier}.slices[{index}].evidence_refs",
+        )
+        residual_gap = require_string(
+            frontier_slice.get("residual_gap", ""),
+            f"{gate.identifier}.slices[{index}].residual_gap",
+        )
+        if slice_id not in BROADER_GENERIC_GPT_FRONTIER_SLICES:
+            return [
+                Issue(
+                    "broader_generic_gpt_frontier_unknown_slice",
+                    f"{gate.identifier}: unknown broader generic-GPT slice {slice_id}",
+                )
+            ]
+        if status not in BROADER_GENERIC_GPT_FRONTIER_STATUSES:
+            raise ManifestError(f"{gate.identifier}: slice {slice_id} has unknown status {status!r}")
+        if slice_id in status_by_slice:
+            return [
+                Issue(
+                    "broader_generic_gpt_frontier_duplicate_slice",
+                    f"{gate.identifier}: duplicate broader generic-GPT slice {slice_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "broader_generic_gpt_frontier_evidence_missing",
+                    f"{gate.identifier}: slice {slice_id} must cite evidence",
+                )
+            ]
+        if status == "underdetermined" and not residual_gap:
+            return [
+                Issue(
+                    "broader_generic_gpt_frontier_residual_gap_missing",
+                    f"{gate.identifier}: underdetermined slice {slice_id} must declare a residual gap",
+                )
+            ]
+        if status != "underdetermined" and residual_gap:
+            return [
+                Issue(
+                    "broader_generic_gpt_frontier_residual_gap_on_closed_slice",
+                    f"{gate.identifier}: closed slice {slice_id} must not declare a residual gap",
+                )
+            ]
+        status_by_slice[slice_id] = status
+
+    missing = sorted(set(BROADER_GENERIC_GPT_FRONTIER_SLICES) - set(status_by_slice))
+    if missing:
+        return [
+            Issue(
+                "broader_generic_gpt_frontier_slice_missing",
+                f"{gate.identifier}: missing broader generic-GPT slices: {', '.join(missing)}",
+            )
+        ]
+    expected_status = require_string(gate.payload.get("expected_frontier_status"), f"{gate.identifier}.expected_frontier_status")
+    if expected_status not in {"reduced_to_nonfinite_residual", "closed"}:
+        raise ManifestError(f"{gate.identifier}.expected_frontier_status is unknown")
+    computed_status = (
+        "reduced_to_nonfinite_residual"
+        if any(status == "underdetermined" for status in status_by_slice.values())
+        else "closed"
+    )
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "broader_generic_gpt_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "broader_generic_gpt_frontier_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM claim boundary",
             )
         ]
     return []
@@ -15544,6 +15754,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "bounded_correlation_screen_theorem": check_bounded_correlation_screen_theorem_gate,
     "noncomplex_jordan_separator_theorem": check_noncomplex_jordan_separator_theorem_gate,
     "generic_gpt_closure_theorem": check_generic_gpt_closure_theorem_gate,
+    "broader_generic_gpt_cone_frontier": check_broader_generic_gpt_cone_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

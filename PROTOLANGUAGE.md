@@ -652,7 +652,12 @@ The `carrier_universal_quantifier_frontier_demo` now makes the universal
 carrier quantifier explicit: non-complex Jordan and unconstrained generic GPT
 classes are rejected, complex Hilbert-like structure survives, route-closed GPT
 collapses to complex-Hilbert-like under its finite sub-frontier, and the broader
-generic GPT class remains underdetermined.
+generic GPT class is reduced to a nonfinite or unwitnessed residual.
+The `finite_route_coverage_reduces_broader_generic_gpt_cone` theorem card and
+`broader_generic_gpt_cone_frontier_demo` record that finite route-incomplete
+broader-GPT slices are rejected, finite route-closed slices collapse, and the
+remaining nonfinite or unwitnessed residual keeps universal carrier selection
+open.
 The `route_closed_gpt_subtheory_frontier_demo` now splits the route-closed GPT
 blocker into two proof obligations: tomographic state-effect duality and
 reversible filter closure.

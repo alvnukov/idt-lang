@@ -30,6 +30,9 @@ from theory_verifier.core import (
     ELL0_PHYSICAL_CANDIDATE_TARGET,
     FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS,
     FULL_QM_OBSTRUCTION_KINDS,
+    BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS,
+    BROADER_GENERIC_GPT_THEOREM_CONCLUSIONS,
+    BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
     GENERIC_GPT_THEOREM_ASSUMPTIONS,
     GENERIC_GPT_THEOREM_CONCLUSIONS,
     GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
@@ -3456,6 +3459,49 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"generic_gpt_theorem_status_mismatch"})
 
+    def test_broader_generic_gpt_frontier_rejects_premature_closure(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_broader_generic_gpt_frontier",
+                        "type": "broader_generic_gpt_cone_frontier",
+                        "target_theorem_card": "finite_route_coverage_reduces_broader_generic_gpt_cone",
+                        "assumptions": list(BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(BROADER_GENERIC_GPT_THEOREM_CONCLUSIONS),
+                        "slices": [
+                            {
+                                "id": "finite_route_incomplete_slice",
+                                "status": "rejected",
+                                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                                "residual_gap": "",
+                            },
+                            {
+                                "id": "finite_route_closed_slice",
+                                "status": "collapses_to_complex_hilbert_like",
+                                "evidence_refs": ["route_closed_gpt_subtheory_frontier_demo"],
+                                "residual_gap": "",
+                            },
+                            {
+                                "id": "nonfinite_unwitnessed_residual",
+                                "status": "underdetermined",
+                                "evidence_refs": ["carrier_universal_quantifier_frontier_demo"],
+                                "residual_gap": "still outside the finite route-witness screen",
+                            },
+                        ],
+                        "expected_frontier_status": "closed",
+                        "forbidden_upgrades": list(BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"broader_generic_gpt_frontier_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -4356,6 +4402,37 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"generic_gpt_theorem_card_status_mismatch"})
+
+    def test_broader_generic_gpt_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "finite_route_coverage_reduces_broader_generic_gpt_cone",
+                        "statement": "finite route coverage reduces the broader cone",
+                        "role": "theorem",
+                        "assumptions": list(BROADER_GENERIC_GPT_THEOREM_ASSUMPTIONS),
+                        "dependencies": [
+                            "broader_generic_gpt_cone_frontier_demo",
+                            "generic_gpt_closure_rejects_unconstrained_cone",
+                            "route_closed_gpt_subtheory_frontier_demo",
+                            "carrier_universal_quantifier_frontier_demo",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "broader_generic_gpt_cone_frontier_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(BROADER_GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"broader_generic_gpt_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

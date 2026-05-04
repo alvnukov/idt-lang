@@ -490,10 +490,23 @@ It separates the current carrier classes into:
    closure theorem;
 4. route-closed GPT subtheories, which collapse to complex-Hilbert-like under
    the finite route-closed sub-frontier;
-5. the broader generic GPT cone, which remains underdetermined.
+5. the broader generic GPT cone, which is now reduced to a nonfinite or
+   unwitnessed residual outside the current finite route-witness screen.
 
-Because the broader generic GPT cone is not closed, the universal quantifier
-remains:
+The broader-cone reduction is executable as:
+
+`broader_generic_gpt_cone_frontier_demo`.
+
+It checks three slices:
+
+1. finite route-incomplete slices are rejected by the generic-GPT closure
+   separator;
+2. finite route-closed slices collapse to complex-Hilbert-like structure under
+   the route-closed sub-frontier;
+3. nonfinite or unwitnessed residual slices remain underdetermined.
+
+Because the nonfinite or unwitnessed residual is not closed, the universal
+quantifier remains:
 
 `open`.
 
