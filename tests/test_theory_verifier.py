@@ -160,6 +160,11 @@ from theory_verifier.core import (
     FDC_REQUIRED_NEGATIVE_CONTROLS,
     FDC_REQUIRED_OPEN_OBLIGATIONS,
     FDC_TARGET_PRINCIPLE,
+    FUNDAMENTAL_UNKNOWNNESS_BRIDGE_RULE,
+    FUNDAMENTAL_UNKNOWNNESS_BRIDGE_TARGET_SCOPE,
+    FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES,
+    FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS,
+    FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES,
     IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
     IDT_PRIMITIVE_CORE_FORBIDDEN_REFS,
     IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
@@ -798,6 +803,116 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_probe_status": "current_wall_detected",
             "forbidden_upgrades": list(QM_WALL_PROBE_FORBIDDEN_UPGRADES),
+        }
+
+    def fundamental_unknownness_bridge_audit_gate(self) -> dict[str, object]:
+        principle_specs: dict[str, dict[str, object]] = {
+            "contextual_finitization": {
+                "statement": "Unknown alternatives become physical only through finite context/readout partitions.",
+                "qm_refs": ["facticizable_distinguishability_closure_frontier_demo", "ks_contextuality_obstruction_demo"],
+                "gravity_refs": ["primitive_tick_clock_count_demo", "weak_field_clock_calculator_I"],
+                "evidence_refs": ["facticizable_distinguishability_closure_frontier_demo", "primitive_tick_clock_count_demo"],
+                "open_gap": "This is a candidate bridge principle, not a derived universal law.",
+            },
+            "holonomy_branch_source": {
+                "statement": "Stable phase/branch unknownness needs a source class, branch policy, and holdout rule.",
+                "qm_refs": ["ab_holonomy_phase_demo", "phase_cost_from_kernel_holonomy_demo"],
+                "gravity_refs": ["non_exact_holonomy_source_demo", "winding_selector_additivity_demo"],
+                "evidence_refs": ["holonomy_selector_class_registry_demo", "phase_branch_no_postfit_demo"],
+                "open_gap": "Holonomy source selection is still target-level, not a Hilbert-carrier proof.",
+            },
+            "source_clock_response": {
+                "statement": "A source becomes physical only through clock/readout response invariants.",
+                "qm_refs": ["measurement_facticity_route_demo", "ramsey_clock_phase_demo"],
+                "gravity_refs": [
+                    "source_response_charge_normalization_demo",
+                    "clock_vacuum_stiffness_from_source_response_demo",
+                ],
+                "evidence_refs": ["source_response_packet_universality_demo", "clock_vacuum_stiffness_universality_demo"],
+                "open_gap": "The source-clock route is partial and does not derive Born or G.",
+            },
+            "residual_holdout_discipline": {
+                "statement": "Residual unknownness is information only when it survives no-postfit holdout discipline.",
+                "qm_refs": ["nonfinite_gpt_residual_frontier_demo", "qm_wall_probe_demo"],
+                "gravity_refs": ["galaxy_residual_no_postfit_demo", "G_candidate_no_postfit_holdout_demo"],
+                "evidence_refs": ["sparc_heldout_selection_no_postfit_demo", "nonfinite_gpt_residual_frontier_demo"],
+                "open_gap": "Residual survival is not a derivation of a carrier or field law.",
+            },
+            "composition_witness_exhaustion": {
+                "statement": "Composite unknownness must be exhausted by declared product/context witnesses.",
+                "qm_refs": [
+                    "context_product_exhaustion_implies_local_tomography",
+                    "real_hilbert_composite_hidden_joint_invariant",
+                ],
+                "gravity_refs": ["source_stress_packet_closure_I", "geometry_response_factor_closure_I"],
+                "evidence_refs": ["context_product_exhaustion_demo", "source_stress_packet_closure_I"],
+                "open_gap": "This rejects some carriers but does not select complex Hilbert space.",
+            },
+            "scale_anchor_independence": {
+                "statement": "Dimensional scale claims require independent anchors, not calibrated readout reuse.",
+                "qm_refs": ["first_principles_hbar_lock", "continuum_action_scale_extension"],
+                "gravity_refs": ["G_candidate_no_calibrated_input_demo", "clock_vacuum_pole_no_calibrated_input_demo"],
+                "evidence_refs": ["action_standard_independence_demo", "G_candidate_no_calibrated_input_demo"],
+                "open_gap": "The shared action-scale route is currently a wall, not a solved bridge.",
+            },
+        }
+        candidate_specs: dict[str, dict[str, object]] = {
+            "hilbert_carrier_route": {
+                "principle_refs": ["composition_witness_exhaustion", "holonomy_branch_source"],
+                "target_refs": ["hilbert_carrier_derivation", "universal_carrier_selection_theorem"],
+                "evidence_refs": ["qm_wall_probe_demo", "context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "Hilbert remains blocked; this is only a search route through composition and holonomy constraints.",
+            },
+            "bell_contextual_correlation_route": {
+                "principle_refs": ["contextual_finitization", "holonomy_branch_source", "source_clock_response"],
+                "target_refs": ["bell_chsh_table_demo", "bell_chsh_from_amplitudes_demo", "spin_bell_angle_model_demo"],
+                "evidence_refs": ["bell_chsh_from_amplitudes_demo", "spin_bell_angle_model_demo"],
+                "open_gap": "Bell tables are executable, but source/spin/apparatus derivation remains open.",
+            },
+            "gravity_clock_source_route": {
+                "principle_refs": ["source_clock_response", "residual_holdout_discipline", "scale_anchor_independence"],
+                "target_refs": ["source_response_charge_I", "clock_vacuum_stiffness_from_source_charge_I", "G_I"],
+                "evidence_refs": ["source_response_charge_normalization_demo", "clock_vacuum_stiffness_universality_demo"],
+                "open_gap": "Gravity route is partially executable and still target-level for G.",
+            },
+            "shared_action_scale_route": {
+                "principle_refs": ["scale_anchor_independence", "source_clock_response", "holonomy_branch_source"],
+                "target_refs": ["first_principles_hbar_lock", "continuum_action_scale_extension", "joint_action_gravity_anchor_I"],
+                "evidence_refs": ["action_standard_work_time_provenance_demo", "phase_cost_from_kernel_holonomy_demo"],
+                "open_gap": "The shared action scale is the strongest bridge candidate and the current hard wall.",
+            },
+        }
+        return {
+            "id": "test_fundamental_unknownness_bridge_audit",
+            "type": "fundamental_unknownness_bridge_audit",
+            "target_scope": FUNDAMENTAL_UNKNOWNNESS_BRIDGE_TARGET_SCOPE,
+            "bridge_rule": FUNDAMENTAL_UNKNOWNNESS_BRIDGE_RULE,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "principles": [
+                {
+                    "id": principle_id,
+                    "statement": spec["statement"],
+                    "status": FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS,
+                    "qm_refs": spec["qm_refs"],
+                    "gravity_refs": spec["gravity_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for principle_id, spec in principle_specs.items()
+            ],
+            "bridge_candidates": [
+                {
+                    "id": candidate_id,
+                    "status": FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES[candidate_id],
+                    "principle_refs": spec["principle_refs"],
+                    "target_refs": spec["target_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for candidate_id, spec in candidate_specs.items()
+            ],
+            "expected_bridge_status": "candidate_bridge_map",
+            "forbidden_upgrades": list(FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES),
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -7694,6 +7809,62 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"qm_wall_probe_target_status_mismatch"})
+
+    def test_fundamental_unknownness_bridge_rejects_principle_upgrade(self) -> None:
+        gate = self.fundamental_unknownness_bridge_audit_gate()
+        principles = gate["principles"]
+        if not isinstance(principles, list):
+            self.fail("principles must be a list")
+        first_principle = principles[0]
+        if not isinstance(first_principle, dict):
+            self.fail("principle must be a mapping")
+        first_principle["status"] = "formal_proof"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fundamental_unknownness_bridge_principle_status_mismatch"})
+
+    def test_fundamental_unknownness_bridge_rejects_missing_candidate(self) -> None:
+        gate = self.fundamental_unknownness_bridge_audit_gate()
+        bridge_candidates = gate["bridge_candidates"]
+        if not isinstance(bridge_candidates, list):
+            self.fail("bridge_candidates must be a list")
+        bridge_candidates.pop()
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fundamental_unknownness_bridge_candidate_missing"})
+
+    def test_fundamental_unknownness_bridge_grounding_rejects_unknown_target_ref(self) -> None:
+        gate = self.fundamental_unknownness_bridge_audit_gate()
+        bridge_candidates = gate["bridge_candidates"]
+        if not isinstance(bridge_candidates, list):
+            self.fail("bridge_candidates must be a list")
+        first_candidate = bridge_candidates[0]
+        if not isinstance(first_candidate, dict):
+            self.fail("bridge candidate must be a mapping")
+        first_candidate["target_refs"] = ["missing_target_ref"]
+        finite_gates = [gate]
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], *finite_gates]
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"fundamental_unknownness_bridge_ref_unresolved"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(

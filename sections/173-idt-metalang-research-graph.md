@@ -631,7 +631,55 @@ Status:
 
 `qm_wall_probe_added`
 
-### 173.13. Proof Verification Ledger
+### 173.13. Fundamental Unknownness Bridge Audit
+
+The current base-theory search is now explicit as:
+
+`fundamental_unknownness_bridge_audit_demo`
+
+The question is whether the QM wall is only a QM problem, or whether the
+gravity/clock/source front exposes a more primitive layer of unknownness.
+
+The audit records six candidate bridge principles:
+
+```text
+contextual_finitization
+holonomy_branch_source
+source_clock_response
+residual_holdout_discipline
+composition_witness_exhaustion
+scale_anchor_independence
+```
+
+The current bridge candidates are:
+
+```text
+hilbert_carrier_route -> candidate_route
+bell_contextual_correlation_route -> finite_executable_underived
+gravity_clock_source_route -> partial_executable_route
+shared_action_scale_route -> current_wall_shared_with_qm
+```
+
+The important result is negative discipline. This audit does not claim that
+gravity derives QM, Hilbert space, Bell correlations, `hbar_I`, or `G_I`.
+It says that the same structural pattern appears on both fronts:
+
+```text
+unknown alternatives
+  -> finite context/source/clock witness
+  -> holonomy or residual boundary
+  -> no-postfit / no-hidden-import discipline
+```
+
+That pattern is now a first-class candidate map. It gives the next proof search
+a sharper target: either promote one of these bridge principles into a real
+theorem, or reject it as another useful exclusion.
+
+Status:
+
+`fundamental_unknownness_bridge_audit_added`
+
+### 173.14. Proof Verification Ledger
 
 The word `formal_proof` is now gated by an executable proof ledger and a
 generated Lean finite-core semantic artifact.

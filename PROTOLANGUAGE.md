@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.23.0`
+Current version: `v6.24.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -807,6 +807,13 @@ several selector/composition/dynamics cells remain open, and Hilbert carrier,
 Born rule, and first-principles action scale are current walls. This is not a
 proof that no future route exists; it is a guard against treating open or
 blocked imports as if they were primitive-core derivations.
+The `fundamental_unknownness_bridge_audit_demo` now records the broad base-layer
+search prompted by the QM wall. It compares QM, Bell, and gravity routes through
+six candidate principles: contextual finitization, holonomy/branch source,
+source-clock response, residual holdout discipline, composition witness
+exhaustion, and scale-anchor independence. The strongest live hint is the
+shared action-scale/holonomy/source route, but it remains a candidate bridge
+map; it does not derive Hilbert space, Bell correlations, `hbar_I`, or `G_I`.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are

@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.23.0`.
+Current theory version: `v6.24.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -82,7 +82,14 @@ The main current successes are bounded and methodological:
    pass, several selector/composition/dynamics cells remain open, and
    Hilbert-carrier, Born-rule, and first-principles action-scale cells are
    explicit current walls rather than hidden imports.
-11. The proof-verification boundary is executable. Current `formal_proof`
+11. A fundamental-unknownness bridge audit is executable. It records candidate
+   principles shared by the QM and gravity fronts: contextual finitization,
+   holonomy/branch source selection, source-clock response, residual holdout
+   discipline, composition witness exhaustion, and scale-anchor independence.
+   The candidate routes to Hilbert carrier, Bell contextual correlations,
+   gravity clock/source structure, and shared action scale remain search
+   routes, not proof upgrades.
+12. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized

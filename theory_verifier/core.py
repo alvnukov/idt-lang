@@ -1089,6 +1089,43 @@ QM_WALL_PROBE_FORBIDDEN_UPGRADES = (
     "does_not_reclassify_candidate_principles_as_formal_proof",
 )
 
+FUNDAMENTAL_UNKNOWNNESS_BRIDGE_TARGET_SCOPE = "qm_gravity_bridge_search"
+FUNDAMENTAL_UNKNOWNNESS_BRIDGE_RULE = (
+    "unknownness_principles_must_have_finite_context_source_or_residual_witness"
+)
+
+FUNDAMENTAL_UNKNOWNNESS_REQUIRED_PRINCIPLES = (
+    "contextual_finitization",
+    "holonomy_branch_source",
+    "source_clock_response",
+    "residual_holdout_discipline",
+    "composition_witness_exhaustion",
+    "scale_anchor_independence",
+)
+
+FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS = "candidate_bridge_principle"
+
+FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES: dict[str, str] = {
+    "hilbert_carrier_route": "candidate_route",
+    "bell_contextual_correlation_route": "finite_executable_underived",
+    "gravity_clock_source_route": "partial_executable_route",
+    "shared_action_scale_route": "current_wall_shared_with_qm",
+}
+
+FUNDAMENTAL_UNKNOWNNESS_BRIDGE_RESULTS = (
+    "candidate_bridge_map",
+    "failed",
+)
+
+FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES = (
+    "does_not_prove_Hilbert_carrier",
+    "does_not_prove_Bell_correlations_from_primitives",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_hbar_I_or_G_I",
+    "does_not_import_gravity_as_QM_solution",
+    "does_not_treat_candidate_bridge_as_formal_proof",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2699,6 +2736,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_qm_wall_probe_grounding(manifest))
     checks.append("QM wall probe grounding")
+
+    issues.extend(check_fundamental_unknownness_bridge_grounding(manifest))
+    checks.append("fundamental unknownness bridge grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -6033,6 +6073,41 @@ def check_qm_wall_probe_grounding(manifest: Manifest) -> list[Issue]:
                         )
                     )
     return issues
+
+
+def check_fundamental_unknownness_bridge_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "fundamental_unknownness_bridge_audit":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "fundamental_unknownness_bridge"))
+        for field_name in ("qm_refs", "gravity_refs", "bell_refs", "target_refs"):
+            for field_path, reference in iter_named_string_refs(gate.payload, field_name):
+                if reference in known_refs or research_graph_doc_ref_exists(reference):
+                    continue
+                issues.append(
+                    Issue(
+                        "fundamental_unknownness_bridge_ref_unresolved",
+                        f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
+                    )
+                )
+    return issues
+
+
+def iter_named_string_refs(raw: object, target_key: str, prefix: str = "") -> Iterator[tuple[str, str]]:
+    if isinstance(raw, dict):
+        for key, value in raw.items():
+            child_prefix = f"{prefix}.{key}" if prefix else key
+            if key == target_key:
+                refs = require_string_tuple(value, child_prefix)
+                for index, reference in enumerate(refs):
+                    yield f"{child_prefix}[{index}]", reference
+            else:
+                yield from iter_named_string_refs(value, target_key, child_prefix)
+    elif isinstance(raw, list):
+        for index, value in enumerate(raw):
+            yield from iter_named_string_refs(value, target_key, f"{prefix}[{index}]")
 
 
 def resolve_qm_wall_probe_target_status(
@@ -13795,6 +13870,181 @@ def check_qm_wall_probe_gate(gate: FiniteGate) -> list[Issue]:
     return []
 
 
+def check_fundamental_unknownness_bridge_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != FUNDAMENTAL_UNKNOWNNESS_BRIDGE_TARGET_SCOPE:
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_target_mismatch",
+                f"{gate.identifier}: target_scope must be {FUNDAMENTAL_UNKNOWNNESS_BRIDGE_TARGET_SCOPE}",
+            )
+        ]
+    bridge_rule = require_string(gate.payload.get("bridge_rule"), f"{gate.identifier}.bridge_rule")
+    if bridge_rule != FUNDAMENTAL_UNKNOWNNESS_BRIDGE_RULE:
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_rule_mismatch",
+                f"{gate.identifier}: bridge_rule must preserve finite witness/source/residual discipline",
+            )
+        ]
+    primitive_basis = set(
+        require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis")
+    )
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+    principles = require_list(gate.payload.get("principles"), f"{gate.identifier}.principles")
+    seen_principles: set[str] = set()
+    for index, raw_principle in enumerate(principles):
+        principle = require_mapping(raw_principle, f"{gate.identifier}.principles[{index}]")
+        principle_id = require_string(principle.get("id"), f"{gate.identifier}.principles[{index}].id")
+        if principle_id not in FUNDAMENTAL_UNKNOWNNESS_REQUIRED_PRINCIPLES:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_unknown_principle",
+                    f"{gate.identifier}: unknown principle {principle_id}",
+                )
+            ]
+        if principle_id in seen_principles:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_duplicate_principle",
+                    f"{gate.identifier}: duplicate principle {principle_id}",
+                )
+            ]
+        status = require_string(principle.get("status"), f"{gate.identifier}.{principle_id}.status")
+        if status != FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_principle_status_mismatch",
+                    f"{gate.identifier}: {principle_id} must remain {FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS}",
+                )
+            ]
+        qm_refs = require_string_tuple(principle.get("qm_refs", []), f"{gate.identifier}.{principle_id}.qm_refs")
+        gravity_refs = require_string_tuple(
+            principle.get("gravity_refs", []),
+            f"{gate.identifier}.{principle_id}.gravity_refs",
+        )
+        evidence_refs = require_string_tuple(
+            principle.get("evidence_refs", []),
+            f"{gate.identifier}.{principle_id}.evidence_refs",
+        )
+        open_gap = require_string(principle.get("open_gap"), f"{gate.identifier}.{principle_id}.open_gap")
+        if not qm_refs or not gravity_refs or not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_principle_support_missing",
+                    f"{gate.identifier}: {principle_id} must cite QM refs, gravity refs, evidence refs, and an open gap",
+                )
+            ]
+        seen_principles.add(principle_id)
+    missing_principles = sorted(set(FUNDAMENTAL_UNKNOWNNESS_REQUIRED_PRINCIPLES) - seen_principles)
+    if missing_principles:
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_principle_missing",
+                f"{gate.identifier}: missing principles: {', '.join(missing_principles)}",
+            )
+        ]
+
+    bridge_candidates = require_list(gate.payload.get("bridge_candidates"), f"{gate.identifier}.bridge_candidates")
+    seen_candidates: set[str] = set()
+    for index, raw_candidate in enumerate(bridge_candidates):
+        candidate = require_mapping(raw_candidate, f"{gate.identifier}.bridge_candidates[{index}]")
+        candidate_id = require_string(candidate.get("id"), f"{gate.identifier}.bridge_candidates[{index}].id")
+        if candidate_id not in FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_unknown_candidate",
+                    f"{gate.identifier}: unknown bridge candidate {candidate_id}",
+                )
+            ]
+        if candidate_id in seen_candidates:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_duplicate_candidate",
+                    f"{gate.identifier}: duplicate bridge candidate {candidate_id}",
+                )
+            ]
+        status = require_string(candidate.get("status"), f"{gate.identifier}.{candidate_id}.status")
+        expected_status = FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES[candidate_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_candidate_status_mismatch",
+                    f"{gate.identifier}: {candidate_id} must remain {expected_status}",
+                )
+            ]
+        principle_refs = set(
+            require_string_tuple(
+                candidate.get("principle_refs", []),
+                f"{gate.identifier}.{candidate_id}.principle_refs",
+            )
+        )
+        target_refs = require_string_tuple(
+            candidate.get("target_refs", []),
+            f"{gate.identifier}.{candidate_id}.target_refs",
+        )
+        evidence_refs = require_string_tuple(
+            candidate.get("evidence_refs", []),
+            f"{gate.identifier}.{candidate_id}.evidence_refs",
+        )
+        open_gap = require_string(candidate.get("open_gap"), f"{gate.identifier}.{candidate_id}.open_gap")
+        if not principle_refs or not target_refs or not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_candidate_support_missing",
+                    f"{gate.identifier}: {candidate_id} must cite principles, targets, evidence, and an open gap",
+                )
+            ]
+        unknown_principle_refs = sorted(principle_refs - set(FUNDAMENTAL_UNKNOWNNESS_REQUIRED_PRINCIPLES))
+        if unknown_principle_refs:
+            return [
+                Issue(
+                    "fundamental_unknownness_bridge_candidate_principle_unknown",
+                    f"{gate.identifier}: {candidate_id} cites unknown principles: {', '.join(unknown_principle_refs)}",
+                )
+            ]
+        seen_candidates.add(candidate_id)
+    missing_candidates = sorted(set(FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES) - seen_candidates)
+    if missing_candidates:
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_candidate_missing",
+                f"{gate.identifier}: missing bridge candidates: {', '.join(missing_candidates)}",
+            )
+        ]
+
+    expected_status = require_string(
+        gate.payload.get("expected_bridge_status"),
+        f"{gate.identifier}.expected_bridge_status",
+    )
+    if expected_status not in FUNDAMENTAL_UNKNOWNNESS_BRIDGE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_bridge_status is unknown")
+    if expected_status != "candidate_bridge_map":
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_status_mismatch",
+                f"{gate.identifier}: bridge audit must remain a candidate map",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "fundamental_unknownness_bridge_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must prevent bridge overclaim",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -19622,6 +19872,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "primitive_core_contract": check_primitive_core_contract_gate,
     "facticizable_distinguishability_closure_frontier": check_facticizable_distinguishability_closure_frontier_gate,
     "qm_wall_probe": check_qm_wall_probe_gate,
+    "fundamental_unknownness_bridge_audit": check_fundamental_unknownness_bridge_audit_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,

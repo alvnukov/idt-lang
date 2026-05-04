@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.23.0",
+  "theory_version": "v6.24.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4968,8 +4968,8 @@
     },
     {
       "expected_component_status": "formal_proof",
-      "expected_gate_type_count": 232,
-      "expected_gate_type_digest": "e3745696fe442419d5041721b49e5e11c44355323f06f13030ad9e84e1008120",
+      "expected_gate_type_count": 233,
+      "expected_gate_type_digest": "ae9742c91dd28acd4c4f94f6d63e4fcfda2147a547841ba7a49e2cd7d53d562c",
       "id": "idt_core_gate_type_registry_audit_demo",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
       "type": "idt_core_gate_type_registry_audit"
@@ -8322,6 +8322,213 @@
       ],
       "target": "full_QM_I",
       "type": "qm_wall_probe"
+    },
+    {
+      "bridge_candidates": [
+        {
+          "evidence_refs": [
+            "qm_wall_probe_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "id": "hilbert_carrier_route",
+          "open_gap": "Hilbert remains blocked; this is only a search route through composition and holonomy constraints.",
+          "principle_refs": [
+            "composition_witness_exhaustion",
+            "holonomy_branch_source"
+          ],
+          "status": "candidate_route",
+          "target_refs": [
+            "hilbert_carrier_derivation",
+            "universal_carrier_selection_theorem"
+          ]
+        },
+        {
+          "evidence_refs": [
+            "bell_chsh_from_amplitudes_demo",
+            "spin_bell_angle_model_demo"
+          ],
+          "id": "bell_contextual_correlation_route",
+          "open_gap": "Bell tables are executable, but source/spin/apparatus derivation remains open.",
+          "principle_refs": [
+            "contextual_finitization",
+            "holonomy_branch_source",
+            "source_clock_response"
+          ],
+          "status": "finite_executable_underived",
+          "target_refs": [
+            "bell_chsh_table_demo",
+            "bell_chsh_from_amplitudes_demo",
+            "spin_bell_angle_model_demo"
+          ]
+        },
+        {
+          "evidence_refs": [
+            "source_response_charge_normalization_demo",
+            "clock_vacuum_stiffness_universality_demo"
+          ],
+          "id": "gravity_clock_source_route",
+          "open_gap": "Gravity route is partially executable and still target-level for G.",
+          "principle_refs": [
+            "source_clock_response",
+            "residual_holdout_discipline",
+            "scale_anchor_independence"
+          ],
+          "status": "partial_executable_route",
+          "target_refs": [
+            "source_response_charge_I",
+            "clock_vacuum_stiffness_from_source_charge_I",
+            "G_I"
+          ]
+        },
+        {
+          "evidence_refs": [
+            "action_standard_work_time_provenance_demo",
+            "phase_cost_from_kernel_holonomy_demo"
+          ],
+          "id": "shared_action_scale_route",
+          "open_gap": "The shared action scale is the strongest bridge candidate and the current hard wall.",
+          "principle_refs": [
+            "scale_anchor_independence",
+            "source_clock_response",
+            "holonomy_branch_source"
+          ],
+          "status": "current_wall_shared_with_qm",
+          "target_refs": [
+            "first_principles_hbar_lock",
+            "continuum_action_scale_extension",
+            "joint_action_gravity_anchor_I"
+          ]
+        }
+      ],
+      "bridge_rule": "unknownness_principles_must_have_finite_context_source_or_residual_witness",
+      "expected_bridge_status": "candidate_bridge_map",
+      "forbidden_upgrades": [
+        "does_not_prove_Hilbert_carrier",
+        "does_not_prove_Bell_correlations_from_primitives",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_hbar_I_or_G_I",
+        "does_not_import_gravity_as_QM_solution",
+        "does_not_treat_candidate_bridge_as_formal_proof"
+      ],
+      "id": "fundamental_unknownness_bridge_audit_demo",
+      "primitive_basis": [
+        "history_space",
+        "event_algebra",
+        "readout_context_family",
+        "inheritance_act_family"
+      ],
+      "principles": [
+        {
+          "evidence_refs": [
+            "facticizable_distinguishability_closure_frontier_demo",
+            "primitive_tick_clock_count_demo"
+          ],
+          "gravity_refs": [
+            "primitive_tick_clock_count_demo",
+            "weak_field_clock_calculator_I"
+          ],
+          "id": "contextual_finitization",
+          "open_gap": "This is a candidate bridge principle, not a derived universal law.",
+          "qm_refs": [
+            "facticizable_distinguishability_closure_frontier_demo",
+            "ks_contextuality_obstruction_demo"
+          ],
+          "statement": "Unknown alternatives become physical only through finite context/readout partitions.",
+          "status": "candidate_bridge_principle"
+        },
+        {
+          "evidence_refs": [
+            "holonomy_selector_class_registry_demo",
+            "phase_branch_no_postfit_demo"
+          ],
+          "gravity_refs": [
+            "non_exact_holonomy_source_demo",
+            "winding_selector_additivity_demo"
+          ],
+          "id": "holonomy_branch_source",
+          "open_gap": "Holonomy source selection is still target-level, not a Hilbert-carrier proof.",
+          "qm_refs": [
+            "ab_holonomy_phase_demo",
+            "phase_cost_from_kernel_holonomy_demo"
+          ],
+          "statement": "Stable phase/branch unknownness needs a source class, branch policy, and holdout rule.",
+          "status": "candidate_bridge_principle"
+        },
+        {
+          "evidence_refs": [
+            "source_response_packet_universality_demo",
+            "clock_vacuum_stiffness_universality_demo"
+          ],
+          "gravity_refs": [
+            "source_response_charge_normalization_demo",
+            "clock_vacuum_stiffness_from_source_response_demo"
+          ],
+          "id": "source_clock_response",
+          "open_gap": "The source-clock route is partial and does not derive Born or G.",
+          "qm_refs": [
+            "measurement_facticity_route_demo",
+            "ramsey_clock_phase_demo"
+          ],
+          "statement": "A source becomes physical only through clock/readout response invariants.",
+          "status": "candidate_bridge_principle"
+        },
+        {
+          "evidence_refs": [
+            "sparc_heldout_selection_no_postfit_demo",
+            "nonfinite_gpt_residual_frontier_demo"
+          ],
+          "gravity_refs": [
+            "galaxy_residual_no_postfit_demo",
+            "G_candidate_no_postfit_holdout_demo"
+          ],
+          "id": "residual_holdout_discipline",
+          "open_gap": "Residual survival is not a derivation of a carrier or field law.",
+          "qm_refs": [
+            "nonfinite_gpt_residual_frontier_demo",
+            "qm_wall_probe_demo"
+          ],
+          "statement": "Residual unknownness is information only when it survives no-postfit holdout discipline.",
+          "status": "candidate_bridge_principle"
+        },
+        {
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "source_stress_packet_closure_I"
+          ],
+          "gravity_refs": [
+            "source_stress_packet_closure_I",
+            "geometry_response_factor_closure_I"
+          ],
+          "id": "composition_witness_exhaustion",
+          "open_gap": "This rejects some carriers but does not select complex Hilbert space.",
+          "qm_refs": [
+            "context_product_exhaustion_implies_local_tomography",
+            "real_hilbert_composite_hidden_joint_invariant"
+          ],
+          "statement": "Composite unknownness must be exhausted by declared product/context witnesses.",
+          "status": "candidate_bridge_principle"
+        },
+        {
+          "evidence_refs": [
+            "action_standard_independence_demo",
+            "G_candidate_no_calibrated_input_demo"
+          ],
+          "gravity_refs": [
+            "G_candidate_no_calibrated_input_demo",
+            "clock_vacuum_pole_no_calibrated_input_demo"
+          ],
+          "id": "scale_anchor_independence",
+          "open_gap": "The shared action-scale route is currently a wall, not a solved bridge.",
+          "qm_refs": [
+            "first_principles_hbar_lock",
+            "continuum_action_scale_extension"
+          ],
+          "statement": "Dimensional scale claims require independent anchors, not calibrated readout reuse.",
+          "status": "candidate_bridge_principle"
+        }
+      ],
+      "target_scope": "qm_gravity_bridge_search",
+      "type": "fundamental_unknownness_bridge_audit"
     },
     {
       "id": "formal_proof_ledger_audit_demo",

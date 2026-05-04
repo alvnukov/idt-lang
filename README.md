@@ -78,6 +78,11 @@ Current auditable results:
   FDC/carrier/tensor/unitary/recompile cells remain open, and
   Hilbert-carrier, Born-rule, and first-principles action-scale cells are
   recorded as current walls rather than hidden upgrades.
+- fundamental-unknownness bridge audit: the current base-theory search now
+  compares QM walls with gravity/clock/source routes. It records six candidate
+  bridge principles and four route candidates, including possible Hilbert and
+  Bell routes, while preserving the status that Hilbert, Bell derivation, and
+  shared action scale are not closed.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first
