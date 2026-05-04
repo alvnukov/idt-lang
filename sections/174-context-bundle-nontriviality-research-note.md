@@ -13495,3 +13495,70 @@ The endomap algebra for conservative gluing is now checkable.
 The remaining blocker is deriving this endomap semantics from IDT projection
 and NUSD rules.
 ```
+
+### 174.272. QM Hard-Wall Probe
+
+Executable probe:
+
+```text
+script = scripts/evaluate_qm_hard_wall_probe.py
+verdict = OPEN_STRUCTURAL_WALL
+fatal_now = false
+route_status = CONDITIONAL_FULL_QM_ROUTE
+closure_status = PROOF_ARTIFACTS_MISSING
+proved = 0
+scaffold_present = 15
+proof_artifact_missing = 0
+structural_walls = 6
+import_walls = 0
+```
+
+Interpretation:
+
+```text
+No fatal contradiction or hidden imported proof artifact is detected in the
+current route.
+
+But the route is not wall-free. It still contains six structural open walls:
+
+1. nonunital_stable_distinguishability
+2. spectral_decomposition
+3. rich_d_cl_reversible_symmetry
+4. continuous_inheritance_family
+5. generator_closure
+6. entanglement_closure
+```
+
+The remaining 15 obligations have finite bridge scaffolds or executable route
+witnesses, but none is a registered machine-checkable proof artifact for full
+QM closure.
+
+This gives a precise answer to the wall question:
+
+```text
+We are not currently blocked by a detected inconsistency or hidden Hilbert/Born
+import.
+
+We are blocked by structural theorem obligations that may require a stronger
+primitive base or explicit boundary assumptions.
+```
+
+The decisive next wall is therefore not another finite experiment gate. It is
+one of:
+
+```text
+NUSD from context-first facticization;
+spectrality/rich reversible symmetry from D_cl;
+continuity/generator closure from finite refinement limits;
+entanglement closure from product-context exhaustion plus no hidden joint-only
+invariants.
+```
+
+Forbidden upgrade:
+
+```text
+does_not_prove_full_QM_I
+does_not_prove_absence_of_future_wall
+does_not_treat_bridge_scaffold_as_formal_proof
+does_not_hide_QM_imports
+```
