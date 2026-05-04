@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import scripts.evaluate_fpd_projective_derivation as fpd_projective  # noqa: E402
+import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
 import scripts.verify_finite_qm_route as finite_gate  # noqa: E402
@@ -79,6 +80,13 @@ def find_representation_route(route_name: str) -> representation_attempt.RouteRe
         if route.name == route_name:
             return representation_attempt.evaluate_route(route)
     raise ValueError(f"unknown representation route: {route_name}")
+
+
+def find_born_route(route_name: str) -> born_attempt.RouteResult:
+    for route in born_attempt.ROUTES:
+        if route.name == route_name:
+            return born_attempt.evaluate_route(route)
+    raise ValueError(f"unknown Born/readout route: {route_name}")
 
 
 def build_residual_closure_step() -> ProofStep:
@@ -151,6 +159,20 @@ def build_universal_representation_step() -> ProofStep:
 
 
 def build_universal_born_step() -> ProofStep:
+    route = find_born_route("quadratic_context_probability_route")
+    if route.verdict == "CONDITIONAL_BORN_ROUTE":
+        return ProofStep(
+            name="universal_born_readout_theorem",
+            status="CONDITIONAL",
+            statement=(
+                "A non-imported Born/readout route exists if context normalization, exclusivity additivity, "
+                "coarse-graining consistency, and operational equivalence are proved."
+            ),
+            evidence=f"verdict={route.verdict}; passed={route.passed}/7; imports={len(route.imports)}",
+            remaining_obligation=(
+                "Prove the readout obligations as IDT theorem artifacts rather than assuming the Born rule."
+            ),
+        )
     return ProofStep(
         name="universal_born_readout_theorem",
         status="OPEN",

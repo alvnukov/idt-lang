@@ -11790,3 +11790,144 @@ The next full-proof pass should attack the next open theorem:
 ```text
 universal_born_readout_theorem
 ```
+
+### 174.248. Born / Readout Theorem Attempt
+
+The next one-pass target was:
+
+```text
+universal_born_readout_theorem
+```
+
+Evaluator:
+
+```text
+scripts/evaluate_born_readout_attempt.py
+```
+
+It tests whether finite normalized-overlap readouts can be promoted to a
+Born-like context probability theorem without importing the Born rule.
+
+Routes tested:
+
+```text
+finite_overlap_screens_only;
+normalization_only;
+normalization_exclusivity;
+normalization_exclusivity_coarse_graining;
+quadratic_context_probability_route;
+imported_born_rule.
+```
+
+Result:
+
+```text
+route = quadratic_context_probability_route
+verdict = CONDITIONAL_BORN_ROUTE
+passed = 7/7
+imports = none
+```
+
+The conditional route requires:
+
+```text
+1. positive quadratic measure;
+2. context normalization;
+3. exclusivity additivity;
+4. coarse-graining consistency;
+5. operational equivalence.
+```
+
+The direct import control is rejected:
+
+```text
+route = imported_born_rule
+verdict = IMPORTED_HIT
+imports = born_rule_assumed
+```
+
+Near-wall controls show why each condition matters:
+
+```text
+finite_overlap_screens_only:
+  lacks normalization, exclusivity, coarse-graining, and operational
+  equivalence.
+
+normalization_only:
+  still lacks exclusivity, coarse-graining, and operational equivalence.
+
+normalization_exclusivity:
+  still lacks coarse-graining and operational equivalence.
+
+normalization_exclusivity_coarse_graining:
+  still lacks operational equivalence.
+```
+
+### 174.249. Meaning Of The Born Attempt
+
+The Born wall did not disappear.
+
+It split into four sharper readout obligations:
+
+```text
+context_normalization_theorem
+exclusivity_additivity_theorem
+coarse_graining_consistency_theorem
+operational_equivalence_probability_theorem
+```
+
+If those are proved from IDT primitives and positive quadratic readout, the
+route gives a non-imported Born-like finite context probability theorem.
+
+If any fails, the universal Born/readout theorem remains blocked.
+
+This is progress because:
+
+```text
+the route no longer says "derive Born rule" as one opaque demand;
+it states exactly which readout obligations turn positive quadratic weights
+into probabilities.
+```
+
+### 174.250. Updated One-Pass Full-QM Attempt After Born Pass
+
+After the Born/readout pass:
+
+```text
+full_qm_proof_attempt = CONDITIONAL_ROUTE_ADVANCED
+pass = 1
+conditional = 4
+open = 3
+failed = 0
+```
+
+Conditional:
+
+```text
+finite_route_residual_closure
+fpd_projective_derivation
+universal_representation_theorem
+universal_born_readout_theorem
+```
+
+Still open:
+
+```text
+unitary_dynamics_theorem
+general_composite_theorem
+physical_phase_scale_boundary
+```
+
+This still does not prove QM.
+
+But the pass made measurable progress:
+
+```text
+universal_born_readout_theorem moved from OPEN to CONDITIONAL.
+```
+
+The next full-proof pass should attack:
+
+```text
+unitary_dynamics_theorem
+```
