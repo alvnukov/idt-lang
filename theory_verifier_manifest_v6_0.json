@@ -3071,6 +3071,37 @@
       ]
     },
     {
+      "id": "route_witness_completeness_implies_tomographic_state_effect_duality",
+      "statement": "For a finite route-closed GPT subtheory, if route witnesses are complete, no effect-cone degrees are unwitnessed, a local-tomographic state basis is fixed, and the state-effect witness matrix has full column rank, then effects separate stable state parameters and tomographic state-effect duality holds for that finite route.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "local_tomographic_state_basis",
+        "full_rank_effect_separation_matrix"
+      ],
+      "dependencies": [
+        "tomographic_state_effect_duality_theorem_demo",
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "generic_gpt_closure_separator_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "tomographic_state_effect_duality_theorem_demo",
+      "known_failures": [
+        "does not close reversible filter closure",
+        "does not prove universal carrier selection",
+        "finite state-effect witness rank is not a generic GPT classification theorem"
+      ],
+      "physical_scope": "Finite route-closed GPT state-effect duality under declared witness-completeness and rank assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_reversible_filter_closure"
+      ]
+    },
+    {
       "id": "finite_born_quadratic_readout_survivor",
       "statement": "For the registered finite amplitude-packet family, if packets are normalized, readout is phase-invariant, orthogonal events are additive, and context probabilities are facticized, then quadratic-modulus readout survives while linear-modulus readout is rejected on the registered two- and three-branch packets.",
       "role": "theorem",
@@ -4133,6 +4164,60 @@
       "expected_theorem_status": "conditional_proof"
     },
     {
+      "id": "tomographic_state_effect_duality_theorem_demo",
+      "type": "tomographic_state_effect_duality_theorem",
+      "target_theorem_card": "route_witness_completeness_implies_tomographic_state_effect_duality",
+      "tolerance": 1e-10,
+      "assumptions": [
+        "finite_route_witness_completeness",
+        "no_unwitnessed_effect_cone_degrees",
+        "local_tomographic_state_basis",
+        "full_rank_effect_separation_matrix"
+      ],
+      "conclusions": [
+        "tomographic_state_effect_duality",
+        "no_hidden_effect_kernel"
+      ],
+      "systems": [
+        {
+          "id": "full_rank_route_effect_basis",
+          "state_dimension": 4,
+          "effect_witness_matrix": [
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+          ],
+          "expected_rank": 4,
+          "expected_status": "survives"
+        },
+        {
+          "id": "hidden_effect_kernel_sample",
+          "state_dimension": 4,
+          "effect_witness_matrix": [
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [1, 1, 0, 0]
+          ],
+          "expected_rank": 3,
+          "expected_status": "rejected"
+        }
+      ],
+      "evidence_refs": [
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "generic_gpt_closure_separator_demo"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_reversible_filter_closure"
+      ],
+      "expected_theorem_status": "conditional_proof"
+    },
+    {
       "id": "purification_filtering_recoverable_support_theorem_demo",
       "type": "purification_filtering_recoverable_support_theorem",
       "target_theorem_card": "purification_filtering_implies_recoverable_support_update",
@@ -4613,10 +4698,11 @@
           "status": "underdetermined",
           "evidence_refs": [
             "route_closed_gpt_subtheory_frontier_demo",
+            "route_witness_completeness_implies_tomographic_state_effect_duality",
             "generic_gpt_closure_rejects_unconstrained_cone",
             "generic_gpt_closure_separator_demo"
           ],
-          "open_gap": "Route-closed GPT subtheories satisfy current finite route-witness and bounded-correlation screens but do not yet collapse to complex Hilbert-like structure."
+          "open_gap": "Route-closed GPT subtheories now have conditional tomographic state-effect duality, but reversible filter closure remains open."
         },
         {
           "id": "broader_generic_gpt_cone",
@@ -4641,12 +4727,18 @@
       "open_requirements": [
         {
           "id": "tomographic_state_effect_duality",
-          "status": "open",
+          "status": "conditional_proof",
           "evidence_refs": [
+            "route_witness_completeness_implies_tomographic_state_effect_duality",
+            "tomographic_state_effect_duality_theorem_demo",
             "generic_gpt_closure_separator_demo",
             "carrier_universal_quantifier_frontier_demo"
           ],
-          "next_proof_obligation": "Prove that route-witness completeness and no unwitnessed effect-cone degrees force tomographic state-effect duality, or keep route-closed GPT underdetermined."
+          "conditional_theorem_refs": [
+            "route_witness_completeness_implies_tomographic_state_effect_duality",
+            "tomographic_state_effect_duality_theorem_demo"
+          ],
+          "next_proof_obligation": ""
         },
         {
           "id": "reversible_filter_closure",

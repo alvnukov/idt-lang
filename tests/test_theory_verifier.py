@@ -73,6 +73,9 @@ from theory_verifier.core import (
     GEOMETRY_RESPONSE_FACTOR_REQUIRED_SYMBOLS,
     GEOMETRY_RESPONSE_FACTOR_TARGET,
     TENSOR_COMPOSITION_ROUTE_CONDITIONS,
+    TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS,
+    TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_CONCLUSIONS,
+    TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_FORBIDDEN_UPGRADES,
     CLOCK_VACUUM_STIFFNESS_REQUIRED_GATES,
     CLOCK_VACUUM_STIFFNESS_REQUIRED_SYMBOLS,
     CLOCK_VACUUM_STIFFNESS_TARGET,
@@ -3156,6 +3159,91 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"context_product_local_tomography_theorem_status_mismatch"})
 
+    def test_tomographic_state_effect_duality_theorem_rejects_rank_mismatch(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_state_effect_duality_theorem",
+                        "type": "tomographic_state_effect_duality_theorem",
+                        "target_theorem_card": "route_witness_completeness_implies_tomographic_state_effect_duality",
+                        "assumptions": list(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS),
+                        "conclusions": list(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_CONCLUSIONS),
+                        "systems": [
+                            {
+                                "id": "rank_deficient_claimed_full",
+                                "state_dimension": 4,
+                                "effect_witness_matrix": [
+                                    [1, 0, 0, 0],
+                                    [0, 1, 0, 0],
+                                    [0, 0, 1, 0],
+                                    [1, 1, 0, 0],
+                                ],
+                                "expected_rank": 4,
+                                "expected_status": "survives",
+                            },
+                            {
+                                "id": "hidden_kernel",
+                                "state_dimension": 4,
+                                "effect_witness_matrix": [
+                                    [1, 0, 0, 0],
+                                    [0, 1, 0, 0],
+                                    [0, 0, 1, 0],
+                                    [1, 1, 0, 0],
+                                ],
+                                "expected_rank": 3,
+                                "expected_status": "rejected",
+                            },
+                        ],
+                        "evidence_refs": [
+                            "context_product_exhaustion_implies_local_tomography",
+                            "context_product_local_tomography_theorem_demo",
+                            "generic_gpt_closure_separator_demo",
+                        ],
+                        "forbidden_upgrades": list(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_FORBIDDEN_UPGRADES),
+                        "expected_theorem_status": "conditional_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"tomographic_state_effect_duality_rank_mismatch"})
+
+    def test_tomographic_state_effect_duality_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "route_witness_completeness_implies_tomographic_state_effect_duality",
+                        "statement": "Badly upgraded state-effect duality.",
+                        "role": "theorem",
+                        "assumptions": list(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS),
+                        "dependencies": [
+                            "tomographic_state_effect_duality_theorem_demo",
+                            "context_product_exhaustion_implies_local_tomography",
+                            "context_product_local_tomography_theorem_demo",
+                            "generic_gpt_closure_separator_demo",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "tomographic_state_effect_duality_theorem_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"tomographic_state_effect_duality_theorem_card_status_mismatch"})
+
     def test_purification_filtering_theorem_rejects_bad_status(self) -> None:
         manifest = parse_manifest(
             {
@@ -3966,7 +4054,7 @@ class TheoryVerifierTests(unittest.TestCase):
                         "open_requirements": [
                             {
                                 "id": requirement,
-                                "status": "supported" if index == 0 else "open",
+                                "status": "conditional_proof" if index == 0 else "open",
                                 "evidence_refs": ["generic_gpt_closure_separator_demo"],
                                 "next_proof_obligation": "test obligation",
                             }

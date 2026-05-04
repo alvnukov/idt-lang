@@ -513,8 +513,21 @@ It also records the two still-open closure requirements:
 1. tomographic state-effect duality;
 2. reversible filter closure.
 
-Until those requirements are proved from IDT structure, route-closed GPT remains
-`underdetermined`.
+Tomographic state-effect duality is now backed by:
+
+`route_witness_completeness_implies_tomographic_state_effect_duality`
+
+and its executable verifier:
+
+`tomographic_state_effect_duality_theorem_demo`.
+
+The theorem checks finite state-effect witness rank. A full-rank witness matrix
+survives because effects separate all stable state parameters; a rank-deficient
+matrix is rejected because it leaves a hidden effect kernel.
+
+This moves tomographic state-effect duality to `conditional_proof` for the
+finite route-closed screen. Route-closed GPT still remains `underdetermined`
+because reversible filter closure is open.
 
 The first proof route toward the universal carrier-selection theorem is now
 executable as:

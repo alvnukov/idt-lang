@@ -653,8 +653,12 @@ carrier quantifier explicit: non-complex Jordan and unconstrained generic GPT
 classes are rejected, complex Hilbert-like structure survives, and route-closed
 plus broader generic GPT classes remain underdetermined.
 The `route_closed_gpt_subtheory_frontier_demo` now splits the route-closed GPT
-blocker into two open proof obligations: tomographic state-effect duality and
+blocker into two proof obligations: tomographic state-effect duality and
 reversible filter closure.
+The `route_witness_completeness_implies_tomographic_state_effect_duality`
+theorem card and `tomographic_state_effect_duality_theorem_demo` now promote
+the first of those obligations to `conditional_proof` using finite
+state-effect witness rank; reversible filter closure remains open.
 The holonomy clearance pass now adds finite gates for transfer phase
 normalization, cycle holonomy composition, branch additivity, source
 classification, and phase-cost independence, while keeping

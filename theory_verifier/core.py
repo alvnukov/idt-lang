@@ -255,6 +255,25 @@ GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES = (
     "does_not_select_complex_Hilbert_from_IDT_primitives_alone",
 )
 
+TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
+    "finite_route_witness_completeness",
+    "no_unwitnessed_effect_cone_degrees",
+    "local_tomographic_state_basis",
+    "full_rank_effect_separation_matrix",
+)
+
+TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_CONCLUSIONS = (
+    "tomographic_state_effect_duality",
+    "no_hidden_effect_kernel",
+)
+
+TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_Hilbert_carrier",
+    "does_not_close_reversible_filter_closure",
+)
+
 BORN_READOUT_ROUTE_CONDITIONS = (
     "normalized_amplitude_packet",
     "phase_invariant_readout",
@@ -1835,6 +1854,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_born_readout_theorem_grounding(manifest))
     checks.append("Born readout theorem grounding")
 
+    issues.extend(check_tomographic_state_effect_duality_theorem_grounding(manifest))
+    checks.append("tomographic state-effect duality theorem grounding")
+
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
 
@@ -3035,6 +3057,65 @@ def check_born_readout_theorem_grounding(manifest: Manifest) -> list[Issue]:
         issues.append(
             Issue(
                 "born_readout_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
+    return issues
+
+
+def check_tomographic_state_effect_duality_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("route_witness_completeness_implies_tomographic_state_effect_duality")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "tomographic_state_effect_duality_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "tomographic_state_effect_duality_theorem_demo",
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "generic_gpt_closure_separator_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "tomographic_state_effect_duality_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "tomographic_state_effect_duality_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    if not set(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS).issubset(set(theorem_card.assumptions)):
+        issues.append(
+            Issue(
+                "tomographic_state_effect_duality_theorem_card_assumption_missing",
+                f"{theorem_card.identifier}: missing assumptions from state-effect duality boundary",
+            )
+        )
+    if not set(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_FORBIDDEN_UPGRADES).issubset(
+        set(theorem_card.forbidden_claims)
+    ):
+        issues.append(
+            Issue(
+                "tomographic_state_effect_duality_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
             )
         )
@@ -7517,11 +7598,24 @@ def check_route_closed_gpt_subtheory_frontier_gate(gate: FiniteGate) -> list[Iss
                     f"{gate.identifier}: duplicate route-closed GPT requirement {requirement_id}",
                 )
             ]
-        if status != "open":
+        if status not in {"open", "conditional_proof"}:
+            raise ManifestError(f"{gate.identifier}: requirement {requirement_id} has unknown status {status!r}")
+        conditional_refs = require_string_tuple(
+            requirement.get("conditional_theorem_refs", []),
+            f"{gate.identifier}.open_requirements[{index}].conditional_theorem_refs",
+        )
+        if status == "conditional_proof" and not conditional_refs:
             return [
                 Issue(
                     "route_closed_gpt_frontier_requirement_status_mismatch",
-                    f"{gate.identifier}: requirement {requirement_id} must remain open until proven",
+                    f"{gate.identifier}: conditional requirement {requirement_id} must cite a conditional theorem",
+                )
+            ]
+        if status == "open" and conditional_refs:
+            return [
+                Issue(
+                    "route_closed_gpt_frontier_requirement_status_mismatch",
+                    f"{gate.identifier}: open requirement {requirement_id} must not cite a conditional theorem",
                 )
             ]
         if not evidence_refs:
@@ -7531,7 +7625,7 @@ def check_route_closed_gpt_subtheory_frontier_gate(gate: FiniteGate) -> list[Iss
                     f"{gate.identifier}: requirement {requirement_id} must cite evidence",
                 )
             ]
-        if not next_obligation:
+        if status == "open" and not next_obligation:
             return [
                 Issue(
                     "route_closed_gpt_frontier_obligation_missing",
@@ -7552,7 +7646,15 @@ def check_route_closed_gpt_subtheory_frontier_gate(gate: FiniteGate) -> list[Iss
     expected_status = require_string(gate.payload.get("expected_status"), f"{gate.identifier}.expected_status")
     if expected_status not in ROUTE_CLOSED_GPT_FRONTIER_STATUSES:
         raise ManifestError(f"{gate.identifier}.expected_status is unknown")
-    computed_status = "underdetermined"
+    has_open_requirement = any(
+        require_string(
+            require_mapping(item, f"{gate.identifier}.open_requirements[{index}]").get("status"),
+            f"{gate.identifier}.open_requirements[{index}].status",
+        )
+        == "open"
+        for index, item in enumerate(requirements)
+    )
+    computed_status = "underdetermined" if has_open_requirement else "collapses_to_complex_hilbert_like"
     if computed_status != expected_status:
         return [
             Issue(
@@ -7728,6 +7830,130 @@ def check_context_product_carrier_lemma_route_gate(gate: FiniteGate) -> list[Iss
             Issue(
                 "context_product_carrier_lemma_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_tomographic_state_effect_duality_theorem_gate(gate: FiniteGate) -> list[Issue]:
+    target_card = require_string(gate.payload.get("target_theorem_card"), f"{gate.identifier}.target_theorem_card")
+    if target_card != "route_witness_completeness_implies_tomographic_state_effect_duality":
+        return [
+            Issue(
+                "tomographic_state_effect_duality_theorem_target_mismatch",
+                f"{gate.identifier}: target card must be route_witness_completeness_implies_tomographic_state_effect_duality",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS):
+        return [
+            Issue(
+                "tomographic_state_effect_duality_theorem_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the conditional state-effect duality theorem",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_CONCLUSIONS):
+        return [
+            Issue(
+                "tomographic_state_effect_duality_theorem_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must match state-effect duality and hidden-kernel rejection",
+            )
+        ]
+
+    systems = require_list(gate.payload.get("systems"), f"{gate.identifier}.systems")
+    if len(systems) < 2:
+        raise ManifestError(f"{gate.identifier}: systems must include a full-rank witness and a rank-deficient separator")
+    accepted = 0
+    rejected = 0
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    for index, item in enumerate(systems):
+        system = require_mapping(item, f"{gate.identifier}.systems[{index}]")
+        system_id = require_string(system.get("id"), f"{gate.identifier}.systems[{index}].id")
+        state_dimension = parse_positive_integer(
+            system.get("state_dimension"),
+            f"{gate.identifier}.systems[{index}].state_dimension",
+        )
+        witness_matrix = parse_matrix(
+            system.get("effect_witness_matrix"),
+            f"{gate.identifier}.systems[{index}].effect_witness_matrix",
+        )
+        if any(len(row) != state_dimension for row in witness_matrix):
+            raise ManifestError(f"{gate.identifier}: system {system_id} witness rows must match state_dimension")
+        expected_rank = parse_nonnegative_integer(
+            system.get("expected_rank"),
+            f"{gate.identifier}.systems[{index}].expected_rank",
+        )
+        computed_rank = complex_matrix_rank(witness_matrix, tolerance)
+        if computed_rank != expected_rank:
+            return [
+                Issue(
+                    "tomographic_state_effect_duality_rank_mismatch",
+                    f"{gate.identifier}: system {system_id} expected rank {expected_rank}, computed {computed_rank}",
+                )
+            ]
+        expected_status = require_string(
+            system.get("expected_status"),
+            f"{gate.identifier}.systems[{index}].expected_status",
+        )
+        if expected_status not in {"survives", "rejected"}:
+            raise ManifestError(f"{gate.identifier}: system {system_id} expected_status is unknown")
+        computed_status = "survives" if computed_rank == state_dimension else "rejected"
+        if computed_status != expected_status:
+            return [
+                Issue(
+                    "tomographic_state_effect_duality_status_mismatch",
+                    f"{gate.identifier}: system {system_id} expected {expected_status}, computed {computed_status}",
+                )
+            ]
+        if computed_status == "survives":
+            accepted += 1
+        if computed_status == "rejected":
+            rejected += 1
+
+    if accepted == 0 or rejected == 0:
+        return [
+            Issue(
+                "tomographic_state_effect_duality_separator_incomplete",
+                f"{gate.identifier}: theorem gate must include both a survivor and a rejected hidden-kernel sample",
+            )
+        ]
+
+    evidence_refs = require_string_tuple(gate.payload.get("evidence_refs", []), f"{gate.identifier}.evidence_refs")
+    required_evidence = {
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "generic_gpt_closure_separator_demo",
+    }
+    if set(evidence_refs) != required_evidence:
+        return [
+            Issue(
+                "tomographic_state_effect_duality_theorem_evidence_mismatch",
+                f"{gate.identifier}: evidence refs must link local tomography theorem and generic-GPT closure screen",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "tomographic_state_effect_duality_theorem_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the public QM claim boundary",
+            )
+        ]
+
+    expected_theorem_status = require_string(
+        gate.payload.get("expected_theorem_status"),
+        f"{gate.identifier}.expected_theorem_status",
+    )
+    computed_theorem_status = "conditional_proof"
+    if expected_theorem_status != computed_theorem_status:
+        return [
+            Issue(
+                "tomographic_state_effect_duality_theorem_status_mismatch",
+                f"{gate.identifier}: expected {expected_theorem_status}, computed {computed_theorem_status}",
             )
         ]
     return []
@@ -14319,6 +14545,38 @@ def real_diagonal_entry(value: complex, tolerance: float, field: str) -> float:
     return value.real
 
 
+def complex_matrix_rank(matrix: list[list[complex]], tolerance: float) -> int:
+    if not matrix:
+        return 0
+    width = len(matrix[0])
+    if any(len(row) != width for row in matrix):
+        raise ManifestError("matrix rows must have equal length")
+    reduced = [row.copy() for row in matrix]
+    row_count = len(reduced)
+    rank = 0
+    for column in range(width):
+        pivot = max(range(rank, row_count), key=lambda row: abs(reduced[row][column]), default=None)
+        if pivot is None or abs(reduced[pivot][column]) <= tolerance:
+            continue
+        reduced[rank], reduced[pivot] = reduced[pivot], reduced[rank]
+        pivot_value = reduced[rank][column]
+        reduced[rank] = [value / pivot_value for value in reduced[rank]]
+        for row in range(row_count):
+            if row == rank:
+                continue
+            factor = reduced[row][column]
+            if abs(factor) <= tolerance:
+                continue
+            reduced[row] = [
+                value - (factor * pivot_row_value)
+                for value, pivot_row_value in zip(reduced[row], reduced[rank], strict=True)
+            ]
+        rank += 1
+        if rank == row_count:
+            break
+    return rank
+
+
 def compose_block_kernel(
     g0: list[list[complex]], g1: list[list[complex]], cross: list[list[complex]]
 ) -> list[list[complex]]:
@@ -15076,6 +15334,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "context_product_exhaustion": check_context_product_exhaustion_gate,
     "rebit_hidden_joint_invariant_separator": check_rebit_hidden_joint_invariant_separator_gate,
     "context_product_local_tomography_theorem": check_context_product_local_tomography_theorem_gate,
+    "tomographic_state_effect_duality_theorem": check_tomographic_state_effect_duality_theorem_gate,
     "purification_filtering_recoverable_support_theorem": check_purification_filtering_recoverable_support_theorem_gate,
     "bounded_correlation_screen_theorem": check_bounded_correlation_screen_theorem_gate,
     "noncomplex_jordan_separator_theorem": check_noncomplex_jordan_separator_theorem_gate,
