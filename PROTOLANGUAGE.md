@@ -617,6 +617,9 @@ The `born_quadratic_readout_route_demo` now makes the finite Born/readout route
 executable: quadratic modulus survives the phase-invariant normalized amplitude
 packet checks, while linear-modulus readout is rejected on the registered
 two- and three-branch packets.
+The `finite_born_quadratic_readout_survivor` theorem card promotes that route
+to a conditional finite theorem while keeping `universal_born_rule_theorem`
+open until the carrier and measurement/facticity obligations are closed.
 The `tensor_composition_route_demo` now makes the finite tensor-composition
 route executable: product context dimensions multiply, product states have
 Schmidt rank one, and Bell-style states carry Schmidt rank two rather than

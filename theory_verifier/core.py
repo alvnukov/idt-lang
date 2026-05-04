@@ -262,6 +262,26 @@ BORN_READOUT_ROUTE_CONDITIONS = (
     "facticized_context_probability",
 )
 
+BORN_READOUT_THEOREM_ASSUMPTIONS = (
+    "finite_amplitude_packet_family",
+    "normalized_amplitude_packet",
+    "phase_invariant_readout",
+    "orthogonal_event_additivity",
+    "facticized_context_probability",
+)
+
+BORN_READOUT_THEOREM_CONCLUSIONS = (
+    "quadratic_modulus_readout_survives",
+    "linear_modulus_readout_rejected_on_registered_packets",
+)
+
+BORN_READOUT_THEOREM_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_Born_rule",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_Hilbert_carrier",
+    "does_not_replace_measurement_facticity_theorem",
+)
+
 TENSOR_COMPOSITION_ROUTE_CONDITIONS = (
     "product_context_basis",
     "local_tomographic_dimension_product",
@@ -1775,6 +1795,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_generic_gpt_theorem_grounding(manifest))
     checks.append("generic-GPT theorem grounding")
 
+    issues.extend(check_born_readout_theorem_grounding(manifest))
+    checks.append("Born readout theorem grounding")
+
     issues.extend(check_clock_vacuum_pole_closure(manifest))
     checks.append("clock-vacuum pole closure")
 
@@ -2405,7 +2428,8 @@ def check_qm_core_proof_obligations(manifest: Manifest) -> list[Issue]:
     finite_gate_ids = {gate.identifier for gate in manifest.finite_gates}
     pattern_ids = {pattern.identifier for pattern in manifest.qm_universal_patterns}
     symbol_ids = set(manifest.symbols)
-    evidence_ids = finite_gate_ids | pattern_ids | symbol_ids
+    theorem_card_ids = {card.identifier for card in manifest.theorem_cards}
+    evidence_ids = finite_gate_ids | pattern_ids | symbol_ids | theorem_card_ids
     seen: set[str] = set()
 
     missing_required = sorted(set(QM_CORE_PROOF_REQUIRED_OBLIGATIONS) - obligation_ids)
@@ -2903,6 +2927,63 @@ def check_generic_gpt_theorem_grounding(manifest: Manifest) -> list[Issue]:
         issues.append(
             Issue(
                 "generic_gpt_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
+            )
+        )
+    return issues
+
+
+def check_born_readout_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("finite_born_quadratic_readout_survivor")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "born_readout_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "born_quadratic_readout_route_demo",
+        "born_context_probability_table_demo",
+        "measurement_facticity_route_demo",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "born_readout_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "born_readout_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    if not set(BORN_READOUT_THEOREM_ASSUMPTIONS).issubset(set(theorem_card.assumptions)):
+        issues.append(
+            Issue(
+                "born_readout_theorem_card_assumption_missing",
+                f"{theorem_card.identifier}: missing assumptions from finite Born route boundary",
+            )
+        )
+    forbidden_upgrades = set(theorem_card.forbidden_claims)
+    if not set(BORN_READOUT_THEOREM_FORBIDDEN_UPGRADES).issubset(forbidden_upgrades):
+        issues.append(
+            Issue(
+                "born_readout_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing forbidden upgrades from conditional theorem boundary",
             )
         )

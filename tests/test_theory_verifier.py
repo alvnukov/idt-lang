@@ -13,6 +13,8 @@ from theory_verifier.core import (
     CALIBRATED_QM_REQUIRED_SYMBOLS,
     CALIBRATED_QM_TARGET,
     BORN_READOUT_ROUTE_CONDITIONS,
+    BORN_READOUT_THEOREM_ASSUMPTIONS,
+    BORN_READOUT_THEOREM_FORBIDDEN_UPGRADES,
     CLOCK_VACUUM_POLE_REQUIRED_SYMBOLS,
     CLOCK_VACUUM_POLE_TARGET,
     CONTINUUM_ACTION_FRONTIER_REQUIREMENTS,
@@ -2020,6 +2022,66 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"born_quadratic_route_candidate_status_mismatch"})
+
+    def test_born_readout_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "finite_born_quadratic_readout_survivor",
+                        "statement": "Badly upgraded finite Born route.",
+                        "role": "theorem",
+                        "assumptions": list(BORN_READOUT_THEOREM_ASSUMPTIONS),
+                        "dependencies": [
+                            "born_quadratic_readout_route_demo",
+                            "born_context_probability_table_demo",
+                            "measurement_facticity_route_demo",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "born_quadratic_readout_route_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(BORN_READOUT_THEOREM_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"born_readout_theorem_card_status_mismatch"})
+
+    def test_born_readout_theorem_requires_forbidden_upgrades(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "finite_born_quadratic_readout_survivor",
+                        "statement": "Finite Born route without boundary.",
+                        "role": "theorem",
+                        "assumptions": list(BORN_READOUT_THEOREM_ASSUMPTIONS),
+                        "dependencies": [
+                            "born_quadratic_readout_route_demo",
+                            "born_context_probability_table_demo",
+                            "measurement_facticity_route_demo",
+                        ],
+                        "proof_status": "conditional_proof",
+                        "verifier": "born_quadratic_readout_route_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": ["too_weak"],
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"born_readout_theorem_card_forbidden_claim_missing"})
 
     def test_unitary_measurement_context_rejects_bad_probability(self) -> None:
         manifest = parse_manifest(

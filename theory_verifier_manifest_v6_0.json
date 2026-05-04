@@ -2792,11 +2792,12 @@
       "scope": "finite_core",
       "depends_on": ["hilbert_carrier_derivation", "probability_measure_layer"],
       "evidence_refs": [
+        "finite_born_quadratic_readout_survivor",
         "born_context_probability_table_demo",
         "born_quadratic_readout_route_demo",
         "bell_chsh_from_amplitudes_demo"
       ],
-      "open_gap": "A finite quadratic readout route is now executable, but a universal Born theorem still depends on the carrier and measurement/facticity theorems.",
+      "open_gap": "A finite quadratic readout conditional theorem is now executable, but a universal Born theorem still depends on the carrier and measurement/facticity theorems.",
       "claim_boundary": "Born readouts have a finite executable route; full first-principles Born-rule derivation remains open."
     },
     {
@@ -3070,6 +3071,37 @@
       ]
     },
     {
+      "id": "finite_born_quadratic_readout_survivor",
+      "statement": "For the registered finite amplitude-packet family, if packets are normalized, readout is phase-invariant, orthogonal events are additive, and context probabilities are facticized, then quadratic-modulus readout survives while linear-modulus readout is rejected on the registered two- and three-branch packets.",
+      "role": "theorem",
+      "assumptions": [
+        "finite_amplitude_packet_family",
+        "normalized_amplitude_packet",
+        "phase_invariant_readout",
+        "orthogonal_event_additivity",
+        "facticized_context_probability"
+      ],
+      "dependencies": [
+        "born_quadratic_readout_route_demo",
+        "born_context_probability_table_demo",
+        "measurement_facticity_route_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "born_quadratic_readout_route_demo",
+      "known_failures": [
+        "finite packet family is not a universal Born theorem",
+        "Hilbert carrier derivation remains open",
+        "measurement/facticity theorem remains open"
+      ],
+      "physical_scope": "Finite Born/readout separator under declared readout and facticity assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_universal_Born_rule",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_replace_measurement_facticity_theorem"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
@@ -3104,13 +3136,18 @@
       "role": "theorem",
       "assumptions": ["hilbert_carrier_derivation"],
       "dependencies": [
+        "finite_born_quadratic_readout_survivor",
         "born_quadratic_readout_route_demo",
         "hilbert_carrier_derivation",
         "measurement_facticity_route_demo"
       ],
       "proof_status": "open",
       "verifier": "full_qm_closure_frontier_demo",
-      "known_failures": ["finite quadratic route is not a universal Born theorem"],
+      "known_failures": [
+        "finite quadratic survivor theorem is conditional",
+        "Hilbert carrier derivation remains open",
+        "measurement/facticity theorem remains open"
+      ],
       "physical_scope": "Full-QM probability rule derivation.",
       "forbidden_claims": ["Born rule universally derived from finite route alone"]
     },

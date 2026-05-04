@@ -105,9 +105,14 @@ additive, facticized context readout. The quadratic modulus readout survives;
 linear-modulus alternatives are rejected on the registered two- and
 three-branch packets.
 
-This is a finite route toward Born readout, not the full Born theorem. The
-universal theorem still depends on closing the carrier and measurement/facticity
-obligations.
+This finite route is now backed by the conditional theorem card:
+
+`finite_born_quadratic_readout_survivor`.
+
+The card records the exact boundary: quadratic-modulus readout is the finite
+survivor under the registered packet and facticity assumptions, but this is not
+the universal Born theorem. The universal theorem still depends on closing the
+carrier and measurement/facticity obligations.
 
 The finite tensor-composition route is now executable as:
 
