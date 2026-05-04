@@ -1126,6 +1126,38 @@ FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES = (
     "does_not_treat_candidate_bridge_as_formal_proof",
 )
 
+HILBERT_SPACETIME_BRIDGE_TARGET_SCOPE = "hilbert_bell_spacetime_bridge_search"
+HILBERT_SPACETIME_BRIDGE_RULE = "gr_may_only_enter_as_reflection_or_limit_not_as_foundation"
+
+HILBERT_SPACETIME_REQUIRED_CONSTRAINTS: dict[str, str] = {
+    "gr_reflection_not_primitive": "candidate_constraint",
+    "clock_context_pregeometry": "candidate_constraint",
+    "holonomy_curvature_phase_commonality": "candidate_constraint",
+    "bell_no_global_spacetime_fact_table": "finite_executable_underived",
+    "hilbert_locality_from_composite_witnesses": "candidate_route",
+}
+
+HILBERT_SPACETIME_REQUIRED_ROUTE_STATUS: dict[str, str] = {
+    "hilbert_from_pregeometric_context_route": "candidate_route",
+    "bell_from_contextual_source_route": "finite_executable_underived",
+    "gr_as_clock_source_limit_route": "reflection_limit_candidate",
+    "shared_holonomy_action_route": "current_hard_wall",
+}
+
+HILBERT_SPACETIME_BRIDGE_RESULTS = (
+    "candidate_map_with_gr_reflection_boundary",
+    "failed",
+)
+
+HILBERT_SPACETIME_FORBIDDEN_UPGRADES = (
+    "does_not_use_GR_as_primitive",
+    "does_not_prove_Hilbert_carrier",
+    "does_not_prove_Bell_correlations_from_spacetime",
+    "does_not_derive_metric_spacetime",
+    "does_not_derive_hbar_I_or_G_I",
+    "does_not_close_full_QM_I",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2739,6 +2771,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_fundamental_unknownness_bridge_grounding(manifest))
     checks.append("fundamental unknownness bridge grounding")
+
+    issues.extend(check_hilbert_spacetime_bridge_grounding(manifest))
+    checks.append("Hilbert spacetime bridge grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -6089,6 +6124,26 @@ def check_fundamental_unknownness_bridge_grounding(manifest: Manifest) -> list[I
                 issues.append(
                     Issue(
                         "fundamental_unknownness_bridge_ref_unresolved",
+                        f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
+                    )
+                )
+    return issues
+
+
+def check_hilbert_spacetime_bridge_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "hilbert_spacetime_bridge_audit":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "hilbert_spacetime_bridge"))
+        for field_name in ("hilbert_refs", "bell_refs", "spacetime_refs", "target_refs"):
+            for field_path, reference in iter_named_string_refs(gate.payload, field_name):
+                if reference in known_refs or research_graph_doc_ref_exists(reference):
+                    continue
+                issues.append(
+                    Issue(
+                        "hilbert_spacetime_bridge_ref_unresolved",
                         f"{gate.identifier}: {field_name} ref {reference!r} at {field_path} is not grounded",
                     )
                 )
@@ -14045,6 +14100,173 @@ def check_fundamental_unknownness_bridge_audit_gate(gate: FiniteGate) -> list[Is
     return []
 
 
+def check_hilbert_spacetime_bridge_audit_gate(gate: FiniteGate) -> list[Issue]:
+    target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
+    if target_scope != HILBERT_SPACETIME_BRIDGE_TARGET_SCOPE:
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_target_mismatch",
+                f"{gate.identifier}: target_scope must be {HILBERT_SPACETIME_BRIDGE_TARGET_SCOPE}",
+            )
+        ]
+    bridge_rule = require_string(gate.payload.get("bridge_rule"), f"{gate.identifier}.bridge_rule")
+    if bridge_rule != HILBERT_SPACETIME_BRIDGE_RULE:
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_rule_mismatch",
+                f"{gate.identifier}: bridge_rule must keep GR below primitive status",
+            )
+        ]
+    primitive_basis = set(
+        require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis")
+    )
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+    constraints = require_list(gate.payload.get("constraints"), f"{gate.identifier}.constraints")
+    seen_constraints: set[str] = set()
+    for index, raw_constraint in enumerate(constraints):
+        constraint = require_mapping(raw_constraint, f"{gate.identifier}.constraints[{index}]")
+        constraint_id = require_string(constraint.get("id"), f"{gate.identifier}.constraints[{index}].id")
+        if constraint_id not in HILBERT_SPACETIME_REQUIRED_CONSTRAINTS:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_unknown_constraint",
+                    f"{gate.identifier}: unknown constraint {constraint_id}",
+                )
+            ]
+        if constraint_id in seen_constraints:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_duplicate_constraint",
+                    f"{gate.identifier}: duplicate constraint {constraint_id}",
+                )
+            ]
+        status = require_string(constraint.get("status"), f"{gate.identifier}.{constraint_id}.status")
+        expected_status = HILBERT_SPACETIME_REQUIRED_CONSTRAINTS[constraint_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_constraint_status_mismatch",
+                    f"{gate.identifier}: {constraint_id} must remain {expected_status}",
+                )
+            ]
+        hilbert_refs = require_string_tuple(
+            constraint.get("hilbert_refs", []),
+            f"{gate.identifier}.{constraint_id}.hilbert_refs",
+        )
+        spacetime_refs = require_string_tuple(
+            constraint.get("spacetime_refs", []),
+            f"{gate.identifier}.{constraint_id}.spacetime_refs",
+        )
+        evidence_refs = require_string_tuple(
+            constraint.get("evidence_refs", []),
+            f"{gate.identifier}.{constraint_id}.evidence_refs",
+        )
+        open_gap = require_string(constraint.get("open_gap"), f"{gate.identifier}.{constraint_id}.open_gap")
+        if not hilbert_refs or not spacetime_refs or not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_constraint_support_missing",
+                    f"{gate.identifier}: {constraint_id} must cite Hilbert, spacetime, evidence refs, and an open gap",
+                )
+            ]
+        seen_constraints.add(constraint_id)
+    missing_constraints = sorted(set(HILBERT_SPACETIME_REQUIRED_CONSTRAINTS) - seen_constraints)
+    if missing_constraints:
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_constraint_missing",
+                f"{gate.identifier}: missing constraints: {', '.join(missing_constraints)}",
+            )
+        ]
+
+    routes = require_list(gate.payload.get("routes"), f"{gate.identifier}.routes")
+    seen_routes: set[str] = set()
+    for index, raw_route in enumerate(routes):
+        route = require_mapping(raw_route, f"{gate.identifier}.routes[{index}]")
+        route_id = require_string(route.get("id"), f"{gate.identifier}.routes[{index}].id")
+        if route_id not in HILBERT_SPACETIME_REQUIRED_ROUTE_STATUS:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_unknown_route",
+                    f"{gate.identifier}: unknown route {route_id}",
+                )
+            ]
+        if route_id in seen_routes:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_duplicate_route",
+                    f"{gate.identifier}: duplicate route {route_id}",
+                )
+            ]
+        status = require_string(route.get("status"), f"{gate.identifier}.{route_id}.status")
+        expected_status = HILBERT_SPACETIME_REQUIRED_ROUTE_STATUS[route_id]
+        if status != expected_status:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_route_status_mismatch",
+                    f"{gate.identifier}: {route_id} must remain {expected_status}",
+                )
+            ]
+        constraint_refs = set(
+            require_string_tuple(route.get("constraint_refs", []), f"{gate.identifier}.{route_id}.constraint_refs")
+        )
+        target_refs = require_string_tuple(route.get("target_refs", []), f"{gate.identifier}.{route_id}.target_refs")
+        evidence_refs = require_string_tuple(route.get("evidence_refs", []), f"{gate.identifier}.{route_id}.evidence_refs")
+        open_gap = require_string(route.get("open_gap"), f"{gate.identifier}.{route_id}.open_gap")
+        if not constraint_refs or not target_refs or not evidence_refs or not open_gap:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_route_support_missing",
+                    f"{gate.identifier}: {route_id} must cite constraints, targets, evidence, and an open gap",
+                )
+            ]
+        unknown_constraint_refs = sorted(constraint_refs - set(HILBERT_SPACETIME_REQUIRED_CONSTRAINTS))
+        if unknown_constraint_refs:
+            return [
+                Issue(
+                    "hilbert_spacetime_bridge_route_constraint_unknown",
+                    f"{gate.identifier}: {route_id} cites unknown constraints: {', '.join(unknown_constraint_refs)}",
+                )
+            ]
+        seen_routes.add(route_id)
+    missing_routes = sorted(set(HILBERT_SPACETIME_REQUIRED_ROUTE_STATUS) - seen_routes)
+    if missing_routes:
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_route_missing",
+                f"{gate.identifier}: missing routes: {', '.join(missing_routes)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_bridge_status"), f"{gate.identifier}.expected_bridge_status")
+    if expected_status not in HILBERT_SPACETIME_BRIDGE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_bridge_status is unknown")
+    if expected_status != "candidate_map_with_gr_reflection_boundary":
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_status_mismatch",
+                f"{gate.identifier}: bridge must remain a candidate map with GR as reflection boundary",
+            )
+        ]
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(HILBERT_SPACETIME_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "hilbert_spacetime_bridge_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must block Hilbert/Bell/GR overclaim",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -19873,6 +20095,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "facticizable_distinguishability_closure_frontier": check_facticizable_distinguishability_closure_frontier_gate,
     "qm_wall_probe": check_qm_wall_probe_gate,
     "fundamental_unknownness_bridge_audit": check_fundamental_unknownness_bridge_audit_gate,
+    "hilbert_spacetime_bridge_audit": check_hilbert_spacetime_bridge_audit_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,

@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.24.0`
+Current version: `v6.25.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -814,6 +814,12 @@ source-clock response, residual holdout discipline, composition witness
 exhaustion, and scale-anchor independence. The strongest live hint is the
 shared action-scale/holonomy/source route, but it remains a candidate bridge
 map; it does not derive Hilbert space, Bell correlations, `hbar_I`, or `G_I`.
+The `hilbert_spacetime_bridge_audit_demo` now sharpens that search with an
+explicit GR-reflection boundary. It records the hypothesis that Hilbert carrier
+structure, Bell contextual correlations, and spacetime geometry may be readout
+projections of a deeper clock-context-source/holonomy layer. The gate forbids
+using GR as a primitive foundation and keeps Hilbert, Bell derivation, metric
+spacetime, `hbar_I`, `G_I`, and full QM open or blocked as declared.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are

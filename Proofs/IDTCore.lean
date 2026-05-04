@@ -330,6 +330,7 @@ def registryWitnesses : List RegistryWitness :=
       "geometry_response_no_gravity_anchor",
       "gpt_principle_separator",
       "hbar_known_gate_holdout",
+      "hilbert_spacetime_bridge_audit",
       "holonomy_selector_class_registry",
       "holonomy_selector_no_calibrated_input",
       "holonomy_selector_status",
@@ -482,9 +483,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 233,
-    expectedDigest := "ae9742c91dd28acd4c4f94f6d63e4fcfda2147a547841ba7a49e2cd7d53d562c",
-    computedDigest := "ae9742c91dd28acd4c4f94f6d63e4fcfda2147a547841ba7a49e2cd7d53d562c"
+    expectedCount := 234,
+    expectedDigest := "ad8a1dc48438b74ad28e0f62217330e4402513afac99ac590640cc47dff1e795",
+    computedDigest := "ad8a1dc48438b74ad28e0f62217330e4402513afac99ac590640cc47dff1e795"
   },
   {
     id := "finite_primitive_sort_vocabulary",

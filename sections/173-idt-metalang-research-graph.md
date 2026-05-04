@@ -679,7 +679,52 @@ Status:
 
 `fundamental_unknownness_bridge_audit_added`
 
-### 173.14. Proof Verification Ledger
+### 173.14. Hilbert Spacetime Bridge Audit
+
+The stronger bridge hypothesis is now explicit as:
+
+`hilbert_spacetime_bridge_audit_demo`
+
+The rule is:
+
+```text
+gr_may_only_enter_as_reflection_or_limit_not_as_foundation
+```
+
+The audit treats Hilbert carrier structure, Bell contextual correlations, and
+spacetime geometry as possible readout projections of a deeper
+clock-context-source/holonomy layer. It does not allow GR, metric geometry, or
+known spacetime structure to be used as primitive input.
+
+The current constraints are:
+
+```text
+gr_reflection_not_primitive
+clock_context_pregeometry
+holonomy_curvature_phase_commonality
+bell_no_global_spacetime_fact_table
+hilbert_locality_from_composite_witnesses
+```
+
+The current route map is:
+
+```text
+hilbert_from_pregeometric_context_route -> candidate_route
+bell_from_contextual_source_route -> finite_executable_underived
+gr_as_clock_source_limit_route -> reflection_limit_candidate
+shared_holonomy_action_route -> current_hard_wall
+```
+
+This is a disciplined version of the conjecture that Hilbert and spacetime are
+tightly related. The committed boundary is equally important: this does not
+derive Hilbert space, Bell correlations from primitives, metric spacetime,
+`hbar_I`, `G_I`, or full QM.
+
+Status:
+
+`hilbert_spacetime_bridge_audit_added`
+
+### 173.15. Proof Verification Ledger
 
 The word `formal_proof` is now gated by an executable proof ledger and a
 generated Lean finite-core semantic artifact.

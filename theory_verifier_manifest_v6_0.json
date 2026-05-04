@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.24.0",
+  "theory_version": "v6.25.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4968,8 +4968,8 @@
     },
     {
       "expected_component_status": "formal_proof",
-      "expected_gate_type_count": 233,
-      "expected_gate_type_digest": "ae9742c91dd28acd4c4f94f6d63e4fcfda2147a547841ba7a49e2cd7d53d562c",
+      "expected_gate_type_count": 234,
+      "expected_gate_type_digest": "ad8a1dc48438b74ad28e0f62217330e4402513afac99ac590640cc47dff1e795",
       "id": "idt_core_gate_type_registry_audit_demo",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
       "type": "idt_core_gate_type_registry_audit"
@@ -8529,6 +8529,206 @@
       ],
       "target_scope": "qm_gravity_bridge_search",
       "type": "fundamental_unknownness_bridge_audit"
+    },
+    {
+      "bridge_rule": "gr_may_only_enter_as_reflection_or_limit_not_as_foundation",
+      "constraints": [
+        {
+          "bell_refs": [
+            "bell_chsh_table_demo"
+          ],
+          "evidence_refs": [
+            "fundamental_unknownness_bridge_audit_demo",
+            "foundation_import_boundary_audit_demo"
+          ],
+          "hilbert_refs": [
+            "hilbert_carrier_derivation",
+            "universal_carrier_selection_theorem"
+          ],
+          "id": "gr_reflection_not_primitive",
+          "open_gap": "GR is not allowed as a primitive derivation source.",
+          "spacetime_refs": [
+            "weak_field_clock_calculator_I",
+            "ppn_no_slip_validation_I"
+          ],
+          "statement": "Metric/GR structure may only enter as a readout or limit of deeper clock-source structure.",
+          "status": "candidate_constraint"
+        },
+        {
+          "bell_refs": [
+            "spin_bell_angle_model_demo"
+          ],
+          "evidence_refs": [
+            "primitive_tick_clock_count_demo",
+            "facticizable_distinguishability_closure_frontier_demo"
+          ],
+          "hilbert_refs": [
+            "idt_primitive_core_contract_demo",
+            "context_product_exhaustion_demo"
+          ],
+          "id": "clock_context_pregeometry",
+          "open_gap": "Pregeometry is a candidate route, not a derived spacetime theory.",
+          "spacetime_refs": [
+            "primitive_tick_clock_count_demo",
+            "clock_vacuum_pole_candidate_demo"
+          ],
+          "statement": "Clock/context relations are treated as prior to metric geometry in the bridge search.",
+          "status": "candidate_constraint"
+        },
+        {
+          "bell_refs": [
+            "bell_chsh_from_amplitudes_demo"
+          ],
+          "evidence_refs": [
+            "holonomy_selector_class_registry_demo",
+            "phase_branch_no_postfit_demo"
+          ],
+          "hilbert_refs": [
+            "phase_cost_from_kernel_holonomy_demo",
+            "ab_holonomy_phase_demo"
+          ],
+          "id": "holonomy_curvature_phase_commonality",
+          "open_gap": "Holonomy commonality does not select complex Hilbert space.",
+          "spacetime_refs": [
+            "non_exact_holonomy_source_demo",
+            "cycle_holonomy_composition_demo"
+          ],
+          "statement": "Holonomy may be the common finite witness form behind phase and curvature readouts.",
+          "status": "candidate_constraint"
+        },
+        {
+          "bell_refs": [
+            "bell_chsh_table_demo",
+            "spin_bell_angle_model_demo"
+          ],
+          "evidence_refs": [
+            "bell_chsh_from_amplitudes_demo",
+            "ks_contextuality_obstruction_demo"
+          ],
+          "hilbert_refs": [
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "id": "bell_no_global_spacetime_fact_table",
+          "open_gap": "Bell correlations are finite-executable but not derived from spacetime primitives.",
+          "spacetime_refs": [
+            "source_response_packet_universality_demo",
+            "fundamental_unknownness_bridge_audit_demo"
+          ],
+          "statement": "Bell is treated as contextual-source/readout obstruction, not as superluminal spacetime mechanism.",
+          "status": "finite_executable_underived"
+        },
+        {
+          "bell_refs": [
+            "bell_chsh_from_amplitudes_demo"
+          ],
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "source_stress_packet_closure_I"
+          ],
+          "hilbert_refs": [
+            "context_product_exhaustion_implies_local_tomography",
+            "hilbert_carrier_derivation"
+          ],
+          "id": "hilbert_locality_from_composite_witnesses",
+          "open_gap": "Composite witness exhaustion is conditional and still does not select Hilbert.",
+          "spacetime_refs": [
+            "source_stress_packet_closure_I",
+            "geometry_response_factor_closure_I"
+          ],
+          "statement": "Hilbert-like locality must come from composite witness exhaustion, not metric locality import.",
+          "status": "candidate_route"
+        }
+      ],
+      "expected_bridge_status": "candidate_map_with_gr_reflection_boundary",
+      "forbidden_upgrades": [
+        "does_not_use_GR_as_primitive",
+        "does_not_prove_Hilbert_carrier",
+        "does_not_prove_Bell_correlations_from_spacetime",
+        "does_not_derive_metric_spacetime",
+        "does_not_derive_hbar_I_or_G_I",
+        "does_not_close_full_QM_I"
+      ],
+      "id": "hilbert_spacetime_bridge_audit_demo",
+      "primitive_basis": [
+        "history_space",
+        "event_algebra",
+        "readout_context_family",
+        "inheritance_act_family"
+      ],
+      "routes": [
+        {
+          "constraint_refs": [
+            "clock_context_pregeometry",
+            "hilbert_locality_from_composite_witnesses"
+          ],
+          "evidence_refs": [
+            "qm_wall_probe_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "id": "hilbert_from_pregeometric_context_route",
+          "open_gap": "Candidate route only; Hilbert remains blocked.",
+          "status": "candidate_route",
+          "target_refs": [
+            "hilbert_carrier_derivation",
+            "universal_carrier_selection_theorem"
+          ]
+        },
+        {
+          "constraint_refs": [
+            "bell_no_global_spacetime_fact_table",
+            "holonomy_curvature_phase_commonality"
+          ],
+          "evidence_refs": [
+            "bell_chsh_from_amplitudes_demo",
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "id": "bell_from_contextual_source_route",
+          "open_gap": "Bell tables are executable but not derived from source/spacetime primitives.",
+          "status": "finite_executable_underived",
+          "target_refs": [
+            "bell_chsh_table_demo",
+            "bell_chsh_from_amplitudes_demo",
+            "spin_bell_angle_model_demo"
+          ]
+        },
+        {
+          "constraint_refs": [
+            "gr_reflection_not_primitive",
+            "clock_context_pregeometry"
+          ],
+          "evidence_refs": [
+            "source_response_charge_normalization_demo",
+            "ppn_gamma_no_slip_demo"
+          ],
+          "id": "gr_as_clock_source_limit_route",
+          "open_gap": "GR remains a reflection/limit candidate, not a foundation.",
+          "status": "reflection_limit_candidate",
+          "target_refs": [
+            "weak_field_clock_calculator_I",
+            "G_I",
+            "ppn_no_slip_validation_I"
+          ]
+        },
+        {
+          "constraint_refs": [
+            "holonomy_curvature_phase_commonality",
+            "gr_reflection_not_primitive"
+          ],
+          "evidence_refs": [
+            "phase_cost_from_kernel_holonomy_demo",
+            "action_standard_independence_demo"
+          ],
+          "id": "shared_holonomy_action_route",
+          "open_gap": "Shared holonomy/action route is the current hard wall.",
+          "status": "current_hard_wall",
+          "target_refs": [
+            "first_principles_hbar_lock",
+            "joint_action_gravity_anchor_I"
+          ]
+        }
+      ],
+      "target_scope": "hilbert_bell_spacetime_bridge_search",
+      "type": "hilbert_spacetime_bridge_audit"
     },
     {
       "id": "formal_proof_ledger_audit_demo",

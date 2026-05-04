@@ -165,6 +165,11 @@ from theory_verifier.core import (
     FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES,
     FUNDAMENTAL_UNKNOWNNESS_PRINCIPLE_STATUS,
     FUNDAMENTAL_UNKNOWNNESS_REQUIRED_BRIDGE_CANDIDATES,
+    HILBERT_SPACETIME_BRIDGE_RULE,
+    HILBERT_SPACETIME_BRIDGE_TARGET_SCOPE,
+    HILBERT_SPACETIME_FORBIDDEN_UPGRADES,
+    HILBERT_SPACETIME_REQUIRED_CONSTRAINTS,
+    HILBERT_SPACETIME_REQUIRED_ROUTE_STATUS,
     IDT_PRIMITIVE_CORE_ALLOWED_DEPENDENCIES,
     IDT_PRIMITIVE_CORE_FORBIDDEN_REFS,
     IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
@@ -913,6 +918,109 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_bridge_status": "candidate_bridge_map",
             "forbidden_upgrades": list(FUNDAMENTAL_UNKNOWNNESS_FORBIDDEN_UPGRADES),
+        }
+
+    def hilbert_spacetime_bridge_audit_gate(self) -> dict[str, object]:
+        constraint_specs: dict[str, dict[str, object]] = {
+            "gr_reflection_not_primitive": {
+                "statement": "Metric/GR structure may only enter as a readout or limit of deeper clock-source structure.",
+                "hilbert_refs": ["hilbert_carrier_derivation", "universal_carrier_selection_theorem"],
+                "bell_refs": ["bell_chsh_table_demo"],
+                "spacetime_refs": ["weak_field_clock_calculator_I", "ppn_no_slip_validation_I"],
+                "evidence_refs": ["fundamental_unknownness_bridge_audit_demo", "foundation_import_boundary_audit_demo"],
+                "open_gap": "GR is not allowed as a primitive derivation source.",
+            },
+            "clock_context_pregeometry": {
+                "statement": "Clock/context relations are treated as prior to metric geometry in the bridge search.",
+                "hilbert_refs": ["idt_primitive_core_contract_demo", "context_product_exhaustion_demo"],
+                "bell_refs": ["spin_bell_angle_model_demo"],
+                "spacetime_refs": ["primitive_tick_clock_count_demo", "clock_vacuum_pole_candidate_demo"],
+                "evidence_refs": ["primitive_tick_clock_count_demo", "facticizable_distinguishability_closure_frontier_demo"],
+                "open_gap": "Pregeometry is a candidate route, not a derived spacetime theory.",
+            },
+            "holonomy_curvature_phase_commonality": {
+                "statement": "Holonomy may be the common finite witness form behind phase and curvature readouts.",
+                "hilbert_refs": ["phase_cost_from_kernel_holonomy_demo", "ab_holonomy_phase_demo"],
+                "bell_refs": ["bell_chsh_from_amplitudes_demo"],
+                "spacetime_refs": ["non_exact_holonomy_source_demo", "cycle_holonomy_composition_demo"],
+                "evidence_refs": ["holonomy_selector_class_registry_demo", "phase_branch_no_postfit_demo"],
+                "open_gap": "Holonomy commonality does not select complex Hilbert space.",
+            },
+            "bell_no_global_spacetime_fact_table": {
+                "statement": "Bell is treated as contextual-source/readout obstruction, not as superluminal spacetime mechanism.",
+                "hilbert_refs": ["bounded_correlation_screen_rejects_superquantum_boxes"],
+                "bell_refs": ["bell_chsh_table_demo", "spin_bell_angle_model_demo"],
+                "spacetime_refs": ["source_response_packet_universality_demo", "fundamental_unknownness_bridge_audit_demo"],
+                "evidence_refs": ["bell_chsh_from_amplitudes_demo", "ks_contextuality_obstruction_demo"],
+                "open_gap": "Bell correlations are finite-executable but not derived from spacetime primitives.",
+            },
+            "hilbert_locality_from_composite_witnesses": {
+                "statement": "Hilbert-like locality must come from composite witness exhaustion, not metric locality import.",
+                "hilbert_refs": ["context_product_exhaustion_implies_local_tomography", "hilbert_carrier_derivation"],
+                "bell_refs": ["bell_chsh_from_amplitudes_demo"],
+                "spacetime_refs": ["source_stress_packet_closure_I", "geometry_response_factor_closure_I"],
+                "evidence_refs": ["context_product_exhaustion_demo", "source_stress_packet_closure_I"],
+                "open_gap": "Composite witness exhaustion is conditional and still does not select Hilbert.",
+            },
+        }
+        route_specs: dict[str, dict[str, object]] = {
+            "hilbert_from_pregeometric_context_route": {
+                "constraint_refs": ["clock_context_pregeometry", "hilbert_locality_from_composite_witnesses"],
+                "target_refs": ["hilbert_carrier_derivation", "universal_carrier_selection_theorem"],
+                "evidence_refs": ["qm_wall_probe_demo", "context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "Candidate route only; Hilbert remains blocked.",
+            },
+            "bell_from_contextual_source_route": {
+                "constraint_refs": ["bell_no_global_spacetime_fact_table", "holonomy_curvature_phase_commonality"],
+                "target_refs": ["bell_chsh_table_demo", "bell_chsh_from_amplitudes_demo", "spin_bell_angle_model_demo"],
+                "evidence_refs": ["bell_chsh_from_amplitudes_demo", "bounded_correlation_screen_rejects_superquantum_boxes"],
+                "open_gap": "Bell tables are executable but not derived from source/spacetime primitives.",
+            },
+            "gr_as_clock_source_limit_route": {
+                "constraint_refs": ["gr_reflection_not_primitive", "source_clock_response", "clock_context_pregeometry"],
+                "target_refs": ["weak_field_clock_calculator_I", "G_I", "ppn_no_slip_validation_I"],
+                "evidence_refs": ["source_response_charge_normalization_demo", "ppn_gamma_no_slip_demo"],
+                "open_gap": "GR remains a reflection/limit candidate, not a foundation.",
+            },
+            "shared_holonomy_action_route": {
+                "constraint_refs": ["holonomy_curvature_phase_commonality", "gr_reflection_not_primitive"],
+                "target_refs": ["first_principles_hbar_lock", "joint_action_gravity_anchor_I"],
+                "evidence_refs": ["phase_cost_from_kernel_holonomy_demo", "action_standard_independence_demo"],
+                "open_gap": "Shared holonomy/action route is the current hard wall.",
+            },
+        }
+        return {
+            "id": "test_hilbert_spacetime_bridge_audit",
+            "type": "hilbert_spacetime_bridge_audit",
+            "target_scope": HILBERT_SPACETIME_BRIDGE_TARGET_SCOPE,
+            "bridge_rule": HILBERT_SPACETIME_BRIDGE_RULE,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "constraints": [
+                {
+                    "id": constraint_id,
+                    "statement": spec["statement"],
+                    "status": HILBERT_SPACETIME_REQUIRED_CONSTRAINTS[constraint_id],
+                    "hilbert_refs": spec["hilbert_refs"],
+                    "bell_refs": spec["bell_refs"],
+                    "spacetime_refs": spec["spacetime_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for constraint_id, spec in constraint_specs.items()
+            ],
+            "routes": [
+                {
+                    "id": route_id,
+                    "status": HILBERT_SPACETIME_REQUIRED_ROUTE_STATUS[route_id],
+                    "constraint_refs": spec["constraint_refs"],
+                    "target_refs": spec["target_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "open_gap": spec["open_gap"],
+                }
+                for route_id, spec in route_specs.items()
+            ],
+            "expected_bridge_status": "candidate_map_with_gr_reflection_boundary",
+            "forbidden_upgrades": list(HILBERT_SPACETIME_FORBIDDEN_UPGRADES),
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -7865,6 +7973,57 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"fundamental_unknownness_bridge_ref_unresolved"})
+
+    def test_hilbert_spacetime_bridge_rejects_gr_foundation_rule_drift(self) -> None:
+        gate = self.hilbert_spacetime_bridge_audit_gate()
+        gate["bridge_rule"] = "GR_is_foundation"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"hilbert_spacetime_bridge_rule_mismatch"})
+
+    def test_hilbert_spacetime_bridge_rejects_hilbert_route_upgrade(self) -> None:
+        gate = self.hilbert_spacetime_bridge_audit_gate()
+        routes = gate["routes"]
+        if not isinstance(routes, list):
+            self.fail("routes must be a list")
+        first_route = routes[0]
+        if not isinstance(first_route, dict):
+            self.fail("route must be a mapping")
+        first_route["status"] = "formal_proof"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"hilbert_spacetime_bridge_route_status_mismatch"})
+
+    def test_hilbert_spacetime_bridge_grounding_rejects_unknown_bell_ref(self) -> None:
+        gate = self.hilbert_spacetime_bridge_audit_gate()
+        constraints = gate["constraints"]
+        if not isinstance(constraints, list):
+            self.fail("constraints must be a list")
+        first_constraint = constraints[0]
+        if not isinstance(first_constraint, dict):
+            self.fail("constraint must be a mapping")
+        first_constraint["bell_refs"] = ["missing_bell_ref"]
+        raw_manifest = json.loads((ROOT / "theory_verifier_manifest_v6_0.json").read_text(encoding="utf-8"))
+        raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], gate]
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"hilbert_spacetime_bridge_ref_unresolved"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(

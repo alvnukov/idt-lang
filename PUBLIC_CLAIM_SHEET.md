@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.24.0`.
+Current theory version: `v6.25.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -89,7 +89,12 @@ The main current successes are bounded and methodological:
    The candidate routes to Hilbert carrier, Bell contextual correlations,
    gravity clock/source structure, and shared action scale remain search
    routes, not proof upgrades.
-12. The proof-verification boundary is executable. Current `formal_proof`
+12. A Hilbert/spacetime bridge audit is executable. It records the hypothesis
+   that Hilbert carrier structure, Bell contextual correlations, and spacetime
+   geometry may be different readout projections of a deeper
+   clock-context-source/holonomy layer. It also enforces the boundary that GR is
+   treated only as a reflection or limit candidate, not as a primitive source.
+13. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized

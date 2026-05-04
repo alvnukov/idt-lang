@@ -83,6 +83,10 @@ Current auditable results:
   bridge principles and four route candidates, including possible Hilbert and
   Bell routes, while preserving the status that Hilbert, Bell derivation, and
   shared action scale are not closed.
+- Hilbert/spacetime bridge audit: the possible Hilbert/Bell/gravity connection
+  is now tracked with an explicit GR-reflection boundary. Metric/GR structure
+  may only enter as a readout or limit candidate of deeper clock-source-context
+  structure, not as a primitive foundation.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first
