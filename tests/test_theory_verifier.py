@@ -45,6 +45,7 @@ from theory_verifier.core import (
     UNIFORM_WITNESS_BOUND_ROUTE_FAMILIES,
     UNIFORM_WITNESS_BOUND_ROUTE_FORBIDDEN_UPGRADES,
     IDT_CORE_FINITE_SIGNATURE_COMPONENTS,
+    IDT_CORE_GRAMMAR_ASSUMPTION_COMPONENTS,
     GENERIC_GPT_THEOREM_ASSUMPTIONS,
     GENERIC_GPT_THEOREM_CONCLUSIONS,
     GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
@@ -3751,6 +3752,36 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_core_finite_signature_frontier_status_mismatch"})
+
+    def test_idt_core_grammar_assumption_frontier_reports_conditional_basis(self) -> None:
+        target_assumption = "bounded_context_arity"
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "stale_idt_core_grammar_assumption_frontier",
+                        "type": "idt_core_grammar_assumption_frontier",
+                        "target_assumption": target_assumption,
+                        "components": [
+                            {
+                                "id": component,
+                                "status": "conditional_support",
+                                "evidence_refs": ["uniform_witness_bound_route_demo"],
+                                "open_gap": "conditional component, not formal proof",
+                            }
+                            for component in IDT_CORE_GRAMMAR_ASSUMPTION_COMPONENTS[target_assumption]
+                        ],
+                        "expected_assumption_status": "open",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_grammar_assumption_frontier_status_mismatch"})
 
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(

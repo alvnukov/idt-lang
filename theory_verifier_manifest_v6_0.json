@@ -4855,31 +4855,34 @@
           "id": "bounded_context_arity",
           "status": "conditional_support",
           "evidence_refs": [
+            "idt_core_bounded_arity_frontier_demo",
             "uniform_witness_bound_route_demo",
             "context_product_exhaustion_demo",
             "tomographic_state_effect_duality_theorem_demo"
           ],
-          "open_gap": "Bounded arity is witnessed by registered finite route families but not yet derived as a global IDT grammar theorem."
+          "open_gap": "Bounded context arity now has an executable IDT-Core arity frontier at conditional_basis, but its components are not formal IDT-Core grammar theorems."
         },
         {
           "id": "finite_route_generator_basis",
           "status": "conditional_support",
           "evidence_refs": [
+            "idt_core_route_generator_basis_frontier_demo",
             "uniform_witness_bound_route_demo",
             "qm_core_recompile_route_demo",
             "idt_metalang_research_graph_contract_demo"
           ],
-          "open_gap": "The finite route generator basis is recorded by executable route families but not yet promoted to a formal IDT-Core basis theorem."
+          "open_gap": "Finite route generator basis now has an executable IDT-Core generator frontier at conditional_basis, but its components are not formal IDT-Core basis theorems."
         },
         {
           "id": "no_new_primitive_effects_under_route_closure",
           "status": "conditional_support",
           "evidence_refs": [
+            "idt_core_no_new_primitive_effects_frontier_demo",
             "uniform_witness_bound_route_demo",
             "no_emergent_joint_only_invariant_route_demo",
             "nonfinite_gpt_residual_frontier_demo"
           ],
-          "open_gap": "No-new-primitive-effects closure is conditionally supported by the residual frontier, but it is not yet a formal closure theorem over the whole IDT grammar."
+          "open_gap": "No-new-primitive-effects closure now has an executable IDT-Core closure frontier at conditional_basis, but its components are not formal IDT-Core closure theorems."
         }
       ],
       "expected_frontier_status": "conditional_basis"
@@ -4929,6 +4932,138 @@
         }
       ],
       "expected_signature_status": "conditional_signature"
+    },
+    {
+      "id": "idt_core_bounded_arity_frontier_demo",
+      "type": "idt_core_grammar_assumption_frontier",
+      "target_assumption": "bounded_context_arity",
+      "components": [
+        {
+          "id": "context_product_arity_bound",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "open_gap": "Context-product arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+        },
+        {
+          "id": "state_effect_witness_arity_bound",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "tomographic_state_effect_duality_theorem_demo",
+            "route_witness_completeness_implies_tomographic_state_effect_duality"
+          ],
+          "open_gap": "State-effect witness arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+        },
+        {
+          "id": "recoverable_filter_arity_bound",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "reversible_filter_closure_theorem_demo",
+            "recoverable_support_update_implies_reversible_filter_closure"
+          ],
+          "open_gap": "Recoverable filter arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+        },
+        {
+          "id": "bounded_correlation_arity_bound",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "bounded_correlation_screen_theorem_demo",
+            "bounded_correlation_screen_rejects_superquantum_boxes"
+          ],
+          "open_gap": "Bounded-correlation arity is bounded in the registered route, but not yet a global IDT-Core arity theorem."
+        }
+      ],
+      "expected_assumption_status": "conditional_basis"
+    },
+    {
+      "id": "idt_core_route_generator_basis_frontier_demo",
+      "type": "idt_core_grammar_assumption_frontier",
+      "target_assumption": "finite_route_generator_basis",
+      "components": [
+        {
+          "id": "context_product_generators",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "context_product_exhaustion_demo",
+            "uniform_witness_bound_route_demo"
+          ],
+          "open_gap": "Context-product generators are registered, but not yet a formal IDT-Core basis theorem."
+        },
+        {
+          "id": "state_effect_generators",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "tomographic_state_effect_duality_theorem_demo",
+            "uniform_witness_bound_route_demo"
+          ],
+          "open_gap": "State-effect generators are registered, but not yet a formal IDT-Core basis theorem."
+        },
+        {
+          "id": "recoverable_filter_generators",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "reversible_filter_closure_theorem_demo",
+            "uniform_witness_bound_route_demo"
+          ],
+          "open_gap": "Recoverable-filter generators are registered, but not yet a formal IDT-Core basis theorem."
+        },
+        {
+          "id": "bounded_correlation_generators",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "bounded_correlation_screen_theorem_demo",
+            "uniform_witness_bound_route_demo"
+          ],
+          "open_gap": "Bounded-correlation generators are registered, but not yet a formal IDT-Core basis theorem."
+        }
+      ],
+      "expected_assumption_status": "conditional_basis"
+    },
+    {
+      "id": "idt_core_no_new_primitive_effects_frontier_demo",
+      "type": "idt_core_grammar_assumption_frontier",
+      "target_assumption": "no_new_primitive_effects_under_route_closure",
+      "components": [
+        {
+          "id": "finite_effect_registry",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "idt_core_finite_signature_frontier_demo",
+            "uniform_witness_bound_assumption_frontier_demo"
+          ],
+          "open_gap": "The effect registry is finite under the current signature frontier, but not yet a formal IDT-Core closure theorem."
+        },
+        {
+          "id": "route_closure_effect_audit",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "uniform_witness_bound_route_demo",
+            "nonfinite_gpt_residual_frontier_demo"
+          ],
+          "open_gap": "Route closure is audited by residual gates, but not yet a formal no-new-effects theorem."
+        },
+        {
+          "id": "joint_only_invariant_rejection",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "no_emergent_joint_only_invariant_route_demo",
+            "no_emergent_joint_only_invariants_under_context_product_exhaustion"
+          ],
+          "open_gap": "Joint-only invariant rejection is conditional, not yet a formal global IDT-Core theorem."
+        },
+        {
+          "id": "residual_frontier_no_new_effect_boundary",
+          "status": "conditional_support",
+          "evidence_refs": [
+            "nonfinite_gpt_residual_frontier_demo",
+            "broader_generic_gpt_cone_frontier_demo"
+          ],
+          "open_gap": "Residual frontier boundaries prevent overclaiming, but are not yet formal closure proofs."
+        }
+      ],
+      "expected_assumption_status": "conditional_basis"
     },
     {
       "id": "idt_bounded_correlation_demo",

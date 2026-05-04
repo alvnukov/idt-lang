@@ -674,6 +674,10 @@ and no-new-primitive-effects closure are at `conditional_basis`, not
 The `idt_core_finite_signature_frontier_demo` decomposes the first of those
 assumptions into a conditional IDT-Core signature over primitive sorts, claim
 roles, gate types, and route families.
+The `idt_core_bounded_arity_frontier_demo`,
+`idt_core_route_generator_basis_frontier_demo`, and
+`idt_core_no_new_primitive_effects_frontier_demo` now decompose the remaining
+uniform-witness assumptions into executable conditional-basis frontiers.
 The `no_emergent_joint_only_invariants_under_context_product_exhaustion`
 theorem card and `no_emergent_joint_only_invariant_route_demo` now reduce the
 joint-only-invariant obstruction to a conditional separator under

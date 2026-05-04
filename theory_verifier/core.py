@@ -414,6 +414,39 @@ IDT_CORE_FINITE_SIGNATURE_RESULTS = (
     "formalized",
 )
 
+IDT_CORE_GRAMMAR_ASSUMPTION_COMPONENTS: dict[str, tuple[str, ...]] = {
+    "bounded_context_arity": (
+        "context_product_arity_bound",
+        "state_effect_witness_arity_bound",
+        "recoverable_filter_arity_bound",
+        "bounded_correlation_arity_bound",
+    ),
+    "finite_route_generator_basis": (
+        "context_product_generators",
+        "state_effect_generators",
+        "recoverable_filter_generators",
+        "bounded_correlation_generators",
+    ),
+    "no_new_primitive_effects_under_route_closure": (
+        "finite_effect_registry",
+        "route_closure_effect_audit",
+        "joint_only_invariant_rejection",
+        "residual_frontier_no_new_effect_boundary",
+    ),
+}
+
+IDT_CORE_GRAMMAR_ASSUMPTION_STATUSES = (
+    "open",
+    "conditional_support",
+    "formal_proof",
+)
+
+IDT_CORE_GRAMMAR_ASSUMPTION_RESULTS = (
+    "open",
+    "conditional_basis",
+    "formalized",
+)
+
 TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -7808,6 +7841,98 @@ def check_idt_core_finite_signature_frontier_gate(gate: FiniteGate) -> list[Issu
         return [
             Issue(
                 "idt_core_finite_signature_frontier_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_idt_core_grammar_assumption_frontier_gate(gate: FiniteGate) -> list[Issue]:
+    target_assumption = require_string(gate.payload.get("target_assumption"), f"{gate.identifier}.target_assumption")
+    expected_components = IDT_CORE_GRAMMAR_ASSUMPTION_COMPONENTS.get(target_assumption)
+    if expected_components is None:
+        return [
+            Issue(
+                "idt_core_grammar_assumption_frontier_target_mismatch",
+                f"{gate.identifier}: unsupported target assumption {target_assumption}",
+            )
+        ]
+
+    components = require_list(gate.payload.get("components"), f"{gate.identifier}.components")
+    if len(components) != len(expected_components):
+        raise ManifestError(f"{gate.identifier}: components must cover every IDT-Core grammar assumption component")
+
+    status_by_component: dict[str, str] = {}
+    for index, item in enumerate(components):
+        component = require_mapping(item, f"{gate.identifier}.components[{index}]")
+        component_id = require_string(component.get("id"), f"{gate.identifier}.components[{index}].id")
+        status = require_string(component.get("status"), f"{gate.identifier}.components[{index}].status")
+        evidence_refs = require_string_tuple(
+            component.get("evidence_refs", []),
+            f"{gate.identifier}.components[{index}].evidence_refs",
+        )
+        open_gap = require_string(component.get("open_gap", ""), f"{gate.identifier}.components[{index}].open_gap")
+        if component_id not in expected_components:
+            return [
+                Issue(
+                    "idt_core_grammar_assumption_frontier_unknown_component",
+                    f"{gate.identifier}: unknown component {component_id} for {target_assumption}",
+                )
+            ]
+        if status not in IDT_CORE_GRAMMAR_ASSUMPTION_STATUSES:
+            raise ManifestError(f"{gate.identifier}: component {component_id} has unknown status {status!r}")
+        if component_id in status_by_component:
+            return [
+                Issue(
+                    "idt_core_grammar_assumption_frontier_duplicate_component",
+                    f"{gate.identifier}: duplicate component {component_id}",
+                )
+            ]
+        if not evidence_refs:
+            return [
+                Issue(
+                    "idt_core_grammar_assumption_frontier_evidence_missing",
+                    f"{gate.identifier}: component {component_id} must cite evidence",
+                )
+            ]
+        if status != "formal_proof" and not open_gap:
+            return [
+                Issue(
+                    "idt_core_grammar_assumption_frontier_gap_missing",
+                    f"{gate.identifier}: non-formal component {component_id} must declare an open gap",
+                )
+            ]
+        if status == "formal_proof" and open_gap:
+            return [
+                Issue(
+                    "idt_core_grammar_assumption_frontier_gap_on_formal_component",
+                    f"{gate.identifier}: formal component {component_id} must not declare an open gap",
+                )
+            ]
+        status_by_component[component_id] = status
+
+    missing = sorted(set(expected_components) - set(status_by_component))
+    if missing:
+        return [
+            Issue(
+                "idt_core_grammar_assumption_frontier_component_missing",
+                f"{gate.identifier}: missing components: {', '.join(missing)}",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_assumption_status"), f"{gate.identifier}.expected_assumption_status")
+    if expected_status not in IDT_CORE_GRAMMAR_ASSUMPTION_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_assumption_status is unknown")
+    if all(status == "formal_proof" for status in status_by_component.values()):
+        computed_status = "formalized"
+    elif all(status in {"conditional_support", "formal_proof"} for status in status_by_component.values()):
+        computed_status = "conditional_basis"
+    else:
+        computed_status = "open"
+    if computed_status != expected_status:
+        return [
+            Issue(
+                "idt_core_grammar_assumption_frontier_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
@@ -16561,6 +16686,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "uniform_witness_bound_route": check_uniform_witness_bound_route_gate,
     "uniform_witness_bound_assumption_frontier": check_uniform_witness_bound_assumption_frontier_gate,
     "idt_core_finite_signature_frontier": check_idt_core_finite_signature_frontier_gate,
+    "idt_core_grammar_assumption_frontier": check_idt_core_grammar_assumption_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,
