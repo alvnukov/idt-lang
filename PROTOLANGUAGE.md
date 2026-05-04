@@ -663,6 +663,10 @@ card and `nonfinite_gpt_residual_frontier_demo` now turn that residual into
 explicit proof obligations: derive a uniform finite route-witness bound and
 exclude emergent joint-only invariants from IDT primitives, or keep universal
 carrier selection open.
+The `no_emergent_joint_only_invariants_under_context_product_exhaustion`
+theorem card and `no_emergent_joint_only_invariant_route_demo` now reduce the
+joint-only-invariant obstruction to a conditional separator under
+context-product exhaustion; the uniform witness-bound derivation remains open.
 The `route_closed_gpt_subtheory_frontier_demo` now splits the route-closed GPT
 blocker into two proof obligations: tomographic state-effect duality and
 reversible filter closure.

@@ -338,6 +338,25 @@ NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES = (
     "does_not_close_nonfinite_generic_gpt_residual_without_IDT_derivations",
 )
 
+NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS = (
+    "context_product_exhaustion",
+    "product_effect_separation",
+    "stable_invariant_witness_completeness",
+    "facticized_readout_closure",
+)
+
+NO_EMERGENT_JOINT_ONLY_INVARIANT_CONCLUSIONS = (
+    "joint_only_invariant_requires_product_witness",
+    "unwitnessed_joint_only_invariant_rejected",
+)
+
+NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES = (
+    "does_not_prove_universal_carrier_selection",
+    "does_not_prove_full_QM_I",
+    "does_not_derive_Hilbert_carrier",
+    "does_not_close_uniform_witness_bound",
+)
+
 TOMOGRAPHIC_STATE_EFFECT_DUALITY_THEOREM_ASSUMPTIONS = (
     "finite_route_witness_completeness",
     "no_unwitnessed_effect_cone_degrees",
@@ -1944,6 +1963,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
     issues.extend(check_nonfinite_gpt_residual_theorem_grounding(manifest))
     checks.append("nonfinite GPT residual theorem grounding")
 
+    issues.extend(check_no_emergent_joint_only_invariant_theorem_grounding(manifest))
+    checks.append("no-emergent joint-only invariant theorem grounding")
+
     issues.extend(check_born_readout_theorem_grounding(manifest))
     checks.append("Born readout theorem grounding")
 
@@ -3264,6 +3286,62 @@ def check_nonfinite_gpt_residual_theorem_grounding(manifest: Manifest) -> list[I
             Issue(
                 "nonfinite_gpt_residual_theorem_card_forbidden_claim_missing",
                 f"{theorem_card.identifier}: missing residual forbidden upgrades",
+            )
+        )
+    return issues
+
+
+def check_no_emergent_joint_only_invariant_theorem_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    cards_by_id = {card.identifier: card for card in manifest.theorem_cards}
+    theorem_card = cards_by_id.get("no_emergent_joint_only_invariants_under_context_product_exhaustion")
+    if theorem_card is None:
+        return issues
+
+    if theorem_card.proof_status != "conditional_proof":
+        issues.append(
+            Issue(
+                "no_emergent_joint_only_invariant_theorem_card_status_mismatch",
+                (
+                    f"{theorem_card.identifier}: proof_status {theorem_card.proof_status!r} "
+                    "must remain conditional_proof"
+                ),
+            )
+        )
+    required_dependencies = {
+        "no_emergent_joint_only_invariant_route_demo",
+        "context_product_exhaustion_implies_local_tomography",
+        "real_hilbert_composite_hidden_joint_invariant",
+    }
+    if not required_dependencies.issubset(set(theorem_card.dependencies)):
+        missing = sorted(required_dependencies - set(theorem_card.dependencies))
+        issues.append(
+            Issue(
+                "no_emergent_joint_only_invariant_theorem_card_dependency_missing",
+                f"{theorem_card.identifier}: missing dependencies: {', '.join(missing)}",
+            )
+        )
+    missing_refs = [dependency for dependency in theorem_card.dependencies if dependency not in known_refs]
+    if missing_refs:
+        issues.append(
+            Issue(
+                "no_emergent_joint_only_invariant_theorem_card_dependency_unresolved",
+                f"{theorem_card.identifier}: unresolved dependencies: {', '.join(missing_refs)}",
+            )
+        )
+    if not set(NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS).issubset(set(theorem_card.assumptions)):
+        issues.append(
+            Issue(
+                "no_emergent_joint_only_invariant_theorem_card_assumption_missing",
+                f"{theorem_card.identifier}: missing no-emergence assumptions",
+            )
+        )
+    if not set(NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES).issubset(set(theorem_card.forbidden_claims)):
+        issues.append(
+            Issue(
+                "no_emergent_joint_only_invariant_theorem_card_forbidden_claim_missing",
+                f"{theorem_card.identifier}: missing no-emergence forbidden upgrades",
             )
         )
     return issues
@@ -7245,6 +7323,84 @@ def check_nonfinite_gpt_residual_frontier_gate(gate: FiniteGate) -> list[Issue]:
             Issue(
                 "nonfinite_gpt_residual_frontier_status_mismatch",
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
+def check_no_emergent_joint_only_invariant_route_gate(gate: FiniteGate) -> list[Issue]:
+    target_obligation = require_string(gate.payload.get("target_obligation"), f"{gate.identifier}.target_obligation")
+    if target_obligation != "idt_derivation_of_no_emergent_joint_only_invariants":
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_target_mismatch",
+                f"{gate.identifier}: target obligation must be idt_derivation_of_no_emergent_joint_only_invariants",
+            )
+        ]
+
+    assumptions = require_string_tuple(gate.payload.get("assumptions", []), f"{gate.identifier}.assumptions")
+    if set(assumptions) != set(NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS):
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_assumptions_mismatch",
+                f"{gate.identifier}: assumptions must match the no-emergent joint-only invariant boundary",
+            )
+        ]
+
+    conclusions = require_string_tuple(gate.payload.get("conclusions", []), f"{gate.identifier}.conclusions")
+    if set(conclusions) != set(NO_EMERGENT_JOINT_ONLY_INVARIANT_CONCLUSIONS):
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_conclusions_mismatch",
+                f"{gate.identifier}: conclusions must only reject unwitnessed joint-only invariants",
+            )
+        ]
+
+    separator_refs = require_string_tuple(gate.payload.get("separator_refs", []), f"{gate.identifier}.separator_refs")
+    required_separator_refs = {
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "context_product_exhaustion_demo",
+    }
+    if set(separator_refs) != required_separator_refs:
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_separator_refs_mismatch",
+                f"{gate.identifier}: separator refs must ground context-product exhaustion and local tomography",
+            )
+        ]
+
+    rejected_witness_refs = require_string_tuple(
+        gate.payload.get("rejected_witness_refs", []),
+        f"{gate.identifier}.rejected_witness_refs",
+    )
+    required_rejected_witness_refs = {
+        "real_hilbert_composite_hidden_joint_invariant",
+        "real_hilbert_composite_hidden_joint_invariant_demo",
+    }
+    if set(rejected_witness_refs) != required_rejected_witness_refs:
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_rejected_witness_refs_mismatch",
+                f"{gate.identifier}: rejected witness refs must include the rebit hidden joint invariant separator",
+            )
+        ]
+
+    forbidden_upgrades = require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    if set(forbidden_upgrades) != set(NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden upgrades must preserve the residual boundary",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_obligation_status"), f"{gate.identifier}.expected_obligation_status")
+    if expected_status != "conditional_proof":
+        return [
+            Issue(
+                "no_emergent_joint_only_invariant_route_status_mismatch",
+                f"{gate.identifier}: no-emergence route must remain conditional_proof",
             )
         ]
     return []
@@ -15993,6 +16149,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "broader_generic_gpt_cone_frontier": check_broader_generic_gpt_cone_frontier_gate,
     "nonfinite_gpt_residual_compactness": check_nonfinite_gpt_residual_compactness_gate,
     "nonfinite_gpt_residual_frontier": check_nonfinite_gpt_residual_frontier_gate,
+    "no_emergent_joint_only_invariant_route": check_no_emergent_joint_only_invariant_route_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,
     "noncomplex_jordan_separator": check_noncomplex_jordan_separator_gate,

@@ -37,6 +37,9 @@ from theory_verifier.core import (
     NONFINITE_GPT_RESIDUAL_COMPACTNESS_CONCLUSIONS,
     NONFINITE_GPT_RESIDUAL_FORBIDDEN_UPGRADES,
     NONFINITE_GPT_RESIDUAL_FRONTIER_OBLIGATIONS,
+    NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS,
+    NO_EMERGENT_JOINT_ONLY_INVARIANT_CONCLUSIONS,
+    NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES,
     GENERIC_GPT_THEOREM_ASSUMPTIONS,
     GENERIC_GPT_THEOREM_CONCLUSIONS,
     GENERIC_GPT_THEOREM_FORBIDDEN_UPGRADES,
@@ -3559,6 +3562,38 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"nonfinite_gpt_residual_compactness_status_mismatch"})
 
+    def test_no_emergent_joint_only_invariant_route_rejects_formal_status(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_no_emergent_joint_only_route",
+                        "type": "no_emergent_joint_only_invariant_route",
+                        "target_obligation": "idt_derivation_of_no_emergent_joint_only_invariants",
+                        "assumptions": list(NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS),
+                        "conclusions": list(NO_EMERGENT_JOINT_ONLY_INVARIANT_CONCLUSIONS),
+                        "separator_refs": [
+                            "context_product_exhaustion_implies_local_tomography",
+                            "context_product_local_tomography_theorem_demo",
+                            "context_product_exhaustion_demo",
+                        ],
+                        "rejected_witness_refs": [
+                            "real_hilbert_composite_hidden_joint_invariant",
+                            "real_hilbert_composite_hidden_joint_invariant_demo",
+                        ],
+                        "forbidden_upgrades": list(NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES),
+                        "expected_obligation_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"no_emergent_joint_only_invariant_route_status_mismatch"})
+
     def test_idt_purification_filtering_rejects_bad_posterior(self) -> None:
         manifest = parse_manifest(
             {
@@ -4520,6 +4555,36 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"nonfinite_gpt_residual_theorem_card_status_mismatch"})
+
+    def test_no_emergent_joint_only_invariant_theorem_card_stays_conditional(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "theorem_cards": [
+                    {
+                        "id": "no_emergent_joint_only_invariants_under_context_product_exhaustion",
+                        "statement": "no emergent joint-only invariants under context-product exhaustion",
+                        "role": "theorem",
+                        "assumptions": list(NO_EMERGENT_JOINT_ONLY_INVARIANT_ASSUMPTIONS),
+                        "dependencies": [
+                            "no_emergent_joint_only_invariant_route_demo",
+                            "context_product_exhaustion_implies_local_tomography",
+                            "real_hilbert_composite_hidden_joint_invariant",
+                        ],
+                        "proof_status": "formal_proof",
+                        "verifier": "no_emergent_joint_only_invariant_route_demo",
+                        "known_failures": [],
+                        "physical_scope": "test",
+                        "forbidden_claims": list(NO_EMERGENT_JOINT_ONLY_INVARIANT_FORBIDDEN_UPGRADES),
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"no_emergent_joint_only_invariant_theorem_card_status_mismatch"})
 
     def test_context_product_carrier_lemma_rejects_premature_formal_proof(self) -> None:
         manifest = parse_manifest(

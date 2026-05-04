@@ -3163,6 +3163,36 @@
       ]
     },
     {
+      "id": "no_emergent_joint_only_invariants_under_context_product_exhaustion",
+      "statement": "For any finite route-covered composite, if context-product exhaustion, product-effect separation, stable invariant witness completeness, and facticized readout closure hold, then a joint-only invariant must have a product-context witness; an unwitnessed joint-only invariant is rejected rather than admitted as a stable facticizable invariant.",
+      "role": "theorem",
+      "assumptions": [
+        "context_product_exhaustion",
+        "product_effect_separation",
+        "stable_invariant_witness_completeness",
+        "facticized_readout_closure"
+      ],
+      "dependencies": [
+        "no_emergent_joint_only_invariant_route_demo",
+        "context_product_exhaustion_implies_local_tomography",
+        "real_hilbert_composite_hidden_joint_invariant"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "no_emergent_joint_only_invariant_route_demo",
+      "known_failures": [
+        "conditional on context-product exhaustion and product-effect separation",
+        "does not derive a uniform finite route-witness bound",
+        "does not close universal carrier selection"
+      ],
+      "physical_scope": "Finite route-covered composite separator for joint-only invariants under context-product exhaustion.",
+      "forbidden_claims": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_uniform_witness_bound"
+      ]
+    },
+    {
       "id": "route_witness_completeness_implies_tomographic_state_effect_duality",
       "statement": "For a finite route-closed GPT subtheory, if route witnesses are complete, no effect-cone degrees are unwitnessed, a local-tomographic state basis is fixed, and the state-effect witness matrix has full column rank, then effects separate stable state parameters and tomographic state-effect duality holds for that finite route.",
       "role": "theorem",
@@ -4624,7 +4654,9 @@
       "evidence_refs": [
         "broader_generic_gpt_cone_frontier_demo",
         "finite_route_coverage_reduces_broader_generic_gpt_cone",
-        "route_witness_completeness_implies_tomographic_state_effect_duality"
+        "route_witness_completeness_implies_tomographic_state_effect_duality",
+        "no_emergent_joint_only_invariants_under_context_product_exhaustion",
+        "no_emergent_joint_only_invariant_route_demo"
       ],
       "forbidden_upgrades": [
         "does_not_prove_universal_carrier_selection",
@@ -4659,16 +4691,49 @@
         },
         {
           "id": "idt_derivation_of_no_emergent_joint_only_invariants",
-          "status": "open",
+          "status": "conditional_proof",
           "evidence_refs": [
+            "no_emergent_joint_only_invariants_under_context_product_exhaustion",
+            "no_emergent_joint_only_invariant_route_demo",
             "context_product_exhaustion_implies_local_tomography",
             "real_hilbert_composite_hidden_joint_invariant",
             "broader_generic_gpt_cone_frontier_demo"
           ],
-          "open_gap": "IDT has not yet derived a universal exclusion of emergent joint-only invariants beyond the finite witness screen."
+          "open_gap": "The no-emergence route is conditional on context-product exhaustion and product-effect separation; it still does not derive the uniform finite witness bound."
         }
       ],
       "expected_residual_status": "open"
+    },
+    {
+      "id": "no_emergent_joint_only_invariant_route_demo",
+      "type": "no_emergent_joint_only_invariant_route",
+      "target_obligation": "idt_derivation_of_no_emergent_joint_only_invariants",
+      "assumptions": [
+        "context_product_exhaustion",
+        "product_effect_separation",
+        "stable_invariant_witness_completeness",
+        "facticized_readout_closure"
+      ],
+      "conclusions": [
+        "joint_only_invariant_requires_product_witness",
+        "unwitnessed_joint_only_invariant_rejected"
+      ],
+      "separator_refs": [
+        "context_product_exhaustion_implies_local_tomography",
+        "context_product_local_tomography_theorem_demo",
+        "context_product_exhaustion_demo"
+      ],
+      "rejected_witness_refs": [
+        "real_hilbert_composite_hidden_joint_invariant",
+        "real_hilbert_composite_hidden_joint_invariant_demo"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_universal_carrier_selection",
+        "does_not_prove_full_QM_I",
+        "does_not_derive_Hilbert_carrier",
+        "does_not_close_uniform_witness_bound"
+      ],
+      "expected_obligation_status": "conditional_proof"
     },
     {
       "id": "idt_bounded_correlation_demo",

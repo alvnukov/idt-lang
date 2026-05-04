@@ -521,6 +521,16 @@ It records one conditional route and two still-open IDT derivations:
 2. `idt_derivation_of_uniform_witness_bound`;
 3. `idt_derivation_of_no_emergent_joint_only_invariants`.
 
+The third item is now reduced to a conditional separator:
+
+`no_emergent_joint_only_invariants_under_context_product_exhaustion`.
+
+It says that under context-product exhaustion, product-effect separation,
+stable invariant witness completeness, and facticized readout closure, a
+joint-only invariant must have a product-context witness; otherwise it is
+rejected as an unwitnessed facticizable invariant. The rebit \(Y\otimes Y\)
+fixture remains the concrete rejected witness for this failure mode.
+
 The compactness route says that a uniform finite witness bound, preservation of
 facticized readout separation under limits, and exclusion of emergent
 joint-only invariants would reduce the residual back to the finite
