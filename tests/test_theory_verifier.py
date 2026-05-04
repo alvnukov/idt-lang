@@ -200,6 +200,7 @@ from theory_verifier.core import (
     PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES,
     PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS,
     PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS,
+    PROOF_LEDGER_FORMAL_PROOF_KINDS,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
     iter_formal_claims,
@@ -8449,6 +8450,42 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"formal_proof_ledger_claim_uncovered"})
 
+    def test_formal_proof_ledger_rejects_stale_formal_card_claim_ref(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate(["finite_gates.missing.component.status"])
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"formal_proof_ledger_claim_stale"})
+
+    def test_formal_proof_ledger_allows_conditional_non_formal_claim_ref(self) -> None:
+        gate = self.formal_proof_ledger_audit_gate(["full_qm_proof_closure.context_normalization"])
+        proof_cards = gate["proof_cards"]
+        if not isinstance(proof_cards, list):
+            self.fail("proof_cards must be a list")
+        proof_card = proof_cards[0]
+        if not isinstance(proof_card, dict):
+            self.fail("proof card must be a mapping")
+        proof_card["proof_kind"] = "conditional_proof"
+        proof_card["open_gaps"] = ["conditional package assumptions remain open"]
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertFalse(report.issues, [issue.code for issue in report.issues])
+
     def test_formal_proof_ledger_rejects_missing_artifact(self) -> None:
         gate = self.formal_proof_ledger_audit_gate()
         proof_cards = gate["proof_cards"]
@@ -8526,18 +8563,23 @@ class TheoryVerifierTests(unittest.TestCase):
         for raw_card in proof_cards:
             if not isinstance(raw_card, dict):
                 self.fail("proof card must be a mapping")
+            proof_kind = raw_card.get("proof_kind")
+            if not isinstance(proof_kind, str):
+                self.fail("proof_kind must be a string")
             raw_claim_refs = raw_card.get("claim_refs")
             if not isinstance(raw_claim_refs, list):
                 self.fail("claim_refs must be a list")
-            covered_refs.update(ref for ref in raw_claim_refs if isinstance(ref, str))
+            if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS:
+                covered_refs.update(ref for ref in raw_claim_refs if isinstance(ref, str))
             checker_commands = raw_card.get("checker_commands")
             if not isinstance(checker_commands, list):
                 self.fail("checker_commands must be a list")
-            self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS).issubset(set(checker_commands)))
             machine_checks = raw_card.get("machine_checks")
             if not isinstance(machine_checks, list):
                 self.fail("machine_checks must be a list")
-            self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS).issubset(set(machine_checks)))
+            if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS:
+                self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS).issubset(set(checker_commands)))
+                self.assertTrue(set(PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS).issubset(set(machine_checks)))
         self.assertEqual(claim_refs, sorted(covered_refs))
 
     def test_proof_runner_allowlist_accepts_only_safe_checker_commands(self) -> None:

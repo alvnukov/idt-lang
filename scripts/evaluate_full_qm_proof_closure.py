@@ -15,12 +15,14 @@ import scripts.evaluate_full_qm_proof_attempt as full_attempt  # noqa: E402
 
 ClosureVerdict = Literal[
     "FULL_QM_PROVED",
+    "CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED",
     "PROOF_ARTIFACTS_MISSING",
     "IMPORTED_ASSUMPTION_REJECTED",
     "ROUTE_NOT_READY",
 ]
 CheckStatus = Literal[
     "PROVED",
+    "CONDITIONAL_ARTIFACT",
     "MISSING_ARTIFACT",
     "SKETCH_ARTIFACT",
     "INCOMPLETE_ARTIFACT",
@@ -61,6 +63,7 @@ class ClosureAttempt:
     verdict: ClosureVerdict
     route_status: full_attempt.AttemptVerdict
     proved: int
+    conditional_artifacts: int
     missing_artifacts: int
     sketch_artifacts: int
     incomplete_artifacts: int
@@ -199,6 +202,7 @@ OBLIGATIONS: tuple[ProofObligation, ...] = (
 
 DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
 FORMAL_PROOF_KINDS = ("machine_checked_finite_proof", "external_formal_proof")
+CONDITIONAL_PROOF_KINDS = ("conditional_proof",)
 
 
 def require_mapping(value: object, field: str) -> dict[str, object]:
@@ -288,9 +292,14 @@ def artifact_mentions_forbidden_import(artifact: ProofArtifact, obligation: Proo
     return None
 
 
-def artifact_is_complete(artifact: ProofArtifact) -> bool:
+def artifact_has_required_fields(artifact: ProofArtifact) -> bool:
     fields = (artifact.system, artifact.file, artifact.theorem, artifact.check_command)
-    return all(field.strip() for field in fields) and artifact.verified
+    return all(field.strip() for field in fields)
+
+
+def artifact_file_is_present(artifact: ProofArtifact) -> bool:
+    artifact_path = REPO_ROOT / artifact.file
+    return artifact_path.is_file()
 
 
 def check_obligation(obligation: ProofObligation, artifacts: dict[str, ProofArtifact]) -> ObligationCheck:
@@ -320,21 +329,36 @@ def check_obligation(obligation: ProofObligation, artifacts: dict[str, ProofArti
             reason="proof-ledger card is explicitly a proof sketch, not a formal proof",
             artifact=artifact,
         )
-    if not artifact_is_complete(artifact):
+    if not artifact_has_required_fields(artifact):
         return ObligationCheck(
             id=obligation.id,
             cluster=obligation.cluster,
             status="INCOMPLETE_ARTIFACT",
-            reason="artifact exists but lacks required fields or verified=true",
+            reason="artifact exists but lacks required fields",
             artifact=artifact,
         )
-    artifact_path = REPO_ROOT / artifact.file
-    if not artifact_path.is_file():
+    if not artifact_file_is_present(artifact):
         return ObligationCheck(
             id=obligation.id,
             cluster=obligation.cluster,
             status="INCOMPLETE_ARTIFACT",
             reason="artifact file is not present in the repository",
+            artifact=artifact,
+        )
+    if artifact.proof_kind in CONDITIONAL_PROOF_KINDS:
+        return ObligationCheck(
+            id=obligation.id,
+            cluster=obligation.cluster,
+            status="CONDITIONAL_ARTIFACT",
+            reason="machine-checkable conditional package artifact is registered, but this is not a formal proof from primitives",
+            artifact=artifact,
+        )
+    if not artifact.verified:
+        return ObligationCheck(
+            id=obligation.id,
+            cluster=obligation.cluster,
+            status="INCOMPLETE_ARTIFACT",
+            reason="artifact exists but proof_kind is not a recognized formal or conditional machine-checked artifact",
             artifact=artifact,
         )
     return ObligationCheck(
@@ -353,6 +377,7 @@ def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAtte
             verdict="ROUTE_NOT_READY",
             route_status=route_attempt.verdict,
             proved=0,
+            conditional_artifacts=0,
             missing_artifacts=0,
             sketch_artifacts=0,
             incomplete_artifacts=0,
@@ -362,6 +387,7 @@ def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAtte
     artifacts = build_artifact_registry(manifest_path)
     checks = [check_obligation(obligation, artifacts) for obligation in OBLIGATIONS]
     proved = sum(1 for check in checks if check.status == "PROVED")
+    conditional = sum(1 for check in checks if check.status == "CONDITIONAL_ARTIFACT")
     missing = sum(1 for check in checks if check.status == "MISSING_ARTIFACT")
     sketch = sum(1 for check in checks if check.status == "SKETCH_ARTIFACT")
     incomplete = sum(1 for check in checks if check.status == "INCOMPLETE_ARTIFACT")
@@ -370,12 +396,15 @@ def build_closure_attempt(manifest_path: Path = DEFAULT_MANIFEST) -> ClosureAtte
         verdict: ClosureVerdict = "IMPORTED_ASSUMPTION_REJECTED"
     elif missing > 0 or sketch > 0 or incomplete > 0:
         verdict = "PROOF_ARTIFACTS_MISSING"
+    elif conditional > 0:
+        verdict = "CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED"
     else:
         verdict = "FULL_QM_PROVED"
     return ClosureAttempt(
         verdict=verdict,
         route_status=route_attempt.verdict,
         proved=proved,
+        conditional_artifacts=conditional,
         missing_artifacts=missing,
         sketch_artifacts=sketch,
         incomplete_artifacts=incomplete,
@@ -397,6 +426,7 @@ def main() -> int:
     print(
         f"full_qm_proof_closure={attempt.verdict} "
         f"route_status={attempt.route_status} proved={attempt.proved} "
+        f"conditional_artifacts={attempt.conditional_artifacts} "
         f"missing_artifacts={attempt.missing_artifacts} "
         f"sketch_artifacts={attempt.sketch_artifacts} "
         f"incomplete_artifacts={attempt.incomplete_artifacts} "

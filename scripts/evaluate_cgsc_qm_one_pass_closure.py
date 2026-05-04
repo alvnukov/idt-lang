@@ -79,6 +79,7 @@ class OnePassClosureProbe:
     package_blocked: int
     finite_gate_checks: int
     finite_gate_failures: int
+    conditional_artifacts: int
     missing_formal_proof_artifacts: int
     open_residuals: tuple[str, ...]
     global_checks: list[GlobalCheck]
@@ -331,6 +332,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         package_blocked=package_blocked,
         finite_gate_checks=len(gate_by_id),
         finite_gate_failures=finite_gate_failures,
+        conditional_artifacts=full_probe.conditional_artifacts,
         missing_formal_proof_artifacts=full_probe.missing_artifacts + full_probe.sketch_artifacts + full_probe.incomplete_artifacts,
         open_residuals=sorted_tuple(open_residuals),
         global_checks=global_checks,
@@ -339,8 +341,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks_failed=draft_failed,
         draft_checks=draft_checks,
         next_blocker=(
-            "turn the structurally evidenced packages into machine-checkable theorem artifacts; "
-            "the finite-sector residual is rejected by admissibility, not a substitute for full-QM proof artifacts"
+            "promote the registered conditional package artifacts to formal primitive proofs; "
+            "the finite-sector residual is rejected by admissibility, not a substitute for full-QM proof"
         ),
     )
 
@@ -363,6 +365,7 @@ def main() -> int:
         f"global_failed={probe.global_checks_failed} packages={probe.packages} "
         f"package_evidenced={probe.package_evidenced} package_open_residual={probe.package_open_residual} "
         f"package_blocked={probe.package_blocked} finite_gate_failures={probe.finite_gate_failures} "
+        f"conditional_artifacts={probe.conditional_artifacts} "
         f"missing_formal_proof_artifacts={probe.missing_formal_proof_artifacts} "
         f"open_residuals={len(probe.open_residuals)} draft_checks_failed={probe.draft_checks_failed}"
     )

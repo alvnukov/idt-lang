@@ -138,7 +138,7 @@ def check_known_failures(theorem_card: dict[str, object]) -> DraftCheck:
     required = {
         "clauses_not_proved_from_primitives",
         "no_machine_checked_formal_proof",
-        "full_qm_proof_closure_remains_proof_artifacts_missing",
+        "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
     }
     if required.issubset(failures):
         return DraftCheck(name="known_failures", passed=True, reason=f"count={len(failures)}")

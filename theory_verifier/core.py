@@ -5817,8 +5817,8 @@ def check_formal_proof_ledger_coverage(manifest: Manifest) -> list[Issue]:
                     f"{gate.identifier}.proof_cards[{index}].claim_refs",
                 )
             )
-            declared_refs.update(claim_refs)
             if proof_kind in PROOF_LEDGER_FORMAL_PROOF_KINDS:
+                declared_refs.update(claim_refs)
                 covered_refs.update(claim_refs)
 
     missing = sorted(formal_claim_refs - covered_refs)

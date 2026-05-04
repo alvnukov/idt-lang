@@ -9239,6 +9239,120 @@
             "does_not_prove_full_QM_I"
           ],
           "open_gaps": []
+        },
+        {
+          "id": "cgsc_finite_exposed_context_package_conditional_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.finite_projection_determinacy",
+            "full_qm_proof_closure.projective_consistency",
+            "full_qm_proof_closure.nonunital_stable_distinguishability",
+            "full_qm_proof_closure.conservative_projective_gluing",
+            "full_qm_proof_closure.spectral_decomposition",
+            "full_qm_proof_closure.context_normalization",
+            "full_qm_proof_closure.exclusivity_additivity",
+            "full_qm_proof_closure.coarse_graining_consistency",
+            "full_qm_proof_closure.operational_equivalence_probability",
+            "full_qm_proof_closure.physical_phase_scale_boundary"
+          ],
+          "statement": "Conditional Lean package artifact covering finite exposed-context completion obligations, including FPD/projective consistency, spectral/readout obligations, and the physical phase-scale boundary. The artifact packages checked assumptions; it does not prove these assumptions from primitives.",
+          "theorem": "IDT.QMClosure.finite_exposed_context_package_no_target_imports",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_package_conditional_artifact"
+          ],
+          "scope": "conditional_cgsc_package_obligation_coverage",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_conditional_package_artifact_as_full_QM_proof"
+          ],
+          "open_gaps": [
+            "package assumptions are conditional and still require proof from primitives",
+            "this card does not prove full_QM_I"
+          ]
+        },
+        {
+          "id": "cgsc_route_automorphism_refinement_package_conditional_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.rich_d_cl_reversible_symmetry",
+            "full_qm_proof_closure.d_cl_automorphism_dynamics",
+            "full_qm_proof_closure.overlap_preservation_dynamics",
+            "full_qm_proof_closure.projective_action",
+            "full_qm_proof_closure.continuous_inheritance_family",
+            "full_qm_proof_closure.generator_closure"
+          ],
+          "statement": "Conditional Lean package artifact covering route automorphism/refinement coherence obligations for reversible symmetry, projective action, continuity, and generator closure without importing unitary group or Stone theorem.",
+          "theorem": "IDT.QMClosure.route_automorphism_refinement_package_no_target_imports",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_package_conditional_artifact"
+          ],
+          "scope": "conditional_cgsc_package_obligation_coverage",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_conditional_package_artifact_as_full_QM_proof"
+          ],
+          "open_gaps": [
+            "package assumptions are conditional and still require proof from primitives",
+            "this card does not prove full_QM_I"
+          ]
+        },
+        {
+          "id": "cgsc_generated_composite_package_conditional_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.product_context_exhaustion",
+            "full_qm_proof_closure.local_tomography",
+            "full_qm_proof_closure.monoidal_associativity",
+            "full_qm_proof_closure.entanglement_closure",
+            "full_qm_proof_closure.projective_limit_consistency"
+          ],
+          "statement": "Conditional Lean package artifact covering generated-composite/no-hidden-joint obligations, including product-context exhaustion, local tomography, monoidal associativity, entanglement closure, projective limits, and constructive residual rejection.",
+          "theorem": "IDT.QMClosure.generated_composite_package_rejects_unwitnessed_residual",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_package_conditional_artifact"
+          ],
+          "scope": "conditional_cgsc_package_obligation_coverage",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_conditional_package_artifact_as_full_QM_proof"
+          ],
+          "open_gaps": [
+            "package assumptions are conditional and still require proof from primitives",
+            "this card does not prove full_QM_I"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

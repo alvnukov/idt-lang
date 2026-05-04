@@ -14261,11 +14261,14 @@ CGSC/QM is still not formally closed.
 The next wall is now a formalization wall, not a vague conceptual wall.
 ```
 
-The formal wall is:
+At the time of the first one-pass attempt, the formal wall was:
 
 ```text
 21 full-QM proof obligations lack machine-checkable proof artifacts.
 ```
+
+This status is superseded by 174.281: the obligations now have conditional
+machine-checkable package artifacts, but not formal proofs from primitives.
 
 Therefore the route is:
 
@@ -14284,6 +14287,7 @@ fatal import wall found:
 
 remaining blocker:
   produce machine-checkable proof artifacts for the registered obligations
+  [superseded by 174.281: artifacts exist, but are conditional]
 ```
 
 Forbidden upgrade:
@@ -14361,6 +14365,15 @@ open_residuals = 0
 missing_formal_proof_artifacts = 21
 ```
 
+This one-pass artifact count is superseded by 174.281.
+
+Updated post-174.281 one-pass artifact status:
+
+```text
+conditional_artifacts = 21
+missing_formal_proof_artifacts = 0
+```
+
 Interpretation:
 
 ```text
@@ -14381,4 +14394,95 @@ does_not_claim_unknown_future_carriers_are_impossible
 does_not_treat_placeholder_rejection_as_universal_carrier_selection
 does_not_claim_full_QM_is_proved
 does_not_mark_conditional_routes_as_formal_proof
+```
+
+### 174.281. CGSC Package Conditional Artifact Pass
+
+The technical "missing artifacts" wall was closed broadly with one Lean file:
+
+```text
+Proofs/QMClosure/CGSCPackageClosure.lean
+```
+
+The artifact defines three conditional package structures:
+
+```text
+FiniteExposedContextPackage
+RouteAutomorphismRefinementPackage
+GeneratedCompositePackage
+```
+
+and machine-checks package corollaries for all 21 registered full-QM closure
+obligations.
+
+The formal proof ledger now has three conditional proof cards:
+
+```text
+cgsc_finite_exposed_context_package_conditional_artifact
+cgsc_route_automorphism_refinement_package_conditional_artifact
+cgsc_generated_composite_package_conditional_artifact
+```
+
+Important boundary:
+
+```text
+proof_kind = conditional_proof
+not machine_checked_finite_proof
+```
+
+Updated full-QM closure:
+
+```text
+full_qm_proof_closure = CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED
+proved = 0
+conditional_artifacts = 21
+missing_artifacts = 0
+sketch_artifacts = 0
+incomplete_artifacts = 0
+imported_artifacts = 0
+```
+
+Updated one-pass closure:
+
+```text
+cgsc_qm_one_pass_closure = STRUCTURAL_ROUTE_READY_FORMALIZATION_WALL
+package_evidenced = 3
+package_open_residual = 0
+open_residuals = 0
+conditional_artifacts = 21
+missing_formal_proof_artifacts = 0
+```
+
+Interpretation:
+
+```text
+Missing-artifact wall:
+  closed.
+
+Residual wall:
+  closed by admissibility.
+
+Formal primitive-proof wall:
+  still open.
+
+Full QM:
+  still not proved.
+```
+
+The next real blocker is no longer artifact registration. It is:
+
+```text
+promote conditional package artifacts to formal primitive proofs:
+  B0 or successor primitives
+  => three CGSC packages
+  => 21 obligations as formal corollaries
+```
+
+Forbidden upgrade:
+
+```text
+does_not_claim_conditional_package_artifacts_are_primitive_proofs
+does_not_claim_full_QM_is_proved
+does_not_mark_conditional_proof_cards_as_machine_checked_finite_proof
+does_not_import_Hilbert_Born_unitary_tensor_or_Stone
 ```

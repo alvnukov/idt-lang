@@ -62,6 +62,7 @@ class TargetCheck:
     live_route_verdict: str
     imports: tuple[str, ...]
     missing_clause_proofs: tuple[str, ...]
+    conditional_proof_artifacts: tuple[str, ...]
     missing_proof_artifacts: tuple[str, ...]
     open_gap: str
 
@@ -87,6 +88,7 @@ class InevitabilityRouteProbe:
     failed_targets: int
     imported_targets: int
     missing_clause_proofs: int
+    conditional_proof_artifacts: int
     missing_proof_artifacts: int
     missing_base_extensions: tuple[str, ...]
     draft_checks_passed: int
@@ -239,8 +241,13 @@ def check_target(spec: TargetSpec, clause_status_by_id: dict[str, str], proof_st
     missing_clause_proofs = tuple(
         clause_id for clause_id in spec.required_clauses if clause_status_by_id.get(clause_id) != "formal_proof"
     )
+    conditional_artifacts = tuple(
+        obligation_id for obligation_id in spec.proof_obligations if proof_status_by_id.get(obligation_id) == "CONDITIONAL_ARTIFACT"
+    )
     missing_artifacts = tuple(
-        obligation_id for obligation_id in spec.proof_obligations if proof_status_by_id.get(obligation_id) != "PROVED"
+        obligation_id
+        for obligation_id in spec.proof_obligations
+        if proof_status_by_id.get(obligation_id) not in ("PROVED", "CONDITIONAL_ARTIFACT")
     )
     if imports:
         status: TargetStatus = "IMPORT_REJECTED"
@@ -253,7 +260,9 @@ def check_target(spec: TargetSpec, clause_status_by_id: dict[str, str], proof_st
     if missing_clause_proofs:
         open_gap = "required CGSC clauses are not formal proofs from primitives"
     elif missing_artifacts:
-        open_gap = "required full-QM proof artifacts are not registered as PROVED"
+        open_gap = "required full-QM proof artifacts are not registered"
+    elif conditional_artifacts:
+        open_gap = "required full-QM artifacts are conditional package artifacts, not formal primitive proofs"
     else:
         open_gap = "-"
     return TargetCheck(
@@ -263,6 +272,7 @@ def check_target(spec: TargetSpec, clause_status_by_id: dict[str, str], proof_st
         live_route_verdict=verdict,
         imports=imports,
         missing_clause_proofs=missing_clause_proofs,
+        conditional_proof_artifacts=conditional_artifacts,
         missing_proof_artifacts=missing_artifacts,
         open_gap=open_gap,
     )
@@ -289,7 +299,7 @@ def validate_draft(
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
         "cgsc_primitive_derivation_not_closed",
-        "full_qm_proof_closure_remains_proof_artifacts_missing",
+        "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
     )
@@ -335,6 +345,7 @@ def build_probe(
     failed_targets = sum(1 for check in target_checks if check.status == "FAILED")
     imported_targets = sum(1 for check in target_checks if check.status == "IMPORT_REJECTED")
     missing_clause_proofs = sum(len(check.missing_clause_proofs) for check in target_checks)
+    conditional_proof_artifacts = sum(len(check.conditional_proof_artifacts) for check in target_checks)
     missing_proof_artifacts = sum(len(check.missing_proof_artifacts) for check in target_checks)
     if draft_failed > 0:
         verdict: Verdict = "ROUTE_DRAFT_INVALID"
@@ -345,7 +356,7 @@ def build_probe(
     elif failed_targets > 0 or open_targets > 0:
         verdict = "TARGET_ROUTE_NOT_READY"
         proof_status = "OPEN_TARGET_PROOF_ARTIFACTS_MISSING"
-    elif missing_clause_proofs == 0 and missing_proof_artifacts == 0:
+    elif missing_clause_proofs == 0 and conditional_proof_artifacts == 0 and missing_proof_artifacts == 0:
         verdict = "INEVITABILITY_PROVED"
         proof_status = "FORMAL_PROOF"
     else:
@@ -368,6 +379,7 @@ def build_probe(
         failed_targets=failed_targets,
         imported_targets=imported_targets,
         missing_clause_proofs=missing_clause_proofs,
+        conditional_proof_artifacts=conditional_proof_artifacts,
         missing_proof_artifacts=missing_proof_artifacts,
         missing_base_extensions=primitive_probe.missing_base_extensions,
         draft_checks_passed=sum(1 for check in draft_checks if check.passed),
@@ -375,8 +387,8 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "close CGSC primitive derivation, including missing base extensions, then promote the required "
-            "full-QM obligations to machine-checkable proof artifacts"
+            "close CGSC primitive derivation, including missing base extensions, then promote the registered "
+            "conditional package artifacts to formal primitive proofs"
         ),
     )
 
@@ -404,6 +416,7 @@ def main() -> int:
         f"conditional_targets={probe.conditional_targets} open_targets={probe.open_targets} "
         f"failed_targets={probe.failed_targets} imported_targets={probe.imported_targets} "
         f"missing_clause_proofs={probe.missing_clause_proofs} "
+        f"conditional_proof_artifacts={probe.conditional_proof_artifacts} "
         f"missing_proof_artifacts={probe.missing_proof_artifacts} "
         f"missing_base_extensions={len(probe.missing_base_extensions)} "
         f"draft_checks_failed={probe.draft_checks_failed}"
@@ -416,6 +429,7 @@ def main() -> int:
             print(
                 f"{target_check.status} {target_check.id}: route={target_check.live_route_verdict} "
                 f"missing_clause_proofs={len(target_check.missing_clause_proofs)} "
+                f"conditional_artifacts={len(target_check.conditional_proof_artifacts)} "
                 f"missing_artifacts={len(target_check.missing_proof_artifacts)} gap={target_check.open_gap}"
             )
     if args.show_draft_checks:

@@ -25,7 +25,7 @@
     "known_failures": [
       "clauses_not_proved_from_primitives",
       "no_machine_checked_formal_proof",
-      "full_qm_proof_closure_remains_proof_artifacts_missing"
+      "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs"
     ],
     "physical_scope": "candidate primitive-base route for finite QM structural-wall closure only",
     "forbidden_claims": [

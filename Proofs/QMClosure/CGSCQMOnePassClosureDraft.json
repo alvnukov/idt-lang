@@ -34,7 +34,7 @@
       },
       {
         "id": "full_qm_proof_closure",
-        "expected": "PROOF_ARTIFACTS_MISSING"
+        "expected": "CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED"
       }
     ],
     "packages": [
