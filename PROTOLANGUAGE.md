@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.19.0`
+Current version: `v6.20.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -792,11 +792,12 @@ Hilbert/Born/tensor/unitary/first-principles-`hbar_I` derivations.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are
-finite IDT-Core/meta-invariants only. The proof pipeline first regenerates the
-expected Lean ledger from the manifest and checks it against
-`Proofs/IDTCore.lean`, then runs the Lean 4 kernel and reruns the IDT verifier;
-this does not upgrade QM, Hilbert space, Born rule, tensor composition, unitary
-dynamics, or first-principles `hbar_I`.
+finite IDT-Core/meta-invariants only. The proof pipeline now generates a Lean
+finite-core semantic artifact from the manifest and checks registry witnesses,
+bounded arity witnesses, route-generator witnesses, no-new-effect witnesses,
+joint-only rejection scope, and proof-ledger consistency before rerunning the
+IDT verifier. This does not upgrade QM, Hilbert space, Born rule, tensor
+composition, unitary dynamics, or first-principles `hbar_I`.
 
 ---
 

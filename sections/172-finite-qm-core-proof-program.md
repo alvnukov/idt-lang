@@ -609,15 +609,18 @@ or unwitnessed GPT residual as `conditional_support` and explicitly forbids
 upgrading this result into global no-new-effects closure, universal carrier
 selection, or full QM.
 
-As of v6.19, every current `formal_proof` marker is also covered by:
+As of v6.20, every current `formal_proof` marker is also covered by:
 
 `formal_proof_ledger_audit_demo`
 
 The proof ledger requires machine-checkable proof cards. The current card first
 checks that `Proofs/IDTCore.lean` is generated from the manifest by
 `scripts/sync_formal_proof_ledger.py`, then runs the Lean 4 artifact and the IDT
-verifier. This keeps these claims at the finite IDT-Core/meta-invariant level;
-it does not turn them into physics theorem proofs.
+verifier. The Lean artifact now checks the finite-core semantic witnesses:
+registry counts/digests, bounded arity, route generators, no-new-effect empty
+witnesses, joint-only rejection scope, and proof-ledger consistency. This keeps
+these claims at the finite IDT-Core/meta-invariant level; it does not turn them
+into physics theorem proofs.
 
 The remaining gap is now narrower: nonfinite residual closure is still
 conditional. This narrows the next proof work to the nonfinite residual

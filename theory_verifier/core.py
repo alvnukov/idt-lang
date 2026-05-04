@@ -1031,6 +1031,7 @@ PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS = (
 
 PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS = (
     "formal_claim_manifest_sync",
+    "lean_finite_core_semantic_checks",
     "lean4_kernel",
     "idt_verifier_manifest",
 )

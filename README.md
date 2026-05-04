@@ -67,8 +67,8 @@ Current auditable results:
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first
-  synchronizes the generated Lean ledger against the manifest, then runs Lean 4
-  plus the IDT verifier.
+  synchronizes the generated Lean finite-core semantic artifact against the
+  manifest, then runs Lean 4 plus the IDT verifier.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants
@@ -83,8 +83,8 @@ of nature.
 - `sections/` — modular theory body.
 - `scripts/graph_query.py` — file-based research graph query and cautious edit
   helper for the verifier manifest.
-- `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean ledger of
-  current `formal_proof` claims from the manifest.
+- `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
+  semantic proof artifact from the current manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
 - `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
 - `Proofs/` — Lean proof artifacts.

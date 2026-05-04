@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.19.0`.
+Current theory version: `v6.20.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -73,8 +73,8 @@ The main current successes are bounded and methodological:
 9. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
-   checks that the generated Lean ledger is synchronized with the manifest, then
-   runs Lean 4 and the IDT verifier.
+   checks that the generated Lean finite-core semantic artifact is synchronized
+   with the manifest, then runs Lean 4 and the IDT verifier.
 
 ## What The Verifier Catches
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.19.0",
+  "theory_version": "v6.20.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -7755,7 +7755,7 @@
           ],
           "proof_kind": "machine_checked_finite_proof",
           "backend": "lean4",
-          "statement": "Current finite formal-proof claims are generated from the manifest, synchronized into a Lean ledger, checked by the Lean kernel, and rechecked by the IDT verifier. This proves only the current finite IDT-Core/meta-level proof ledger, not QM, Hilbert space, Born rule, or hbar.",
+          "statement": "Current finite formal-proof claims are generated from the manifest into a Lean finite-core semantic artifact. Lean proves registry count/digest witnesses, bounded arity witnesses, route-generator witnesses, no-new-effect witnesses, joint-only rejection scope, and proof-ledger consistency; the IDT verifier then replays the manifest checks. This does not prove QM, Hilbert space, Born rule, tensor composition, unitary dynamics, or hbar from primitives.",
           "artifact_paths": [
             "Proofs/IDTCore.lean",
             "scripts/sync_formal_proof_ledger.py"
@@ -7767,6 +7767,7 @@
           ],
           "machine_checks": [
             "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
             "lean4_kernel",
             "idt_verifier_manifest"
           ],

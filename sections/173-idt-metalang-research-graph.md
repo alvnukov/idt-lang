@@ -491,7 +491,8 @@ Status:
 
 ### 173.11. Proof Verification Ledger
 
-The word `formal_proof` is now gated by an executable proof ledger.
+The word `formal_proof` is now gated by an executable proof ledger and a
+generated Lean finite-core semantic artifact.
 
 The audit is:
 
@@ -504,7 +505,7 @@ formal_proof marker
   -> proof card
   -> declared artifact paths
   -> declared checker commands
-  -> manifest-to-Lean sync check
+  -> manifest-to-Lean semantic sync check
   -> proof runner executes those commands
 ```
 
@@ -520,7 +521,7 @@ lakefile.lean
 Proofs/IDTCore.lean
 ```
 
-The Lean ledger is generated from the manifest and checked for exact sync by:
+The Lean artifact is generated from the manifest and checked for exact sync by:
 
 ```bash
 python3 scripts/sync_formal_proof_ledger.py --check
@@ -541,6 +542,17 @@ python3 scripts/check_all.py
 The key discipline is negative: if a future edit adds a new `formal_proof`
 marker without adding a proof card, synchronized machine-checkable artifact, and
 required checker command, the verifier or proof runner must fail.
+
+The current Lean artifact checks finite semantic witnesses for:
+
+```text
+registry count/digest consistency
+bounded route arity
+finite route-generator basis
+empty new-primitive-effect witnesses
+finite joint-only rejection scope
+proof-ledger claim coverage
+```
 
 Status:
 
