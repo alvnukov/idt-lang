@@ -1,6 +1,6 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v6.22.0`
+Current version: `v6.23.0`
 Date: 2026-05-04
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
@@ -800,6 +800,13 @@ witness. The gate keeps this as a frontier candidate, runs negative controls for
 hidden joint-only invariants, global noncontextual fact tables, unconstrained
 GPT cones, and nonfinite unwitnessed residuals, and forbids upgrading the result
 into Hilbert, Born, full-QM, or nonfinite closure.
+The `qm_wall_probe_demo` now turns the question "will the QM route hit a wall?"
+into an executable diagnostic. It classifies the route to `full_QM_I` by cells:
+primitive-core and context-product local tomography currently pass, FDC and
+several selector/composition/dynamics cells remain open, and Hilbert carrier,
+Born rule, and first-principles action scale are current walls. This is not a
+proof that no future route exists; it is a guard against treating open or
+blocked imports as if they were primitive-core derivations.
 The `formal_proof_ledger_audit_demo` now makes proof verification executable:
 every current `formal_proof` marker must be covered by a proof card with
 machine-checkable artifacts and checker commands. The current covered claims are

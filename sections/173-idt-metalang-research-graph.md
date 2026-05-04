@@ -575,7 +575,63 @@ Status:
 
 `facticizable_distinguishability_closure_frontier_added`
 
-### 173.12. Proof Verification Ledger
+### 173.12. QM Wall Probe
+
+The route to `full_QM_I` now has an executable wall diagnostic:
+
+`qm_wall_probe_demo`
+
+The probe classifies each cell as:
+
+```text
+pass -> the current diagnostic target is supported without a hidden import
+open -> support exists, but an obligation/import/frontier remains live
+wall -> the current route is blocked by a declared proof or import boundary
+bad  -> the manifest is hiding an import or has an inconsistent status
+```
+
+The current result is:
+
+`current_wall_detected`
+
+The current pass cells are:
+
+```text
+primitive_core_boundary
+context_product_local_tomography
+probability_measure_layer
+```
+
+The current open cells are:
+
+```text
+fdc_lower_principle
+distinguishability_geometry
+measurement_facticity_mechanism
+carrier_selection
+tensor_composition
+reversible_dynamics
+experiment_recompile_from_core
+```
+
+The current wall cells are:
+
+```text
+hilbert_carrier_derivation
+born_rule_derivation
+continuum_action_scale
+```
+
+This does not prove that IDT cannot reach QM. It says something narrower and
+more useful: the current route cannot honestly claim full QM while Hilbert
+carrier structure, Born rule, and first-principles action scale remain blocked
+or imported.
+
+Status:
+
+`qm_wall_probe_added`
+
+### 173.13. Proof Verification Ledger
 
 The word `formal_proof` is now gated by an executable proof ledger and a
 generated Lean finite-core semantic artifact.

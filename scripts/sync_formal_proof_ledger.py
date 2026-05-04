@@ -28,12 +28,16 @@ from theory_verifier.core import (  # noqa: E402
     IDT_PRIMITIVE_CORE_IMPORT_OBLIGATION_TARGETS,
     IDT_PRIMITIVE_CORE_REQUIRED_LAWS,
     QM_EXPERIMENT_REQUIRED_PRIMITIVES,
+    QM_WALL_PROBE_FORBIDDEN_UPGRADES,
+    QM_WALL_PROBE_REQUIRED_IMPORT_REFS,
+    QM_WALL_PROBE_TARGET,
     FiniteGate,
     Manifest,
     idt_core_gate_type_registry_digest,
     idt_core_registry_digest,
     iter_formal_claims,
     load_manifest,
+    qm_wall_probe_result_from_statuses,
 )
 
 DEFAULT_MANIFEST = ROOT / "theory_verifier_manifest_v6_0.json"
@@ -134,6 +138,17 @@ class FDCNegativeControlWitness:
 class FDCOpenObligationWitness:
     identifier: str
     required_status: str
+
+
+@dataclass(frozen=True)
+class QMWallNodeWitness:
+    identifier: str
+    result: str
+    computed_result: str
+    target_statuses: tuple[str, ...]
+    import_refs: tuple[str, ...]
+    required_import_refs: tuple[str, ...]
+    open_gap: str
 
 
 def lean_string(value: str) -> str:
@@ -490,6 +505,40 @@ def fdc_open_obligation_witnesses(manifest: Manifest) -> tuple[FDCOpenObligation
     return tuple(witnesses)
 
 
+def qm_wall_node_witnesses(manifest: Manifest) -> tuple[QMWallNodeWitness, ...]:
+    gate = gate_by_id(manifest, "qm_wall_probe_demo")
+    witnesses: list[QMWallNodeWitness] = []
+    for index, raw_node in enumerate(require_list(gate.payload.get("nodes"), f"{gate.identifier}.nodes")):
+        node = require_mapping(raw_node, f"{gate.identifier}.nodes[{index}]")
+        node_id = require_string(node.get("id"), f"{gate.identifier}.nodes[{index}].id")
+        target_statuses: list[str] = []
+        for target_index, raw_target in enumerate(require_list(node.get("target_refs"), f"{gate.identifier}.{node_id}.target_refs")):
+            target = require_mapping(raw_target, f"{gate.identifier}.{node_id}.target_refs[{target_index}]")
+            target_statuses.append(
+                require_string(
+                    target.get("expected_status"),
+                    f"{gate.identifier}.{node_id}.target_refs[{target_index}].expected_status",
+                )
+            )
+        target_status_tuple = tuple(target_statuses)
+        import_refs = require_string_tuple(
+            node.get("imported_structure_refs", []),
+            f"{gate.identifier}.{node_id}.imported_structure_refs",
+        )
+        witnesses.append(
+            QMWallNodeWitness(
+                identifier=node_id,
+                result=require_string(node.get("result"), f"{gate.identifier}.{node_id}.result"),
+                computed_result=qm_wall_probe_result_from_statuses(target_status_tuple, import_refs),
+                target_statuses=target_status_tuple,
+                import_refs=import_refs,
+                required_import_refs=QM_WALL_PROBE_REQUIRED_IMPORT_REFS[node_id],
+                open_gap=require_string(node.get("open_gap"), f"{gate.identifier}.{node_id}.open_gap"),
+            )
+        )
+    return tuple(witnesses)
+
+
 def lean_list(items: Sequence[str], indent: str = "    ") -> str:
     if not items:
         return "[]"
@@ -609,6 +658,18 @@ def render_fdc_open_obligation_witness(witness: FDCOpenObligationWitness) -> str
   }}"""
 
 
+def render_qm_wall_node_witness(witness: QMWallNodeWitness) -> str:
+    return f"""  {{
+    id := {lean_string(witness.identifier)},
+    result := {lean_string(witness.result)},
+    computedResult := {lean_string(witness.computed_result)},
+    targetStatuses := {lean_list(witness.target_statuses, "      ")},
+    importRefs := {lean_list(witness.import_refs, "      ")},
+    requiredImportRefs := {lean_list(witness.required_import_refs, "      ")},
+    openGap := {lean_string(witness.open_gap)}
+  }}"""
+
+
 def render_comma_list(items: Sequence[str]) -> str:
     return ",\n".join(items)
 
@@ -625,6 +686,7 @@ def render_lean(manifest: Manifest) -> str:
     fdc_condition_data = fdc_condition_witnesses(manifest)
     fdc_negative_control_data = fdc_negative_control_witnesses(manifest)
     fdc_open_obligation_data = fdc_open_obligation_witnesses(manifest)
+    qm_wall_node_data = qm_wall_node_witnesses(manifest)
     joint_witness = joint_only_rejection_witness(manifest)
     rendered_claim_refs = lean_list(claim_refs)
     rendered_registry_witnesses = render_comma_list([render_registry_witness(witness) for witness in registry_data])
@@ -650,6 +712,9 @@ def render_lean(manifest: Manifest) -> str:
     )
     rendered_fdc_open_obligation_witnesses = render_comma_list(
         [render_fdc_open_obligation_witness(witness) for witness in fdc_open_obligation_data]
+    )
+    rendered_qm_wall_node_witnesses = render_comma_list(
+        [render_qm_wall_node_witness(witness) for witness in qm_wall_node_data]
     )
     if claim_refs:
         cardinality_theorem = """theorem current_formal_claim_ledger_nonempty :
@@ -808,6 +873,23 @@ def FDCOpenObligationWitness.valid (w : FDCOpenObligationWitness) : Bool :=
     && w.requiredStatus != "formal_proof"
     && w.requiredStatus != "derived"
 
+structure QMWallNodeWitness where
+  id : String
+  result : String
+  computedResult : String
+  targetStatuses : List String
+  importRefs : List String
+  requiredImportRefs : List String
+  openGap : String
+deriving Repr
+
+def QMWallNodeWitness.valid (w : QMWallNodeWitness) : Bool :=
+  w.result == w.computedResult
+    && w.result != "bad"
+    && w.importRefs == w.requiredImportRefs
+    && decide (w.targetStatuses.length > 0)
+    && ((w.result == "pass" && w.openGap == "") || (w.result != "pass" && decide (w.openGap.length > 0)))
+
 structure JointOnlyRejectionWitness where
   id : String
   status : String
@@ -883,6 +965,16 @@ def fdcOpenObligationWitnesses : List FDCOpenObligationWitness :=
 {rendered_fdc_open_obligation_witnesses}
 ]
 
+def qmWallProbeTarget : String := {lean_string(QM_WALL_PROBE_TARGET)}
+
+def qmWallProbeForbiddenUpgrades : List String :=
+  {lean_list(QM_WALL_PROBE_FORBIDDEN_UPGRADES)}
+
+def qmWallNodeWitnesses : List QMWallNodeWitness :=
+[
+{rendered_qm_wall_node_witnesses}
+]
+
 def jointOnlyRejectionWitness : JointOnlyRejectionWitness :=
 {{
   id := {lean_string(joint_witness.identifier)},
@@ -909,6 +1001,9 @@ def currentSemanticProofChecks : List Bool :=
     fdcConditionWitnesses.all FDCConditionWitness.valid,
     fdcNegativeControlWitnesses.all FDCNegativeControlWitness.valid,
     fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid,
+    qmWallProbeTarget == "full_QM_I",
+    qmWallProbeForbiddenUpgrades.length == 6,
+    qmWallNodeWitnesses.all QMWallNodeWitness.valid,
     jointOnlyRejectionWitness.valid
   ]
 
@@ -960,6 +1055,10 @@ theorem current_fdc_negative_control_witnesses_valid :
 
 theorem current_fdc_open_obligation_witnesses_valid :
     fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid = true := by
+  native_decide
+
+theorem current_qm_wall_node_witnesses_valid :
+    qmWallNodeWitnesses.all QMWallNodeWitness.valid = true := by
   native_decide
 
 theorem current_joint_only_rejection_witness_valid :

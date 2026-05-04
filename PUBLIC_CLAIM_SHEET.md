@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v6.22.0`.
+Current theory version: `v6.23.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -76,7 +76,13 @@ The main current successes are bounded and methodological:
    candidate principle. It tests whether stable inherited distinguishability
    must have finite admissible readout witnesses, while retaining negative
    controls and open QM obligations.
-10. The proof-verification boundary is executable. Current `formal_proof`
+10. A new QM wall probe is executable. It audits the route to `full_QM_I` as
+   `pass`, `open`, or `wall` cells. The current diagnosis is
+   `current_wall_detected`: primitive-core and context-product tomography cells
+   pass, several selector/composition/dynamics cells remain open, and
+   Hilbert-carrier, Born-rule, and first-principles action-scale cells are
+   explicit current walls rather than hidden imports.
+11. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized

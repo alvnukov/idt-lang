@@ -1001,6 +1001,94 @@ FDC_RESULTS = (
     "failed",
 )
 
+QM_WALL_PROBE_TARGET = "full_QM_I"
+
+QM_WALL_PROBE_REQUIRED_NODE_RESULTS: dict[str, str] = {
+    "primitive_core_boundary": "pass",
+    "fdc_lower_principle": "open",
+    "context_product_local_tomography": "pass",
+    "distinguishability_geometry": "open",
+    "probability_measure_layer": "pass",
+    "measurement_facticity_mechanism": "open",
+    "carrier_selection": "open",
+    "hilbert_carrier_derivation": "wall",
+    "born_rule_derivation": "wall",
+    "tensor_composition": "open",
+    "reversible_dynamics": "open",
+    "experiment_recompile_from_core": "open",
+    "continuum_action_scale": "wall",
+}
+
+QM_WALL_PROBE_REQUIRED_IMPORT_REFS: dict[str, tuple[str, ...]] = {
+    "primitive_core_boundary": (),
+    "fdc_lower_principle": (),
+    "context_product_local_tomography": (),
+    "distinguishability_geometry": ("psd_distinguishability_kernel",),
+    "probability_measure_layer": (),
+    "measurement_facticity_mechanism": ("schur_inheritance_update",),
+    "carrier_selection": ("complex_amplitude_carrier",),
+    "hilbert_carrier_derivation": ("complex_amplitude_carrier",),
+    "born_rule_derivation": ("quadratic_actualization_measure",),
+    "tensor_composition": ("tensor_composition_import",),
+    "reversible_dynamics": ("unitary_context_map_import",),
+    "experiment_recompile_from_core": (
+        "complex_amplitude_carrier",
+        "quadratic_actualization_measure",
+        "tensor_composition_import",
+        "unitary_context_map_import",
+    ),
+    "continuum_action_scale": ("action_phase_hbar_bridge",),
+}
+
+QM_WALL_PROBE_TARGET_KINDS = (
+    "finite_gate_field",
+    "qm_core_obligation",
+    "symbol",
+    "theorem_card",
+)
+
+QM_WALL_PROBE_PASS_STATUSES = (
+    "conditional_proof",
+    "derived_conditional",
+    "finite_verifier_pass",
+    "formal_proof",
+    "primitive_core_locked",
+    "regression_supported",
+)
+
+QM_WALL_PROBE_OPEN_STATUSES = (
+    "frontier_candidate",
+    "open",
+    "target",
+)
+
+QM_WALL_PROBE_WALL_STATUSES = (
+    "blocked",
+)
+
+QM_WALL_PROBE_NODE_RESULTS = (
+    "pass",
+    "open",
+    "wall",
+    "bad",
+)
+
+QM_WALL_PROBE_RESULTS = (
+    "current_wall_detected",
+    "open_frontier",
+    "closed_no_wall_detected",
+    "hidden_import_failure",
+)
+
+QM_WALL_PROBE_FORBIDDEN_UPGRADES = (
+    "does_not_prove_full_QM_I",
+    "does_not_prove_absence_of_future_wall",
+    "does_not_treat_open_as_pass",
+    "does_not_hide_QM_imports",
+    "does_not_upgrade_blocked_to_open_without_proof",
+    "does_not_reclassify_candidate_principles_as_formal_proof",
+)
+
 FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS = (
     "complex_amplitude_carrier",
     "psd_distinguishability_kernel",
@@ -2608,6 +2696,9 @@ def verify_manifest(manifest: Manifest) -> VerificationReport:
 
     issues.extend(check_facticizable_distinguishability_closure_grounding(manifest))
     checks.append("facticizable distinguishability closure grounding")
+
+    issues.extend(check_qm_wall_probe_grounding(manifest))
+    checks.append("QM wall probe grounding")
 
     return VerificationReport(checks=tuple(checks), issues=tuple(issues))
 
@@ -5886,9 +5977,100 @@ def check_facticizable_distinguishability_closure_grounding(manifest: Manifest) 
                     Issue(
                         "fdc_frontier_obligation_status_mismatch",
                         f"{gate.identifier}: {theorem_id} must remain {expected_status}",
+                )
+            )
+    return issues
+
+
+def check_qm_wall_probe_grounding(manifest: Manifest) -> list[Issue]:
+    issues: list[Issue] = []
+    known_refs = research_graph_known_evidence_refs(manifest)
+    for gate in manifest.finite_gates:
+        if gate.gate_type != "qm_wall_probe":
+            continue
+        issues.extend(check_gate_evidence_refs_grounded(gate, known_refs, "qm_wall_probe"))
+        nodes = require_list(gate.payload.get("nodes"), f"{gate.identifier}.nodes")
+        for node_index, raw_node in enumerate(nodes):
+            node = require_mapping(raw_node, f"{gate.identifier}.nodes[{node_index}]")
+            node_id = require_string(node.get("id"), f"{gate.identifier}.nodes[{node_index}].id")
+            dependency_refs = require_string_tuple(
+                node.get("dependency_refs", []),
+                f"{gate.identifier}.{node_id}.dependency_refs",
+            )
+            for dependency_ref in dependency_refs:
+                if dependency_ref in known_refs or research_graph_doc_ref_exists(dependency_ref):
+                    continue
+                issues.append(
+                    Issue(
+                        "qm_wall_probe_dependency_unresolved",
+                        f"{gate.identifier}: {node_id} dependency ref {dependency_ref!r} is not grounded",
                     )
                 )
+            target_refs = require_list(node.get("target_refs"), f"{gate.identifier}.{node_id}.target_refs")
+            for target_index, raw_ref in enumerate(target_refs):
+                target_ref = require_mapping(raw_ref, f"{gate.identifier}.{node_id}.target_refs[{target_index}]")
+                actual_status = resolve_qm_wall_probe_target_status(manifest, gate.identifier, node_id, target_ref)
+                if actual_status is None:
+                    issues.append(
+                        Issue(
+                            "qm_wall_probe_target_missing",
+                            f"{gate.identifier}: {node_id} target ref is not grounded",
+                        )
+                    )
+                    continue
+                expected_status = require_string(
+                    target_ref.get("expected_status"),
+                    f"{gate.identifier}.{node_id}.target_refs[{target_index}].expected_status",
+                )
+                if actual_status != expected_status:
+                    issues.append(
+                        Issue(
+                            "qm_wall_probe_target_status_mismatch",
+                            (
+                                f"{gate.identifier}: {node_id} expected target status {expected_status}, "
+                                f"got {actual_status}"
+                            ),
+                        )
+                    )
     return issues
+
+
+def resolve_qm_wall_probe_target_status(
+    manifest: Manifest,
+    gate_id: str,
+    node_id: str,
+    target_ref: dict[str, object],
+) -> str | None:
+    target_kind = require_string(target_ref.get("kind"), f"{gate_id}.{node_id}.target_ref.kind")
+    target_id = require_string(target_ref.get("id"), f"{gate_id}.{node_id}.target_ref.id")
+    if target_kind == "symbol":
+        symbol = manifest.symbols.get(target_id)
+        if symbol is None:
+            return None
+        return symbol.status
+    if target_kind == "theorem_card":
+        card_by_id = {card.identifier: card for card in manifest.theorem_cards}
+        card = card_by_id.get(target_id)
+        if card is None:
+            return None
+        return card.proof_status
+    if target_kind == "qm_core_obligation":
+        obligation_by_id = {obligation.identifier: obligation for obligation in manifest.qm_core_proof_obligations}
+        obligation = obligation_by_id.get(target_id)
+        if obligation is None:
+            return None
+        return obligation.status
+    if target_kind == "finite_gate_field":
+        field = require_string(target_ref.get("field"), f"{gate_id}.{node_id}.target_ref.field")
+        gate_by_id = {gate.identifier: gate for gate in manifest.finite_gates}
+        referenced_gate = gate_by_id.get(target_id)
+        if referenced_gate is None:
+            return None
+        value = referenced_gate.payload.get(field)
+        if not isinstance(value, str):
+            return None
+        return value
+    return None
 
 
 def check_gate_evidence_refs_grounded(gate: FiniteGate, known_refs: set[str], issue_prefix: str) -> list[Issue]:
@@ -13399,6 +13581,220 @@ def check_facticizable_distinguishability_closure_frontier_gate(gate: FiniteGate
     return []
 
 
+def qm_wall_probe_result_from_statuses(statuses: tuple[str, ...], imported_refs: tuple[str, ...] = ()) -> str:
+    if not statuses:
+        return "bad"
+    if any(status in QM_WALL_PROBE_WALL_STATUSES for status in statuses):
+        return "wall"
+    if any(status in QM_WALL_PROBE_OPEN_STATUSES for status in statuses):
+        return "open"
+    if all(status in QM_WALL_PROBE_PASS_STATUSES for status in statuses):
+        if imported_refs:
+            return "open"
+        return "pass"
+    return "bad"
+
+
+def qm_wall_probe_status_from_results(results: tuple[str, ...]) -> str:
+    if not results or any(result == "bad" for result in results):
+        return "hidden_import_failure"
+    if any(result == "wall" for result in results):
+        return "current_wall_detected"
+    if any(result == "open" for result in results):
+        return "open_frontier"
+    return "closed_no_wall_detected"
+
+
+def check_qm_wall_probe_gate(gate: FiniteGate) -> list[Issue]:
+    target = require_string(gate.payload.get("target"), f"{gate.identifier}.target")
+    if target != QM_WALL_PROBE_TARGET:
+        return [
+            Issue(
+                "qm_wall_probe_target_mismatch",
+                f"{gate.identifier}: target must be {QM_WALL_PROBE_TARGET}",
+            )
+        ]
+
+    primitive_basis = set(
+        require_string_tuple(gate.payload.get("primitive_basis", []), f"{gate.identifier}.primitive_basis")
+    )
+    if primitive_basis != set(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE):
+        return [
+            Issue(
+                "qm_wall_probe_primitive_basis_mismatch",
+                f"{gate.identifier}: primitive_basis must be the carrier-neutral primitive core",
+            )
+        ]
+
+    forbidden_refs = set(
+        require_string_tuple(gate.payload.get("forbidden_import_refs", []), f"{gate.identifier}.forbidden_import_refs")
+    )
+    if forbidden_refs != set(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS):
+        return [
+            Issue(
+                "qm_wall_probe_forbidden_refs_mismatch",
+                f"{gate.identifier}: forbidden_import_refs must match the primitive-core import boundary",
+            )
+        ]
+
+    nodes = require_list(gate.payload.get("nodes"), f"{gate.identifier}.nodes")
+    seen_nodes: set[str] = set()
+    results: list[str] = []
+    for node_index, raw_node in enumerate(nodes):
+        node = require_mapping(raw_node, f"{gate.identifier}.nodes[{node_index}]")
+        node_id = require_string(node.get("id"), f"{gate.identifier}.nodes[{node_index}].id")
+        if node_id not in QM_WALL_PROBE_REQUIRED_NODE_RESULTS:
+            return [
+                Issue(
+                    "qm_wall_probe_unknown_node",
+                    f"{gate.identifier}: unknown wall-probe node {node_id}",
+                )
+            ]
+        if node_id in seen_nodes:
+            return [
+                Issue(
+                    "qm_wall_probe_duplicate_node",
+                    f"{gate.identifier}: duplicate wall-probe node {node_id}",
+                )
+            ]
+        question = require_string(node.get("question"), f"{gate.identifier}.{node_id}.question")
+        result = require_string(node.get("result"), f"{gate.identifier}.{node_id}.result")
+        if result not in QM_WALL_PROBE_NODE_RESULTS:
+            return [
+                Issue(
+                    "qm_wall_probe_unknown_result",
+                    f"{gate.identifier}: {node_id} has unknown result {result}",
+                )
+            ]
+        expected_result = QM_WALL_PROBE_REQUIRED_NODE_RESULTS[node_id]
+        if result != expected_result:
+            return [
+                Issue(
+                    "qm_wall_probe_node_result_mismatch",
+                    f"{gate.identifier}: {node_id} must remain {expected_result}",
+                )
+            ]
+        imported_refs = tuple(
+            require_string_tuple(
+                node.get("imported_structure_refs", []),
+                f"{gate.identifier}.{node_id}.imported_structure_refs",
+            )
+        )
+        expected_import_refs = QM_WALL_PROBE_REQUIRED_IMPORT_REFS[node_id]
+        if imported_refs != expected_import_refs:
+            return [
+                Issue(
+                    "qm_wall_probe_import_refs_mismatch",
+                    f"{gate.identifier}: {node_id} must expose its exact imported-structure refs",
+                )
+            ]
+        unknown_imports = sorted(set(imported_refs) - set(FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS))
+        if unknown_imports:
+            return [
+                Issue(
+                    "qm_wall_probe_unknown_import_ref",
+                    f"{gate.identifier}: {node_id} cites unknown imports: {', '.join(unknown_imports)}",
+                )
+            ]
+        if result == "pass" and imported_refs:
+            return [
+                Issue(
+                    "qm_wall_probe_hidden_import_as_pass",
+                    f"{gate.identifier}: {node_id} cannot pass while citing imported QM structure",
+                )
+            ]
+        dependency_refs = require_string_tuple(
+            node.get("dependency_refs", []),
+            f"{gate.identifier}.{node_id}.dependency_refs",
+        )
+        evidence_refs = require_string_tuple(node.get("evidence_refs", []), f"{gate.identifier}.{node_id}.evidence_refs")
+        if not question or not dependency_refs or not evidence_refs:
+            return [
+                Issue(
+                    "qm_wall_probe_node_support_missing",
+                    f"{gate.identifier}: {node_id} must include a question, dependency_refs, and evidence_refs",
+                )
+            ]
+        target_refs = require_list(node.get("target_refs"), f"{gate.identifier}.{node_id}.target_refs")
+        target_statuses: list[str] = []
+        for target_index, raw_target_ref in enumerate(target_refs):
+            target_ref = require_mapping(raw_target_ref, f"{gate.identifier}.{node_id}.target_refs[{target_index}]")
+            target_kind = require_string(target_ref.get("kind"), f"{gate.identifier}.{node_id}.target_refs[{target_index}].kind")
+            if target_kind not in QM_WALL_PROBE_TARGET_KINDS:
+                return [
+                    Issue(
+                        "qm_wall_probe_unknown_target_kind",
+                        f"{gate.identifier}: {node_id} target kind {target_kind} is unsupported",
+                    )
+                ]
+            if target_kind == "finite_gate_field":
+                require_string(target_ref.get("field"), f"{gate.identifier}.{node_id}.target_refs[{target_index}].field")
+            target_statuses.append(
+                require_string(
+                    target_ref.get("expected_status"),
+                    f"{gate.identifier}.{node_id}.target_refs[{target_index}].expected_status",
+                )
+            )
+        computed_result = qm_wall_probe_result_from_statuses(tuple(target_statuses), imported_refs)
+        if computed_result != result:
+            return [
+                Issue(
+                    "qm_wall_probe_computed_result_mismatch",
+                    f"{gate.identifier}: {node_id} expected result {result}, computed {computed_result}",
+                )
+            ]
+        open_gap = require_string(node.get("open_gap"), f"{gate.identifier}.{node_id}.open_gap")
+        if result == "pass" and open_gap:
+            return [
+                Issue(
+                    "qm_wall_probe_pass_gap_mismatch",
+                    f"{gate.identifier}: {node_id} cannot retain an open gap when classified pass",
+                )
+            ]
+        if result != "pass" and not open_gap:
+            return [
+                Issue(
+                    "qm_wall_probe_gap_missing",
+                    f"{gate.identifier}: {node_id} must keep a wall/open-gap explanation",
+                )
+            ]
+        seen_nodes.add(node_id)
+        results.append(result)
+
+    missing_nodes = sorted(set(QM_WALL_PROBE_REQUIRED_NODE_RESULTS) - seen_nodes)
+    if missing_nodes:
+        return [
+            Issue(
+                "qm_wall_probe_node_missing",
+                f"{gate.identifier}: missing wall-probe nodes: {', '.join(missing_nodes)}",
+            )
+        ]
+
+    forbidden_upgrades = set(
+        require_string_tuple(gate.payload.get("forbidden_upgrades", []), f"{gate.identifier}.forbidden_upgrades")
+    )
+    if forbidden_upgrades != set(QM_WALL_PROBE_FORBIDDEN_UPGRADES):
+        return [
+            Issue(
+                "qm_wall_probe_forbidden_upgrades_mismatch",
+                f"{gate.identifier}: forbidden_upgrades must prevent hidden full-QM closure",
+            )
+        ]
+
+    expected_status = require_string(gate.payload.get("expected_probe_status"), f"{gate.identifier}.expected_probe_status")
+    if expected_status not in QM_WALL_PROBE_RESULTS:
+        raise ManifestError(f"{gate.identifier}: expected_probe_status is unknown")
+    computed_status = qm_wall_probe_status_from_results(tuple(results))
+    if expected_status != computed_status:
+        return [
+            Issue(
+                "qm_wall_probe_status_mismatch",
+                f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
+            )
+        ]
+    return []
+
+
 def check_formal_proof_ledger_audit_gate(gate: FiniteGate) -> list[Issue]:
     target_scope = require_string(gate.payload.get("target_scope"), f"{gate.identifier}.target_scope")
     if target_scope != "current_formal_proof_claims":
@@ -19225,6 +19621,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "foundation_import_boundary_audit": check_foundation_import_boundary_audit_gate,
     "primitive_core_contract": check_primitive_core_contract_gate,
     "facticizable_distinguishability_closure_frontier": check_facticizable_distinguishability_closure_frontier_gate,
+    "qm_wall_probe": check_qm_wall_probe_gate,
     "formal_proof_ledger_audit": check_formal_proof_ledger_audit_gate,
     "dimensionful_anchor_policy": check_dimensionful_anchor_policy_gate,
     "dimensionless_coupling_policy": check_dimensionless_coupling_policy_gate,

@@ -172,6 +172,10 @@ from theory_verifier.core import (
     FOUNDATION_IMPORT_BOUNDARY_PROOF_BOUNDARY,
     FOUNDATION_IMPORT_BOUNDARY_REQUIRED_IMPORTS,
     FOUNDATION_IMPORT_BOUNDARY_TARGET_REFACTOR_BY_IMPORT,
+    QM_WALL_PROBE_FORBIDDEN_UPGRADES,
+    QM_WALL_PROBE_REQUIRED_IMPORT_REFS,
+    QM_WALL_PROBE_REQUIRED_NODE_RESULTS,
+    QM_WALL_PROBE_TARGET,
     PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES,
     PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS,
     PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS,
@@ -574,6 +578,226 @@ class TheoryVerifierTests(unittest.TestCase):
             ],
             "expected_frontier_status": "frontier_candidate",
             "forbidden_upgrades": list(FDC_FORBIDDEN_UPGRADES),
+        }
+
+    def qm_wall_probe_gate(self) -> dict[str, object]:
+        node_specs: dict[str, dict[str, object]] = {
+            "primitive_core_boundary": {
+                "question": "Is the primitive core free of direct QM carrier imports?",
+                "target_refs": [
+                    {
+                        "kind": "finite_gate_field",
+                        "id": "idt_primitive_core_contract_demo",
+                        "field": "expected_contract_status",
+                        "expected_status": "primitive_core_locked",
+                    }
+                ],
+                "dependency_refs": ["idt_primitive_core_contract_demo"],
+                "evidence_refs": ["idt_primitive_core_contract_demo"],
+                "open_gap": "",
+            },
+            "fdc_lower_principle": {
+                "question": "Does FDC currently close as a lower-level principle?",
+                "target_refs": [
+                    {
+                        "kind": "finite_gate_field",
+                        "id": "facticizable_distinguishability_closure_frontier_demo",
+                        "field": "expected_frontier_status",
+                        "expected_status": "frontier_candidate",
+                    }
+                ],
+                "dependency_refs": ["facticizable_distinguishability_closure_frontier_demo"],
+                "evidence_refs": ["facticizable_distinguishability_closure_frontier_demo"],
+                "open_gap": "FDC is a candidate principle, not a completed full-QM derivation.",
+            },
+            "context_product_local_tomography": {
+                "question": "Does context-product exhaustion provide a checked local-tomography separator?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "context_product_exhaustion_implies_local_tomography",
+                        "expected_status": "conditional_proof",
+                    }
+                ],
+                "dependency_refs": [
+                    "context_product_exhaustion_implies_local_tomography",
+                    "context_product_exhaustion_demo",
+                ],
+                "evidence_refs": ["context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "",
+            },
+            "distinguishability_geometry": {
+                "question": "Is the positive distinguishability geometry derived from carrier-neutral primitives?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "distinguishability_geometry",
+                        "expected_status": "target",
+                    }
+                ],
+                "dependency_refs": ["distinguishability_geometry", "distinguishability_geometry_probe_demo"],
+                "evidence_refs": ["distinguishability_geometry_probe_demo"],
+                "open_gap": "The PSD geometry is still an explicit obligation, not a primitive-core theorem.",
+            },
+            "probability_measure_layer": {
+                "question": "Is a finite operational probability layer regression-supported?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "probability_measure_layer",
+                        "expected_status": "regression_supported",
+                    }
+                ],
+                "dependency_refs": ["probability_measure_layer"],
+                "evidence_refs": ["born_context_probability_table_demo"],
+                "open_gap": "",
+            },
+            "measurement_facticity_mechanism": {
+                "question": "Is the finite measurement facticity mechanism regression-supported?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "measurement_facticity_mechanism",
+                        "expected_status": "regression_supported",
+                    }
+                ],
+                "dependency_refs": ["measurement_facticity_mechanism", "measurement_facticity_route_demo"],
+                "evidence_refs": ["measurement_facticity_route_demo"],
+                "open_gap": "Measurement facticity is regression-supported but still carries the Schur update import.",
+            },
+            "carrier_selection": {
+                "question": "Is a universal carrier selector proved without importing the complex carrier?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "universal_carrier_selection_theorem",
+                        "expected_status": "open",
+                    }
+                ],
+                "dependency_refs": ["universal_carrier_selection_theorem"],
+                "evidence_refs": ["generic_gpt_closure_separator_demo"],
+                "open_gap": "Carrier selection remains open; current finite separators are not a universal theorem.",
+            },
+            "hilbert_carrier_derivation": {
+                "question": "Is Hilbert-space carrier structure derived from IDT primitives?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "hilbert_carrier_derivation",
+                        "expected_status": "blocked",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "hilbert_carrier_derivation",
+                        "expected_status": "blocked",
+                    },
+                ],
+                "dependency_refs": ["hilbert_carrier_derivation"],
+                "evidence_refs": ["idt_primitive_core_contract_demo"],
+                "open_gap": "Hilbert carrier derivation is currently blocked by the carrier import boundary.",
+            },
+            "born_rule_derivation": {
+                "question": "Is the Born rule derived rather than supplied by a quadratic readout obligation?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "universal_born_rule_theorem",
+                        "expected_status": "open",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "born_rule_derivation",
+                        "expected_status": "blocked",
+                    },
+                ],
+                "dependency_refs": ["universal_born_rule_theorem", "born_rule_derivation"],
+                "evidence_refs": ["finite_born_quadratic_readout_survivor"],
+                "open_gap": "The universal Born derivation is blocked at the quadratic actualization obligation.",
+            },
+            "tensor_composition": {
+                "question": "Is monoidal tensor composition proved from the primitive core?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "monoidal_tensor_composition_theorem",
+                        "expected_status": "open",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "tensor_composition_law",
+                        "expected_status": "target",
+                    },
+                ],
+                "dependency_refs": ["monoidal_tensor_composition_theorem", "tensor_composition_law"],
+                "evidence_refs": ["context_product_exhaustion_implies_local_tomography"],
+                "open_gap": "Tensor composition is still a target/open obligation.",
+            },
+            "reversible_dynamics": {
+                "question": "Is reversible dynamics derived as Wigner/unitary structure?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "wigner_reversible_inheritance_theorem",
+                        "expected_status": "open",
+                    }
+                ],
+                "dependency_refs": ["wigner_reversible_inheritance_theorem", "reversible_inheritance_symmetry"],
+                "evidence_refs": ["unitary_measurement_context_demo"],
+                "open_gap": "Wigner-style reversible inheritance remains open.",
+            },
+            "experiment_recompile_from_core": {
+                "question": "Are all 35 QM experiments recompiled from the primitive core without QM imports?",
+                "target_refs": [
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "recompile_35_from_core",
+                        "expected_status": "target",
+                    }
+                ],
+                "dependency_refs": ["recompile_35_from_core"],
+                "evidence_refs": ["qm_core_recompile_route_demo"],
+                "open_gap": "The 35-experiment corpus is covered by gates, but not yet recompiled from the primitive core.",
+            },
+            "continuum_action_scale": {
+                "question": "Is hbar/action scale locked from first principles?",
+                "target_refs": [
+                    {
+                        "kind": "theorem_card",
+                        "id": "first_principles_hbar_lock",
+                        "expected_status": "blocked",
+                    },
+                    {
+                        "kind": "qm_core_obligation",
+                        "id": "continuum_action_scale_extension",
+                        "expected_status": "blocked",
+                    },
+                ],
+                "dependency_refs": ["first_principles_hbar_lock", "continuum_action_scale_extension"],
+                "evidence_refs": ["hbar_I"],
+                "open_gap": "The action scale remains blocked as a first-principles derivation.",
+            },
+        }
+        return {
+            "id": "test_qm_wall_probe",
+            "type": "qm_wall_probe",
+            "target": QM_WALL_PROBE_TARGET,
+            "primitive_basis": list(FOUNDATION_IMPORT_BOUNDARY_PRIMITIVE_CORE),
+            "forbidden_import_refs": list(IDT_PRIMITIVE_CORE_FORBIDDEN_REFS),
+            "nodes": [
+                {
+                    "id": node_id,
+                    "question": spec["question"],
+                    "result": QM_WALL_PROBE_REQUIRED_NODE_RESULTS[node_id],
+                    "target_refs": spec["target_refs"],
+                    "dependency_refs": spec["dependency_refs"],
+                    "evidence_refs": spec["evidence_refs"],
+                    "imported_structure_refs": list(QM_WALL_PROBE_REQUIRED_IMPORT_REFS[node_id]),
+                    "open_gap": spec["open_gap"],
+                }
+                for node_id, spec in node_specs.items()
+            ],
+            "expected_probe_status": "current_wall_detected",
+            "forbidden_upgrades": list(QM_WALL_PROBE_FORBIDDEN_UPGRADES),
         }
 
     def formal_proof_ledger_audit_gate(self, claim_refs: list[str] | None = None) -> dict[str, object]:
@@ -7389,6 +7613,87 @@ class TheoryVerifierTests(unittest.TestCase):
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"fdc_frontier_obligation_status_mismatch"})
+
+    def test_qm_wall_probe_rejects_hidden_import_as_pass(self) -> None:
+        gate = self.qm_wall_probe_gate()
+        nodes = gate["nodes"]
+        if not isinstance(nodes, list):
+            self.fail("nodes must be a list")
+        for node in nodes:
+            if not isinstance(node, dict) or node.get("id") != "carrier_selection":
+                continue
+            node["result"] = "pass"
+            break
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_node_result_mismatch"})
+
+    def test_qm_wall_probe_rejects_missing_node(self) -> None:
+        gate = self.qm_wall_probe_gate()
+        nodes = gate["nodes"]
+        if not isinstance(nodes, list):
+            self.fail("nodes must be a list")
+        nodes.pop()
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_node_missing"})
+
+    def test_qm_wall_probe_rejects_import_ref_drift(self) -> None:
+        gate = self.qm_wall_probe_gate()
+        nodes = gate["nodes"]
+        if not isinstance(nodes, list):
+            self.fail("nodes must be a list")
+        for node in nodes:
+            if not isinstance(node, dict) or node.get("id") != "born_rule_derivation":
+                continue
+            node["imported_structure_refs"] = []
+            break
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_import_refs_mismatch"})
+
+    def test_qm_wall_probe_grounding_rejects_hilbert_status_drift(self) -> None:
+        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        theorem_cards = raw_manifest["theorem_cards"]
+        if not isinstance(theorem_cards, list):
+            self.fail("theorem_cards must be a list")
+        for theorem_card in theorem_cards:
+            if not isinstance(theorem_card, dict) or theorem_card.get("id") != "hilbert_carrier_derivation":
+                continue
+            theorem_card["proof_status"] = "open"
+            break
+        finite_gates = raw_manifest["finite_gates"]
+        if not isinstance(finite_gates, list):
+            self.fail("finite_gates must be a list")
+        finite_gates.append(self.qm_wall_probe_gate())
+        manifest = parse_manifest(raw_manifest)
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"qm_wall_probe_target_status_mismatch"})
 
     def test_formal_proof_ledger_rejects_uncovered_formal_claim(self) -> None:
         manifest = parse_manifest(

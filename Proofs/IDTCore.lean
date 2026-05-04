@@ -181,6 +181,23 @@ def FDCOpenObligationWitness.valid (w : FDCOpenObligationWitness) : Bool :=
     && w.requiredStatus != "formal_proof"
     && w.requiredStatus != "derived"
 
+structure QMWallNodeWitness where
+  id : String
+  result : String
+  computedResult : String
+  targetStatuses : List String
+  importRefs : List String
+  requiredImportRefs : List String
+  openGap : String
+deriving Repr
+
+def QMWallNodeWitness.valid (w : QMWallNodeWitness) : Bool :=
+  w.result == w.computedResult
+    && w.result != "bad"
+    && w.importRefs == w.requiredImportRefs
+    && decide (w.targetStatuses.length > 0)
+    && ((w.result == "pass" && w.openGap == "") || (w.result != "pass" && decide (w.openGap.length > 0)))
+
 structure JointOnlyRejectionWitness where
   id : String
   status : String
@@ -376,6 +393,7 @@ def registryWitnesses : List RegistryWitness :=
       "purification_filtering_recoverable_support_theorem",
       "qm_core_recompile_route",
       "qm_proof_anti_hallucination_audit",
+      "qm_wall_probe",
       "ramsey_clock_phase",
       "rebit_hidden_joint_invariant_separator",
       "recoverability_loss",
@@ -463,9 +481,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 231,
-    expectedDigest := "40409046d8a344fd5e650caf43625ad7df64d8396b2c6106304cf7b62832849b",
-    computedDigest := "40409046d8a344fd5e650caf43625ad7df64d8396b2c6106304cf7b62832849b"
+    expectedCount := 232,
+    expectedDigest := "e3745696fe442419d5041721b49e5e11c44355323f06f13030ad9e84e1008120",
+    computedDigest := "e3745696fe442419d5041721b49e5e11c44355323f06f13030ad9e84e1008120"
   },
   {
     id := "finite_primitive_sort_vocabulary",
@@ -918,6 +936,211 @@ def fdcOpenObligationWitnesses : List FDCOpenObligationWitness :=
   }
 ]
 
+def qmWallProbeTarget : String := "full_QM_I"
+
+def qmWallProbeForbiddenUpgrades : List String :=
+  [
+    "does_not_prove_full_QM_I",
+    "does_not_prove_absence_of_future_wall",
+    "does_not_treat_open_as_pass",
+    "does_not_hide_QM_imports",
+    "does_not_upgrade_blocked_to_open_without_proof",
+    "does_not_reclassify_candidate_principles_as_formal_proof"
+  ]
+
+def qmWallNodeWitnesses : List QMWallNodeWitness :=
+[
+  {
+    id := "primitive_core_boundary",
+    result := "pass",
+    computedResult := "pass",
+    targetStatuses := [
+      "primitive_core_locked"
+  ],
+    importRefs := [],
+    requiredImportRefs := [],
+    openGap := ""
+  },
+  {
+    id := "fdc_lower_principle",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "frontier_candidate"
+  ],
+    importRefs := [],
+    requiredImportRefs := [],
+    openGap := "FDC is a candidate principle, not a completed full-QM derivation."
+  },
+  {
+    id := "context_product_local_tomography",
+    result := "pass",
+    computedResult := "pass",
+    targetStatuses := [
+      "conditional_proof"
+  ],
+    importRefs := [],
+    requiredImportRefs := [],
+    openGap := ""
+  },
+  {
+    id := "distinguishability_geometry",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "target"
+  ],
+    importRefs := [
+      "psd_distinguishability_kernel"
+  ],
+    requiredImportRefs := [
+      "psd_distinguishability_kernel"
+  ],
+    openGap := "The PSD geometry is still an explicit obligation, not a primitive-core theorem."
+  },
+  {
+    id := "probability_measure_layer",
+    result := "pass",
+    computedResult := "pass",
+    targetStatuses := [
+      "regression_supported"
+  ],
+    importRefs := [],
+    requiredImportRefs := [],
+    openGap := ""
+  },
+  {
+    id := "measurement_facticity_mechanism",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "regression_supported"
+  ],
+    importRefs := [
+      "schur_inheritance_update"
+  ],
+    requiredImportRefs := [
+      "schur_inheritance_update"
+  ],
+    openGap := "Measurement facticity is regression-supported but still carries the Schur update import."
+  },
+  {
+    id := "carrier_selection",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "open"
+  ],
+    importRefs := [
+      "complex_amplitude_carrier"
+  ],
+    requiredImportRefs := [
+      "complex_amplitude_carrier"
+  ],
+    openGap := "Carrier selection remains open; current finite separators are not a universal theorem."
+  },
+  {
+    id := "hilbert_carrier_derivation",
+    result := "wall",
+    computedResult := "wall",
+    targetStatuses := [
+      "blocked",
+      "blocked"
+  ],
+    importRefs := [
+      "complex_amplitude_carrier"
+  ],
+    requiredImportRefs := [
+      "complex_amplitude_carrier"
+  ],
+    openGap := "Hilbert carrier derivation is currently blocked by the carrier import boundary."
+  },
+  {
+    id := "born_rule_derivation",
+    result := "wall",
+    computedResult := "wall",
+    targetStatuses := [
+      "open",
+      "blocked"
+  ],
+    importRefs := [
+      "quadratic_actualization_measure"
+  ],
+    requiredImportRefs := [
+      "quadratic_actualization_measure"
+  ],
+    openGap := "The universal Born derivation is blocked at the quadratic actualization obligation."
+  },
+  {
+    id := "tensor_composition",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "open",
+      "target"
+  ],
+    importRefs := [
+      "tensor_composition_import"
+  ],
+    requiredImportRefs := [
+      "tensor_composition_import"
+  ],
+    openGap := "Tensor composition is still a target/open obligation."
+  },
+  {
+    id := "reversible_dynamics",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "open"
+  ],
+    importRefs := [
+      "unitary_context_map_import"
+  ],
+    requiredImportRefs := [
+      "unitary_context_map_import"
+  ],
+    openGap := "Wigner-style reversible inheritance remains open."
+  },
+  {
+    id := "experiment_recompile_from_core",
+    result := "open",
+    computedResult := "open",
+    targetStatuses := [
+      "target"
+  ],
+    importRefs := [
+      "complex_amplitude_carrier",
+      "quadratic_actualization_measure",
+      "tensor_composition_import",
+      "unitary_context_map_import"
+  ],
+    requiredImportRefs := [
+      "complex_amplitude_carrier",
+      "quadratic_actualization_measure",
+      "tensor_composition_import",
+      "unitary_context_map_import"
+  ],
+    openGap := "The 35-experiment corpus is covered by gates, but not yet recompiled from the primitive core."
+  },
+  {
+    id := "continuum_action_scale",
+    result := "wall",
+    computedResult := "wall",
+    targetStatuses := [
+      "blocked",
+      "blocked"
+  ],
+    importRefs := [
+      "action_phase_hbar_bridge"
+  ],
+    requiredImportRefs := [
+      "action_phase_hbar_bridge"
+  ],
+    openGap := "The action scale remains blocked as a first-principles derivation."
+  }
+]
+
 def jointOnlyRejectionWitness : JointOnlyRejectionWitness :=
 {
   id := "joint_only_invariant_rejection",
@@ -956,6 +1179,9 @@ def currentSemanticProofChecks : List Bool :=
     fdcConditionWitnesses.all FDCConditionWitness.valid,
     fdcNegativeControlWitnesses.all FDCNegativeControlWitness.valid,
     fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid,
+    qmWallProbeTarget == "full_QM_I",
+    qmWallProbeForbiddenUpgrades.length == 6,
+    qmWallNodeWitnesses.all QMWallNodeWitness.valid,
     jointOnlyRejectionWitness.valid
   ]
 
@@ -1009,6 +1235,10 @@ theorem current_fdc_negative_control_witnesses_valid :
 
 theorem current_fdc_open_obligation_witnesses_valid :
     fdcOpenObligationWitnesses.all FDCOpenObligationWitness.valid = true := by
+  native_decide
+
+theorem current_qm_wall_node_witnesses_valid :
+    qmWallNodeWitnesses.all QMWallNodeWitness.valid = true := by
   native_decide
 
 theorem current_joint_only_rejection_witness_valid :

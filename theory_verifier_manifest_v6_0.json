@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.22.0",
+  "theory_version": "v6.23.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4967,12 +4967,12 @@
       "expected_signature_status": "formalized"
     },
     {
+      "expected_component_status": "formal_proof",
+      "expected_gate_type_count": 232,
+      "expected_gate_type_digest": "e3745696fe442419d5041721b49e5e11c44355323f06f13030ad9e84e1008120",
       "id": "idt_core_gate_type_registry_audit_demo",
-      "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 231,
-      "expected_gate_type_digest": "40409046d8a344fd5e650caf43625ad7df64d8396b2c6106304cf7b62832849b",
-      "expected_component_status": "formal_proof"
+      "type": "idt_core_gate_type_registry_audit"
     },
     {
       "id": "idt_core_signature_registry_audit_demo",
@@ -7973,6 +7973,355 @@
         "does_not_close_nonfinite_gpt_residual",
         "does_not_import_QM_structures_as_primitives"
       ]
+    },
+    {
+      "expected_probe_status": "current_wall_detected",
+      "forbidden_import_refs": [
+        "W",
+        "Gamma_I",
+        "Born",
+        "Hilbert",
+        "tensor",
+        "unitary",
+        "hbar_I",
+        "calibrated_hbar_I",
+        "complex_amplitude_carrier",
+        "psd_distinguishability_kernel",
+        "quadratic_actualization_measure",
+        "schur_inheritance_update",
+        "tensor_composition_import",
+        "unitary_context_map_import",
+        "action_phase_hbar_bridge"
+      ],
+      "forbidden_upgrades": [
+        "does_not_prove_full_QM_I",
+        "does_not_prove_absence_of_future_wall",
+        "does_not_treat_open_as_pass",
+        "does_not_hide_QM_imports",
+        "does_not_upgrade_blocked_to_open_without_proof",
+        "does_not_reclassify_candidate_principles_as_formal_proof"
+      ],
+      "id": "qm_wall_probe_demo",
+      "nodes": [
+        {
+          "dependency_refs": [
+            "idt_primitive_core_contract_demo"
+          ],
+          "evidence_refs": [
+            "idt_primitive_core_contract_demo"
+          ],
+          "id": "primitive_core_boundary",
+          "imported_structure_refs": [],
+          "open_gap": "",
+          "question": "Is the primitive core free of direct QM carrier imports?",
+          "result": "pass",
+          "target_refs": [
+            {
+              "expected_status": "primitive_core_locked",
+              "field": "expected_contract_status",
+              "id": "idt_primitive_core_contract_demo",
+              "kind": "finite_gate_field"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "facticizable_distinguishability_closure_frontier_demo"
+          ],
+          "evidence_refs": [
+            "facticizable_distinguishability_closure_frontier_demo"
+          ],
+          "id": "fdc_lower_principle",
+          "imported_structure_refs": [],
+          "open_gap": "FDC is a candidate principle, not a completed full-QM derivation.",
+          "question": "Does FDC currently close as a lower-level principle?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "frontier_candidate",
+              "field": "expected_frontier_status",
+              "id": "facticizable_distinguishability_closure_frontier_demo",
+              "kind": "finite_gate_field"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "context_product_exhaustion_implies_local_tomography",
+            "context_product_exhaustion_demo"
+          ],
+          "evidence_refs": [
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "id": "context_product_local_tomography",
+          "imported_structure_refs": [],
+          "open_gap": "",
+          "question": "Does context-product exhaustion provide a checked local-tomography separator?",
+          "result": "pass",
+          "target_refs": [
+            {
+              "expected_status": "conditional_proof",
+              "id": "context_product_exhaustion_implies_local_tomography",
+              "kind": "theorem_card"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "distinguishability_geometry",
+            "distinguishability_geometry_probe_demo"
+          ],
+          "evidence_refs": [
+            "distinguishability_geometry_probe_demo"
+          ],
+          "id": "distinguishability_geometry",
+          "imported_structure_refs": [
+            "psd_distinguishability_kernel"
+          ],
+          "open_gap": "The PSD geometry is still an explicit obligation, not a primitive-core theorem.",
+          "question": "Is the positive distinguishability geometry derived from carrier-neutral primitives?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "target",
+              "id": "distinguishability_geometry",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "probability_measure_layer"
+          ],
+          "evidence_refs": [
+            "born_context_probability_table_demo"
+          ],
+          "id": "probability_measure_layer",
+          "imported_structure_refs": [],
+          "open_gap": "",
+          "question": "Is a finite operational probability layer regression-supported?",
+          "result": "pass",
+          "target_refs": [
+            {
+              "expected_status": "regression_supported",
+              "id": "probability_measure_layer",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "measurement_facticity_mechanism",
+            "measurement_facticity_route_demo"
+          ],
+          "evidence_refs": [
+            "measurement_facticity_route_demo"
+          ],
+          "id": "measurement_facticity_mechanism",
+          "imported_structure_refs": [
+            "schur_inheritance_update"
+          ],
+          "open_gap": "Measurement facticity is regression-supported but still carries the Schur update import.",
+          "question": "Is the finite measurement facticity mechanism regression-supported?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "regression_supported",
+              "id": "measurement_facticity_mechanism",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "universal_carrier_selection_theorem"
+          ],
+          "evidence_refs": [
+            "generic_gpt_closure_separator_demo"
+          ],
+          "id": "carrier_selection",
+          "imported_structure_refs": [
+            "complex_amplitude_carrier"
+          ],
+          "open_gap": "Carrier selection remains open; current finite separators are not a universal theorem.",
+          "question": "Is a universal carrier selector proved without importing the complex carrier?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "open",
+              "id": "universal_carrier_selection_theorem",
+              "kind": "theorem_card"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "hilbert_carrier_derivation"
+          ],
+          "evidence_refs": [
+            "idt_primitive_core_contract_demo"
+          ],
+          "id": "hilbert_carrier_derivation",
+          "imported_structure_refs": [
+            "complex_amplitude_carrier"
+          ],
+          "open_gap": "Hilbert carrier derivation is currently blocked by the carrier import boundary.",
+          "question": "Is Hilbert-space carrier structure derived from IDT primitives?",
+          "result": "wall",
+          "target_refs": [
+            {
+              "expected_status": "blocked",
+              "id": "hilbert_carrier_derivation",
+              "kind": "theorem_card"
+            },
+            {
+              "expected_status": "blocked",
+              "id": "hilbert_carrier_derivation",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "universal_born_rule_theorem",
+            "born_rule_derivation"
+          ],
+          "evidence_refs": [
+            "finite_born_quadratic_readout_survivor"
+          ],
+          "id": "born_rule_derivation",
+          "imported_structure_refs": [
+            "quadratic_actualization_measure"
+          ],
+          "open_gap": "The universal Born derivation is blocked at the quadratic actualization obligation.",
+          "question": "Is the Born rule derived rather than supplied by a quadratic readout obligation?",
+          "result": "wall",
+          "target_refs": [
+            {
+              "expected_status": "open",
+              "id": "universal_born_rule_theorem",
+              "kind": "theorem_card"
+            },
+            {
+              "expected_status": "blocked",
+              "id": "born_rule_derivation",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "monoidal_tensor_composition_theorem",
+            "tensor_composition_law"
+          ],
+          "evidence_refs": [
+            "context_product_exhaustion_implies_local_tomography"
+          ],
+          "id": "tensor_composition",
+          "imported_structure_refs": [
+            "tensor_composition_import"
+          ],
+          "open_gap": "Tensor composition is still a target/open obligation.",
+          "question": "Is monoidal tensor composition proved from the primitive core?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "open",
+              "id": "monoidal_tensor_composition_theorem",
+              "kind": "theorem_card"
+            },
+            {
+              "expected_status": "target",
+              "id": "tensor_composition_law",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "wigner_reversible_inheritance_theorem",
+            "reversible_inheritance_symmetry"
+          ],
+          "evidence_refs": [
+            "unitary_measurement_context_demo"
+          ],
+          "id": "reversible_dynamics",
+          "imported_structure_refs": [
+            "unitary_context_map_import"
+          ],
+          "open_gap": "Wigner-style reversible inheritance remains open.",
+          "question": "Is reversible dynamics derived as Wigner/unitary structure?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "open",
+              "id": "wigner_reversible_inheritance_theorem",
+              "kind": "theorem_card"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "recompile_35_from_core"
+          ],
+          "evidence_refs": [
+            "qm_core_recompile_route_demo"
+          ],
+          "id": "experiment_recompile_from_core",
+          "imported_structure_refs": [
+            "complex_amplitude_carrier",
+            "quadratic_actualization_measure",
+            "tensor_composition_import",
+            "unitary_context_map_import"
+          ],
+          "open_gap": "The 35-experiment corpus is covered by gates, but not yet recompiled from the primitive core.",
+          "question": "Are all 35 QM experiments recompiled from the primitive core without QM imports?",
+          "result": "open",
+          "target_refs": [
+            {
+              "expected_status": "target",
+              "id": "recompile_35_from_core",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        },
+        {
+          "dependency_refs": [
+            "first_principles_hbar_lock",
+            "continuum_action_scale_extension"
+          ],
+          "evidence_refs": [
+            "hbar_I"
+          ],
+          "id": "continuum_action_scale",
+          "imported_structure_refs": [
+            "action_phase_hbar_bridge"
+          ],
+          "open_gap": "The action scale remains blocked as a first-principles derivation.",
+          "question": "Is hbar/action scale locked from first principles?",
+          "result": "wall",
+          "target_refs": [
+            {
+              "expected_status": "blocked",
+              "id": "first_principles_hbar_lock",
+              "kind": "theorem_card"
+            },
+            {
+              "expected_status": "blocked",
+              "id": "continuum_action_scale_extension",
+              "kind": "qm_core_obligation"
+            }
+          ]
+        }
+      ],
+      "primitive_basis": [
+        "history_space",
+        "event_algebra",
+        "readout_context_family",
+        "inheritance_act_family"
+      ],
+      "target": "full_QM_I",
+      "type": "qm_wall_probe"
     },
     {
       "id": "formal_proof_ledger_audit_demo",

@@ -73,6 +73,11 @@ Current auditable results:
   admissible readout witnesses; hidden joint invariants, global fact tables,
   unconstrained GPT cones, and nonfinite residuals are tracked as negative
   controls without closing QM.
+- QM wall probe: the verifier now audits the route to `full_QM_I` as diagnostic
+  cells. Primitive-core and context-product local tomography currently pass,
+  FDC/carrier/tensor/unitary/recompile cells remain open, and
+  Hilbert-carrier, Born-rule, and first-principles action-scale cells are
+  recorded as current walls rather than hidden upgrades.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first
