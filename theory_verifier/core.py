@@ -402,6 +402,9 @@ IDT_CORE_FINITE_SIGNATURE_COMPONENTS = (
     "finite_route_family_registry",
 )
 
+IDT_CORE_GATE_TYPE_REGISTRY_SOURCE = "theory_verifier.FINITE_GATE_CHECKS"
+IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS = "formal_proof"
+
 IDT_CORE_FINITE_SIGNATURE_STATUSES = (
     "open",
     "conditional_support",
@@ -413,6 +416,11 @@ IDT_CORE_FINITE_SIGNATURE_RESULTS = (
     "conditional_signature",
     "formalized",
 )
+
+
+def idt_core_gate_type_registry_digest(gate_types: tuple[str, ...]) -> str:
+    return hashlib.sha256("\n".join(gate_types).encode("utf-8")).hexdigest()
+
 
 IDT_CORE_GRAMMAR_ASSUMPTION_COMPONENTS: dict[str, tuple[str, ...]] = {
     "bounded_context_arity": (
@@ -7844,6 +7852,64 @@ def check_idt_core_finite_signature_frontier_gate(gate: FiniteGate) -> list[Issu
                 f"{gate.identifier}: expected {expected_status}, computed {computed_status}",
             )
         ]
+    return []
+
+
+def check_idt_core_gate_type_registry_audit_gate(gate: FiniteGate) -> list[Issue]:
+    registry_source = require_string(gate.payload.get("registry_source"), f"{gate.identifier}.registry_source")
+    if registry_source != IDT_CORE_GATE_TYPE_REGISTRY_SOURCE:
+        return [
+            Issue(
+                "idt_core_gate_type_registry_source_mismatch",
+                f"{gate.identifier}: registry_source must be {IDT_CORE_GATE_TYPE_REGISTRY_SOURCE}",
+            )
+        ]
+
+    expected_gate_type_count = parse_positive_integer(
+        gate.payload.get("expected_gate_type_count"),
+        f"{gate.identifier}.expected_gate_type_count",
+    )
+    expected_gate_type_digest = require_string(
+        gate.payload.get("expected_gate_type_digest"),
+        f"{gate.identifier}.expected_gate_type_digest",
+    )
+    expected_component_status = require_string(
+        gate.payload.get("expected_component_status"),
+        f"{gate.identifier}.expected_component_status",
+    )
+
+    registered_gate_types = tuple(sorted(FINITE_GATE_CHECKS))
+    if expected_gate_type_count != len(registered_gate_types):
+        return [
+            Issue(
+                "idt_core_gate_type_registry_count_mismatch",
+                f"{gate.identifier}: expected count {expected_gate_type_count}, registered {len(registered_gate_types)}",
+            )
+        ]
+
+    computed_digest = idt_core_gate_type_registry_digest(registered_gate_types)
+    if expected_gate_type_digest != computed_digest:
+        return [
+            Issue(
+                "idt_core_gate_type_registry_digest_mismatch",
+                (
+                    f"{gate.identifier}: expected gate registry digest {expected_gate_type_digest}, "
+                    f"computed {computed_digest}"
+                ),
+            )
+        ]
+
+    if expected_component_status != IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS:
+        return [
+            Issue(
+                "idt_core_gate_type_registry_status_mismatch",
+                (
+                    f"{gate.identifier}: expected_component_status must be "
+                    f"{IDT_CORE_GATE_TYPE_REGISTRY_COMPONENT_STATUS}"
+                ),
+            )
+        ]
+
     return []
 
 
@@ -16686,6 +16752,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "uniform_witness_bound_route": check_uniform_witness_bound_route_gate,
     "uniform_witness_bound_assumption_frontier": check_uniform_witness_bound_assumption_frontier_gate,
     "idt_core_finite_signature_frontier": check_idt_core_finite_signature_frontier_gate,
+    "idt_core_gate_type_registry_audit": check_idt_core_gate_type_registry_audit_gate,
     "idt_core_grammar_assumption_frontier": check_idt_core_grammar_assumption_frontier_gate,
     "idt_purification_filtering": check_idt_purification_filtering_gate,
     "idt_bounded_correlation": check_idt_bounded_correlation_gate,

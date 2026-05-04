@@ -25,6 +25,8 @@ SAFE_EDIT_FIELDS: dict[str, frozenset[str]] = {
     "theorem_cards": frozenset({"proof_status", "physical_scope"}),
 }
 
+SAFE_ROOT_EDIT_FIELDS = frozenset({"theory_version"})
+
 LIST_OBJECT_COLLECTIONS = frozenset(
     {
         "equations",
@@ -163,6 +165,24 @@ def edit_field(path: Path, collection: str, identifier: str, field: str, value: 
         return manifest_sha256(path)
 
 
+def edit_root_field(path: Path, field: str, value: str, expect_sha: str) -> str:
+    if field not in SAFE_ROOT_EDIT_FIELDS:
+        raise GraphQueryError(f"root field {field!r} is not an allowed edit field")
+    validate_edit_value(field, value)
+    with manifest_lock(path):
+        before_sha = manifest_sha256(path)
+        if before_sha != expect_sha:
+            raise GraphQueryError(f"manifest sha mismatch: expected {expect_sha}, got {before_sha}")
+        manifest = load_json(path)
+        old_value = manifest.get(field)
+        if not isinstance(old_value, str):
+            raise GraphQueryError(f"manifest.{field} must be an existing string field")
+        text = path.read_text(encoding="utf-8")
+        updated = replace_string_field(text, 0, len(text.splitlines()) - 1, field, old_value, value)
+        atomic_write_text(path, updated)
+        return manifest_sha256(path)
+
+
 def add_object(path: Path, collection: str, raw_object: str, after_id: str, expect_sha: str) -> str:
     if collection not in LIST_OBJECT_COLLECTIONS:
         raise GraphQueryError(f"{collection!r} is not an appendable list-object collection")
@@ -274,6 +294,8 @@ def validate_edit_value(field: str, value: str) -> None:
         raise GraphQueryError(f"unknown status value {value!r}")
     if field == "proof_status" and value not in PROOF_STATUS_VALUES:
         raise GraphQueryError(f"unknown proof_status value {value!r}")
+    if field == "theory_version" and re.fullmatch(r"v\d+\.\d+\.\d+", value) is None:
+        raise GraphQueryError(f"invalid theory_version value {value!r}")
     if not value.strip():
         raise GraphQueryError(f"{field} must not be empty")
 
@@ -449,6 +471,11 @@ def build_parser() -> argparse.ArgumentParser:
     edit_parser.add_argument("--value", required=True)
     edit_parser.add_argument("--expect-sha", required=True)
 
+    root_edit_parser = subparsers.add_parser("set-root-field", help="Safely edit one allowed root string field.")
+    root_edit_parser.add_argument("--field", required=True)
+    root_edit_parser.add_argument("--value", required=True)
+    root_edit_parser.add_argument("--expect-sha", required=True)
+
     add_parser = subparsers.add_parser("add-object", help="Atomically add one JSON object after an existing id.")
     add_parser.add_argument("--collection", required=True)
     add_parser.add_argument("--after-id", required=True)
@@ -484,6 +511,14 @@ def main(argv: Sequence[str] | None = None, output: TextIO | None = None) -> int
                 manifest_path,
                 args.collection,
                 args.id,
+                args.field,
+                args.value,
+                args.expect_sha,
+            )
+            print_json({"ok": True, "sha256": new_sha}, stream)
+        elif args.command == "set-root-field":
+            new_sha = edit_root_field(
+                manifest_path,
                 args.field,
                 args.value,
                 args.expect_sha,

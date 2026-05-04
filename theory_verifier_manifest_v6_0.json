@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v6.10.0",
+  "theory_version": "v6.11.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -4913,12 +4913,11 @@
         },
         {
           "id": "finite_gate_type_registry",
-          "status": "conditional_support",
+          "status": "formal_proof",
           "evidence_refs": [
-            "theory_verifier finite gate checks",
-            "idt_metalang_research_graph_contract_demo"
+            "idt_core_gate_type_registry_audit_demo"
           ],
-          "open_gap": "Gate types are executable in the verifier registry, but not yet exported as a first-class IDT-Core finite signature object."
+          "open_gap": ""
         },
         {
           "id": "finite_route_family_registry",
@@ -4932,6 +4931,14 @@
         }
       ],
       "expected_signature_status": "conditional_signature"
+    },
+    {
+      "id": "idt_core_gate_type_registry_audit_demo",
+      "type": "idt_core_gate_type_registry_audit",
+      "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
+      "expected_gate_type_count": 221,
+      "expected_gate_type_digest": "2bbdcfe4c187b47784440228915f9f95f566b0cfff3c701ebe05713b60bdfe2d",
+      "expected_component_status": "formal_proof"
     },
     {
       "id": "idt_core_bounded_arity_frontier_demo",

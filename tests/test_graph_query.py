@@ -9,6 +9,7 @@ from scripts.graph_query import (
     GraphQueryError,
     add_object,
     edit_field,
+    edit_root_field,
     graph_summary,
     incoming_refs,
     manifest_sha256,
@@ -65,6 +66,18 @@ class GraphQueryTests(unittest.TestCase):
 
             updated = json.loads(manifest_path.read_text(encoding="utf-8"))
             self.assertEqual("conditional_proof", updated["theorem_cards"][0]["proof_status"])
+
+    def test_safe_root_edit_updates_theory_version(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            manifest_path = write_sample_manifest(Path(raw_dir))
+            old_sha = manifest_sha256(manifest_path)
+            new_sha = edit_root_field(manifest_path, "theory_version", "v6.10.1", old_sha)
+            self.assertNotEqual(old_sha, new_sha)
+
+            updated = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual("v6.10.1", updated["theory_version"])
+            with self.assertRaises(GraphQueryError):
+                edit_root_field(manifest_path, "theory_version", "6.10.2", new_sha)
 
     def test_add_object_requires_current_sha_and_unique_id(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:

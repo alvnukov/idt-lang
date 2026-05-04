@@ -553,6 +553,22 @@ The first reports `conditional_signature` over four IDT-Core components:
 3. finite gate-type registry;
 4. finite route-family registry.
 
+One component has now been promoted from conditional support to executable
+formal proof:
+
+`finite_gate_type_registry`
+
+is checked by:
+
+`idt_core_gate_type_registry_audit_demo`.
+
+The audit snapshots the count and digest of the finite gate-type list exported
+by the verifier and compares them against the live `FINITE_GATE_CHECKS`
+registry. This proves that the gate-type vocabulary is a finite,
+machine-audited registry for this version of IDT-Core without embedding the
+entire registry list in the manifest. It does not formalize the remaining
+primitive-sort, claim-role, or route-family vocabularies.
+
 The other three report `conditional_basis` for bounded arity, route-generator
 basis, and no-new-primitive-effects closure. This narrows the next proof work
 to formalizing compact IDT-Core grammar theorems rather than adding more QM

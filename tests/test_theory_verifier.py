@@ -102,6 +102,7 @@ from theory_verifier.core import (
     G_EMERGENCE_CLEARANCE_TARGET,
     FIRST_PRINCIPLES_G_CANDIDATE_REQUIRED_SYMBOLS,
     FIRST_PRINCIPLES_G_CANDIDATE_TARGET,
+    FINITE_GATE_CHECKS,
     FIXED_POINT_STEP_INVARIANT_REQUIRED_SYMBOLS,
     FIXED_POINT_STEP_INVARIANT_TARGET,
     KAPPA_OMEGA_CONSISTENCY_REQUIRED_SYMBOLS,
@@ -137,6 +138,7 @@ from theory_verifier.core import (
     GPT_SEPARATOR_PRINCIPLES,
     IDT_BOUNDED_CORRELATION_CONDITIONS,
     IDT_PURIFICATION_FILTERING_CONDITIONS,
+    idt_core_gate_type_registry_digest,
     IDT_LOCAL_TOMOGRAPHY_CONDITIONS,
     NONCOMPLEX_JORDAN_SEPARATOR_CONDITIONS,
     QM_CORE_PROOF_REQUIRED_OBLIGATIONS,
@@ -3752,6 +3754,75 @@ class TheoryVerifierTests(unittest.TestCase):
         )
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"idt_core_finite_signature_frontier_status_mismatch"})
+
+    def test_idt_core_gate_type_registry_audit_rejects_stale_gate_type_count(self) -> None:
+        gate_types = tuple(sorted(FINITE_GATE_CHECKS))
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "missing_idt_core_gate_type_registry_audit",
+                        "type": "idt_core_gate_type_registry_audit",
+                        "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
+                        "expected_gate_type_count": len(gate_types) - 1,
+                        "expected_gate_type_digest": idt_core_gate_type_registry_digest(gate_types),
+                        "expected_component_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_gate_type_registry_count_mismatch"})
+
+    def test_idt_core_gate_type_registry_audit_rejects_stale_gate_type_digest(self) -> None:
+        gate_types = tuple(sorted(FINITE_GATE_CHECKS))
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "stale_idt_core_gate_type_registry_audit",
+                        "type": "idt_core_gate_type_registry_audit",
+                        "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
+                        "expected_gate_type_count": len(gate_types),
+                        "expected_gate_type_digest": "0" * 64,
+                        "expected_component_status": "formal_proof",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_gate_type_registry_digest_mismatch"})
+
+    def test_idt_core_gate_type_registry_audit_rejects_nonformal_status(self) -> None:
+        gate_types = tuple(sorted(FINITE_GATE_CHECKS))
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "nonformal_idt_core_gate_type_registry_audit",
+                        "type": "idt_core_gate_type_registry_audit",
+                        "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
+                        "expected_gate_type_count": len(gate_types),
+                        "expected_gate_type_digest": idt_core_gate_type_registry_digest(gate_types),
+                        "expected_component_status": "conditional_support",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"idt_core_gate_type_registry_status_mismatch"})
 
     def test_idt_core_grammar_assumption_frontier_reports_conditional_basis(self) -> None:
         target_assumption = "bounded_context_arity"
