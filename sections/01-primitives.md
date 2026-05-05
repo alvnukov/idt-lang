@@ -57,21 +57,32 @@ The bound successor-base candidate now makes this requirement explicit:
 
 ```text
 Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean
+Proofs/QMClosure/B1PrimitiveBase.lean
 ```
 
-It defines `BoundPrimitiveGeneratedBase`, constructs `BoundSourceAtom` as an
-inductive sum of typed primitive witness sorts, and proves:
+`BoundPrimitiveGeneratedBase` constructs `BoundSourceAtom` as an inductive sum
+of typed primitive witness sorts, and proves:
 
 ```text
 bound_admissibility_role_atoms_are_constructor_generated
 bound_primitive_generated_base_yields_full_qm_obligation_bundle
 ```
 
-This solves the free-admissibility problem for the successor-base route:
+`B1PrimitiveBase` then promotes that bound successor-base route with explicit
+no-free-admissibility and no-target-import boundaries, and proves:
+
+```text
+b1_primitive_base_constructor_binds_admissibility
+b1_primitive_base_promotes_successor_boundaries
+b1_primitive_base_yields_full_qm_obligation_bundle
+b1_primitive_base_yields_import_guards
+```
+
+This solves the free-admissibility problem for the B1 successor-base route:
 admissibility roles are constructor-generated from the successor primitive base,
-not arbitrary predicates on a detached atom universe. It does not prove that the
-successor base is already derived from the older `B0CandidateBase`, and it does
-not prove QM from primitives.
+not arbitrary predicates on a detached atom universe. It does not prove that B1
+is derived from the older `B0CandidateBase`, and it does not prove QM from
+primitives.
 
 The binding contract is:
 
@@ -84,9 +95,9 @@ The binding contract is:
 | product binding | composite/product witnesses are generated from admissible local context witnesses |
 | no-hidden-joint binding | stable joint facts must be witnessed through generated product/refinement routes |
 
-Until the bound successor base is either promoted as the primitive base or
-derived from `B0CandidateBase`, any route from B0 to CGSC/QM remains conditional
-and must not be marked as a proof from primitives.
+Until B1 is explicitly accepted as the successor primitive base or derived from
+`B0CandidateBase`, any route from B0 to CGSC/QM remains conditional and must not
+be marked as a proof from primitives.
 
 Base rule:
 

@@ -15125,3 +15125,47 @@ bound successor base: constructor-bound CGSC source families registered
 full QM proof: still conditional until the successor-base route is promoted
 or derived and the 21 package artifacts become formal primitive proofs
 ```
+
+### 174.293. B1 Primitive-Base Promotion
+
+The successor-base route now has an explicit B1 promotion artifact:
+
+```text
+Proofs/QMClosure/B1PrimitiveBase.lean
+```
+
+It wraps `BoundPrimitiveGeneratedBase` with three proof-boundary commitments:
+
+```text
+successorBasePromoted
+noFreeAdmissibilityBoundary
+noTargetImportBoundary
+```
+
+Machine-checked theorems:
+
+```text
+b1_primitive_base_constructor_binds_admissibility
+b1_primitive_base_promotes_successor_boundaries
+b1_primitive_base_yields_full_qm_obligation_bundle
+b1_primitive_base_yields_import_guards
+```
+
+Updated evaluator status:
+
+```text
+cgsc_semantic_content_wall = B1_PRIMITIVE_BASE_REGISTERED
+cgsc_primitive_derivation = SUCCESSOR_BASE_DERIVATION_REGISTERED
+cgsc_extension_wall_probe = EXTENSION_ROUTE_READY
+```
+
+This removes the previous blocker "promote the bound successor base" for the
+B1 route. The new blocker is sharper:
+
+```text
+derive B1 from older B0 or explicitly migrate the primitive base to B1;
+then turn B1 package projections into semantic target proofs.
+```
+
+This is still not a proof of QM. It is a registered conditional route from B1
+to the current full-QM obligation bundle, with import guards preserved.

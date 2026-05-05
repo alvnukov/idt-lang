@@ -9806,6 +9806,43 @@
             "does_not_claim_bound_successor_base_is_derived_from_B0",
             "does_not_mark_conditional_bound_base_as_QM_proof"
           ]
+        },
+        {
+          "id": "b1_primitive_base_conditional_artifact",
+          "statement": "Conditional Lean artifact promoting BoundPrimitiveGeneratedBase into B1PrimitiveBase with explicit no-free-admissibility and no-target-import boundaries, then yielding the CGSC/full-QM obligation bundle. This registers the B1 primitive-base route but does not prove full_QM_I or target Hilbert/Born/unitary/tensor semantics.",
+          "scope": "conditional_b1_primitive_base_to_full_qm_obligation_bundle",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/B1PrimitiveBase.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.B1PrimitiveBase"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "b1_primitive_base",
+            "successor_boundary_promotion"
+          ],
+          "claim_refs": [
+            "b1_primitive_base.to_full_qm_obligation_bundle",
+            "b1_primitive_base.boundary_promotion"
+          ],
+          "theorem": "IDT.QMClosure.b1_primitive_base_yields_full_qm_obligation_bundle",
+          "open_gaps": [
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1",
+            "turn B1 package projections into semantic target proofs before any full-QM upgrade",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_Hilbert_Born_unitary_tensor_semantics_are_proved",
+            "does_not_mark_conditional_B1_base_as_full_QM_proof"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

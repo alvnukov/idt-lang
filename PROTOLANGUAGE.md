@@ -842,8 +842,10 @@ tracks admissible context covers, local outcome-event presheaves, inheritance
 transition families, facticization witnesses, and stable distinguishability as
 lower-base candidates. The current v6 primitive core remains an executable
 scaffold until a migration gate recovers it as a readout interface or marks it
-as superseded. This does not derive Hilbert space, Born rule, GR, full QM,
-`hbar_I`, or `G_I`.
+as superseded. The B1 Lean route now constructor-binds the successor-base
+admissibility interface and no-target-import boundaries, but it is still a
+conditional route rather than a formal QM derivation. This does not derive
+Hilbert space, Born rule, GR, full QM, `hbar_I`, or `G_I`.
 
 ---
 

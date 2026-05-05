@@ -397,7 +397,10 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
     route_draft = cgsc_route.build_probe()
     route_clauses = route_clause_ids()
     semantic_probe = semantic_content_wall.build_probe()
-    successor_base_bound = semantic_probe.verdict == "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED"
+    successor_base_bound = semantic_probe.verdict in (
+        "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED",
+        "B1_PRIMITIVE_BASE_REGISTERED",
+    )
     checks = [
         check_clause(requirement, route_clauses, successor_base_bound)
         for requirement in CLAUSE_REQUIREMENTS
@@ -444,8 +447,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
         checks=checks,
         route_draft_checks=route_draft_checks,
         next_blocker=(
-            "promote the bound successor primitive base or prove its data from B0, then prove the six "
-            "CGSC extensions from that bound base or reject CGSC as insufficient for full QM inevitability"
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1, then prove the six "
+            "CGSC extension semantics from that base or reject CGSC as insufficient for full QM inevitability"
         ),
     )
 

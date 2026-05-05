@@ -109,8 +109,10 @@ The main current successes are bounded and methodological:
    records admissible contexts, local outcome-event presheaves, inheritance
    transitions, facticization witnesses, and stable distinguishability as the
    lower-base candidate, while keeping the v6 core as a verifier-facing
-   scaffold until a migration gate recovers or supersedes it. This does not
-   upgrade QM, Hilbert space, Born rule, GR, `hbar_I`, or `G_I`.
+   scaffold until a migration gate recovers or supersedes it. The B1 Lean route
+   now binds admissibility to the successor base and preserves no-target-import
+   guards, but remains a conditional route. This does not upgrade QM, Hilbert
+   space, Born rule, GR, `hbar_I`, or `G_I`.
 
 ## What The Verifier Catches
 

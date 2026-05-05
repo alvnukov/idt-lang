@@ -73,7 +73,9 @@ Current auditable results:
   outcome-event presheaves, inheritance transition families, facticization
   witnesses, and stable distinguishability are tracked as the lower-base
   candidate. The v6 core must be recovered as a readout interface or explicitly
-  superseded before this becomes a completed migration.
+  superseded before this becomes a completed migration. The B1 Lean route now
+  constructor-binds admissibility and no-target-import boundaries for the
+  successor-base candidate, but remains conditional rather than a QM proof.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

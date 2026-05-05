@@ -365,7 +365,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> ExtensionWallProbe:
         control_checks=control_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "promote the bound successor primitive base or prove its data from B0; "
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1; "
             "the extension packages are constructor-bound but not formal full-QM proofs"
         ),
     )

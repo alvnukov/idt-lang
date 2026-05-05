@@ -3,7 +3,7 @@
   "artifact_status": "primitive_derivation_route_draft_not_formal_proof",
   "theorem_card": {
     "id": "context_generated_stable_closure_from_primitives_route",
-    "statement": "Context-generated stable closure is not yet derived from the older B0 candidate. The current B0 candidate supports finite generation and facticizable separation as candidate clauses, grounds the import boundary, and the successor BoundPrimitiveGeneratedBase now constructor-binds the six CGSC extension families without importing Hilbert, Born, unitary, tensor, Stone, or spectral structure.",
+    "statement": "Context-generated stable closure is not yet derived from the older B0 candidate. The current B0 candidate supports finite generation and facticizable separation as candidate clauses, grounds the import boundary, and B1 now promotes the bound successor base with no-free-admissibility and no-target-import boundaries without importing Hilbert, Born, unitary, tensor, Stone, or spectral structure.",
     "role": "primitive_derivation_route",
     "proof_status": "open",
     "verifier": "scripts/evaluate_cgsc_primitive_derivation.py",
@@ -11,6 +11,7 @@
       "Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json",
       "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean",
       "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean",
+      "Proofs/QMClosure/B1PrimitiveBase.lean",
       "scripts/evaluate_context_generated_stable_closure_route_draft.py",
       "scripts/evaluate_cgsc_semantic_content_wall.py",
       "sections/01-primitives.md"
@@ -18,7 +19,7 @@
     "known_failures": [
       "no_clause_formal_from_primitives",
       "b0_lower_base_primitives_are_candidates",
-      "bound_successor_base_not_promoted_or_derived_from_B0",
+      "b1_primitive_base_registered_not_target_semantic_proofs",
       "full_qm_inevitability_route_remains_open"
     ],
     "physical_scope": "primitive-base derivation route for CGSC only",

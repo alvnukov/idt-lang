@@ -301,7 +301,7 @@ def validate_draft(
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
         "cgsc_primitive_derivation_successor_base_registered_not_formal",
-        "bound_successor_base_not_promoted_or_derived_from_B0",
+        "b1_primitive_base_registered_not_target_semantic_proofs",
         "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
@@ -392,8 +392,8 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "promote the bound successor primitive base or prove its data from B0, "
-            "then close CGSC primitive derivation and promote conditional artifacts to formal primitive proofs"
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1, "
+            "then close CGSC target semantics and promote conditional artifacts to formal primitive proofs"
         ),
     )
 

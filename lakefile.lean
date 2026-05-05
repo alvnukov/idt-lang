@@ -18,5 +18,6 @@ lean_lib Proofs where
     `Proofs.QMClosure.UniversalPrimitiveToyWall,
     `Proofs.QMClosure.PrimitiveGeneratedSourceKernel,
     `Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall,
-    `Proofs.QMClosure.BoundPrimitiveGeneratedBase
+    `Proofs.QMClosure.BoundPrimitiveGeneratedBase,
+    `Proofs.QMClosure.B1PrimitiveBase
   ]

@@ -32,6 +32,8 @@ Verdict = Literal[
     "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED",
     "BOUND_PRIMITIVE_GENERATED_BASE_CHECK_FAILED",
     "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED",
+    "B1_PRIMITIVE_BASE_CHECK_FAILED",
+    "B1_PRIMITIVE_BASE_REGISTERED",
     "WALL_DRAFT_INVALID",
 ]
 CheckStatus = Literal["PASS", "FAIL"]
@@ -64,6 +66,7 @@ PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_COMMAND = (
     "lake build Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall"
 )
 BOUND_PRIMITIVE_GENERATED_BASE_COMMAND = "lake build Proofs.QMClosure.BoundPrimitiveGeneratedBase"
+B1_PRIMITIVE_BASE_COMMAND = "lake build Proofs.QMClosure.B1PrimitiveBase"
 
 
 @dataclass(frozen=True)
@@ -95,6 +98,7 @@ class SemanticContentWallProbe:
     primitive_generated_source_file: str
     primitive_generated_admissibility_wall_file: str
     bound_primitive_generated_base_file: str
+    b1_primitive_base_file: str
     extension_witnesses: int
     draft_checks_failed: int
     legacy_wall_check: LeanCheck
@@ -108,6 +112,7 @@ class SemanticContentWallProbe:
     primitive_generated_source_check: LeanCheck
     primitive_generated_admissibility_wall_check: LeanCheck
     bound_primitive_generated_base_check: LeanCheck
+    b1_primitive_base_check: LeanCheck
     draft_checks: list[DraftCheck]
     next_blocker: str
 
@@ -177,6 +182,7 @@ def run_lean_check(command: str) -> LeanCheck:
         PRIMITIVE_GENERATED_SOURCE_COMMAND,
         PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_COMMAND,
         BOUND_PRIMITIVE_GENERATED_BASE_COMMAND,
+        B1_PRIMITIVE_BASE_COMMAND,
     }
     if command not in allowed_commands:
         return LeanCheck(command=command, returncode=2, status="FAIL")
@@ -199,7 +205,7 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
         check_equals(
             "expected_verdict",
             wall.get("expected_verdict"),
-            "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED",
+            "B1_PRIMITIVE_BASE_REGISTERED",
         ),
         check_equals("proof_status", wall.get("proof_status"), "blocked"),
         check_equals("lean_file", wall.get("lean_file"), "Proofs/QMClosure/CGSCSemanticContentWall.lean"),
@@ -304,6 +310,16 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             wall.get("bound_primitive_generated_base_checker_command"),
             BOUND_PRIMITIVE_GENERATED_BASE_COMMAND,
         ),
+        check_equals(
+            "b1_primitive_base_file",
+            wall.get("b1_primitive_base_file"),
+            "Proofs/QMClosure/B1PrimitiveBase.lean",
+        ),
+        check_equals(
+            "b1_primitive_base_checker_command",
+            wall.get("b1_primitive_base_checker_command"),
+            B1_PRIMITIVE_BASE_COMMAND,
+        ),
         existing_dependency_refs(string_tuple(wall.get("dependencies"), "wall.dependencies")),
         check_set_equals(
             "extension_witnesses",
@@ -381,9 +397,19 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             "bound_admissibility_role_atoms_are_constructor_generated",
         ),
         check_equals(
+            "b1_primitive_base",
+            wall.get("b1_primitive_base"),
+            "b1_primitive_base_yields_full_qm_obligation_bundle",
+        ),
+        check_equals(
+            "b1_primitive_base_boundaries",
+            wall.get("b1_primitive_base_boundaries"),
+            "b1_primitive_base_promotes_successor_boundaries",
+        ),
+        check_equals(
             "required_fix",
             wall.get("required_fix"),
-            "promote the bound successor primitive base or prove its data from B0; free B0 admissibility remains rejected",
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1, then turn B1 package projections into semantic target proofs",
         ),
         check_set_equals(
             "forbidden_claims",
@@ -437,6 +463,12 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
             "wall.bound_primitive_generated_base_checker_command",
         )
     )
+    b1_primitive_base_check = run_lean_check(
+        require_string(
+            wall.get("b1_primitive_base_checker_command"),
+            "wall.b1_primitive_base_checker_command",
+        )
+    )
     draft_failed = sum(1 for check in draft_checks if not check.passed)
     if draft_failed > 0:
         verdict: Verdict = "WALL_DRAFT_INVALID"
@@ -462,8 +494,10 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         verdict = "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_CHECK_FAILED"
     elif bound_primitive_generated_base_check.status == "FAIL":
         verdict = "BOUND_PRIMITIVE_GENERATED_BASE_CHECK_FAILED"
+    elif b1_primitive_base_check.status == "FAIL":
+        verdict = "B1_PRIMITIVE_BASE_CHECK_FAILED"
     else:
-        verdict = "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED"
+        verdict = "B1_PRIMITIVE_BASE_REGISTERED"
     return SemanticContentWallProbe(
         verdict=verdict,
         draft_path=str(draft_path.relative_to(REPO_ROOT)),
@@ -487,6 +521,10 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
             wall.get("bound_primitive_generated_base_file"),
             "wall.bound_primitive_generated_base_file",
         ),
+        b1_primitive_base_file=require_string(
+            wall.get("b1_primitive_base_file"),
+            "wall.b1_primitive_base_file",
+        ),
         extension_witnesses=len(string_tuple(wall.get("extension_witnesses"), "wall.extension_witnesses")),
         draft_checks_failed=draft_failed,
         legacy_wall_check=legacy_wall_check,
@@ -500,10 +538,11 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         primitive_generated_source_check=primitive_generated_source_check,
         primitive_generated_admissibility_wall_check=primitive_generated_admissibility_wall_check,
         bound_primitive_generated_base_check=bound_primitive_generated_base_check,
+        b1_primitive_base_check=b1_primitive_base_check,
         draft_checks=draft_checks,
         next_blocker=(
-            "promote the bound successor primitive base or prove its data from B0; "
-            "free B0 admissibility remains rejected"
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1, "
+            "then turn B1 package projections into semantic target proofs"
         ),
     )
 
@@ -528,6 +567,7 @@ def main() -> int:
         f"primitive_generated_source={probe.primitive_generated_source_check.status} "
         f"primitive_generated_admissibility_wall={probe.primitive_generated_admissibility_wall_check.status} "
         f"bound_primitive_generated_base={probe.bound_primitive_generated_base_check.status} "
+        f"b1_primitive_base={probe.b1_primitive_base_check.status} "
         f"extension_witnesses={probe.extension_witnesses} draft_checks_failed={probe.draft_checks_failed}"
     )
     print(f"NEXT {probe.next_blocker}")
@@ -539,7 +579,7 @@ def main() -> int:
         with open(str(args.output_json), "w", encoding="utf-8") as handle:
             json.dump(asdict(probe), handle, indent=2, sort_keys=True)
             handle.write("\n")
-    if probe.verdict != "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED":
+    if probe.verdict != "B1_PRIMITIVE_BASE_REGISTERED":
         return 1
     return 0
 
