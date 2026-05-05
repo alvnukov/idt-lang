@@ -143,7 +143,7 @@ def build_probe() -> FullQMSectorClosureProbe:
             "derive_context_first_constructive_witness_completeness_from_lower_base",
             "prove_carrier_frontier_exhaustion_or_record_non_Hilbert_constructive_countermodel",
             "promote_conditional_package_artifacts_to_external_QM_adequacy_theorems",
-            "derive_exact_universal_Born_readout_for_all_admissible_contexts",
+            "derive_context_first_universal_endpoint_data_for_exact_Born",
             "derive_first_principles_physical_phase_scale_or_keep_calibrated_hbar_boundary",
         ),
         forbidden_upgrades=(

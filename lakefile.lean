@@ -36,5 +36,6 @@ lean_lib Proofs where
     `Proofs.QMClosure.S2BornProofSearch,
     `Proofs.QMClosure.PrimitiveBoundaryQMChain,
     `Proofs.QMClosure.ConstructiveWitnessPrimitiveBase,
+    `Proofs.QMClosure.BornHilbertUniversalClosure,
     `Proofs.QMClosure.FullQMSectorClosure
   ]

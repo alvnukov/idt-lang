@@ -28,7 +28,7 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v7.0.0`.
+Current theory version: `v7.1.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
@@ -89,23 +89,28 @@ The main current successes are bounded and methodological:
    The candidate routes to Hilbert carrier, Bell contextual correlations,
    gravity clock/source structure, and shared action scale remain search
    routes, not proof upgrades.
-12. A Hilbert/spacetime bridge audit is executable. It records the hypothesis
+12. The universal Born/Hilbert frontier is now conditionally closed as a single
+   contract: context-first universal endpoint data plus carrier-frontier
+   exhaustion imply exact universal Born readout and frontier-scoped Hilbert
+   representation. This does not derive those assumptions from B0, does not
+   prove `full_QM_I`, and does not derive `hbar_I`.
+13. A Hilbert/spacetime bridge audit is executable. It records the hypothesis
    that Hilbert carrier structure, Bell contextual correlations, and spacetime
    geometry may be different readout projections of a deeper
    clock-context-source/holonomy layer. It also enforces the boundary that GR is
    treated only as a reflection or limit candidate, not as a primitive source.
-13. A Hilbert/Bell/gravity scale probe is executable. It records the broader
+14. A Hilbert/Bell/gravity scale probe is executable. It records the broader
    candidate that the same base mechanism may affect more than QM, while
    ordinary finite QM gates only expose the Hilbert/Bell projection because the
    gravity-facing clock/source response is scale-separated. The probe keeps
    this as a hard-wall common-source route, not as a derivation of Hilbert,
    Bell correlations, GR, `hbar_I`, or `G_I`.
-14. The proof-verification boundary is executable. Current `formal_proof`
+15. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized
    with the manifest, then runs Lean 4 and the IDT verifier.
-15. The v7 context-first primitive-base migration boundary is executable. It
+16. The v7 context-first primitive-base migration boundary is executable. It
    records admissible contexts, local outcome-event presheaves, inheritance
    transitions, facticization witnesses, and stable distinguishability as the
    lower-base candidate, while keeping the v6 core as a verifier-facing
@@ -113,35 +118,41 @@ The main current successes are bounded and methodological:
    now binds admissibility to the successor base and preserves no-target-import
    guards, but remains a conditional route. This does not upgrade QM, Hilbert
    space, Born rule, GR, `hbar_I`, or `G_I`.
-16. The QM semantic-kernel route is executable. It groups the current full-QM
+17. The QM semantic-kernel route is executable. It groups the current full-QM
    proof surface into six conditional clusters covering 21 obligations:
    residual/projective, representation, readout, dynamics, composite, and
    physical scale. B1 now projects to that kernel without losing package
    fields, and each cluster has an explicit B1-projected theorem. The next
    proof target is the semantic content of the open kernel core; this is not a
    proof of `full_QM_I`.
-17. The QM semantic-content scaffold bundle is executable. It machine-checks
+18. The QM semantic-content scaffold bundle is executable. It machine-checks
    finite projective, readout, inheritance-action, product-tomography,
    monoidal, projective-limit, and calibrated-scale fragments as one Lean
    artifact. This removes a proof-engineering gap for those fragments and
    concentrates the remaining full-QM work in structural target theorems, not
    in unchecked scaffold files.
-18. The CGSC structural target kernel is executable. It conditionally closes
+19. The CGSC structural target kernel is executable. It conditionally closes
    the six current structural QM blockers from seven context-generated stable
    closure clauses and preserves no-target-import boundaries. At this layer
    alone the kernel is conditional; the B1 derivation below supplies the clause
    source, while external QM adequacy remains open.
-19. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
+20. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
    now machine-derived from the B1 primitive-base witness interface, and the
    six structural blockers close inside the current IDT package semantics.
    The semantic-kernel evaluator now removes those six B1-closed blockers and
    two finite-scaffold closures from the live open core. This does not yet
    prove external Hilbert/Born/unitary/tensor equivalence or a B0-alone
    derivation.
-20. The Born wall is now machine-diagnosed rather than opaque. The separator
+21. The Born wall is now machine-diagnosed rather than opaque. The separator
    proves that current finite readout accounting admits a non-quadratic stable
-   readout, so Born is not selected by B1/scaffold closure alone. The remaining
-   mathematical core is `positive_quadratic_actualization_principle`.
+   readout, and the S2 proof-search artifact proves that current primitive
+   discipline still admits a local ternary witness. A new Lean bridge proves
+   that the existing context-first constructive witness package supplies
+   primitive pairwise endpoint coverage, endpoint-stable binary oriented
+   contexts, and ternary-facticization blocking once universal endpoint data is
+   provided. The remaining mathematical core is deriving that endpoint data from
+   B0 or the accepted successor base; a B1-only negative control is checked and
+   does not force that endpoint data.
 
 ## What The Verifier Catches
 
@@ -181,6 +192,8 @@ IDT currently does not claim:
    Hilbert space, Born rule, tensor composition, unitary dynamics, or
    `full_QM_I`.
 10. treating machine-checked finite scaffolds as a universal derivation of QM.
+11. treating the conditional universal Born/Hilbert frontier closure as a
+   B0-alone derivation or as a proof of `full_QM_I`.
 
 ## Derived, Conditional, Calibrated, Blocked
 
@@ -189,8 +202,8 @@ Current public classification:
 | Category | Examples |
 |---|---|
 | Derived or finite executable readouts | context Born table, two-path interference, Sorkin `I3 = 0`, finite Bell/CHSH gates |
-| Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route, finite semantic-content scaffold bundle |
-| Diagnosed walls | positive quadratic actualization principle for Born/readout selection |
+| Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route, finite semantic-content scaffold bundle, universal Born/Hilbert frontier closure under explicit source/frontier assumptions |
+| Diagnosed walls | deriving context-first universal endpoint data from B0 or the accepted successor base; proving carrier-frontier exhaustion over all admissible carriers |
 | Calibrated anchors | `calibrated_hbar_I`, calibrated gravity anchors and targets |
 | Structural selectors | primitive holonomy/source and topology/winding selector targets |
 | Experimental gates | SPARC gates, Bell/CHSH gates, residual provenance gates |

@@ -106,11 +106,23 @@ Current auditable results:
   universal physical meaning, not only as an internal obligation bundle. The
   semantic-kernel evaluator now removes the six B1-closed structural blockers
   and two finite-scaffold closures from the live open core; the remaining
-  frontier is now one mathematical principle: positive quadratic actualization.
-  A new Born-wall separator proves that finite readout accounting admits both
-  linear and quadratic stable readouts, so current B1/scaffold closure does not
-  select Born by itself. The calibrated phase-scale bridge remains an accepted
-  boundary only, not a first-principles derivation of `hbar_I`.
+  frontier is the all-context readout boundary: context-first universal endpoint
+  data. A new Lean bridge proves that the existing context-first constructive
+  witness package supplies primitive pairwise endpoint coverage, endpoint-stable
+  binary oriented contexts, and ternary-facticization blocking, so it selects
+  the Born-square readout without importing Born. The current primitive
+  discipline still admits a local ternary witness, and a B1-only endpoint-data
+  negative control is now checked, so current B1/scaffold closure does not
+  select universal Born by itself. The calibrated phase-scale bridge remains an
+  accepted boundary only, not a first-principles derivation of `hbar_I`.
+- Universal Born/Hilbert frontier: a new Lean contract closes exact universal
+  Born readout and frontier-scoped Hilbert representation together under
+  context-first universal endpoint data and carrier-frontier exhaustion. This is
+  a conditional frontier
+  closure, not a B0-alone derivation and not a proof of `full_QM_I`; the live
+  lower obligations are deriving that context-first endpoint data from B0 or the
+  accepted successor base and proving carrier-frontier exhaustion without
+  importing Born or complex Hilbert space.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

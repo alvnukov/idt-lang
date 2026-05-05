@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v7.0.0",
+  "theory_version": "v7.1.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",
@@ -3463,6 +3463,38 @@
       "known_failures": ["finite continuum checks do not yet construct field modes"],
       "physical_scope": "Full-QM continuum and field-mode extension.",
       "forbidden_claims": ["field-mode continuum limit derived from finite checks alone"]
+    },
+    {
+      "id": "universal_born_hilbert_frontier_closure",
+      "statement": "If context-first universal endpoint data and carrier-frontier exhaustion are supplied without target imports, exact universal Born readout and frontier-scoped Hilbert representation close together.",
+      "role": "theorem",
+      "assumptions": [
+        "context_first_universal_endpoint_data",
+        "carrier_frontier_exhaustion"
+      ],
+      "dependencies": [
+        "born_rule_derivation",
+        "hilbert_carrier_derivation",
+        "universal_carrier_selection_theorem",
+        "born_quadratic_readout_route_demo",
+        "carrier_selection_frontier_demo",
+        "full_qm_closure_frontier_demo"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "full_qm_closure_frontier_demo",
+      "known_failures": [
+        "context-first universal endpoint data is not derived from B0 or B1",
+        "current primitive discipline admits a local ternary witness unless context-first endpoint data is supplied",
+        "carrier-frontier exhaustion is not proved over all admissible carriers",
+        "hbar_I remains blocked"
+      ],
+      "physical_scope": "Universal finite-QM Born/Hilbert frontier under explicit context-first endpoint data and carrier-frontier assumptions.",
+      "forbidden_claims": [
+        "does_not_prove_full_QM_I",
+        "does_not_prove_universal_Born_from_B0_alone",
+        "does_not_prove_universal_Hilbert_uniqueness_from_finite_frontier_alone",
+        "does_not_derive_hbar_I"
+      ]
     }
   ],
   "finite_gates": [

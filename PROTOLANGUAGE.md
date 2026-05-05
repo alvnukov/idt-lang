@@ -1,7 +1,7 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v7.0.0`
-Date: 2026-05-04
+Current version: `v7.1.0`
+Date: 2026-05-05
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
 ---
@@ -880,11 +880,15 @@ internal conditional proof step, not a proof that external Hilbert space, Born
 rule, unitary dynamics, tensor composition, or `full_QM_I` are inevitable in
 physical semantics. The semantic-kernel evaluator now removes the six B1-closed
 structural blockers and two finite-scaffold closures from the live open core;
-the remaining mathematical core is positive quadratic actualization. The
-`born_wall_separation` artifact proves the current finite readout accounting
-admits both linear and quadratic stable readouts, so B1/scaffold closure does
-not select Born by itself. Calibrated phase scale remains accepted only as a
-boundary, not as a first-principles derivation of `hbar_I`.
+the remaining mathematical core is context-first universal endpoint data. The
+Born-wall artifacts prove that finite readout accounting admits non-quadratic
+stable readouts and that current primitive discipline still admits a local
+ternary witness. The new universal Born/Hilbert bridge proves that the existing
+context-first constructive witness package supplies primitive pairwise endpoint
+coverage, endpoint-stable binary oriented contexts, ternary-facticization
+blocking, and the Born-square readout without importing Born. Calibrated phase
+scale remains accepted only as a boundary, not as a first-principles derivation
+of `hbar_I`.
 
 ---
 

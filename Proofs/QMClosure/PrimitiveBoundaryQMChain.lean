@@ -631,6 +631,24 @@ def ConstructorRespectingBranchLabels
     (labels : OrientedReadoutBranchLabels) : Prop :=
   labels.yesBranch = aligned ∧ labels.noBranch = opposed
 
+def EndpointStableBinaryBranchLabels
+    (labels : OrientedReadoutBranchLabels) : Prop :=
+  labels.yesBranch = aligned ∧ labels.yesBranch ≠ labels.noBranch
+
+theorem endpoint_stable_binary_labels_are_constructor_respecting
+    (labels : OrientedReadoutBranchLabels) :
+    EndpointStableBinaryBranchLabels labels →
+      ConstructorRespectingBranchLabels labels := by
+  intro endpointStable
+  rcases endpointStable with ⟨yesAligned, yesNoDistinct⟩
+  cases labels with
+  | mk yesBranch noBranch =>
+    simp at yesAligned yesNoDistinct
+    subst yesBranch
+    cases noBranch
+    · exact False.elim (yesNoDistinct rfl)
+    · exact And.intro rfl rfl
+
 def branchLabelsToBornReadout
     (cover : OrientedTwoCoverCounts)
     (labels : OrientedReadoutBranchLabels) :

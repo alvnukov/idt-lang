@@ -1973,3 +1973,98 @@ target-equation import.
 Therefore the tension is quarantined: the legacy Hamiltonian-scale sample may
 remain as a calibrated/target-side demonstration, but it must not be used as
 evidence for the action-scale-free Schrodinger readout or for exact full QM.
+
+## 175.31. Universal Born/Hilbert Frontier Closure Contract
+
+The Born/Hilbert wall has been narrowed to one combined frontier contract.
+The finite route is no longer the central uncertainty: finite Born readout,
+finite phase-bundle/Hilbert carrier screens, Bell angle screens, and the
+Schrodinger frequency-generator readout are connected. The remaining question
+is the universal quantifier over all admissible contexts and carriers.
+
+The new Lean artifact is:
+
+```text
+Proofs/QMClosure/BornHilbertUniversalClosure.lean
+```
+
+It proves the conditional closure:
+
+```text
+context-first universal endpoint data
++ carrier-frontier exhaustion
+=> exact universal Born readout
++ frontier-scoped Hilbert representation
+```
+
+The executable evaluator is:
+
+```text
+scripts/evaluate_universal_born_hilbert_frontier.py
+```
+
+Current result:
+
+```text
+universal_born_hilbert_frontier =
+  UNIVERSAL_BORN_HILBERT_FRONTIER_CLOSED_CONDITIONAL
+pairwise_endpoint_core =
+  PRIMITIVE_PAIRWISE_ENDPOINT_COVERAGE_TO_BORN_PROVED
+primitive_boundary_endpoint_core =
+  PRIMITIVE_BOUNDARY_ENDPOINT_COVERAGE_TO_BORN_PROVED
+context_first_endpoint_core =
+  CONTEXT_FIRST_ENDPOINT_DATA_TO_BORN_HILBERT_PROVED
+current_base_coverage =
+  CURRENT_BASE_DOES_NOT_FORCE_PAIRWISE_ENDPOINT_COVERAGE
+b1_endpoint_data =
+  B1_INTERFACE_DOES_NOT_FORCE_CONTEXT_FIRST_ENDPOINT_DATA
+exact_from_b0_closed = False
+```
+
+This is a real narrowing of the wall, not a full-QM upgrade. It says that the
+Born exponent/readout selector and Hilbert carrier route close together once
+the lower layer supplies:
+
+```text
+derive_context_first_universal_endpoint_data_from_B0_or_successor_base;
+prove_carrier_frontier_exhaustion_over_all_admissible_carriers.
+```
+
+The Born-side meaning is precise. Probability accounting does not select Born:
+the existing Born-wall separator shows that accounting admits non-quadratic
+stable readouts. Born is selected only after the source is constrained to a
+primitive pairwise endpoint coverage law. The new Lean bridge proves that this
+supplies endpoint-stable binary oriented contexts and blocks primitive ternary
+facticization before the Born readout is selected.
+
+The new theorem names are:
+
+```text
+primitive_pairwise_endpoint_coverage_blocks_ternary_witness
+primitive_pairwise_endpoint_coverage_selects_born
+current_primitive_discipline_does_not_force_primitive_pairwise_endpoint_coverage
+primitive_boundary_pairwise_closure_supplies_pairwise_basis
+primitive_boundary_endpoint_coverage_selects_born
+context_first_endpoint_data_selects_born
+context_first_endpoint_data_plus_frontier_closes_born_hilbert
+b1_interface_projection_does_not_force_context_first_endpoint_data
+```
+
+The current negative side is also machine-checked: `S2BornProofSearch.lean`
+still admits a local ternary witness under the present primitive discipline.
+Therefore universal Born must not be marked as proved until context-first
+universal endpoint data is derived below the QM-sector readout.
+
+The Hilbert-side meaning is also precise. The finite complex phase-bundle route
+survives the current carrier screens, and the known non-complex samples are
+rejected. Universal Hilbert representation still needs carrier-frontier
+exhaustion; finite samples alone are not a universal quantifier over carriers.
+
+Forbidden upgrades:
+
+```text
+does_not_prove_full_QM_I;
+does_not_prove_universal_Born_from_B0_alone;
+does_not_prove_universal_Hilbert_uniqueness_from_finite_frontier_alone;
+does_not_derive_hbar_I.
+```
