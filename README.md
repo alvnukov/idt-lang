@@ -80,9 +80,11 @@ Current auditable results:
   successor-base candidate, but remains conditional rather than a QM proof.
 - QM semantic-kernel route: the current full-QM proof surface is grouped into
   six conditional clusters covering 21 obligations: residual/projective,
-  representation, readout, dynamics, composite, and physical scale. This
-  narrows the next proof target to deriving those clusters from B1 or successor
-  primitives; it is not a proof of `full_QM_I`.
+  representation, readout, dynamics, composite, and physical scale. B1 now
+  projects to this six-cluster kernel without losing package fields, and each
+  cluster has an explicit B1-projected theorem. This narrows the next proof
+  target to semantic content inside the open kernel core; it is not a proof of
+  `full_QM_I`.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

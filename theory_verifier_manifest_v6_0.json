@@ -9862,22 +9862,25 @@
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I",
             "does_not_mark_semantic_kernel_sufficiency_as_full_QM_proof",
-            "does_not_claim_B1_derives_the_semantic_kernel"
+            "does_not_claim_B1_derives_the_semantic_kernel",
+            "does_not_treat_B1_package_projection_as_target_semantic_proof"
           ],
           "id": "qm_semantic_kernel_route_conditional_artifact",
           "machine_checks": [
             "lean4_kernel",
             "qm_semantic_kernel_route",
-            "six_cluster_full_qm_obligation_coverage"
+            "six_cluster_full_qm_obligation_coverage",
+            "b1_package_projection_roundtrip",
+            "b1_projected_cluster_theorems"
           ],
           "open_gaps": [
-            "derive the six semantic kernel clusters from B1 or successor primitives",
-            "do not treat conditional semantic-kernel sufficiency as full_QM_I",
+            "prove target semantic content for the open kernel core from B1 or successor primitives",
+            "do not treat B1 package projection or conditional semantic-kernel sufficiency as full_QM_I",
             "physical hbar_I remains calibrated or separately blocked"
           ],
           "proof_kind": "conditional_proof",
           "scope": "conditional_semantic_kernel_to_full_qm_obligation_bundle",
-          "statement": "Conditional Lean artifact registering the broad six-cluster semantic-kernel route over the current full-QM proof surface. The route groups residual/projective, representation, readout, dynamics, composite, and physical-scale obligations and proves that a FullQMSemanticKernel yields the current FullQMObligationBundle while preserving import boundaries. This does not prove full_QM_I because the semantic kernel clusters are not yet derived from B1 or successor primitives.",
+          "statement": "Conditional Lean artifact registering the broad six-cluster semantic-kernel route over the current full-QM proof surface. The route groups residual/projective, representation, readout, dynamics, composite, and physical-scale obligations and proves that a FullQMSemanticKernel yields the current FullQMObligationBundle while preserving import boundaries. It now also proves that the B1 package projects into that kernel without losing package fields, and exposes six B1-projected cluster theorems. This does not prove full_QM_I because the open kernel core still needs target semantic content from B1 or successor primitives.",
           "theorem": "IDT.QMClosure.semantic_kernel_yields_full_qm_obligation_bundle"
         }
       ],

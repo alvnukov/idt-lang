@@ -39,13 +39,15 @@ structure PhysicalScaleKernel where
   physicalPhaseScaleBoundary : CheckedProp
 
 structure NoTargetImportKernel where
-  noSpectralImport : CheckedProp
-  noBornImport : CheckedProp
-  noHilbertImport : CheckedProp
-  noUnitaryImport : CheckedProp
-  noStoneImport : CheckedProp
-  noGeneratorImport : CheckedProp
-  noTensorImport : CheckedProp
+  finiteNoSpectralImport : CheckedProp
+  finiteNoBornImport : CheckedProp
+  finiteNoHilbertImport : CheckedProp
+  routeNoUnitaryImport : CheckedProp
+  routeNoStoneImport : CheckedProp
+  routeNoGeneratorImport : CheckedProp
+  compositeNoTensorImport : CheckedProp
+  compositeNoBornImport : CheckedProp
+  compositeNoHilbertImport : CheckedProp
 
 structure FullQMSemanticKernel where
   residualProjective : ResidualProjectiveKernel
@@ -55,6 +57,90 @@ structure FullQMSemanticKernel where
   composite : CompositeKernel
   scale : PhysicalScaleKernel
   imports : NoTargetImportKernel
+
+def packageClosureToSemanticKernel
+    (pkg : CGSCPackageClosure) :
+    FullQMSemanticKernel :=
+  {
+    residualProjective := {
+      finiteProjectionDeterminacy :=
+        pkg.finiteExposed.finiteProjectionDeterminacy,
+      projectiveConsistency :=
+        pkg.finiteExposed.projectiveConsistency,
+      nonunitalStableDistinguishability :=
+        pkg.finiteExposed.nonunitalStableDistinguishability,
+      conservativeProjectiveGluing :=
+        pkg.finiteExposed.conservativeProjectiveGluing
+    },
+    representation := {
+      spectralDecomposition :=
+        pkg.finiteExposed.spectralDecomposition,
+      richDclReversibleSymmetry :=
+        pkg.routeCoherence.richDclReversibleSymmetry
+    },
+    readout := {
+      contextNormalization :=
+        pkg.finiteExposed.contextNormalization,
+      exclusivityAdditivity :=
+        pkg.finiteExposed.exclusivityAdditivity,
+      coarseGrainingConsistency :=
+        pkg.finiteExposed.coarseGrainingConsistency,
+      operationalEquivalenceProbability :=
+        pkg.finiteExposed.operationalEquivalenceProbability
+    },
+    dynamics := {
+      dclAutomorphismDynamics :=
+        pkg.routeCoherence.dclAutomorphismDynamics,
+      overlapPreservationDynamics :=
+        pkg.routeCoherence.overlapPreservationDynamics,
+      projectiveAction :=
+        pkg.routeCoherence.projectiveAction,
+      continuousInheritanceFamily :=
+        pkg.routeCoherence.continuousInheritanceFamily,
+      generatorClosure :=
+        pkg.routeCoherence.generatorClosure
+    },
+    composite := {
+      productContextExhaustion :=
+        pkg.compositeClosure.productContextExhaustion,
+      localTomography :=
+        pkg.compositeClosure.localTomography,
+      monoidalAssociativity :=
+        pkg.compositeClosure.monoidalAssociativity,
+      entanglementClosure :=
+        pkg.compositeClosure.entanglementClosure,
+      projectiveLimitConsistency :=
+        pkg.compositeClosure.projectiveLimitConsistency,
+      constructiveCarrierWitness :=
+        pkg.compositeClosure.constructiveCarrierWitness,
+      noHiddenJointOnlyGeneration :=
+        pkg.compositeClosure.noHiddenJointOnlyGeneration
+    },
+    scale := {
+      physicalPhaseScaleBoundary :=
+        pkg.finiteExposed.physicalPhaseScaleBoundary
+    },
+    imports := {
+      finiteNoSpectralImport :=
+        pkg.finiteExposed.noSpectralImport,
+      finiteNoBornImport :=
+        pkg.finiteExposed.noBornImport,
+      finiteNoHilbertImport :=
+        pkg.finiteExposed.noHilbertImport,
+      routeNoUnitaryImport :=
+        pkg.routeCoherence.noUnitaryImport,
+      routeNoStoneImport :=
+        pkg.routeCoherence.noStoneImport,
+      routeNoGeneratorImport :=
+        pkg.routeCoherence.noGeneratorImport,
+      compositeNoTensorImport :=
+        pkg.compositeClosure.noTensorImport,
+      compositeNoBornImport :=
+        pkg.compositeClosure.noBornImport,
+      compositeNoHilbertImport :=
+        pkg.compositeClosure.noHilbertImport
+    }
+  }
 
 def semanticKernelToPackageClosure
     (kernel : FullQMSemanticKernel) :
@@ -82,11 +168,11 @@ def semanticKernelToPackageClosure
       physicalPhaseScaleBoundary :=
         kernel.scale.physicalPhaseScaleBoundary,
       noSpectralImport :=
-        kernel.imports.noSpectralImport,
+        kernel.imports.finiteNoSpectralImport,
       noBornImport :=
-        kernel.imports.noBornImport,
+        kernel.imports.finiteNoBornImport,
       noHilbertImport :=
-        kernel.imports.noHilbertImport
+        kernel.imports.finiteNoHilbertImport
     },
     routeCoherence := {
       richDclReversibleSymmetry :=
@@ -102,11 +188,11 @@ def semanticKernelToPackageClosure
       generatorClosure :=
         kernel.dynamics.generatorClosure,
       noUnitaryImport :=
-        kernel.imports.noUnitaryImport,
+        kernel.imports.routeNoUnitaryImport,
       noStoneImport :=
-        kernel.imports.noStoneImport,
+        kernel.imports.routeNoStoneImport,
       noGeneratorImport :=
-        kernel.imports.noGeneratorImport
+        kernel.imports.routeNoGeneratorImport
     },
     compositeClosure := {
       productContextExhaustion :=
@@ -124,20 +210,27 @@ def semanticKernelToPackageClosure
       noHiddenJointOnlyGeneration :=
         kernel.composite.noHiddenJointOnlyGeneration,
       noTensorImport :=
-        kernel.imports.noTensorImport,
+        kernel.imports.compositeNoTensorImport,
       noBornImport :=
-        kernel.imports.noBornImport,
+        kernel.imports.compositeNoBornImport,
       noHilbertImport :=
-        kernel.imports.noHilbertImport
+        kernel.imports.compositeNoHilbertImport
     }
   }
 
 theorem semantic_kernel_yields_full_qm_obligation_bundle
     (kernel : FullQMSemanticKernel) :
     FullQMObligationBundle
-      (semanticKernelToPackageClosure kernel) :=
+    (semanticKernelToPackageClosure kernel) :=
   fullQMObligationBundleFromPackage
     (semanticKernelToPackageClosure kernel)
+
+theorem package_closure_to_semantic_kernel_roundtrip
+    (pkg : CGSCPackageClosure) :
+    semanticKernelToPackageClosure
+      (packageClosureToSemanticKernel pkg) = pkg := by
+  cases pkg
+  rfl
 
 theorem semantic_kernel_preserves_import_boundaries
     (kernel : FullQMSemanticKernel) :
@@ -151,22 +244,22 @@ theorem semantic_kernel_preserves_import_boundaries
       ∧ (semanticKernelToPackageClosure kernel).compositeClosure.noBornImport.statement
       ∧ (semanticKernelToPackageClosure kernel).compositeClosure.noHilbertImport.statement :=
   And.intro
-    kernel.imports.noSpectralImport.proof
+    kernel.imports.finiteNoSpectralImport.proof
     (And.intro
-      kernel.imports.noBornImport.proof
+      kernel.imports.finiteNoBornImport.proof
       (And.intro
-        kernel.imports.noHilbertImport.proof
+        kernel.imports.finiteNoHilbertImport.proof
         (And.intro
-          kernel.imports.noUnitaryImport.proof
+          kernel.imports.routeNoUnitaryImport.proof
           (And.intro
-            kernel.imports.noStoneImport.proof
+            kernel.imports.routeNoStoneImport.proof
             (And.intro
-              kernel.imports.noGeneratorImport.proof
+              kernel.imports.routeNoGeneratorImport.proof
               (And.intro
-                kernel.imports.noTensorImport.proof
+                kernel.imports.compositeNoTensorImport.proof
                 (And.intro
-                  kernel.imports.noBornImport.proof
-                  kernel.imports.noHilbertImport.proof)))))))
+                  kernel.imports.compositeNoBornImport.proof
+                  kernel.imports.compositeNoHilbertImport.proof)))))))
 
 theorem semantic_kernel_rejects_unwitnessed_composite_residual
     (kernel : FullQMSemanticKernel) :
@@ -180,6 +273,132 @@ structure B1ToFullQMSemanticKernelRoute where
   base : B1PrimitiveBase
   kernel : FullQMSemanticKernel
   kernelDerivedFromB1 : CheckedProp
+
+def b1PrimitiveBaseToFullQMSemanticKernel
+    (base : B1PrimitiveBase) :
+    FullQMSemanticKernel :=
+  packageClosureToSemanticKernel
+    (b1PrimitiveGeneratedCGSCPackageClosure base)
+
+theorem b1_primitive_base_projects_to_semantic_kernel
+    (base : B1PrimitiveBase) :
+    semanticKernelToPackageClosure
+      (b1PrimitiveBaseToFullQMSemanticKernel base) =
+        b1PrimitiveGeneratedCGSCPackageClosure base :=
+  package_closure_to_semantic_kernel_roundtrip
+    (b1PrimitiveGeneratedCGSCPackageClosure base)
+
+theorem b1_projected_semantic_kernel_yields_full_qm_obligation_bundle
+    (base : B1PrimitiveBase) :
+    FullQMObligationBundle
+      (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)) := by
+  rw [b1_primitive_base_projects_to_semantic_kernel]
+  exact b1_primitive_base_yields_full_qm_obligation_bundle base
+
+theorem b1_projected_residual_projective_kernel
+    (base : B1PrimitiveBase) :
+    (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.finiteProjectionDeterminacy.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.projectiveConsistency.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.nonunitalStableDistinguishability.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.conservativeProjectiveGluing.statement :=
+  And.intro
+    (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.finiteProjectionDeterminacy.proof
+    (And.intro
+      (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.projectiveConsistency.proof
+      (And.intro
+        (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.nonunitalStableDistinguishability.proof
+        (b1PrimitiveBaseToFullQMSemanticKernel base).residualProjective.conservativeProjectiveGluing.proof))
+
+theorem b1_projected_representation_kernel
+    (base : B1PrimitiveBase) :
+    (b1PrimitiveBaseToFullQMSemanticKernel base).representation.spectralDecomposition.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).representation.richDclReversibleSymmetry.statement :=
+  And.intro
+    (b1PrimitiveBaseToFullQMSemanticKernel base).representation.spectralDecomposition.proof
+    (b1PrimitiveBaseToFullQMSemanticKernel base).representation.richDclReversibleSymmetry.proof
+
+theorem b1_projected_readout_kernel
+    (base : B1PrimitiveBase) :
+    (b1PrimitiveBaseToFullQMSemanticKernel base).readout.contextNormalization.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).readout.exclusivityAdditivity.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).readout.coarseGrainingConsistency.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).readout.operationalEquivalenceProbability.statement :=
+  And.intro
+    (b1PrimitiveBaseToFullQMSemanticKernel base).readout.contextNormalization.proof
+    (And.intro
+      (b1PrimitiveBaseToFullQMSemanticKernel base).readout.exclusivityAdditivity.proof
+      (And.intro
+        (b1PrimitiveBaseToFullQMSemanticKernel base).readout.coarseGrainingConsistency.proof
+        (b1PrimitiveBaseToFullQMSemanticKernel base).readout.operationalEquivalenceProbability.proof))
+
+theorem b1_projected_dynamics_kernel
+    (base : B1PrimitiveBase) :
+    (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.dclAutomorphismDynamics.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.overlapPreservationDynamics.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.projectiveAction.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.continuousInheritanceFamily.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.generatorClosure.statement :=
+  And.intro
+    (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.dclAutomorphismDynamics.proof
+    (And.intro
+      (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.overlapPreservationDynamics.proof
+      (And.intro
+        (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.projectiveAction.proof
+        (And.intro
+          (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.continuousInheritanceFamily.proof
+          (b1PrimitiveBaseToFullQMSemanticKernel base).dynamics.generatorClosure.proof)))
+
+theorem b1_projected_composite_kernel
+    (base : B1PrimitiveBase) :
+    (b1PrimitiveBaseToFullQMSemanticKernel base).composite.productContextExhaustion.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).composite.localTomography.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).composite.monoidalAssociativity.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).composite.entanglementClosure.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).composite.projectiveLimitConsistency.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).composite.constructiveCarrierWitness.statement
+      ∧ (b1PrimitiveBaseToFullQMSemanticKernel base).composite.noHiddenJointOnlyGeneration.statement :=
+  And.intro
+    (b1PrimitiveBaseToFullQMSemanticKernel base).composite.productContextExhaustion.proof
+    (And.intro
+      (b1PrimitiveBaseToFullQMSemanticKernel base).composite.localTomography.proof
+      (And.intro
+        (b1PrimitiveBaseToFullQMSemanticKernel base).composite.monoidalAssociativity.proof
+        (And.intro
+          (b1PrimitiveBaseToFullQMSemanticKernel base).composite.entanglementClosure.proof
+          (And.intro
+            (b1PrimitiveBaseToFullQMSemanticKernel base).composite.projectiveLimitConsistency.proof
+            (And.intro
+              (b1PrimitiveBaseToFullQMSemanticKernel base).composite.constructiveCarrierWitness.proof
+              (b1PrimitiveBaseToFullQMSemanticKernel base).composite.noHiddenJointOnlyGeneration.proof)))))
+
+theorem b1_projected_physical_scale_kernel
+    (base : B1PrimitiveBase) :
+    (b1PrimitiveBaseToFullQMSemanticKernel base).scale.physicalPhaseScaleBoundary.statement :=
+  (b1PrimitiveBaseToFullQMSemanticKernel base).scale.physicalPhaseScaleBoundary.proof
+
+theorem b1_projected_semantic_kernel_preserves_import_boundaries
+    (base : B1PrimitiveBase) :
+    (semanticKernelToPackageClosure
+      (b1PrimitiveBaseToFullQMSemanticKernel base)).finiteExposed.noSpectralImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).finiteExposed.noBornImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).finiteExposed.noHilbertImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).routeCoherence.noUnitaryImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).routeCoherence.noStoneImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).routeCoherence.noGeneratorImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).compositeClosure.noTensorImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).compositeClosure.noBornImport.statement
+      ∧ (semanticKernelToPackageClosure
+        (b1PrimitiveBaseToFullQMSemanticKernel base)).compositeClosure.noHilbertImport.statement :=
+  semantic_kernel_preserves_import_boundaries
+    (b1PrimitiveBaseToFullQMSemanticKernel base)
 
 theorem b1_semantic_kernel_route_yields_full_qm_obligation_bundle
     (route : B1ToFullQMSemanticKernelRoute) :

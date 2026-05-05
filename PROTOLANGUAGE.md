@@ -849,11 +849,13 @@ Hilbert space, Born rule, GR, full QM, `hbar_I`, or `G_I`.
 The `qm_semantic_kernel_route` now records the broadest current full-QM proof
 attempt as six conditional semantic clusters: residual/projective,
 representation, readout, dynamics, composite, and physical scale. The route
-covers all 21 current full-QM obligations and compiles as a Lean conditional
-artifact, but the open core remains the derivation of those semantic kernels
-from B1 or successor primitives. It is therefore a sharper proof target, not a
-completed derivation of Hilbert space, Born rule, tensor composition, unitary
-dynamics, physical action scale, or `full_QM_I`.
+covers all 21 current full-QM obligations, compiles as a Lean conditional
+artifact, and now proves that the B1 package projects into the six-cluster
+kernel without losing package fields. It also exposes explicit B1-projected
+theorems for all six clusters. The open core is therefore no longer the
+packaging link from B1, but the semantic content of the projected obligations:
+Hilbert space, Born rule, tensor composition, unitary dynamics, physical action
+scale, and `full_QM_I` are still not derived.
 
 ---
 

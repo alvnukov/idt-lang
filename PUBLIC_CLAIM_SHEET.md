@@ -116,8 +116,10 @@ The main current successes are bounded and methodological:
 16. The QM semantic-kernel route is executable. It groups the current full-QM
    proof surface into six conditional clusters covering 21 obligations:
    residual/projective, representation, readout, dynamics, composite, and
-   physical scale. The next proof target is to derive those clusters from B1 or
-   successor primitives; this is not a proof of `full_QM_I`.
+   physical scale. B1 now projects to that kernel without losing package
+   fields, and each cluster has an explicit B1-projected theorem. The next
+   proof target is the semantic content of the open kernel core; this is not a
+   proof of `full_QM_I`.
 
 ## What The Verifier Catches
 

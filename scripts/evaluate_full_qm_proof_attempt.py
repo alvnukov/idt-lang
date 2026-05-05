@@ -287,8 +287,10 @@ def build_physical_scale_step() -> ProofStep:
 def build_semantic_kernel_step() -> ProofStep:
     probe = semantic_kernel_attempt.build_probe()
     evidence = (
-        f"verdict={probe.verdict}; lean={probe.lean_check.status}; clusters={probe.clusters}; "
-        f"covered_obligations={probe.covered_obligations}; open_core={len(probe.open_core)}"
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; b1_projection={probe.b1_projection}; "
+        f"b1_projected_clusters={probe.b1_projected_clusters}; clusters={probe.clusters}; "
+        f"covered_obligations={probe.covered_obligations}; "
+        f"open_core={len(probe.open_core)}"
     )
     if probe.verdict == "SEMANTIC_KERNEL_ROUTE_REGISTERED":
         return ProofStep(
@@ -300,8 +302,8 @@ def build_semantic_kernel_step() -> ProofStep:
             ),
             evidence=evidence,
             remaining_obligation=(
-                "Derive the six semantic kernel clusters from B1 or successor primitives; do not treat clustered "
-                "conditional coverage as full_QM_I."
+                "Prove target semantic content for the open kernel core from B1 or successor primitives; do not "
+                "treat B1 package projection or clustered conditional coverage as full_QM_I."
             ),
         )
     if probe.verdict == "SEMANTIC_KERNEL_CHECK_FAILED":

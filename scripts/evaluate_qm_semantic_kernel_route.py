@@ -54,6 +54,8 @@ class KernelCluster:
 class SemanticKernelRouteProbe:
     verdict: Verdict
     lean_check: LeanCheck
+    b1_projection: CheckStatus
+    b1_projected_clusters: int
     clusters: int
     conditional_ready: int
     blocked: int
@@ -240,6 +242,8 @@ def build_probe() -> SemanticKernelRouteProbe:
     return SemanticKernelRouteProbe(
         verdict=verdict,
         lean_check=lean_check,
+        b1_projection=lean_check.status,
+        b1_projected_clusters=len(clusters) if lean_check.status == "PASS" else 0,
         clusters=len(clusters),
         conditional_ready=conditional,
         blocked=blocked,
@@ -248,8 +252,8 @@ def build_probe() -> SemanticKernelRouteProbe:
         open_core=open_core,
         clusters_detail=clusters,
         next_blocker=(
-            "derive the semantic kernel clusters from B1 or successor primitives; "
-            "do not treat conditional route readiness as full_QM_I"
+            "prove target semantic content for the open kernel core from B1 or successor primitives; "
+            "the B1 package now projects to the six-cluster kernel but does not by itself prove full_QM_I"
         ),
     )
 
@@ -268,6 +272,7 @@ def main() -> int:
     probe = build_probe()
     print(
         f"qm_semantic_kernel_route={probe.verdict} lean={probe.lean_check.status} "
+        f"b1_projection={probe.b1_projection} b1_projected_clusters={probe.b1_projected_clusters} "
         f"clusters={probe.clusters} conditional_ready={probe.conditional_ready} "
         f"blocked={probe.blocked} import_rejected={probe.import_rejected} "
         f"covered_obligations={probe.covered_obligations} open_core={len(probe.open_core)}"
