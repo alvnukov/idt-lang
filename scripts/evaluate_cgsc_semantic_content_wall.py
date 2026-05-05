@@ -26,6 +26,10 @@ Verdict = Literal[
     "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED",
     "UNIVERSAL_TOY_WALL_CHECK_FAILED",
     "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED",
+    "PRIMITIVE_GENERATED_SOURCE_CHECK_FAILED",
+    "PRIMITIVE_GENERATED_SOURCE_KERNEL_REGISTERED",
+    "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_CHECK_FAILED",
+    "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED",
     "WALL_DRAFT_INVALID",
 ]
 CheckStatus = Literal["PASS", "FAIL"]
@@ -53,6 +57,10 @@ FULL_ASSEMBLY_COMMAND = "lake build Proofs.QMClosure.FullQMAssemblyFromGroundedS
 GROUNDED_TOY_WALL_COMMAND = "lake build Proofs.QMClosure.CGSCGroundedToyWall"
 UNIVERSAL_KERNEL_COMMAND = "lake build Proofs.QMClosure.UniversalPrimitiveSourceKernel"
 UNIVERSAL_TOY_WALL_COMMAND = "lake build Proofs.QMClosure.UniversalPrimitiveToyWall"
+PRIMITIVE_GENERATED_SOURCE_COMMAND = "lake build Proofs.QMClosure.PrimitiveGeneratedSourceKernel"
+PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_COMMAND = (
+    "lake build Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall"
+)
 
 
 @dataclass(frozen=True)
@@ -81,6 +89,8 @@ class SemanticContentWallProbe:
     grounded_toy_wall_file: str
     universal_kernel_file: str
     universal_toy_wall_file: str
+    primitive_generated_source_file: str
+    primitive_generated_admissibility_wall_file: str
     extension_witnesses: int
     draft_checks_failed: int
     legacy_wall_check: LeanCheck
@@ -91,6 +101,8 @@ class SemanticContentWallProbe:
     grounded_toy_wall_check: LeanCheck
     universal_kernel_check: LeanCheck
     universal_toy_wall_check: LeanCheck
+    primitive_generated_source_check: LeanCheck
+    primitive_generated_admissibility_wall_check: LeanCheck
     draft_checks: list[DraftCheck]
     next_blocker: str
 
@@ -157,6 +169,8 @@ def run_lean_check(command: str) -> LeanCheck:
         GROUNDED_TOY_WALL_COMMAND,
         UNIVERSAL_KERNEL_COMMAND,
         UNIVERSAL_TOY_WALL_COMMAND,
+        PRIMITIVE_GENERATED_SOURCE_COMMAND,
+        PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_COMMAND,
     }
     if command not in allowed_commands:
         return LeanCheck(command=command, returncode=2, status="FAIL")
@@ -176,7 +190,11 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
     return [
         check_equals("artifact_status", draft.get("artifact_status"), "semantic_content_wall_not_formal_proof"),
         check_equals("wall_id", wall.get("id"), "cgsc_semantic_content_wall"),
-        check_equals("expected_verdict", wall.get("expected_verdict"), "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED"),
+        check_equals(
+            "expected_verdict",
+            wall.get("expected_verdict"),
+            "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED",
+        ),
         check_equals("proof_status", wall.get("proof_status"), "blocked"),
         check_equals("lean_file", wall.get("lean_file"), "Proofs/QMClosure/CGSCSemanticContentWall.lean"),
         check_equals("wall_checker_command", wall.get("wall_checker_command"), LEGACY_WALL_COMMAND),
@@ -250,6 +268,26 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             wall.get("universal_toy_wall_checker_command"),
             UNIVERSAL_TOY_WALL_COMMAND,
         ),
+        check_equals(
+            "primitive_generated_source_file",
+            wall.get("primitive_generated_source_file"),
+            "Proofs/QMClosure/PrimitiveGeneratedSourceKernel.lean",
+        ),
+        check_equals(
+            "primitive_generated_source_checker_command",
+            wall.get("primitive_generated_source_checker_command"),
+            PRIMITIVE_GENERATED_SOURCE_COMMAND,
+        ),
+        check_equals(
+            "primitive_generated_admissibility_wall_file",
+            wall.get("primitive_generated_admissibility_wall_file"),
+            "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean",
+        ),
+        check_equals(
+            "primitive_generated_admissibility_wall_checker_command",
+            wall.get("primitive_generated_admissibility_wall_checker_command"),
+            PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_COMMAND,
+        ),
         existing_dependency_refs(string_tuple(wall.get("dependencies"), "wall.dependencies")),
         check_set_equals(
             "extension_witnesses",
@@ -302,9 +340,24 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             "universal_kernel_admits_three_point_toy_full_qm_obligation_bundle",
         ),
         check_equals(
+            "primitive_generated_source_kernel",
+            wall.get("primitive_generated_source_kernel"),
+            "primitive_generated_admissibility_yields_full_qm_obligation_bundle",
+        ),
+        check_equals(
+            "primitive_generated_atom_universe",
+            wall.get("primitive_generated_atom_universe"),
+            "primitive_generated_source_slots_share_one_atom_universe",
+        ),
+        check_equals(
+            "primitive_generated_admissibility_wall",
+            wall.get("primitive_generated_admissibility_wall"),
+            "b0_alone_can_feed_free_primitive_generated_source_kernel",
+        ),
+        check_equals(
             "required_fix",
             wall.get("required_fix"),
-            "derive the source kernel directly from primitive-generated admissibility, not from rank or free toy kernels",
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base; B0 alone still admits a free toy admissibility",
         ),
         check_set_equals(
             "forbidden_claims",
@@ -340,6 +393,18 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
     universal_toy_wall_check = run_lean_check(
         require_string(wall.get("universal_toy_wall_checker_command"), "wall.universal_toy_wall_checker_command")
     )
+    primitive_generated_source_check = run_lean_check(
+        require_string(
+            wall.get("primitive_generated_source_checker_command"),
+            "wall.primitive_generated_source_checker_command",
+        )
+    )
+    primitive_generated_admissibility_wall_check = run_lean_check(
+        require_string(
+            wall.get("primitive_generated_admissibility_wall_checker_command"),
+            "wall.primitive_generated_admissibility_wall_checker_command",
+        )
+    )
     draft_failed = sum(1 for check in draft_checks if not check.passed)
     if draft_failed > 0:
         verdict: Verdict = "WALL_DRAFT_INVALID"
@@ -359,8 +424,12 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         verdict = "UNIVERSAL_KERNEL_CHECK_FAILED"
     elif universal_toy_wall_check.status == "FAIL":
         verdict = "UNIVERSAL_TOY_WALL_CHECK_FAILED"
+    elif primitive_generated_source_check.status == "FAIL":
+        verdict = "PRIMITIVE_GENERATED_SOURCE_CHECK_FAILED"
+    elif primitive_generated_admissibility_wall_check.status == "FAIL":
+        verdict = "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_CHECK_FAILED"
     else:
-        verdict = "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED"
+        verdict = "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED"
     return SemanticContentWallProbe(
         verdict=verdict,
         draft_path=str(draft_path.relative_to(REPO_ROOT)),
@@ -372,6 +441,14 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         grounded_toy_wall_file=require_string(wall.get("grounded_toy_wall_file"), "wall.grounded_toy_wall_file"),
         universal_kernel_file=require_string(wall.get("universal_kernel_file"), "wall.universal_kernel_file"),
         universal_toy_wall_file=require_string(wall.get("universal_toy_wall_file"), "wall.universal_toy_wall_file"),
+        primitive_generated_source_file=require_string(
+            wall.get("primitive_generated_source_file"),
+            "wall.primitive_generated_source_file",
+        ),
+        primitive_generated_admissibility_wall_file=require_string(
+            wall.get("primitive_generated_admissibility_wall_file"),
+            "wall.primitive_generated_admissibility_wall_file",
+        ),
         extension_witnesses=len(string_tuple(wall.get("extension_witnesses"), "wall.extension_witnesses")),
         draft_checks_failed=draft_failed,
         legacy_wall_check=legacy_wall_check,
@@ -382,10 +459,12 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         grounded_toy_wall_check=grounded_toy_wall_check,
         universal_kernel_check=universal_kernel_check,
         universal_toy_wall_check=universal_toy_wall_check,
+        primitive_generated_source_check=primitive_generated_source_check,
+        primitive_generated_admissibility_wall_check=primitive_generated_admissibility_wall_check,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive the source kernel directly from primitive-generated admissibility; "
-            "rank, free grounded-source, and finite toy kernels are blocked as proof upgrades"
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base; "
+            "B0 alone still admits a free toy admissibility"
         ),
     )
 
@@ -407,6 +486,8 @@ def main() -> int:
         f"decorative_wall={probe.decorative_wall_check.status} grounded_kernel={probe.grounded_kernel_check.status} "
         f"full_assembly={probe.full_assembly_check.status} grounded_toy_wall={probe.grounded_toy_wall_check.status} "
         f"universal_kernel={probe.universal_kernel_check.status} universal_toy_wall={probe.universal_toy_wall_check.status} "
+        f"primitive_generated_source={probe.primitive_generated_source_check.status} "
+        f"primitive_generated_admissibility_wall={probe.primitive_generated_admissibility_wall_check.status} "
         f"extension_witnesses={probe.extension_witnesses} draft_checks_failed={probe.draft_checks_failed}"
     )
     print(f"NEXT {probe.next_blocker}")
@@ -418,7 +499,7 @@ def main() -> int:
         with open(str(args.output_json), "w", encoding="utf-8") as handle:
             json.dump(asdict(probe), handle, indent=2, sort_keys=True)
             handle.write("\n")
-    if probe.verdict != "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED":
+    if probe.verdict != "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED":
         return 1
     return 0
 

@@ -3,19 +3,21 @@
   "artifact_status": "primitive_derivation_route_draft_not_formal_proof",
   "theorem_card": {
     "id": "context_generated_stable_closure_from_primitives_route",
-    "statement": "Context-generated stable closure is not yet derived from the current primitive base. The current B0 candidate supports finite generation and facticizable separation as candidate clauses, grounds the import boundary, and exposes four required base extensions.",
+    "statement": "Context-generated stable closure is not yet derived from the current primitive base. The current B0 candidate supports finite generation and facticizable separation as candidate clauses, grounds the import boundary, and now exposes that PrimitiveGeneratedAdmissibility must be bound to B0 or a successor primitive base before the six CGSC extensions can become primitive proofs.",
     "role": "primitive_derivation_route",
     "proof_status": "open",
     "verifier": "scripts/evaluate_cgsc_primitive_derivation.py",
     "dependencies": [
       "Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json",
+      "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean",
       "scripts/evaluate_context_generated_stable_closure_route_draft.py",
       "sections/01-primitives.md"
     ],
     "known_failures": [
       "no_clause_formal_from_primitives",
       "b0_lower_base_primitives_are_candidates",
-      "four_cgsc_clauses_require_base_extensions",
+      "primitive_generated_admissibility_not_bound_to_B0",
+      "six_cgsc_extensions_require_bound_admissibility",
       "full_qm_inevitability_route_remains_open"
     ],
     "physical_scope": "primitive-base derivation route for CGSC only",

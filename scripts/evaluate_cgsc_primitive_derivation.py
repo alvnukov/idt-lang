@@ -424,8 +424,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
         checks=checks,
         route_draft_checks=route_draft_checks,
         next_blocker=(
-            "either prove the B0-supported clauses formally and add the missing base extensions, "
-            "or reject CGSC as insufficient for full QM inevitability"
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base, then prove the six "
+            "CGSC extensions from that bound admissibility or reject CGSC as insufficient for full QM inevitability"
         ),
     )
 

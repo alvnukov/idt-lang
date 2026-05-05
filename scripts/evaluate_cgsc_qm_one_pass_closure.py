@@ -351,8 +351,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks_failed=draft_failed,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive the source kernel directly from primitive-generated admissibility; "
-            "the finite-sector residual is rejected by admissibility, not a substitute for full-QM proof"
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base; "
+            "B0 alone still admits a free toy admissibility"
         ),
     )
 

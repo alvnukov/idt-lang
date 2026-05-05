@@ -20,6 +20,8 @@ ALLOWED_EXACT_COMMANDS = {
     ("lake", "build", "Proofs.QMClosure.CGSCGroundedToyWall"),
     ("lake", "build", "Proofs.QMClosure.UniversalPrimitiveSourceKernel"),
     ("lake", "build", "Proofs.QMClosure.UniversalPrimitiveToyWall"),
+    ("lake", "build", "Proofs.QMClosure.PrimitiveGeneratedSourceKernel"),
+    ("lake", "build", "Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall"),
     ("python3", "scripts/sync_formal_proof_ledger.py", "--check"),
     ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json"),
 }

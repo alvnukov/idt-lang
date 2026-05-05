@@ -14956,3 +14956,94 @@ two-point toy wall: rejected by AtLeastThree
 three-point universal toy wall: detected and registered
 QM from primitives: still open
 ```
+
+### 174.290. Primitive-Generated Source Kernel
+
+The next pass removes one source of fake progress: the six CGSC source slots are
+no longer free independent types. They are now constructed as subtypes of one
+primitive-generated atom universe:
+
+```text
+Proofs/QMClosure/PrimitiveGeneratedSourceKernel.lean
+```
+
+The central object is:
+
+```text
+PrimitiveGeneratedAdmissibility
+```
+
+It supplies a single `Atom` type plus predicates for contexts, facts, blocks,
+routes, refinements, states, generators, and local facts. The grounded CGSC
+source base is then built from those predicates by construction.
+
+Machine-checked conditional assembly theorem:
+
+```text
+primitive_generated_admissibility_yields_full_qm_obligation_bundle
+```
+
+Machine-checked structural guard:
+
+```text
+primitive_generated_source_slots_share_one_atom_universe
+```
+
+This does not prove QM. It does prove that the current route can be tightened
+from freely selected source types to one primitive-generated admissibility
+interface. The remaining blocker is sharper:
+
+```text
+B0 or successor primitives
+=> PrimitiveGeneratedAdmissibility
+=> primitive-generated source kernel
+=> full QM obligation bundle
+```
+
+So the wall moved from "choose a source kernel" to:
+
+```text
+derive PrimitiveGeneratedAdmissibility from the primitive base;
+otherwise the source kernel remains a conditional interface.
+```
+
+### 174.291. Primitive-Generated Admissibility Wall
+
+The one-`Atom` source construction is still not enough by itself. The current
+formal B0 candidate contains proof-boundary flags, but it does not yet bind the
+`Atom` universe or the admissibility predicates to the primitive context cover,
+outcome presheaf, inheritance transitions, readout witnesses, and stable
+distinguishability relation.
+
+The negative control is machine-checked:
+
+```text
+Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean
+```
+
+It constructs a free finite atom universe for any `B0CandidateBase` and proves:
+
+```text
+b0_alone_admits_free_primitive_generated_admissibility
+b0_alone_can_feed_free_primitive_generated_source_kernel
+free_primitive_generated_admissibility_keeps_import_guards
+```
+
+This is not a QM proof. It is a failure-ledger result:
+
+```text
+B0CandidateBase alone is too weak;
+PrimitiveGeneratedAdmissibility can still be freely selected;
+therefore the next base must bind admissibility to B0 or replace B0 with a
+successor primitive base whose context/outcome/inheritance/readout/distinction
+data generate the admissibility interface.
+```
+
+Sharper remaining target:
+
+```text
+context-first successor base
+=> bound PrimitiveGeneratedAdmissibility
+=> primitive-generated source kernel
+=> full QM obligation bundle
+```

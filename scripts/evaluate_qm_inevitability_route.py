@@ -301,7 +301,7 @@ def validate_draft(
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
         "cgsc_primitive_derivation_not_closed",
-        "cgsc_primitive_generated_source_kernel_derivation_missing",
+        "primitive_generated_admissibility_not_bound_to_B0",
         "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
@@ -392,7 +392,7 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive the source kernel directly from primitive-generated admissibility, "
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base, "
             "then close CGSC primitive derivation and promote conditional artifacts to formal primitive proofs"
         ),
     )

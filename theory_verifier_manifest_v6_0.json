@@ -9697,6 +9697,78 @@
             "does_not_treat_rank_filtered_toy_kernel_as_QM_proof",
             "does_not_mark_cardinality_filters_as_primitive_derivation"
           ]
+        },
+        {
+          "id": "primitive_generated_source_kernel_conditional_artifact",
+          "statement": "Conditional Lean artifact showing that PrimitiveGeneratedAdmissibility builds the CGSC source kernel from one Atom universe and yields the full 21-obligation QM closure bundle. This tightens the route from free source-type selection to one primitive-generated admissibility interface, but the admissibility interface is not yet derived from B0 or successor primitives.",
+          "scope": "conditional_full_qm_obligation_bundle_from_primitive_generated_admissibility",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/PrimitiveGeneratedSourceKernel.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.PrimitiveGeneratedSourceKernel"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "primitive_generated_source_kernel",
+            "single_atom_source_slots"
+          ],
+          "claim_refs": [
+            "primitive_generated_source_kernel.to_full_qm_obligation_bundle",
+            "primitive_generated_source_kernel.one_atom_universe"
+          ],
+          "theorem": "IDT.QMClosure.primitive_generated_admissibility_yields_full_qm_obligation_bundle",
+          "open_gaps": [
+            "derive PrimitiveGeneratedAdmissibility from B0 or successor primitives",
+            "prove the single Atom universe is the admissible primitive base rather than another conditional interface",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_primitive_generated_admissibility_is_proved_from_B0",
+            "does_not_mark_conditional_source_kernel_as_QM_proof"
+          ]
+        },
+        {
+          "id": "primitive_generated_admissibility_wall_failure_artifact",
+          "statement": "Lean failure-ledger artifact showing that the current B0CandidateBase alone can feed a freely selected PrimitiveGeneratedAdmissibility, which then yields the full-QM obligation bundle and import guards as a conditional package. Therefore PrimitiveGeneratedAdmissibility must be bound to B0 or a successor primitive base before any primitive-proof upgrade.",
+          "scope": "failure_ledger_no_free_primitive_generated_admissibility_upgrade",
+          "proof_kind": "proof_sketch",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "primitive_generated_admissibility_wall",
+            "free_b0_toy_admissibility"
+          ],
+          "claim_refs": [
+            "primitive_generated_admissibility_wall.free_b0_toy_detected"
+          ],
+          "theorem": "IDT.QMClosure.b0_alone_can_feed_free_primitive_generated_source_kernel",
+          "open_gaps": [
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base",
+            "replace proof-boundary flags with typed primitive data or prove admissibility from them",
+            "this card is a failure-ledger guard, not a full_QM_I proof"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_free_admissibility_as_primitive_derivation",
+            "does_not_mark_B0CandidateBase_alone_as_sufficient_for_QM"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"
