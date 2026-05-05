@@ -425,6 +425,7 @@ def registryWitnesses : List RegistryWitness :=
       "route_closed_gpt_subtheory_frontier",
       "scale_residual_activation",
       "scale_residual_bound",
+      "schrodinger_frequency_generator_readout",
       "schur_psd",
       "screened_amplitude_lower_bound",
       "screened_baryonic_acceleration_map",
@@ -485,9 +486,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 236,
-    expectedDigest := "c60c518589019c0425f9ecd82130aac10f73230f0dd461cdd9509053a6e03520",
-    computedDigest := "c60c518589019c0425f9ecd82130aac10f73230f0dd461cdd9509053a6e03520"
+    expectedCount := 237,
+    expectedDigest := "0419dff8ab7173723bce81261f5ecca294e030812a18b5a36a600141911c7059",
+    computedDigest := "0419dff8ab7173723bce81261f5ecca294e030812a18b5a36a600141911c7059"
   },
   {
     id := "finite_primitive_sort_vocabulary",
@@ -1057,7 +1058,7 @@ def qmWallNodeWitnesses : List QMWallNodeWitness :=
     requiredImportRefs := [
       "complex_amplitude_carrier"
   ],
-    openGap := "Hilbert carrier derivation is currently blocked by the carrier import boundary."
+    openGap := "Hilbert carrier derivation is now a frontier obligation: carrier-frontier exhaustion and endpoint structure must still be derived without importing the complex carrier."
   },
   {
     id := "born_rule_derivation",
@@ -1073,7 +1074,7 @@ def qmWallNodeWitnesses : List QMWallNodeWitness :=
     requiredImportRefs := [
       "quadratic_actualization_measure"
   ],
-    openGap := "The universal Born derivation is blocked at the quadratic actualization obligation."
+    openGap := "Universal Born is now a frontier obligation: oriented endpoint discipline selects the square readout once context-first universal endpoint data is supplied, but that endpoint data is not yet derived from B0 or the accepted successor base."
   },
   {
     id := "tensor_composition",
@@ -1141,7 +1142,7 @@ def qmWallNodeWitnesses : List QMWallNodeWitness :=
     requiredImportRefs := [
       "action_phase_hbar_bridge"
   ],
-    openGap := "The action scale remains blocked as a first-principles derivation."
+    openGap := "The action scale remains blocked as a first-principles derivation and is tracked separately from the Born/Hilbert frontier."
   }
 ]
 

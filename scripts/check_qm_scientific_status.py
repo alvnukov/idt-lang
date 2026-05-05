@@ -16,7 +16,7 @@ from scripts import evaluate_cgsc_qm_one_pass_closure as cgsc_qm_closure  # noqa
 from scripts import evaluate_full_qm_proof_closure as full_qm_closure  # noqa: E402
 from scripts import evaluate_qm_direct_one_pass as qm_direct  # noqa: E402
 
-DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
+DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest.json"
 DEFAULT_README = REPO_ROOT / "README.md"
 DEFAULT_WORKFLOW = REPO_ROOT / ".github/workflows/qm-status.yml"
 

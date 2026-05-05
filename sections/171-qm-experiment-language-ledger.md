@@ -13,7 +13,7 @@ organize a large class of QM experiments without changing vocabulary from case
 to case.
 
 The ledger is manifest-backed. The verifier reads `qm_experiments` from
-`theory_verifier_manifest_v6_0.json` and checks that each entry has:
+`theory_verifier_manifest.json` and checks that each entry has:
 
 1. a known coverage status;
 2. a standard QM result;

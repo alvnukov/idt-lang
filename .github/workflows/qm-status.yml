@@ -39,7 +39,7 @@ jobs:
           mypy --strict theory_verifier tests scripts
 
       - name: Manifest verifier
-        run: python -m theory_verifier --json theory_verifier_manifest_v6_0.json
+        run: python -m theory_verifier --json theory_verifier_manifest.json
 
       - name: Lean proof ledger
         run: python scripts/check_proofs.py

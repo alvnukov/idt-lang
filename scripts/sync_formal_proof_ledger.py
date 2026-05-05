@@ -40,7 +40,7 @@ from theory_verifier.core import (  # noqa: E402
     qm_wall_probe_result_from_statuses,
 )
 
-DEFAULT_MANIFEST = ROOT / "theory_verifier_manifest_v6_0.json"
+DEFAULT_MANIFEST = ROOT / "theory_verifier_manifest.json"
 DEFAULT_LEAN_PATH = ROOT / "Proofs" / "IDTCore.lean"
 
 

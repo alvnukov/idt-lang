@@ -13,7 +13,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "manifest",
         nargs="?",
-        default="theory_verifier_manifest_v6_0.json",
+        default="theory_verifier_manifest.json",
         help="Path to a JSON verifier manifest.",
     )
     parser.add_argument("--json", action="store_true", help="Print machine-readable report.")

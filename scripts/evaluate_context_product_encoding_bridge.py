@@ -10,7 +10,7 @@ BridgeVerdict = Literal["FINITE_CARTESIAN_ENCODING_WITNESS", "BRIDGE_WITNESS_FAI
 CheckStatus = Literal["PASS", "FAIL"]
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
+DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest.json"
 TARGET_GATE_ID = "context_product_exhaustion_demo"
 
 

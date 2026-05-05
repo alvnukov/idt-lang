@@ -16,7 +16,7 @@ from typing import TextIO
 import fcntl
 
 
-DEFAULT_MANIFEST = Path("theory_verifier_manifest_v6_0.json")
+DEFAULT_MANIFEST = Path("theory_verifier_manifest.json")
 
 SAFE_EDIT_FIELDS: dict[str, frozenset[str]] = {
     "symbols": frozenset({"status"}),

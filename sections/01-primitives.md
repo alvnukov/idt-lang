@@ -1,24 +1,26 @@
 ## 1. Primitive Structure
 
-Current executable v6 core:
+Legacy executable scaffold:
 
 $$
 \mathfrak T_0=(H,\mathcal E,\mathsf M,\mathcal I)
 $$
 
-This is the current verifier-facing carrier-neutral contract. It is not yet the
-lowest acceptable base. The Bell/Hilbert/gravity audit shows that the theory
-must avoid making any global fact table, Hilbert carrier, or metric geometry
+This was the older verifier-facing carrier-neutral scaffold. It is no longer
+the current primitive base. It remains only as a compatibility/readout interface
+that must be recovered from the context-first base when needed. The
+Bell/Hilbert/gravity audit shows why this demotion is necessary: the theory must
+avoid making any global fact table, Hilbert carrier, or metric geometry
 primitive.
 
 | Symbol | Meaning | Status |
 |---|---|---|
-| \(H\) | possible histories / event bundles | executable v6 primitive; candidate derived inheritance traces |
-| \(\mathcal E\subseteq2^H\) | event algebra | executable v6 primitive; candidate derived local event algebras |
-| \(\mathsf M\) | admissible readout contexts | executable v6 primitive; candidate context cover/category |
-| \(\mathcal I\) | admissible inheritance acts | executable v6 primitive; candidate transition family |
+| \(H\) | possible histories / event bundles | legacy scaffold; candidate derived inheritance traces |
+| \(\mathcal E\subseteq2^H\) | event algebra | legacy scaffold; candidate derived local event algebras |
+| \(\mathsf M\) | admissible readout contexts | legacy scaffold; superseded by context cover/category |
+| \(\mathcal I\) | admissible inheritance acts | retained only as readout interface over context transitions |
 
-The deeper base candidate is context-first:
+The active base candidate is context-first:
 
 $$
 \mathfrak B_0=(\mathcal C,\mathcal O,\mathcal I,\mathcal R,\mathcal D)
@@ -235,11 +237,10 @@ No Primitive Global Structure:
 
 Migration boundary:
 
-The executable v6 verifier still locks \((H,\mathcal E,\mathsf M,\mathcal I)\)
-as the current carrier-neutral core. Replacing it with \(\mathfrak B_0\)
-requires a new verifier gate proving that the old core is recovered as a
-readout-facing derived interface, or explicitly marking the old contract as a
-superseded scaffold.
+The verifier now treats \((H,\mathcal E,\mathsf M,\mathcal I)\) as a legacy
+readout scaffold. The current migration target is \(\mathfrak B_0\). Any use of
+the old scaffold must be justified as a derived readout interface or marked as
+superseded compatibility machinery.
 
 Current finite-QM readout scaffold:
 

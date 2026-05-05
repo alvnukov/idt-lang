@@ -8062,7 +8062,7 @@
       ]
     },
     {
-      "expected_probe_status": "current_wall_detected",
+      "expected_probe_status": "current_frontier_detected",
       "forbidden_import_refs": [
         "W",
         "Gamma_I",
@@ -8252,7 +8252,7 @@
           "imported_structure_refs": [
             "complex_amplitude_carrier"
           ],
-          "open_gap": "Hilbert carrier derivation is currently blocked by the carrier import boundary.",
+          "open_gap": "Hilbert carrier derivation is now a frontier obligation: carrier-frontier exhaustion and endpoint structure must still be derived without importing the complex carrier.",
           "question": "Is Hilbert-space carrier structure derived from IDT primitives?",
           "result": "wall",
           "target_refs": [
@@ -8280,7 +8280,7 @@
           "imported_structure_refs": [
             "quadratic_actualization_measure"
           ],
-          "open_gap": "The universal Born derivation is blocked at the quadratic actualization obligation.",
+          "open_gap": "Universal Born is now a frontier obligation: oriented endpoint discipline selects the square readout once context-first universal endpoint data is supplied, but that endpoint data is not yet derived from B0 or the accepted successor base.",
           "question": "Is the Born rule derived rather than supplied by a quadratic readout obligation?",
           "result": "wall",
           "target_refs": [
@@ -8384,7 +8384,7 @@
           "imported_structure_refs": [
             "action_phase_hbar_bridge"
           ],
-          "open_gap": "The action scale remains blocked as a first-principles derivation.",
+          "open_gap": "The action scale remains blocked as a first-principles derivation and is tracked separately from the Born/Hilbert frontier.",
           "question": "Is hbar/action scale locked from first principles?",
           "result": "wall",
           "target_refs": [
@@ -9061,7 +9061,7 @@
             "sections/01-primitives.md",
             "sections/174-context-bundle-nontriviality-research-note.md"
           ],
-          "open_gap": "The verifier still treats the v6 core as executable scaffold until migration closes."
+          "open_gap": "The legacy H/E/M/I scaffold is superseded as primitive base; current migration must recover any needed readout interface from context-first primitives."
         },
         {
           "id": "local_outcome_event_presheaf",
@@ -9249,7 +9249,7 @@
       ],
       "expected_base_status": "context_first_base_migration_candidate",
       "forbidden_upgrades": [
-        "does_not_replace_v6_core_without_migration_gate",
+        "does_not_treat_legacy_HEMI_scaffold_as_current_primitive_base",
         "does_not_prove_Hilbert_carrier",
         "does_not_prove_Born_rule",
         "does_not_prove_GR_or_metric_spacetime",
@@ -9311,7 +9311,7 @@
           "checker_commands": [
             "python3 scripts/sync_formal_proof_ledger.py --check",
             "lake env lean Proofs/IDTCore.lean",
-            "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json"
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
           ],
           "machine_checks": [
             "formal_claim_manifest_sync",
@@ -10027,10 +10027,10 @@
           "id": "cgsc_structural_target_kernel_conditional_artifact",
           "proof_kind": "conditional_proof",
           "backend": "lean4",
-          "statement": "Conditional Lean artifact registering the context-generated stable closure structural target kernel. It proves that, given seven CGSC clauses and explicit derivation rules from those clauses, the six current QM structural blockers are closed inside the B1-projected semantic kernel and no-target-import boundaries are preserved. This is not full_QM_I because the CGSC clauses are not yet machine-derived from B1 or successor primitives.",
-          "scope": "conditional_six_blocker_structural_target_kernel",
+          "statement": "Conditional Lean artifact registering the context-generated stable closure structural target kernel. It proves that, given seven CGSC clauses and explicit derivation rules from those clauses, the six QM structural target clauses are closed inside the B1-projected semantic kernel and no-target-import boundaries are preserved. This is not full_QM_I because the CGSC clauses are not yet machine-derived from B1 or successor primitives.",
+          "scope": "conditional_six_target_clause_structural_kernel",
           "claim_refs": [
-            "cgsc_structural_target_kernel.conditional_six_blocker_closure",
+            "cgsc_structural_target_kernel.conditional_six_target_clause_closure",
             "cgsc_structural_target_kernel.unproved_clause_frontier"
           ],
           "artifact_paths": [
@@ -10043,7 +10043,7 @@
           "machine_checks": [
             "lean4_kernel",
             "cgsc_clause_interface",
-            "six_structural_blocker_target_kernel",
+            "six_structural_target_clause_kernel",
             "no_target_import_boundary_preservation",
             "full_qm_obligation_bundle_assembly"
           ],
@@ -10069,11 +10069,11 @@
           "id": "b1_cgsc_clause_derivation_conditional_artifact",
           "proof_kind": "conditional_proof",
           "backend": "lean4",
-          "statement": "Conditional Lean artifact proving that all seven context-generated stable closure clauses are machine-derived from the B1 primitive-base witness interface. The artifact also proves that the B1-derived clauses close the six current structural QM blockers inside the current IDT semantic-kernel package and preserve no-target-import boundaries. This remains B1-relative and does not prove external Hilbert/Born/unitary/tensor equivalence or derive the clauses from the older B0 candidate alone.",
+          "statement": "Conditional Lean artifact proving that all seven context-generated stable closure clauses are machine-derived from the B1 primitive-base witness interface. The artifact also proves that the B1-derived clauses close the six structural QM target clauses inside the current IDT semantic-kernel package and preserve no-target-import boundaries. This remains B1-relative and does not prove external Hilbert/Born/unitary/tensor equivalence or derive the clauses from the older B0 candidate alone.",
           "scope": "b1_relative_cgsc_clause_derivation",
           "claim_refs": [
             "b1_cgsc_clause_derivation.machine_derived_clauses",
-            "b1_cgsc_clause_derivation.closed_structural_targets"
+            "b1_cgsc_clause_derivation.closed_structural_target_clauses"
           ],
           "artifact_paths": [
             "Proofs/QMClosure/B1CGSCClauseDerivation.lean",
@@ -10086,7 +10086,7 @@
             "lean4_kernel",
             "b1_cgsc_clause_sources",
             "shared_atom_universe",
-            "six_structural_blocker_closure",
+            "six_structural_target_clause_closure",
             "no_target_import_boundary_preservation"
           ],
           "open_gaps": [

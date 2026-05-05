@@ -1,11 +1,10 @@
-## 159. v6 Calibrated QM Reconstruction
+## 159. Legacy Calibrated QM Reconstruction
 
 Status:
 
-`v6_calibrated_qm_reconstruction_initialized`
+`legacy_calibrated_qm_reconstruction_initialized`
 
-This section closes the QM tail that can honestly be closed after the v6
-constant-anchor correction.
+This section closes the QM tail that can honestly be closed after the legacy constant-anchor correction.
 
 The theory no longer tries to derive the numerical value of \(\hbar\) inside
 the QM route.
@@ -32,7 +31,7 @@ Reason:
 
 as a first-principles dimensional derivation.
 
-The v6 calibrated target is:
+The legacy calibrated target is:
 
 `calibrated_QM_reconstruction_I`.
 
@@ -175,7 +174,7 @@ Status:
 
 `apparatus_facticity_tail_closed_for_calibrated_QM`
 
-### 159.6. v6 machine guard
+### 159.6. Legacy machine guard
 
 The manifest now registers:
 
@@ -202,9 +201,9 @@ Status:
 
 `calibrated_QM_machine_guard_registered`
 
-### 159.7. Final v6 QM status
+### 159.7. Final legacy QM status
 
-Closed for v6:
+Closed for the legacy calibrated branch:
 
 `calibrated_QM_reconstruction_I = derived_conditional`
 
@@ -229,11 +228,11 @@ Still open outside the calibrated QM route:
 3. primitive derivation of macroscopic apparatus sectors;
 4. beyond-standard-QM residual prediction.
 
-Therefore the QM tail is closed in the only honest v6 sense:
+Therefore the QM tail is closed in the only honest legacy calibrated sense:
 
 calibrated operational reconstruction, not first-principles derivation of all
 dimensional constants.
 
 Status:
 
-`v6_QM_tail_closed_as_calibrated_reconstruction`
+`legacy_QM_tail_closed_as_calibrated_reconstruction`

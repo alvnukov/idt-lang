@@ -1253,7 +1253,7 @@ Status:
 ### 174.21. v7 Recovery Problem
 
 The v7 base candidate is not complete until it explains why the old executable
-v6 core was useful.
+legacy H/E/M/I scaffold was useful.
 
 Current v7 candidate:
 
@@ -1537,7 +1537,7 @@ not:
 B0 => old global T0
 ```
 
-This is a meaningful improvement. It preserves the executable v6 work while
+This is a meaningful improvement. It preserves the legacy executable scaffold work while
 removing the hidden global-ontology assumption.
 
 Status:
@@ -14043,7 +14043,7 @@ no_hidden_joint_only_generation
 The broad route now reads:
 
 ```text
-current v6 core:
+legacy H/E/M/I scaffold:
   useful executable scaffold, not enough for CGSC proof
 
 B0 context-first candidate:

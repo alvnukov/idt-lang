@@ -33,7 +33,7 @@ Current theory version: `v7.1.0`.
 The current verifier manifest is executable and checks the public claim ledger:
 
 ```bash
-python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
+python3 -m theory_verifier --json theory_verifier_manifest.json
 python3 -m unittest discover -s tests
 ```
 
@@ -76,12 +76,12 @@ The main current successes are bounded and methodological:
    candidate principle. It tests whether stable inherited distinguishability
    must have finite admissible readout witnesses, while retaining negative
    controls and open QM obligations.
-10. A new QM wall probe is executable. It audits the route to `full_QM_I` as
-   `pass`, `open`, or `wall` cells. The current diagnosis is
-   `current_wall_detected`: primitive-core and context-product tomography cells
-   pass, several selector/composition/dynamics cells remain open, and
-   Hilbert-carrier, Born-rule, and first-principles action-scale cells are
-   explicit current walls rather than hidden imports.
+10. A QM frontier probe is executable. It audits the route to `full_QM_I` as
+   `pass`, `open`, or `frontier` cells. The current diagnosis is no longer an
+   opaque blocker: primitive-core and context-product tomography pass, several
+   selector/composition/dynamics cells have conditional closure routes, and the
+   remaining open frontiers are context-first universal endpoint data,
+   carrier-frontier exhaustion, and first-principles action scale.
 11. A fundamental-unknownness bridge audit is executable. It records candidate
    principles shared by the QM and gravity fronts: contextual finitization,
    holonomy/branch source selection, source-clock response, residual holdout
@@ -103,19 +103,19 @@ The main current successes are bounded and methodological:
    candidate that the same base mechanism may affect more than QM, while
    ordinary finite QM gates only expose the Hilbert/Bell projection because the
    gravity-facing clock/source response is scale-separated. The probe keeps
-   this as a hard-wall common-source route, not as a derivation of Hilbert,
-   Bell correlations, GR, `hbar_I`, or `G_I`.
+   this as an open common-source route, not as a derivation of Hilbert, Bell
+   correlations, GR, `hbar_I`, or `G_I`.
 15. The proof-verification boundary is executable. Current `formal_proof`
    markers are finite IDT-Core/meta-invariants only, and they must be covered by
    proof cards with machine-checkable artifacts and commands. The proof pipeline
    checks that the generated Lean finite-core semantic artifact is synchronized
    with the manifest, then runs Lean 4 and the IDT verifier.
-16. The v7 context-first primitive-base migration boundary is executable. It
-   records admissible contexts, local outcome-event presheaves, inheritance
+16. The v7 context-first primitive-base boundary is executable. It records
+   admissible contexts, local outcome-event presheaves, inheritance
    transitions, facticization witnesses, and stable distinguishability as the
-   lower-base candidate, while keeping the v6 core as a verifier-facing
-   scaffold until a migration gate recovers or supersedes it. The B1 Lean route
-   now binds admissibility to the successor base and preserves no-target-import
+   active lower-base candidates. The old history/event/readout scaffold is now
+   legacy compatibility only, not the current primitive base. The B1 Lean route
+   binds admissibility to the successor base and preserves no-target-import
    guards, but remains a conditional route. This does not upgrade QM, Hilbert
    space, Born rule, GR, `hbar_I`, or `G_I`.
 17. The QM semantic-kernel route is executable. It groups the current full-QM
@@ -132,27 +132,25 @@ The main current successes are bounded and methodological:
    concentrates the remaining full-QM work in structural target theorems, not
    in unchecked scaffold files.
 19. The CGSC structural target kernel is executable. It conditionally closes
-   the six current structural QM blockers from seven context-generated stable
+   the six structural QM target clauses from seven context-generated stable
    closure clauses and preserves no-target-import boundaries. At this layer
    alone the kernel is conditional; the B1 derivation below supplies the clause
    source, while external QM adequacy remains open.
 20. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
    now machine-derived from the B1 primitive-base witness interface, and the
-   six structural blockers close inside the current IDT package semantics.
-   The semantic-kernel evaluator now removes those six B1-closed blockers and
+   six structural target clauses close inside the current IDT package semantics.
+   The semantic-kernel evaluator now removes those six B1-closed clauses and
    two finite-scaffold closures from the live open core. This does not yet
    prove external Hilbert/Born/unitary/tensor equivalence or a B0-alone
    derivation.
-21. The Born wall is now machine-diagnosed rather than opaque. The separator
-   proves that current finite readout accounting admits a non-quadratic stable
-   readout, and the S2 proof-search artifact proves that current primitive
-   discipline still admits a local ternary witness. A new Lean bridge proves
-   that the existing context-first constructive witness package supplies
-   primitive pairwise endpoint coverage, endpoint-stable binary oriented
-   contexts, and ternary-facticization blocking once universal endpoint data is
-   provided. The remaining mathematical core is deriving that endpoint data from
-   B0 or the accepted successor base; a B1-only negative control is checked and
-   does not force that endpoint data.
+21. The Born/Hilbert frontier is now narrowed rather than opaque. The finite
+   Born-square readout is selected under the checked oriented endpoint
+   discipline, and a new Lean bridge proves that the existing context-first
+   constructive witness package supplies primitive pairwise endpoint coverage,
+   endpoint-stable binary oriented contexts, and ternary-facticization blocking
+   once universal endpoint data is provided. The remaining mathematical core is
+   deriving that endpoint data from B0 or the accepted successor base; a
+   B1-only negative control is checked and does not force that endpoint data.
 
 ## What The Verifier Catches
 
@@ -186,7 +184,7 @@ IDT currently does not claim:
 7. a derivation of complex Hilbert space, the universal Born rule, tensor
    composition, unitary dynamics, or first-principles `hbar_I` from IDT
    primitives.
-8. a completed migration from the v6 executable primitive core to the v7
+8. a completed migration from the legacy executable primitive scaffold to the v7
    context-first lower base.
 9. treating six-cluster conditional QM coverage as a completed derivation of
    Hilbert space, Born rule, tensor composition, unitary dynamics, or

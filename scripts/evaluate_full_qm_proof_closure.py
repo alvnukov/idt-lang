@@ -200,7 +200,7 @@ OBLIGATIONS: tuple[ProofObligation, ...] = (
     ),
 )
 
-DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
+DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest.json"
 FORMAL_PROOF_KINDS = ("machine_checked_finite_proof", "external_formal_proof")
 CONDITIONAL_PROOF_KINDS = ("conditional_proof",)
 

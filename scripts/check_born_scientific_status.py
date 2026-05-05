@@ -16,7 +16,7 @@ from scripts import evaluate_born_readout_attempt as born_readout  # noqa: E402
 from scripts import evaluate_born_wall_separation as born_wall  # noqa: E402
 from scripts import evaluate_s2_born_proof_search as s2_search  # noqa: E402
 
-DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
+DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest.json"
 DEFAULT_WORKFLOW = REPO_ROOT / ".github/workflows/qm-status.yml"
 
 EXPECTED_BORN_DIRECT_VERDICT = "DIRECT_FINITE_BORN_ROUTE_HIT_NOT_UNIVERSAL_PROOF"

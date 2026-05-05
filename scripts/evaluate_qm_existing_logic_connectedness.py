@@ -385,7 +385,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Check logical connectedness of existing Bell/Born/Hilbert/Schrodinger QM nodes."
     )
-    parser.add_argument("--manifest", default=str(REPO_ROOT / "theory_verifier_manifest_v6_0.json"))
+    parser.add_argument("--manifest", default=str(REPO_ROOT / "theory_verifier_manifest.json"))
     parser.add_argument("--output-json", default="")
     parser.add_argument("--show-checks", action="store_true")
     return parser
