@@ -95,7 +95,7 @@ Status:
 
 The current manifest:
 
-`theory_verifier_manifest_v6_0.json`
+`theory_verifier_manifest.json`
 
 contains a toy unit-holonomy family:
 

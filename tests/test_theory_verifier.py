@@ -239,13 +239,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class TheoryVerifierTests(unittest.TestCase):
     def test_current_manifest_passes_logic_checks(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         manifest = parse_manifest_text(manifest_path)
         report = verify_manifest(manifest)
         self.assertEqual([], list(report.issues))
 
     def test_current_manifest_compiles_qm_bench(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         manifest = parse_manifest_text(manifest_path)
         bench = compile_qm_bench(manifest)
         self.assertEqual(6, len(bench.kernels))
@@ -818,7 +818,7 @@ class TheoryVerifierTests(unittest.TestCase):
                 }
                 for node_id, spec in node_specs.items()
             ],
-            "expected_probe_status": "current_wall_detected",
+            "expected_probe_status": "current_frontier_detected",
             "forbidden_upgrades": list(QM_WALL_PROBE_FORBIDDEN_UPGRADES),
         }
 
@@ -1179,7 +1179,7 @@ class TheoryVerifierTests(unittest.TestCase):
             "admissible_context_cover": {
                 "statement": "Admissible contexts form the lower cover/category before global event algebra.",
                 "evidence_refs": ["sections/01-primitives.md", "sections/174-context-bundle-nontriviality-research-note.md"],
-                "open_gap": "The verifier still treats the v6 core as executable scaffold until migration closes.",
+                "open_gap": "The legacy H/E/M/I scaffold is superseded as primitive base; current migration must recover any needed readout interface from context-first primitives.",
             },
             "local_outcome_event_presheaf": {
                 "statement": "Outcome events are local sections over contexts before any global section is allowed.",
@@ -7966,7 +7966,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"qm_proof_anti_hallucination_negative_controls_mismatch"})
 
     def test_qm_proof_anti_hallucination_grounding_rejects_premature_full_qm_status(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         symbols = raw_manifest["symbols"]
         if not isinstance(symbols, dict):
@@ -7981,7 +7981,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"qm_proof_anti_hallucination_full_qm_status_mismatch"})
 
     def test_qm_proof_anti_hallucination_grounding_rejects_limit_gap_upgrade(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         finite_gates = raw_manifest["finite_gates"]
         if not isinstance(finite_gates, list):
@@ -8116,7 +8116,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"foundation_import_boundary_forbidden_upgrades_mismatch"})
 
     def test_foundation_import_boundary_grounding_rejects_hilbert_upgrade(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         theorem_cards = raw_manifest["theorem_cards"]
         if not isinstance(theorem_cards, list):
@@ -8174,7 +8174,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"primitive_core_contract_import_overclaim"})
 
     def test_primitive_core_contract_grounding_rejects_obligation_upgrade(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         theorem_cards = raw_manifest["theorem_cards"]
         if not isinstance(theorem_cards, list):
@@ -8235,7 +8235,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"fdc_frontier_negative_control_result_mismatch"})
 
     def test_fdc_frontier_grounding_rejects_carrier_upgrade(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         theorem_cards = raw_manifest["theorem_cards"]
         if not isinstance(theorem_cards, list):
@@ -8316,7 +8316,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"qm_wall_probe_import_refs_mismatch"})
 
     def test_qm_wall_probe_grounding_rejects_hilbert_status_drift(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         theorem_cards = raw_manifest["theorem_cards"]
         if not isinstance(theorem_cards, list):
@@ -8383,7 +8383,7 @@ class TheoryVerifierTests(unittest.TestCase):
             self.fail("bridge candidate must be a mapping")
         first_candidate["target_refs"] = ["missing_target_ref"]
         finite_gates = [gate]
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         raw_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], *finite_gates]
         manifest = parse_manifest(raw_manifest)
@@ -8435,7 +8435,7 @@ class TheoryVerifierTests(unittest.TestCase):
         if not isinstance(first_constraint, dict):
             self.fail("constraint must be a mapping")
         first_constraint["bell_refs"] = ["missing_bell_ref"]
-        raw_manifest = json.loads((ROOT / "theory_verifier_manifest_v6_0.json").read_text(encoding="utf-8"))
+        raw_manifest = json.loads((ROOT / "theory_verifier_manifest.json").read_text(encoding="utf-8"))
         raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], gate]
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
@@ -8486,7 +8486,7 @@ class TheoryVerifierTests(unittest.TestCase):
         if not isinstance(first_mechanism, dict):
             self.fail("mechanism must be a mapping")
         first_mechanism["gravity_refs"] = ["missing_gravity_ref"]
-        raw_manifest = json.loads((ROOT / "theory_verifier_manifest_v6_0.json").read_text(encoding="utf-8"))
+        raw_manifest = json.loads((ROOT / "theory_verifier_manifest.json").read_text(encoding="utf-8"))
         raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], gate]
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
@@ -8540,7 +8540,7 @@ class TheoryVerifierTests(unittest.TestCase):
         if not isinstance(first_interface, dict):
             self.fail("derived interface must be a mapping")
         first_interface["target_refs"] = ["missing_context_first_target_ref"]
-        raw_manifest = json.loads((ROOT / "theory_verifier_manifest_v6_0.json").read_text(encoding="utf-8"))
+        raw_manifest = json.loads((ROOT / "theory_verifier_manifest.json").read_text(encoding="utf-8"))
         raw_manifest["finite_gates"] = [*raw_manifest["finite_gates"], gate]
         manifest = parse_manifest(raw_manifest)
         report = verify_manifest(manifest)
@@ -8686,7 +8686,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertIssueCodes(report, {"formal_proof_ledger_machine_checks_incomplete"})
 
     def test_current_formal_claims_have_proof_ledger_coverage(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         manifest = parse_manifest_text(manifest_path)
         claim_refs = sorted({claim.reference for claim in iter_formal_claims(manifest)})
         self.assertTrue(claim_refs)
@@ -8743,14 +8743,14 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.BornWallSeparation")))
         self.assertTrue(
             is_allowed_checker_command(
-                ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json")
+                ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest.json")
             )
         )
         self.assertFalse(is_allowed_checker_command(("python3", "-c", "print('unsafe')")))
         self.assertFalse(is_allowed_checker_command(("lake", "env", "lean", "../Proofs/IDTCore.lean")))
 
     def test_formal_proof_ledger_sync_detects_stale_generated_file(self) -> None:
-        manifest_path = ROOT / "theory_verifier_manifest_v6_0.json"
+        manifest_path = ROOT / "theory_verifier_manifest.json"
         with tempfile.TemporaryDirectory() as raw_tmp_dir:
             lean_path = Path(raw_tmp_dir) / "IDTCore.lean"
             self.assertEqual(0, write_ledger(manifest_path, lean_path, io.StringIO()))

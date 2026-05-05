@@ -32,7 +32,7 @@ Status:
 
 The current machine manifest is:
 
-`theory_verifier_manifest_v6_0.json`
+`theory_verifier_manifest.json`
 
 It encodes the active blocked front:
 

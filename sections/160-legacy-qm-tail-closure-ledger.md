@@ -1,15 +1,15 @@
-## 160. v6 QM Tail Closure Ledger
+## 160. Legacy QM Tail Closure Ledger
 
 Status:
 
-`v6_qm_tail_closure_ledger_initialized`
+`legacy_qm_tail_closure_ledger_initialized`
 
 This section closes the bookkeeping ambiguity left by the older QM sections.
 
 There are two different claims:
 
 1. first-principles full QM;
-2. calibrated v6 QM reconstruction.
+2. legacy calibrated QM reconstruction.
 
 The first remains open.
 
@@ -37,7 +37,7 @@ Status:
 
 `first_principles_QM_remains_open`
 
-### 160.2. Calibrated v6 spine
+### 160.2. Legacy calibrated spine
 
 The calibrated target is:
 
@@ -59,7 +59,7 @@ Status:
 
 ### 160.3. Tail table
 
-| Tail | v6 calibrated status | First-principles status |
+| Tail | legacy calibrated status | First-principles status |
 |---|---|---|
 | finite Born/context readout | closed conditionally | conditional |
 | finite unitary/context networks | closed conditionally | conditional |
@@ -76,7 +76,7 @@ Status:
 
 ### 160.4. Machine status
 
-The v6 verifier now checks:
+The current verifier now checks the legacy calibrated branch:
 
 1. `full_QM_I` cannot be claimed as derived prematurely;
 2. `qm_dynamics_action_facticity_closure_I` cannot be claimed as derived
@@ -90,7 +90,7 @@ spine, while the stronger first-principles branch remains honestly open.
 
 Status:
 
-`v6_QM_machine_status_closed`
+`legacy_QM_machine_status_closed`
 
 ### 160.5. Remaining non-QM work
 
@@ -103,8 +103,8 @@ It is one of:
 3. primitive macroscopic apparatus construction;
 4. non-standard residual prediction.
 
-These are outside the calibrated v6 QM closure.
+These are outside the legacy calibrated QM closure.
 
 Status:
 
-`QM_tails_closed_under_calibrated_v6_scope`
+`QM_tails_closed_under_legacy_calibrated_scope`

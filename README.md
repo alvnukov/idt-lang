@@ -1,6 +1,6 @@
 # IDT Lang
 
-![QM Scientific Status](https://img.shields.io/badge/QM-conditional_structural_route__formalization_wall-yellow)
+![QM Scientific Status](https://img.shields.io/badge/QM-context--first_Born--Hilbert_frontier-yellow)
 [![QM CI](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
@@ -67,18 +67,17 @@ Current auditable results:
   are grounded against real manifest objects, schema surfaces, verifier checks,
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
-- primitive-core contract: history space, event algebra, readout-context
-  family, and inheritance-act family remain the current executable
-  carrier-neutral v6 core; QM imports are forbidden inside that core and are
-  routed to explicit theorem or proof obligations. A lower context-first base
-  candidate is now documented as a migration target, not as a proof upgrade.
-- v7 context-first primitive-base boundary: admissible context covers, local
-  outcome-event presheaves, inheritance transition families, facticization
-  witnesses, and stable distinguishability are tracked as the lower-base
-  candidate. The v6 core must be recovered as a readout interface or explicitly
-  superseded before this becomes a completed migration. The B1 Lean route now
-  constructor-binds admissibility and no-target-import boundaries for the
-  successor-base candidate, but remains conditional rather than a QM proof.
+- primitive-core contract: the current primitive surface is context-first.
+  Admissible context covers, local outcome-event presheaves, inheritance
+  transition families, facticization witnesses, and stable distinguishability
+  are the active lower-base candidates. The old history/event/readout scaffold
+  is now legacy compatibility only, not the current primitive base.
+- v7 context-first primitive-base boundary: the B1 Lean route constructor-binds
+  admissibility and no-target-import boundaries for the successor-base
+  candidate. The latest Born/Hilbert pass narrows the live readout frontier to
+  deriving context-first universal endpoint data from B0 or the accepted
+  successor base, while carrier-frontier exhaustion remains the Hilbert-side
+  universal quantifier.
 - QM semantic-kernel route: the current full-QM proof surface is grouped into
   six conditional clusters covering 21 obligations: residual/projective,
   representation, readout, dynamics, composite, and physical scale. B1 now
@@ -89,10 +88,9 @@ Current auditable results:
 - QM semantic-content scaffolds: the finite projective, readout,
   inheritance-action, product-tomography, monoidal associativity,
   projective-limit, and calibrated-scale scaffolds are now compiled as a single
-  Lean bundle. This removes a proof-engineering gap for those finite fragments
-  and leaves the real target blockers concentrated in six structural theorems:
-  NUSD, spectral decomposition, rich reversible symmetry, continuity, generator
-  closure, and entanglement closure.
+  Lean bundle. This removes a proof-engineering gap for those finite fragments;
+  the later B1/CGSC artifacts now close the six structural target clauses
+  inside the current package semantics.
 - CGSC structural target kernel: the six structural QM blockers are now
   conditionally closed by one Lean artifact from seven context-generated stable
   closure clauses, while preserving the no-target-import boundary. At this
@@ -100,7 +98,8 @@ Current auditable results:
   clause source, while external QM adequacy remains open.
 - B1 CGSC clause derivation: all seven CGSC clauses are now machine-derived
   from the B1 primitive-base witness interface in Lean, and the same artifact
-  closes the six structural blockers inside the current IDT package semantics.
+  closes the six structural target clauses inside the current IDT package
+  semantics.
   The remaining frontier is external adequacy: prove that this B1-derived
   package reconstructs Hilbert/Born/unitary/tensor QM with the intended
   universal physical meaning, not only as an internal obligation bundle. The
@@ -128,16 +127,15 @@ Current auditable results:
   admissible readout witnesses; hidden joint invariants, global fact tables,
   unconstrained GPT cones, and nonfinite residuals are tracked as negative
   controls without closing QM.
-- QM wall probe: the verifier now audits the route to `full_QM_I` as diagnostic
-  cells. Primitive-core and context-product local tomography currently pass,
-  FDC/carrier/tensor/unitary/recompile cells remain open, and
-  Hilbert-carrier, Born-rule, and first-principles action-scale cells are
-  recorded as current walls rather than hidden upgrades.
-- fundamental-unknownness bridge audit: the current base-theory search now
-  compares QM walls with gravity/clock/source routes. It records six candidate
-  bridge principles and four route candidates, including possible Hilbert and
-  Bell routes, while preserving the status that Hilbert, Bell derivation, and
-  shared action scale are not closed.
+- QM frontier probe: the verifier audits the route to `full_QM_I` as diagnostic
+  cells. Earlier hard blockers have been narrowed into explicit proof
+  frontiers: context-first universal endpoint data, carrier-frontier exhaustion,
+  and first-principles action scale.
+- fundamental-unknownness bridge audit: the current base-theory search compares
+  the QM proof frontier with gravity/clock/source routes. It records six
+  candidate bridge principles and four route candidates, including possible
+  Hilbert and Bell routes, while preserving the status that Hilbert, Bell
+  derivation, and shared action scale are not closed.
 - Hilbert/spacetime bridge audit: the possible Hilbert/Bell/gravity connection
   is now tracked with an explicit GR-reflection boundary. Metric/GR structure
   may only enter as a readout or limit candidate of deeper clock-source-context
@@ -145,7 +143,7 @@ Current auditable results:
 - Hilbert/Bell/gravity scale probe: the broader candidate link is tracked as a
   scale-hidden common-source route. QM-scale gates may expose Hilbert/Bell
   readouts while gravity-facing clock/source response remains suppressed or
-  unresolved; this is recorded as a hard-wall research route, not a proof.
+  unresolved; this is recorded as an open research route, not a proof.
 - proof-verification ledger: current `formal_proof` markers are finite
   IDT-Core/meta-invariants only, and they must be covered by proof cards with
   machine-checkable artifacts and commands. The current proof pipeline first
@@ -171,7 +169,7 @@ of nature.
 - `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
 - `Proofs/` — Lean proof artifacts.
 - `theory_verifier/` — executable manifest verifier.
-- `theory_verifier_manifest_v6_0.json` — current machine-checkable manifest.
+- `theory_verifier_manifest.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.
 - `data/` — documented data anchors used by verifier-facing research notes.
 
@@ -216,7 +214,7 @@ The QM status CI lane behind the README badge runs:
 ```bash
 ruff check theory_verifier tests scripts
 mypy --strict theory_verifier tests scripts
-python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
+python3 -m theory_verifier --json theory_verifier_manifest.json
 python3 scripts/check_proofs.py
 python3 scripts/evaluate_born_direct_one_pass.py
 python3 scripts/evaluate_born_readout_attempt.py
@@ -235,15 +233,17 @@ python3 -m unittest discover -s tests
 lake build
 ```
 
-The `QM Scientific Status` badge reports the current scientific proof-boundary
-status: conditional structural route, formalization wall open. The `QM CI`
-badge reports whether the verifier/proof-boundary workflow is passing. Neither
-badge means that QM has been proved.
+The `QM Scientific Status` badge reports the current scientific proof boundary:
+the finite standard-QM sector is conditionally closed, and the active
+Born/Hilbert frontier is context-first universal endpoint data plus
+carrier-frontier exhaustion. The `QM CI` badge reports whether the
+verifier/proof-boundary workflow is passing. Neither badge means that exact
+fundamental QM has been proved.
 
 The underlying checks are:
 
 ```bash
-python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
+python3 -m theory_verifier --json theory_verifier_manifest.json
 python3 scripts/sync_formal_proof_ledger.py --check
 lake env lean Proofs/IDTCore.lean
 python3 -m unittest discover -s tests

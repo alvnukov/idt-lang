@@ -202,8 +202,8 @@ The canonical theory modules are:
 157. [156. Our-Universe Selection Gate](sections/156-our-universe-selection-gate.md)
 158. [157. Local G Domain Hypothesis](sections/157-local-G-domain-hypothesis.md)
 159. [158. Physical Meaning of Local G](sections/158-physical-meaning-of-local-G.md)
-160. [159. v6 Calibrated QM Reconstruction](sections/159-v6-calibrated-qm-reconstruction.md)
-161. [160. v6 QM Tail Closure Ledger](sections/160-v6-qm-tail-closure-ledger.md)
+160. [159. Legacy Calibrated QM Reconstruction](sections/159-legacy-calibrated-qm-reconstruction.md)
+161. [160. Legacy QM Tail Closure Ledger](sections/160-legacy-qm-tail-closure-ledger.md)
 162. [161. Joint Action-Gravity Anchor Front](sections/161-joint-action-gravity-anchor-front.md)
 163. [162. Source-Response Charge Closure Front](sections/162-source-response-charge-closure-front.md)
 164. [163. Clock-Vacuum Stiffness From Source Charge](sections/163-clock-vacuum-stiffness-from-source-charge.md)
@@ -237,15 +237,15 @@ $$
 G_I.
 $$
 
-The previous v6 QM result remains bounded: `full_QM_I = target`, because
-`hbar_I` is still blocked as an uncalibrated dimensional derivation. The v6 QM
-closure therefore introduces `calibrated_QM_reconstruction_I`: it uses the single
-our-universe action anchor `calibrated_hbar_I` to close the operational
+The legacy calibrated QM result remains bounded: `full_QM_I = target`, because
+`hbar_I` is still blocked as an uncalibrated dimensional derivation. That
+historical closure introduced `calibrated_QM_reconstruction_I`: it uses the
+single our-universe action anchor `calibrated_hbar_I` to close the operational
 Hamiltonian, momentum, de Broglie, canonical, and apparatus/facticity spine
-without per-domain refit. The verifier now has a calibrated-QM guard that
-requires an explicit calibrated route and rejects premature `derived` claims
-while required nodes remain only open or target.
-Section 160 records the resulting boundary: the calibrated v6 QM spine is
+without per-domain refit. The current verifier keeps this as a legacy calibrated
+route and rejects premature `derived` claims while required nodes remain only
+open or target.
+Section 160 records the resulting boundary: the calibrated legacy QM spine is
 `derived_conditional`, while `full_QM_I`, `hbar_I`, and the first-principles
 action/facticity closure remain open rather than silently promoted.
 Section 161 opens the next selected front: `joint_action_gravity_anchor_I`.
@@ -536,7 +536,7 @@ amplitudes as contextual inputs, not yet as a full derivation from primitive
 local apparatus dynamics. The operational QM pass now also checks finite
 unitary networks, projective measurement repeatability, and the singlet Bell
 angle model from setting angles. It now also rejects probability readout
-contexts whose off-diagonal actualization terms are too large. The v6 calibrated
+contexts whose off-diagonal actualization terms are too large. The legacy calibrated
 QM pass now separates `full_QM_I` from `calibrated_QM_reconstruction_I` and
 adds calibrated Hamiltonian, momentum, de Broglie, and canonical readouts using
 `calibrated_hbar_I` as an explicit our-universe anchor.
@@ -801,15 +801,16 @@ witness. The gate keeps this as a frontier candidate, runs negative controls for
 hidden joint-only invariants, global noncontextual fact tables, unconstrained
 GPT cones, and nonfinite unwitnessed residuals, and forbids upgrading the result
 into Hilbert, Born, full-QM, or nonfinite closure.
-The `qm_wall_probe_demo` now turns the question "will the QM route hit a wall?"
-into an executable diagnostic. It classifies the route to `full_QM_I` by cells:
-primitive-core and context-product local tomography currently pass, FDC and
-several selector/composition/dynamics cells remain open, and Hilbert carrier,
-Born rule, and first-principles action scale are current walls. This is not a
-proof that no future route exists; it is a guard against treating open or
-blocked imports as if they were primitive-core derivations.
+The `qm_wall_probe_demo` is retained as an executable frontier diagnostic. It
+classifies the route to `full_QM_I` by cells: primitive-core and context-product
+local tomography pass, several selector/composition/dynamics cells have
+conditional closure routes, and the remaining open frontiers are
+context-first universal endpoint data, carrier-frontier exhaustion, and
+first-principles action scale. This is not a proof that full QM is closed; it is
+a guard against treating open imports as if they were primitive-core
+derivations.
 The `fundamental_unknownness_bridge_audit_demo` now records the broad base-layer
-search prompted by the QM wall. It compares QM, Bell, and gravity routes through
+search prompted by the QM frontier. It compares QM, Bell, and gravity routes through
 six candidate principles: contextual finitization, holonomy/branch source,
 source-clock response, residual holdout discipline, composition witness
 exhaustion, and scale-anchor independence. The strongest live hint is the
@@ -836,14 +837,14 @@ bounded arity witnesses, route-generator witnesses, no-new-effect witnesses,
 joint-only rejection scope, and proof-ledger consistency before rerunning the
 IDT verifier. This does not upgrade QM, Hilbert space, Born rule, tensor
 composition, unitary dynamics, or first-principles `hbar_I`.
-The `context_first_primitive_base_revision_demo` opens the v7.0 boundary: the
-candidate lower base is context-first rather than global-history-first. It
-tracks admissible context covers, local outcome-event presheaves, inheritance
-transition families, facticization witnesses, and stable distinguishability as
-lower-base candidates. The current v6 primitive core remains an executable
-scaffold until a migration gate recovers it as a readout interface or marks it
-as superseded. The B1 Lean route now constructor-binds the successor-base
-admissibility interface and no-target-import boundaries, but it is still a
+The `context_first_primitive_base_revision_demo` opens the current v7 boundary:
+the active lower-base candidate is context-first rather than
+global-history-first. It tracks admissible context covers, local outcome-event
+presheaves, inheritance transition families, facticization witnesses, and stable
+distinguishability as lower-base candidates. The old H/E/M/I primitive surface
+is now legacy scaffold only; current work must recover it as a readout interface
+or leave it superseded. The B1 Lean route now constructor-binds the
+successor-base admissibility interface and no-target-import boundaries, but it is still a
 conditional route rather than a formal QM derivation. This does not derive
 Hilbert space, Born rule, GR, full QM, `hbar_I`, or `G_I`.
 The `qm_semantic_kernel_route` now records the broadest current full-QM proof
@@ -865,8 +866,8 @@ removes unchecked scaffold files from the QM route, but it deliberately does
 not convert those finite scaffolds into universal Hilbert, Born, unitary,
 tensor, entanglement, continuity, generator, or first-principles scale
 theorems.
-The `cgsc_structural_target_kernel` now turns the current six structural QM
-blockers into one conditional Lean frontier. Given seven context-generated
+The `cgsc_structural_target_kernel` now turns the six structural QM target
+clauses into one conditional Lean frontier. Given seven context-generated
 stable closure clauses plus explicit derivation rules, it closes NUSD,
 spectral decomposition, rich reversible symmetry, continuity, generator
 closure, and entanglement closure inside the B1-projected semantic kernel while
@@ -875,15 +876,16 @@ at this layer alone the seven CGSC clauses are assumed sources, not derived.
 The `b1_cgsc_clause_derivation_conditional_artifact` now supplies the common
 B1-relative source for those seven clauses in Lean. All seven clauses share one
 B1 atom universe and witness interface, and the resulting package closes the
-six structural blockers inside the current IDT package semantics. This is an
+six structural target clauses inside the current IDT package semantics. This is an
 internal conditional proof step, not a proof that external Hilbert space, Born
 rule, unitary dynamics, tensor composition, or `full_QM_I` are inevitable in
 physical semantics. The semantic-kernel evaluator now removes the six B1-closed
-structural blockers and two finite-scaffold closures from the live open core;
+structural target clauses and two finite-scaffold closures from the live open core;
 the remaining mathematical core is context-first universal endpoint data. The
-Born-wall artifacts prove that finite readout accounting admits non-quadratic
-stable readouts and that current primitive discipline still admits a local
-ternary witness. The new universal Born/Hilbert bridge proves that the existing
+Born frontier artifacts show that finite readout accounting admits
+non-quadratic stable readouts unless the oriented endpoint discipline is added,
+and that B1 alone still admits a local ternary witness. The new universal
+Born/Hilbert bridge proves that the existing
 context-first constructive witness package supplies primitive pairwise endpoint
 coverage, endpoint-stable binary oriented contexts, ternary-facticization
 blocking, and the Born-square readout without importing Born. Calibrated phase
@@ -903,7 +905,7 @@ Each accepted version is:
 3. annotate git tag.
 
 Version numbers follow semantic versioning: `MAJOR.MINOR.PATCH`.
-Annotated tags use the same version with a leading `v`, for example `v6.0.0`.
+Annotated tags use the same version with a leading `v`, for example `v7.1.0`.
 `MAJOR` is for incompatible canonical baselines, `MINOR` for compatible section
 clusters or verifier capabilities, and `PATCH` for corrections that do not
 change the accepted theory surface.

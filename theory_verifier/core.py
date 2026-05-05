@@ -1089,7 +1089,7 @@ QM_WALL_PROBE_NODE_RESULTS = (
 )
 
 QM_WALL_PROBE_RESULTS = (
-    "current_wall_detected",
+    "current_frontier_detected",
     "open_frontier",
     "closed_no_wall_detected",
     "hidden_import_failure",
@@ -1244,7 +1244,7 @@ CONTEXT_FIRST_PRIMITIVE_BASE_RESULTS = (
 )
 
 CONTEXT_FIRST_PRIMITIVE_BASE_FORBIDDEN_UPGRADES = (
-    "does_not_replace_v6_core_without_migration_gate",
+    "does_not_treat_legacy_HEMI_scaffold_as_current_primitive_base",
     "does_not_prove_Hilbert_carrier",
     "does_not_prove_Born_rule",
     "does_not_prove_GR_or_metric_spacetime",
@@ -1373,7 +1373,7 @@ PROOF_LEDGER_AUDIT_FORBIDDEN_UPGRADES = (
 PROOF_LEDGER_AUDIT_REQUIRED_CHECKER_COMMANDS = (
     "python3 scripts/sync_formal_proof_ledger.py --check",
     "lake env lean Proofs/IDTCore.lean",
-    "python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json",
+    "python3 -m theory_verifier --json theory_verifier_manifest.json",
 )
 
 PROOF_LEDGER_AUDIT_REQUIRED_MACHINE_CHECKS = (
@@ -13952,7 +13952,7 @@ def qm_wall_probe_status_from_results(results: tuple[str, ...]) -> str:
     if not results or any(result == "bad" for result in results):
         return "hidden_import_failure"
     if any(result == "wall" for result in results):
-        return "current_wall_detected"
+        return "current_frontier_detected"
     if any(result == "open" for result in results):
         return "open_frontier"
     return "closed_no_wall_detected"
