@@ -3,7 +3,7 @@
   "artifact_status": "semantic_content_wall_not_formal_proof",
   "wall": {
     "id": "cgsc_semantic_content_wall",
-    "expected_verdict": "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED",
+    "expected_verdict": "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED",
     "proof_status": "blocked",
     "lean_file": "Proofs/QMClosure/CGSCSemanticContentWall.lean",
     "wall_checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
@@ -19,6 +19,8 @@
     "grounded_toy_wall_checker_command": "lake build Proofs.QMClosure.CGSCGroundedToyWall",
     "universal_kernel_file": "Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean",
     "universal_kernel_checker_command": "lake build Proofs.QMClosure.UniversalPrimitiveSourceKernel",
+    "universal_toy_wall_file": "Proofs/QMClosure/UniversalPrimitiveToyWall.lean",
+    "universal_toy_wall_checker_command": "lake build Proofs.QMClosure.UniversalPrimitiveToyWall",
     "dependencies": [
       "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
       "Proofs/QMClosure/CGSCSemanticContentWall.lean",
@@ -28,6 +30,7 @@
       "Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean",
       "Proofs/QMClosure/CGSCGroundedToyWall.lean",
       "Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean",
+      "Proofs/QMClosure/UniversalPrimitiveToyWall.lean",
       "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "scripts/evaluate_cgsc_semantic_content_wall.py"
     ],
@@ -47,7 +50,8 @@
     "grounded_toy_wall": "grounded_kernel_admits_toy_full_qm_obligation_bundle",
     "universal_kernel": "universal_primitive_source_kernel_yields_full_qm_obligation_bundle",
     "universal_kernel_toy_rejection": "toy_grounded_kernel_has_no_universal_exposed_rank",
-    "required_fix": "derive the universal primitive source kernel from B0 or successor primitives before any formal proof upgrade",
+    "universal_toy_wall": "universal_kernel_admits_three_point_toy_full_qm_obligation_bundle",
+    "required_fix": "derive the source kernel directly from primitive-generated admissibility, not from rank or free toy kernels",
     "forbidden_claims": [
       "does_not_prove_CGSC",
       "does_not_prove_full_QM_I",

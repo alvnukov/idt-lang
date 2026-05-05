@@ -8595,6 +8595,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.FullQMAssemblyFromGroundedSources")))
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.CGSCGroundedToyWall")))
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.UniversalPrimitiveSourceKernel")))
+        self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.UniversalPrimitiveToyWall")))
         self.assertTrue(
             is_allowed_checker_command(
                 ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json")

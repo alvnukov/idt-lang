@@ -9663,6 +9663,40 @@
             "does_not_claim_universal_kernel_is_proved_from_B0",
             "does_not_mark_conditional_universal_kernel_as_QM_proof"
           ]
+        },
+        {
+          "id": "universal_primitive_toy_wall_failure_artifact",
+          "statement": "Lean failure-ledger artifact showing that the AtLeastThree universal primitive source kernel still admits a three-point toy model that assembles the full-QM obligation bundle and keeps import guards. Therefore cardinality/rank filters and freely chosen source kernels are insufficient for a primitive proof of QM.",
+          "scope": "failure_ledger_no_rank_filtered_universal_kernel_upgrade",
+          "proof_kind": "proof_sketch",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/UniversalPrimitiveToyWall.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.UniversalPrimitiveToyWall"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "universal_primitive_three_point_toy_wall"
+          ],
+          "claim_refs": [
+            "universal_primitive_toy_wall.three_point_toy_kernel_detected"
+          ],
+          "theorem": "IDT.QMClosure.universal_kernel_admits_three_point_toy_full_qm_obligation_bundle",
+          "open_gaps": [
+            "derive source kernels directly from primitive-generated admissibility instead of selecting arbitrary source types",
+            "rule out rank-filtered finite toy kernels as proof upgrades",
+            "this card is a failure-ledger guard, not a full_QM_I proof"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_rank_filtered_toy_kernel_as_QM_proof",
+            "does_not_mark_cardinality_filters_as_primitive_derivation"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

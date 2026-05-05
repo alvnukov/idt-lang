@@ -14912,3 +14912,47 @@ Remaining honest blocker:
 derive the universal primitive source kernel from primitives;
 rule out higher-cardinality toy kernels, not only the current two-point toy.
 ```
+
+### 174.289. Universal Kernel Toy Wall
+
+The previous `AtLeastThree` rank filter is not enough. A three-point toy model
+still satisfies the universal kernel shape and mechanically assembles the full
+QM obligation bundle:
+
+```text
+Proofs/QMClosure/UniversalPrimitiveToyWall.lean
+```
+
+Machine-checked negative control:
+
+```text
+universal_kernel_admits_three_point_toy_full_qm_obligation_bundle
+universal_kernel_three_point_toy_keeps_import_guards
+```
+
+This is the important lesson of the broad pass:
+
+```text
+cardinality filters do not prove QM;
+free source kernels do not prove QM;
+ranked toy kernels still pass the assembly theorem.
+```
+
+The next target must stop adding local filters and instead remove free source
+selection entirely:
+
+```text
+primitive-generated admissibility
+=> source kernel constructed by definition
+=> no external choice of Context/Fact/Route/ProductWitness types
+=> full QM obligation bundle
+```
+
+Current status:
+
+```text
+full assembly from source kernels: machine-checked conditional theorem
+two-point toy wall: rejected by AtLeastThree
+three-point universal toy wall: detected and registered
+QM from primitives: still open
+```

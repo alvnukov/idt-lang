@@ -24,6 +24,8 @@ Verdict = Literal[
     "SEMANTIC_GROUNDING_TOY_WALL_REGISTERED",
     "UNIVERSAL_KERNEL_CHECK_FAILED",
     "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED",
+    "UNIVERSAL_TOY_WALL_CHECK_FAILED",
+    "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED",
     "WALL_DRAFT_INVALID",
 ]
 CheckStatus = Literal["PASS", "FAIL"]
@@ -50,6 +52,7 @@ GROUNDED_KERNEL_COMMAND = "lake build Proofs.QMClosure.CGSCGroundedSemanticExten
 FULL_ASSEMBLY_COMMAND = "lake build Proofs.QMClosure.FullQMAssemblyFromGroundedSources"
 GROUNDED_TOY_WALL_COMMAND = "lake build Proofs.QMClosure.CGSCGroundedToyWall"
 UNIVERSAL_KERNEL_COMMAND = "lake build Proofs.QMClosure.UniversalPrimitiveSourceKernel"
+UNIVERSAL_TOY_WALL_COMMAND = "lake build Proofs.QMClosure.UniversalPrimitiveToyWall"
 
 
 @dataclass(frozen=True)
@@ -77,6 +80,7 @@ class SemanticContentWallProbe:
     full_assembly_file: str
     grounded_toy_wall_file: str
     universal_kernel_file: str
+    universal_toy_wall_file: str
     extension_witnesses: int
     draft_checks_failed: int
     legacy_wall_check: LeanCheck
@@ -86,6 +90,7 @@ class SemanticContentWallProbe:
     full_assembly_check: LeanCheck
     grounded_toy_wall_check: LeanCheck
     universal_kernel_check: LeanCheck
+    universal_toy_wall_check: LeanCheck
     draft_checks: list[DraftCheck]
     next_blocker: str
 
@@ -151,6 +156,7 @@ def run_lean_check(command: str) -> LeanCheck:
         FULL_ASSEMBLY_COMMAND,
         GROUNDED_TOY_WALL_COMMAND,
         UNIVERSAL_KERNEL_COMMAND,
+        UNIVERSAL_TOY_WALL_COMMAND,
     }
     if command not in allowed_commands:
         return LeanCheck(command=command, returncode=2, status="FAIL")
@@ -170,7 +176,7 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
     return [
         check_equals("artifact_status", draft.get("artifact_status"), "semantic_content_wall_not_formal_proof"),
         check_equals("wall_id", wall.get("id"), "cgsc_semantic_content_wall"),
-        check_equals("expected_verdict", wall.get("expected_verdict"), "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED"),
+        check_equals("expected_verdict", wall.get("expected_verdict"), "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED"),
         check_equals("proof_status", wall.get("proof_status"), "blocked"),
         check_equals("lean_file", wall.get("lean_file"), "Proofs/QMClosure/CGSCSemanticContentWall.lean"),
         check_equals("wall_checker_command", wall.get("wall_checker_command"), LEGACY_WALL_COMMAND),
@@ -234,6 +240,16 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             wall.get("universal_kernel_checker_command"),
             UNIVERSAL_KERNEL_COMMAND,
         ),
+        check_equals(
+            "universal_toy_wall_file",
+            wall.get("universal_toy_wall_file"),
+            "Proofs/QMClosure/UniversalPrimitiveToyWall.lean",
+        ),
+        check_equals(
+            "universal_toy_wall_checker_command",
+            wall.get("universal_toy_wall_checker_command"),
+            UNIVERSAL_TOY_WALL_COMMAND,
+        ),
         existing_dependency_refs(string_tuple(wall.get("dependencies"), "wall.dependencies")),
         check_set_equals(
             "extension_witnesses",
@@ -281,9 +297,14 @@ def validate_draft(draft: dict[str, object], wall: dict[str, object]) -> list[Dr
             "toy_grounded_kernel_has_no_universal_exposed_rank",
         ),
         check_equals(
+            "universal_toy_wall",
+            wall.get("universal_toy_wall"),
+            "universal_kernel_admits_three_point_toy_full_qm_obligation_bundle",
+        ),
+        check_equals(
             "required_fix",
             wall.get("required_fix"),
-            "derive the universal primitive source kernel from B0 or successor primitives before any formal proof upgrade",
+            "derive the source kernel directly from primitive-generated admissibility, not from rank or free toy kernels",
         ),
         check_set_equals(
             "forbidden_claims",
@@ -316,6 +337,9 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
     universal_kernel_check = run_lean_check(
         require_string(wall.get("universal_kernel_checker_command"), "wall.universal_kernel_checker_command")
     )
+    universal_toy_wall_check = run_lean_check(
+        require_string(wall.get("universal_toy_wall_checker_command"), "wall.universal_toy_wall_checker_command")
+    )
     draft_failed = sum(1 for check in draft_checks if not check.passed)
     if draft_failed > 0:
         verdict: Verdict = "WALL_DRAFT_INVALID"
@@ -333,8 +357,10 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         verdict = "GROUNDED_TOY_WALL_CHECK_FAILED"
     elif universal_kernel_check.status == "FAIL":
         verdict = "UNIVERSAL_KERNEL_CHECK_FAILED"
+    elif universal_toy_wall_check.status == "FAIL":
+        verdict = "UNIVERSAL_TOY_WALL_CHECK_FAILED"
     else:
-        verdict = "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED"
+        verdict = "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED"
     return SemanticContentWallProbe(
         verdict=verdict,
         draft_path=str(draft_path.relative_to(REPO_ROOT)),
@@ -345,6 +371,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         full_assembly_file=require_string(wall.get("full_assembly_file"), "wall.full_assembly_file"),
         grounded_toy_wall_file=require_string(wall.get("grounded_toy_wall_file"), "wall.grounded_toy_wall_file"),
         universal_kernel_file=require_string(wall.get("universal_kernel_file"), "wall.universal_kernel_file"),
+        universal_toy_wall_file=require_string(wall.get("universal_toy_wall_file"), "wall.universal_toy_wall_file"),
         extension_witnesses=len(string_tuple(wall.get("extension_witnesses"), "wall.extension_witnesses")),
         draft_checks_failed=draft_failed,
         legacy_wall_check=legacy_wall_check,
@@ -354,10 +381,11 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> SemanticContentWallProbe:
         full_assembly_check=full_assembly_check,
         grounded_toy_wall_check=grounded_toy_wall_check,
         universal_kernel_check=universal_kernel_check,
+        universal_toy_wall_check=universal_toy_wall_check,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive the universal primitive source kernel from B0 or successor primitives; "
-            "the vacuous, decorative, two-point toy, and free grounded-source routes are blocked as proof upgrades"
+            "derive the source kernel directly from primitive-generated admissibility; "
+            "rank, free grounded-source, and finite toy kernels are blocked as proof upgrades"
         ),
     )
 
@@ -378,7 +406,7 @@ def main() -> int:
         f"legacy_wall={probe.legacy_wall_check.status} typed_contract={probe.typed_contract_check.status} "
         f"decorative_wall={probe.decorative_wall_check.status} grounded_kernel={probe.grounded_kernel_check.status} "
         f"full_assembly={probe.full_assembly_check.status} grounded_toy_wall={probe.grounded_toy_wall_check.status} "
-        f"universal_kernel={probe.universal_kernel_check.status} "
+        f"universal_kernel={probe.universal_kernel_check.status} universal_toy_wall={probe.universal_toy_wall_check.status} "
         f"extension_witnesses={probe.extension_witnesses} draft_checks_failed={probe.draft_checks_failed}"
     )
     print(f"NEXT {probe.next_blocker}")
@@ -390,7 +418,7 @@ def main() -> int:
         with open(str(args.output_json), "w", encoding="utf-8") as handle:
             json.dump(asdict(probe), handle, indent=2, sort_keys=True)
             handle.write("\n")
-    if probe.verdict != "SEMANTIC_UNIVERSAL_KERNEL_REGISTERED":
+    if probe.verdict != "UNIVERSAL_KERNEL_TOY_WALL_REGISTERED":
         return 1
     return 0
 
