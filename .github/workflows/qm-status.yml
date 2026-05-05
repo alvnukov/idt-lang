@@ -1,0 +1,62 @@
+name: QM Status
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  qm-status:
+    name: QM verifier and proof boundary
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python tools
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Install Lean toolchain
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Python quality gates
+        run: |
+          ruff check theory_verifier tests scripts
+          mypy --strict theory_verifier tests scripts
+
+      - name: Manifest verifier
+        run: python -m theory_verifier --json theory_verifier_manifest_v6_0.json
+
+      - name: Lean proof ledger
+        run: python scripts/check_proofs.py
+
+      - name: QM route status probes
+        run: |
+          python scripts/evaluate_cgsc_semantic_content_wall.py
+          python scripts/evaluate_cgsc_primitive_derivation.py
+          python scripts/evaluate_cgsc_extension_wall_probe.py
+          python scripts/evaluate_cgsc_primitive_bridge.py
+          python scripts/evaluate_cgsc_qm_one_pass_closure.py
+          python scripts/evaluate_qm_inevitability_route.py
+          python scripts/evaluate_full_qm_proof_closure.py
+          python scripts/evaluate_qm_hard_wall_probe.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+
+      - name: Lean build
+        run: lake build
