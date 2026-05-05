@@ -126,6 +126,11 @@ The main current successes are bounded and methodological:
    artifact. This removes a proof-engineering gap for those fragments and
    concentrates the remaining full-QM work in structural target theorems, not
    in unchecked scaffold files.
+18. The CGSC structural target kernel is executable. It conditionally closes
+   the six current structural QM blockers from seven context-generated stable
+   closure clauses and preserves no-target-import boundaries. This is not a
+   `full_QM_I` proof: all seven CGSC clauses still require machine-checkable
+   derivation from B1 or a successor primitive base.
 
 ## What The Verifier Catches
 

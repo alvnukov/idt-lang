@@ -15,6 +15,7 @@ import scripts.evaluate_fpd_projective_derivation as fpd_projective  # noqa: E40
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
+import scripts.evaluate_cgsc_structural_target_kernel as cgsc_target_kernel_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
 import scripts.evaluate_qm_semantic_content_scaffolds as semantic_scaffolds_attempt  # noqa: E402
 import scripts.evaluate_qm_semantic_kernel_route as semantic_kernel_attempt  # noqa: E402
@@ -351,6 +352,43 @@ def build_semantic_content_scaffold_step() -> ProofStep:
     )
 
 
+def build_cgsc_structural_target_kernel_step() -> ProofStep:
+    probe = cgsc_target_kernel_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"structural_targets={len(probe.structural_targets)}; "
+        f"conditional_targets={probe.conditionally_covered_targets}; "
+        f"formal_clauses={probe.formal_clause_derivations}; "
+        f"unproved_clauses={probe.unproved_clause_derivations}"
+    )
+    if probe.verdict == "CGSC_STRUCTURAL_TARGET_KERNEL_CONDITIONAL":
+        return ProofStep(
+            name="cgsc_structural_target_kernel",
+            status="CONDITIONAL",
+            statement=(
+                "The CGSC structural target kernel machine-checks the conditional closure of the six current "
+                "QM structural blockers while preserving no-target-import boundaries."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    if probe.verdict == "CGSC_STRUCTURAL_TARGET_KERNEL_CHECK_FAILED":
+        return ProofStep(
+            name="cgsc_structural_target_kernel",
+            status="FAIL",
+            statement="The CGSC structural target kernel Lean artifact must compile before the route can advance.",
+            evidence=evidence,
+            remaining_obligation="Repair the Lean CGSC structural target kernel artifact.",
+        )
+    return ProofStep(
+        name="cgsc_structural_target_kernel",
+        status="OPEN",
+        statement="The CGSC structural target kernel is not yet a valid conditional full-QM blocker cover.",
+        evidence=evidence,
+        remaining_obligation=probe.next_blocker,
+    )
+
+
 def build_attempt() -> ProofAttempt:
     steps = [
         build_finite_gate_step(),
@@ -362,6 +400,7 @@ def build_attempt() -> ProofAttempt:
         build_general_composite_step(),
         build_physical_scale_step(),
         build_semantic_content_scaffold_step(),
+        build_cgsc_structural_target_kernel_step(),
         build_semantic_kernel_step(),
     ]
     passed = sum(1 for step in steps if step.status == "PASS")

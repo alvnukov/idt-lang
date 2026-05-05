@@ -92,6 +92,11 @@ Current auditable results:
   and leaves the real target blockers concentrated in six structural theorems:
   NUSD, spectral decomposition, rich reversible symmetry, continuity, generator
   closure, and entanglement closure.
+- CGSC structural target kernel: the six structural QM blockers are now
+  conditionally closed by one Lean artifact from seven context-generated stable
+  closure clauses, while preserving the no-target-import boundary. This is a
+  sharper frontier, not a completed QM proof: the seven CGSC clauses still need
+  machine-checkable derivation from B1 or a successor primitive base.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

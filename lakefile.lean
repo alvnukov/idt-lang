@@ -28,5 +28,6 @@ lean_lib Proofs where
     `Proofs.QMClosure.MonoidalAssociativityDraft,
     `Proofs.QMClosure.ProjectiveLimitScaffoldDraft,
     `Proofs.QMClosure.BoundaryScaffoldsDraft,
-    `Proofs.QMClosure.QMSemanticContentScaffoldBundle
+    `Proofs.QMClosure.QMSemanticContentScaffoldBundle,
+    `Proofs.QMClosure.CGSCStructuralTargetKernel
   ]

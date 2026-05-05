@@ -9175,6 +9175,7 @@
       "id": "formal_proof_ledger_audit_demo",
       "type": "formal_proof_ledger_audit",
       "target_scope": "current_formal_proof_claims",
+      "expected_ledger_status": "formal_claims_covered",
       "proof_cards": [
         {
           "id": "idt_core_current_formal_claims_machine_checked",
@@ -9934,9 +9935,50 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_finite_scaffolds_as_target_semantic_proofs"
           ]
+        },
+        {
+          "id": "cgsc_structural_target_kernel_conditional_artifact",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "statement": "Conditional Lean artifact registering the context-generated stable closure structural target kernel. It proves that, given seven CGSC clauses and explicit derivation rules from those clauses, the six current QM structural blockers are closed inside the B1-projected semantic kernel and no-target-import boundaries are preserved. This is not full_QM_I because the CGSC clauses are not yet machine-derived from B1 or successor primitives.",
+          "scope": "conditional_six_blocker_structural_target_kernel",
+          "claim_refs": [
+            "cgsc_structural_target_kernel.conditional_six_blocker_closure",
+            "cgsc_structural_target_kernel.unproved_clause_frontier"
+          ],
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCStructuralTargetKernel.lean",
+            "scripts/evaluate_cgsc_structural_target_kernel.py"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCStructuralTargetKernel"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_clause_interface",
+            "six_structural_blocker_target_kernel",
+            "no_target_import_boundary_preservation",
+            "full_qm_obligation_bundle_assembly"
+          ],
+          "open_gaps": [
+            "prove the seven CGSC clauses from B1 or a successor primitive base",
+            "derive context-generated stable closure rather than assuming it as a clause bundle",
+            "do not treat conditional structural target closure as full_QM_I"
+          ],
+          "theorem": "IDT.QMClosure.context_generated_stable_closure_from_b1_yields_full_qm_obligation_bundle",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_derive_Hilbert_carrier",
+            "does_not_derive_universal_Born_rule",
+            "does_not_derive_unitary_dynamics",
+            "does_not_derive_tensor_composition",
+            "does_not_treat_CGSC_clauses_as_derived_from_primitives"
+          ]
         }
-      ],
-      "expected_ledger_status": "formal_claims_covered"
+      ]
     },
     {
       "id": "phase_branch_additivity_demo",

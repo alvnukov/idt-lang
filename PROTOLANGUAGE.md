@@ -865,6 +865,14 @@ removes unchecked scaffold files from the QM route, but it deliberately does
 not convert those finite scaffolds into universal Hilbert, Born, unitary,
 tensor, entanglement, continuity, generator, or first-principles scale
 theorems.
+The `cgsc_structural_target_kernel` now turns the current six structural QM
+blockers into one conditional Lean frontier. Given seven context-generated
+stable closure clauses plus explicit derivation rules, it closes NUSD,
+spectral decomposition, rich reversible symmetry, continuity, generator
+closure, and entanglement closure inside the B1-projected semantic kernel while
+preserving no-target-import boundaries. The result is still conditional:
+none of the seven CGSC clauses is yet a formal derivation from B1 or a
+successor primitive base.
 
 ---
 

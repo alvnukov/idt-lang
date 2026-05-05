@@ -26,6 +26,7 @@ ALLOWED_EXACT_COMMANDS = {
     ("lake", "build", "Proofs.QMClosure.B1PrimitiveBase"),
     ("lake", "build", "Proofs.QMClosure.QMSemanticKernelRoute"),
     ("lake", "build", "Proofs.QMClosure.QMSemanticContentScaffoldBundle"),
+    ("lake", "build", "Proofs.QMClosure.CGSCStructuralTargetKernel"),
     ("python3", "scripts/sync_formal_proof_ledger.py", "--check"),
     ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json"),
 }
