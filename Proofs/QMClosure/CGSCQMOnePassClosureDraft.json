@@ -28,7 +28,7 @@
       },
       {
         "id": "primitive_derivation",
-        "expected": "SUCCESSOR_BASE_DERIVATION_REGISTERED"
+        "expected": "CGSC_DERIVED_FROM_PRIMITIVES"
       },
       {
         "id": "cgsc_primitive_bridge",

@@ -46,6 +46,8 @@ jobs:
 
       - name: QM route status probes
         run: |
+          python scripts/evaluate_born_direct_one_pass.py
+          python scripts/evaluate_qm_direct_one_pass.py
           python scripts/evaluate_cgsc_semantic_content_wall.py
           python scripts/evaluate_cgsc_primitive_derivation.py
           python scripts/evaluate_cgsc_extension_wall_probe.py

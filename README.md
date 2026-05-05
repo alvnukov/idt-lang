@@ -1,6 +1,7 @@
 # IDT Lang
 
-[![QM Status](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
+![QM Scientific Status](https://img.shields.io/badge/QM-conditional_structural_route__formalization_wall-yellow)
+[![QM CI](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
 language for interpreting the physical structure of the universe, designed for
@@ -205,6 +206,8 @@ ruff check theory_verifier tests scripts
 mypy --strict theory_verifier tests scripts
 python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
 python3 scripts/check_proofs.py
+python3 scripts/evaluate_born_direct_one_pass.py
+python3 scripts/evaluate_qm_direct_one_pass.py
 python3 scripts/evaluate_cgsc_qm_one_pass_closure.py
 python3 scripts/evaluate_qm_inevitability_route.py
 python3 scripts/evaluate_qm_hard_wall_probe.py
@@ -215,8 +218,10 @@ python3 -m unittest discover -s tests
 lake build
 ```
 
-The badge reports whether the QM verifier/proof-boundary workflow is passing;
-it does not mean that QM has been proved.
+The `QM Scientific Status` badge reports the current scientific proof-boundary
+status: conditional structural route, formalization wall open. The `QM CI`
+badge reports whether the verifier/proof-boundary workflow is passing. Neither
+badge means that QM has been proved.
 
 The underlying checks are:
 

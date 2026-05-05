@@ -31,5 +31,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.QMSemanticContentScaffoldBundle,
     `Proofs.QMClosure.CGSCStructuralTargetKernel,
     `Proofs.QMClosure.B1CGSCClauseDerivation,
-    `Proofs.QMClosure.BornWallSeparation
+    `Proofs.QMClosure.BornWallSeparation,
+    `Proofs.QMClosure.S2BornProofSearch,
+    `Proofs.QMClosure.PrimitiveBoundaryQMChain
   ]

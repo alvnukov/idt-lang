@@ -23,7 +23,7 @@
       },
       {
         "id": "primitive_derivation",
-        "expected": "SUCCESSOR_BASE_DERIVATION_REGISTERED"
+        "expected": "CGSC_DERIVED_FROM_PRIMITIVES"
       },
       {
         "id": "full_qm_proof_closure",

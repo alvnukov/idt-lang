@@ -351,8 +351,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks_failed=draft_failed,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive B1 from older B0 or explicitly migrate the primitive base to B1, "
-            "then turn B1 package projections into semantic target proofs"
+            "turn the CGSC package projections into semantic target proofs for "
+            "Hilbert/Born/unitary/tensor QM, then replace conditional packages with formal artifacts"
         ),
     )
 
