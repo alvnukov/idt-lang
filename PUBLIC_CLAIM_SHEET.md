@@ -128,9 +128,15 @@ The main current successes are bounded and methodological:
    in unchecked scaffold files.
 18. The CGSC structural target kernel is executable. It conditionally closes
    the six current structural QM blockers from seven context-generated stable
-   closure clauses and preserves no-target-import boundaries. This is not a
-   `full_QM_I` proof: all seven CGSC clauses still require machine-checkable
-   derivation from B1 or a successor primitive base.
+   closure clauses and preserves no-target-import boundaries. At this layer
+   alone the kernel is conditional; the B1 derivation below supplies the clause
+   source, while external QM adequacy remains open.
+19. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
+   now machine-derived from the B1 primitive-base witness interface, and the
+   six structural blockers close inside the current IDT package semantics.
+   The semantic-kernel evaluator now removes those six B1-closed blockers from
+   the live open core. This does not yet prove external
+   Hilbert/Born/unitary/tensor equivalence or a B0-alone derivation.
 
 ## What The Verifier Catches
 

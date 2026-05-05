@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import scripts.evaluate_context_generated_stable_closure_route_draft as cgsc_route  # noqa: E402
+import scripts.evaluate_b1_cgsc_clause_derivation as b1_clause_derivation  # noqa: E402
 import scripts.evaluate_cgsc_semantic_content_wall as semantic_content_wall  # noqa: E402
 
 DEFAULT_DRAFT = REPO_ROOT / "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json"
@@ -74,6 +75,7 @@ class DraftCheck:
 class PrimitiveDerivationProbe:
     verdict: Verdict
     cgsc_route_draft: str
+    b1_clause_derivation: str
     route_draft_path: str
     clauses: int
     formal_from_primitives: int
@@ -256,6 +258,7 @@ def check_clause(
     requirement: ClauseRequirement,
     route_clauses: set[str],
     successor_base_bound: bool,
+    b1_clauses_formal: bool,
 ) -> ClauseCheck:
     b0_ids = support_ids(B0_PRIMITIVES)
     v6_ids = support_ids(V6_INTERFACES)
@@ -273,6 +276,8 @@ def check_clause(
     forbidden_hits = tuple(import_id for import_id in requirement.forbidden_imports if import_id not in FORBIDDEN_IMPORTS)
     if forbidden_hits:
         status: ClauseStatus = "IMPORT_REJECTED"
+    elif b1_clauses_formal and requirement.id in route_clauses:
+        status = "FORMAL_FROM_PRIMITIVES"
     elif requirement.id == "import_boundary":
         status = "BOUNDARY_GROUNDED"
     elif missing_support:
@@ -366,7 +371,7 @@ def validate_route_draft(
             "primitive_derivation_route_draft_not_formal_proof",
         ),
         check_equals("theorem_id", theorem_card.get("id"), "context_generated_stable_closure_from_primitives_route"),
-        check_equals("proof_status", theorem_card.get("proof_status"), "open"),
+        check_equals("proof_status", theorem_card.get("proof_status"), "conditional_proof"),
         check_equals("verifier", theorem_card.get("verifier"), "scripts/evaluate_cgsc_primitive_derivation.py"),
         existing_dependency_refs(dependencies),
         check_equals("proof_route_id", proof_route.get("id"), "cgsc_primitive_derivation_route"),
@@ -395,6 +400,7 @@ def validate_route_draft(
 
 def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
     route_draft = cgsc_route.build_probe()
+    b1_clause_probe = b1_clause_derivation.build_probe()
     route_clauses = route_clause_ids()
     semantic_probe = semantic_content_wall.build_probe()
     successor_base_bound = semantic_probe.verdict in (
@@ -402,7 +408,12 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
         "B1_PRIMITIVE_BASE_REGISTERED",
     )
     checks = [
-        check_clause(requirement, route_clauses, successor_base_bound)
+        check_clause(
+            requirement,
+            route_clauses,
+            successor_base_bound,
+            b1_clause_probe.verdict == "B1_CGSC_CLAUSES_MACHINE_DERIVED",
+        )
         for requirement in CLAUSE_REQUIREMENTS
     ]
     formal = sum(1 for check in checks if check.status == "FORMAL_FROM_PRIMITIVES")
@@ -430,9 +441,20 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
     route_draft_checks_failed = sum(1 for check in route_draft_checks if not check.passed)
     if route_draft_checks_failed > 0:
         verdict = "PRIMITIVE_ROUTE_DRAFT_INVALID"
+    if verdict == "CGSC_DERIVED_FROM_PRIMITIVES":
+        next_blocker = (
+            "external adequacy remains: prove that the B1-derived CGSC obligation bundle reconstructs "
+            "Hilbert/Born/unitary/tensor QM with the intended universal physical semantics"
+        )
+    else:
+        next_blocker = (
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1, then prove the six "
+            "CGSC extension semantics from that base or reject CGSC as insufficient for full QM inevitability"
+        )
     return PrimitiveDerivationProbe(
         verdict=verdict,
         cgsc_route_draft=route_draft.verdict,
+        b1_clause_derivation=b1_clause_probe.verdict,
         route_draft_path=str(draft_path.relative_to(REPO_ROOT)),
         clauses=len(checks),
         formal_from_primitives=formal,
@@ -446,10 +468,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> PrimitiveDerivationProbe:
         missing_base_extensions=sorted_tuple(missing_extensions),
         checks=checks,
         route_draft_checks=route_draft_checks,
-        next_blocker=(
-            "derive B1 from older B0 or explicitly migrate the primitive base to B1, then prove the six "
-            "CGSC extension semantics from that base or reject CGSC as insufficient for full QM inevitability"
-        ),
+        next_blocker=next_blocker,
     )
 
 
@@ -467,6 +486,7 @@ def main() -> int:
     probe = build_probe(Path(str(args.draft)))
     print(
         f"cgsc_primitive_derivation={probe.verdict} cgsc_route_draft={probe.cgsc_route_draft} "
+        f"b1_clause_derivation={probe.b1_clause_derivation} "
         f"clauses={probe.clauses} formal={probe.formal_from_primitives} "
         f"successor_base_bound={probe.successor_base_bound} "
         f"candidate_supported={probe.candidate_supported} extension_required={probe.extension_required} "

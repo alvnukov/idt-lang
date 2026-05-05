@@ -46,7 +46,8 @@ FORBIDDEN_UPGRADES: tuple[str, ...] = (
     "does_not_derive_Born_rule",
     "does_not_derive_unitary_dynamics",
     "does_not_derive_tensor_composition",
-    "does_not_treat_CGSC_clauses_as_derived_from_primitives",
+    "does_not_treat_B1_relative_clause_derivation_as_B0_alone_derivation",
+    "does_not_treat_internal_obligation_bundle_as_external_QM_equivalence",
 )
 
 
@@ -181,8 +182,13 @@ def build_probe() -> CGSCStructuralTargetKernelProbe:
         successor_base_bound_clauses=successor_bound,
         boundary_grounded_clauses=boundary_grounded,
         next_blocker=(
-            "prove the seven CGSC clauses from B1 or a successor primitive base as machine-checkable "
-            "artifacts; the structural target kernel closes the six QM blockers only conditionally"
+            "external adequacy remains: prove that the B1-derived CGSC package reconstructs "
+            "Hilbert/Born/unitary/tensor QM with intended universal physical semantics, and do not "
+            "treat the B1-relative derivation as a B0-alone derivation"
+            if unproved_clause_derivations == 0
+            else "prove the seven CGSC clauses from B1 or a successor primitive base as "
+            "machine-checkable artifacts; the structural target kernel closes the six QM blockers "
+            "only conditionally"
         ),
         forbidden_upgrades=FORBIDDEN_UPGRADES,
     )

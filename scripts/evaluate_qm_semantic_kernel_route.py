@@ -14,6 +14,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
+import scripts.evaluate_b1_cgsc_clause_derivation as b1_clause_derivation  # noqa: E402
 import scripts.evaluate_fpd_projective_derivation as fpd_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
@@ -30,6 +31,15 @@ Verdict = Literal[
 ]
 CheckStatus = Literal["PASS", "FAIL"]
 ClusterStatus = Literal["CONDITIONAL_READY", "BLOCKED", "IMPORT_REJECTED"]
+
+B1_CGSC_CLOSED_CORE: tuple[str, ...] = (
+    "nonunital_stable_distinguishability",
+    "spectral_decomposition",
+    "rich_d_cl_reversible_symmetry",
+    "continuous_inheritance_family",
+    "generator_closure",
+    "entanglement_closure",
+)
 
 
 @dataclass(frozen=True)
@@ -54,6 +64,7 @@ class KernelCluster:
 class SemanticKernelRouteProbe:
     verdict: Verdict
     lean_check: LeanCheck
+    b1_cgsc_clause_derivation: str
     b1_projection: CheckStatus
     b1_projected_clusters: int
     clusters: int
@@ -61,6 +72,7 @@ class SemanticKernelRouteProbe:
     blocked: int
     import_rejected: int
     covered_obligations: int
+    b1_closed_core: tuple[str, ...]
     open_core: tuple[str, ...]
     clusters_detail: list[KernelCluster]
     next_blocker: str
@@ -225,12 +237,19 @@ def sorted_tuple(values: set[str]) -> tuple[str, ...]:
 
 def build_probe() -> SemanticKernelRouteProbe:
     lean_check = run_lean_check()
+    b1_clause_probe = b1_clause_derivation.build_probe()
     clusters = build_clusters()
     conditional = sum(1 for cluster in clusters if cluster.status == "CONDITIONAL_READY")
     blocked = sum(1 for cluster in clusters if cluster.status == "BLOCKED")
     imported = sum(1 for cluster in clusters if cluster.status == "IMPORT_REJECTED")
     covered = {obligation for cluster in clusters for obligation in cluster.covers}
-    open_core = sorted_tuple({item for cluster in clusters for item in cluster.open_core})
+    raw_open_core = {item for cluster in clusters for item in cluster.open_core}
+    b1_closed_core = (
+        B1_CGSC_CLOSED_CORE
+        if b1_clause_probe.verdict == "B1_CGSC_CLAUSES_MACHINE_DERIVED"
+        else ()
+    )
+    open_core = sorted_tuple(raw_open_core - set(b1_closed_core))
     if lean_check.status == "FAIL":
         verdict: Verdict = "SEMANTIC_KERNEL_CHECK_FAILED"
     elif imported > 0:
@@ -242,6 +261,7 @@ def build_probe() -> SemanticKernelRouteProbe:
     return SemanticKernelRouteProbe(
         verdict=verdict,
         lean_check=lean_check,
+        b1_cgsc_clause_derivation=b1_clause_probe.verdict,
         b1_projection=lean_check.status,
         b1_projected_clusters=len(clusters) if lean_check.status == "PASS" else 0,
         clusters=len(clusters),
@@ -249,11 +269,13 @@ def build_probe() -> SemanticKernelRouteProbe:
         blocked=blocked,
         import_rejected=imported,
         covered_obligations=len(covered),
+        b1_closed_core=b1_closed_core,
         open_core=open_core,
         clusters_detail=clusters,
         next_blocker=(
-            "prove target semantic content for the open kernel core from B1 or successor primitives; "
-            "the B1 package now projects to the six-cluster kernel but does not by itself prove full_QM_I"
+            "prove external semantic adequacy for the remaining open kernel core after B1 CGSC closure; "
+            "the B1 package now closes the structural core internally but does not by itself prove "
+            "Hilbert/Born/unitary/tensor equivalence or full_QM_I"
         ),
     )
 
@@ -273,6 +295,7 @@ def main() -> int:
     print(
         f"qm_semantic_kernel_route={probe.verdict} lean={probe.lean_check.status} "
         f"b1_projection={probe.b1_projection} b1_projected_clusters={probe.b1_projected_clusters} "
+        f"b1_cgsc={probe.b1_cgsc_clause_derivation} b1_closed_core={len(probe.b1_closed_core)} "
         f"clusters={probe.clusters} conditional_ready={probe.conditional_ready} "
         f"blocked={probe.blocked} import_rejected={probe.import_rejected} "
         f"covered_obligations={probe.covered_obligations} open_core={len(probe.open_core)}"

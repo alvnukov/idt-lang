@@ -871,8 +871,17 @@ stable closure clauses plus explicit derivation rules, it closes NUSD,
 spectral decomposition, rich reversible symmetry, continuity, generator
 closure, and entanglement closure inside the B1-projected semantic kernel while
 preserving no-target-import boundaries. The result is still conditional:
-none of the seven CGSC clauses is yet a formal derivation from B1 or a
-successor primitive base.
+at this layer alone the seven CGSC clauses are assumed sources, not derived.
+The `b1_cgsc_clause_derivation_conditional_artifact` now supplies the common
+B1-relative source for those seven clauses in Lean. All seven clauses share one
+B1 atom universe and witness interface, and the resulting package closes the
+six structural blockers inside the current IDT package semantics. This is an
+internal conditional proof step, not a proof that external Hilbert space, Born
+rule, unitary dynamics, tensor composition, or `full_QM_I` are inevitable in
+physical semantics. The semantic-kernel evaluator now removes the six B1-closed
+structural blockers from the live open core; the remaining core is conservative
+projective gluing, quadratic readout actualization, projective-limit
+consistency, and calibrated phase-scale boundary discipline.
 
 ---
 

@@ -76,8 +76,9 @@ def build_probe() -> SemanticContentScaffoldProbe:
         machine_checked_scaffolds=MACHINE_CHECKED_SCAFFOLDS,
         structural_target_blockers=STRUCTURAL_TARGET_BLOCKERS,
         next_blocker=(
-            "derive the six structural target blockers from B1 or successor primitives; "
-            "the scaffold bundle is machine-checked but is not a Hilbert/Born/unitary/tensor proof"
+            "combine the finite scaffold bundle with B1 CGSC closure, then prove external "
+            "Hilbert/Born/unitary/tensor adequacy; the scaffold bundle is machine-checked "
+            "but is not itself a full-QM proof"
         ),
     )
 

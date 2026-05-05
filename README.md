@@ -94,9 +94,19 @@ Current auditable results:
   closure, and entanglement closure.
 - CGSC structural target kernel: the six structural QM blockers are now
   conditionally closed by one Lean artifact from seven context-generated stable
-  closure clauses, while preserving the no-target-import boundary. This is a
-  sharper frontier, not a completed QM proof: the seven CGSC clauses still need
-  machine-checkable derivation from B1 or a successor primitive base.
+  closure clauses, while preserving the no-target-import boundary. At this
+  layer alone the kernel is conditional; the next B1 derivation supplies the
+  clause source, while external QM adequacy remains open.
+- B1 CGSC clause derivation: all seven CGSC clauses are now machine-derived
+  from the B1 primitive-base witness interface in Lean, and the same artifact
+  closes the six structural blockers inside the current IDT package semantics.
+  The remaining frontier is external adequacy: prove that this B1-derived
+  package reconstructs Hilbert/Born/unitary/tensor QM with the intended
+  universal physical meaning, not only as an internal obligation bundle. The
+  semantic-kernel evaluator now removes the six B1-closed structural blockers
+  from the live open core; the remaining frontier is conservative projective
+  gluing, quadratic readout actualization, projective-limit consistency, and
+  calibrated phase-scale boundary discipline.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

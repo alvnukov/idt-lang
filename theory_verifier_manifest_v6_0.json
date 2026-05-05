@@ -9977,6 +9977,48 @@
             "does_not_derive_tensor_composition",
             "does_not_treat_CGSC_clauses_as_derived_from_primitives"
           ]
+        },
+        {
+          "id": "b1_cgsc_clause_derivation_conditional_artifact",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "statement": "Conditional Lean artifact proving that all seven context-generated stable closure clauses are machine-derived from the B1 primitive-base witness interface. The artifact also proves that the B1-derived clauses close the six current structural QM blockers inside the current IDT semantic-kernel package and preserve no-target-import boundaries. This remains B1-relative and does not prove external Hilbert/Born/unitary/tensor equivalence or derive the clauses from the older B0 candidate alone.",
+          "scope": "b1_relative_cgsc_clause_derivation",
+          "claim_refs": [
+            "b1_cgsc_clause_derivation.machine_derived_clauses",
+            "b1_cgsc_clause_derivation.closed_structural_targets"
+          ],
+          "artifact_paths": [
+            "Proofs/QMClosure/B1CGSCClauseDerivation.lean",
+            "scripts/evaluate_b1_cgsc_clause_derivation.py"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.B1CGSCClauseDerivation"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "b1_cgsc_clause_sources",
+            "shared_atom_universe",
+            "six_structural_blocker_closure",
+            "no_target_import_boundary_preservation"
+          ],
+          "open_gaps": [
+            "prove external Hilbert/Born/unitary/tensor adequacy for the B1-derived CGSC package",
+            "do not treat B1-relative clause derivation as a B0-alone derivation",
+            "do not treat internal obligation-bundle closure as full_QM_I"
+          ],
+          "theorem": "IDT.QMClosure.b1_cgsc_clause_derivation_yields_full_qm_obligation_bundle",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_derive_Hilbert_carrier_from_B0_alone",
+            "does_not_derive_universal_Born_rule_from_B0_alone",
+            "does_not_derive_unitary_dynamics_from_B0_alone",
+            "does_not_derive_tensor_composition_from_B0_alone",
+            "does_not_replace_external_QM_equivalence_theorems"
+          ]
         }
       ]
     },
