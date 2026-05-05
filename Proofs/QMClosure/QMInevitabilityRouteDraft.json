@@ -32,11 +32,11 @@
       "import_boundary"
     ],
     "known_failures": [
-      "context_generated_stable_closure_clauses_not_proved_from_primitives",
-      "cgsc_primitive_derivation_successor_base_registered_not_formal",
-      "b1_primitive_base_registered_not_target_semantic_proofs",
+      "successor_base_B1_is_currently_required_not_lower_B0_alone",
+      "context_first_witness_completeness_not_derived_from_lower_base",
+      "carrier_frontier_exhaustion_not_derived_from_lower_base",
       "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
-      "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
+      "external_hilbert_born_unitary_tensor_adequacy_theorems_not_promoted",
       "physical_hbar_I_not_derived"
     ],
     "physical_scope": "mathematical QM structure route only; physical action scale remains calibrated or separately blocked",

@@ -148,6 +148,8 @@ Machine-checked boundary:
 current_finite_b2_closes_born_hilbert_finite_routes
 current_finite_b2_still_not_universal_qm
 current_b2_is_standard_qm_sector_projection_not_final_physics
+b1_context_first_frontier_closes_full_finite_standard_qm_sector
+current_full_qm_sector_closure_is_not_exact_fundamental_qm
 ```
 
 So the concrete result is:
@@ -155,10 +157,32 @@ So the concrete result is:
 ```text
 B1 alone is not enough.
 B2 constructive witness completeness recovers the current finite Born/Hilbert
-standard-QM sector without target imports.
-B2 still does not prove universal Born, universal Hilbert uniqueness, full QM,
-or exact finality of empirical QM formulas.
+B1 plus context-first constructive witness completeness plus carrier-frontier
+exhaustion closes the current finite standard-QM sector surface without target
+imports.
+This still does not prove universal Born, universal Hilbert uniqueness, exact
+fundamental QM, or exact finality of empirical QM formulas.
 Beyond-QM correction channels remain open unless independently ruled out.
+```
+
+The current executable sector status is:
+
+```text
+scripts/evaluate_full_qm_sector_closure.py
+
+FULL_FINITE_STANDARD_QM_SECTOR_CLOSED_CONDITIONAL
+```
+
+The remaining base obligations are now localized:
+
+```text
+derive B1 or its successor from the lower B0/base without target imports;
+derive context-first constructive witness completeness from the lower base;
+prove carrier-frontier exhaustion or record a non-Hilbert constructive
+countermodel;
+promote conditional Hilbert/Born/unitary/tensor adequacy artifacts to formal
+primitive proofs;
+keep hbar_I as calibrated unless a first-principles scale theorem is supplied.
 ```
 
 Correction channels are not free fit terms. The current Lean boundary adds:

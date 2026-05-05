@@ -1675,3 +1675,67 @@ Use Born/Hilbert as the fixed standard-sector baseline.
 Only lower-source, predeclared, holdout-tested correction channels may go
 beyond that baseline.
 ```
+
+## 175.27. Full Finite Standard-QM Sector Closure Pass
+
+The broad Born/Hilbert/tensor/unitary pass now has one machine-checked sector
+closure artifact:
+
+```text
+Proofs/QMClosure/FullQMSectorClosure.lean
+```
+
+The theorem is:
+
+```text
+b1_context_first_frontier_closes_full_finite_standard_qm_sector
+```
+
+It composes, in one Lean proof:
+
+```text
+B1 CGSC clause derivation;
+context-first constructive witness completeness;
+carrier-frontier exhaustion;
+finite Born/Hilbert route closure;
+Hilbert frontier closure;
+readout, dynamics, composite, monoidal, projective-limit, and calibrated-scale
+semantic scaffolds;
+no Born/Hilbert/unitary/tensor/Stone/spectral imports.
+```
+
+Executable status:
+
+```text
+scripts/evaluate_full_qm_sector_closure.py
+
+full_qm_sector_closure =
+  FULL_FINITE_STANDARD_QM_SECTOR_CLOSED_CONDITIONAL
+
+finite_sector_closed = true
+exact_fundamental_qm_closed = false
+target_open = 0
+target_failed = 0
+target_imported = 0
+```
+
+The important status correction is:
+
+```text
+missing_clause_proofs = 0
+conditional_proof_artifacts = 20
+```
+
+So the current blocker is no longer "CGSC clauses missing". The blocker is:
+
+```text
+derive B1 / context-first constructive witness completeness /
+carrier-frontier exhaustion from the lower base;
+promote conditional Hilbert/Born/unitary/tensor adequacy artifacts to formal
+primitive proofs;
+keep hbar_I calibrated unless a first-principles scale theorem is supplied.
+```
+
+This is not a proof of exact fundamental QM. It is the strongest checked sector
+result so far: the finite standard-QM sector closes under the stated successor
+base and frontier assumptions, and the remaining wall is sharply localized.

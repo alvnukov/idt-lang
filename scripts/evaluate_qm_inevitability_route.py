@@ -39,6 +39,7 @@ Verdict = Literal[
 ProofStatus = Literal[
     "FORMAL_PROOF",
     "OPEN_PRIMITIVE_CLAUSE_PROOFS_MISSING",
+    "OPEN_CONDITIONAL_TARGET_PROOF_ARTIFACTS",
     "OPEN_TARGET_PROOF_ARTIFACTS_MISSING",
     "OPEN_ROUTE_DRAFT_INVALID",
 ]
@@ -234,6 +235,15 @@ def clause_statuses_from_cgsc_route() -> dict[str, str]:
     return statuses
 
 
+def clause_statuses_for_inevitability(
+    primitive_probe: cgsc_primitive.PrimitiveDerivationProbe,
+) -> dict[str, str]:
+    statuses = clause_statuses_from_cgsc_route()
+    if primitive_probe.verdict == "CGSC_DERIVED_FROM_PRIMITIVES":
+        return {clause_id: "formal_proof" for clause_id in statuses}
+    return statuses
+
+
 def proof_statuses_from_closure(closure: proof_closure.ClosureAttempt) -> dict[str, str]:
     return {check.id: check.status for check in closure.checks}
 
@@ -299,11 +309,11 @@ def validate_draft(
     known_failures = string_tuple(theorem_card.get("known_failures"), "theorem_card.known_failures")
     forbidden_claims = string_tuple(theorem_card.get("forbidden_claims"), "theorem_card.forbidden_claims")
     required_failures = (
-        "context_generated_stable_closure_clauses_not_proved_from_primitives",
-        "cgsc_primitive_derivation_successor_base_registered_not_formal",
-        "b1_primitive_base_registered_not_target_semantic_proofs",
+        "successor_base_B1_is_currently_required_not_lower_B0_alone",
+        "context_first_witness_completeness_not_derived_from_lower_base",
+        "carrier_frontier_exhaustion_not_derived_from_lower_base",
         "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
-        "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
+        "external_hilbert_born_unitary_tensor_adequacy_theorems_not_promoted",
         "physical_hbar_I_not_derived",
     )
     required_forbidden = (
@@ -339,7 +349,7 @@ def build_probe(
     primitive_probe = cgsc_primitive.build_probe()
     semantic_probe = semantic_content_wall.build_probe()
     closure = proof_closure.build_closure_attempt(manifest_path)
-    clause_status_by_id = clause_statuses_from_cgsc_route()
+    clause_status_by_id = clause_statuses_for_inevitability(primitive_probe)
     proof_status_by_id = proof_statuses_from_closure(closure)
     target_checks = [check_target(spec, clause_status_by_id, proof_status_by_id) for spec in target_specs]
     draft_checks = validate_draft(draft, target_specs, cgsc_probe)
@@ -365,11 +375,12 @@ def build_probe(
         proof_status = "FORMAL_PROOF"
     else:
         verdict = "CONDITIONAL_INEVITABILITY_ROUTE_VALIDATED"
-        proof_status = (
-            "OPEN_PRIMITIVE_CLAUSE_PROOFS_MISSING"
-            if missing_clause_proofs > 0
-            else "OPEN_TARGET_PROOF_ARTIFACTS_MISSING"
-        )
+        if missing_clause_proofs > 0:
+            proof_status = "OPEN_PRIMITIVE_CLAUSE_PROOFS_MISSING"
+        elif conditional_proof_artifacts > 0:
+            proof_status = "OPEN_CONDITIONAL_TARGET_PROOF_ARTIFACTS"
+        else:
+            proof_status = "OPEN_TARGET_PROOF_ARTIFACTS_MISSING"
     return InevitabilityRouteProbe(
         verdict=verdict,
         proof_status=proof_status,
@@ -392,8 +403,8 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive B1 from older B0 or explicitly migrate the primitive base to B1, "
-            "then close CGSC target semantics and promote conditional artifacts to formal primitive proofs"
+            "derive B1/context-first witness completeness/carrier-frontier exhaustion from the lower base, "
+            "then promote conditional Hilbert/Born/unitary/tensor adequacy artifacts to formal primitive proofs"
         ),
     )
 
