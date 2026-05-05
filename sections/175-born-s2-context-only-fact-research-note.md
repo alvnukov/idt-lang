@@ -1295,3 +1295,383 @@ finite direct Born/QM route hit
 CGSC/QM structural route ready
 formal full-QM proof still open
 ```
+
+## 175.22. Born/Hilbert/Bell Primitive-Link Pass
+
+The next broad pass treats Born, Hilbert, and Bell as one primitive readout
+problem rather than three independent targets.
+
+Hypothesis:
+
+```text
+Bell/contextual obstruction,
+Born readout,
+and Hilbert carrier pressure
+
+are projections of one lower object:
+
+normalized oriented distinguishability
+with finite facticizable readout witnesses.
+```
+
+Executable pass:
+
+```text
+scripts/evaluate_born_hilbert_bell_primitive_link.py
+```
+
+The route decomposes the three targets as:
+
+```text
+Bell:
+  no primitive global fact table;
+  context-indexed orientation overlap;
+  bounded no-signalling correlation readout.
+
+Born:
+  normalized orientation overlap;
+  signed binary expectation;
+  affine facticizable frequency readout;
+  phase-bundle double cover;
+  p = |a|^2 on the finite route.
+
+Hilbert:
+  phase-bundle carrier pressure;
+  local tomography/product-context exhaustion;
+  spectral exposed contexts;
+  rich D_cl reversible symmetry;
+  bounded-composite separator screens.
+```
+
+Current verdict:
+
+```text
+BORN_HILBERT_BELL_PRIMITIVE_LINK_CONDITIONAL_HIT_UNIVERSAL_UNIQUENESS_OPEN
+```
+
+Meaning:
+
+```text
+The finite graph supports a shared primitive link:
+orientation overlap explains the Bell angle screen;
+signed/affine readout explains the finite Born square;
+phase-bundle/local-tomography screens create complex-Hilbert pressure and reject
+real-Hilbert, boxworld, generic GPT, and finite residual controls.
+```
+
+This is stronger than treating Born/Hilbert/Bell separately. It suggests the
+right primitive object is not probability, Hilbert vector, or Bell table, but:
+
+```text
+finite oriented distinguishability read out through admissible facticization.
+```
+
+Common-nature interpretation:
+
+```text
+Bell is the obstruction/readout projection:
+  no primitive global fact table, only context-indexed oriented correlations.
+
+Born is the frequency/readout projection:
+  signed oriented overlap becomes affine facticizable probability.
+
+Hilbert is the carrier/representation projection:
+  the same oriented distinguishability needs a minimal faithful phase-bundle
+  representation stable under composition, tomography, and reversible routes.
+```
+
+So the shared object is not yet a named physical substance. It is a stricter
+primitive pattern:
+
+```text
+context-local oriented distinguishability
++ finite witness/facticization discipline
++ admissible composition/reversibility
+```
+
+The remaining wall is also sharper:
+
+```text
+derive S2 or a QM-sector S2 law from context-first unknownness;
+derive signed expectation readout generally;
+derive affine frequency calibration for facticizable records;
+derive phase-bundle double cover generally;
+derive spectral decomposition and rich reversible symmetry from D_cl;
+derive recoverable oriented filtering without importing purification;
+prove universal complex-Hilbert uniqueness or exhibit a countermodel.
+```
+
+This does not prove full QM. It says the same primitive link now carries all
+three fronts as a conditional route, while universal complex-Hilbert uniqueness
+and universal Born remain open.
+
+## 175.23. Born/Hilbert Result With Bell As Control
+
+Bell is no longer the active wall in this pass. The normalized-orientation
+overlap route already closes the finite Bell/CHSH/Tsirelson readout screen
+without importing a Bell table, while the direct cosine route remains classified
+as an import control.
+
+The active Born/Hilbert result is:
+
+```text
+Born:
+  finite selector hit;
+  universal primitive derivation open.
+
+Hilbert:
+  finite complex-like carrier hit;
+  real/quaternionic/boxworld/generic controls rejected;
+  universal carrier uniqueness open.
+```
+
+Executable status:
+
+```text
+scripts/evaluate_born_hilbert_bell_primitive_link.py
+
+BORN_STATUS:
+  finite Born readout is selected once normalized signed overlap, affine
+  facticizable frequency readout, context normalization,
+  exclusivity/coarse-graining, operational equivalence, and phase-bundle double
+  cover are supplied.
+
+BORN_BLOCKER:
+  derive positive quadratic actualization, signed expectation readout, affine
+  frequency calibration, and phase-bundle double cover from B1 or a successor
+  primitive base; otherwise Born remains a conditional sector law.
+
+HILBERT_STATUS:
+  complex-Hilbert-like finite sector survives all current separator screens,
+  while real/quaternionic/boxworld/generic controls are rejected.
+
+HILBERT_BLOCKER:
+  prove that every admissible fundamental finite carrier has a constructive
+  phase-bundle/local-tomography/spectral-symmetry witness, or exhibit a concrete
+  non-Hilbert constructive carrier countermodel.
+```
+
+So the current result is not a failure to explain Born/Hilbert. It is a precise
+lowering of the wall:
+
+```text
+Born wall:
+  not "why square after assuming Hilbert";
+  but "why positive quadratic actualization is forced by primitive
+  facticization/readout".
+
+Hilbert wall:
+  not "why complex Hilbert survives the finite screens";
+  but "why every admissible fundamental carrier must be constructively
+  generated by the phase-bundle/tomography/spectral-symmetry route".
+```
+
+The next primitive-base decision is therefore narrow. Either B1 must derive
+constructive actualization and constructive carrier witness completeness, or a
+successor primitive base must include a stricter witness-completeness principle.
+Adding Born probability or Hilbert space directly would be circular; adding a
+constructive witness-completeness principle may be legitimate because it speaks
+below probability and below carrier representation.
+
+## 175.24. Concrete Born/Hilbert Sector-Projection Result
+
+The non-intermediate result of this pass is now machine-checkable:
+
+```text
+Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean
+```
+
+It introduces a B2-style successor contract:
+
+```text
+B2ConstructiveWitnessBase
+```
+
+The contract is intentionally below Born and below Hilbert. It does not contain
+probability amplitudes, projectors, Hilbert vectors, tensor products, or a Bell
+table. It also does not assert that empirical QM formulas are exact at all
+scales. Born/Hilbert are used as orientation targets for the standard finite
+QM-sector projection, while beyond-QM correction channels remain open.
+
+The B2 contract contains only generated witness-completeness obligations:
+
+```text
+primitive-boundary closure;
+signed-overlap readout witnesses;
+affine facticizable frequency witnesses;
+phase-bundle double-cover witnesses;
+phase-bundle carrier screen;
+local tomography;
+spectral exposed contexts;
+rich D_cl reversible symmetry;
+constructive carrier witness;
+no hidden joint-only generation;
+no Born/Hilbert/tensor imports.
+```
+
+Lean theorem:
+
+```text
+b2_constructive_witness_base_closes_born_hilbert_finite_routes
+```
+
+Statement-level meaning:
+
+```text
+If a B2 constructive-witness base is ready, then:
+
+1. DirectFiniteBornRouteHit holds.
+2. PositiveQuadraticActualizationFromSignedOverlap holds.
+3. FiniteHilbertCarrierRouteHit holds.
+```
+
+Concrete current finite instance:
+
+```text
+current_finite_b2_constructive_witness_base_ready
+current_finite_b2_closes_born_hilbert_finite_routes
+```
+
+Non-overclaim guard:
+
+```text
+current_finite_b2_still_not_universal_qm
+```
+
+This is the first concrete sector-projection result for the Born/Hilbert wall:
+
+```text
+B1 constructor binding + import guards:
+  insufficient.
+
+B2 constructive witness completeness:
+  sufficient for current finite Born/Hilbert standard-QM sector projection.
+
+Universal QM:
+  still open.
+
+Exact finality of empirical QM formulas:
+  not claimed.
+
+Beyond-QM correction channel:
+  open unless independently ruled out.
+```
+
+The next scientific question is no longer "what is the Born/Hilbert blocker?"
+The blocker is identified. The question is:
+
+```text
+Can constructive witness completeness itself be derived from context-first
+fundamental unknownness, or must it be accepted as the B2 primitive principle?
+```
+
+The guard added in Lean is:
+
+```text
+current_b2_is_standard_qm_sector_projection_not_final_physics
+```
+
+That is the discipline needed here: do not fit primitives to Born/Hilbert as
+final truth. Use Born/Hilbert to identify the stable observed sector, then keep
+the lower theory free to produce audited deviations outside that sector.
+
+## 175.25. Audited Beyond-QM Correction Channel
+
+The correction direction is now explicit in Lean:
+
+```text
+BeyondQMCorrectionChannel
+AuditedBeyondQMCorrectionChannel
+```
+
+The channel is not a free residual term. A correction is admissible only if:
+
+```text
+standard QM-sector projection is held fixed;
+lower primitive source is declared;
+scale or context boundary is declared before comparison;
+correction observable is declared;
+no post-fit retuning is allowed;
+holdout comparison is required;
+Born/Hilbert readout is not redefined after seeing data;
+the correction reduces to the standard QM sector inside its boundary;
+the correction may be zero.
+```
+
+Negative control:
+
+```text
+free_fit_correction_channel_is_rejected
+```
+
+Current audited open-channel theorem:
+
+```text
+current_beyond_qm_correction_channel_is_audited
+```
+
+This gives the working split:
+
+```text
+standard_QM_sector_projection:
+  recover the finite Born/Hilbert sector where its witness assumptions hold.
+
+fundamental_IDT_dynamics:
+  lower primitive/source dynamics still under investigation.
+
+audited_correction_terms:
+  possible deviations from ideal QM only when fixed by a declared lower source,
+  boundary, observable, and no-postfit holdout protocol.
+```
+
+So the research direction is not to adjust primitives until QM is matched
+perfectly. The direction is to keep QM as the high-precision sector constraint
+and look for lower-source correction channels that survive audit.
+
+## 175.26. Born/Hilbert Sector-Correction Classifier
+
+The correction protocol now has an executable classifier:
+
+```text
+scripts/evaluate_born_hilbert_sector_corrections.py
+```
+
+Current verdict:
+
+```text
+BORN_HILBERT_SECTOR_CORRECTION_AUDIT_PASS
+```
+
+The classifier keeps exactly one channel type open:
+
+```text
+audited_lower_source_scale_channel:
+  standard sector fixed;
+  lower primitive source declared;
+  scale/context boundary declared;
+  observable declared;
+  no-postfit retuning;
+  holdout comparison required;
+  no Born/Hilbert redefinition;
+  reduces to standard QM inside boundary;
+  null correction allowed.
+```
+
+It rejects:
+
+```text
+free_fit_residual;
+born_rule_redefinition;
+hilbert_carrier_override;
+nonzero_inside_standard_boundary;
+no_holdout_channel.
+```
+
+This gives a concrete working rule for Born/Hilbert:
+
+```text
+Do not fit the primitives to Born/Hilbert.
+Use Born/Hilbert as the fixed standard-sector baseline.
+Only lower-source, predeclared, holdout-tested correction channels may go
+beyond that baseline.
+```

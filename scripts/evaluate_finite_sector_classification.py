@@ -109,6 +109,29 @@ CANDIDATES: tuple[CarrierCandidate, ...] = (
     ),
 )
 
+LEAN_ARTIFACTS: tuple[str, ...] = (
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "complex_phase_bundle_passes_known_finite_carrier_screen",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "known_finite_carrier_frontier_classification",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "known_finite_carrier_pass_implies_complex_phase_bundle",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "carrier_frontier_exhaustion_selects_complex_phase_bundle",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "context_first_plus_frontier_exhaustion_closes_hilbert_frontier",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "real_rebit_rejected_by_known_finite_carrier_screen",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "quaternionic_bit_rejected_by_known_finite_carrier_screen",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "boxworld_rejected_by_known_finite_carrier_screen",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "generic_gpt_rejected_by_known_finite_carrier_screen",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "abstract_residual_rejected_by_known_finite_carrier_screen",
+)
+
 
 def local_parameters(candidate: CarrierCandidate) -> int:
     dimension = candidate.local_dimension
@@ -293,6 +316,13 @@ def main() -> int:
         )
         for test in result.tests:
             print(f"  {test.verdict} {test.name}: {test.reason} details={test.details}")
+    print(f"LEAN_ARTIFACTS {','.join(LEAN_ARTIFACTS)}")
+    print(
+        "RESULT known finite carrier frontier has machine-checked uniqueness: "
+        "any listed carrier that passes all finite screens is complex phase-bundle; "
+        "with context-first witness completeness this supplies a Hilbert route; "
+        "universal selection is reduced to proving carrier-frontier exhaustion"
+    )
     if args.output_jsonl:
         with open(str(args.output_jsonl), "w", encoding="utf-8") as handle:
             for result in results:
