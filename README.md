@@ -209,6 +209,7 @@ python3 scripts/check_proofs.py
 python3 scripts/evaluate_born_direct_one_pass.py
 python3 scripts/evaluate_qm_direct_one_pass.py
 python3 scripts/evaluate_cgsc_qm_one_pass_closure.py
+python3 scripts/check_qm_scientific_status.py
 python3 scripts/evaluate_qm_inevitability_route.py
 python3 scripts/evaluate_qm_hard_wall_probe.py
 python3 scripts/evaluate_qm_semantic_kernel_route.py
