@@ -57,6 +57,7 @@ jobs:
           python scripts/evaluate_qm_semantic_kernel_route.py
           python scripts/evaluate_qm_semantic_content_scaffolds.py
           python scripts/evaluate_b1_cgsc_clause_derivation.py
+          python scripts/evaluate_born_wall_separation.py
           python scripts/evaluate_cgsc_structural_target_kernel.py
           python scripts/evaluate_full_qm_proof_attempt.py
 

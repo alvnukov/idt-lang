@@ -8604,6 +8604,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.QMSemanticContentScaffoldBundle")))
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.CGSCStructuralTargetKernel")))
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.B1CGSCClauseDerivation")))
+        self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.BornWallSeparation")))
         self.assertTrue(
             is_allowed_checker_command(
                 ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json")

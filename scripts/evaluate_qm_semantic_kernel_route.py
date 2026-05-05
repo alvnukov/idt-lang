@@ -19,6 +19,7 @@ import scripts.evaluate_fpd_projective_derivation as fpd_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
+import scripts.evaluate_born_wall_separation as born_wall_attempt  # noqa: E402
 import scripts.evaluate_qm_semantic_content_scaffolds as semantic_scaffolds_attempt  # noqa: E402
 import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
 
@@ -72,6 +73,7 @@ class SemanticKernelRouteProbe:
     lean_check: LeanCheck
     b1_cgsc_clause_derivation: str
     semantic_scaffolds: str
+    born_wall_separation: str
     b1_projection: CheckStatus
     b1_projected_clusters: int
     clusters: int
@@ -81,6 +83,7 @@ class SemanticKernelRouteProbe:
     covered_obligations: int
     b1_closed_core: tuple[str, ...]
     scaffold_closed_core: tuple[str, ...]
+    accepted_boundaries: tuple[str, ...]
     open_core: tuple[str, ...]
     clusters_detail: list[KernelCluster]
     next_blocker: str
@@ -247,6 +250,7 @@ def build_probe() -> SemanticKernelRouteProbe:
     lean_check = run_lean_check()
     b1_clause_probe = b1_clause_derivation.build_probe()
     scaffold_probe = semantic_scaffolds_attempt.build_probe()
+    born_wall_probe = born_wall_attempt.build_probe()
     clusters = build_clusters()
     conditional = sum(1 for cluster in clusters if cluster.status == "CONDITIONAL_READY")
     blocked = sum(1 for cluster in clusters if cluster.status == "BLOCKED")
@@ -263,7 +267,16 @@ def build_probe() -> SemanticKernelRouteProbe:
         if scaffold_probe.verdict == "SCAFFOLD_BUNDLE_CHECKED"
         else ()
     )
-    open_core = sorted_tuple(raw_open_core - set(b1_closed_core) - set(scaffold_closed_core))
+    accepted_boundaries = (
+        ("calibrated_phase_scale_boundary",)
+        if born_wall_probe.phase_scale_boundary == "CONDITIONAL_SCALE_BOUNDARY"
+        else ()
+    )
+    reduced_open_core = raw_open_core - set(b1_closed_core) - set(scaffold_closed_core) - set(accepted_boundaries)
+    if born_wall_probe.verdict == "BORN_WALL_REQUIRES_ACTUALIZATION_PRINCIPLE":
+        reduced_open_core.discard("quadratic_context_probability_route")
+        reduced_open_core.add(born_wall_probe.missing_principle)
+    open_core = sorted_tuple(reduced_open_core)
     if lean_check.status == "FAIL":
         verdict: Verdict = "SEMANTIC_KERNEL_CHECK_FAILED"
     elif imported > 0:
@@ -277,6 +290,7 @@ def build_probe() -> SemanticKernelRouteProbe:
         lean_check=lean_check,
         b1_cgsc_clause_derivation=b1_clause_probe.verdict,
         semantic_scaffolds=scaffold_probe.verdict,
+        born_wall_separation=born_wall_probe.verdict,
         b1_projection=lean_check.status,
         b1_projected_clusters=len(clusters) if lean_check.status == "PASS" else 0,
         clusters=len(clusters),
@@ -286,12 +300,13 @@ def build_probe() -> SemanticKernelRouteProbe:
         covered_obligations=len(covered),
         b1_closed_core=b1_closed_core,
         scaffold_closed_core=scaffold_closed_core,
+        accepted_boundaries=accepted_boundaries,
         open_core=open_core,
         clusters_detail=clusters,
         next_blocker=(
-            "prove external semantic adequacy for the remaining open kernel core after B1 CGSC closure "
-            "and finite scaffold closure; the internal route still does not by itself prove "
-            "Hilbert/Born/unitary/tensor equivalence or full_QM_I"
+            "prove positive_quadratic_actualization_principle from B1 or a successor primitive base, "
+            "or declare it as an explicit new primitive/boundary assumption; calibrated phase scale "
+            "is accepted only as a boundary, not as first-principles hbar_I"
         ),
     )
 
@@ -313,6 +328,7 @@ def main() -> int:
         f"b1_projection={probe.b1_projection} b1_projected_clusters={probe.b1_projected_clusters} "
         f"b1_cgsc={probe.b1_cgsc_clause_derivation} b1_closed_core={len(probe.b1_closed_core)} "
         f"scaffolds={probe.semantic_scaffolds} scaffold_closed_core={len(probe.scaffold_closed_core)} "
+        f"born_wall={probe.born_wall_separation} accepted_boundaries={len(probe.accepted_boundaries)} "
         f"clusters={probe.clusters} conditional_ready={probe.conditional_ready} "
         f"blocked={probe.blocked} import_rejected={probe.import_rejected} "
         f"covered_obligations={probe.covered_obligations} open_core={len(probe.open_core)}"

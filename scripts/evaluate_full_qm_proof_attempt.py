@@ -16,6 +16,7 @@ import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
 import scripts.evaluate_b1_cgsc_clause_derivation as b1_cgsc_clause_attempt  # noqa: E402
+import scripts.evaluate_born_wall_separation as born_wall_attempt  # noqa: E402
 import scripts.evaluate_cgsc_structural_target_kernel as cgsc_target_kernel_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
 import scripts.evaluate_qm_semantic_content_scaffolds as semantic_scaffolds_attempt  # noqa: E402
@@ -303,6 +304,7 @@ def build_semantic_kernel_step() -> ProofStep:
         f"b1_projected_clusters={probe.b1_projected_clusters}; clusters={probe.clusters}; "
         f"b1_closed_core={len(probe.b1_closed_core)}; "
         f"scaffold_closed_core={len(probe.scaffold_closed_core)}; "
+        f"accepted_boundaries={len(probe.accepted_boundaries)}; "
         f"covered_obligations={probe.covered_obligations}; "
         f"open_core={len(probe.open_core)}"
     )
@@ -425,6 +427,33 @@ def build_b1_cgsc_clause_derivation_step() -> ProofStep:
     )
 
 
+def build_born_wall_separation_step() -> ProofStep:
+    probe = born_wall_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"born_route={probe.conditional_born_route}; phase_scale={probe.phase_scale_boundary}; "
+        f"missing={probe.missing_principle}"
+    )
+    if probe.verdict == "BORN_WALL_REQUIRES_ACTUALIZATION_PRINCIPLE":
+        return ProofStep(
+            name="born_wall_separation",
+            status="PASS",
+            statement=(
+                "The Born wall is machine-diagnosed: finite readout accounting admits a non-quadratic "
+                "stable readout, so current B1/scaffold closure does not select quadratic actualization."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    return ProofStep(
+        name="born_wall_separation",
+        status="FAIL",
+        statement="The Born wall separator must compile before the final QM route status is reliable.",
+        evidence=evidence,
+        remaining_obligation="Repair the Born wall separator artifact.",
+    )
+
+
 def build_attempt() -> ProofAttempt:
     steps = [
         build_finite_gate_step(),
@@ -437,6 +466,7 @@ def build_attempt() -> ProofAttempt:
         build_physical_scale_step(),
         build_semantic_content_scaffold_step(),
         build_b1_cgsc_clause_derivation_step(),
+        build_born_wall_separation_step(),
         build_cgsc_structural_target_kernel_step(),
         build_semantic_kernel_step(),
     ]

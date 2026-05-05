@@ -3290,6 +3290,41 @@
       ]
     },
     {
+      "id": "born_wall_requires_positive_quadratic_actualization_principle",
+      "statement": "The current B1/scaffold readout layer does not select Born by accounting alone: a machine-checked separator admits both a linear and a quadratic stable two-branch readout under finite readout accounting, while preserving the calibrated phase-scale boundary. Therefore the remaining mathematical Born wall is positive quadratic actualization, to be proved from B1 or a successor primitive base or declared as an explicit new principle/boundary.",
+      "role": "theorem",
+      "assumptions": [
+        "B1_CGSC_clause_derivation",
+        "finite_readout_accounting_scaffold",
+        "calibrated_phase_scale_boundary"
+      ],
+      "dependencies": [
+        "finite_born_quadratic_readout_survivor",
+        "born_quadratic_readout_route_demo",
+        "calibrated_hbar_I"
+      ],
+      "artifact_paths": [
+        "Proofs/QMClosure/BornWallSeparation.lean",
+        "scripts/evaluate_born_wall_separation.py"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "born_quadratic_readout_route_demo",
+      "known_failures": [
+        "does_not_derive_universal_Born_rule",
+        "positive_quadratic_actualization_principle_remains_open",
+        "linear_countermodel_is_a_separator_not_physical_QM",
+        "first_principles_hbar_I_remains_blocked"
+      ],
+      "physical_scope": "Born/readout wall diagnosis for finite context probability selection.",
+      "forbidden_claims": [
+        "does_not_prove_full_QM_I",
+        "does_not_prove_universal_Born_rule",
+        "does_not_derive_hbar_I",
+        "does_not_treat_readout_accounting_as_quadratic_selection",
+        "does_not_treat_calibrated_hbar_I_as_first_principles"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",

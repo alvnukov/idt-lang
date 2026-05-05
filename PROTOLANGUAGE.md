@@ -880,8 +880,11 @@ internal conditional proof step, not a proof that external Hilbert space, Born
 rule, unitary dynamics, tensor composition, or `full_QM_I` are inevitable in
 physical semantics. The semantic-kernel evaluator now removes the six B1-closed
 structural blockers and two finite-scaffold closures from the live open core;
-the remaining core is quadratic readout actualization and calibrated
-phase-scale boundary discipline.
+the remaining mathematical core is positive quadratic actualization. The
+`born_wall_separation` artifact proves the current finite readout accounting
+admits both linear and quadratic stable readouts, so B1/scaffold closure does
+not select Born by itself. Calibrated phase scale remains accepted only as a
+boundary, not as a first-principles derivation of `hbar_I`.
 
 ---
 

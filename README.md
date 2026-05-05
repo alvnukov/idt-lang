@@ -105,8 +105,11 @@ Current auditable results:
   universal physical meaning, not only as an internal obligation bundle. The
   semantic-kernel evaluator now removes the six B1-closed structural blockers
   and two finite-scaffold closures from the live open core; the remaining
-  frontier is quadratic readout actualization and calibrated phase-scale
-  boundary discipline.
+  frontier is now one mathematical principle: positive quadratic actualization.
+  A new Born-wall separator proves that finite readout accounting admits both
+  linear and quadratic stable readouts, so current B1/scaffold closure does not
+  select Born by itself. The calibrated phase-scale bridge remains an accepted
+  boundary only, not a first-principles derivation of `hbar_I`.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

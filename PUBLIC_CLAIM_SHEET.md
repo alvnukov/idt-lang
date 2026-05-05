@@ -138,6 +138,10 @@ The main current successes are bounded and methodological:
    two finite-scaffold closures from the live open core. This does not yet
    prove external Hilbert/Born/unitary/tensor equivalence or a B0-alone
    derivation.
+20. The Born wall is now machine-diagnosed rather than opaque. The separator
+   proves that current finite readout accounting admits a non-quadratic stable
+   readout, so Born is not selected by B1/scaffold closure alone. The remaining
+   mathematical core is `positive_quadratic_actualization_principle`.
 
 ## What The Verifier Catches
 
@@ -186,6 +190,7 @@ Current public classification:
 |---|---|
 | Derived or finite executable readouts | context Born table, two-path interference, Sorkin `I3 = 0`, finite Bell/CHSH gates |
 | Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route, finite semantic-content scaffold bundle |
+| Diagnosed walls | positive quadratic actualization principle for Born/readout selection |
 | Calibrated anchors | `calibrated_hbar_I`, calibrated gravity anchors and targets |
 | Structural selectors | primitive holonomy/source and topology/winding selector targets |
 | Experimental gates | SPARC gates, Bell/CHSH gates, residual provenance gates |
