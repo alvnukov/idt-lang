@@ -100,9 +100,12 @@ def build_routes() -> list[ProofRoute]:
             source="Proofs/QMClosure/B1CGSCClauseDerivation.lean",
             decisive_reason=(
                 "B1 derives the CGSC structural clauses, but those clauses explicitly preserve "
-                "no-Born-import guards and do not select positive quadratic actualization."
+                "no-Born-import guards and do not derive constructor-respecting oriented readout "
+                "labels, signed expectation semantics, or the phase-bundle double cover."
             ),
-            missing_obligation="derive positive_quadratic_actualization_principle from B1 or successor base",
+            missing_obligation=(
+                "derive the constructor-respecting Born readout inputs from B1 or a successor base"
+            ),
             imports=(),
         ),
         ProofRoute(
@@ -128,7 +131,8 @@ def build_routes() -> list[ProofRoute]:
                 "A single primitive-boundary package now identifies the exact non-imported inputs "
                 "that would feed the checked finite Born/phase-bundle chain: compatible kernel "
                 "additivity, normalized overlap uniqueness, phase-bundle J, proper-subcontext "
-                "pairwise coverage, and no hidden ternary context-only fact."
+                "pairwise coverage, no hidden ternary context-only fact, and constructor-respecting "
+                "oriented branch labels."
             ),
             missing_obligation=(
                 "derive the five principles from context-first primitive unknownness, or declare "
@@ -164,9 +168,9 @@ def build_routes() -> list[ProofRoute]:
             source="Proofs/QMClosure/BornWallSeparation.lean",
             decisive_reason=(
                 "Finite readout accounting admits both linear and quadratic stable two-branch "
-                "readouts; accounting alone does not select Born."
+                "readouts; accounting alone does not select constructor-respecting oriented labels."
             ),
-            missing_obligation="positive_quadratic_actualization_principle",
+            missing_obligation="constructor-respecting oriented facticization plus phase double-cover",
             imports=(),
         ),
         ProofRoute(
@@ -200,7 +204,7 @@ def build_routes() -> list[ProofRoute]:
                 "Finite nonnegative normalized weights satisfy context probability accounting for many "
                 "weight laws. Kolmogorov-style context axioms do not select the Born exponent."
             ),
-            missing_obligation="derive positive quadratic actualization rather than probability axioms",
+            missing_obligation="derive constructor-respecting oriented facticization below probability axioms",
             imports=(),
         ),
         ProofRoute(
@@ -223,14 +227,16 @@ def build_routes() -> list[ProofRoute]:
             verdict="FINITE_SELECTOR_HIT",
             source="scripts/evaluate_born_from_overlap_affine_readout.py; Proofs/QMClosure/PrimitiveBoundaryQMChain.lean",
             decisive_reason=(
-                "If normalized overlap is the signed binary expectation and probability readout is "
-                "affine under stable mixtures, repeatability, complement symmetry, unbiased zero, "
-                "and the phase-bundle double cover force p=(1+r)/2, hence p=|a|^2 for "
-                "r=2|a|^2-1. Cubic, quintic, tanh, threshold, and unsigned-overlap controls fail."
+                "If normalized overlap is the signed binary expectation, readout respects the generated "
+                "oriented branch labels, probability readout is affine under stable mixtures, and the "
+                "phase-bundle double cover is supplied, Lean checks 2*yes=total+signed, hence "
+                "p=(1+r)/2 and p=|a|^2 for r=2|a|^2-1. Cubic, quintic, tanh, threshold, swapped-label, "
+                "and unsigned-overlap controls fail."
             ),
             missing_obligation=(
-                "derive signed expectation readout, affine mixture response, and the phase-bundle "
-                "double-cover relation from primitive-boundary structure across all admissible contexts"
+                "derive constructor-respecting branch labels, signed expectation readout, affine mixture "
+                "response, and the phase-bundle double-cover relation from primitive-boundary structure "
+                "across all admissible contexts"
             ),
             imports=(),
         ),
@@ -256,14 +262,15 @@ def build_routes() -> list[ProofRoute]:
             source="scripts/evaluate_born_direct_one_pass.py; Proofs/QMClosure/PrimitiveBoundaryQMChain.lean",
             decisive_reason=(
                 "The direct one-pass route composes primitive-boundary candidate, normalized-overlap "
-                "uniqueness, phase-bundle J, operational affine readout, signed-overlap Born selector, "
-                "and imported/negative controls. It closes the finite Born selector route without "
-                "target imports, while explicitly preserving the universal-proof boundary."
+                "uniqueness, phase-bundle J, constructor-respecting branch labels, operational affine "
+                "readout, signed-overlap Born selector, and imported/negative controls. It closes the "
+                "finite Born selector route without target imports, while explicitly preserving the "
+                "universal-proof boundary."
             ),
             missing_obligation=(
-                "derive the primitive-boundary package, external-randomization calibration, signed "
-                "expectation semantics, and phase-bundle double cover from primitives for all "
-                "admissible contexts"
+                "derive the primitive-boundary package, constructor-respecting branch labels, "
+                "external-randomization calibration, signed expectation semantics, and phase-bundle "
+                "double cover from primitives for all admissible contexts"
             ),
             imports=(),
         ),
@@ -345,7 +352,7 @@ def build_routes() -> list[ProofRoute]:
                 "Quadratic weights plus normalization, exclusivity additivity, coarse-graining, "
                 "and operational equivalence give Born-like finite context probability."
             ),
-            missing_obligation="supply positive quadratic actualization without Born import",
+            missing_obligation="supply constructor-respecting oriented facticization without Born import",
             imports=(),
         ),
         ProofRoute(
@@ -572,13 +579,13 @@ def build_search() -> S2BornProofSearch:
             "derive_phase_bundle_J_structure_from_primitives",
             "generalize_overlap_selector_to_all_readout_contexts",
             "second_order_facticization",
-            "positive_quadratic_actualization_principle",
+            "derive_constructor_respecting_oriented_branch_labels_from_primitives",
         ),
         viable_next_route=(
             "Use the finite chain as the target and work below probability: derive compatible "
-            "kernel additivity, normalized overlap, phase-bundle J, and proper-subcontext/pairwise "
-            "coverage from primitive unknownness. Probability normalization can only read out the "
-            "selected weights; it cannot select Born."
+            "kernel additivity, normalized overlap, constructor-respecting branch labels, phase-bundle "
+            "J, and proper-subcontext/pairwise coverage from primitive unknownness. Probability "
+            "normalization can only read out selected weights; it cannot select Born."
         ),
         routes=routes,
     )

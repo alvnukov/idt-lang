@@ -32,6 +32,29 @@ $$
 | \(\mathcal R\) | facticization/readout witness relation | lower-base candidate |
 | \(\mathcal D\) | stable distinguishability relation | lower-base candidate |
 
+The Born/Hilbert/Bell research front is the main reason for this shape. These
+three targets are not separate primitive inputs:
+
+| Target | Primitive-level reading |
+|---|---|
+| Bell/contextuality | failed global gluing of local context sections |
+| Born/readout | affine facticizable frequency readout of oriented distinguishability |
+| Hilbert carrier | minimal faithful representation of local distinguishability under composition/reversibility |
+
+The common lower pattern is:
+
+```text
+context-local oriented distinguishability
++ finite facticization witnesses
++ admissible inheritance/composition
+```
+
+This is not yet a proof of Born, complex Hilbert space, or Bell correlations
+from primitives. It is the intended reason that \(\mathfrak B_0\) and its B1
+successor bind contexts, outcome sections, inheritance transitions,
+facticization witnesses, and stable distinguishability before any global
+carrier/readout object is allowed.
+
 Candidate derived objects:
 
 | Object | Derivation requirement |
@@ -98,6 +121,91 @@ The binding contract is:
 Until B1 is explicitly accepted as the successor primitive base or derived from
 `B0CandidateBase`, any route from B0 to CGSC/QM remains conditional and must not
 be marked as a proof from primitives.
+
+The Born/Hilbert closure pass then identifies the next concrete successor
+contract:
+
+```text
+Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean
+```
+
+This B2-style contract does not add Born probability, Hilbert space, or a Bell
+table. It also does not treat empirical QM formulas as exact fundamental laws.
+It uses Born/Hilbert as orientation targets for the standard finite QM-sector
+projection and adds constructive witness completeness below those targets:
+
+| B2 witness requirement | Role |
+|---|---|
+| constructive actualization witness | forces readout weights through signed overlap, affine facticizable frequency, and phase-bundle double cover |
+| constructive carrier witness | forbids abstract carrier residuals with no generated representation witness |
+| local tomography / no-hidden-joint witness | keeps composite facts product/refinement witnessed |
+| spectral exposed-context witness | makes stable states decomposable through generated exposed contexts |
+| rich reversible-symmetry witness | supplies the reversible context motion needed by the representation route |
+
+Machine-checked boundary:
+
+```text
+current_finite_b2_closes_born_hilbert_finite_routes
+current_finite_b2_still_not_universal_qm
+current_b2_is_standard_qm_sector_projection_not_final_physics
+b1_context_first_frontier_closes_full_finite_standard_qm_sector
+current_full_qm_sector_closure_is_not_exact_fundamental_qm
+```
+
+So the concrete result is:
+
+```text
+B1 alone is not enough.
+B2 constructive witness completeness recovers the current finite Born/Hilbert
+B1 plus context-first constructive witness completeness plus carrier-frontier
+exhaustion closes the current finite standard-QM sector surface without target
+imports.
+This still does not prove universal Born, universal Hilbert uniqueness, exact
+fundamental QM, or exact finality of empirical QM formulas.
+Beyond-QM correction channels remain open unless independently ruled out.
+```
+
+The current executable sector status is:
+
+```text
+scripts/evaluate_full_qm_sector_closure.py
+
+FULL_FINITE_STANDARD_QM_SECTOR_CLOSED_CONDITIONAL
+```
+
+The remaining base obligations are now localized:
+
+```text
+derive B1 or its successor from the lower B0/base without target imports;
+derive context-first constructive witness completeness from the lower base;
+prove carrier-frontier exhaustion or record a non-Hilbert constructive
+countermodel;
+promote conditional Hilbert/Born/unitary/tensor adequacy artifacts to formal
+primitive proofs;
+keep hbar_I as calibrated unless a first-principles scale theorem is supplied.
+```
+
+Correction channels are not free fit terms. The current Lean boundary adds:
+
+```text
+free_fit_correction_channel_is_rejected
+current_beyond_qm_correction_channel_is_audited
+```
+
+An admissible correction must keep the standard QM-sector projection fixed,
+declare a lower primitive source, declare a scale/context boundary, declare the
+observable being tested, require no-postfit and holdout discipline, and reduce
+back to the standard QM sector inside its declared boundary.
+
+Executable correction classifier:
+
+```text
+scripts/evaluate_born_hilbert_sector_corrections.py
+```
+
+It keeps only audited lower-source correction channels open and rejects free
+fit residuals, Born-rule redefinitions, Hilbert-carrier overrides,
+inside-boundary deviations, and no-holdout channels.
 
 Base rule:
 

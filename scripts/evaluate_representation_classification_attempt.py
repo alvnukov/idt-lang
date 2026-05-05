@@ -118,6 +118,27 @@ ROUTES: tuple[RepresentationRoute, ...] = (
     ),
 )
 
+LEAN_ARTIFACTS: tuple[str, ...] = (
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "b1_semantic_kernel_plus_current_phase_route_supplies_hilbert_route",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "context_first_witness_completeness_supplies_hilbert_route",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "current_finite_b2_supplies_hilbert_representation_route",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "current_hilbert_representation_route_still_not_universal",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "context_first_plus_frontier_exhaustion_closes_hilbert_frontier",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "missing_spectral_exposed_contexts_blocks_hilbert_representation",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "missing_reversible_symmetry_blocks_hilbert_representation",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "abstract_residual_without_constructive_witness_is_not_hilbert_route",
+    "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean::"
+    "imported_hilbert_representation_is_not_hilbert_route",
+)
+
 
 def finite_route_contract_test(route: RepresentationRoute) -> TestResult:
     if route.finite_route_contract:
@@ -238,6 +259,12 @@ def main() -> int:
         )
         for test in result.tests:
             print(f"  {test.verdict} {test.name}: {test.reason} details={test.details}")
+    print(f"LEAN_ARTIFACTS {','.join(LEAN_ARTIFACTS)}")
+    print(
+        "RESULT context-first witness completeness supplies a Hilbert-like representation "
+        "route; with carrier-frontier exhaustion this closes the Hilbert frontier to "
+        "complex phase-bundle representation, while universal carrier exhaustion remains open"
+    )
     if args.output_jsonl:
         with open(str(args.output_jsonl), "w", encoding="utf-8") as handle:
             for result in results:
