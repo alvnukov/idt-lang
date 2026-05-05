@@ -1,6 +1,7 @@
 # IDT Lang
 
-[![QM Status](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
+![QM Scientific Status](https://img.shields.io/badge/QM-conditional_structural_route__formalization_wall-yellow)
+[![QM CI](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
 language for interpreting the physical structure of the universe, designed for
@@ -78,6 +79,38 @@ Current auditable results:
   superseded before this becomes a completed migration. The B1 Lean route now
   constructor-binds admissibility and no-target-import boundaries for the
   successor-base candidate, but remains conditional rather than a QM proof.
+- QM semantic-kernel route: the current full-QM proof surface is grouped into
+  six conditional clusters covering 21 obligations: residual/projective,
+  representation, readout, dynamics, composite, and physical scale. B1 now
+  projects to this six-cluster kernel without losing package fields, and each
+  cluster has an explicit B1-projected theorem. This narrows the next proof
+  target to semantic content inside the open kernel core; it is not a proof of
+  `full_QM_I`.
+- QM semantic-content scaffolds: the finite projective, readout,
+  inheritance-action, product-tomography, monoidal associativity,
+  projective-limit, and calibrated-scale scaffolds are now compiled as a single
+  Lean bundle. This removes a proof-engineering gap for those finite fragments
+  and leaves the real target blockers concentrated in six structural theorems:
+  NUSD, spectral decomposition, rich reversible symmetry, continuity, generator
+  closure, and entanglement closure.
+- CGSC structural target kernel: the six structural QM blockers are now
+  conditionally closed by one Lean artifact from seven context-generated stable
+  closure clauses, while preserving the no-target-import boundary. At this
+  layer alone the kernel is conditional; the next B1 derivation supplies the
+  clause source, while external QM adequacy remains open.
+- B1 CGSC clause derivation: all seven CGSC clauses are now machine-derived
+  from the B1 primitive-base witness interface in Lean, and the same artifact
+  closes the six structural blockers inside the current IDT package semantics.
+  The remaining frontier is external adequacy: prove that this B1-derived
+  package reconstructs Hilbert/Born/unitary/tensor QM with the intended
+  universal physical meaning, not only as an internal obligation bundle. The
+  semantic-kernel evaluator now removes the six B1-closed structural blockers
+  and two finite-scaffold closures from the live open core; the remaining
+  frontier is now one mathematical principle: positive quadratic actualization.
+  A new Born-wall separator proves that finite readout accounting admits both
+  linear and quadratic stable readouts, so current B1/scaffold closure does not
+  select Born by itself. The calibrated phase-scale bridge remains an accepted
+  boundary only, not a first-principles derivation of `hbar_I`.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,
@@ -173,15 +206,22 @@ ruff check theory_verifier tests scripts
 mypy --strict theory_verifier tests scripts
 python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
 python3 scripts/check_proofs.py
+python3 scripts/evaluate_born_direct_one_pass.py
+python3 scripts/evaluate_qm_direct_one_pass.py
 python3 scripts/evaluate_cgsc_qm_one_pass_closure.py
 python3 scripts/evaluate_qm_inevitability_route.py
 python3 scripts/evaluate_qm_hard_wall_probe.py
+python3 scripts/evaluate_qm_semantic_kernel_route.py
+python3 scripts/evaluate_qm_semantic_content_scaffolds.py
+python3 scripts/evaluate_full_qm_proof_attempt.py
 python3 -m unittest discover -s tests
 lake build
 ```
 
-The badge reports whether the QM verifier/proof-boundary workflow is passing;
-it does not mean that QM has been proved.
+The `QM Scientific Status` badge reports the current scientific proof-boundary
+status: conditional structural route, formalization wall open. The `QM CI`
+badge reports whether the verifier/proof-boundary workflow is passing. Neither
+badge means that QM has been proved.
 
 The underlying checks are:
 

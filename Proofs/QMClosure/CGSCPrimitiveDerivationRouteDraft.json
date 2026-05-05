@@ -3,23 +3,24 @@
   "artifact_status": "primitive_derivation_route_draft_not_formal_proof",
   "theorem_card": {
     "id": "context_generated_stable_closure_from_primitives_route",
-    "statement": "Context-generated stable closure is not yet derived from the older B0 candidate. The current B0 candidate supports finite generation and facticizable separation as candidate clauses, grounds the import boundary, and B1 now promotes the bound successor base with no-free-admissibility and no-target-import boundaries without importing Hilbert, Born, unitary, tensor, Stone, or spectral structure.",
+    "statement": "Context-generated stable closure clauses are now machine-derived from the B1 primitive-base interface. This is a B1-relative derivation, not a derivation from the older B0 candidate alone and not a completed external Hilbert/Born/unitary/tensor QM equivalence theorem.",
     "role": "primitive_derivation_route",
-    "proof_status": "open",
+    "proof_status": "conditional_proof",
     "verifier": "scripts/evaluate_cgsc_primitive_derivation.py",
     "dependencies": [
       "Proofs/QMClosure/ContextGeneratedStableClosureRouteDraft.json",
       "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean",
       "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean",
       "Proofs/QMClosure/B1PrimitiveBase.lean",
+      "Proofs/QMClosure/B1CGSCClauseDerivation.lean",
       "scripts/evaluate_context_generated_stable_closure_route_draft.py",
+      "scripts/evaluate_b1_cgsc_clause_derivation.py",
       "scripts/evaluate_cgsc_semantic_content_wall.py",
       "sections/01-primitives.md"
     ],
     "known_failures": [
-      "no_clause_formal_from_primitives",
-      "b0_lower_base_primitives_are_candidates",
-      "b1_primitive_base_registered_not_target_semantic_proofs",
+      "b1_clause_derivation_is_not_a_B0_alone_derivation",
+      "external_QM_equivalence_theorems_are_not_closed",
       "full_qm_inevitability_route_remains_open"
     ],
     "physical_scope": "primitive-base derivation route for CGSC only",
@@ -37,41 +38,41 @@
     "id": "cgsc_primitive_derivation_route",
     "target_theorem": "context_generated_stable_closure_from_primitives_route",
     "expected_route_status": "open",
-    "expected_probe_verdict": "SUCCESSOR_BASE_DERIVATION_REGISTERED",
+    "expected_probe_verdict": "CGSC_DERIVED_FROM_PRIMITIVES",
     "clauses": [
       {
         "id": "finite_generation",
-        "expected_status": "B0_CANDIDATE_SUPPORTED",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       },
       {
         "id": "facticizable_separation",
-        "expected_status": "B0_CANDIDATE_SUPPORTED",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       },
       {
         "id": "exposed_context_decomposition",
-        "expected_status": "SUCCESSOR_BASE_BOUND",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       },
       {
         "id": "reversible_route_closure",
-        "expected_status": "SUCCESSOR_BASE_BOUND",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       },
       {
         "id": "coherent_refinement_flow",
-        "expected_status": "SUCCESSOR_BASE_BOUND",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       },
       {
         "id": "composite_route_generation",
-        "expected_status": "SUCCESSOR_BASE_BOUND",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       },
       {
         "id": "import_boundary",
-        "expected_status": "BOUNDARY_GROUNDED",
+        "expected_status": "FORMAL_FROM_PRIMITIVES",
         "missing_base_extensions": []
       }
     ],

@@ -15,7 +15,12 @@ import scripts.evaluate_fpd_projective_derivation as fpd_projective  # noqa: E40
 import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
+import scripts.evaluate_b1_cgsc_clause_derivation as b1_cgsc_clause_attempt  # noqa: E402
+import scripts.evaluate_born_wall_separation as born_wall_attempt  # noqa: E402
+import scripts.evaluate_cgsc_structural_target_kernel as cgsc_target_kernel_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
+import scripts.evaluate_qm_semantic_content_scaffolds as semantic_scaffolds_attempt  # noqa: E402
+import scripts.evaluate_qm_semantic_kernel_route as semantic_kernel_attempt  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
 import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
 import scripts.verify_finite_qm_route as finite_gate  # noqa: E402
@@ -121,7 +126,10 @@ def build_residual_closure_step() -> ProofStep:
             status="CONDITIONAL",
             statement="The route-closed residual is closed if finite projection determinacy and projective consistency hold.",
             evidence=f"verdict={route.verdict}; passed={route.passed}/6; imports={len(route.imports)}",
-            remaining_obligation="Prove FPD and projective consistency from primitive IDT principles.",
+            remaining_obligation=(
+                "Use the B1-closed NUSD source plus projective gluing semantics to prove external FPD "
+                "and projective consistency, not only an internal route condition."
+            ),
         )
     return ProofStep(
         name="finite_route_residual_closure",
@@ -140,7 +148,10 @@ def build_fpd_projective_step() -> ProofStep:
             status="CONDITIONAL",
             statement="NUSD plus conservative projective gluing is a non-Hilbert derivation candidate for FPD and projective consistency.",
             evidence=f"verdict={route.verdict}; passed={route.passed}/6; imports={len(route.imports)}",
-            remaining_obligation="Promote NUSD and conservative projective gluing to proof artifacts or explicit boundary assumptions.",
+            remaining_obligation=(
+                "NUSD is B1-closed internally; prove conservative projective gluing as external "
+                "projective-fact semantics rather than as a scaffold assumption."
+            ),
         )
     return ProofStep(
         name="fpd_projective_derivation",
@@ -158,13 +169,13 @@ def build_universal_representation_step() -> ProofStep:
             name="universal_representation_theorem",
             status="CONDITIONAL",
             statement=(
-                "A non-imported representation route exists if spectral decomposition and rich D_cl-preserving "
-                "reversible symmetry are proved."
+                "A non-imported representation route exists; B1 closes the internal spectral and "
+                "rich D_cl-preserving symmetry sources, while external carrier classification remains conditional."
             ),
             evidence=f"verdict={route.verdict}; passed={route.passed}/8; imports={len(route.imports)}",
             remaining_obligation=(
-                "Prove spectral decomposition and rich reversible symmetry from IDT primitives, then turn the route "
-                "into a machine-checkable representation theorem."
+                "Prove the external representation/classification theorem from the B1-derived package "
+                "without importing complex Hilbert space or the spectral theorem."
             ),
         )
     return ProofStep(
@@ -194,7 +205,8 @@ def build_universal_born_step() -> ProofStep:
             ),
             evidence=f"verdict={route.verdict}; passed={route.passed}/7; imports={len(route.imports)}",
             remaining_obligation=(
-                "Prove the readout obligations as IDT theorem artifacts rather than assuming the Born rule."
+                "Prove quadratic readout actualization as an external theorem from the B1-derived "
+                "readout package rather than assuming the Born rule."
             ),
         )
     return ProofStep(
@@ -216,13 +228,13 @@ def build_dynamics_step() -> ProofStep:
             name="unitary_dynamics_theorem",
             status="CONDITIONAL",
             statement=(
-                "A non-imported dynamics route exists if reversible inheritance acts as D_cl automorphisms, "
-                "preserves normalized overlap, acts projectively, and has continuous generator closure."
+                "A non-imported dynamics route exists; B1 closes continuity and generator sources internally, "
+                "while external unitary/antiunitary adequacy remains conditional."
             ),
             evidence=f"verdict={route.verdict}; passed={route.passed}/8; imports={len(route.imports)}",
             remaining_obligation=(
-                "Prove D_cl automorphism, overlap preservation, projective action, continuity, and generator closure "
-                "as IDT theorem artifacts rather than assuming unitary evolution."
+                "Prove external reversible-dynamics adequacy from D_cl automorphism, overlap preservation, "
+                "projective action, and B1 generator closure without importing unitary evolution or Stone."
             ),
         )
     return ProofStep(
@@ -243,12 +255,14 @@ def build_general_composite_step() -> ProofStep:
             name="general_composite_theorem",
             status="CONDITIONAL",
             statement=(
-                "A non-imported general-composite route exists if product-context exhaustion, local tomography, "
-                "monoidal coherence, entanglement closure, and projective-limit consistency are proved."
+                "A non-imported general-composite route exists; B1 closes entanglement internally, while "
+                "external tensor/composite adequacy remains conditional."
             ),
             evidence=f"verdict={route.verdict}; passed={route.passed}/9; imports={len(route.imports)}",
             remaining_obligation=(
-                "Prove the composite obligations as IDT theorem artifacts rather than assuming a Hilbert tensor product."
+                "Prove external tensor/composite adequacy from product contexts, local tomography, monoidal "
+                "coherence, B1 entanglement closure, and projective-limit semantics without importing a "
+                "Hilbert tensor product."
             ),
         )
     return ProofStep(
@@ -283,6 +297,163 @@ def build_physical_scale_step() -> ProofStep:
     )
 
 
+def build_semantic_kernel_step() -> ProofStep:
+    probe = semantic_kernel_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; b1_projection={probe.b1_projection}; "
+        f"b1_projected_clusters={probe.b1_projected_clusters}; clusters={probe.clusters}; "
+        f"b1_closed_core={len(probe.b1_closed_core)}; "
+        f"scaffold_closed_core={len(probe.scaffold_closed_core)}; "
+        f"accepted_boundaries={len(probe.accepted_boundaries)}; "
+        f"covered_obligations={probe.covered_obligations}; "
+        f"open_core={len(probe.open_core)}"
+    )
+    if probe.verdict == "SEMANTIC_KERNEL_ROUTE_REGISTERED":
+        return ProofStep(
+            name="six_cluster_semantic_kernel_route",
+            status="CONDITIONAL",
+            statement=(
+                "The current full-QM obligation surface is covered by six conditional semantic-kernel clusters: "
+                "residual/projective, representation, readout, dynamics, composite, and physical-scale."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    if probe.verdict == "SEMANTIC_KERNEL_CHECK_FAILED":
+        return ProofStep(
+            name="six_cluster_semantic_kernel_route",
+            status="FAIL",
+            statement="The semantic-kernel Lean artifact must compile before it can support the full-QM route.",
+            evidence=evidence,
+            remaining_obligation="Repair the Lean semantic-kernel artifact.",
+        )
+    return ProofStep(
+        name="six_cluster_semantic_kernel_route",
+        status="OPEN",
+        statement="The six-cluster semantic-kernel route is not yet ready as a full-QM obligation cover.",
+        evidence=evidence,
+        remaining_obligation=probe.next_blocker,
+    )
+
+
+def build_semantic_content_scaffold_step() -> ProofStep:
+    probe = semantic_scaffolds_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"machine_checked_scaffolds={len(probe.machine_checked_scaffolds)}; "
+        f"structural_target_blockers={len(probe.structural_target_blockers)}"
+    )
+    if probe.verdict == "SCAFFOLD_BUNDLE_CHECKED":
+        return ProofStep(
+            name="semantic_content_scaffold_bundle",
+            status="PASS",
+            statement=(
+                "The finite semantic-content scaffold bundle is machine-checked for projective, readout, "
+                "inheritance-action, product-tomography, monoidal, projective-limit, and calibrated-scale fragments."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    return ProofStep(
+        name="semantic_content_scaffold_bundle",
+        status="FAIL",
+        statement="The semantic-content scaffold bundle must compile before it can support the QM proof route.",
+        evidence=evidence,
+        remaining_obligation="Repair the Lean semantic-content scaffold bundle.",
+    )
+
+
+def build_cgsc_structural_target_kernel_step() -> ProofStep:
+    probe = cgsc_target_kernel_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"structural_targets={len(probe.structural_targets)}; "
+        f"conditional_targets={probe.conditionally_covered_targets}; "
+        f"formal_clauses={probe.formal_clause_derivations}; "
+        f"unproved_clauses={probe.unproved_clause_derivations}"
+    )
+    if probe.verdict == "CGSC_STRUCTURAL_TARGET_KERNEL_CONDITIONAL":
+        return ProofStep(
+            name="cgsc_structural_target_kernel",
+            status="CONDITIONAL",
+            statement=(
+                "The CGSC structural target kernel machine-checks the conditional closure of the six current "
+                "QM structural blockers while preserving no-target-import boundaries."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    if probe.verdict == "CGSC_STRUCTURAL_TARGET_KERNEL_CHECK_FAILED":
+        return ProofStep(
+            name="cgsc_structural_target_kernel",
+            status="FAIL",
+            statement="The CGSC structural target kernel Lean artifact must compile before the route can advance.",
+            evidence=evidence,
+            remaining_obligation="Repair the Lean CGSC structural target kernel artifact.",
+        )
+    return ProofStep(
+        name="cgsc_structural_target_kernel",
+        status="OPEN",
+        statement="The CGSC structural target kernel is not yet a valid conditional full-QM blocker cover.",
+        evidence=evidence,
+        remaining_obligation=probe.next_blocker,
+    )
+
+
+def build_b1_cgsc_clause_derivation_step() -> ProofStep:
+    probe = b1_cgsc_clause_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"clauses={len(probe.clauses)}; machine_derived={probe.machine_derived_clauses}; "
+        f"closed_targets={probe.closed_structural_targets}"
+    )
+    if probe.verdict == "B1_CGSC_CLAUSES_MACHINE_DERIVED":
+        return ProofStep(
+            name="b1_cgsc_clause_derivation",
+            status="PASS",
+            statement=(
+                "All seven CGSC clauses are machine-derived from the B1 primitive-base witness interface, "
+                "and they close the six structural target blockers inside the current IDT package semantics."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    return ProofStep(
+        name="b1_cgsc_clause_derivation",
+        status="FAIL",
+        statement="The B1 CGSC clause derivation must compile before this route can advance.",
+        evidence=evidence,
+        remaining_obligation="Repair the B1 CGSC clause derivation artifact.",
+    )
+
+
+def build_born_wall_separation_step() -> ProofStep:
+    probe = born_wall_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"born_route={probe.conditional_born_route}; phase_scale={probe.phase_scale_boundary}; "
+        f"missing={probe.missing_principle}"
+    )
+    if probe.verdict == "BORN_WALL_REQUIRES_ACTUALIZATION_PRINCIPLE":
+        return ProofStep(
+            name="born_wall_separation",
+            status="PASS",
+            statement=(
+                "The Born wall is machine-diagnosed: finite readout accounting admits a non-quadratic "
+                "stable readout, so current B1/scaffold closure does not select quadratic actualization."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    return ProofStep(
+        name="born_wall_separation",
+        status="FAIL",
+        statement="The Born wall separator must compile before the final QM route status is reliable.",
+        evidence=evidence,
+        remaining_obligation="Repair the Born wall separator artifact.",
+    )
+
+
 def build_attempt() -> ProofAttempt:
     steps = [
         build_finite_gate_step(),
@@ -293,6 +464,11 @@ def build_attempt() -> ProofAttempt:
         build_dynamics_step(),
         build_general_composite_step(),
         build_physical_scale_step(),
+        build_semantic_content_scaffold_step(),
+        build_b1_cgsc_clause_derivation_step(),
+        build_born_wall_separation_step(),
+        build_cgsc_structural_target_kernel_step(),
+        build_semantic_kernel_step(),
     ]
     passed = sum(1 for step in steps if step.status == "PASS")
     conditional = sum(1 for step in steps if step.status == "CONDITIONAL")

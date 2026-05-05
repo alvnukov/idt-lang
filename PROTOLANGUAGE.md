@@ -846,6 +846,45 @@ as superseded. The B1 Lean route now constructor-binds the successor-base
 admissibility interface and no-target-import boundaries, but it is still a
 conditional route rather than a formal QM derivation. This does not derive
 Hilbert space, Born rule, GR, full QM, `hbar_I`, or `G_I`.
+The `qm_semantic_kernel_route` now records the broadest current full-QM proof
+attempt as six conditional semantic clusters: residual/projective,
+representation, readout, dynamics, composite, and physical scale. The route
+covers all 21 current full-QM obligations, compiles as a Lean conditional
+artifact, and now proves that the B1 package projects into the six-cluster
+kernel without losing package fields. It also exposes explicit B1-projected
+theorems for all six clusters. The open core is therefore no longer the
+packaging link from B1, but the semantic content of the projected obligations:
+Hilbert space, Born rule, tensor composition, unitary dynamics, physical action
+scale, and `full_QM_I` are still not derived.
+The `qm_semantic_content_scaffold_bundle` now compiles the finite scaffold
+layer as one Lean artifact: projective idempotent gluing, finite readout
+normalization/additivity/coarse-graining/equivalence, inheritance-action
+fragments, product-readout local tomography, monoidal associativity,
+projective-limit consistency, and calibrated-scale boundary discipline. This
+removes unchecked scaffold files from the QM route, but it deliberately does
+not convert those finite scaffolds into universal Hilbert, Born, unitary,
+tensor, entanglement, continuity, generator, or first-principles scale
+theorems.
+The `cgsc_structural_target_kernel` now turns the current six structural QM
+blockers into one conditional Lean frontier. Given seven context-generated
+stable closure clauses plus explicit derivation rules, it closes NUSD,
+spectral decomposition, rich reversible symmetry, continuity, generator
+closure, and entanglement closure inside the B1-projected semantic kernel while
+preserving no-target-import boundaries. The result is still conditional:
+at this layer alone the seven CGSC clauses are assumed sources, not derived.
+The `b1_cgsc_clause_derivation_conditional_artifact` now supplies the common
+B1-relative source for those seven clauses in Lean. All seven clauses share one
+B1 atom universe and witness interface, and the resulting package closes the
+six structural blockers inside the current IDT package semantics. This is an
+internal conditional proof step, not a proof that external Hilbert space, Born
+rule, unitary dynamics, tensor composition, or `full_QM_I` are inevitable in
+physical semantics. The semantic-kernel evaluator now removes the six B1-closed
+structural blockers and two finite-scaffold closures from the live open core;
+the remaining mathematical core is positive quadratic actualization. The
+`born_wall_separation` artifact proves the current finite readout accounting
+admits both linear and quadratic stable readouts, so B1/scaffold closure does
+not select Born by itself. Calibrated phase scale remains accepted only as a
+boundary, not as a first-principles derivation of `hbar_I`.
 
 ---
 

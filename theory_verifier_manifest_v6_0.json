@@ -3290,6 +3290,41 @@
       ]
     },
     {
+      "id": "born_wall_requires_positive_quadratic_actualization_principle",
+      "statement": "The current B1/scaffold readout layer does not select Born by accounting alone: a machine-checked separator admits both a linear and a quadratic stable two-branch readout under finite readout accounting, while preserving the calibrated phase-scale boundary. Therefore the remaining mathematical Born wall is positive quadratic actualization, to be proved from B1 or a successor primitive base or declared as an explicit new principle/boundary.",
+      "role": "theorem",
+      "assumptions": [
+        "B1_CGSC_clause_derivation",
+        "finite_readout_accounting_scaffold",
+        "calibrated_phase_scale_boundary"
+      ],
+      "dependencies": [
+        "finite_born_quadratic_readout_survivor",
+        "born_quadratic_readout_route_demo",
+        "calibrated_hbar_I"
+      ],
+      "artifact_paths": [
+        "Proofs/QMClosure/BornWallSeparation.lean",
+        "scripts/evaluate_born_wall_separation.py"
+      ],
+      "proof_status": "conditional_proof",
+      "verifier": "born_quadratic_readout_route_demo",
+      "known_failures": [
+        "does_not_derive_universal_Born_rule",
+        "positive_quadratic_actualization_principle_remains_open",
+        "linear_countermodel_is_a_separator_not_physical_QM",
+        "first_principles_hbar_I_remains_blocked"
+      ],
+      "physical_scope": "Born/readout wall diagnosis for finite context probability selection.",
+      "forbidden_claims": [
+        "does_not_prove_full_QM_I",
+        "does_not_prove_universal_Born_rule",
+        "does_not_derive_hbar_I",
+        "does_not_treat_readout_accounting_as_quadratic_selection",
+        "does_not_treat_calibrated_hbar_I_as_first_principles"
+      ]
+    },
+    {
       "id": "universal_carrier_selection_theorem",
       "statement": "IDT primitives must force the admissible operational carrier rather than assume a complex-Hilbert carrier.",
       "role": "theorem",
@@ -9175,6 +9210,7 @@
       "id": "formal_proof_ledger_audit_demo",
       "type": "formal_proof_ledger_audit",
       "target_scope": "current_formal_proof_claims",
+      "expected_ledger_status": "formal_claims_covered",
       "proof_cards": [
         {
           "id": "idt_core_current_formal_claims_machine_checked",
@@ -9843,9 +9879,183 @@
             "does_not_claim_Hilbert_Born_unitary_tensor_semantics_are_proved",
             "does_not_mark_conditional_B1_base_as_full_QM_proof"
           ]
+        },
+        {
+          "artifact_paths": [
+            "Proofs/QMClosure/QMSemanticKernelRoute.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake build Proofs.QMClosure.QMSemanticKernelRoute"
+          ],
+          "claim_refs": [
+            "qm_semantic_kernel_route.semantic_kernel_to_full_qm_obligation_bundle",
+            "qm_semantic_kernel_route.six_cluster_coverage"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_mark_semantic_kernel_sufficiency_as_full_QM_proof",
+            "does_not_claim_B1_derives_the_semantic_kernel",
+            "does_not_treat_B1_package_projection_as_target_semantic_proof"
+          ],
+          "id": "qm_semantic_kernel_route_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "qm_semantic_kernel_route",
+            "six_cluster_full_qm_obligation_coverage",
+            "b1_package_projection_roundtrip",
+            "b1_projected_cluster_theorems"
+          ],
+          "open_gaps": [
+            "prove target semantic content for the open kernel core from B1 or successor primitives",
+            "do not treat B1 package projection or conditional semantic-kernel sufficiency as full_QM_I",
+            "physical hbar_I remains calibrated or separately blocked"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_semantic_kernel_to_full_qm_obligation_bundle",
+          "statement": "Conditional Lean artifact registering the broad six-cluster semantic-kernel route over the current full-QM proof surface. The route groups residual/projective, representation, readout, dynamics, composite, and physical-scale obligations and proves that a FullQMSemanticKernel yields the current FullQMObligationBundle while preserving import boundaries. It now also proves that the B1 package projects into that kernel without losing package fields, and exposes six B1-projected cluster theorems. This does not prove full_QM_I because the open kernel core still needs target semantic content from B1 or successor primitives.",
+          "theorem": "IDT.QMClosure.semantic_kernel_yields_full_qm_obligation_bundle"
+        },
+        {
+          "artifact_paths": [
+            "Proofs/QMClosure/QMSemanticContentScaffoldBundle.lean",
+            "Proofs/QMClosure/ProjectionScaffoldsDraft.lean",
+            "Proofs/QMClosure/ReadoutScaffoldsDraft.lean",
+            "Proofs/QMClosure/InheritanceScaffoldsDraft.lean",
+            "Proofs/QMClosure/CompositeScaffoldsDraft.lean",
+            "Proofs/QMClosure/MonoidalAssociativityDraft.lean",
+            "Proofs/QMClosure/ProjectiveLimitScaffoldDraft.lean",
+            "Proofs/QMClosure/BoundaryScaffoldsDraft.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake build Proofs.QMClosure.QMSemanticContentScaffoldBundle"
+          ],
+          "claim_refs": [
+            "qm_semantic_content_scaffold_bundle.machine_checked_finite_scaffolds",
+            "qm_semantic_content_scaffold_bundle.structural_target_blockers"
+          ],
+          "id": "qm_semantic_content_scaffold_bundle_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "projective_scaffold_bundle",
+            "readout_scaffold_bundle",
+            "inheritance_action_scaffold_bundle",
+            "product_tomography_scaffold_bundle",
+            "monoidal_and_projective_limit_scaffold_bundle",
+            "calibrated_scale_boundary_scaffold"
+          ],
+          "open_gaps": [
+            "derive nonunital stable distinguishability from B1 or successor primitives",
+            "derive spectral decomposition and rich reversible symmetry without importing Hilbert space",
+            "derive continuity and generator closure without importing unitary or Stone structure",
+            "derive entanglement closure without importing tensor product",
+            "finite scaffolds do not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "machine_checked_finite_semantic_content_scaffolds",
+          "statement": "Conditional Lean artifact compiling the finite semantic-content scaffolds into one checked bundle: projective idempotent gluing, finite readout normalization/additivity/coarse-graining/equivalence, inheritance-action fragments, product-readout local tomography, monoidal associativity, projective-limit consistency, and calibrated-scale boundary discipline. This removes an unchecked scaffold layer but does not prove full_QM_I or derive Hilbert, Born, unitary, tensor, entanglement, continuity, generator closure, or first-principles action scale.",
+          "theorem": "IDT.QMClosure.qm_semantic_content_scaffold_bundle_is_machine_checked",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_derive_Hilbert_carrier",
+            "does_not_derive_tensor_composition",
+            "does_not_derive_unitary_dynamics",
+            "does_not_derive_universal_Born_rule",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_finite_scaffolds_as_target_semantic_proofs"
+          ]
+        },
+        {
+          "id": "cgsc_structural_target_kernel_conditional_artifact",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "statement": "Conditional Lean artifact registering the context-generated stable closure structural target kernel. It proves that, given seven CGSC clauses and explicit derivation rules from those clauses, the six current QM structural blockers are closed inside the B1-projected semantic kernel and no-target-import boundaries are preserved. This is not full_QM_I because the CGSC clauses are not yet machine-derived from B1 or successor primitives.",
+          "scope": "conditional_six_blocker_structural_target_kernel",
+          "claim_refs": [
+            "cgsc_structural_target_kernel.conditional_six_blocker_closure",
+            "cgsc_structural_target_kernel.unproved_clause_frontier"
+          ],
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCStructuralTargetKernel.lean",
+            "scripts/evaluate_cgsc_structural_target_kernel.py"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.CGSCStructuralTargetKernel"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_clause_interface",
+            "six_structural_blocker_target_kernel",
+            "no_target_import_boundary_preservation",
+            "full_qm_obligation_bundle_assembly"
+          ],
+          "open_gaps": [
+            "prove the seven CGSC clauses from B1 or a successor primitive base",
+            "derive context-generated stable closure rather than assuming it as a clause bundle",
+            "do not treat conditional structural target closure as full_QM_I"
+          ],
+          "theorem": "IDT.QMClosure.context_generated_stable_closure_from_b1_yields_full_qm_obligation_bundle",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_derive_Hilbert_carrier",
+            "does_not_derive_universal_Born_rule",
+            "does_not_derive_unitary_dynamics",
+            "does_not_derive_tensor_composition",
+            "does_not_treat_CGSC_clauses_as_derived_from_primitives"
+          ]
+        },
+        {
+          "id": "b1_cgsc_clause_derivation_conditional_artifact",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "statement": "Conditional Lean artifact proving that all seven context-generated stable closure clauses are machine-derived from the B1 primitive-base witness interface. The artifact also proves that the B1-derived clauses close the six current structural QM blockers inside the current IDT semantic-kernel package and preserve no-target-import boundaries. This remains B1-relative and does not prove external Hilbert/Born/unitary/tensor equivalence or derive the clauses from the older B0 candidate alone.",
+          "scope": "b1_relative_cgsc_clause_derivation",
+          "claim_refs": [
+            "b1_cgsc_clause_derivation.machine_derived_clauses",
+            "b1_cgsc_clause_derivation.closed_structural_targets"
+          ],
+          "artifact_paths": [
+            "Proofs/QMClosure/B1CGSCClauseDerivation.lean",
+            "scripts/evaluate_b1_cgsc_clause_derivation.py"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.B1CGSCClauseDerivation"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "b1_cgsc_clause_sources",
+            "shared_atom_universe",
+            "six_structural_blocker_closure",
+            "no_target_import_boundary_preservation"
+          ],
+          "open_gaps": [
+            "prove external Hilbert/Born/unitary/tensor adequacy for the B1-derived CGSC package",
+            "do not treat B1-relative clause derivation as a B0-alone derivation",
+            "do not treat internal obligation-bundle closure as full_QM_I"
+          ],
+          "theorem": "IDT.QMClosure.b1_cgsc_clause_derivation_yields_full_qm_obligation_bundle",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_derive_Hilbert_carrier_from_B0_alone",
+            "does_not_derive_universal_Born_rule_from_B0_alone",
+            "does_not_derive_unitary_dynamics_from_B0_alone",
+            "does_not_derive_tensor_composition_from_B0_alone",
+            "does_not_replace_external_QM_equivalence_theorems"
+          ]
         }
-      ],
-      "expected_ledger_status": "formal_claims_covered"
+      ]
     },
     {
       "id": "phase_branch_additivity_demo",

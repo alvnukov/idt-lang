@@ -158,6 +158,12 @@ def check_equals(name: str, actual: object, expected: object) -> DraftCheck:
     return DraftCheck(name=name, passed=False, reason=f"expected {expected!r}, got {actual!r}")
 
 
+def check_in(name: str, actual: object, expected: tuple[str, ...]) -> DraftCheck:
+    if isinstance(actual, str) and actual in expected:
+        return DraftCheck(name=name, passed=True, reason=f"{actual!r}")
+    return DraftCheck(name=name, passed=False, reason=f"expected one of {expected!r}, got {actual!r}")
+
+
 def check_set_equals(name: str, actual: tuple[str, ...], expected: tuple[str, ...]) -> DraftCheck:
     actual_set = set(actual)
     expected_set = set(expected)
@@ -291,10 +297,10 @@ def validate_draft(
         check_equals("probe_id", probe.get("id"), "cgsc_extension_wall_probe"),
         check_equals("expected_verdict", probe.get("expected_verdict"), verdict),
         existing_dependency_refs(dependencies),
-        check_equals(
+        check_in(
             "primitive_derivation_verdict",
             primitive_probe.verdict,
-            "SUCCESSOR_BASE_DERIVATION_REGISTERED",
+            ("CGSC_DERIVED_FROM_PRIMITIVES", "SUCCESSOR_BASE_DERIVATION_REGISTERED"),
         ),
         check_set_equals("package_ids", tuple(package.id for package in packages), EXPECTED_PACKAGE_IDS),
         check_set_equals("control_ids", tuple(control.id for control in controls), EXPECTED_CONTROL_IDS),
@@ -319,13 +325,20 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> ExtensionWallProbe:
     for check in package_checks:
         covered_extensions.update(check.covers)
         fatal_imports.update(check.forbidden_import_hits)
-    successor_base_ready = primitive_probe.verdict == "SUCCESSOR_BASE_DERIVATION_REGISTERED"
+    successor_base_ready = primitive_probe.verdict in (
+        "CGSC_DERIVED_FROM_PRIMITIVES",
+        "SUCCESSOR_BASE_DERIVATION_REGISTERED",
+    )
     expected_extensions = set(EXPECTED_EXTENSION_IDS) if successor_base_ready else set(primitive_probe.missing_base_extensions)
     uncovered_extensions = sorted_tuple(expected_extensions - covered_extensions)
     covered_tuple = sorted_tuple(covered_extensions & expected_extensions)
     failed_controls = sum(1 for check in control_checks if check.status == "CONTROL_FAILED")
     rejected_controls = sum(1 for check in control_checks if check.status == "REJECTED_CONTROL")
-    if primitive_probe.verdict not in ("PRIMITIVE_DERIVATION_NOT_CLOSED", "SUCCESSOR_BASE_DERIVATION_REGISTERED"):
+    if primitive_probe.verdict not in (
+        "CGSC_DERIVED_FROM_PRIMITIVES",
+        "PRIMITIVE_DERIVATION_NOT_CLOSED",
+        "SUCCESSOR_BASE_DERIVATION_REGISTERED",
+    ):
         verdict: Verdict = "PRIMITIVE_DERIVATION_UNEXPECTED"
     elif fatal_imports:
         verdict = "FATAL_IMPORT_WALL"
@@ -365,7 +378,11 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> ExtensionWallProbe:
         control_checks=control_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "derive B1 from older B0 or explicitly migrate the primitive base to B1; "
+            "turn the derived CGSC extension packages into semantic target proofs for "
+            "Hilbert/Born/unitary/tensor QM; the packages are constructor-bound but not "
+            "formal full-QM proofs"
+            if primitive_probe.verdict == "CGSC_DERIVED_FROM_PRIMITIVES"
+            else "derive B1 from older B0 or explicitly migrate the primitive base to B1; "
             "the extension packages are constructor-bound but not formal full-QM proofs"
         ),
     )
