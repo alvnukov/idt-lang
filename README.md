@@ -85,6 +85,13 @@ Current auditable results:
   cluster has an explicit B1-projected theorem. This narrows the next proof
   target to semantic content inside the open kernel core; it is not a proof of
   `full_QM_I`.
+- QM semantic-content scaffolds: the finite projective, readout,
+  inheritance-action, product-tomography, monoidal associativity,
+  projective-limit, and calibrated-scale scaffolds are now compiled as a single
+  Lean bundle. This removes a proof-engineering gap for those finite fragments
+  and leaves the real target blockers concentrated in six structural theorems:
+  NUSD, spectral decomposition, rich reversible symmetry, continuity, generator
+  closure, and entanglement closure.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,
@@ -184,6 +191,7 @@ python3 scripts/evaluate_cgsc_qm_one_pass_closure.py
 python3 scripts/evaluate_qm_inevitability_route.py
 python3 scripts/evaluate_qm_hard_wall_probe.py
 python3 scripts/evaluate_qm_semantic_kernel_route.py
+python3 scripts/evaluate_qm_semantic_content_scaffolds.py
 python3 scripts/evaluate_full_qm_proof_attempt.py
 python3 -m unittest discover -s tests
 lake build

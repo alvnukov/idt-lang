@@ -120,6 +120,12 @@ The main current successes are bounded and methodological:
    fields, and each cluster has an explicit B1-projected theorem. The next
    proof target is the semantic content of the open kernel core; this is not a
    proof of `full_QM_I`.
+17. The QM semantic-content scaffold bundle is executable. It machine-checks
+   finite projective, readout, inheritance-action, product-tomography,
+   monoidal, projective-limit, and calibrated-scale fragments as one Lean
+   artifact. This removes a proof-engineering gap for those fragments and
+   concentrates the remaining full-QM work in structural target theorems, not
+   in unchecked scaffold files.
 
 ## What The Verifier Catches
 
@@ -158,6 +164,7 @@ IDT currently does not claim:
 9. treating six-cluster conditional QM coverage as a completed derivation of
    Hilbert space, Born rule, tensor composition, unitary dynamics, or
    `full_QM_I`.
+10. treating machine-checked finite scaffolds as a universal derivation of QM.
 
 ## Derived, Conditional, Calibrated, Blocked
 
@@ -166,7 +173,7 @@ Current public classification:
 | Category | Examples |
 |---|---|
 | Derived or finite executable readouts | context Born table, two-path interference, Sorkin `I3 = 0`, finite Bell/CHSH gates |
-| Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route |
+| Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route, finite semantic-content scaffold bundle |
 | Calibrated anchors | `calibrated_hbar_I`, calibrated gravity anchors and targets |
 | Structural selectors | primitive holonomy/source and topology/winding selector targets |
 | Experimental gates | SPARC gates, Bell/CHSH gates, residual provenance gates |

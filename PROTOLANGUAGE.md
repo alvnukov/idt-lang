@@ -856,6 +856,15 @@ theorems for all six clusters. The open core is therefore no longer the
 packaging link from B1, but the semantic content of the projected obligations:
 Hilbert space, Born rule, tensor composition, unitary dynamics, physical action
 scale, and `full_QM_I` are still not derived.
+The `qm_semantic_content_scaffold_bundle` now compiles the finite scaffold
+layer as one Lean artifact: projective idempotent gluing, finite readout
+normalization/additivity/coarse-graining/equivalence, inheritance-action
+fragments, product-readout local tomography, monoidal associativity,
+projective-limit consistency, and calibrated-scale boundary discipline. This
+removes unchecked scaffold files from the QM route, but it deliberately does
+not convert those finite scaffolds into universal Hilbert, Born, unitary,
+tensor, entanglement, continuity, generator, or first-principles scale
+theorems.
 
 ---
 

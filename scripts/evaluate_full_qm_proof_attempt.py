@@ -16,6 +16,7 @@ import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
+import scripts.evaluate_qm_semantic_content_scaffolds as semantic_scaffolds_attempt  # noqa: E402
 import scripts.evaluate_qm_semantic_kernel_route as semantic_kernel_attempt  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
 import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
@@ -323,6 +324,33 @@ def build_semantic_kernel_step() -> ProofStep:
     )
 
 
+def build_semantic_content_scaffold_step() -> ProofStep:
+    probe = semantic_scaffolds_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; "
+        f"machine_checked_scaffolds={len(probe.machine_checked_scaffolds)}; "
+        f"structural_target_blockers={len(probe.structural_target_blockers)}"
+    )
+    if probe.verdict == "SCAFFOLD_BUNDLE_CHECKED":
+        return ProofStep(
+            name="semantic_content_scaffold_bundle",
+            status="PASS",
+            statement=(
+                "The finite semantic-content scaffold bundle is machine-checked for projective, readout, "
+                "inheritance-action, product-tomography, monoidal, projective-limit, and calibrated-scale fragments."
+            ),
+            evidence=evidence,
+            remaining_obligation=probe.next_blocker,
+        )
+    return ProofStep(
+        name="semantic_content_scaffold_bundle",
+        status="FAIL",
+        statement="The semantic-content scaffold bundle must compile before it can support the QM proof route.",
+        evidence=evidence,
+        remaining_obligation="Repair the Lean semantic-content scaffold bundle.",
+    )
+
+
 def build_attempt() -> ProofAttempt:
     steps = [
         build_finite_gate_step(),
@@ -333,6 +361,7 @@ def build_attempt() -> ProofAttempt:
         build_dynamics_step(),
         build_general_composite_step(),
         build_physical_scale_step(),
+        build_semantic_content_scaffold_step(),
         build_semantic_kernel_step(),
     ]
     passed = sum(1 for step in steps if step.status == "PASS")

@@ -9882,6 +9882,58 @@
           "scope": "conditional_semantic_kernel_to_full_qm_obligation_bundle",
           "statement": "Conditional Lean artifact registering the broad six-cluster semantic-kernel route over the current full-QM proof surface. The route groups residual/projective, representation, readout, dynamics, composite, and physical-scale obligations and proves that a FullQMSemanticKernel yields the current FullQMObligationBundle while preserving import boundaries. It now also proves that the B1 package projects into that kernel without losing package fields, and exposes six B1-projected cluster theorems. This does not prove full_QM_I because the open kernel core still needs target semantic content from B1 or successor primitives.",
           "theorem": "IDT.QMClosure.semantic_kernel_yields_full_qm_obligation_bundle"
+        },
+        {
+          "artifact_paths": [
+            "Proofs/QMClosure/QMSemanticContentScaffoldBundle.lean",
+            "Proofs/QMClosure/ProjectionScaffoldsDraft.lean",
+            "Proofs/QMClosure/ReadoutScaffoldsDraft.lean",
+            "Proofs/QMClosure/InheritanceScaffoldsDraft.lean",
+            "Proofs/QMClosure/CompositeScaffoldsDraft.lean",
+            "Proofs/QMClosure/MonoidalAssociativityDraft.lean",
+            "Proofs/QMClosure/ProjectiveLimitScaffoldDraft.lean",
+            "Proofs/QMClosure/BoundaryScaffoldsDraft.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake build Proofs.QMClosure.QMSemanticContentScaffoldBundle"
+          ],
+          "claim_refs": [
+            "qm_semantic_content_scaffold_bundle.machine_checked_finite_scaffolds",
+            "qm_semantic_content_scaffold_bundle.structural_target_blockers"
+          ],
+          "id": "qm_semantic_content_scaffold_bundle_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "projective_scaffold_bundle",
+            "readout_scaffold_bundle",
+            "inheritance_action_scaffold_bundle",
+            "product_tomography_scaffold_bundle",
+            "monoidal_and_projective_limit_scaffold_bundle",
+            "calibrated_scale_boundary_scaffold"
+          ],
+          "open_gaps": [
+            "derive nonunital stable distinguishability from B1 or successor primitives",
+            "derive spectral decomposition and rich reversible symmetry without importing Hilbert space",
+            "derive continuity and generator closure without importing unitary or Stone structure",
+            "derive entanglement closure without importing tensor product",
+            "finite scaffolds do not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "machine_checked_finite_semantic_content_scaffolds",
+          "statement": "Conditional Lean artifact compiling the finite semantic-content scaffolds into one checked bundle: projective idempotent gluing, finite readout normalization/additivity/coarse-graining/equivalence, inheritance-action fragments, product-readout local tomography, monoidal associativity, projective-limit consistency, and calibrated-scale boundary discipline. This removes an unchecked scaffold layer but does not prove full_QM_I or derive Hilbert, Born, unitary, tensor, entanglement, continuity, generator closure, or first-principles action scale.",
+          "theorem": "IDT.QMClosure.qm_semantic_content_scaffold_bundle_is_machine_checked",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_derive_Hilbert_carrier",
+            "does_not_derive_tensor_composition",
+            "does_not_derive_unitary_dynamics",
+            "does_not_derive_universal_Born_rule",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_finite_scaffolds_as_target_semantic_proofs"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

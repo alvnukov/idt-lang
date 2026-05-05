@@ -8601,6 +8601,7 @@ class TheoryVerifierTests(unittest.TestCase):
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.BoundPrimitiveGeneratedBase")))
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.B1PrimitiveBase")))
         self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.QMSemanticKernelRoute")))
+        self.assertTrue(is_allowed_checker_command(("lake", "build", "Proofs.QMClosure.QMSemanticContentScaffoldBundle")))
         self.assertTrue(
             is_allowed_checker_command(
                 ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest_v6_0.json")
