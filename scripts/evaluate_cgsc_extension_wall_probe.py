@@ -47,6 +47,14 @@ EXPECTED_CONTROL_IDS: tuple[str, ...] = (
     "born_rule_import_control",
     "complex_hilbert_carrier_import_control",
 )
+EXPECTED_EXTENSION_IDS: tuple[str, ...] = (
+    "coherent_refinement_compactness",
+    "complete_exposed_context_partition",
+    "generator_bookkeeping_without_stone",
+    "no_hidden_joint_only_generation",
+    "product_context_generation_closure",
+    "reversible_context_automorphism_closure",
+)
 
 
 @dataclass(frozen=True)
@@ -283,12 +291,16 @@ def validate_draft(
         check_equals("probe_id", probe.get("id"), "cgsc_extension_wall_probe"),
         check_equals("expected_verdict", probe.get("expected_verdict"), verdict),
         existing_dependency_refs(dependencies),
-        check_equals("primitive_derivation_verdict", primitive_probe.verdict, "PRIMITIVE_DERIVATION_NOT_CLOSED"),
+        check_equals(
+            "primitive_derivation_verdict",
+            primitive_probe.verdict,
+            "SUCCESSOR_BASE_DERIVATION_REGISTERED",
+        ),
         check_set_equals("package_ids", tuple(package.id for package in packages), EXPECTED_PACKAGE_IDS),
         check_set_equals("control_ids", tuple(control.id for control in controls), EXPECTED_CONTROL_IDS),
         check_set_equals("package_statuses", package_statuses, expected_package_statuses),
         check_set_equals("control_statuses", control_statuses, expected_control_statuses),
-        check_set_equals("covered_extensions", tuple(covered), primitive_probe.missing_base_extensions),
+        check_set_equals("covered_extensions", tuple(covered), EXPECTED_EXTENSION_IDS),
         check_set_equals("declared_forbidden_imports", package_forbidden_imports(packages), FORBIDDEN_IMPORTS),
     ]
 
@@ -307,15 +319,18 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> ExtensionWallProbe:
     for check in package_checks:
         covered_extensions.update(check.covers)
         fatal_imports.update(check.forbidden_import_hits)
-    missing_set = set(primitive_probe.missing_base_extensions)
-    uncovered_extensions = sorted_tuple(missing_set - covered_extensions)
-    covered_tuple = sorted_tuple(covered_extensions & missing_set)
+    successor_base_ready = primitive_probe.verdict == "SUCCESSOR_BASE_DERIVATION_REGISTERED"
+    expected_extensions = set(EXPECTED_EXTENSION_IDS) if successor_base_ready else set(primitive_probe.missing_base_extensions)
+    uncovered_extensions = sorted_tuple(expected_extensions - covered_extensions)
+    covered_tuple = sorted_tuple(covered_extensions & expected_extensions)
     failed_controls = sum(1 for check in control_checks if check.status == "CONTROL_FAILED")
     rejected_controls = sum(1 for check in control_checks if check.status == "REJECTED_CONTROL")
-    if primitive_probe.verdict != "PRIMITIVE_DERIVATION_NOT_CLOSED":
+    if primitive_probe.verdict not in ("PRIMITIVE_DERIVATION_NOT_CLOSED", "SUCCESSOR_BASE_DERIVATION_REGISTERED"):
         verdict: Verdict = "PRIMITIVE_DERIVATION_UNEXPECTED"
     elif fatal_imports:
         verdict = "FATAL_IMPORT_WALL"
+    elif successor_base_ready and not uncovered_extensions and rejected_controls == len(control_checks):
+        verdict = "EXTENSION_ROUTE_READY"
     elif not uncovered_extensions and rejected_controls == len(control_checks):
         verdict = "EXTENSION_WALL_LOCALIZED"
     else:
@@ -350,8 +365,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> ExtensionWallProbe:
         control_checks=control_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "prove or reject the three localized extension packages from B0; "
-            "without them CGSC remains a conditional route and QM inevitability remains open"
+            "promote the bound successor primitive base or prove its data from B0; "
+            "the extension packages are constructor-bound but not formal full-QM proofs"
         ),
     )
 

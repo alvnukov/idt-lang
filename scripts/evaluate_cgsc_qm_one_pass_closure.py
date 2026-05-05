@@ -351,8 +351,8 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> OnePassClosureProbe:
         draft_checks_failed=draft_failed,
         draft_checks=draft_checks,
         next_blocker=(
-            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base; "
-            "B0 alone still admits a free toy admissibility"
+            "promote the bound successor primitive base or prove its data from B0, "
+            "then turn the conditional QM package artifacts into formal primitive proofs"
         ),
     )
 

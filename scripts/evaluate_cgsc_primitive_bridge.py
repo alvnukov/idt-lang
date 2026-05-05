@@ -268,7 +268,7 @@ def build_probe(draft_path: Path = DEFAULT_DRAFT) -> BridgeProbe:
         upstream_checks=upstream,
         draft_checks=draft_checks,
         next_blocker=(
-            "prove the six extension witnesses from B0 or reject this bridge; "
+            "promote the bound successor primitive base or prove its data from B0; "
             "the bridge is conditional and does not prove CGSC or full QM"
         ),
     )

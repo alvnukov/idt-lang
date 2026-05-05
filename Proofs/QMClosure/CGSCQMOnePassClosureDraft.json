@@ -24,11 +24,11 @@
       },
       {
         "id": "extension_wall_probe",
-        "expected": "EXTENSION_WALL_LOCALIZED"
+        "expected": "EXTENSION_ROUTE_READY"
       },
       {
         "id": "primitive_derivation",
-        "expected": "PRIMITIVE_DERIVATION_NOT_CLOSED"
+        "expected": "SUCCESSOR_BASE_DERIVATION_REGISTERED"
       },
       {
         "id": "cgsc_primitive_bridge",
@@ -36,7 +36,7 @@
       },
       {
         "id": "cgsc_semantic_content_wall",
-        "expected": "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED"
+        "expected": "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED"
       },
       {
         "id": "qm_inevitability_route",

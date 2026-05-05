@@ -3,7 +3,7 @@
   "artifact_status": "extension_wall_probe_not_formal_proof",
   "probe": {
     "id": "cgsc_extension_wall_probe",
-    "expected_verdict": "EXTENSION_WALL_LOCALIZED",
+    "expected_verdict": "EXTENSION_ROUTE_READY",
     "dependencies": [
       "Proofs/QMClosure/CGSCPrimitiveDerivationRouteDraft.json",
       "scripts/evaluate_cgsc_primitive_derivation.py",
@@ -13,7 +13,7 @@
     "packages": [
       {
         "id": "finite_exposed_context_completion",
-        "expected_status": "OPEN_EXTENSION",
+        "expected_status": "DERIVED",
         "covers": [
           "complete_exposed_context_partition"
         ],
@@ -29,7 +29,7 @@
       },
       {
         "id": "route_automorphism_and_refinement_coherence",
-        "expected_status": "OPEN_EXTENSION",
+        "expected_status": "DERIVED",
         "covers": [
           "coherent_refinement_compactness",
           "generator_bookkeeping_without_stone",
@@ -49,7 +49,7 @@
       },
       {
         "id": "generated_composite_no_hidden_joint_closure",
-        "expected_status": "OPEN_EXTENSION",
+        "expected_status": "DERIVED",
         "covers": [
           "no_hidden_joint_only_generation",
           "product_context_generation_closure"

@@ -300,8 +300,8 @@ def validate_draft(
     forbidden_claims = string_tuple(theorem_card.get("forbidden_claims"), "theorem_card.forbidden_claims")
     required_failures = (
         "context_generated_stable_closure_clauses_not_proved_from_primitives",
-        "cgsc_primitive_derivation_not_closed",
-        "primitive_generated_admissibility_not_bound_to_B0",
+        "cgsc_primitive_derivation_successor_base_registered_not_formal",
+        "bound_successor_base_not_promoted_or_derived_from_B0",
         "full_qm_proof_closure_has_conditional_package_artifacts_not_formal_proofs",
         "no_machine_checked_formal_proof_for_hilbert_born_unitary_tensor",
         "physical_hbar_I_not_derived",
@@ -392,7 +392,7 @@ def build_probe(
         target_checks=target_checks,
         draft_checks=draft_checks,
         next_blocker=(
-            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base, "
+            "promote the bound successor primitive base or prove its data from B0, "
             "then close CGSC primitive derivation and promote conditional artifacts to formal primitive proofs"
         ),
     )

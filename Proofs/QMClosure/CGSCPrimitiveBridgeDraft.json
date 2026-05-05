@@ -19,11 +19,11 @@
     "upstream_requirements": [
       {
         "id": "extension_wall_probe",
-        "expected": "EXTENSION_WALL_LOCALIZED"
+        "expected": "EXTENSION_ROUTE_READY"
       },
       {
         "id": "primitive_derivation",
-        "expected": "PRIMITIVE_DERIVATION_NOT_CLOSED"
+        "expected": "SUCCESSOR_BASE_DERIVATION_REGISTERED"
       },
       {
         "id": "full_qm_proof_closure",

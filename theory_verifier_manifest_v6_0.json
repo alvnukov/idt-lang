@@ -9769,6 +9769,43 @@
             "does_not_treat_free_admissibility_as_primitive_derivation",
             "does_not_mark_B0CandidateBase_alone_as_sufficient_for_QM"
           ]
+        },
+        {
+          "id": "bound_primitive_generated_base_conditional_artifact",
+          "statement": "Conditional Lean artifact showing that a BoundPrimitiveGeneratedBase constructor-generates PrimitiveGeneratedAdmissibility from typed successor-base witness sorts, then yields the primitive-generated source kernel and full-QM obligation bundle. This closes the free-admissibility defect for the successor-base route, while leaving open whether the successor base is promoted as primitive or derived from the older B0CandidateBase.",
+          "scope": "conditional_full_qm_obligation_bundle_from_bound_successor_primitive_base",
+          "proof_kind": "conditional_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean"
+          ],
+          "checker_commands": [
+            "lake build Proofs.QMClosure.BoundPrimitiveGeneratedBase"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "bound_primitive_generated_base",
+            "constructor_bound_admissibility_roles"
+          ],
+          "claim_refs": [
+            "bound_primitive_generated_base.to_full_qm_obligation_bundle",
+            "bound_primitive_generated_base.constructor_bound_roles"
+          ],
+          "theorem": "IDT.QMClosure.bound_primitive_generated_base_yields_full_qm_obligation_bundle",
+          "open_gaps": [
+            "promote BoundPrimitiveGeneratedBase as the primitive base or derive its typed witness data from B0CandidateBase",
+            "prove the six CGSC clauses as formal primitive proofs from the bound base",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_claim_bound_successor_base_is_derived_from_B0",
+            "does_not_mark_conditional_bound_base_as_QM_proof"
+          ]
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

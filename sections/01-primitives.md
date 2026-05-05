@@ -53,8 +53,27 @@ machine-checked negative control in
 `Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean` shows that B0 alone
 still admits a freely selected `PrimitiveGeneratedAdmissibility` toy interface.
 
-Therefore the next base revision must make admissibility generated, not merely
-attached:
+The bound successor-base candidate now makes this requirement explicit:
+
+```text
+Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean
+```
+
+It defines `BoundPrimitiveGeneratedBase`, constructs `BoundSourceAtom` as an
+inductive sum of typed primitive witness sorts, and proves:
+
+```text
+bound_admissibility_role_atoms_are_constructor_generated
+bound_primitive_generated_base_yields_full_qm_obligation_bundle
+```
+
+This solves the free-admissibility problem for the successor-base route:
+admissibility roles are constructor-generated from the successor primitive base,
+not arbitrary predicates on a detached atom universe. It does not prove that the
+successor base is already derived from the older `B0CandidateBase`, and it does
+not prove QM from primitives.
+
+The binding contract is:
 
 | Required binding | Meaning |
 |---|---|
@@ -65,8 +84,9 @@ attached:
 | product binding | composite/product witnesses are generated from admissible local context witnesses |
 | no-hidden-joint binding | stable joint facts must be witnessed through generated product/refinement routes |
 
-Until these bindings are formalized and machine-checked, any route from B0 to
-CGSC/QM remains conditional and must not be marked as a proof from primitives.
+Until the bound successor base is either promoted as the primitive base or
+derived from `B0CandidateBase`, any route from B0 to CGSC/QM remains conditional
+and must not be marked as a proof from primitives.
 
 Base rule:
 

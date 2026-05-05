@@ -3,7 +3,7 @@
   "artifact_status": "semantic_content_wall_not_formal_proof",
   "wall": {
     "id": "cgsc_semantic_content_wall",
-    "expected_verdict": "PRIMITIVE_GENERATED_ADMISSIBILITY_WALL_REGISTERED",
+    "expected_verdict": "BOUND_PRIMITIVE_GENERATED_BASE_REGISTERED",
     "proof_status": "blocked",
     "lean_file": "Proofs/QMClosure/CGSCSemanticContentWall.lean",
     "wall_checker_command": "lake build Proofs.QMClosure.CGSCSemanticContentWall",
@@ -25,6 +25,8 @@
     "primitive_generated_source_checker_command": "lake build Proofs.QMClosure.PrimitiveGeneratedSourceKernel",
     "primitive_generated_admissibility_wall_file": "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean",
     "primitive_generated_admissibility_wall_checker_command": "lake build Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall",
+    "bound_primitive_generated_base_file": "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean",
+    "bound_primitive_generated_base_checker_command": "lake build Proofs.QMClosure.BoundPrimitiveGeneratedBase",
     "dependencies": [
       "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
       "Proofs/QMClosure/CGSCSemanticContentWall.lean",
@@ -37,6 +39,7 @@
       "Proofs/QMClosure/UniversalPrimitiveToyWall.lean",
       "Proofs/QMClosure/PrimitiveGeneratedSourceKernel.lean",
       "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean",
+      "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean",
       "Proofs/QMClosure/CGSCSemanticContentWallDraft.json",
       "scripts/evaluate_cgsc_semantic_content_wall.py"
     ],
@@ -60,7 +63,9 @@
     "primitive_generated_source_kernel": "primitive_generated_admissibility_yields_full_qm_obligation_bundle",
     "primitive_generated_atom_universe": "primitive_generated_source_slots_share_one_atom_universe",
     "primitive_generated_admissibility_wall": "b0_alone_can_feed_free_primitive_generated_source_kernel",
-    "required_fix": "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base; B0 alone still admits a free toy admissibility",
+    "bound_primitive_generated_base": "bound_primitive_generated_base_yields_full_qm_obligation_bundle",
+    "bound_primitive_generated_roles": "bound_admissibility_role_atoms_are_constructor_generated",
+    "required_fix": "promote the bound successor primitive base or prove its data from B0; free B0 admissibility remains rejected",
     "forbidden_claims": [
       "does_not_prove_CGSC",
       "does_not_prove_full_QM_I",
