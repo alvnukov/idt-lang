@@ -9843,6 +9843,42 @@
             "does_not_claim_Hilbert_Born_unitary_tensor_semantics_are_proved",
             "does_not_mark_conditional_B1_base_as_full_QM_proof"
           ]
+        },
+        {
+          "artifact_paths": [
+            "Proofs/QMClosure/QMSemanticKernelRoute.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake build Proofs.QMClosure.QMSemanticKernelRoute"
+          ],
+          "claim_refs": [
+            "qm_semantic_kernel_route.semantic_kernel_to_full_qm_obligation_bundle",
+            "qm_semantic_kernel_route.six_cluster_coverage"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_mark_semantic_kernel_sufficiency_as_full_QM_proof",
+            "does_not_claim_B1_derives_the_semantic_kernel"
+          ],
+          "id": "qm_semantic_kernel_route_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "qm_semantic_kernel_route",
+            "six_cluster_full_qm_obligation_coverage"
+          ],
+          "open_gaps": [
+            "derive the six semantic kernel clusters from B1 or successor primitives",
+            "do not treat conditional semantic-kernel sufficiency as full_QM_I",
+            "physical hbar_I remains calibrated or separately blocked"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_semantic_kernel_to_full_qm_obligation_bundle",
+          "statement": "Conditional Lean artifact registering the broad six-cluster semantic-kernel route over the current full-QM proof surface. The route groups residual/projective, representation, readout, dynamics, composite, and physical-scale obligations and proves that a FullQMSemanticKernel yields the current FullQMObligationBundle while preserving import boundaries. This does not prove full_QM_I because the semantic kernel clusters are not yet derived from B1 or successor primitives.",
+          "theorem": "IDT.QMClosure.semantic_kernel_yields_full_qm_obligation_bundle"
         }
       ],
       "expected_ledger_status": "formal_claims_covered"

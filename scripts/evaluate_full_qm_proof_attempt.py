@@ -16,6 +16,7 @@ import scripts.evaluate_born_readout_attempt as born_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
 import scripts.evaluate_projective_residual_closure as residual_closure  # noqa: E402
+import scripts.evaluate_qm_semantic_kernel_route as semantic_kernel_attempt  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
 import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
 import scripts.verify_finite_qm_route as finite_gate  # noqa: E402
@@ -283,6 +284,43 @@ def build_physical_scale_step() -> ProofStep:
     )
 
 
+def build_semantic_kernel_step() -> ProofStep:
+    probe = semantic_kernel_attempt.build_probe()
+    evidence = (
+        f"verdict={probe.verdict}; lean={probe.lean_check.status}; clusters={probe.clusters}; "
+        f"covered_obligations={probe.covered_obligations}; open_core={len(probe.open_core)}"
+    )
+    if probe.verdict == "SEMANTIC_KERNEL_ROUTE_REGISTERED":
+        return ProofStep(
+            name="six_cluster_semantic_kernel_route",
+            status="CONDITIONAL",
+            statement=(
+                "The current full-QM obligation surface is covered by six conditional semantic-kernel clusters: "
+                "residual/projective, representation, readout, dynamics, composite, and physical-scale."
+            ),
+            evidence=evidence,
+            remaining_obligation=(
+                "Derive the six semantic kernel clusters from B1 or successor primitives; do not treat clustered "
+                "conditional coverage as full_QM_I."
+            ),
+        )
+    if probe.verdict == "SEMANTIC_KERNEL_CHECK_FAILED":
+        return ProofStep(
+            name="six_cluster_semantic_kernel_route",
+            status="FAIL",
+            statement="The semantic-kernel Lean artifact must compile before it can support the full-QM route.",
+            evidence=evidence,
+            remaining_obligation="Repair the Lean semantic-kernel artifact.",
+        )
+    return ProofStep(
+        name="six_cluster_semantic_kernel_route",
+        status="OPEN",
+        statement="The six-cluster semantic-kernel route is not yet ready as a full-QM obligation cover.",
+        evidence=evidence,
+        remaining_obligation=probe.next_blocker,
+    )
+
+
 def build_attempt() -> ProofAttempt:
     steps = [
         build_finite_gate_step(),
@@ -293,6 +331,7 @@ def build_attempt() -> ProofAttempt:
         build_dynamics_step(),
         build_general_composite_step(),
         build_physical_scale_step(),
+        build_semantic_kernel_step(),
     ]
     passed = sum(1 for step in steps if step.status == "PASS")
     conditional = sum(1 for step in steps if step.status == "CONDITIONAL")

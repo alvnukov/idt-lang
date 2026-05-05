@@ -846,6 +846,14 @@ as superseded. The B1 Lean route now constructor-binds the successor-base
 admissibility interface and no-target-import boundaries, but it is still a
 conditional route rather than a formal QM derivation. This does not derive
 Hilbert space, Born rule, GR, full QM, `hbar_I`, or `G_I`.
+The `qm_semantic_kernel_route` now records the broadest current full-QM proof
+attempt as six conditional semantic clusters: residual/projective,
+representation, readout, dynamics, composite, and physical scale. The route
+covers all 21 current full-QM obligations and compiles as a Lean conditional
+artifact, but the open core remains the derivation of those semantic kernels
+from B1 or successor primitives. It is therefore a sharper proof target, not a
+completed derivation of Hilbert space, Born rule, tensor composition, unitary
+dynamics, physical action scale, or `full_QM_I`.
 
 ---
 

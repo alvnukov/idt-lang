@@ -78,6 +78,11 @@ Current auditable results:
   superseded before this becomes a completed migration. The B1 Lean route now
   constructor-binds admissibility and no-target-import boundaries for the
   successor-base candidate, but remains conditional rather than a QM proof.
+- QM semantic-kernel route: the current full-QM proof surface is grouped into
+  six conditional clusters covering 21 obligations: residual/projective,
+  representation, readout, dynamics, composite, and physical scale. This
+  narrows the next proof target to deriving those clusters from B1 or successor
+  primitives; it is not a proof of `full_QM_I`.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,
@@ -176,6 +181,8 @@ python3 scripts/check_proofs.py
 python3 scripts/evaluate_cgsc_qm_one_pass_closure.py
 python3 scripts/evaluate_qm_inevitability_route.py
 python3 scripts/evaluate_qm_hard_wall_probe.py
+python3 scripts/evaluate_qm_semantic_kernel_route.py
+python3 scripts/evaluate_full_qm_proof_attempt.py
 python3 -m unittest discover -s tests
 lake build
 ```

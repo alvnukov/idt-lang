@@ -113,6 +113,11 @@ The main current successes are bounded and methodological:
    now binds admissibility to the successor base and preserves no-target-import
    guards, but remains a conditional route. This does not upgrade QM, Hilbert
    space, Born rule, GR, `hbar_I`, or `G_I`.
+16. The QM semantic-kernel route is executable. It groups the current full-QM
+   proof surface into six conditional clusters covering 21 obligations:
+   residual/projective, representation, readout, dynamics, composite, and
+   physical scale. The next proof target is to derive those clusters from B1 or
+   successor primitives; this is not a proof of `full_QM_I`.
 
 ## What The Verifier Catches
 
@@ -148,6 +153,9 @@ IDT currently does not claim:
    primitives.
 8. a completed migration from the v6 executable primitive core to the v7
    context-first lower base.
+9. treating six-cluster conditional QM coverage as a completed derivation of
+   Hilbert space, Born rule, tensor composition, unitary dynamics, or
+   `full_QM_I`.
 
 ## Derived, Conditional, Calibrated, Blocked
 
@@ -156,7 +164,7 @@ Current public classification:
 | Category | Examples |
 |---|---|
 | Derived or finite executable readouts | context Born table, two-path interference, Sorkin `I3 = 0`, finite Bell/CHSH gates |
-| Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors |
+| Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route |
 | Calibrated anchors | `calibrated_hbar_I`, calibrated gravity anchors and targets |
 | Structural selectors | primitive holonomy/source and topology/winding selector targets |
 | Experimental gates | SPARC gates, Bell/CHSH gates, residual provenance gates |

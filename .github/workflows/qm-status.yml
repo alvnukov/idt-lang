@@ -54,6 +54,8 @@ jobs:
           python scripts/evaluate_qm_inevitability_route.py
           python scripts/evaluate_full_qm_proof_closure.py
           python scripts/evaluate_qm_hard_wall_probe.py
+          python scripts/evaluate_qm_semantic_kernel_route.py
+          python scripts/evaluate_full_qm_proof_attempt.py
 
       - name: Unit tests
         run: python -m unittest discover -s tests
