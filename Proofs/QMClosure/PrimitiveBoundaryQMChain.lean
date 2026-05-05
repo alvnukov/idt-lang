@@ -973,5 +973,155 @@ theorem direct_finite_born_route_still_does_not_close_universal_born_or_s2 :
       intro closed
       exact closed.left)
 
+/-!
+Exact universal Born readout frontier.
+
+The finite route is now closed. Exact universal Born is stronger: the same
+constructor-respecting oriented readout law must hold for every admissible
+readout context, and probability accounting must remain downstream of the
+selected weight law. The contract below keeps that distinction machine-visible.
+-/
+
+structure UniversalBornReadoutContract where
+  finiteDirectBornRoute : Prop
+  allAdmissibleContextsCloseFiniteBornChain : Prop
+  universalSignedReadout : Prop
+  universalConstructorRespectingBranchLabels : Prop
+  universalPhaseDoubleCover : Prop
+  noPrimitiveHigherOrderFacticization : Prop
+  probabilityAccountingIsOnlyReadout : Prop
+  noBornImport : Prop
+
+def ExactUniversalBornReadoutClosed
+    (contract : UniversalBornReadoutContract) : Prop :=
+  contract.finiteDirectBornRoute
+    ∧ contract.allAdmissibleContextsCloseFiniteBornChain
+    ∧ contract.universalSignedReadout
+    ∧ contract.universalConstructorRespectingBranchLabels
+    ∧ contract.universalPhaseDoubleCover
+    ∧ contract.noPrimitiveHigherOrderFacticization
+    ∧ contract.probabilityAccountingIsOnlyReadout
+    ∧ contract.noBornImport
+
+theorem universal_born_readout_contract_closes_exact_universal_born
+    (contract : UniversalBornReadoutContract) :
+    contract.finiteDirectBornRoute →
+      contract.allAdmissibleContextsCloseFiniteBornChain →
+        contract.universalSignedReadout →
+          contract.universalConstructorRespectingBranchLabels →
+            contract.universalPhaseDoubleCover →
+              contract.noPrimitiveHigherOrderFacticization →
+                contract.probabilityAccountingIsOnlyReadout →
+                  contract.noBornImport →
+                    ExactUniversalBornReadoutClosed contract := by
+  intro finiteRoute allContexts signedReadout constructorLabels
+    phaseCover noHigherOrder probabilityBoundary noBornImport
+  exact And.intro finiteRoute
+    (And.intro allContexts
+      (And.intro signedReadout
+        (And.intro constructorLabels
+          (And.intro phaseCover
+            (And.intro noHigherOrder
+              (And.intro probabilityBoundary noBornImport))))))
+
+theorem exact_universal_born_requires_all_admissible_contexts
+    (contract : UniversalBornReadoutContract) :
+    ExactUniversalBornReadoutClosed contract →
+      contract.allAdmissibleContextsCloseFiniteBornChain :=
+  fun closed => closed.right.left
+
+theorem exact_universal_born_requires_signed_readout
+    (contract : UniversalBornReadoutContract) :
+    ExactUniversalBornReadoutClosed contract →
+      contract.universalSignedReadout :=
+  fun closed => closed.right.right.left
+
+theorem exact_universal_born_requires_constructor_labels
+    (contract : UniversalBornReadoutContract) :
+    ExactUniversalBornReadoutClosed contract →
+      contract.universalConstructorRespectingBranchLabels :=
+  fun closed => closed.right.right.right.left
+
+theorem exact_universal_born_requires_phase_double_cover
+    (contract : UniversalBornReadoutContract) :
+    ExactUniversalBornReadoutClosed contract →
+      contract.universalPhaseDoubleCover :=
+  fun closed => closed.right.right.right.right.left
+
+theorem exact_universal_born_requires_no_higher_order_facticization
+    (contract : UniversalBornReadoutContract) :
+    ExactUniversalBornReadoutClosed contract →
+      contract.noPrimitiveHigherOrderFacticization :=
+  fun closed => closed.right.right.right.right.right.left
+
+theorem exact_universal_born_requires_probability_boundary
+    (contract : UniversalBornReadoutContract) :
+    ExactUniversalBornReadoutClosed contract →
+      contract.probabilityAccountingIsOnlyReadout :=
+  fun closed => closed.right.right.right.right.right.right.left
+
+def currentUniversalBornReadoutContract : UniversalBornReadoutContract :=
+  {
+    finiteDirectBornRoute :=
+      DirectFiniteBornRouteHit
+        fullPrimitiveBoundaryCandidate
+        finiteAffineOverlapBornInputs,
+    allAdmissibleContextsCloseFiniteBornChain := False,
+    universalSignedReadout := False,
+    universalConstructorRespectingBranchLabels := False,
+    universalPhaseDoubleCover := False,
+    noPrimitiveHigherOrderFacticization := False,
+    probabilityAccountingIsOnlyReadout := True,
+    noBornImport := True
+  }
+
+theorem current_born_frontier_has_finite_route_but_not_universal_born :
+    currentUniversalBornReadoutContract.finiteDirectBornRoute
+      ∧ ¬ ExactUniversalBornReadoutClosed
+        currentUniversalBornReadoutContract :=
+  And.intro
+    full_boundary_plus_affine_overlap_closes_direct_finite_born_route
+    (by
+      intro closed
+      exact closed.right.left)
+
+theorem missing_all_context_closure_blocks_exact_universal_born
+    (contract : UniversalBornReadoutContract) :
+    ¬ contract.allAdmissibleContextsCloseFiniteBornChain →
+      ¬ ExactUniversalBornReadoutClosed contract :=
+  fun missing closed =>
+    missing (exact_universal_born_requires_all_admissible_contexts contract closed)
+
+theorem missing_universal_signed_readout_blocks_exact_universal_born
+    (contract : UniversalBornReadoutContract) :
+    ¬ contract.universalSignedReadout →
+      ¬ ExactUniversalBornReadoutClosed contract :=
+  fun missing closed =>
+    missing (exact_universal_born_requires_signed_readout contract closed)
+
+theorem missing_universal_constructor_labels_blocks_exact_universal_born
+    (contract : UniversalBornReadoutContract) :
+    ¬ contract.universalConstructorRespectingBranchLabels →
+      ¬ ExactUniversalBornReadoutClosed contract :=
+  fun missing closed =>
+    missing (exact_universal_born_requires_constructor_labels contract closed)
+
+theorem missing_universal_phase_double_cover_blocks_exact_universal_born
+    (contract : UniversalBornReadoutContract) :
+    ¬ contract.universalPhaseDoubleCover →
+      ¬ ExactUniversalBornReadoutClosed contract :=
+  fun missing closed =>
+    missing (exact_universal_born_requires_phase_double_cover contract closed)
+
+theorem missing_no_higher_order_facticization_blocks_exact_universal_born
+    (contract : UniversalBornReadoutContract) :
+    ¬ contract.noPrimitiveHigherOrderFacticization →
+      ¬ ExactUniversalBornReadoutClosed contract :=
+  fun missing closed =>
+    missing
+      (exact_universal_born_requires_no_higher_order_facticization
+        contract
+        closed)
+
 end QMClosure
 end IDT

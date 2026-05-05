@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Literal
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-LEAN_COMMAND = "lake build Proofs.QMClosure.S2BornProofSearch"
+LEAN_COMMAND = "lake build Proofs.QMClosure.PrimitiveBoundaryQMChain"
 
 RouteVerdict = Literal[
     "COUNTERMODEL_SURVIVES",
@@ -529,6 +529,21 @@ def build_routes() -> list[ProofRoute]:
             imports=(),
         ),
         ProofRoute(
+            id="exact_universal_born_contract_frontier",
+            verdict="FINITE_DIRECT_BORN_HIT",
+            source="Proofs/QMClosure/PrimitiveBoundaryQMChain.lean",
+            decisive_reason=(
+                "The exact universal Born contract is now machine-visible: the finite direct "
+                "Born route is closed, but exact universal Born additionally requires all-context "
+                "closure, universal signed readout, constructor-respecting branch labels, phase "
+                "double cover, and no primitive higher-order facticization."
+            ),
+            missing_obligation=(
+                "close the UniversalBornReadoutContract fields for every admissible context"
+            ),
+            imports=(),
+        ),
+        ProofRoute(
             id="s2_as_explicit_qm_sector_law",
             verdict="PRIMITIVE_OR_SECTOR_LAW_REQUIRED",
             source="sections/174-context-bundle-nontriviality-research-note.md#174.34",
@@ -573,19 +588,20 @@ def build_search() -> S2BornProofSearch:
         promising_unproved=count_routes(routes, "PROMISING_UNPROVED"),
         sector_boundary_possible=count_routes(routes, "SECTOR_BOUNDARY_POSSIBLE"),
         open_core=(
-            "proper_subcontext_pairwise_basis",
+            "all_admissible_contexts_close_finite_born_chain",
+            "universal_signed_readout",
+            "universal_constructor_respecting_branch_labels",
+            "universal_phase_double_cover",
+            "no_primitive_higher_order_facticization",
             "derive_compatible_kernel_additivity_from_primitives",
             "derive_normalized_overlap_selector_from_primitives",
-            "derive_phase_bundle_J_structure_from_primitives",
-            "generalize_overlap_selector_to_all_readout_contexts",
-            "second_order_facticization",
-            "derive_constructor_respecting_oriented_branch_labels_from_primitives",
         ),
         viable_next_route=(
-            "Use the finite chain as the target and work below probability: derive compatible "
-            "kernel additivity, normalized overlap, constructor-respecting branch labels, phase-bundle "
-            "J, and proper-subcontext/pairwise coverage from primitive unknownness. Probability "
-            "normalization can only read out selected weights; it cannot select Born."
+            "Use the exact universal Born contract as the target and work below probability: "
+            "derive all-context finite-chain closure, universal signed readout, constructor-respecting "
+            "branch labels, phase double cover, and no primitive higher-order facticization from "
+            "primitive unknownness. Probability normalization can only read out selected weights; "
+            "it cannot select Born."
         ),
         routes=routes,
     )

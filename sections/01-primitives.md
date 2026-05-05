@@ -149,6 +149,10 @@ current_finite_b2_closes_born_hilbert_finite_routes
 current_finite_b2_still_not_universal_qm
 current_b2_is_standard_qm_sector_projection_not_final_physics
 b1_context_first_frontier_closes_full_finite_standard_qm_sector
+full_finite_sector_plus_exact_contract_closes_exact_fundamental_qm
+external_qm_adequacy_theorems_close_target_adequacy
+universal_born_readout_contract_closes_exact_universal_born
+current_born_frontier_has_finite_route_but_not_universal_born
 current_full_qm_sector_closure_is_not_exact_fundamental_qm
 ```
 
@@ -157,9 +161,12 @@ So the concrete result is:
 ```text
 B1 alone is not enough.
 B2 constructive witness completeness recovers the current finite Born/Hilbert
+standard-QM sector.
 B1 plus context-first constructive witness completeness plus carrier-frontier
 exhaustion closes the current finite standard-QM sector surface without target
 imports.
+The exact universal Born contract is now explicit: finite direct Born is closed,
+but all-context Born is still a frontier obligation.
 This still does not prove universal Born, universal Hilbert uniqueness, exact
 fundamental QM, or exact finality of empirical QM formulas.
 Beyond-QM correction channels remain open unless independently ruled out.
@@ -182,7 +189,17 @@ prove carrier-frontier exhaustion or record a non-Hilbert constructive
 countermodel;
 promote conditional Hilbert/Born/unitary/tensor adequacy artifacts to formal
 primitive proofs;
+derive exact universal Born readout for all admissible contexts;
 keep hbar_I as calibrated unless a first-principles scale theorem is supplied.
+```
+
+The external adequacy obligation is now split into:
+
+```text
+Hilbert representation adequacy;
+Born readout adequacy;
+unitary dynamics adequacy;
+tensor/composite adequacy.
 ```
 
 Correction channels are not free fit terms. The current Lean boundary adds:

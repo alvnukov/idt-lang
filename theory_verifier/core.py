@@ -590,6 +590,21 @@ CONTINUUM_ACTION_FRONTIER_REQUIREMENTS = (
     "field_mode_limit",
 )
 
+SCHRODINGER_FREQUENCY_GENERATOR_REQUIRED_CONDITIONS = (
+    "phase_orientation",
+    "normalized_transition_readout",
+    "reversible_dcl_automorphism",
+    "overlap_preserving_projective_action",
+    "continuous_identity_component",
+    "closed_frequency_generator",
+)
+
+SCHRODINGER_FREQUENCY_GENERATOR_FORBIDDEN_IMPORTS = (
+    "schrodinger_equation_assumed",
+    "unitary_dynamics_assumed",
+    "hamiltonian_energy_form_assumed",
+)
+
 FULL_QM_CLOSURE_FRONTIER_REQUIREMENTS = (
     "universal_carrier_selection_theorem",
     "hilbert_carrier_derivation",
@@ -12105,6 +12120,88 @@ def check_generator_difference_convergence_gate(gate: FiniteGate) -> list[Issue]
     return []
 
 
+def check_schrodinger_frequency_generator_readout_gate(gate: FiniteGate) -> list[Issue]:
+    issues: list[Issue] = []
+    status = require_string(gate.payload.get("status"), f"{gate.identifier}.status")
+    if status != "derived_conditional":
+        issues.append(
+            Issue(
+                "schrodinger_frequency_generator_status_mismatch",
+                f"{gate.identifier}: expected derived_conditional, got {status}",
+            )
+        )
+
+    expected_verdict = require_string(
+        gate.payload.get("expected_verdict"),
+        f"{gate.identifier}.expected_verdict",
+    )
+    if expected_verdict != "frequency_generator_readout":
+        issues.append(
+            Issue(
+                "schrodinger_frequency_generator_verdict_mismatch",
+                f"{gate.identifier}: expected verdict must be frequency_generator_readout",
+            )
+        )
+
+    for condition in SCHRODINGER_FREQUENCY_GENERATOR_REQUIRED_CONDITIONS:
+        if not parse_bool(gate.payload.get(condition), f"{gate.identifier}.{condition}"):
+            issues.append(
+                Issue(
+                    "schrodinger_frequency_generator_condition_missing",
+                    f"{gate.identifier}: missing required condition {condition}",
+                )
+            )
+
+    action_scale_free = parse_bool(
+        gate.payload.get("action_scale_free"),
+        f"{gate.identifier}.action_scale_free",
+    )
+    if not action_scale_free:
+        issues.append(
+            Issue(
+                "schrodinger_action_scale_imported",
+                f"{gate.identifier}: frequency generator gate must remain action-scale-free",
+            )
+        )
+
+    no_energy_form_claim = parse_bool(
+        gate.payload.get("no_energy_form_claim"),
+        f"{gate.identifier}.no_energy_form_claim",
+    )
+    if not no_energy_form_claim:
+        issues.append(
+            Issue(
+                "schrodinger_energy_form_shortcut",
+                f"{gate.identifier}: energy-form equation is outside this gate",
+            )
+        )
+
+    forbidden_imports = set(
+        require_string_tuple(
+            gate.payload.get("forbidden_imports", []),
+            f"{gate.identifier}.forbidden_imports",
+        )
+    )
+    missing_forbidden = set(SCHRODINGER_FREQUENCY_GENERATOR_FORBIDDEN_IMPORTS) - forbidden_imports
+    if missing_forbidden:
+        issues.append(
+            Issue(
+                "schrodinger_forbidden_imports_incomplete",
+                f"{gate.identifier}: missing forbidden imports {sorted(missing_forbidden)}",
+            )
+        )
+
+    imports = set(require_string_tuple(gate.payload.get("imports", []), f"{gate.identifier}.imports"))
+    if imports:
+        issues.append(
+            Issue(
+                "schrodinger_target_import",
+                f"{gate.identifier}: target imports are not allowed: {sorted(imports)}",
+            )
+        )
+    return issues
+
+
 def check_action_standard_provenance_gate(gate: FiniteGate) -> list[Issue]:
     candidate_sources = set(
         require_string_tuple(gate.payload.get("candidate_sources"), f"{gate.identifier}.candidate_sources")
@@ -20573,6 +20670,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "one_parameter_unitary_flow": check_one_parameter_unitary_flow_gate,
     "strong_continuity_modulus": check_strong_continuity_modulus_gate,
     "generator_difference_convergence": check_generator_difference_convergence_gate,
+    "schrodinger_frequency_generator_readout": check_schrodinger_frequency_generator_readout_gate,
     "ell0_radar_consistency": check_ell0_radar_consistency_gate,
     "ell0_link_frequency_consistency": check_ell0_link_frequency_consistency_gate,
     "ell0_no_gravity_input": check_ell0_no_gravity_input_gate,

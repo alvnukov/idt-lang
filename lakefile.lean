@@ -32,6 +32,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.CGSCStructuralTargetKernel,
     `Proofs.QMClosure.B1CGSCClauseDerivation,
     `Proofs.QMClosure.BornWallSeparation,
+    `Proofs.QMClosure.SchrodingerGeneratorLogic,
     `Proofs.QMClosure.S2BornProofSearch,
     `Proofs.QMClosure.PrimitiveBoundaryQMChain,
     `Proofs.QMClosure.ConstructiveWitnessPrimitiveBase,

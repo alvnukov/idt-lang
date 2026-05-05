@@ -1717,6 +1717,8 @@ exact_fundamental_qm_closed = false
 target_open = 0
 target_failed = 0
 target_imported = 0
+exact_frontier_obligations = 6
+external_target_adequacy_obligations = 4
 ```
 
 The important status correction is:
@@ -1733,9 +1735,241 @@ derive B1 / context-first constructive witness completeness /
 carrier-frontier exhaustion from the lower base;
 promote conditional Hilbert/Born/unitary/tensor adequacy artifacts to formal
 primitive proofs;
+derive exact universal Born readout for all admissible contexts;
 keep hbar_I calibrated unless a first-principles scale theorem is supplied.
 ```
 
 This is not a proof of exact fundamental QM. It is the strongest checked sector
 result so far: the finite standard-QM sector closes under the stated successor
 base and frontier assumptions, and the remaining wall is sharply localized.
+
+The exact closure contract is now explicit in Lean:
+
+```text
+ExactFundamentalQMClosureContract
+full_finite_sector_plus_exact_contract_closes_exact_fundamental_qm
+```
+
+and each missing component has a blocking theorem:
+
+```text
+missing_lower_base_b1_blocks_exact_fundamental_qm
+missing_context_first_witness_completeness_blocks_exact_fundamental_qm
+missing_carrier_frontier_exhaustion_blocks_exact_fundamental_qm
+missing_external_target_adequacy_blocks_exact_fundamental_qm
+missing_exact_universal_born_blocks_exact_fundamental_qm
+missing_first_principles_phase_scale_blocks_exact_fundamental_qm
+```
+
+The external target adequacy wall is also split into four independent theorem
+obligations:
+
+```text
+ExternalQMAdequacyTheorems
+ExternalHilbertBornUnitaryTensorAdequacyClosed
+external_qm_adequacy_theorems_close_target_adequacy
+current_external_qm_adequacy_theorems_not_closed
+```
+
+Those four obligations are:
+
+```text
+hilbertRepresentationAdequacy;
+bornReadoutAdequacy;
+unitaryDynamicsAdequacy;
+tensorCompositeAdequacy.
+```
+
+## 175.28. Exact Universal Born Contract
+
+The Born wall is now split cleanly:
+
+```text
+finite direct Born route: closed
+exact universal Born readout: not closed
+```
+
+The new Lean object is:
+
+```text
+UniversalBornReadoutContract
+ExactUniversalBornReadoutClosed
+universal_born_readout_contract_closes_exact_universal_born
+current_born_frontier_has_finite_route_but_not_universal_born
+```
+
+The exact universal Born contract requires:
+
+```text
+finiteDirectBornRoute;
+allAdmissibleContextsCloseFiniteBornChain;
+universalSignedReadout;
+universalConstructorRespectingBranchLabels;
+universalPhaseDoubleCover;
+noPrimitiveHigherOrderFacticization;
+probabilityAccountingIsOnlyReadout;
+noBornImport.
+```
+
+The important correction is that probability accounting is not a missing
+selector anymore. It is explicitly downstream of the selected weights. The
+remaining Born wall is the universalization of the oriented finite route:
+
+```text
+all admissible contexts;
+universal signed readout;
+constructor-respecting branch labels;
+phase double cover;
+no primitive higher-order facticization.
+```
+
+The updated proof search reports:
+
+```text
+finite_direct_born_hits = 2
+OPEN_CORE =
+  all_admissible_contexts_close_finite_born_chain,
+  universal_signed_readout,
+  universal_constructor_respecting_branch_labels,
+  universal_phase_double_cover,
+  no_primitive_higher_order_facticization,
+  derive_compatible_kernel_additivity_from_primitives,
+  derive_normalized_overlap_selector_from_primitives
+```
+
+So Born is not "unknown" anymore in a broad sense. The finite readout algebra
+is closed, and the exact universal frontier is now a finite list of primitive
+obligations.
+
+## 175.29. Schrodinger As Generator-Readout Dynamics
+
+The dynamics question is now separated from the physical action-scale question.
+In IDT terms, the Schrodinger layer is not an outcome readout. It is a
+generator readout of reversible inherited distinguishability before outcome
+actualization.
+
+The action-scale-free target is:
+
+```text
+phase orientation
++ normalized transition readout
++ reversible D_cl automorphism
++ overlap-preserving projective action
++ continuous identity-connected inheritance flow
++ closed frequency generator
++ no target dynamics import
+=> frequency-form generator readout
+```
+
+The intended projection is the frequency form:
+
+```text
+i d_t psi = Omega psi
+```
+
+This is not the physical energy-form equation. The latter remains outside this
+artifact.
+
+New machine-checkable artifact:
+
+```text
+Proofs/QMClosure/SchrodingerGeneratorLogic.lean
+```
+
+The central theorem is:
+
+```text
+package_and_boundary_close_frequency_schrodinger_logic
+```
+
+It shows that a CGSC package plus a primitive boundary supplying normalized
+overlap and phase orientation closes the action-scale-free frequency-generator
+logic.
+
+The executable probe is:
+
+```text
+scripts/evaluate_schrodinger_logic_attempt.py
+```
+
+It distinguishes:
+
+```text
+frequency_generator_readout: hit
+finite_update_gates_only: open
+projective_overlap_symmetry_without_continuity: open
+continuous_flow_without_generator: open
+generator_without_phase_orientation: open
+energy_form_shortcut: rejected
+imported_schrodinger_equation: rejected import
+```
+
+Current conclusion: Schrodinger is best treated as a dynamics readout:
+the generator of stable reversible distinguishability transport, represented in
+the oriented phase carrier. This links it directly to the same normalized
+overlap / phase-orientation machinery that supports the Born and Hilbert
+routes, without upgrading the physical scale claim.
+
+## 175.30. Existing QM Logic Connectedness Audit
+
+The current audit scope is deliberately narrower than full QM. It checks only
+the nodes already available in the finite/conditional package:
+
+```text
+Bell angle/correlation screen;
+finite Born readout;
+Hilbert phase-bundle carrier route;
+Schrodinger frequency-generator dynamics readout.
+```
+
+It does not check the open obligations:
+
+```text
+universal Born;
+universal Hilbert uniqueness;
+exact fundamental QM;
+first-principles action scale.
+```
+
+The executable audit is:
+
+```text
+scripts/evaluate_qm_existing_logic_connectedness.py
+```
+
+Current result:
+
+```text
+qm_existing_logic_connectedness =
+  EXISTING_QM_LOGIC_CONNECTED_CONDITIONAL
+```
+
+The shared anchors are:
+
+```text
+normalized_oriented_distinguishability;
+phase_orientation;
+normalized_transition_readout;
+phase_bundle_square.
+```
+
+No direct contradiction was found between the existing Bell, Born, Hilbert, and
+Schrodinger nodes. The important boundary tension is:
+
+```text
+unitary_generator_reconstruction_demo contains an hbar/Hamiltonian sample.
+```
+
+This is not currently a logical contradiction because:
+
+```text
+hbar_I = blocked;
+qm_generator_translation_closure_I = target;
+full_QM_I = target;
+schrodinger_frequency_generator_readout_demo is action-scale-free and has no
+target-equation import.
+```
+
+Therefore the tension is quarantined: the legacy Hamiltonian-scale sample may
+remain as a calibrated/target-side demonstration, but it must not be used as
+evidence for the action-scale-free Schrodinger readout or for exact full QM.

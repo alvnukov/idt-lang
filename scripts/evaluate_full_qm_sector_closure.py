@@ -16,6 +16,7 @@ if str(REPO_ROOT) not in sys.path:
 import scripts.evaluate_born_hilbert_bell_primitive_link as primitive_link  # noqa: E402
 import scripts.evaluate_full_qm_proof_attempt as full_attempt  # noqa: E402
 import scripts.evaluate_qm_inevitability_route as inevitability  # noqa: E402
+import scripts.evaluate_schrodinger_logic_attempt as schrodinger_logic  # noqa: E402
 
 LEAN_COMMAND = "lake build Proofs.QMClosure.FullQMSectorClosure"
 
@@ -48,8 +49,12 @@ class FullQMSectorClosureProbe:
     target_open: int
     target_failed: int
     target_imported: int
+    schrodinger_logic_verdict: str
+    schrodinger_logic_closed: bool
     finite_sector_closed: bool
     exact_fundamental_qm_closed: bool
+    exact_frontier_obligations: int
+    external_target_adequacy_obligations: int
     closed_clusters: tuple[str, ...]
     remaining_obligations: tuple[str, ...]
     forbidden_upgrades: tuple[str, ...]
@@ -76,6 +81,15 @@ def build_probe() -> FullQMSectorClosureProbe:
     primitive = primitive_link.build_pass()
     attempt = full_attempt.build_attempt()
     route = inevitability.build_probe()
+    schrodinger_route = next(
+        candidate for candidate in schrodinger_logic.ROUTES if candidate.name == "frequency_generator_readout"
+    )
+    schrodinger = schrodinger_logic.evaluate_route(schrodinger_route)
+    schrodinger_closed = (
+        schrodinger.verdict == "FREQUENCY_SCHRODINGER_LOGIC_HIT"
+        and schrodinger.failed == 0
+        and schrodinger.open == 0
+    )
     finite_sector_closed = (
         lean_check.status == "PASS"
         and primitive.failed == 0
@@ -84,6 +98,7 @@ def build_probe() -> FullQMSectorClosureProbe:
         and route.open_targets == 0
         and route.failed_targets == 0
         and route.imported_targets == 0
+        and schrodinger_closed
     )
     exact_fundamental_qm_closed = finite_sector_closed and route.proof_status == "FORMAL_PROOF"
     if not finite_sector_closed:
@@ -105,22 +120,30 @@ def build_probe() -> FullQMSectorClosureProbe:
         target_open=route.open_targets,
         target_failed=route.failed_targets,
         target_imported=route.imported_targets,
+        schrodinger_logic_verdict=schrodinger.verdict,
+        schrodinger_logic_closed=schrodinger_closed,
         finite_sector_closed=finite_sector_closed,
         exact_fundamental_qm_closed=exact_fundamental_qm_closed,
+        exact_frontier_obligations=6,
+        external_target_adequacy_obligations=4,
         closed_clusters=(
             "born_readout_finite_constructor_respecting_route",
             "hilbert_frontier_under_carrier_exhaustion",
             "semantic_full_qm_obligation_bundle",
             "readout_scaffolds",
             "dynamics_scaffolds",
+            "schrodinger_frequency_generator_readout",
             "composite_scaffolds",
             "import_boundaries",
+            "exact_qm_frontier_obligation_contract",
+            "external_target_adequacy_obligation_contract",
         ),
         remaining_obligations=(
             "derive_B1_or_successor_base_from_lower_B0_without_target_imports",
             "derive_context_first_constructive_witness_completeness_from_lower_base",
             "prove_carrier_frontier_exhaustion_or_record_non_Hilbert_constructive_countermodel",
             "promote_conditional_package_artifacts_to_external_QM_adequacy_theorems",
+            "derive_exact_universal_Born_readout_for_all_admissible_contexts",
             "derive_first_principles_physical_phase_scale_or_keep_calibrated_hbar_boundary",
         ),
         forbidden_upgrades=(
@@ -150,7 +173,11 @@ def main() -> int:
         f"full_attempt={probe.full_qm_attempt_verdict} open={probe.full_qm_attempt_open} "
         f"failed={probe.full_qm_attempt_failed} inevitability={probe.inevitability_verdict} "
         f"proof_status={probe.inevitability_proof_status} target_open={probe.target_open} "
-        f"target_failed={probe.target_failed} target_imported={probe.target_imported}"
+        f"target_failed={probe.target_failed} target_imported={probe.target_imported} "
+        f"schrodinger_logic={probe.schrodinger_logic_verdict} "
+        f"schrodinger_closed={probe.schrodinger_logic_closed} "
+        f"exact_frontier_obligations={probe.exact_frontier_obligations} "
+        f"external_target_adequacy_obligations={probe.external_target_adequacy_obligations}"
     )
     print(f"REMAINING {','.join(probe.remaining_obligations)}")
     print(f"FORBIDDEN_UPGRADES {','.join(probe.forbidden_upgrades)}")

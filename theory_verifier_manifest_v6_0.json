@@ -5002,12 +5002,12 @@
       "expected_signature_status": "formalized"
     },
     {
-      "expected_component_status": "formal_proof",
-      "expected_gate_type_count": 236,
-      "expected_gate_type_digest": "c60c518589019c0425f9ecd82130aac10f73230f0dd461cdd9509053a6e03520",
       "id": "idt_core_gate_type_registry_audit_demo",
+      "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "type": "idt_core_gate_type_registry_audit"
+      "expected_gate_type_count": 237,
+      "expected_gate_type_digest": "0419dff8ab7173723bce81261f5ecca294e030812a18b5a36a600141911c7059",
+      "expected_component_status": "formal_proof"
     },
     {
       "id": "idt_core_signature_registry_audit_demo",
@@ -6263,6 +6263,26 @@
       "omega": 1.25,
       "steps": [0.2, 0.1, 0.05],
       "max_error": 1.0e-10
+    },
+    {
+      "id": "schrodinger_frequency_generator_readout_demo",
+      "type": "schrodinger_frequency_generator_readout",
+      "status": "derived_conditional",
+      "phase_orientation": true,
+      "normalized_transition_readout": true,
+      "reversible_dcl_automorphism": true,
+      "overlap_preserving_projective_action": true,
+      "continuous_identity_component": true,
+      "closed_frequency_generator": true,
+      "action_scale_free": true,
+      "no_energy_form_claim": true,
+      "imports": [],
+      "forbidden_imports": [
+        "schrodinger_equation_assumed",
+        "unitary_dynamics_assumed",
+        "hamiltonian_energy_form_assumed"
+      ],
+      "expected_verdict": "frequency_generator_readout"
     },
     {
       "id": "continuum_action_frontier_demo",

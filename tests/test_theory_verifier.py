@@ -6650,6 +6650,142 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"generator_difference_error_exceeded"})
 
+    def test_schrodinger_frequency_generator_readout_accepts_clean_route(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "good_schrodinger_frequency_generator",
+                        "type": "schrodinger_frequency_generator_readout",
+                        "status": "derived_conditional",
+                        "phase_orientation": True,
+                        "normalized_transition_readout": True,
+                        "reversible_dcl_automorphism": True,
+                        "overlap_preserving_projective_action": True,
+                        "continuous_identity_component": True,
+                        "closed_frequency_generator": True,
+                        "action_scale_free": True,
+                        "no_energy_form_claim": True,
+                        "imports": [],
+                        "forbidden_imports": [
+                            "schrodinger_equation_assumed",
+                            "unitary_dynamics_assumed",
+                            "hamiltonian_energy_form_assumed",
+                        ],
+                        "expected_verdict": "frequency_generator_readout",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertFalse(report.issues, [issue.code for issue in report.issues])
+
+    def test_schrodinger_frequency_generator_readout_rejects_missing_generator(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "missing_schrodinger_generator",
+                        "type": "schrodinger_frequency_generator_readout",
+                        "status": "derived_conditional",
+                        "phase_orientation": True,
+                        "normalized_transition_readout": True,
+                        "reversible_dcl_automorphism": True,
+                        "overlap_preserving_projective_action": True,
+                        "continuous_identity_component": True,
+                        "closed_frequency_generator": False,
+                        "action_scale_free": True,
+                        "no_energy_form_claim": True,
+                        "imports": [],
+                        "forbidden_imports": [
+                            "schrodinger_equation_assumed",
+                            "unitary_dynamics_assumed",
+                            "hamiltonian_energy_form_assumed",
+                        ],
+                        "expected_verdict": "frequency_generator_readout",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"schrodinger_frequency_generator_condition_missing"})
+
+    def test_schrodinger_frequency_generator_readout_rejects_energy_form_shortcut(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "bad_schrodinger_energy_form",
+                        "type": "schrodinger_frequency_generator_readout",
+                        "status": "derived_conditional",
+                        "phase_orientation": True,
+                        "normalized_transition_readout": True,
+                        "reversible_dcl_automorphism": True,
+                        "overlap_preserving_projective_action": True,
+                        "continuous_identity_component": True,
+                        "closed_frequency_generator": True,
+                        "action_scale_free": True,
+                        "no_energy_form_claim": False,
+                        "imports": [],
+                        "forbidden_imports": [
+                            "schrodinger_equation_assumed",
+                            "unitary_dynamics_assumed",
+                            "hamiltonian_energy_form_assumed",
+                        ],
+                        "expected_verdict": "frequency_generator_readout",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"schrodinger_energy_form_shortcut"})
+
+    def test_schrodinger_frequency_generator_readout_rejects_target_import(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [
+                    {
+                        "id": "imported_schrodinger_equation",
+                        "type": "schrodinger_frequency_generator_readout",
+                        "status": "derived_conditional",
+                        "phase_orientation": True,
+                        "normalized_transition_readout": True,
+                        "reversible_dcl_automorphism": True,
+                        "overlap_preserving_projective_action": True,
+                        "continuous_identity_component": True,
+                        "closed_frequency_generator": True,
+                        "action_scale_free": True,
+                        "no_energy_form_claim": True,
+                        "imports": ["schrodinger_equation_assumed"],
+                        "forbidden_imports": [
+                            "schrodinger_equation_assumed",
+                            "unitary_dynamics_assumed",
+                            "hamiltonian_energy_form_assumed",
+                        ],
+                        "expected_verdict": "frequency_generator_readout",
+                    }
+                ],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"schrodinger_target_import"})
+
     def test_phase_action_scale_universality_rejects_bad_validation(self) -> None:
         manifest = parse_manifest(
             {
