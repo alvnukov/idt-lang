@@ -207,6 +207,7 @@ mypy --strict theory_verifier tests scripts
 python3 -m theory_verifier --json theory_verifier_manifest_v6_0.json
 python3 scripts/check_proofs.py
 python3 scripts/evaluate_born_direct_one_pass.py
+python3 scripts/evaluate_born_readout_attempt.py
 python3 scripts/evaluate_s2_born_proof_search.py
 python3 scripts/evaluate_qm_direct_one_pass.py
 python3 scripts/evaluate_cgsc_qm_one_pass_closure.py

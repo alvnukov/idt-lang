@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from scripts import evaluate_born_direct_one_pass as born_direct  # noqa: E402
+from scripts import evaluate_born_readout_attempt as born_readout  # noqa: E402
 from scripts import evaluate_born_wall_separation as born_wall  # noqa: E402
 from scripts import evaluate_s2_born_proof_search as s2_search  # noqa: E402
 
@@ -19,12 +20,14 @@ DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest_v6_0.json"
 DEFAULT_WORKFLOW = REPO_ROOT / ".github/workflows/qm-status.yml"
 
 EXPECTED_BORN_DIRECT_VERDICT = "DIRECT_FINITE_BORN_ROUTE_HIT_NOT_UNIVERSAL_PROOF"
+EXPECTED_BORN_READOUT_VERDICT = "CONDITIONAL_BORN_ROUTE"
 EXPECTED_S2_SEARCH_VERDICT = "FINITE_BORN_CHAIN_HIT_UNIVERSAL_S2_OPEN"
 EXPECTED_BORN_WALL_VERDICT = "BORN_WALL_REQUIRES_ACTUALIZATION_PRINCIPLE"
 EXPECTED_BORN_OBLIGATION_STATUS = "blocked"
 
 WORKFLOW_PROBE_SCRIPTS = (
     "scripts/evaluate_born_direct_one_pass.py",
+    "scripts/evaluate_born_readout_attempt.py",
     "scripts/evaluate_s2_born_proof_search.py",
     "scripts/evaluate_born_wall_separation.py",
 )
@@ -74,6 +77,13 @@ def check_expected_verdict(name: str, observed: str, expected: str) -> GuardChec
     if observed == expected:
         return pass_check(name, observed)
     return fail_check(name, f"expected {expected}, got {observed}")
+
+
+def find_quadratic_context_probability_route() -> born_readout.RouteResult:
+    for route in born_readout.ROUTES:
+        if route.name == "quadratic_context_probability_route":
+            return born_readout.evaluate_route(route)
+    raise ValueError("missing quadratic_context_probability_route")
 
 
 def python_script_line(workflow_text: str, script_path: str) -> int | None:
@@ -177,6 +187,7 @@ def check_born_obligation_status(manifest: dict[str, object]) -> GuardCheck:
 def build_checks(manifest_path: Path, workflow_path: Path) -> list[GuardCheck]:
     manifest = load_manifest(manifest_path)
     born_route = born_direct.build_route()
+    born_readout_route = find_quadratic_context_probability_route()
     s2_result = s2_search.build_search()
     born_wall_probe = born_wall.build_probe()
     return [
@@ -184,6 +195,11 @@ def build_checks(manifest_path: Path, workflow_path: Path) -> list[GuardCheck]:
             "route.born_direct_one_pass",
             born_route.verdict,
             EXPECTED_BORN_DIRECT_VERDICT,
+        ),
+        check_expected_verdict(
+            "route.born_readout_attempt",
+            born_readout_route.verdict,
+            EXPECTED_BORN_READOUT_VERDICT,
         ),
         check_expected_verdict(
             "route.s2_born_proof_search",

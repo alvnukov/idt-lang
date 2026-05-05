@@ -4,6 +4,7 @@ import unittest
 
 from scripts.check_born_scientific_status import (
     EXPECTED_BORN_DIRECT_VERDICT,
+    EXPECTED_BORN_READOUT_VERDICT,
     born_upgrade_markers,
     check_born_obligation_status,
     check_expected_verdict,
@@ -33,6 +34,16 @@ class BornScientificStatusGuardTests(unittest.TestCase):
 
         self.assertFalse(check.passed)
         self.assertIn(EXPECTED_BORN_DIRECT_VERDICT, check.detail)
+
+    def test_expected_verdict_rejects_born_readout_regression(self) -> None:
+        check = check_expected_verdict(
+            "route.born_readout_attempt",
+            "OPEN_WALL",
+            EXPECTED_BORN_READOUT_VERDICT,
+        )
+
+        self.assertFalse(check.passed)
+        self.assertIn(EXPECTED_BORN_READOUT_VERDICT, check.detail)
 
     def test_born_obligation_must_remain_blocked(self) -> None:
         self.assertTrue(check_born_obligation_status(manifest_with_born_status("blocked")).passed)
@@ -74,6 +85,7 @@ class BornScientificStatusGuardTests(unittest.TestCase):
         workflow = """
         run: |
           python scripts/evaluate_born_direct_one_pass.py
+          python scripts/evaluate_born_readout_attempt.py
           python scripts/evaluate_s2_born_proof_search.py
           python scripts/evaluate_born_wall_separation.py
           python scripts/check_born_scientific_status.py
@@ -86,11 +98,26 @@ class BornScientificStatusGuardTests(unittest.TestCase):
         run: |
           python scripts/evaluate_born_direct_one_pass.py
           python scripts/check_born_scientific_status.py
+          python scripts/evaluate_born_readout_attempt.py
           python scripts/evaluate_s2_born_proof_search.py
           python scripts/evaluate_born_wall_separation.py
         """
 
         self.assertFalse(check_workflow_runs_guard(workflow).passed)
+
+    def test_workflow_requires_born_readout_attempt_probe(self) -> None:
+        workflow = """
+        run: |
+          python scripts/evaluate_born_direct_one_pass.py
+          python scripts/evaluate_s2_born_proof_search.py
+          python scripts/evaluate_born_wall_separation.py
+          python scripts/check_born_scientific_status.py
+        """
+
+        check = check_workflow_runs_guard(workflow)
+
+        self.assertFalse(check.passed)
+        self.assertIn("scripts/evaluate_born_readout_attempt.py", check.detail)
 
 
 if __name__ == "__main__":
