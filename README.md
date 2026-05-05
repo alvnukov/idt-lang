@@ -104,9 +104,9 @@ Current auditable results:
   package reconstructs Hilbert/Born/unitary/tensor QM with the intended
   universal physical meaning, not only as an internal obligation bundle. The
   semantic-kernel evaluator now removes the six B1-closed structural blockers
-  from the live open core; the remaining frontier is conservative projective
-  gluing, quadratic readout actualization, projective-limit consistency, and
-  calibrated phase-scale boundary discipline.
+  and two finite-scaffold closures from the live open core; the remaining
+  frontier is quadratic readout actualization and calibrated phase-scale
+  boundary discipline.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

@@ -879,9 +879,9 @@ six structural blockers inside the current IDT package semantics. This is an
 internal conditional proof step, not a proof that external Hilbert space, Born
 rule, unitary dynamics, tensor composition, or `full_QM_I` are inevitable in
 physical semantics. The semantic-kernel evaluator now removes the six B1-closed
-structural blockers from the live open core; the remaining core is conservative
-projective gluing, quadratic readout actualization, projective-limit
-consistency, and calibrated phase-scale boundary discipline.
+structural blockers and two finite-scaffold closures from the live open core;
+the remaining core is quadratic readout actualization and calibrated
+phase-scale boundary discipline.
 
 ---
 

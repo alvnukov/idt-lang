@@ -134,9 +134,10 @@ The main current successes are bounded and methodological:
 19. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
    now machine-derived from the B1 primitive-base witness interface, and the
    six structural blockers close inside the current IDT package semantics.
-   The semantic-kernel evaluator now removes those six B1-closed blockers from
-   the live open core. This does not yet prove external
-   Hilbert/Born/unitary/tensor equivalence or a B0-alone derivation.
+   The semantic-kernel evaluator now removes those six B1-closed blockers and
+   two finite-scaffold closures from the live open core. This does not yet
+   prove external Hilbert/Born/unitary/tensor equivalence or a B0-alone
+   derivation.
 
 ## What The Verifier Catches
 

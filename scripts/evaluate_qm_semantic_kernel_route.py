@@ -19,6 +19,7 @@ import scripts.evaluate_fpd_projective_derivation as fpd_attempt  # noqa: E402
 import scripts.evaluate_general_composite_attempt as composite_attempt  # noqa: E402
 import scripts.evaluate_phase_scale_boundary_attempt as phase_scale_attempt  # noqa: E402
 import scripts.evaluate_representation_classification_attempt as representation_attempt  # noqa: E402
+import scripts.evaluate_qm_semantic_content_scaffolds as semantic_scaffolds_attempt  # noqa: E402
 import scripts.evaluate_unitary_dynamics_attempt as dynamics_attempt  # noqa: E402
 
 LEAN_COMMAND = "lake build Proofs.QMClosure.QMSemanticKernelRoute"
@@ -39,6 +40,11 @@ B1_CGSC_CLOSED_CORE: tuple[str, ...] = (
     "continuous_inheritance_family",
     "generator_closure",
     "entanglement_closure",
+)
+
+SCAFFOLD_CLOSED_CORE: tuple[str, ...] = (
+    "conservative_projective_gluing",
+    "projective_limit_consistency",
 )
 
 
@@ -65,6 +71,7 @@ class SemanticKernelRouteProbe:
     verdict: Verdict
     lean_check: LeanCheck
     b1_cgsc_clause_derivation: str
+    semantic_scaffolds: str
     b1_projection: CheckStatus
     b1_projected_clusters: int
     clusters: int
@@ -73,6 +80,7 @@ class SemanticKernelRouteProbe:
     import_rejected: int
     covered_obligations: int
     b1_closed_core: tuple[str, ...]
+    scaffold_closed_core: tuple[str, ...]
     open_core: tuple[str, ...]
     clusters_detail: list[KernelCluster]
     next_blocker: str
@@ -238,6 +246,7 @@ def sorted_tuple(values: set[str]) -> tuple[str, ...]:
 def build_probe() -> SemanticKernelRouteProbe:
     lean_check = run_lean_check()
     b1_clause_probe = b1_clause_derivation.build_probe()
+    scaffold_probe = semantic_scaffolds_attempt.build_probe()
     clusters = build_clusters()
     conditional = sum(1 for cluster in clusters if cluster.status == "CONDITIONAL_READY")
     blocked = sum(1 for cluster in clusters if cluster.status == "BLOCKED")
@@ -249,7 +258,12 @@ def build_probe() -> SemanticKernelRouteProbe:
         if b1_clause_probe.verdict == "B1_CGSC_CLAUSES_MACHINE_DERIVED"
         else ()
     )
-    open_core = sorted_tuple(raw_open_core - set(b1_closed_core))
+    scaffold_closed_core = (
+        SCAFFOLD_CLOSED_CORE
+        if scaffold_probe.verdict == "SCAFFOLD_BUNDLE_CHECKED"
+        else ()
+    )
+    open_core = sorted_tuple(raw_open_core - set(b1_closed_core) - set(scaffold_closed_core))
     if lean_check.status == "FAIL":
         verdict: Verdict = "SEMANTIC_KERNEL_CHECK_FAILED"
     elif imported > 0:
@@ -262,6 +276,7 @@ def build_probe() -> SemanticKernelRouteProbe:
         verdict=verdict,
         lean_check=lean_check,
         b1_cgsc_clause_derivation=b1_clause_probe.verdict,
+        semantic_scaffolds=scaffold_probe.verdict,
         b1_projection=lean_check.status,
         b1_projected_clusters=len(clusters) if lean_check.status == "PASS" else 0,
         clusters=len(clusters),
@@ -270,11 +285,12 @@ def build_probe() -> SemanticKernelRouteProbe:
         import_rejected=imported,
         covered_obligations=len(covered),
         b1_closed_core=b1_closed_core,
+        scaffold_closed_core=scaffold_closed_core,
         open_core=open_core,
         clusters_detail=clusters,
         next_blocker=(
-            "prove external semantic adequacy for the remaining open kernel core after B1 CGSC closure; "
-            "the B1 package now closes the structural core internally but does not by itself prove "
+            "prove external semantic adequacy for the remaining open kernel core after B1 CGSC closure "
+            "and finite scaffold closure; the internal route still does not by itself prove "
             "Hilbert/Born/unitary/tensor equivalence or full_QM_I"
         ),
     )
@@ -296,6 +312,7 @@ def main() -> int:
         f"qm_semantic_kernel_route={probe.verdict} lean={probe.lean_check.status} "
         f"b1_projection={probe.b1_projection} b1_projected_clusters={probe.b1_projected_clusters} "
         f"b1_cgsc={probe.b1_cgsc_clause_derivation} b1_closed_core={len(probe.b1_closed_core)} "
+        f"scaffolds={probe.semantic_scaffolds} scaffold_closed_core={len(probe.scaffold_closed_core)} "
         f"clusters={probe.clusters} conditional_ready={probe.conditional_ready} "
         f"blocked={probe.blocked} import_rejected={probe.import_rejected} "
         f"covered_obligations={probe.covered_obligations} open_core={len(probe.open_core)}"

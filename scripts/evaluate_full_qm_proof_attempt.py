@@ -301,7 +301,9 @@ def build_semantic_kernel_step() -> ProofStep:
     evidence = (
         f"verdict={probe.verdict}; lean={probe.lean_check.status}; b1_projection={probe.b1_projection}; "
         f"b1_projected_clusters={probe.b1_projected_clusters}; clusters={probe.clusters}; "
-        f"b1_closed_core={len(probe.b1_closed_core)}; covered_obligations={probe.covered_obligations}; "
+        f"b1_closed_core={len(probe.b1_closed_core)}; "
+        f"scaffold_closed_core={len(probe.scaffold_closed_core)}; "
+        f"covered_obligations={probe.covered_obligations}; "
         f"open_core={len(probe.open_core)}"
     )
     if probe.verdict == "SEMANTIC_KERNEL_ROUTE_REGISTERED":
