@@ -16,6 +16,7 @@ The first Lean-sourced executable status probe is:
 ```bash
 lake exe idt_v8_protocol_status
 lake exe idt_v8_protocol_status -- --json
+lake exe idt_v8_protocol_status -- --check-boundary
 ```
 
 It imports the Lean protocol/readiness modules and reports the current

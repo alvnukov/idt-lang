@@ -71,6 +71,10 @@ Current auditable results:
   context-first primitive base, and current stopped QM frontier are now encoded
   in Lean under `Proofs/MetaLang/`. The old Python verifier is deprecated
   compatibility infrastructure; the target proof architecture is Lean + IDT v8.
+  The first Lean-sourced experiment-protocol probe is available as
+  `lake exe idt_v8_protocol_status`; it reports the current
+  certified-executable-check boundary and does not assign physical/QM
+  `formal_proof` status.
 - primitive-core contract: the current primitive surface is context-first.
   Admissible context covers, local outcome-event presheaves, inheritance
   transition families, facticization witnesses, and stable distinguishability
@@ -173,6 +177,7 @@ of nature.
 - `scripts/check_declarative_rules.py` — checks v8 declarative rule files.
 - `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
 - `Proofs/` — Lean proof artifacts.
+- `Experiments/` — Lean-sourced executable protocol probes.
 - `rules/v8/` — declarative v8 verification specifications.
 - `theory_verifier/` — executable manifest verifier.
 - `theory_verifier_manifest.json` — current machine-checkable manifest.
