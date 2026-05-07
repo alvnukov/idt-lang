@@ -54,6 +54,7 @@ Proofs/MetaLang/V8TheoremDependencyBoundaryLedger.lean
 Proofs/MetaLang/V8CurrentFrontierBlockers.lean
 Proofs/MetaLang/V8ResidualGateExperimentProfile.lean
 Proofs/MetaLang/V8ResidualEncodingRequirements.lean
+Proofs/MetaLang/V8MigrationCompletionCriterion.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -126,9 +127,13 @@ This layer encodes:
 34. IDT v8 residual encoding is not ready for migration stop while the 35 QM
     experiments still need v8 classification and the residual boundary remains
     declarative input rather than proof truth;
-35. a compressed full research-tree context packer is mandatory research-model
+35. Lean-eligible migration has an explicit completion criterion: the theorem
+    and QM-obligation ledgers are encoded and have no false formal-proof
+    closure, but current open/blocked theorem candidates keep the phase
+    incomplete and block IDT v8 residual encoding;
+36. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-36. the context-first primitive base:
+37. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
