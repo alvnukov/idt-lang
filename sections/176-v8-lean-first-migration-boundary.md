@@ -28,6 +28,7 @@ Proofs/MetaLang/V8CoreClaimDisciplineRules.lean
 Proofs/MetaLang/V8ControlledVocabularyInventory.lean
 Proofs/MetaLang/V8ManifestCollectionContract.lean
 Proofs/MetaLang/V8RuleManifestGrounding.lean
+Proofs/MetaLang/V8AssertionPredicateSemantics.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -55,7 +56,8 @@ This layer encodes:
     freezing current manifest collection sizes;
 14. every v8 core rule target collection is grounded in the Lean manifest
     collection contract;
-15. the context-first primitive base:
+15. all ten v8 assertion predicate operations have abstract Lean semantics;
+16. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
