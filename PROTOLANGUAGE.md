@@ -328,9 +328,13 @@ finite-difference generator recovery. The \(\hbar_I\) subroute now has finite
 gates for no-fit phase/action scale universality, action-standard provenance,
 action-standard independence, work-time action provenance, and holdout checks
 against \(E=\hbar\omega\), \(p=\hbar k\), and \(\Delta\phi=S/\hbar\). The
-verifier now also rejects `hbar_I=derived_conditional` while \(A_{0,I}\)
-remains only open or normalization-only, and rejects `A0_I=derived_conditional`
-while `primitive_work_unit_I`, `primitive_tick_I`,
+calibrated action-scale scaffold now checks one shared
+`phase_action_conversion_I` anchor across energy-frequency,
+momentum-wavenumber, action-phase, spectral, and interference fixtures, rejects
+per-experiment refit, and keeps `calibrated_hbar_I` as the physical readout in
+our-universe units. The verifier now also rejects `hbar_I=derived_conditional`
+while \(A_{0,I}\) remains only open or normalization-only, and rejects
+`A0_I=derived_conditional` while `primitive_work_unit_I`, `primitive_tick_I`,
 `primitive_work_unit_closure_I`, or `primitive_tick_closure_I` remains open or
 target. The primitive tick/work pass now separates the two objects into
 independent closure fronts and checks finite tick-count, radar-tick,
@@ -503,7 +507,9 @@ public scope until an independent source of mass dimension is supplied. The
 selected calibrated branch introduces a separate action anchor
 `calibrated_action_anchor_I` as a `bridge_assumption`, with `calibrated_hbar_I`
 used only for single-anchor reconstruction and holdout tests. This branch does
-not change `hbar_I = blocked`; it positions the programme as a calibrated
+not change `hbar_I = blocked`; the related `phase_action_conversion_I`
+reconstruction gate is calibrated consistency only, not a first-principles
+action-scale derivation. It positions the programme as a calibrated
 reconstruction framework. The \(G\) route is
 now split the same way: `calibrated_G_I` is a target computed, if possible, from
 `calibrated_hbar_I`, \(c_I\), an independently derived `omega_ell_I`, and

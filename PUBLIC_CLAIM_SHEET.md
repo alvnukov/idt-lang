@@ -49,7 +49,10 @@ The main current successes are bounded and methodological:
    compatibility checks, not a claim that full QM is derived.
 3. The action-scale route is controlled. `calibrated_hbar_I` can be used as an
    explicit our-universe anchor for operational reconstruction, while
-   first-principles `hbar_I` remains a blocked claim.
+   first-principles `hbar_I` remains a blocked claim. The current verifier also
+   checks a no-refit `phase_action_conversion_I` scaffold across
+   energy-frequency, momentum-wavenumber, action-phase, spectral, and
+   interference fixtures; this is calibrated consistency, not derivation.
 4. The gravity route is controlled. `calibrated_G_I` is a calibrated target, and
    first-principles `G_I` remains blocked until the missing source-response and
    vacuum-stiffness inputs are independently supplied.
@@ -159,12 +162,13 @@ The verifier is designed to reject progress by relabeling. It blocks:
 
 1. a derived claim that depends on an open or blocked object;
 2. a calibrated anchor presented as a first-principles derivation;
-3. a structural selector used as a dimensional constant;
-4. a bridge assumption relabeled as a derived readout;
-5. SPARC residual claims that reuse the observed residual as their own source;
-6. full-QM claims while the action scale, generator, apparatus, and facticity
+3. per-experiment action-scale refits presented as one universal anchor;
+4. a structural selector used as a dimensional constant;
+5. a bridge assumption relabeled as a derived readout;
+6. SPARC residual claims that reuse the observed residual as their own source;
+7. full-QM claims while the action scale, generator, apparatus, and facticity
    spine remain incomplete;
-7. relabeling current QM imports as primitive or first-principles derived
+8. relabeling current QM imports as primitive or first-principles derived
    structures;
 8. a `formal_proof` marker without a proof-ledger card and machine-checkable
    proof artifacts.

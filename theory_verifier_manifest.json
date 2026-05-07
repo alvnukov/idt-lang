@@ -310,6 +310,10 @@
       "status": "bridge_assumption",
       "dimension": {"M": 1, "L": 2, "T": -1}
     },
+    "phase_action_conversion_I": {
+      "status": "bridge_assumption",
+      "dimension": {"M": 1, "L": 2, "T": -1}
+    },
     "calibrated_hbar_I": {
       "status": "bridge_assumption",
       "dimension": {"M": 1, "L": 2, "T": -1}
@@ -5037,8 +5041,8 @@
       "id": "idt_core_gate_type_registry_audit_demo",
       "type": "idt_core_gate_type_registry_audit",
       "registry_source": "theory_verifier.FINITE_GATE_CHECKS",
-      "expected_gate_type_count": 237,
-      "expected_gate_type_digest": "0419dff8ab7173723bce81261f5ecca294e030812a18b5a36a600141911c7059",
+      "expected_gate_type_count": 238,
+      "expected_gate_type_digest": "1662c1f0871f1ecf10f1e7d3fc43310f513e1a7244bb08184315250a00fe5f2b",
       "expected_component_status": "formal_proof"
     },
     {
@@ -10839,6 +10843,56 @@
           "role": "excluded",
           "cost": 1.0,
           "phase": 1.0
+        }
+      ]
+    },
+    {
+      "id": "calibrated_action_scale_reconstruction_demo",
+      "type": "calibrated_action_scale_reconstruction",
+      "tolerance": 1.0e-10,
+      "epsilon": 0.01,
+      "shared_action_scale": 2.0,
+      "target_anchor": "phase_action_conversion_I",
+      "target_anchor_status": "calibrated_universal_anchor",
+      "physical_readout": "calibrated_hbar_I",
+      "physical_readout_status": "bridge_assumption",
+      "hbar_status": "blocked",
+      "allow_per_experiment_refit": false,
+      "experiments": [
+        {
+          "id": "photoelectric_anchor",
+          "type": "energy_frequency",
+          "role": "calibration",
+          "energy": 6.0,
+          "omega": 3.0
+        },
+        {
+          "id": "matter_wave_holdout",
+          "type": "momentum_wavenumber",
+          "role": "validation",
+          "momentum": 10.0,
+          "wavenumber": 5.0
+        },
+        {
+          "id": "phase_action_holdout",
+          "type": "phase_action",
+          "role": "validation",
+          "action": 8.0,
+          "phase": 4.0
+        },
+        {
+          "id": "spectral_holdout",
+          "type": "spectral_transition",
+          "role": "validation",
+          "energy_gap": 14.0,
+          "angular_frequency": 7.0
+        },
+        {
+          "id": "interference_holdout",
+          "type": "interference_phase",
+          "role": "validation",
+          "action_difference": 12.0,
+          "phase_shift": 6.0
         }
       ]
     },

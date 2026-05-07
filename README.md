@@ -83,6 +83,10 @@ Current auditable results:
   for `hbar_I`, `G_I`, `alpha_em_I`, and `full_QM_I`;
 - calibrated-anchor discipline: `calibrated_hbar_I` may be used as an explicit
   our-universe action anchor, while first-principles `hbar_I` remains blocked;
+- calibrated action-scale reconstruction: one shared
+  `phase_action_conversion_I` anchor is checked across energy-frequency,
+  momentum-wavenumber, action-phase, spectral, and interference fixtures, with
+  per-experiment refits rejected;
 - real-data weak-gravity gates: the SPARC front anchors real DDO154 data,
   rejects post-fit residual provenance, records near misses, and rejects
   held-out transfer for the current frozen candidate;
@@ -152,7 +156,8 @@ Current auditable results:
   discipline still admits a local ternary witness, and a B1-only endpoint-data
   negative control is now checked, so current B1/scaffold closure does not
   select universal Born by itself. The calibrated phase-scale bridge remains an
-  accepted boundary only, not a first-principles derivation of `hbar_I`.
+  accepted boundary only, not a first-principles derivation of `hbar_I`; the
+  new action-scale reconstruction gate only tests one shared calibrated anchor.
 - Universal Born/Hilbert frontier: a new Lean contract closes exact universal
   Born readout and frontier-scoped Hilbert representation together under
   context-first universal endpoint data and carrier-frontier exhaustion. This is
