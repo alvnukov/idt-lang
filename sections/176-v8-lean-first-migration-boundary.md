@@ -20,6 +20,7 @@ Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean
 Proofs/MetaLang/V8TheoremCardLedger.lean
 Proofs/MetaLang/V8CurrentStatusSnapshot.lean
 Proofs/MetaLang/V8ExternalCheckerBoundary.lean
+Proofs/MetaLang/V8StatusTransitionPolicy.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -32,7 +33,8 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes but not
    `formal_proof`;
-7. the context-first primitive base:
+7. status transitions require explicit evidence and cannot silently upgrade;
+8. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
