@@ -12,8 +12,16 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TextIO
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
-JsonObject = dict[str, object]
+from theory_verifier.ai_theory_graph import (  # noqa: E402
+    SCHEMA,
+    GraphEdge as Edge,
+    GraphNode as Node,
+    JsonObject,
+    graph_json_text,
+)
 
 DEFAULT_MANIFEST = Path("theory_verifier_manifest.json")
 DEFAULT_RULE_DIR = Path("rules/v8")
@@ -86,37 +94,6 @@ class V8GraphError(ValueError):
 
 
 @dataclass(frozen=True)
-class Node:
-    identifier: str
-    kind: str
-    status: str
-    label: str
-    source: str
-    digest: str
-
-    def row(self) -> list[str]:
-        return [
-            self.identifier,
-            self.kind,
-            self.status,
-            self.label,
-            self.source,
-            self.digest,
-        ]
-
-
-@dataclass(frozen=True)
-class Edge:
-    source: str
-    relation: str
-    target: str
-    evidence: str
-
-    def row(self) -> list[str]:
-        return [self.source, self.relation, self.target, self.evidence]
-
-
-@dataclass(frozen=True)
 class SourceFile:
     path: Path
     relative_path: str
@@ -180,7 +157,7 @@ def build_v8_ai_theory_graph(
         nodes, edges = focus_subgraph(nodes, edges, focus_ids, depth)
 
     return {
-        "schema": "idt-v8-ai-theory-graph/1",
+        "schema": SCHEMA,
         "contract": {
             "purpose": "compressed_source_grounded_context_for_ai_agents",
             "proof_authority": "lean_only",
@@ -706,21 +683,11 @@ def relative_or_absolute(repo_root: Path, path: Path) -> str:
 
 def write_graph(path: Path, graph: Mapping[str, object], pretty: bool) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    text = (
-        json.dumps(graph, ensure_ascii=False, indent=2, sort_keys=True)
-        if pretty
-        else json.dumps(graph, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    )
-    path.write_text(text + "\n", encoding="utf-8")
+    path.write_text(graph_json_text(graph, pretty) + "\n", encoding="utf-8")
 
 
 def print_graph(graph: Mapping[str, object], output: TextIO, pretty: bool) -> None:
-    text = (
-        json.dumps(graph, ensure_ascii=False, indent=2, sort_keys=True)
-        if pretty
-        else json.dumps(graph, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    )
-    output.write(text)
+    output.write(graph_json_text(graph, pretty))
     output.write("\n")
 
 

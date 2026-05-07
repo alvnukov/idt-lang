@@ -7,11 +7,11 @@ import unittest
 from pathlib import Path
 
 from scripts.build_ai_theory_graph import build_v8_ai_theory_graph, write_graph
-from scripts.query_ai_theory_graph import (
+from scripts.query_ai_theory_graph import main
+from theory_verifier.ai_theory_graph import (
     graph_summary,
     incoming_refs,
     load_theory_graph,
-    main,
     neighbor_subgraph,
     show_node,
     source_pointers,

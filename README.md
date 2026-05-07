@@ -178,6 +178,8 @@ of nature.
   packer for AI agents.
 - `scripts/query_ai_theory_graph.py` — read-only v8 graph query CLI for
   summaries, local neighborhoods, references, and source pointers.
+- `theory_verifier/ai_theory_graph.py` — shared typed graph library used by the
+  packer and query CLI.
 - `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
   semantic proof artifact from the current manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
