@@ -51,8 +51,9 @@ python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json
 python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json summary
 ```
 
-In CI, the same graph is published by GitHub Actions under `IDT v8 Lean Status`
-as the artifact `idt-v8-ai-theory-graph`.
+The graph is not committed to the repository and is not zipped. On a published
+GitHub Release, CI builds, validates, and attaches the raw JSON file
+`idt-v8-ai-theory-graph.json` as a release asset.
 
 Use this boundary when answering questions about the theory:
 
@@ -283,8 +284,9 @@ The v8 AI theory graph is a compact index for agents, not proof authority. Lean
 remains the proof source of truth, and the manifest is treated as residual
 research input.
 
-CI publishes the graph from GitHub Actions under `IDT v8 Lean Status` as the
-artifact `idt-v8-ai-theory-graph`. To generate the same file locally:
+The graph is not stored in git and is not zipped. On a published GitHub Release,
+CI attaches the raw JSON file `idt-v8-ai-theory-graph.json` as a release asset.
+To generate the same file locally:
 
 ```bash
 python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.json

@@ -36,10 +36,11 @@ python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json
 python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json summary
 ```
 
-In GitHub Actions, download the graph from:
+The graph is not committed to the repository and is not zipped. For published
+versions, download the raw JSON file from the GitHub Release assets:
 
 ```text
-IDT v8 Lean Status -> artifact idt-v8-ai-theory-graph
+GitHub Releases -> <release> -> idt-v8-ai-theory-graph.json
 ```
 
 Use graph query commands before reading full files:
