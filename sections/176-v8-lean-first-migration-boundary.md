@@ -22,7 +22,7 @@ lake exe idt_v8_protocol_status -- --check-boundary
 
 It imports the Lean protocol/readiness modules and reports the current
 certified-executable-check boundary. The `--check-boundary` mode currently
-checks the Lean-sourced migration snapshot: 239 verification-discipline theorem
+checks the Lean-sourced migration snapshot: 242 verification-discipline theorem
 declarations, 35 residual QM experiments, and zero theorem-card,
 QM-obligation, QM-experiment, physical, or QM formal-proof closures. It does
 not read the legacy manifest and does not upgrade any physical claim.
@@ -57,6 +57,7 @@ Proofs/MetaLang/V8ClaimStrengthInvariant.lean
 Proofs/MetaLang/V8VerifierDecommissionPolicy.lean
 Proofs/MetaLang/V8DeclarativeDocumentSchema.lean
 Proofs/MetaLang/V8CoreClaimDisciplineDocument.lean
+Proofs/MetaLang/V8QmExperimentResidualDocument.lean
 Proofs/MetaLang/V8MigrationRoadmap.lean
 Proofs/MetaLang/V8ManifestInputBoundary.lean
 Proofs/MetaLang/V8ResidualMigrationLedger.lean
@@ -87,7 +88,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 239 theorem
+   The current Lean verification-discipline snapshot contains 242 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -115,8 +116,8 @@ This layer encodes:
 20. IDT v8 declarative verification documents have a Lean-side schema whose
     accepted rules must target allowed collections and use Lean-semantics
     assertions;
-21. the current core claim-discipline document is mirrored as an accepted Lean
-    object;
+21. the current core claim-discipline document and QM experiment residual
+    document are mirrored as accepted Lean objects;
 22. the migration roadmap is fixed: Lean migration first, residual IDT v8
     encoding second, then stop; only after that are new CI, legacy archive,
     mandatory compressed research-context packing, and research handoff allowed;

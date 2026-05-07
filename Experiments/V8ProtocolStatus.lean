@@ -45,7 +45,7 @@ def protocolStatusText : String :=
 
 def boundaryCheckPassed : Bool :=
   residualQmExperimentCount == 35
-    && verificationDisciplineTheoremCount == 239
+    && verificationDisciplineTheoremCount == 242
     && theoremCardFormalProofCount == 0
     && qmCoreObligationFormalProofCount == 0
     && qmExperimentResidualFormalProofCount == 0

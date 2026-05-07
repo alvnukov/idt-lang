@@ -106,6 +106,35 @@ class DeclarativeVerifierTests(unittest.TestCase):
         self.assertFalse(report.ok)
         self.assertEqual("declarative_unknown_ref", report.issues[0].code)
 
+    def test_qm_experiment_residual_status_must_remain_executable_gate(self) -> None:
+        manifest: JsonObject = {
+            "symbols": {},
+            "equations": [],
+            "derivations": [],
+            "finite_gates": [{"id": "gate_a", "type": "demo"}],
+            "qm_experiments": [
+                {
+                    "id": "experiment_a",
+                    "title": "Experiment A",
+                    "standard_result": "Declared readout.",
+                    "stable_invariant": "Stable table.",
+                    "claim_boundary": "Executable only.",
+                    "status": "formal_proof",
+                    "finite_gates": ["gate_a"],
+                    "idt_primitives": {"readout": "declared"},
+                }
+            ],
+            "qm_universal_patterns": [],
+            "qm_core_proof_obligations": [],
+            "theorem_cards": [],
+        }
+        rules = load_rule_documents(ROOT / "rules/v8/qm_experiment_residuals.idtl.json")
+
+        report = verify_declarative_rule_documents(manifest, rules, ROOT)
+
+        self.assertFalse(report.ok)
+        self.assertEqual("declarative_field_value_not_allowed", report.issues[0].code)
+
 
 if __name__ == "__main__":
     unittest.main()
