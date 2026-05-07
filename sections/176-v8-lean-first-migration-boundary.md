@@ -49,6 +49,7 @@ Proofs/MetaLang/V8FormalProofScopeBoundary.lean
 Proofs/MetaLang/V8ResidualRouteClassification.lean
 Proofs/MetaLang/V8TaskBlockerLedger.lean
 Proofs/MetaLang/V8CurrentMigrationState.lean
+Proofs/MetaLang/V8CurrentTheoremAndObligationLedger.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -107,9 +108,12 @@ This layer encodes:
     legacy archive, and research readiness;
 29. the current migration state is Lean migration, with legacy archive and
     research readiness blocked until their task blockers are completed;
-30. a compressed full research-tree context packer is mandatory research-model
+30. all 23 current theorem cards and all 11 current QM core proof obligations
+    are represented in Lean as typed status ledgers with zero formal-proof
+    physical/QM closures;
+31. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-31. the context-first primitive base:
+32. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
