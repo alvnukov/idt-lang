@@ -73,6 +73,7 @@ Current auditable results:
   compatibility infrastructure; the target proof architecture is Lean + IDT v8.
   The first Lean-sourced experiment-protocol probe is available as
   `lake exe idt_v8_protocol_status`; use `--json` for machine-readable status
+  `--documents-json` for the accepted IDT v8 document inventory,
   `--residuals-json` for the Lean-sourced QM residual experiment list, and
   `--check-boundary` for the current Lean boundary check. It reports the
   certified-executable-check boundary and does not assign physical/QM

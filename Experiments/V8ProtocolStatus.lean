@@ -1,5 +1,6 @@
 import Proofs.MetaLang.V8CurrentStopReadiness
 import Proofs.MetaLang.V8FormalProofScopeBoundary
+import Proofs.MetaLang.V8AcceptedDocumentInventory
 
 open IDT.MetaLang.V8
 
@@ -15,6 +16,9 @@ def physicalFormalProofCount : Nat :=
 def qmFormalProofCount : Nat :=
   currentFormalProofScopeCounts.qmClosure
 
+def acceptedV8Documents : Nat :=
+  currentAcceptedV8DocumentInventory.documentCount
+
 def jsonString (value : String) : String :=
   "\"" ++ value ++ "\""
 
@@ -24,12 +28,19 @@ def residualExperimentIdsJson : String :=
       (fun entry => jsonString entry.manifestId)
   "[" ++ String.intercalate "," ids ++ "]"
 
+def acceptedV8DocumentIdsJson : String :=
+  let ids :=
+    acceptedV8DocumentIds.map
+      (fun document => jsonString document.toDocumentId)
+  "[" ++ String.intercalate "," ids ++ "]"
+
 def protocolStatusText : String :=
   String.intercalate "\n" [
     "IDT v8 Lean migration and experiment protocol status",
     "protocol_logic_authority=lean_checked",
     "result_status=certified_executable_check",
     "proof_authority=declarative_input_check",
+    s!"accepted_v8_documents={acceptedV8Documents}",
     s!"verification_discipline_theorems={verificationDisciplineTheoremCount}",
     s!"residual_qm_experiments={residualQmExperimentCount}",
     "residuals_need_idt_v8_classification=true",
@@ -45,7 +56,8 @@ def protocolStatusText : String :=
 
 def boundaryCheckPassed : Bool :=
   residualQmExperimentCount == 35
-    && verificationDisciplineTheoremCount == 251
+    && acceptedV8Documents == 4
+    && verificationDisciplineTheoremCount == 254
     && theoremCardFormalProofCount == 0
     && qmCoreObligationFormalProofCount == 0
     && qmExperimentResidualFormalProofCount == 0
@@ -60,15 +72,21 @@ def main (args : List String) : IO Unit := do
       throw <| IO.userError "boundary_check=failed"
   else if args.contains "--residuals-json" then
     IO.println residualExperimentIdsJson
+  else if args.contains "--documents-json" then
+    IO.println acceptedV8DocumentIdsJson
   else if args.contains "--json" then
     let residualCount :=
       toString residualQmExperimentCount
     let verificationCount :=
       toString verificationDisciplineTheoremCount
+    let documentCount :=
+      toString acceptedV8Documents
     IO.println (
       "{\"protocol_logic_authority\":\"lean_checked\","
       ++ "\"result_status\":\"certified_executable_check\","
       ++ "\"proof_authority\":\"declarative_input_check\","
+      ++ "\"accepted_v8_documents\":" ++ documentCount ++ ","
+      ++ "\"accepted_v8_document_ids\":" ++ acceptedV8DocumentIdsJson ++ ","
       ++ "\"verification_discipline_theorems\":" ++ verificationCount ++ ","
       ++ "\"residual_qm_experiments\":" ++ residualCount ++ ","
       ++ "\"residual_qm_experiment_ids\":" ++ residualExperimentIdsJson ++ ","
