@@ -39,6 +39,7 @@ Proofs/MetaLang/V8CoreRuleSemanticClosure.lean
 Proofs/MetaLang/V8DeclarativeReportContract.lean
 Proofs/MetaLang/V8ClaimStrengthInvariant.lean
 Proofs/MetaLang/V8VerifierDecommissionPolicy.lean
+Proofs/MetaLang/V8DeclarativeDocumentSchema.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -74,7 +75,10 @@ This layer encodes:
 18. conclusion strength must not exceed evidence strength;
 19. the old Python verifier is deprecated compatibility only and targets
     decommission in favor of the Lean proof kernel;
-20. the context-first primitive base:
+20. IDT v8 declarative verification documents have a Lean-side schema whose
+    accepted rules must target allowed collections and use Lean-semantics
+    assertions;
+21. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
