@@ -1,22 +1,47 @@
 import Proofs.MetaLang.V8CurrentStopReadiness
+import Proofs.MetaLang.V8FormalProofScopeBoundary
 
 open IDT.MetaLang.V8
 
+def residualQmExperimentCount : Nat :=
+  currentExperimentProgramArchitecture.residualLedger.length
+
+def verificationDisciplineTheoremCount : Nat :=
+  currentFormalProofScopeCounts.verificationDiscipline
+
+def physicalFormalProofCount : Nat :=
+  currentFormalProofScopeCounts.physicalTheory
+
+def qmFormalProofCount : Nat :=
+  currentFormalProofScopeCounts.qmClosure
+
 def protocolStatusText : String :=
   String.intercalate "\n" [
-    "IDT v8 Lean experiment protocol status",
+    "IDT v8 Lean migration and experiment protocol status",
     "protocol_logic_authority=lean_checked",
     "result_status=certified_executable_check",
     "proof_authority=declarative_input_check",
-    s!"residual_qm_experiments={currentExperimentProgramArchitecture.residualLedger.length}",
+    s!"verification_discipline_theorems={verificationDisciplineTheoremCount}",
+    s!"residual_qm_experiments={residualQmExperimentCount}",
     "residuals_need_idt_v8_classification=true",
     "can_assign_physical_formal_proof=false",
+    s!"physical_formal_proofs={physicalFormalProofCount}",
+    s!"qm_formal_proofs={qmFormalProofCount}",
+    "lean_eligible_migration_complete=false",
+    "residual_encoding_ready=false",
+    "experiment_program_ready=false",
     "ready_for_research_handoff=false",
     "ready_for_migration_stop=false"
   ]
 
 def boundaryCheckPassed : Bool :=
-  currentExperimentProgramArchitecture.residualLedger.length == 35
+  residualQmExperimentCount == 35
+    && verificationDisciplineTheoremCount == 239
+    && theoremCardFormalProofCount == 0
+    && qmCoreObligationFormalProofCount == 0
+    && qmExperimentResidualFormalProofCount == 0
+    && physicalFormalProofCount == 0
+    && qmFormalProofCount == 0
 
 def main (args : List String) : IO Unit := do
   if args.contains "--check-boundary" then
@@ -26,14 +51,25 @@ def main (args : List String) : IO Unit := do
       throw <| IO.userError "boundary_check=failed"
   else if args.contains "--json" then
     let residualCount :=
-      toString currentExperimentProgramArchitecture.residualLedger.length
+      toString residualQmExperimentCount
+    let verificationCount :=
+      toString verificationDisciplineTheoremCount
     IO.println (
       "{\"protocol_logic_authority\":\"lean_checked\","
       ++ "\"result_status\":\"certified_executable_check\","
       ++ "\"proof_authority\":\"declarative_input_check\","
+      ++ "\"verification_discipline_theorems\":" ++ verificationCount ++ ","
       ++ "\"residual_qm_experiments\":" ++ residualCount ++ ","
       ++ "\"residuals_need_idt_v8_classification\":true,"
       ++ "\"can_assign_physical_formal_proof\":false,"
+      ++ "\"theorem_card_formal_proofs\":0,"
+      ++ "\"qm_obligation_formal_proofs\":0,"
+      ++ "\"qm_experiment_formal_proofs\":0,"
+      ++ "\"physical_formal_proofs\":0,"
+      ++ "\"qm_formal_proofs\":0,"
+      ++ "\"lean_eligible_migration_complete\":false,"
+      ++ "\"residual_encoding_ready\":false,"
+      ++ "\"experiment_program_ready\":false,"
       ++ "\"ready_for_research_handoff\":false,"
       ++ "\"ready_for_migration_stop\":false}"
     )
