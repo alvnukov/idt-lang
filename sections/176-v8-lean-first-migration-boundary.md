@@ -88,8 +88,8 @@ This layer encodes:
 21. the current core claim-discipline document is mirrored as an accepted Lean
     object;
 22. the migration roadmap is fixed: Lean migration first, residual IDT v8
-    encoding second, then stop; only after that are new CI, legacy archive, and
-    research handoff allowed;
+    encoding second, then stop; only after that are new CI, legacy archive,
+    mandatory compressed research-context packing, and research handoff allowed;
 23. the active manifest is an IDT v8 input boundary, not proof authority;
 24. the current residual manifest surface is counted as IDT v8 input with no
     formal-proof status;
@@ -101,7 +101,9 @@ This layer encodes:
     closures;
 27. residual material is routed either to Lean migration or to IDT v8 residual
     input encoding;
-28. the context-first primitive base:
+28. a compressed full research-tree context packer is mandatory research-model
+    work after migration stop/new CI/legacy archive, not current migration work;
+29. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)

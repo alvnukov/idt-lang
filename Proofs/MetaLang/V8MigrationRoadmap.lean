@@ -15,7 +15,8 @@ No new research is allowed during this migration phase:
 3. stop at that boundary;
 4. only then build new CI;
 5. archive legacy verifier infrastructure;
-6. hand the repository back to a research model.
+6. prepare a compressed research-context packer for the research model;
+7. hand the repository back to a research model.
 -/
 
 inductive MigrationPhase where
@@ -24,6 +25,7 @@ inductive MigrationPhase where
   | migrationStop
   | newCi
   | archiveLegacy
+  | researchContextPacker
   | researchReady
 deriving DecidableEq, Repr
 
@@ -33,7 +35,8 @@ def MigrationPhase.rank : MigrationPhase → Nat
   | MigrationPhase.migrationStop => 2
   | MigrationPhase.newCi => 3
   | MigrationPhase.archiveLegacy => 4
-  | MigrationPhase.researchReady => 5
+  | MigrationPhase.researchContextPacker => 5
+  | MigrationPhase.researchReady => 6
 
 def phasePrecedes (left right : MigrationPhase) : Prop :=
   left.rank < right.rank
@@ -50,6 +53,7 @@ def v8LeanIdtMigrationRoadmap : MigrationRoadmap :=
       MigrationPhase.migrationStop,
       MigrationPhase.newCi,
       MigrationPhase.archiveLegacy,
+      MigrationPhase.researchContextPacker,
       MigrationPhase.researchReady
     ]
   }
@@ -85,6 +89,13 @@ theorem new_ci_precedes_legacy_archive :
 theorem legacy_archive_precedes_research_ready :
     phasePrecedes
       MigrationPhase.archiveLegacy
+      MigrationPhase.researchContextPacker := by
+  unfold phasePrecedes
+  decide
+
+theorem research_context_packer_precedes_research_ready :
+    phasePrecedes
+      MigrationPhase.researchContextPacker
       MigrationPhase.researchReady := by
   unfold phasePrecedes
   decide
@@ -109,6 +120,31 @@ theorem legacy_archive_is_after_new_ci :
       MigrationPhase.archiveLegacy := by
   unfold phasePrecedes
   decide
+
+structure ResearchContextPackerRequirement where
+  required : Bool
+  assignedToResearchModel : Bool
+  mayStartBeforeMigrationStop : Bool
+deriving Repr
+
+def researchContextPackerRequirement : ResearchContextPackerRequirement :=
+  {
+    required := true,
+    assignedToResearchModel := true,
+    mayStartBeforeMigrationStop := false
+  }
+
+theorem research_context_packer_is_required :
+    researchContextPackerRequirement.required = true := by
+  rfl
+
+theorem research_context_packer_is_research_model_work :
+    researchContextPackerRequirement.assignedToResearchModel = true := by
+  rfl
+
+theorem research_context_packer_waits_for_migration_stop :
+    researchContextPackerRequirement.mayStartBeforeMigrationStop = false := by
+  rfl
 
 end V8
 end MetaLang

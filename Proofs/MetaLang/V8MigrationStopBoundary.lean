@@ -44,7 +44,13 @@ def MigrationStopBoundary.allowsLegacyArchive
 
 def MigrationStopBoundary.allowsResearchHandoff
     (_boundary : MigrationStopBoundary) : Prop :=
-  phasePrecedes MigrationPhase.archiveLegacy MigrationPhase.researchReady
+  phasePrecedes MigrationPhase.researchContextPacker
+    MigrationPhase.researchReady
+
+def MigrationStopBoundary.requiresResearchContextPacker
+    (_boundary : MigrationStopBoundary) : Prop :=
+  researchContextPackerRequirement.required = true
+    ∧ researchContextPackerRequirement.assignedToResearchModel = true
 
 theorem current_stop_boundary_allows_new_ci_only_after_stop :
     currentMigrationStopBoundary.allowsNewCi :=
@@ -56,7 +62,12 @@ theorem current_stop_boundary_allows_archive_only_after_new_ci :
 
 theorem current_stop_boundary_allows_research_only_after_archive :
     currentMigrationStopBoundary.allowsResearchHandoff :=
-  legacy_archive_precedes_research_ready
+  research_context_packer_precedes_research_ready
+
+theorem current_stop_boundary_requires_research_context_packer :
+    currentMigrationStopBoundary.requiresResearchContextPacker :=
+  And.intro research_context_packer_is_required
+    research_context_packer_is_research_model_work
 
 theorem current_stop_boundary_keeps_python_deprecated :
     oldPythonVerifierRole.isDeprecatedCompatibility :=
