@@ -11,6 +11,17 @@ numeric gate -> executable trusted checker
 legacy Python verifier -> deprecated compatibility only, not proof source of truth
 ```
 
+The first Lean-sourced executable status probe is:
+
+```bash
+lake exe idt_v8_protocol_status
+lake exe idt_v8_protocol_status -- --json
+```
+
+It imports the Lean protocol/readiness modules and reports the current
+certified-executable-check boundary. It does not read the legacy manifest and
+does not upgrade any physical claim.
+
 The migration freezes new physical research claims until the already recorded
 claim discipline has been moved into Lean. The first Lean layer is:
 
