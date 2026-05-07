@@ -47,6 +47,7 @@ Proofs/MetaLang/V8ResidualMigrationLedger.lean
 Proofs/MetaLang/V8MigrationStopBoundary.lean
 Proofs/MetaLang/V8FormalProofScopeBoundary.lean
 Proofs/MetaLang/V8ResidualRouteClassification.lean
+Proofs/MetaLang/V8TaskBlockerLedger.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -101,9 +102,11 @@ This layer encodes:
     closures;
 27. residual material is routed either to Lean migration or to IDT v8 residual
     input encoding;
-28. a compressed full research-tree context packer is mandatory research-model
+28. migration tasks are typed Lean blockers for later phases such as new CI,
+    legacy archive, and research readiness;
+29. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-29. the context-first primitive base:
+30. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
