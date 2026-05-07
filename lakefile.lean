@@ -17,6 +17,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8LeanFirstTrustKernel,
     `Proofs.MetaLang.V8CoreClaimDisciplineRules,
     `Proofs.MetaLang.V8ControlledVocabularyInventory,
+    `Proofs.MetaLang.V8ManifestCollectionContract,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,

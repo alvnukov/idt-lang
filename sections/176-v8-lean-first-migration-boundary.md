@@ -26,6 +26,7 @@ Proofs/MetaLang/V8ProofArtifactContract.lean
 Proofs/MetaLang/V8LeanFirstTrustKernel.lean
 Proofs/MetaLang/V8CoreClaimDisciplineRules.lean
 Proofs/MetaLang/V8ControlledVocabularyInventory.lean
+Proofs/MetaLang/V8ManifestCollectionContract.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -49,7 +50,9 @@ This layer encodes:
     rule shapes mirrored from the declarative input;
 12. the v8 controlled vocabulary is mirrored into Lean with project-local terms
     kept distinct from standard scientific/formal-methods vocabulary;
-13. the context-first primitive base:
+13. the v8 manifest reference-index collection set is fixed in Lean without
+    freezing current manifest collection sizes;
+14. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
