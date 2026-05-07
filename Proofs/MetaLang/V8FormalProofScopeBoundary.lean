@@ -28,7 +28,7 @@ deriving Repr
 
 def currentFormalProofScopeCounts : FormalProofScopeCounts :=
   {
-    verificationDiscipline := 259,
+    verificationDiscipline := 273,
     declarativeLanguage := 0,
     physicalTheory := 0,
     qmClosure := 0
@@ -49,8 +49,8 @@ def FormalProofScopeCounts.hasVerificationDisciplineProofs
     (counts : FormalProofScopeCounts) : Prop :=
   counts.verificationDiscipline > 0
 
-theorem current_formal_proof_scope_total_is_259 :
-    currentFormalProofScopeCounts.total = 259 := by
+theorem current_formal_proof_scope_total_is_273 :
+    currentFormalProofScopeCounts.total = 273 := by
   rfl
 
 theorem current_formal_proofs_are_verification_scope_only :

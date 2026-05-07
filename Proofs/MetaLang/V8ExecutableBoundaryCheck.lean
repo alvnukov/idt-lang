@@ -54,8 +54,8 @@ def currentExecutableBoundarySnapshot : ExecutableBoundarySnapshot :=
 
 def ExecutableBoundarySnapshot.matchesCurrentBoundary
     (snapshot : ExecutableBoundarySnapshot) : Prop :=
-  snapshot.acceptedDocumentCount = 5
-    ∧ snapshot.verificationDisciplineTheorems = 259
+  snapshot.acceptedDocumentCount = 9
+    ∧ snapshot.verificationDisciplineTheorems = 273
     ∧ snapshot.manifestInputTotal = 596
     ∧ snapshot.symbolInputs = 178
     ∧ snapshot.equationInputs = 15

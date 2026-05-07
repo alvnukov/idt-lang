@@ -217,6 +217,83 @@ class DeclarativeVerifierTests(unittest.TestCase):
         self.assertFalse(report.ok)
         self.assertEqual("declarative_forbidden_field_value", report.issues[0].code)
 
+    def test_symbol_residual_status_must_remain_controlled(self) -> None:
+        manifest: JsonObject = {
+            "symbols": {
+                "symbol_a": {
+                    "status": "formal_proof",
+                    "dimension": {},
+                }
+            },
+            "equations": [],
+            "derivations": [],
+            "finite_gates": [],
+            "qm_experiments": [],
+            "qm_universal_patterns": [],
+            "qm_core_proof_obligations": [],
+            "theorem_cards": [],
+        }
+        rules = load_rule_documents(ROOT / "rules/v8/symbol_residuals.idtl.json")
+
+        report = verify_declarative_rule_documents(manifest, rules, ROOT)
+
+        self.assertFalse(report.ok)
+        self.assertEqual("declarative_field_value_not_allowed", report.issues[0].code)
+
+    def test_derivation_residual_dependencies_must_be_grounded(self) -> None:
+        manifest: JsonObject = {
+            "symbols": {"target_a": {"status": "target", "dimension": {}}},
+            "equations": [],
+            "derivations": [
+                {
+                    "id": "derivation_a",
+                    "target": "target_a",
+                    "status": "target",
+                    "depends_on": ["missing_dependency"],
+                }
+            ],
+            "finite_gates": [],
+            "qm_experiments": [],
+            "qm_universal_patterns": [],
+            "qm_core_proof_obligations": [],
+            "theorem_cards": [],
+        }
+        rules = load_rule_documents(ROOT / "rules/v8/derivation_residuals.idtl.json")
+
+        report = verify_declarative_rule_documents(manifest, rules, ROOT)
+
+        self.assertFalse(report.ok)
+        self.assertEqual("declarative_unknown_ref", report.issues[0].code)
+
+    def test_qm_universal_pattern_refs_must_be_grounded(self) -> None:
+        manifest: JsonObject = {
+            "symbols": {},
+            "equations": [],
+            "derivations": [],
+            "finite_gates": [],
+            "qm_experiments": [],
+            "qm_universal_patterns": [
+                {
+                    "id": "pattern_a",
+                    "title": "Pattern A",
+                    "mechanism": "Residual pattern.",
+                    "claim_boundary": "Not a proof.",
+                    "experiments": ["missing_experiment"],
+                    "finite_gates": ["missing_gate"],
+                }
+            ],
+            "qm_core_proof_obligations": [],
+            "theorem_cards": [],
+        }
+        rules = load_rule_documents(
+            ROOT / "rules/v8/qm_universal_pattern_residuals.idtl.json"
+        )
+
+        report = verify_declarative_rule_documents(manifest, rules, ROOT)
+
+        self.assertFalse(report.ok)
+        self.assertEqual("declarative_unknown_ref", report.issues[0].code)
+
 
 if __name__ == "__main__":
     unittest.main()
