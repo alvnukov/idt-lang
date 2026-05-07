@@ -182,7 +182,9 @@ of nature.
 - `Proofs/` — Lean proof artifacts.
 - `Experiments/` — Lean-sourced executable protocol probes.
 - `rules/v8/` — declarative v8 verification specifications.
-- `theory_verifier/` — executable manifest verifier.
+- `theory_verifier/` — compatibility Python package; `declarative.py` remains
+  the active IDT v8 input checker, while the legacy manifest verifier is not
+  proof authority.
 - `theory_verifier_manifest.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.
 - `data/` — documented data anchors used by verifier-facing research notes.
