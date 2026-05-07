@@ -23,6 +23,7 @@ Proofs/MetaLang/V8ExternalCheckerBoundary.lean
 Proofs/MetaLang/V8StatusTransitionPolicy.lean
 Proofs/MetaLang/V8DependencyGraphPolicy.lean
 Proofs/MetaLang/V8ProofArtifactContract.lean
+Proofs/MetaLang/V8LeanFirstTrustKernel.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -40,7 +41,9 @@ This layer encodes:
    status dependencies;
 9. formal proof upgrades require runnable Lean artifacts with path, theorem
    name, and check command;
-10. the context-first primitive base:
+10. accepted theorem-card, transition, dependency, artifact, and legacy-checker
+    ledgers compose into a single Lean-first trust kernel;
+11. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
