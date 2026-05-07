@@ -37,6 +37,7 @@ Proofs/MetaLang/V8RuleManifestGrounding.lean
 Proofs/MetaLang/V8AssertionPredicateSemantics.lean
 Proofs/MetaLang/V8CoreRuleSemanticClosure.lean
 Proofs/MetaLang/V8DeclarativeReportContract.lean
+Proofs/MetaLang/V8ClaimStrengthInvariant.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -69,7 +70,8 @@ This layer encodes:
     to Lean-side assertion semantics;
 17. declarative reports with issues are not accepted, and accepted core reports
     must check the six v8 core rules;
-18. the context-first primitive base:
+18. conclusion strength must not exceed evidence strength;
+19. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
