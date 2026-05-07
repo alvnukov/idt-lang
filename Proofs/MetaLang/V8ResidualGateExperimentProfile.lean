@@ -63,17 +63,17 @@ deriving Repr
 def currentResidualQmExperimentProfile : ResidualQmExperimentProfile :=
   {
     totalExperiments := 35,
-    unclassifiedExperiments := 35,
-    classification := ResidualExperimentClassification.unclassified
+    unclassifiedExperiments := 0,
+    classification := ResidualExperimentClassification.idtV8Classified
   }
 
-def ResidualQmExperimentProfile.needsIdtV8Classification
+def ResidualQmExperimentProfile.isIdtV8Classified
     (profile : ResidualQmExperimentProfile) : Prop :=
-  profile.unclassifiedExperiments = profile.totalExperiments
-    ∧ profile.classification = ResidualExperimentClassification.unclassified
+  profile.unclassifiedExperiments = 0
+    ∧ profile.classification = ResidualExperimentClassification.idtV8Classified
 
-theorem current_qm_experiments_need_idt_v8_classification :
-    currentResidualQmExperimentProfile.needsIdtV8Classification := by
+theorem current_qm_experiments_are_idt_v8_classified :
+    currentResidualQmExperimentProfile.isIdtV8Classified := by
   exact And.intro rfl rfl
 
 structure ResidualGateExperimentBoundary where
@@ -93,14 +93,14 @@ def ResidualGateExperimentBoundary.isAcceptedForV8
     (boundary : ResidualGateExperimentBoundary) : Prop :=
   boundary.authority = VerificationAuthority.declarativeInputCheck
     ∧ boundary.gates.isConsistent
-    ∧ boundary.experiments.needsIdtV8Classification
+    ∧ boundary.experiments.isIdtV8Classified
 
 theorem current_residual_gate_experiment_boundary_is_accepted :
     currentResidualGateExperimentBoundary.isAcceptedForV8 := by
   exact And.intro rfl
     (And.intro
       current_residual_finite_gate_profile_is_consistent
-      current_qm_experiments_need_idt_v8_classification)
+      current_qm_experiments_are_idt_v8_classified)
 
 end V8
 end MetaLang

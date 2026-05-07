@@ -50,13 +50,13 @@ theorem current_stop_readiness_blocked_by_lean_migration :
     ¬ currentStopReadiness.leanEligibleMigrationComplete :=
   current_lean_eligible_migration_is_not_complete
 
-theorem current_stop_readiness_blocked_by_residual_encoding :
-    ¬ currentStopReadiness.residualEncodingReady :=
-  current_residual_encoding_not_ready_for_migration_stop
+theorem current_stop_readiness_residual_encoding_ready :
+    currentStopReadiness.residualEncodingReady :=
+  current_residual_encoding_ready_for_migration_stop
 
-theorem current_stop_readiness_blocked_by_experiment_program :
-    ¬ currentStopReadiness.experimentProgramReady :=
-  current_experiment_program_readiness_blocks_research_handoff
+theorem current_stop_readiness_experiment_program_ready :
+    currentStopReadiness.experimentProgramReady :=
+  current_experiment_program_readiness_is_locally_ready
 
 theorem current_stop_readiness_is_not_ready_for_migration_stop :
     ¬ currentStopReadiness.readyForMigrationStop := by

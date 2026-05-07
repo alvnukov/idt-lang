@@ -8,8 +8,9 @@ namespace V8
 V8 QM experiment residual ledger.
 
 The current 35 QM experiment records are executable gates, not Lean proofs.
-This module preserves their IDs as typed residual inputs that must be classified
-in IDT v8 before research resumes.
+This module preserves their IDs as typed IDT v8 residual inputs. The
+classification says only that each row is controlled residual input; it does
+not upgrade any experiment to physical/QM formal proof.
 -/
 
 inductive CurrentQmExperimentId where
@@ -108,41 +109,41 @@ def QmExperimentResidualEntry.manifestId
 
 def currentQmExperimentResidualLedger : List QmExperimentResidualEntry :=
   [
-    { id := .bornContextProbabilityTests, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .twoPathInterference, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .finiteI3Actualization, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .tripleSlitSorkinParameter, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .whichWayMarker, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .quantumEraser, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .unitaryMeasurementContext, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .finiteInterferometerNetwork, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .projectiveRepeatability, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .bellChshTable, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .bellChshFromAmplitudes, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .singletAngleModel, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .calibratedActionPhaseHoldout, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .decoherenceAndRecoverability, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .sternGerlachSingleAxis, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .sequentialSternGerlach, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .delayedChoice, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .aharonovBohmPhase, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .abFluxPeriod, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .ramseyInterferometry, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .rabiOscillation, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .photoelectricThreshold, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .spectroscopyLines, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .tunnelingBarrier, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .quantumZeno, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .hongOuMandel, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .antibunchingSinglePhoton, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .entanglementSwapping, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .quantumTeleportation, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .noCloning, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .ghzMerminContextuality, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .kochenSpeckerContextuality, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .leggettGargTemporalContext, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .weakMeasurement, gateStatus := .executableGate, v8Classification := .needsClassification },
-    { id := .quantumRandomWalk, gateStatus := .executableGate, v8Classification := .needsClassification }
+    { id := .bornContextProbabilityTests, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .twoPathInterference, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .finiteI3Actualization, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .tripleSlitSorkinParameter, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .whichWayMarker, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .quantumEraser, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .unitaryMeasurementContext, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .finiteInterferometerNetwork, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .projectiveRepeatability, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .bellChshTable, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .bellChshFromAmplitudes, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .singletAngleModel, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .calibratedActionPhaseHoldout, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .decoherenceAndRecoverability, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .sternGerlachSingleAxis, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .sequentialSternGerlach, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .delayedChoice, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .aharonovBohmPhase, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .abFluxPeriod, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .ramseyInterferometry, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .rabiOscillation, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .photoelectricThreshold, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .spectroscopyLines, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .tunnelingBarrier, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .quantumZeno, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .hongOuMandel, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .antibunchingSinglePhoton, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .entanglementSwapping, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .quantumTeleportation, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .noCloning, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .ghzMerminContextuality, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .kochenSpeckerContextuality, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .leggettGargTemporalContext, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .weakMeasurement, gateStatus := .executableGate, v8Classification := .classified },
+    { id := .quantumRandomWalk, gateStatus := .executableGate, v8Classification := .classified }
   ]
 
 def qmExperimentClassificationCount
@@ -170,6 +171,12 @@ theorem current_qm_experiment_residuals_are_executable_gates :
 theorem current_qm_experiment_residuals_need_v8_classification :
     qmExperimentClassificationCount
       .needsClassification
+      currentQmExperimentResidualLedger = 0 := by
+  rfl
+
+theorem current_qm_experiment_residuals_are_idt_v8_classified :
+    qmExperimentClassificationCount
+      .classified
       currentQmExperimentResidualLedger = 35 := by
   rfl
 

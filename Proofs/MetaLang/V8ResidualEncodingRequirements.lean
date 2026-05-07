@@ -15,15 +15,15 @@ material and does not turn finite gates or experiments into proof truth.
 
 structure ResidualEncodingRequirements where
   gateExperimentBoundaryAccepted : Prop
-  qmExperimentsNeedClassification : Prop
+  qmExperimentsClassified : Prop
   residualInputAuthorityOnly : Prop
 
 def currentResidualEncodingRequirements : ResidualEncodingRequirements :=
   {
     gateExperimentBoundaryAccepted :=
       currentResidualGateExperimentBoundary.isAcceptedForV8,
-    qmExperimentsNeedClassification :=
-      currentResidualQmExperimentProfile.needsIdtV8Classification,
+    qmExperimentsClassified :=
+      currentResidualQmExperimentProfile.isIdtV8Classified,
     residualInputAuthorityOnly :=
       currentResidualGateExperimentBoundary.authority =
         VerificationAuthority.declarativeInputCheck
@@ -32,22 +32,20 @@ def currentResidualEncodingRequirements : ResidualEncodingRequirements :=
 def ResidualEncodingRequirements.readyForMigrationStop
     (requirements : ResidualEncodingRequirements) : Prop :=
   requirements.gateExperimentBoundaryAccepted
-    ∧ ¬ requirements.qmExperimentsNeedClassification
+    ∧ requirements.qmExperimentsClassified
     ∧ requirements.residualInputAuthorityOnly
 
 theorem current_residual_encoding_requirements_grounded :
     currentResidualEncodingRequirements.gateExperimentBoundaryAccepted
-      ∧ currentResidualEncodingRequirements.qmExperimentsNeedClassification
+      ∧ currentResidualEncodingRequirements.qmExperimentsClassified
       ∧ currentResidualEncodingRequirements.residualInputAuthorityOnly := by
   exact And.intro
     current_residual_gate_experiment_boundary_is_accepted
-    (And.intro current_qm_experiments_need_idt_v8_classification rfl)
+    (And.intro current_qm_experiments_are_idt_v8_classified rfl)
 
-theorem current_residual_encoding_not_ready_for_migration_stop :
-    ¬ currentResidualEncodingRequirements.readyForMigrationStop := by
-  intro ready
-  exact ready.2.1
-    current_residual_encoding_requirements_grounded.2.1
+theorem current_residual_encoding_ready_for_migration_stop :
+    currentResidualEncodingRequirements.readyForMigrationStop := by
+  exact current_residual_encoding_requirements_grounded
 
 theorem current_state_has_not_completed_residual_encoding_task :
     ¬ currentMigrationState.completedTasks.hasCompleted

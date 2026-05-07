@@ -104,18 +104,17 @@ theorem certified_executable_experiment_cannot_assign_physical_formal_proof :
 structure ExperimentProgramArchitecture where
   protocol : LeanExperimentProtocol
   residualLedger : List QmExperimentResidualEntry
-  residualsNeedClassification :
+  residualsClassified :
     qmExperimentClassificationCount
       ExperimentV8ClassificationStatus.needsClassification
-      residualLedger = residualLedger.length
+      residualLedger = 0
 
 def currentExperimentProgramArchitecture : ExperimentProgramArchitecture :=
   {
     protocol := v8LeanExperimentProtocolTarget,
     residualLedger := currentQmExperimentResidualLedger,
-    residualsNeedClassification := by
-      rw [current_qm_experiment_residuals_need_v8_classification]
-      rw [current_qm_experiment_residual_ledger_count]
+    residualsClassified := by
+      exact current_qm_experiment_residuals_need_v8_classification
   }
 
 theorem current_experiment_program_has_35_residual_experiments :

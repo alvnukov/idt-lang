@@ -51,13 +51,13 @@ def protocolStatusText : String :=
     s!"residual_qm_experiments={residualQmExperimentCount}",
     s!"qm_core_obligation_inputs={boundarySnapshot.qmCoreObligationInputs}",
     s!"theorem_card_inputs={boundarySnapshot.theoremCardInputs}",
-    "residuals_need_idt_v8_classification=true",
+    "residuals_need_idt_v8_classification=false",
     "can_assign_physical_formal_proof=false",
     s!"physical_formal_proofs={physicalFormalProofCount}",
     s!"qm_formal_proofs={qmFormalProofCount}",
     "lean_eligible_migration_complete=false",
-    "residual_encoding_ready=false",
-    "experiment_program_ready=false",
+    "residual_encoding_ready=true",
+    "experiment_program_ready=true",
     "ready_for_research_handoff=false",
     "ready_for_migration_stop=false"
   ]
@@ -114,7 +114,7 @@ def main (args : List String) : IO Unit := do
       ++ "\"qm_universal_pattern_inputs\":" ++ toString boundarySnapshot.qmUniversalPatternInputs ++ ","
       ++ "\"qm_core_obligation_inputs\":" ++ toString boundarySnapshot.qmCoreObligationInputs ++ ","
       ++ "\"theorem_card_inputs\":" ++ toString boundarySnapshot.theoremCardInputs ++ ","
-      ++ "\"residuals_need_idt_v8_classification\":true,"
+      ++ "\"residuals_need_idt_v8_classification\":false,"
       ++ "\"can_assign_physical_formal_proof\":false,"
       ++ "\"theorem_card_formal_proofs\":0,"
       ++ "\"qm_obligation_formal_proofs\":0,"
@@ -122,8 +122,8 @@ def main (args : List String) : IO Unit := do
       ++ "\"physical_formal_proofs\":0,"
       ++ "\"qm_formal_proofs\":0,"
       ++ "\"lean_eligible_migration_complete\":false,"
-      ++ "\"residual_encoding_ready\":false,"
-      ++ "\"experiment_program_ready\":false,"
+      ++ "\"residual_encoding_ready\":true,"
+      ++ "\"experiment_program_ready\":true,"
       ++ "\"ready_for_research_handoff\":false,"
       ++ "\"ready_for_migration_stop\":false}"
     )

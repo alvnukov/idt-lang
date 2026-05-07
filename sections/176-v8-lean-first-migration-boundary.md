@@ -154,30 +154,30 @@ This layer encodes:
 32. the exact/full-QM frontier has explicit active blockers in Lean, including
     Hilbert-carrier and Born-rule blockers;
 33. finite gates and QM experiments have a residual IDT v8 profile: 247 gates
-    across a long-tail type surface, and 35 QM experiments awaiting IDT v8
-    classification;
-34. IDT v8 residual encoding is not ready for migration stop while the 35 QM
-    experiments still need v8 classification and the residual boundary remains
-    declarative input rather than proof truth;
+    across a long-tail type surface, and 35 QM experiments classified as IDT v8
+    residual inputs;
+34. IDT v8 residual encoding is locally ready for migration stop because the
+    gate/experiment boundary is accepted, experiment residuals are classified,
+    and the residual boundary remains declarative input rather than proof truth;
 35. Lean-eligible migration has an explicit completion criterion: the theorem
     and QM-obligation ledgers are encoded and have no false formal-proof
     closure, but current open/blocked theorem candidates keep the phase
     incomplete and block IDT v8 residual encoding;
 36. the 35 current QM experiment records are mirrored as typed executable-gate
-    residual inputs with zero formal-proof closure and mandatory IDT v8
-    classification before research resumes;
+    residual inputs with zero formal-proof closure and IDT v8 residual-input
+    classification;
 37. the next executable experiment architecture is explicit: Lean may define
     admissible protocol logic and computable readout semantics, while external
     fixtures, laboratory data, calibration anchors, and numeric tolerances stay
     visible input boundaries; such runs can be certified executable checks, not
     physical/QM `formal_proof`;
 38. the experiment program has a Lean readiness gate: the protocol boundary is
-    certified executable, but research handoff remains blocked while the 35 QM
-    experiment residuals still need IDT v8 classification;
-39. current migration-stop readiness is explicitly false in Lean: Lean-eligible
-    migration is incomplete, residual encoding is not ready, and experiment
-    program readiness is blocked, while physical/QM formal-proof counts remain
-    zero;
+    certified executable and experiment residuals are classified, while full
+    research handoff remains blocked by later migration/CI/archive phases;
+39. current migration-stop readiness is explicitly false in Lean:
+    Lean-eligible migration is incomplete, while residual encoding and the
+    experiment program are locally ready and physical/QM formal-proof counts
+    remain zero;
 40. the accepted IDT v8 document inventory currently has nine Lean-accepted
     documents: core claim discipline, symbol residuals, equation residuals,
     derivation residuals, finite-gate residuals, QM experiment residuals,

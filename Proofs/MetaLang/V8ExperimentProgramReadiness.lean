@@ -34,22 +34,21 @@ theorem current_experiment_program_protocol_is_certified_executable :
     v8LeanExperimentProtocolTarget.isCertifiedExecutableExperiment :=
   v8_lean_experiment_protocol_is_certified_executable_check
 
-theorem current_experiment_program_residuals_are_not_classified :
-    ¬ currentExperimentProgramReadiness.residualExperimentsClassified := by
-  intro classified
-  have needsThirtyFive :=
-    current_qm_experiment_residuals_need_v8_classification
-  rw [classified] at needsThirtyFive
-  contradiction
-
-theorem current_experiment_program_readiness_blocks_research_handoff :
-    ¬ currentExperimentProgramReadiness.readyForResearchHandoff := by
-  intro ready
-  exact current_experiment_program_residuals_are_not_classified ready.2.1
+theorem current_experiment_program_residuals_are_classified :
+    currentExperimentProgramReadiness.residualExperimentsClassified := by
+  exact current_qm_experiment_residuals_need_v8_classification
 
 theorem current_experiment_program_keeps_formal_proof_boundary :
     ¬ v8LeanExperimentProtocolTarget.canAssignPhysicalFormalProof :=
   certified_executable_experiment_cannot_assign_physical_formal_proof
+
+theorem current_experiment_program_readiness_is_locally_ready :
+    currentExperimentProgramReadiness.readyForResearchHandoff := by
+  exact And.intro
+    current_experiment_program_protocol_is_certified_executable
+    (And.intro
+      current_experiment_program_residuals_are_classified
+      current_experiment_program_keeps_formal_proof_boundary)
 
 end V8
 end MetaLang
