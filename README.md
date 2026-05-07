@@ -1,7 +1,6 @@
 # IDT Lang
 
 ![QM Scientific Status](https://img.shields.io/badge/QM-context--first_Born--Hilbert_frontier-yellow)
-[![QM CI](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
 [![IDT v8 Lean CI](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
@@ -240,8 +239,8 @@ lake exe idt_v8_protocol_status -- --json
 This is the current Lean + IDT v8 migration-stop CI lane. It does not run the
 legacy manifest verifier as proof authority and does not claim QM is proved.
 
-The older QM status CI lane behind the `QM CI` badge runs the broader legacy
-compatibility/status probes:
+The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
+is retained as a compatibility/status recipe, not active proof-authority CI:
 
 ```bash
 ruff check theory_verifier tests scripts
@@ -269,9 +268,9 @@ lake build
 The `QM Scientific Status` badge reports the current scientific proof boundary:
 the finite standard-QM sector is conditionally closed, and the active
 Born/Hilbert frontier is context-first universal endpoint data plus
-carrier-frontier exhaustion. The `QM CI` badge reports whether the
-verifier/proof-boundary workflow is passing. Neither badge means that exact
-fundamental QM has been proved.
+carrier-frontier exhaustion. The `IDT v8 Lean CI` badge reports whether the
+Lean + IDT v8 migration-stop workflow is passing. Neither badge means that
+exact fundamental QM has been proved.
 
 The underlying checks are:
 
