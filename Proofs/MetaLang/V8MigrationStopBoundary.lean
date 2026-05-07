@@ -2,6 +2,7 @@ import Proofs.MetaLang.V8ResidualMigrationLedger
 import Proofs.MetaLang.V8QmExperimentResidualDocument
 import Proofs.MetaLang.V8QmCoreObligationDocument
 import Proofs.MetaLang.V8TheoremCardResidualDocument
+import Proofs.MetaLang.V8FiniteGateResidualDocument
 
 namespace IDT
 namespace MetaLang
@@ -14,6 +15,7 @@ This module records the point where migration work must stop before any new CI,
 legacy archive, or research handoff. The stop boundary requires:
 
 * accepted Lean mirror of the core IDT v8 discipline document;
+* accepted Lean mirror of the finite-gate residual discipline document;
 * accepted Lean mirror of the QM experiment residual discipline document;
 * accepted Lean mirror of the QM core obligation discipline document;
 * accepted Lean mirror of the theorem-card residual discipline document;
@@ -25,6 +27,8 @@ legacy archive, or research handoff. The stop boundary requires:
 structure MigrationStopBoundary where
   coreDocumentAccepted :
     v8CoreClaimDisciplineDocument.isAcceptedForV8
+  finiteGateResidualDocumentAccepted :
+    v8FiniteGateResidualDocument.isAcceptedForV8
   qmExperimentResidualDocumentAccepted :
     v8QmExperimentResidualDocument.isAcceptedForV8
   qmCoreObligationDocumentAccepted :
@@ -41,6 +45,8 @@ structure MigrationStopBoundary where
 def currentMigrationStopBoundary : MigrationStopBoundary :=
   {
     coreDocumentAccepted := v8_core_claim_discipline_document_is_accepted,
+    finiteGateResidualDocumentAccepted :=
+      v8_finite_gate_residual_document_is_accepted,
     qmExperimentResidualDocumentAccepted :=
       v8_qm_experiment_residual_document_is_accepted,
     qmCoreObligationDocumentAccepted :=
@@ -99,6 +105,10 @@ theorem current_stop_boundary_keeps_manifest_non_proof_authority :
 theorem current_stop_boundary_accepts_qm_experiment_residual_document :
     v8QmExperimentResidualDocument.isAcceptedForV8 :=
   currentMigrationStopBoundary.qmExperimentResidualDocumentAccepted
+
+theorem current_stop_boundary_accepts_finite_gate_residual_document :
+    v8FiniteGateResidualDocument.isAcceptedForV8 :=
+  currentMigrationStopBoundary.finiteGateResidualDocumentAccepted
 
 theorem current_stop_boundary_accepts_qm_core_obligation_document :
     v8QmCoreObligationDocument.isAcceptedForV8 :=

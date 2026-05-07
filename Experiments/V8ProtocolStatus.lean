@@ -59,8 +59,8 @@ def protocolStatusText : String :=
   ]
 
 def boundaryCheckPassed : Bool :=
-  boundarySnapshot.acceptedDocumentCount == 4
-    && boundarySnapshot.verificationDisciplineTheorems == 255
+  boundarySnapshot.acceptedDocumentCount == 5
+    && boundarySnapshot.verificationDisciplineTheorems == 259
     && boundarySnapshot.residualQmExperiments == 35
     && boundarySnapshot.theoremCardFormalProofs == 0
     && boundarySnapshot.qmObligationFormalProofs == 0

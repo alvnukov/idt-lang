@@ -38,8 +38,8 @@ def currentExecutableBoundarySnapshot : ExecutableBoundarySnapshot :=
 
 def ExecutableBoundarySnapshot.matchesCurrentBoundary
     (snapshot : ExecutableBoundarySnapshot) : Prop :=
-  snapshot.acceptedDocumentCount = 4
-    ∧ snapshot.verificationDisciplineTheorems = 255
+  snapshot.acceptedDocumentCount = 5
+    ∧ snapshot.verificationDisciplineTheorems = 259
     ∧ snapshot.residualQmExperiments = 35
     ∧ snapshot.theoremCardFormalProofs = 0
     ∧ snapshot.qmObligationFormalProofs = 0
@@ -50,7 +50,7 @@ def ExecutableBoundarySnapshot.matchesCurrentBoundary
 theorem current_executable_boundary_snapshot_matches :
     currentExecutableBoundarySnapshot.matchesCurrentBoundary := by
   exact And.intro
-    current_accepted_v8_document_inventory_has_four_documents
+    current_accepted_v8_document_inventory_has_five_documents
     (And.intro
       rfl
       (And.intro

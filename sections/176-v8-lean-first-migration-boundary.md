@@ -23,8 +23,8 @@ lake exe idt_v8_protocol_status -- --check-boundary
 
 It imports the Lean protocol/readiness modules and reports the current
 certified-executable-check boundary. The `--check-boundary` mode currently
-checks the Lean-sourced migration snapshot: 255 verification-discipline theorem
-declarations, 35 residual QM experiments, and zero theorem-card,
+checks the Lean-sourced migration snapshot: 259 verification-discipline theorem
+declarations, 5 accepted IDT v8 documents, 35 residual QM experiments, and zero theorem-card,
 QM-obligation, QM-experiment, physical, or QM formal-proof closures. It does
 not read the legacy manifest and does not upgrade any physical claim.
 
@@ -61,6 +61,7 @@ Proofs/MetaLang/V8CoreClaimDisciplineDocument.lean
 Proofs/MetaLang/V8QmExperimentResidualDocument.lean
 Proofs/MetaLang/V8QmCoreObligationDocument.lean
 Proofs/MetaLang/V8TheoremCardResidualDocument.lean
+Proofs/MetaLang/V8FiniteGateResidualDocument.lean
 Proofs/MetaLang/V8MigrationRoadmap.lean
 Proofs/MetaLang/V8ManifestInputBoundary.lean
 Proofs/MetaLang/V8ResidualMigrationLedger.lean
@@ -93,7 +94,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 255 theorem
+   The current Lean verification-discipline snapshot contains 259 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -121,9 +122,9 @@ This layer encodes:
 20. IDT v8 declarative verification documents have a Lean-side schema whose
     accepted rules must target allowed collections and use Lean-semantics
     assertions;
-21. the current core claim-discipline document, QM experiment residual
-    document, QM core obligation document, and theorem-card residual document
-    are mirrored as accepted Lean objects;
+21. the current core claim-discipline document, finite-gate residual document,
+    QM experiment residual document, QM core obligation document, and
+    theorem-card residual document are mirrored as accepted Lean objects;
 22. the migration roadmap is fixed: Lean migration first, residual IDT v8
     encoding second, then stop; only after that are new CI, legacy archive,
     mandatory compressed research-context packing, and research handoff allowed;
@@ -131,10 +132,10 @@ This layer encodes:
 24. the current residual manifest surface is counted as IDT v8 input with no
     formal-proof status;
 25. the migration stop boundary is explicit: only after the core document,
-    QM experiment residual document, QM core obligation document, theorem-card
-    residual document, manifest input boundary, residual ledger, and Python
-    deprecation boundary are accepted can new CI, legacy archive, and research
-    handoff happen;
+    finite-gate residual document, QM experiment residual document, QM core
+    obligation document, theorem-card residual document, manifest input
+    boundary, residual ledger, and Python deprecation boundary are accepted can
+    new CI, legacy archive, and research handoff happen;
 26. current formal proofs are scoped to verification discipline; theorem-card
     physical claims and QM core obligations still have zero formal-proof
     closures;
@@ -177,9 +178,9 @@ This layer encodes:
     migration is incomplete, residual encoding is not ready, and experiment
     program readiness is blocked, while physical/QM formal-proof counts remain
     zero;
-40. the accepted IDT v8 document inventory currently has four Lean-accepted
-    documents: core claim discipline, QM experiment residuals, QM core
-    obligations, and theorem-card residuals;
+40. the accepted IDT v8 document inventory currently has five Lean-accepted
+    documents: core claim discipline, finite-gate residuals, QM experiment
+    residuals, QM core obligations, and theorem-card residuals;
 41. the executable boundary probe mirrors a Lean-side snapshot theorem for the
     accepted-document count, verification theorem count, residual experiment
     count, and zero physical/QM formal-proof closures;
