@@ -174,6 +174,8 @@ of nature.
 - `sections/` — modular theory body.
 - `scripts/graph_query.py` — file-based research graph query and cautious edit
   helper for the verifier manifest.
+- `scripts/build_ai_theory_graph.py` — compact source-grounded theory graph
+  packer for AI agents.
 - `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
   semantic proof artifact from the current manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
@@ -236,10 +238,29 @@ lake build Proofs
 lake build idt_v8_protocol_status
 lake exe idt_v8_protocol_status -- --check-boundary
 lake exe idt_v8_protocol_status -- --json
+python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.json
 ```
 
 This is the current Lean + IDT v8 migration-stop CI lane. It does not run the
 legacy manifest verifier as proof authority and does not claim QM is proved.
+
+## AI Theory Graph
+
+The v8 AI theory graph is a compact index for agents, not proof authority. Lean
+remains the proof source of truth, and the manifest is treated as residual
+research input.
+
+CI publishes the graph from GitHub Actions under `IDT v8 Lean Status` as the
+artifact `idt-v8-ai-theory-graph`. To generate the same file locally:
+
+```bash
+python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.json
+```
+
+Agents should load this compact graph first, inspect node/edge topology, then
+fetch exact source files by the recorded source path and hash only when more
+context is needed. The graph is context and navigation metadata; it does not
+upgrade claims and does not replace Lean artifacts.
 
 The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
 is retained as a compatibility/status recipe, not active proof-authority CI:
