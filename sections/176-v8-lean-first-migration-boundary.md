@@ -52,6 +52,7 @@ Proofs/MetaLang/V8CurrentMigrationState.lean
 Proofs/MetaLang/V8CurrentTheoremAndObligationLedger.lean
 Proofs/MetaLang/V8TheoremDependencyBoundaryLedger.lean
 Proofs/MetaLang/V8CurrentFrontierBlockers.lean
+Proofs/MetaLang/V8ResidualGateExperimentProfile.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -117,9 +118,12 @@ This layer encodes:
     dependency/open-gap/claim-boundary profiles, are represented in Lean;
 32. the exact/full-QM frontier has explicit active blockers in Lean, including
     Hilbert-carrier and Born-rule blockers;
-33. a compressed full research-tree context packer is mandatory research-model
+33. finite gates and QM experiments have a residual IDT v8 profile: 247 gates
+    across a long-tail type surface, and 35 QM experiments awaiting IDT v8
+    classification;
+34. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-34. the context-first primitive base:
+35. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
