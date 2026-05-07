@@ -20,6 +20,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8ManifestCollectionContract,
     `Proofs.MetaLang.V8RuleManifestGrounding,
     `Proofs.MetaLang.V8AssertionPredicateSemantics,
+    `Proofs.MetaLang.V8CoreRuleSemanticClosure,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,
