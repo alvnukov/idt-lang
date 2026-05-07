@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "theory_version": "v7.1.0",
+  "theory_version": "v8.0.0",
   "symbols": {
     "A0_I": {
       "status": "blocked",

@@ -1,0 +1,221 @@
+{
+  "id": "idt_v8_core_claim_discipline",
+  "kind": "verification_specification",
+  "language_version": "v8.0.0",
+  "controlled_vocabulary": [
+    {
+      "term": "claim",
+      "status": "standard",
+      "domain": "scientific claim verification",
+      "definition": "A statement whose status must be tracked against evidence, dependencies, and proof artifacts."
+    },
+    {
+      "term": "evidence",
+      "status": "standard",
+      "domain": "scientific claim verification",
+      "definition": "A cited support object such as a dataset, finite verifier gate, proof artifact, or documented observation."
+    },
+    {
+      "term": "proof artifact",
+      "status": "standard",
+      "domain": "formal methods",
+      "definition": "A machine-checkable object, normally Lean source in this repository, that can be checked by a reproducible command."
+    },
+    {
+      "term": "proof obligation",
+      "status": "standard",
+      "domain": "formal methods",
+      "definition": "A required theorem, lemma, or verification target that must be discharged before a stronger claim status is allowed."
+    },
+    {
+      "term": "dependency",
+      "status": "standard",
+      "domain": "research graph",
+      "definition": "A referenced claim, gate, symbol, theorem card, or obligation on which another claim depends."
+    },
+    {
+      "term": "provenance",
+      "status": "standard",
+      "domain": "scientific data management",
+      "definition": "The origin, command, file, dataset, or artifact trail that makes a verification result reproducible."
+    },
+    {
+      "term": "counterexample",
+      "status": "standard",
+      "domain": "mathematics and scientific method",
+      "definition": "A witness showing that a proposed universal claim, rule, or derivation is false or not yet justified."
+    },
+    {
+      "term": "witness",
+      "status": "standard",
+      "domain": "mathematics and formal verification",
+      "definition": "An explicit object that satisfies a predicate or demonstrates the existence of a required structure."
+    },
+    {
+      "term": "finite verifier pass",
+      "status": "project_local",
+      "domain": "IDT verification",
+      "definition": "An executable finite check passed by the IDT verifier; it is weaker than a universal formal proof."
+    },
+    {
+      "term": "facticization witness",
+      "status": "project_local",
+      "domain": "IDT verification",
+      "definition": "An admissible readout witness used by IDT to mark when a stable distinguishability becomes an actual fact for a context."
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "theorem_cards_use_controlled_statuses",
+      "applies_to": {
+        "collection": "theorem_cards"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "statement"
+        },
+        {
+          "predicate": "field_in",
+          "field_path": "role",
+          "allowed_values": ["theorem", "failure"]
+        },
+        {
+          "predicate": "field_in",
+          "field_path": "proof_status",
+          "allowed_values": [
+            "formal_proof",
+            "conditional_proof",
+            "finite_verifier_pass",
+            "numerical_evidence",
+            "calibrated_match",
+            "open",
+            "blocked"
+          ]
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "verifier",
+          "reference_collections": ["finite_gates"]
+        }
+      ]
+    },
+    {
+      "id": "finite_gate_core_fields_are_declared",
+      "applies_to": {
+        "collection": "finite_gates"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "id"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "type"
+        }
+      ]
+    },
+    {
+      "id": "qm_recompile_route_counts_and_refs_are_grounded",
+      "applies_to": {
+        "collection": "finite_gates",
+        "where": {
+          "field_path": "id",
+          "equals": "qm_core_recompile_route_demo"
+        }
+      },
+      "assertions": [
+        {
+          "predicate": "equals_field",
+          "field_path": "experiment_count",
+          "other_field_path": "expected_experiment_count"
+        },
+        {
+          "predicate": "equals_field",
+          "field_path": "finite_gate_reference_count",
+          "other_field_path": "expected_finite_gate_reference_count"
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "route_gates[]",
+          "reference_collections": ["finite_gates"]
+        }
+      ]
+    },
+    {
+      "id": "context_first_base_uses_candidate_not_proof_status",
+      "applies_to": {
+        "collection": "finite_gates",
+        "where": {
+          "field_path": "id",
+          "equals": "context_first_primitive_base_revision_demo"
+        }
+      },
+      "assertions": [
+        {
+          "predicate": "every_field_equals",
+          "field_path": "lower_base_primitives[]",
+          "nested_field": "status",
+          "expected_value": "lower_base_candidate"
+        },
+        {
+          "predicate": "list_contains_all",
+          "field_path": "forbidden_upgrades[]",
+          "required_values": [
+            "does_not_close_full_QM_I",
+            "does_not_prove_Born_rule",
+            "does_not_prove_Hilbert_carrier",
+            "does_not_treat_legacy_HEMI_scaffold_as_current_primitive_base"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "proof_cards_have_artifacts_and_commands",
+      "applies_to": {
+        "collection": "finite_gates",
+        "where": {
+          "field_path": "id",
+          "equals": "formal_proof_ledger_audit_demo"
+        }
+      },
+      "assertions": [
+        {
+          "predicate": "file_exists",
+          "field_path": "proof_cards[].artifact_paths[]"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "proof_cards[].checker_commands[]"
+        },
+        {
+          "predicate": "field_not_in",
+          "field_path": "proof_cards[].proof_kind",
+          "forbidden_values": ["prose", "sketch", "unchecked"]
+        }
+      ]
+    },
+    {
+      "id": "formal_proof_status_requires_theorem_card_boundary",
+      "applies_to": {
+        "collection": "theorem_cards",
+        "where": {
+          "field_path": "proof_status",
+          "equals": "formal_proof"
+        }
+      },
+      "assertions": [
+        {
+          "predicate": "refs_exist",
+          "field_path": "verifier",
+          "reference_collections": ["finite_gates"]
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "forbidden_claims[]"
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,12 @@ package IDTProofs where
 lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
+    `Proofs.MetaLang.V8VerificationLanguage,
+    `Proofs.MetaLang.V8ContextFirstPrimitiveBase,
+    `Proofs.MetaLang.V8TheoremCardLedger,
+    `Proofs.MetaLang.V8CurrentStatusSnapshot,
+    `Proofs.MetaLang.V8ExternalCheckerBoundary,
+    `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,
     `Proofs.QMClosure.CGSCSemanticContentWall,

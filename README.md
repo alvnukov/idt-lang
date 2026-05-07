@@ -67,6 +67,10 @@ Current auditable results:
   are grounded against real manifest objects, schema surfaces, verifier checks,
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
+- v8 Lean-first migration: the language-level proof-status boundary,
+  context-first primitive base, and current stopped QM frontier are now encoded
+  in Lean under `Proofs/MetaLang/`. Python remains a legacy verifier and
+  manifest/research-graph safety net, not the target source of proof truth.
 - primitive-core contract: the current primitive surface is context-first.
   Admissible context covers, local outcome-event presheaves, inheritance
   transition families, facticization witnesses, and stable distinguishability
@@ -166,8 +170,10 @@ of nature.
 - `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
   semantic proof artifact from the current manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
+- `scripts/check_declarative_rules.py` — checks v8 declarative rule files.
 - `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
 - `Proofs/` — Lean proof artifacts.
+- `rules/v8/` — declarative v8 verification specifications.
 - `theory_verifier/` — executable manifest verifier.
 - `theory_verifier_manifest.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.
@@ -215,6 +221,7 @@ The QM status CI lane behind the README badge runs:
 ruff check theory_verifier tests scripts
 mypy --strict theory_verifier tests scripts
 python3 -m theory_verifier --json theory_verifier_manifest.json
+python3 scripts/check_declarative_rules.py --json
 python3 scripts/check_proofs.py
 python3 scripts/evaluate_born_direct_one_pass.py
 python3 scripts/evaluate_born_readout_attempt.py

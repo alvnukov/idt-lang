@@ -1,7 +1,7 @@
 # Inherited Distinguishability Protolanguage
 
-Current version: `v7.1.0`
-Date: 2026-05-05
+Current version: `v8.0.0`
+Date: 2026-05-07
 Status: modular canonical source. The theory is stored in `sections/`; versions are fixed by git commit and annotated tag.
 
 ---
@@ -218,12 +218,22 @@ The canonical theory modules are:
 173. [172. Finite QM Core Proof Program](sections/172-finite-qm-core-proof-program.md)
 174. [173. IDT MetaLang Research Graph](sections/173-idt-metalang-research-graph.md)
 175. [174. Context-Bundle Nontriviality Research Note](sections/174-context-bundle-nontriviality-research-note.md)
+176. [176. V8 Lean-First Migration Boundary](sections/176-v8-lean-first-migration-boundary.md)
 
 ---
 
 ## Current Development Focus
 
-The active front is now the \(G\)-emergence prerequisite route:
+The active front is now the v8 Lean-first migration:
+
+- freeze new physical research claims;
+- move the already recorded primitive base, claim-status discipline, proof
+  obligations, and stopped QM frontier into Lean;
+- keep Python/JSON as legacy manifest and research-graph tooling only;
+- require Lean artifacts for anything claimed as proved.
+
+The previous \(G\)-emergence prerequisite route remains recorded but is not the
+active research front during the migration:
 
 $$
 \mathcal R_\chi(\omega)
