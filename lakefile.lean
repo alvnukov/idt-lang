@@ -26,6 +26,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8VerifierDecommissionPolicy,
     `Proofs.MetaLang.V8DeclarativeDocumentSchema,
     `Proofs.MetaLang.V8CoreClaimDisciplineDocument,
+    `Proofs.MetaLang.V8MigrationRoadmap,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,

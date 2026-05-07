@@ -41,6 +41,7 @@ Proofs/MetaLang/V8ClaimStrengthInvariant.lean
 Proofs/MetaLang/V8VerifierDecommissionPolicy.lean
 Proofs/MetaLang/V8DeclarativeDocumentSchema.lean
 Proofs/MetaLang/V8CoreClaimDisciplineDocument.lean
+Proofs/MetaLang/V8MigrationRoadmap.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -81,7 +82,10 @@ This layer encodes:
     assertions;
 21. the current core claim-discipline document is mirrored as an accepted Lean
     object;
-22. the context-first primitive base:
+22. the migration roadmap is fixed: Lean migration first, residual IDT v8
+    encoding second, then stop; only after that are new CI, legacy archive, and
+    research handoff allowed;
+23. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
