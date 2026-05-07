@@ -38,6 +38,33 @@ for QM or GR. Its present value is methodological and test-directed:
 
 For a compact public boundary, see the [Public Claim Sheet](PUBLIC_CLAIM_SHEET.md).
 
+## AI Agent Quickstart
+
+AI agents should start from [AI Agent Guide](AI_AGENT_GUIDE.md), not from a full
+repository scan.
+
+The intended first context object is the compact v8 AI theory graph:
+
+```bash
+python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.json
+python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json validate --repo-root . --check-source-hashes
+python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json summary
+```
+
+In CI, the same graph is published by GitHub Actions under `IDT v8 Lean Status`
+as the artifact `idt-v8-ai-theory-graph`.
+
+Use this boundary when answering questions about the theory:
+
+- official project name: **IDT, Inherited Distinguishability Theory**;
+- current language/proof architecture: **Lean + IDT v8**;
+- proof authority: **Lean artifacts only**;
+- graph role: compact context/index for AI agents, not proof authority;
+- manifest role: residual research input, not proof truth;
+- current scientific status: reconstruction framework with finite gates,
+  conditional Lean routes, and explicit open frontiers; not a completed
+  derivation of QM or GR.
+
 ## What This Snapshot Demonstrates
 
 The current public value is that IDT turns speculative theory work into a
@@ -167,6 +194,8 @@ of nature.
 
 ## Repository Layout
 
+- `AI_AGENT_GUIDE.md` — compact entry point for AI agents: graph workflow,
+  primitives, status boundaries, and perspective.
 - `ORIGIN.md` — project origin and motivation.
 - `PUBLIC_CLAIM_SHEET.md` — public claim boundary and current auditable
   successes.

@@ -76,12 +76,14 @@ class AiTheoryGraphTests(unittest.TestCase):
             sections_dir = root / "sections"
             sections_dir.mkdir()
             (sections_dir / "001-test.md").write_text("# Test Section\nBody\n", encoding="utf-8")
+            (root / "AI_AGENT_GUIDE.md").write_text("# AI Agent Guide\nBody\n", encoding="utf-8")
 
             graph = build_v8_ai_theory_graph(repo_root=root, manifest_path=manifest_path)
 
             nodes = rows_by_id(graph["nodes"])
             self.assertIn("src:Proofs/MetaLang/A.lean", nodes)
             self.assertIn("src:sections/001-test.md", nodes)
+            self.assertIn("src:AI_AGENT_GUIDE.md", nodes)
             self.assertIn("decl:Proofs.MetaLang.A.alpha", nodes)
             self.assertEqual("Test Section", nodes["src:sections/001-test.md"][3])
             edges = {tuple(edge) for edge in require_rows(graph["edges"])}

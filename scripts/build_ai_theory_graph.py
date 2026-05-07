@@ -29,6 +29,7 @@ DEFAULT_RULE_DIR = Path("rules/v8")
 DEFAULT_OUTPUT = Path("dist/idt-v8-ai-theory-graph.json")
 DEFAULT_SOURCE_GLOBS = (
     "README.md",
+    "AI_AGENT_GUIDE.md",
     "PUBLIC_CLAIM_SHEET.md",
     "PROTOLANGUAGE.md",
     "sections/*.md",
