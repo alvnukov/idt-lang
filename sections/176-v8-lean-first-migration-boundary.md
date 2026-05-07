@@ -24,6 +24,7 @@ Proofs/MetaLang/V8StatusTransitionPolicy.lean
 Proofs/MetaLang/V8DependencyGraphPolicy.lean
 Proofs/MetaLang/V8ProofArtifactContract.lean
 Proofs/MetaLang/V8LeanFirstTrustKernel.lean
+Proofs/MetaLang/V8CoreClaimDisciplineRules.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -43,7 +44,9 @@ This layer encodes:
    name, and check command;
 10. accepted theorem-card, transition, dependency, artifact, and legacy-checker
     ledgers compose into a single Lean-first trust kernel;
-11. the context-first primitive base:
+11. the v8 core claim-discipline specification has exactly the accepted six
+    rule shapes mirrored from the declarative input;
+12. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
