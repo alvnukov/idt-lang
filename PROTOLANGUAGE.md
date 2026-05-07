@@ -918,9 +918,27 @@ Each accepted version is:
 
 Version numbers follow semantic versioning: `MAJOR.MINOR.PATCH`.
 Annotated tags use the same version with a leading `v`, for example `v7.1.0`.
-`MAJOR` is for incompatible canonical baselines, `MINOR` for compatible section
-clusters or verifier capabilities, and `PATCH` for corrections that do not
-change the accepted theory surface.
+
+The tag number must describe the strongest accepted change in the release:
+
+- `MAJOR`: incompatible canonical baseline or proof-authority boundary change.
+  Examples: replacing the active primitive base, changing the meaning of claim
+  statuses, changing what counts as proof authority, or making old graph/rule
+  consumers semantically unsafe.
+- `MINOR`: compatible theory, IDT language, verifier, Lean artifact, graph, or
+  research-tooling capability that adds new accepted surface area. Examples:
+  new canonical sections, new theorem/proof cards, new declarative rule
+  collections, new graph layers or query capabilities, new CI proof gates, or a
+  newly accepted conditional route.
+- `PATCH`: correction, clarification, hardening, or bug fix that preserves the
+  accepted theory and language surface. Examples: typo fixes, stricter tests,
+  validator hardening, CI reliability fixes, or documentation clarification
+  without a new accepted claim or capability.
+
+If one release contains multiple categories, choose the highest applicable
+level. Do not use `PATCH` for a change that adds a new research-language
+capability, graph surface, proof artifact, theorem card, or accepted theory
+route.
 
 Historical full-file versions remain available through git tags.
 

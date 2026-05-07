@@ -294,7 +294,11 @@ python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.jso
 
 For changes to the accepted theory surface or the IDT research-language/tooling
 surface, publish a semantic-versioned GitHub Release after committing. The
-release workflow is what produces the raw graph asset for that version.
+release workflow is what produces the raw graph asset for that version. The tag
+must follow the versioning rule in [PROTOLANGUAGE.md](PROTOLANGUAGE.md): use
+`MAJOR` for incompatible baseline/proof-boundary changes, `MINOR` for compatible
+new theory/language/tooling surface, and `PATCH` only for corrections or
+hardening that preserve the accepted surface.
 
 Agents should load this compact graph first, inspect node/edge topology, then
 fetch exact source files by the recorded source path and hash only when more

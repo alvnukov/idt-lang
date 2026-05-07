@@ -45,7 +45,9 @@ GitHub Releases -> <release> -> idt-v8-ai-theory-graph.json
 
 New theory-surface or IDT research-language/tooling changes should be consumed
 through a semantic-versioned release. A commit without a tag/release may not yet
-have the release graph asset attached.
+have the release graph asset attached. Interpret tags by SemVer: `MAJOR` means
+an incompatible baseline or proof-boundary change, `MINOR` means compatible new
+theory/language/tooling surface, and `PATCH` means correction or hardening only.
 
 Use graph query commands before reading full files:
 
