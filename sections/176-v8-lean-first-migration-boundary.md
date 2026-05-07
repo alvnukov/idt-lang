@@ -58,6 +58,7 @@ Proofs/MetaLang/V8MigrationCompletionCriterion.lean
 Proofs/MetaLang/V8QmExperimentResidualLedger.lean
 Proofs/MetaLang/V8LeanExperimentProtocolBoundary.lean
 Proofs/MetaLang/V8ExperimentProgramReadiness.lean
+Proofs/MetaLang/V8CurrentStopReadiness.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -70,7 +71,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 234 theorem
+   The current Lean verification-discipline snapshot contains 239 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -147,9 +148,13 @@ This layer encodes:
 38. the experiment program has a Lean readiness gate: the protocol boundary is
     certified executable, but research handoff remains blocked while the 35 QM
     experiment residuals still need IDT v8 classification;
-39. a compressed full research-tree context packer is mandatory research-model
+39. current migration-stop readiness is explicitly false in Lean: Lean-eligible
+    migration is incomplete, residual encoding is not ready, and experiment
+    program readiness is blocked, while physical/QM formal-proof counts remain
+    zero;
+40. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-40. the context-first primitive base:
+41. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
