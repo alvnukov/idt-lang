@@ -53,6 +53,7 @@ Proofs/MetaLang/V8CurrentTheoremAndObligationLedger.lean
 Proofs/MetaLang/V8TheoremDependencyBoundaryLedger.lean
 Proofs/MetaLang/V8CurrentFrontierBlockers.lean
 Proofs/MetaLang/V8ResidualGateExperimentProfile.lean
+Proofs/MetaLang/V8ResidualEncodingRequirements.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -109,8 +110,9 @@ This layer encodes:
     input encoding;
 28. migration tasks are typed Lean blockers for later phases such as new CI,
     legacy archive, and research readiness;
-29. the current migration state is Lean migration, with legacy archive and
-    research readiness blocked until their task blockers are completed;
+29. the current migration state is Lean migration, and IDT v8 residual encoding,
+    migration stop, legacy archive, and research readiness remain blocked until
+    their task blockers are completed;
 30. all 23 current theorem cards and all 11 current QM core proof obligations
     are represented in Lean as typed status ledgers with zero formal-proof
     physical/QM closures;
@@ -121,9 +123,12 @@ This layer encodes:
 33. finite gates and QM experiments have a residual IDT v8 profile: 247 gates
     across a long-tail type surface, and 35 QM experiments awaiting IDT v8
     classification;
-34. a compressed full research-tree context packer is mandatory research-model
+34. IDT v8 residual encoding is not ready for migration stop while the 35 QM
+    experiments still need v8 classification and the residual boundary remains
+    declarative input rather than proof truth;
+35. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-35. the context-first primitive base:
+36. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)

@@ -20,9 +20,7 @@ def currentMigrationState : MigrationState :=
   {
     currentPhase := MigrationPhase.leanMigration,
     completedTasks := {
-      completed := [
-        MigrationTask.migrateLeanEligibleMaterial
-      ]
+      completed := []
     }
   }
 
@@ -50,8 +48,8 @@ theorem current_state_is_lean_migration :
     currentMigrationState.phaseIsCurrent MigrationPhase.leanMigration := by
   rfl
 
-theorem current_state_completed_lean_migration_task :
-    currentMigrationState.completedTasks.hasCompleted
+theorem current_state_has_not_completed_lean_migration_task :
+    ¬ currentMigrationState.completedTasks.hasCompleted
       MigrationTask.migrateLeanEligibleMaterial := by
   simp [
     currentMigrationState,
@@ -81,6 +79,23 @@ theorem current_state_has_not_completed_research_context_packer_task :
     currentMigrationState,
     CompletedMigrationTasks.hasCompleted,
   ]
+
+theorem current_state_blocks_idt_v8_residual_encoding :
+    currentMigrationState.phaseBlocked MigrationPhase.idtV8ResidualEncoding := by
+  intro unblocked
+  have completed :=
+    phase_unblock_requires_blocking_task_completion
+      currentMigrationState.completedTasks
+      MigrationPhase.idtV8ResidualEncoding
+      unblocked
+      {
+        task := MigrationTask.migrateLeanEligibleMaterial,
+        blocksPhase := MigrationPhase.idtV8ResidualEncoding,
+        requiredBeforePhase := MigrationPhase.idtV8ResidualEncoding
+      }
+      (by simp [currentTaskBlockers])
+      rfl
+  exact current_state_has_not_completed_lean_migration_task completed
 
 theorem current_state_blocks_legacy_archive :
     currentMigrationState.phaseBlocked MigrationPhase.archiveLegacy := by

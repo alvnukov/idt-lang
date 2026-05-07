@@ -38,6 +38,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8TheoremDependencyBoundaryLedger,
     `Proofs.MetaLang.V8CurrentFrontierBlockers,
     `Proofs.MetaLang.V8ResidualGateExperimentProfile,
+    `Proofs.MetaLang.V8ResidualEncodingRequirements,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,
