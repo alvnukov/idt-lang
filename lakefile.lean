@@ -13,6 +13,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8ExternalCheckerBoundary,
     `Proofs.MetaLang.V8StatusTransitionPolicy,
     `Proofs.MetaLang.V8DependencyGraphPolicy,
+    `Proofs.MetaLang.V8ProofArtifactContract,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,

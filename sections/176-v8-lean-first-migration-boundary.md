@@ -22,6 +22,7 @@ Proofs/MetaLang/V8CurrentStatusSnapshot.lean
 Proofs/MetaLang/V8ExternalCheckerBoundary.lean
 Proofs/MetaLang/V8StatusTransitionPolicy.lean
 Proofs/MetaLang/V8DependencyGraphPolicy.lean
+Proofs/MetaLang/V8ProofArtifactContract.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -37,7 +38,9 @@ This layer encodes:
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
    status dependencies;
-9. the context-first primitive base:
+9. formal proof upgrades require runnable Lean artifacts with path, theorem
+   name, and check command;
+10. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
