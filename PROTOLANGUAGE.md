@@ -913,6 +913,8 @@ Each accepted version is:
 1. edit the canonical module files;
 2. commit;
 3. annotate git tag.
+4. push the commit and tag;
+5. publish a GitHub Release for the tag.
 
 Version numbers follow semantic versioning: `MAJOR.MINOR.PATCH`.
 Annotated tags use the same version with a leading `v`, for example `v7.1.0`.
@@ -921,3 +923,9 @@ clusters or verifier capabilities, and `PATCH` for corrections that do not
 change the accepted theory surface.
 
 Historical full-file versions remain available through git tags.
+
+When a commit changes the theory surface or the IDT research-language/tooling
+surface, it must be released through this tag flow. The release workflow builds
+and validates the compact AI theory graph, then attaches the raw
+`idt-v8-ai-theory-graph.json` file as a GitHub Release asset. The graph is not
+stored in git.

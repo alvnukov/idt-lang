@@ -292,6 +292,10 @@ To generate the same file locally:
 python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.json
 ```
 
+For changes to the accepted theory surface or the IDT research-language/tooling
+surface, publish a semantic-versioned GitHub Release after committing. The
+release workflow is what produces the raw graph asset for that version.
+
 Agents should load this compact graph first, inspect node/edge topology, then
 fetch exact source files by the recorded source path and hash only when more
 context is needed. The graph is context and navigation metadata; it does not
