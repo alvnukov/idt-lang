@@ -135,6 +135,35 @@ class DeclarativeVerifierTests(unittest.TestCase):
         self.assertFalse(report.ok)
         self.assertEqual("declarative_field_value_not_allowed", report.issues[0].code)
 
+    def test_qm_core_obligation_status_must_remain_controlled(self) -> None:
+        manifest: JsonObject = {
+            "symbols": {},
+            "equations": [],
+            "derivations": [],
+            "finite_gates": [{"id": "gate_a", "type": "demo"}],
+            "qm_experiments": [],
+            "qm_universal_patterns": [],
+            "qm_core_proof_obligations": [
+                {
+                    "id": "obligation_a",
+                    "title": "Obligation A",
+                    "scope": "finite_core",
+                    "claim_boundary": "Not a proof.",
+                    "status": "formal_proof",
+                    "depends_on": [],
+                    "evidence_refs": ["gate_a"],
+                    "open_gap": "Still open.",
+                }
+            ],
+            "theorem_cards": [],
+        }
+        rules = load_rule_documents(ROOT / "rules/v8/qm_core_obligations.idtl.json")
+
+        report = verify_declarative_rule_documents(manifest, rules, ROOT)
+
+        self.assertFalse(report.ok)
+        self.assertEqual("declarative_field_value_not_allowed", report.issues[0].code)
+
 
 if __name__ == "__main__":
     unittest.main()

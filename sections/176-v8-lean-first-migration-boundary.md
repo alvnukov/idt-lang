@@ -22,7 +22,7 @@ lake exe idt_v8_protocol_status -- --check-boundary
 
 It imports the Lean protocol/readiness modules and reports the current
 certified-executable-check boundary. The `--check-boundary` mode currently
-checks the Lean-sourced migration snapshot: 243 verification-discipline theorem
+checks the Lean-sourced migration snapshot: 247 verification-discipline theorem
 declarations, 35 residual QM experiments, and zero theorem-card,
 QM-obligation, QM-experiment, physical, or QM formal-proof closures. It does
 not read the legacy manifest and does not upgrade any physical claim.
@@ -58,6 +58,7 @@ Proofs/MetaLang/V8VerifierDecommissionPolicy.lean
 Proofs/MetaLang/V8DeclarativeDocumentSchema.lean
 Proofs/MetaLang/V8CoreClaimDisciplineDocument.lean
 Proofs/MetaLang/V8QmExperimentResidualDocument.lean
+Proofs/MetaLang/V8QmCoreObligationDocument.lean
 Proofs/MetaLang/V8MigrationRoadmap.lean
 Proofs/MetaLang/V8ManifestInputBoundary.lean
 Proofs/MetaLang/V8ResidualMigrationLedger.lean
@@ -88,7 +89,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 243 theorem
+   The current Lean verification-discipline snapshot contains 247 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -116,8 +117,9 @@ This layer encodes:
 20. IDT v8 declarative verification documents have a Lean-side schema whose
     accepted rules must target allowed collections and use Lean-semantics
     assertions;
-21. the current core claim-discipline document and QM experiment residual
-    document are mirrored as accepted Lean objects;
+21. the current core claim-discipline document, QM experiment residual
+    document, and QM core obligation document are mirrored as accepted Lean
+    objects;
 22. the migration roadmap is fixed: Lean migration first, residual IDT v8
     encoding second, then stop; only after that are new CI, legacy archive,
     mandatory compressed research-context packing, and research handoff allowed;
@@ -125,9 +127,9 @@ This layer encodes:
 24. the current residual manifest surface is counted as IDT v8 input with no
     formal-proof status;
 25. the migration stop boundary is explicit: only after the core document,
-    QM experiment residual document, manifest input boundary, residual ledger,
-    and Python deprecation boundary are accepted can new CI, legacy archive,
-    and research handoff happen;
+    QM experiment residual document, QM core obligation document, manifest input
+    boundary, residual ledger, and Python deprecation boundary are accepted can
+    new CI, legacy archive, and research handoff happen;
 26. current formal proofs are scoped to verification discipline; theorem-card
     physical claims and QM core obligations still have zero formal-proof
     closures;

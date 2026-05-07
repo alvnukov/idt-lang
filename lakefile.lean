@@ -30,6 +30,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8DeclarativeDocumentSchema,
     `Proofs.MetaLang.V8CoreClaimDisciplineDocument,
     `Proofs.MetaLang.V8QmExperimentResidualDocument,
+    `Proofs.MetaLang.V8QmCoreObligationDocument,
     `Proofs.MetaLang.V8MigrationRoadmap,
     `Proofs.MetaLang.V8ManifestInputBoundary,
     `Proofs.MetaLang.V8ResidualMigrationLedger,
