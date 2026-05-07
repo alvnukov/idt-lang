@@ -15,6 +15,15 @@ def physicalFormalProofCount : Nat :=
 def qmFormalProofCount : Nat :=
   currentFormalProofScopeCounts.qmClosure
 
+def jsonString (value : String) : String :=
+  "\"" ++ value ++ "\""
+
+def residualExperimentIdsJson : String :=
+  let ids :=
+    currentExperimentProgramArchitecture.residualLedger.map
+      (fun entry => jsonString entry.manifestId)
+  "[" ++ String.intercalate "," ids ++ "]"
+
 def protocolStatusText : String :=
   String.intercalate "\n" [
     "IDT v8 Lean migration and experiment protocol status",
@@ -49,6 +58,8 @@ def main (args : List String) : IO Unit := do
       IO.println "boundary_check=ok"
     else
       throw <| IO.userError "boundary_check=failed"
+  else if args.contains "--residuals-json" then
+    IO.println residualExperimentIdsJson
   else if args.contains "--json" then
     let residualCount :=
       toString residualQmExperimentCount
@@ -60,6 +71,7 @@ def main (args : List String) : IO Unit := do
       ++ "\"proof_authority\":\"declarative_input_check\","
       ++ "\"verification_discipline_theorems\":" ++ verificationCount ++ ","
       ++ "\"residual_qm_experiments\":" ++ residualCount ++ ","
+      ++ "\"residual_qm_experiment_ids\":" ++ residualExperimentIdsJson ++ ","
       ++ "\"residuals_need_idt_v8_classification\":true,"
       ++ "\"can_assign_physical_formal_proof\":false,"
       ++ "\"theorem_card_formal_proofs\":0,"

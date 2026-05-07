@@ -50,6 +50,43 @@ inductive CurrentQmExperimentId where
   | quantumRandomWalk
 deriving DecidableEq, Repr
 
+def CurrentQmExperimentId.toManifestId : CurrentQmExperimentId → String
+  | .bornContextProbabilityTests => "born_context_probability_tests"
+  | .twoPathInterference => "two_path_interference"
+  | .finiteI3Actualization => "finite_i3_actualization"
+  | .tripleSlitSorkinParameter => "triple_slit_sorkin_parameter"
+  | .whichWayMarker => "which_way_marker"
+  | .quantumEraser => "quantum_eraser"
+  | .unitaryMeasurementContext => "unitary_measurement_context"
+  | .finiteInterferometerNetwork => "finite_interferometer_network"
+  | .projectiveRepeatability => "projective_repeatability"
+  | .bellChshTable => "bell_chsh_table"
+  | .bellChshFromAmplitudes => "bell_chsh_from_amplitudes"
+  | .singletAngleModel => "singlet_angle_model"
+  | .calibratedActionPhaseHoldout => "calibrated_action_phase_holdout"
+  | .decoherenceAndRecoverability => "decoherence_and_recoverability"
+  | .sternGerlachSingleAxis => "stern_gerlach_single_axis"
+  | .sequentialSternGerlach => "sequential_stern_gerlach"
+  | .delayedChoice => "delayed_choice"
+  | .aharonovBohmPhase => "aharonov_bohm_phase"
+  | .abFluxPeriod => "ab_flux_period"
+  | .ramseyInterferometry => "ramsey_interferometry"
+  | .rabiOscillation => "rabi_oscillation"
+  | .photoelectricThreshold => "photoelectric_threshold"
+  | .spectroscopyLines => "spectroscopy_lines"
+  | .tunnelingBarrier => "tunneling_barrier"
+  | .quantumZeno => "quantum_zeno"
+  | .hongOuMandel => "hong_ou_mandel"
+  | .antibunchingSinglePhoton => "antibunching_single_photon"
+  | .entanglementSwapping => "entanglement_swapping"
+  | .quantumTeleportation => "quantum_teleportation"
+  | .noCloning => "no_cloning"
+  | .ghzMerminContextuality => "ghz_mermin_contextuality"
+  | .kochenSpeckerContextuality => "kochen_specker_contextuality"
+  | .leggettGargTemporalContext => "leggett_garg_temporal_context"
+  | .weakMeasurement => "weak_measurement"
+  | .quantumRandomWalk => "quantum_random_walk"
+
 inductive ExperimentGateStatus where
   | executableGate
 deriving DecidableEq, Repr
@@ -64,6 +101,10 @@ structure QmExperimentResidualEntry where
   gateStatus : ExperimentGateStatus
   v8Classification : ExperimentV8ClassificationStatus
 deriving Repr
+
+def QmExperimentResidualEntry.manifestId
+    (entry : QmExperimentResidualEntry) : String :=
+  entry.id.toManifestId
 
 def currentQmExperimentResidualLedger : List QmExperimentResidualEntry :=
   [

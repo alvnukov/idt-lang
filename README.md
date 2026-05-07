@@ -73,7 +73,8 @@ Current auditable results:
   compatibility infrastructure; the target proof architecture is Lean + IDT v8.
   The first Lean-sourced experiment-protocol probe is available as
   `lake exe idt_v8_protocol_status`; use `--json` for machine-readable status
-  and `--check-boundary` for the current Lean boundary check. It reports the
+  `--residuals-json` for the Lean-sourced QM residual experiment list, and
+  `--check-boundary` for the current Lean boundary check. It reports the
   certified-executable-check boundary and does not assign physical/QM
   `formal_proof` status.
 - primitive-core contract: the current primitive surface is context-first.
