@@ -46,7 +46,11 @@ def protocolStatusText : String :=
     "proof_authority=declarative_input_check",
     s!"accepted_v8_documents={acceptedV8Documents}",
     s!"verification_discipline_theorems={verificationDisciplineTheoremCount}",
+    s!"manifest_input_total={boundarySnapshot.manifestInputTotal}",
+    s!"finite_gate_inputs={boundarySnapshot.finiteGateInputs}",
     s!"residual_qm_experiments={residualQmExperimentCount}",
+    s!"qm_core_obligation_inputs={boundarySnapshot.qmCoreObligationInputs}",
+    s!"theorem_card_inputs={boundarySnapshot.theoremCardInputs}",
     "residuals_need_idt_v8_classification=true",
     "can_assign_physical_formal_proof=false",
     s!"physical_formal_proofs={physicalFormalProofCount}",
@@ -61,7 +65,15 @@ def protocolStatusText : String :=
 def boundaryCheckPassed : Bool :=
   boundarySnapshot.acceptedDocumentCount == 5
     && boundarySnapshot.verificationDisciplineTheorems == 259
+    && boundarySnapshot.manifestInputTotal == 596
+    && boundarySnapshot.symbolInputs == 178
+    && boundarySnapshot.equationInputs == 15
+    && boundarySnapshot.derivationInputs == 81
+    && boundarySnapshot.finiteGateInputs == 247
     && boundarySnapshot.residualQmExperiments == 35
+    && boundarySnapshot.qmUniversalPatternInputs == 6
+    && boundarySnapshot.qmCoreObligationInputs == 11
+    && boundarySnapshot.theoremCardInputs == 23
     && boundarySnapshot.theoremCardFormalProofs == 0
     && boundarySnapshot.qmObligationFormalProofs == 0
     && boundarySnapshot.qmExperimentFormalProofs == 0
@@ -92,8 +104,16 @@ def main (args : List String) : IO Unit := do
       ++ "\"accepted_v8_documents\":" ++ documentCount ++ ","
       ++ "\"accepted_v8_document_ids\":" ++ acceptedV8DocumentIdsJson ++ ","
       ++ "\"verification_discipline_theorems\":" ++ verificationCount ++ ","
+      ++ "\"manifest_input_total\":" ++ toString boundarySnapshot.manifestInputTotal ++ ","
+      ++ "\"symbol_inputs\":" ++ toString boundarySnapshot.symbolInputs ++ ","
+      ++ "\"equation_inputs\":" ++ toString boundarySnapshot.equationInputs ++ ","
+      ++ "\"derivation_inputs\":" ++ toString boundarySnapshot.derivationInputs ++ ","
+      ++ "\"finite_gate_inputs\":" ++ toString boundarySnapshot.finiteGateInputs ++ ","
       ++ "\"residual_qm_experiments\":" ++ residualCount ++ ","
       ++ "\"residual_qm_experiment_ids\":" ++ residualExperimentIdsJson ++ ","
+      ++ "\"qm_universal_pattern_inputs\":" ++ toString boundarySnapshot.qmUniversalPatternInputs ++ ","
+      ++ "\"qm_core_obligation_inputs\":" ++ toString boundarySnapshot.qmCoreObligationInputs ++ ","
+      ++ "\"theorem_card_inputs\":" ++ toString boundarySnapshot.theoremCardInputs ++ ","
       ++ "\"residuals_need_idt_v8_classification\":true,"
       ++ "\"can_assign_physical_formal_proof\":false,"
       ++ "\"theorem_card_formal_proofs\":0,"

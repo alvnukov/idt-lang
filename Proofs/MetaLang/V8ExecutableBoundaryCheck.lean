@@ -15,7 +15,15 @@ This module contains the Lean-side invariants mirrored by
 structure ExecutableBoundarySnapshot where
   acceptedDocumentCount : Nat
   verificationDisciplineTheorems : Nat
+  manifestInputTotal : Nat
+  symbolInputs : Nat
+  equationInputs : Nat
+  derivationInputs : Nat
+  finiteGateInputs : Nat
   residualQmExperiments : Nat
+  qmUniversalPatternInputs : Nat
+  qmCoreObligationInputs : Nat
+  theoremCardInputs : Nat
   theoremCardFormalProofs : Nat
   qmObligationFormalProofs : Nat
   qmExperimentFormalProofs : Nat
@@ -27,8 +35,16 @@ def currentExecutableBoundarySnapshot : ExecutableBoundarySnapshot :=
     acceptedDocumentCount := currentAcceptedV8DocumentInventory.documentCount,
     verificationDisciplineTheorems :=
       currentFormalProofScopeCounts.verificationDiscipline,
+    manifestInputTotal := currentV8ManifestCollectionCounts.total,
+    symbolInputs := currentV8ManifestCollectionCounts.symbols,
+    equationInputs := currentV8ManifestCollectionCounts.equations,
+    derivationInputs := currentV8ManifestCollectionCounts.derivations,
+    finiteGateInputs := currentV8ManifestCollectionCounts.finiteGates,
     residualQmExperiments :=
       currentExperimentProgramArchitecture.residualLedger.length,
+    qmUniversalPatternInputs := currentV8ManifestCollectionCounts.qmUniversalPatterns,
+    qmCoreObligationInputs := currentV8ManifestCollectionCounts.qmCoreProofObligations,
+    theoremCardInputs := currentV8ManifestCollectionCounts.theoremCards,
     theoremCardFormalProofs := theoremCardFormalProofCount,
     qmObligationFormalProofs := qmCoreObligationFormalProofCount,
     qmExperimentFormalProofs := qmExperimentResidualFormalProofCount,
@@ -40,7 +56,15 @@ def ExecutableBoundarySnapshot.matchesCurrentBoundary
     (snapshot : ExecutableBoundarySnapshot) : Prop :=
   snapshot.acceptedDocumentCount = 5
     ∧ snapshot.verificationDisciplineTheorems = 259
+    ∧ snapshot.manifestInputTotal = 596
+    ∧ snapshot.symbolInputs = 178
+    ∧ snapshot.equationInputs = 15
+    ∧ snapshot.derivationInputs = 81
+    ∧ snapshot.finiteGateInputs = 247
     ∧ snapshot.residualQmExperiments = 35
+    ∧ snapshot.qmUniversalPatternInputs = 6
+    ∧ snapshot.qmCoreObligationInputs = 11
+    ∧ snapshot.theoremCardInputs = 23
     ∧ snapshot.theoremCardFormalProofs = 0
     ∧ snapshot.qmObligationFormalProofs = 0
     ∧ snapshot.qmExperimentFormalProofs = 0
@@ -49,19 +73,21 @@ def ExecutableBoundarySnapshot.matchesCurrentBoundary
 
 theorem current_executable_boundary_snapshot_matches :
     currentExecutableBoundarySnapshot.matchesCurrentBoundary := by
-  exact And.intro
-    current_accepted_v8_document_inventory_has_five_documents
-    (And.intro
-      rfl
-      (And.intro
-        current_qm_experiment_residual_ledger_count
-        (And.intro
-          theorem_cards_have_no_formal_physical_claims
-          (And.intro
-            qm_core_obligations_have_no_formal_qm_claims
-            (And.intro
-              current_qm_experiment_residuals_have_no_formal_proof_closure
-              current_formal_proofs_are_verification_scope_only)))))
+  unfold ExecutableBoundarySnapshot.matchesCurrentBoundary
+  simp [
+    currentExecutableBoundarySnapshot,
+    currentAcceptedV8DocumentInventory,
+    acceptedV8DocumentCount,
+    acceptedV8DocumentIds,
+    currentV8ManifestCollectionCounts,
+    ManifestCollectionCounts.total,
+    currentFormalProofScopeCounts,
+    currentExperimentProgramArchitecture,
+    currentQmExperimentResidualLedger,
+    theoremCardFormalProofCount,
+    qmCoreObligationFormalProofCount,
+    qmExperimentResidualFormalProofCount,
+  ]
 
 end V8
 end MetaLang

@@ -24,7 +24,7 @@ lake exe idt_v8_protocol_status -- --check-boundary
 It imports the Lean protocol/readiness modules and reports the current
 certified-executable-check boundary. The `--check-boundary` mode currently
 checks the Lean-sourced migration snapshot: 259 verification-discipline theorem
-declarations, 5 accepted IDT v8 documents, 35 residual QM experiments, and zero theorem-card,
+declarations, 596 manifest input objects, 5 accepted IDT v8 documents, 35 residual QM experiments, and zero theorem-card,
 QM-obligation, QM-experiment, physical, or QM formal-proof closures. It does
 not read the legacy manifest and does not upgrade any physical claim.
 
@@ -182,8 +182,8 @@ This layer encodes:
     documents: core claim discipline, finite-gate residuals, QM experiment
     residuals, QM core obligations, and theorem-card residuals;
 41. the executable boundary probe mirrors a Lean-side snapshot theorem for the
-    accepted-document count, verification theorem count, residual experiment
-    count, and zero physical/QM formal-proof closures;
+    accepted-document count, verification theorem count, manifest input counts,
+    residual experiment count, and zero physical/QM formal-proof closures;
 42. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
 43. the context-first primitive base:
