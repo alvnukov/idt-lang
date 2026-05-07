@@ -33,6 +33,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8FormalProofScopeBoundary,
     `Proofs.MetaLang.V8ResidualRouteClassification,
     `Proofs.MetaLang.V8TaskBlockerLedger,
+    `Proofs.MetaLang.V8CurrentMigrationState,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,
