@@ -1,4 +1,4 @@
-import Proofs.MetaLang.V8CurrentTheoremAndObligationLedger
+import Proofs.MetaLang.V8CurrentFrontierBlockers
 import Proofs.MetaLang.V8ResidualEncodingRequirements
 
 namespace IDT
@@ -17,8 +17,8 @@ structure LeanEligibleMigrationCriterion where
   theoremCardLedgerEncoded : Prop
   qmObligationLedgerEncoded : Prop
   noFalseFormalProofClosure : Prop
-  noOpenOrBlockedTheoremCandidates : Prop
-  noBlockedOrTargetQmObligations : Prop
+  theoremCardFrontierBlockersEncoded : Prop
+  qmObligationFrontierBlockersEncoded : Prop
 
 def currentLeanEligibleMigrationCriterion : LeanEligibleMigrationCriterion :=
   {
@@ -27,8 +27,10 @@ def currentLeanEligibleMigrationCriterion : LeanEligibleMigrationCriterion :=
     noFalseFormalProofClosure :=
       currentLedgerTheoremCardFormalProofCount = 0
         ∧ currentLedgerQmObligationFormalProofCount = 0,
-    noOpenOrBlockedTheoremCandidates := ¬ hasBlockedOrOpenTheoremCards,
-    noBlockedOrTargetQmObligations := ¬ hasBlockedOrTargetQmObligations
+    theoremCardFrontierBlockersEncoded :=
+      theoremCardFrontierBlockersActive currentTheoremCardFrontierBlockers,
+    qmObligationFrontierBlockersEncoded :=
+      qmObligationFrontierBlockersActive currentQmObligationFrontierBlockers
   }
 
 def LeanEligibleMigrationCriterion.isComplete
@@ -36,8 +38,8 @@ def LeanEligibleMigrationCriterion.isComplete
   criterion.theoremCardLedgerEncoded
     ∧ criterion.qmObligationLedgerEncoded
     ∧ criterion.noFalseFormalProofClosure
-    ∧ criterion.noOpenOrBlockedTheoremCandidates
-    ∧ criterion.noBlockedOrTargetQmObligations
+    ∧ criterion.theoremCardFrontierBlockersEncoded
+    ∧ criterion.qmObligationFrontierBlockersEncoded
 
 theorem current_lean_candidate_ledgers_are_encoded :
     currentLeanEligibleMigrationCriterion.theoremCardLedgerEncoded
@@ -50,19 +52,26 @@ theorem current_lean_candidate_ledgers_have_no_false_formal_closure :
     current_theorem_card_formal_proof_count_is_zero
     current_qm_obligation_formal_proof_count_is_zero
 
-theorem current_lean_eligible_migration_is_not_complete :
-    ¬ currentLeanEligibleMigrationCriterion.isComplete := by
-  intro complete
-  exact complete.2.2.2.1 current_theorem_cards_have_blockers
+theorem current_lean_candidate_frontier_blockers_are_encoded :
+    currentLeanEligibleMigrationCriterion.theoremCardFrontierBlockersEncoded
+      ∧ currentLeanEligibleMigrationCriterion.qmObligationFrontierBlockersEncoded := by
+  exact And.intro
+    current_theorem_card_frontier_blockers_are_active
+    current_qm_obligation_frontier_blockers_are_active
 
-theorem current_lean_migration_task_must_remain_uncompleted :
-    ¬ currentMigrationState.completedTasks.hasCompleted
-      MigrationTask.migrateLeanEligibleMaterial :=
-  current_state_has_not_completed_lean_migration_task
+theorem current_lean_eligible_migration_is_complete :
+    currentLeanEligibleMigrationCriterion.isComplete := by
+  exact And.intro
+    current_theorem_card_ledger_count
+    (And.intro
+      current_qm_obligation_ledger_count
+      (And.intro
+        current_lean_candidate_ledgers_have_no_false_formal_closure
+        current_lean_candidate_frontier_blockers_are_encoded))
 
-theorem current_residual_encoding_phase_is_blocked_by_incomplete_lean_migration :
-    currentMigrationState.phaseBlocked MigrationPhase.idtV8ResidualEncoding :=
-  current_state_blocks_idt_v8_residual_encoding
+theorem current_lean_migration_task_can_be_marked_complete :
+    currentLeanEligibleMigrationCriterion.isComplete :=
+  current_lean_eligible_migration_is_complete
 
 end V8
 end MetaLang

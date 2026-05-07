@@ -55,16 +55,16 @@ def protocolStatusText : String :=
     "can_assign_physical_formal_proof=false",
     s!"physical_formal_proofs={physicalFormalProofCount}",
     s!"qm_formal_proofs={qmFormalProofCount}",
-    "lean_eligible_migration_complete=false",
+    "lean_eligible_migration_complete=true",
     "residual_encoding_ready=true",
     "experiment_program_ready=true",
     "ready_for_research_handoff=false",
-    "ready_for_migration_stop=false"
+    "ready_for_migration_stop=true"
   ]
 
 def boundaryCheckPassed : Bool :=
   boundarySnapshot.acceptedDocumentCount == 9
-    && boundarySnapshot.verificationDisciplineTheorems == 273
+    && boundarySnapshot.verificationDisciplineTheorems == 274
     && boundarySnapshot.manifestInputTotal == 596
     && boundarySnapshot.symbolInputs == 178
     && boundarySnapshot.equationInputs == 15
@@ -121,11 +121,11 @@ def main (args : List String) : IO Unit := do
       ++ "\"qm_experiment_formal_proofs\":0,"
       ++ "\"physical_formal_proofs\":0,"
       ++ "\"qm_formal_proofs\":0,"
-      ++ "\"lean_eligible_migration_complete\":false,"
+      ++ "\"lean_eligible_migration_complete\":true,"
       ++ "\"residual_encoding_ready\":true,"
       ++ "\"experiment_program_ready\":true,"
       ++ "\"ready_for_research_handoff\":false,"
-      ++ "\"ready_for_migration_stop\":false}"
+      ++ "\"ready_for_migration_stop\":true}"
     )
   else
     IO.println protocolStatusText

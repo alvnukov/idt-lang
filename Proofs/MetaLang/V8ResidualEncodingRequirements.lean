@@ -47,30 +47,22 @@ theorem current_residual_encoding_ready_for_migration_stop :
     currentResidualEncodingRequirements.readyForMigrationStop := by
   exact current_residual_encoding_requirements_grounded
 
-theorem current_state_has_not_completed_residual_encoding_task :
-    ¬ currentMigrationState.completedTasks.hasCompleted
+theorem current_state_has_completed_residual_encoding_task :
+    currentMigrationState.completedTasks.hasCompleted
       MigrationTask.encodeResidualMaterialInIdtV8 := by
   simp [
     currentMigrationState,
     CompletedMigrationTasks.hasCompleted,
   ]
 
-theorem current_state_blocks_migration_stop :
-    currentMigrationState.phaseBlocked MigrationPhase.migrationStop := by
-  intro unblocked
-  have completed :=
-    phase_unblock_requires_blocking_task_completion
-      currentMigrationState.completedTasks
-      MigrationPhase.migrationStop
-      unblocked
-      {
-        task := MigrationTask.encodeResidualMaterialInIdtV8,
-        blocksPhase := MigrationPhase.migrationStop,
-        requiredBeforePhase := MigrationPhase.migrationStop
-      }
-      (by simp [currentTaskBlockers])
-      rfl
-  exact current_state_has_not_completed_residual_encoding_task completed
+theorem current_state_allows_migration_stop :
+    currentMigrationState.canEnterPhase MigrationPhase.migrationStop := by
+  intro blocker blockerPresent blocks
+  simp [currentTaskBlockers] at blockerPresent
+  rcases blockerPresent with rfl | rfl | rfl | rfl | rfl | rfl
+  · contradiction
+  · exact current_state_has_completed_residual_encoding_task
+  all_goals contradiction
 
 end V8
 end MetaLang

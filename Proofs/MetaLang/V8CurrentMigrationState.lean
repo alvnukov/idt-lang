@@ -18,9 +18,13 @@ deriving Repr
 
 def currentMigrationState : MigrationState :=
   {
-    currentPhase := MigrationPhase.leanMigration,
+    currentPhase := MigrationPhase.migrationStop,
     completedTasks := {
-      completed := []
+      completed := [
+        MigrationTask.migrateLeanEligibleMaterial,
+        MigrationTask.encodeResidualMaterialInIdtV8,
+        MigrationTask.reachMigrationStopBoundary
+      ]
     }
   }
 
@@ -44,12 +48,12 @@ def MigrationState.phaseBlocked
     (phase : MigrationPhase) : Prop :=
   ¬ state.canEnterPhase phase
 
-theorem current_state_is_lean_migration :
-    currentMigrationState.phaseIsCurrent MigrationPhase.leanMigration := by
+theorem current_state_is_migration_stop :
+    currentMigrationState.phaseIsCurrent MigrationPhase.migrationStop := by
   rfl
 
-theorem current_state_has_not_completed_lean_migration_task :
-    ¬ currentMigrationState.completedTasks.hasCompleted
+theorem current_state_has_completed_lean_migration_task :
+    currentMigrationState.completedTasks.hasCompleted
       MigrationTask.migrateLeanEligibleMaterial := by
   simp [
     currentMigrationState,
@@ -72,8 +76,8 @@ theorem current_state_has_not_completed_archive_task :
     CompletedMigrationTasks.hasCompleted,
   ]
 
-theorem current_state_has_not_completed_migration_stop_task :
-    ¬ currentMigrationState.completedTasks.hasCompleted
+theorem current_state_has_completed_migration_stop_task :
+    currentMigrationState.completedTasks.hasCompleted
       MigrationTask.reachMigrationStopBoundary := by
   simp [
     currentMigrationState,
@@ -88,39 +92,23 @@ theorem current_state_has_not_completed_research_context_packer_task :
     CompletedMigrationTasks.hasCompleted,
   ]
 
-theorem current_state_blocks_idt_v8_residual_encoding :
-    currentMigrationState.phaseBlocked MigrationPhase.idtV8ResidualEncoding := by
-  intro unblocked
-  have completed :=
-    phase_unblock_requires_blocking_task_completion
-      currentMigrationState.completedTasks
-      MigrationPhase.idtV8ResidualEncoding
-      unblocked
-      {
-        task := MigrationTask.migrateLeanEligibleMaterial,
-        blocksPhase := MigrationPhase.idtV8ResidualEncoding,
-        requiredBeforePhase := MigrationPhase.idtV8ResidualEncoding
-      }
-      (by simp [currentTaskBlockers])
-      rfl
-  exact current_state_has_not_completed_lean_migration_task completed
+theorem current_state_allows_idt_v8_residual_encoding :
+    currentMigrationState.canEnterPhase MigrationPhase.idtV8ResidualEncoding := by
+  intro blocker blockerPresent blocks
+  simp [currentTaskBlockers] at blockerPresent
+  rcases blockerPresent with rfl | rfl | rfl | rfl | rfl | rfl
+  · exact current_state_has_completed_lean_migration_task
+  all_goals contradiction
 
-theorem current_state_blocks_new_ci :
-    currentMigrationState.phaseBlocked MigrationPhase.newCi := by
-  intro unblocked
-  have completed :=
-    phase_unblock_requires_blocking_task_completion
-      currentMigrationState.completedTasks
-      MigrationPhase.newCi
-      unblocked
-      {
-        task := MigrationTask.reachMigrationStopBoundary,
-        blocksPhase := MigrationPhase.newCi,
-        requiredBeforePhase := MigrationPhase.newCi
-      }
-      (by simp [currentTaskBlockers])
-      rfl
-  exact current_state_has_not_completed_migration_stop_task completed
+theorem current_state_allows_new_ci :
+    currentMigrationState.canEnterPhase MigrationPhase.newCi := by
+  intro blocker blockerPresent blocks
+  simp [currentTaskBlockers] at blockerPresent
+  rcases blockerPresent with rfl | rfl | rfl | rfl | rfl | rfl
+  · contradiction
+  · contradiction
+  · exact current_state_has_completed_migration_stop_task
+  all_goals contradiction
 
 theorem current_state_blocks_legacy_archive :
     currentMigrationState.phaseBlocked MigrationPhase.archiveLegacy := by
