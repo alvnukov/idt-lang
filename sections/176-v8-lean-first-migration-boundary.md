@@ -22,7 +22,7 @@ lake exe idt_v8_protocol_status -- --check-boundary
 
 It imports the Lean protocol/readiness modules and reports the current
 certified-executable-check boundary. The `--check-boundary` mode currently
-checks the Lean-sourced migration snapshot: 242 verification-discipline theorem
+checks the Lean-sourced migration snapshot: 243 verification-discipline theorem
 declarations, 35 residual QM experiments, and zero theorem-card,
 QM-obligation, QM-experiment, physical, or QM formal-proof closures. It does
 not read the legacy manifest and does not upgrade any physical claim.
@@ -88,7 +88,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 242 theorem
+   The current Lean verification-discipline snapshot contains 243 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -125,8 +125,9 @@ This layer encodes:
 24. the current residual manifest surface is counted as IDT v8 input with no
     formal-proof status;
 25. the migration stop boundary is explicit: only after the core document,
-    manifest input boundary, residual ledger, and Python deprecation boundary
-    are accepted can new CI, legacy archive, and research handoff happen;
+    QM experiment residual document, manifest input boundary, residual ledger,
+    and Python deprecation boundary are accepted can new CI, legacy archive,
+    and research handoff happen;
 26. current formal proofs are scoped to verification discipline; theorem-card
     physical claims and QM core obligations still have zero formal-proof
     closures;
