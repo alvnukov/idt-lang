@@ -270,6 +270,7 @@ For local graph inspection:
 
 ```bash
 python scripts/query_ai_theory_graph.py summary
+python scripts/query_ai_theory_graph.py validate --repo-root . --check-source-hashes
 python scripts/query_ai_theory_graph.py show <node-id-or-alias>
 python scripts/query_ai_theory_graph.py neighbors <node-id-or-alias> --depth 2
 python scripts/query_ai_theory_graph.py sources <node-id-or-alias> --depth 1

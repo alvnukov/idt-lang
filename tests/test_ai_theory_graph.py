@@ -134,6 +134,40 @@ class AiTheoryGraphTests(unittest.TestCase):
             self.assertEqual("lean_only", contract["proof_authority"])
             self.assertEqual("residual_input_not_proof_truth", contract["manifest_role"])
 
+    def test_graph_build_is_deterministic(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            manifest_path = write_sample_manifest(root)
+
+            first = build_v8_ai_theory_graph(
+                repo_root=root,
+                manifest_path=manifest_path,
+                include_sources=False,
+            )
+            second = build_v8_ai_theory_graph(
+                repo_root=root,
+                manifest_path=manifest_path,
+                include_sources=False,
+            )
+
+            self.assertEqual(json.dumps(first, sort_keys=True), json.dumps(second, sort_keys=True))
+
+    def test_graph_can_exclude_manifest_residuals(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            manifest_path = write_sample_manifest(root)
+
+            graph = build_v8_ai_theory_graph(
+                repo_root=root,
+                manifest_path=manifest_path,
+                include_sources=False,
+                include_manifest_residuals=False,
+            )
+
+            nodes = rows_by_id(graph["nodes"])
+            self.assertIn("col:theorem_cards", nodes)
+            self.assertNotIn("res:theorem_cards:born_card", nodes)
+
 
 def write_sample_manifest(root: Path) -> Path:
     manifest = {

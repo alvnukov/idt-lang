@@ -43,7 +43,7 @@ jobs:
         run: python scripts/check_declarative_rules.py --json
 
       - name: IDT v8 declarative tests
-        run: python -m unittest tests.test_declarative_verifier tests.test_ai_theory_graph tests.test_ai_theory_graph_query
+        run: python -m unittest tests.test_declarative_verifier tests.test_ai_theory_graph tests.test_ai_theory_graph_query tests.test_ai_theory_graph_validation
 
       - name: Lean proof boundary
         run: lake build Proofs
@@ -56,6 +56,9 @@ jobs:
 
       - name: Build AI theory graph artifact
         run: python scripts/build_ai_theory_graph.py --output dist/idt-v8-ai-theory-graph.json
+
+      - name: Validate AI theory graph artifact
+        run: python scripts/query_ai_theory_graph.py --graph dist/idt-v8-ai-theory-graph.json validate --repo-root . --check-source-hashes
 
       - name: Upload AI theory graph artifact
         uses: actions/upload-artifact@v4

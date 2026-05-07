@@ -21,6 +21,7 @@ from theory_verifier.ai_theory_graph import (  # noqa: E402
     GraphNode as Node,
     JsonObject,
     graph_json_text,
+    validate_graph_payload,
 )
 
 DEFAULT_MANIFEST = Path("theory_verifier_manifest.json")
@@ -156,7 +157,7 @@ def build_v8_ai_theory_graph(
         focus_ids = resolve_focus(focus, aliases, {node.identifier for node in nodes})
         nodes, edges = focus_subgraph(nodes, edges, focus_ids, depth)
 
-    return {
+    graph: JsonObject = {
         "schema": SCHEMA,
         "contract": {
             "purpose": "compressed_source_grounded_context_for_ai_agents",
@@ -200,6 +201,8 @@ def build_v8_ai_theory_graph(
         "nodes": [node.row() for node in nodes],
         "edges": [edge.row() for edge in edges],
     }
+    validate_graph_payload(graph)
+    return graph
 
 
 def add_collection_nodes(nodes: list[Node]) -> None:

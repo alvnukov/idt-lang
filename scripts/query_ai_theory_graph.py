@@ -21,6 +21,7 @@ from theory_verifier.ai_theory_graph import (  # noqa: E402
     neighbor_subgraph,
     show_node,
     source_pointers,
+    validate_source_file_hashes,
 )
 
 
@@ -35,6 +36,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pretty", action="store_true")
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("summary", help="Show graph contract, coverage, and compact counts.")
+    validate_parser = subparsers.add_parser(
+        "validate",
+        help="Validate graph schema, contract, rows, coverage, links, and optional source hashes.",
+    )
+    validate_parser.add_argument("--repo-root", type=Path, default=Path("."))
+    validate_parser.add_argument("--check-source-hashes", action="store_true")
     show_parser = subparsers.add_parser("show", help="Show one node plus incoming/outgoing edges.")
     show_parser.add_argument("query")
     refs_parser = subparsers.add_parser("refs", help="Show incoming edges for one node.")
@@ -48,9 +55,26 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def run_command(graph: TheoryGraph, command: str, query: str, depth: int) -> JsonObject:
+def run_command(
+    graph: TheoryGraph,
+    command: str,
+    query: str,
+    depth: int,
+    repo_root: Path,
+    check_source_hashes: bool,
+) -> JsonObject:
     if command == "summary":
         return graph_summary(graph)
+    if command == "validate":
+        if check_source_hashes:
+            validate_source_file_hashes(graph, repo_root)
+        return {
+            "ok": True,
+            "schema": graph.schema,
+            "nodes": len(graph.nodes),
+            "edges": len(graph.edges),
+            "source_hashes_checked": check_source_hashes,
+        }
     if command == "show":
         return show_node(graph, query)
     if command == "refs":
@@ -69,9 +93,12 @@ def main(argv: Sequence[str] | None = None, output: TextIO | None = None) -> int
     query = raw_query if isinstance(raw_query, str) else ""
     raw_depth = getattr(args, "depth", 1)
     depth = raw_depth if isinstance(raw_depth, int) else 1
+    raw_repo_root = getattr(args, "repo_root", Path("."))
+    repo_root = raw_repo_root if isinstance(raw_repo_root, Path) else Path(".")
+    check_source_hashes = bool(getattr(args, "check_source_hashes", False))
     try:
         graph = load_theory_graph(Path(args.graph))
-        result = run_command(graph, str(args.command), query, depth)
+        result = run_command(graph, str(args.command), query, depth, repo_root, check_source_hashes)
     except V8GraphQueryError as error:
         parser.exit(2, f"query_ai_theory_graph: {error}\n")
     write_json(result, output if output is not None else sys.stdout, bool(args.pretty))

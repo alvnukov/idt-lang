@@ -9,12 +9,14 @@ from pathlib import Path
 from scripts.build_ai_theory_graph import build_v8_ai_theory_graph, write_graph
 from scripts.query_ai_theory_graph import main
 from theory_verifier.ai_theory_graph import (
+    V8GraphQueryError,
     graph_summary,
     incoming_refs,
     load_theory_graph,
     neighbor_subgraph,
     show_node,
     source_pointers,
+    theory_graph_from_payload,
 )
 
 
@@ -112,6 +114,72 @@ class AiTheoryGraphQueryTests(unittest.TestCase):
             self.assertNotIn("\n  ", raw)
             parsed = json.loads(raw)
             self.assertEqual("res:theorem_cards:born_card", parsed["resolved"])
+
+    def test_cli_validate_reports_ok(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            graph_path = write_sample_graph(Path(raw_dir), include_sources=False)
+            output = io.StringIO()
+
+            exit_code = main(["--graph", str(graph_path), "validate"], output)
+
+            self.assertEqual(0, exit_code)
+            parsed = json.loads(output.getvalue())
+            self.assertEqual(True, parsed["ok"])
+            self.assertEqual("idt-v8-ai-theory-graph/1", parsed["schema"])
+
+    def test_cli_validate_can_check_source_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            proof_dir = root / "Proofs" / "MetaLang"
+            proof_dir.mkdir(parents=True)
+            (proof_dir / "A.lean").write_text("def alpha := 1\n", encoding="utf-8")
+            graph_path = write_sample_graph(root, include_sources=True)
+            output = io.StringIO()
+
+            exit_code = main(
+                [
+                    "--graph",
+                    str(graph_path),
+                    "validate",
+                    "--repo-root",
+                    str(root),
+                    "--check-source-hashes",
+                ],
+                output,
+            )
+
+            self.assertEqual(0, exit_code)
+            parsed = json.loads(output.getvalue())
+            self.assertEqual(True, parsed["source_hashes_checked"])
+
+    def test_unknown_alias_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            graph_path = write_sample_graph(Path(raw_dir), include_sources=False)
+
+            with self.assertRaisesRegex(V8GraphQueryError, "unknown graph node"):
+                show_node(load_theory_graph(graph_path), "missing_alias")
+
+    def test_ambiguous_alias_is_rejected(self) -> None:
+        graph = theory_graph_from_payload(
+            {
+                "schema": "idt-v8-ai-theory-graph/1",
+                "contract": {
+                    "proof_authority": "lean_only",
+                    "manifest_role": "residual_input_not_proof_truth",
+                    "claim_upgrade_policy": "no_artifact_no_upgrade",
+                    "full_text_policy": "use source paths and sha16 digests to fetch exact repository files",
+                },
+                "coverage": {"nodes": 2, "edges": 0},
+                "nodes": [
+                    ["res:derivations:shared", "manifest.residual", "", "shared", "fixture", "0123456789abcdef"],
+                    ["res:symbols:shared", "manifest.residual", "", "shared", "fixture", "fedcba9876543210"],
+                ],
+                "edges": [],
+            }
+        )
+
+        with self.assertRaisesRegex(V8GraphQueryError, "ambiguous graph alias"):
+            show_node(graph, "shared")
 
 
 def write_sample_graph(root: Path, include_sources: bool) -> Path:
