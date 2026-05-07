@@ -1,6 +1,7 @@
 import Proofs.MetaLang.V8ResidualMigrationLedger
 import Proofs.MetaLang.V8QmExperimentResidualDocument
 import Proofs.MetaLang.V8QmCoreObligationDocument
+import Proofs.MetaLang.V8TheoremCardResidualDocument
 
 namespace IDT
 namespace MetaLang
@@ -15,6 +16,7 @@ legacy archive, or research handoff. The stop boundary requires:
 * accepted Lean mirror of the core IDT v8 discipline document;
 * accepted Lean mirror of the QM experiment residual discipline document;
 * accepted Lean mirror of the QM core obligation discipline document;
+* accepted Lean mirror of the theorem-card residual discipline document;
 * accepted manifest input boundary;
 * accepted residual migration ledger;
 * old Python verifier marked deprecated compatibility only.
@@ -27,6 +29,8 @@ structure MigrationStopBoundary where
     v8QmExperimentResidualDocument.isAcceptedForV8
   qmCoreObligationDocumentAccepted :
     v8QmCoreObligationDocument.isAcceptedForV8
+  theoremCardResidualDocumentAccepted :
+    v8TheoremCardResidualDocument.isAcceptedForV8
   manifestBoundaryAccepted :
     currentManifestInputBoundary.isAcceptedForV8
   residualBoundaryAccepted :
@@ -41,6 +45,8 @@ def currentMigrationStopBoundary : MigrationStopBoundary :=
       v8_qm_experiment_residual_document_is_accepted,
     qmCoreObligationDocumentAccepted :=
       v8_qm_core_obligation_document_is_accepted,
+    theoremCardResidualDocumentAccepted :=
+      v8_theorem_card_residual_document_is_accepted,
     manifestBoundaryAccepted := current_manifest_input_boundary_is_accepted_for_v8,
     residualBoundaryAccepted := current_residual_migration_boundary_is_accepted,
     pythonDeprecated := old_python_verifier_is_deprecated_compatibility
@@ -97,6 +103,10 @@ theorem current_stop_boundary_accepts_qm_experiment_residual_document :
 theorem current_stop_boundary_accepts_qm_core_obligation_document :
     v8QmCoreObligationDocument.isAcceptedForV8 :=
   currentMigrationStopBoundary.qmCoreObligationDocumentAccepted
+
+theorem current_stop_boundary_accepts_theorem_card_residual_document :
+    v8TheoremCardResidualDocument.isAcceptedForV8 :=
+  currentMigrationStopBoundary.theoremCardResidualDocumentAccepted
 
 end V8
 end MetaLang

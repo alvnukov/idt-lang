@@ -164,6 +164,35 @@ class DeclarativeVerifierTests(unittest.TestCase):
         self.assertFalse(report.ok)
         self.assertEqual("declarative_field_value_not_allowed", report.issues[0].code)
 
+    def test_theorem_card_residual_status_must_remain_controlled(self) -> None:
+        manifest: JsonObject = {
+            "symbols": {},
+            "equations": [],
+            "derivations": [],
+            "finite_gates": [{"id": "gate_a", "type": "demo"}],
+            "qm_experiments": [],
+            "qm_universal_patterns": [],
+            "qm_core_proof_obligations": [],
+            "theorem_cards": [
+                {
+                    "id": "card_a",
+                    "statement": "A theorem-card residual.",
+                    "physical_scope": "finite demo",
+                    "role": "theorem",
+                    "proof_status": "formal_proof",
+                    "dependencies": ["gate_a"],
+                    "verifier": "gate_a",
+                    "forbidden_claims": ["does_not_prove_demo"],
+                }
+            ],
+        }
+        rules = load_rule_documents(ROOT / "rules/v8/theorem_card_residuals.idtl.json")
+
+        report = verify_declarative_rule_documents(manifest, rules, ROOT)
+
+        self.assertFalse(report.ok)
+        self.assertEqual("declarative_field_value_not_allowed", report.issues[0].code)
+
 
 if __name__ == "__main__":
     unittest.main()
