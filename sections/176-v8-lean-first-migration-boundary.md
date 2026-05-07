@@ -46,6 +46,7 @@ Proofs/MetaLang/V8ManifestInputBoundary.lean
 Proofs/MetaLang/V8ResidualMigrationLedger.lean
 Proofs/MetaLang/V8MigrationStopBoundary.lean
 Proofs/MetaLang/V8FormalProofScopeBoundary.lean
+Proofs/MetaLang/V8ResidualRouteClassification.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -98,7 +99,9 @@ This layer encodes:
 26. current formal proofs are scoped to verification discipline; theorem-card
     physical claims and QM core obligations still have zero formal-proof
     closures;
-27. the context-first primitive base:
+27. residual material is routed either to Lean migration or to IDT v8 residual
+    input encoding;
+28. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
