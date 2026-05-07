@@ -27,6 +27,7 @@ Proofs/MetaLang/V8LeanFirstTrustKernel.lean
 Proofs/MetaLang/V8CoreClaimDisciplineRules.lean
 Proofs/MetaLang/V8ControlledVocabularyInventory.lean
 Proofs/MetaLang/V8ManifestCollectionContract.lean
+Proofs/MetaLang/V8RuleManifestGrounding.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -52,7 +53,9 @@ This layer encodes:
     kept distinct from standard scientific/formal-methods vocabulary;
 13. the v8 manifest reference-index collection set is fixed in Lean without
     freezing current manifest collection sizes;
-14. the context-first primitive base:
+14. every v8 core rule target collection is grounded in the Lean manifest
+    collection contract;
+15. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
