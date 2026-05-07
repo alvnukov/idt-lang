@@ -72,6 +72,14 @@ theorem current_state_has_not_completed_archive_task :
     CompletedMigrationTasks.hasCompleted,
   ]
 
+theorem current_state_has_not_completed_migration_stop_task :
+    ¬ currentMigrationState.completedTasks.hasCompleted
+      MigrationTask.reachMigrationStopBoundary := by
+  simp [
+    currentMigrationState,
+    CompletedMigrationTasks.hasCompleted,
+  ]
+
 theorem current_state_has_not_completed_research_context_packer_task :
     ¬ currentMigrationState.completedTasks.hasCompleted
       MigrationTask.buildResearchContextPacker := by
@@ -97,6 +105,23 @@ theorem current_state_blocks_idt_v8_residual_encoding :
       rfl
   exact current_state_has_not_completed_lean_migration_task completed
 
+theorem current_state_blocks_new_ci :
+    currentMigrationState.phaseBlocked MigrationPhase.newCi := by
+  intro unblocked
+  have completed :=
+    phase_unblock_requires_blocking_task_completion
+      currentMigrationState.completedTasks
+      MigrationPhase.newCi
+      unblocked
+      {
+        task := MigrationTask.reachMigrationStopBoundary,
+        blocksPhase := MigrationPhase.newCi,
+        requiredBeforePhase := MigrationPhase.newCi
+      }
+      (by simp [currentTaskBlockers])
+      rfl
+  exact current_state_has_not_completed_migration_stop_task completed
+
 theorem current_state_blocks_legacy_archive :
     currentMigrationState.phaseBlocked MigrationPhase.archiveLegacy := by
   intro unblocked
@@ -113,6 +138,23 @@ theorem current_state_blocks_legacy_archive :
       (by simp [currentTaskBlockers])
       rfl
   exact current_state_has_not_completed_new_ci_task completed
+
+theorem current_state_blocks_research_context_packer :
+    currentMigrationState.phaseBlocked MigrationPhase.researchContextPacker := by
+  intro unblocked
+  have completed :=
+    phase_unblock_requires_blocking_task_completion
+      currentMigrationState.completedTasks
+      MigrationPhase.researchContextPacker
+      unblocked
+      {
+        task := MigrationTask.archiveLegacyVerifier,
+        blocksPhase := MigrationPhase.researchContextPacker,
+        requiredBeforePhase := MigrationPhase.researchContextPacker
+      }
+      (by simp [currentTaskBlockers])
+      rfl
+  exact current_state_has_not_completed_archive_task completed
 
 theorem current_state_blocks_research_ready :
     currentMigrationState.phaseBlocked MigrationPhase.researchReady := by

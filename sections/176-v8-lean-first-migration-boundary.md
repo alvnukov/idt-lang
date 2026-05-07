@@ -114,8 +114,8 @@ This layer encodes:
 28. migration tasks are typed Lean blockers for later phases such as new CI,
     legacy archive, and research readiness;
 29. the current migration state is Lean migration, and IDT v8 residual encoding,
-    migration stop, legacy archive, and research readiness remain blocked until
-    their task blockers are completed;
+    migration stop, new CI, legacy archive, research context packing, and
+    research readiness remain blocked until their task blockers are completed;
 30. all 23 current theorem cards and all 11 current QM core proof obligations
     are represented in Lean as typed status ledgers with zero formal-proof
     physical/QM closures;
