@@ -1,6 +1,7 @@
 import Proofs.MetaLang.V8CurrentStopReadiness
 import Proofs.MetaLang.V8FormalProofScopeBoundary
 import Proofs.MetaLang.V8AcceptedDocumentInventory
+import Proofs.MetaLang.V8ExecutableBoundaryCheck
 
 open IDT.MetaLang.V8
 
@@ -17,7 +18,10 @@ def qmFormalProofCount : Nat :=
   currentFormalProofScopeCounts.qmClosure
 
 def acceptedV8Documents : Nat :=
-  currentAcceptedV8DocumentInventory.documentCount
+  currentExecutableBoundarySnapshot.acceptedDocumentCount
+
+def boundarySnapshot : ExecutableBoundarySnapshot :=
+  currentExecutableBoundarySnapshot
 
 def jsonString (value : String) : String :=
   "\"" ++ value ++ "\""
@@ -55,14 +59,14 @@ def protocolStatusText : String :=
   ]
 
 def boundaryCheckPassed : Bool :=
-  residualQmExperimentCount == 35
-    && acceptedV8Documents == 4
-    && verificationDisciplineTheoremCount == 254
-    && theoremCardFormalProofCount == 0
-    && qmCoreObligationFormalProofCount == 0
-    && qmExperimentResidualFormalProofCount == 0
-    && physicalFormalProofCount == 0
-    && qmFormalProofCount == 0
+  boundarySnapshot.acceptedDocumentCount == 4
+    && boundarySnapshot.verificationDisciplineTheorems == 255
+    && boundarySnapshot.residualQmExperiments == 35
+    && boundarySnapshot.theoremCardFormalProofs == 0
+    && boundarySnapshot.qmObligationFormalProofs == 0
+    && boundarySnapshot.qmExperimentFormalProofs == 0
+    && boundarySnapshot.physicalFormalProofs == 0
+    && boundarySnapshot.qmFormalProofs == 0
 
 def main (args : List String) : IO Unit := do
   if args.contains "--check-boundary" then

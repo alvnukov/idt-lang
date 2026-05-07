@@ -51,6 +51,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8ExperimentProgramReadiness,
     `Proofs.MetaLang.V8CurrentStopReadiness,
     `Proofs.MetaLang.V8AcceptedDocumentInventory,
+    `Proofs.MetaLang.V8ExecutableBoundaryCheck,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,

@@ -23,7 +23,7 @@ lake exe idt_v8_protocol_status -- --check-boundary
 
 It imports the Lean protocol/readiness modules and reports the current
 certified-executable-check boundary. The `--check-boundary` mode currently
-checks the Lean-sourced migration snapshot: 254 verification-discipline theorem
+checks the Lean-sourced migration snapshot: 255 verification-discipline theorem
 declarations, 35 residual QM experiments, and zero theorem-card,
 QM-obligation, QM-experiment, physical, or QM formal-proof closures. It does
 not read the legacy manifest and does not upgrade any physical claim.
@@ -80,6 +80,7 @@ Proofs/MetaLang/V8LeanExperimentProtocolBoundary.lean
 Proofs/MetaLang/V8ExperimentProgramReadiness.lean
 Proofs/MetaLang/V8CurrentStopReadiness.lean
 Proofs/MetaLang/V8AcceptedDocumentInventory.lean
+Proofs/MetaLang/V8ExecutableBoundaryCheck.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -92,7 +93,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 254 theorem
+   The current Lean verification-discipline snapshot contains 255 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -179,9 +180,12 @@ This layer encodes:
 40. the accepted IDT v8 document inventory currently has four Lean-accepted
     documents: core claim discipline, QM experiment residuals, QM core
     obligations, and theorem-card residuals;
-41. a compressed full research-tree context packer is mandatory research-model
+41. the executable boundary probe mirrors a Lean-side snapshot theorem for the
+    accepted-document count, verification theorem count, residual experiment
+    count, and zero physical/QM formal-proof closures;
+42. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-42. the context-first primitive base:
+43. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
