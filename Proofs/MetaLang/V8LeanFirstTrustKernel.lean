@@ -11,8 +11,8 @@ V8 Lean-first trust kernel.
 
 This file composes the already migrated verification-discipline layers. It is
 the current Lean-side trust boundary: accepted theorem cards, status
-transitions, dependencies, proof-artifact upgrades, and the legacy Python
-boundary must all be accepted together.
+transitions, dependencies, proof-artifact upgrades, and the deprecated Python
+compatibility boundary must all be accepted together.
 -/
 
 structure LeanFirstTrustKernel where
@@ -20,7 +20,7 @@ structure LeanFirstTrustKernel where
   transitionLedger : StatusTransitionLedger
   dependencyLedger : DependencyClaimLedger
   proofArtifactRequests : List ProofArtifactUpgradeRequest
-  legacyBoundary : LegacyPythonVerifierBoundary
+  legacyBoundary : DeprecatedPythonVerifierBoundary
   theoremLedgerAccepted : theoremLedger.isAcceptedForV8
   transitionLedgerAccepted : transitionLedger.isAcceptedForV8
   dependencyLedgerAccepted : dependencyLedger.isAcceptedForV8
@@ -75,7 +75,13 @@ theorem lean_first_kernel_legacy_python_boundary_is_finite_only
       ∧ kernel.legacyBoundary.forbiddenStatus = ClaimStatus.formalProof :=
   And.intro
     kernel.legacyBoundaryAccepted.right.left
-    kernel.legacyBoundaryAccepted.right.right
+    kernel.legacyBoundaryAccepted.right.right.left
+
+theorem lean_first_kernel_legacy_python_targets_lean_decommission
+    (kernel : LeanFirstTrustKernel) :
+    kernel.legacyBoundary.decommissionTarget =
+      ExternalCheckerKind.leanProofKernel :=
+  kernel.legacyBoundaryAccepted.right.right.right
 
 end V8
 end MetaLang

@@ -8,6 +8,8 @@ inductive ExternalCheckerKind where
   | numericGate
   | dataProvenanceGate
   | legacyManifestGate
+  | idtV8DeclarativeGate
+  | leanProofKernel
   | ciPipeline
 deriving DecidableEq, Repr
 
@@ -46,36 +48,55 @@ theorem finite_verifier_pass_is_not_formal_proof
   rw [finitePass] at formal
   contradiction
 
-structure LegacyPythonVerifierBoundary where
+structure DeprecatedPythonVerifierBoundary where
   checker : ExternalChecker
   allowedStatus : ClaimStatus
   forbiddenStatus : ClaimStatus
+  decommissionTarget : ExternalCheckerKind
 
-def LegacyPythonVerifierBoundary.valid
-    (boundary : LegacyPythonVerifierBoundary) : Prop :=
+def DeprecatedPythonVerifierBoundary.valid
+    (boundary : DeprecatedPythonVerifierBoundary) : Prop :=
   boundary.checker.kind = ExternalCheckerKind.legacyManifestGate
     ∧ boundary.allowedStatus = ClaimStatus.finiteVerifierPass
     ∧ boundary.forbiddenStatus = ClaimStatus.formalProof
+    ∧ boundary.decommissionTarget = ExternalCheckerKind.leanProofKernel
 
-def legacyPythonVerifierBoundary : LegacyPythonVerifierBoundary :=
+def deprecatedPythonVerifierBoundary : DeprecatedPythonVerifierBoundary :=
   {
     checker := {
       identifier := "legacy_python_manifest_verifier",
       kind := ExternalCheckerKind.legacyManifestGate,
       command := "python3 -m theory_verifier --json theory_verifier_manifest.json",
-      trustedScope := "finite_manifest_safety_net_not_formal_proof"
+      trustedScope := "deprecated_compatibility_only_not_proof_truth"
     },
     allowedStatus := ClaimStatus.finiteVerifierPass,
-    forbiddenStatus := ClaimStatus.formalProof
+    forbiddenStatus := ClaimStatus.formalProof,
+    decommissionTarget := ExternalCheckerKind.leanProofKernel
   }
 
+theorem deprecated_python_verifier_boundary_is_valid :
+    deprecatedPythonVerifierBoundary.valid := by
+  exact And.intro rfl (And.intro rfl (And.intro rfl rfl))
+
+theorem deprecated_python_verifier_cannot_assign_formal_proof :
+    deprecatedPythonVerifierBoundary.forbiddenStatus = ClaimStatus.formalProof := by
+  rfl
+
+theorem deprecated_python_verifier_targets_lean_decommission :
+    deprecatedPythonVerifierBoundary.decommissionTarget =
+      ExternalCheckerKind.leanProofKernel := by
+  rfl
+
+abbrev LegacyPythonVerifierBoundary := DeprecatedPythonVerifierBoundary
+abbrev legacyPythonVerifierBoundary := deprecatedPythonVerifierBoundary
+
 theorem legacy_python_verifier_boundary_is_valid :
-    legacyPythonVerifierBoundary.valid := by
-  exact And.intro rfl (And.intro rfl rfl)
+    legacyPythonVerifierBoundary.valid :=
+  deprecated_python_verifier_boundary_is_valid
 
 theorem legacy_python_verifier_cannot_assign_formal_proof :
-    legacyPythonVerifierBoundary.forbiddenStatus = ClaimStatus.formalProof := by
-  rfl
+    legacyPythonVerifierBoundary.forbiddenStatus = ClaimStatus.formalProof :=
+  deprecated_python_verifier_cannot_assign_formal_proof
 
 end V8
 end MetaLang

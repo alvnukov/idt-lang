@@ -8,7 +8,7 @@ The v8 direction is Lean-first:
 proved claim -> Lean artifact
 research route -> IDT declarative language / manifest
 numeric gate -> executable trusted checker
-legacy Python verifier -> safety net, not proof source of truth
+legacy Python verifier -> deprecated compatibility only, not proof source of truth
 ```
 
 The migration freezes new physical research claims until the already recorded
@@ -38,6 +38,7 @@ Proofs/MetaLang/V8AssertionPredicateSemantics.lean
 Proofs/MetaLang/V8CoreRuleSemanticClosure.lean
 Proofs/MetaLang/V8DeclarativeReportContract.lean
 Proofs/MetaLang/V8ClaimStrengthInvariant.lean
+Proofs/MetaLang/V8VerifierDecommissionPolicy.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -48,8 +49,8 @@ This layer encodes:
 3. `derived` claims cannot depend on open or blocked dependencies;
 4. theorem cards and proof obligations must preserve machine boundaries;
 5. the current proof-status snapshot has no false `formal_proof` closure;
-6. Python/numeric/data gates may supply finite verifier passes but not
-   `formal_proof`;
+6. Python/numeric/data gates may supply finite verifier passes only while they
+   remain compatibility checks, but not `formal_proof`;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
    status dependencies;
@@ -71,7 +72,9 @@ This layer encodes:
 17. declarative reports with issues are not accepted, and accepted core reports
     must check the six v8 core rules;
 18. conclusion strength must not exceed evidence strength;
-19. the context-first primitive base:
+19. the old Python verifier is deprecated compatibility only and targets
+    decommission in favor of the Lean proof kernel;
+20. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)

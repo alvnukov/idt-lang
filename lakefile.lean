@@ -23,6 +23,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8CoreRuleSemanticClosure,
     `Proofs.MetaLang.V8DeclarativeReportContract,
     `Proofs.MetaLang.V8ClaimStrengthInvariant,
+    `Proofs.MetaLang.V8VerifierDecommissionPolicy,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,

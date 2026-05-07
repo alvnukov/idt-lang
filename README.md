@@ -69,8 +69,8 @@ Current auditable results:
   theorem cards.
 - v8 Lean-first migration: the language-level proof-status boundary,
   context-first primitive base, and current stopped QM frontier are now encoded
-  in Lean under `Proofs/MetaLang/`. Python remains a legacy verifier and
-  manifest/research-graph safety net, not the target source of proof truth.
+  in Lean under `Proofs/MetaLang/`. The old Python verifier is deprecated
+  compatibility infrastructure; the target proof architecture is Lean + IDT v8.
 - primitive-core contract: the current primitive surface is context-first.
   Admissible context covers, local outcome-event presheaves, inheritance
   transition families, facticization witnesses, and stable distinguishability
