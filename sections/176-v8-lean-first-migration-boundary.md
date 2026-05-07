@@ -30,6 +30,7 @@ Proofs/MetaLang/V8ManifestCollectionContract.lean
 Proofs/MetaLang/V8RuleManifestGrounding.lean
 Proofs/MetaLang/V8AssertionPredicateSemantics.lean
 Proofs/MetaLang/V8CoreRuleSemanticClosure.lean
+Proofs/MetaLang/V8DeclarativeReportContract.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -60,7 +61,9 @@ This layer encodes:
 15. all ten v8 assertion predicate operations have abstract Lean semantics;
 16. every predicate used by the six v8 core claim-discipline rules is connected
     to Lean-side assertion semantics;
-17. the context-first primitive base:
+17. declarative reports with issues are not accepted, and accepted core reports
+    must check the six v8 core rules;
+18. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
