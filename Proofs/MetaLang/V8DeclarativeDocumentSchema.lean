@@ -36,6 +36,7 @@ structure VerificationRuleSpec where
   collection : ManifestReferenceCollection
   wherePredicate : Option RuleWherePredicate
   assertions : List AssertionSpec
+  idNonEmpty : id.length > 0
 deriving Repr
 
 structure DeclarativeSpecificationDocument where
@@ -80,8 +81,7 @@ def VerificationRuleSpec.assertionsHaveLeanSemantics
 
 def VerificationRuleSpec.isAcceptedForV8
     (rule : VerificationRuleSpec) : Prop :=
-  rule.id.length > 0
-    ∧ rule.targetCollectionIsAllowed
+  rule.targetCollectionIsAllowed
     ∧ rule.assertions.length > 0
     ∧ rule.assertionsHaveLeanSemantics
 
@@ -108,7 +108,7 @@ theorem accepted_declarative_document_rules_have_lean_semantics
     (rule : VerificationRuleSpec)
     (rulePresent : rule ∈ document.verificationRules) :
     rule.assertionsHaveLeanSemantics :=
-  (accepted.right.right.right.right.right rule rulePresent).right.right.right
+  (accepted.right.right.right.right.right rule rulePresent).right.right
 
 theorem accepted_declarative_document_rule_targets_are_allowed
     (document : DeclarativeSpecificationDocument)
@@ -116,7 +116,7 @@ theorem accepted_declarative_document_rule_targets_are_allowed
     (rule : VerificationRuleSpec)
     (rulePresent : rule ∈ document.verificationRules) :
     rule.targetCollectionIsAllowed :=
-  (accepted.right.right.right.right.right rule rulePresent).right.left
+  (accepted.right.right.right.right.right rule rulePresent).left
 
 theorem accepted_declarative_document_proposed_terms_need_approval
     (document : DeclarativeSpecificationDocument)
