@@ -176,6 +176,8 @@ of nature.
   helper for the verifier manifest.
 - `scripts/build_ai_theory_graph.py` — compact source-grounded theory graph
   packer for AI agents.
+- `scripts/query_ai_theory_graph.py` — read-only v8 graph query CLI for
+  summaries, local neighborhoods, references, and source pointers.
 - `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
   semantic proof artifact from the current manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
@@ -261,6 +263,15 @@ Agents should load this compact graph first, inspect node/edge topology, then
 fetch exact source files by the recorded source path and hash only when more
 context is needed. The graph is context and navigation metadata; it does not
 upgrade claims and does not replace Lean artifacts.
+
+For local graph inspection:
+
+```bash
+python scripts/query_ai_theory_graph.py summary
+python scripts/query_ai_theory_graph.py show <node-id-or-alias>
+python scripts/query_ai_theory_graph.py neighbors <node-id-or-alias> --depth 2
+python scripts/query_ai_theory_graph.py sources <node-id-or-alias> --depth 1
+```
 
 The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
 is retained as a compatibility/status recipe, not active proof-authority CI:
