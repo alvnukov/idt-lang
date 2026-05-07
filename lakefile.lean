@@ -30,6 +30,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8ManifestInputBoundary,
     `Proofs.MetaLang.V8ResidualMigrationLedger,
     `Proofs.MetaLang.V8MigrationStopBoundary,
+    `Proofs.MetaLang.V8FormalProofScopeBoundary,
     `Proofs.MetaLang.V8StoppedResearchFrontier,
     `Proofs.QMClosure.CGSCPackageClosure,
     `Proofs.QMClosure.CGSCPrimitiveBridge,

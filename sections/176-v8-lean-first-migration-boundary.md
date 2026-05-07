@@ -45,6 +45,7 @@ Proofs/MetaLang/V8MigrationRoadmap.lean
 Proofs/MetaLang/V8ManifestInputBoundary.lean
 Proofs/MetaLang/V8ResidualMigrationLedger.lean
 Proofs/MetaLang/V8MigrationStopBoundary.lean
+Proofs/MetaLang/V8FormalProofScopeBoundary.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -94,7 +95,10 @@ This layer encodes:
 25. the migration stop boundary is explicit: only after the core document,
     manifest input boundary, residual ledger, and Python deprecation boundary
     are accepted can new CI, legacy archive, and research handoff happen;
-26. the context-first primitive base:
+26. current formal proofs are scoped to verification discipline; theorem-card
+    physical claims and QM core obligations still have zero formal-proof
+    closures;
+27. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
