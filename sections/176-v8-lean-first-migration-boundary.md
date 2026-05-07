@@ -55,6 +55,7 @@ Proofs/MetaLang/V8CurrentFrontierBlockers.lean
 Proofs/MetaLang/V8ResidualGateExperimentProfile.lean
 Proofs/MetaLang/V8ResidualEncodingRequirements.lean
 Proofs/MetaLang/V8MigrationCompletionCriterion.lean
+Proofs/MetaLang/V8QmExperimentResidualLedger.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -133,9 +134,12 @@ This layer encodes:
     and QM-obligation ledgers are encoded and have no false formal-proof
     closure, but current open/blocked theorem candidates keep the phase
     incomplete and block IDT v8 residual encoding;
-36. a compressed full research-tree context packer is mandatory research-model
+36. the 35 current QM experiment records are mirrored as typed executable-gate
+    residual inputs with zero formal-proof closure and mandatory IDT v8
+    classification before research resumes;
+37. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-37. the context-first primitive base:
+38. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
