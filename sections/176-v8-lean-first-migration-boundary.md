@@ -50,6 +50,7 @@ Proofs/MetaLang/V8ResidualRouteClassification.lean
 Proofs/MetaLang/V8TaskBlockerLedger.lean
 Proofs/MetaLang/V8CurrentMigrationState.lean
 Proofs/MetaLang/V8CurrentTheoremAndObligationLedger.lean
+Proofs/MetaLang/V8TheoremDependencyBoundaryLedger.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -111,9 +112,11 @@ This layer encodes:
 30. all 23 current theorem cards and all 11 current QM core proof obligations
     are represented in Lean as typed status ledgers with zero formal-proof
     physical/QM closures;
-31. a compressed full research-tree context packer is mandatory research-model
+31. theorem-card dependency and forbidden-claim boundaries, plus QM-obligation
+    dependency/open-gap/claim-boundary profiles, are represented in Lean;
+32. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-32. the context-first primitive base:
+33. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
