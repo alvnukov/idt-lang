@@ -2,6 +2,7 @@
 
 ![QM Scientific Status](https://img.shields.io/badge/QM-context--first_Born--Hilbert_frontier-yellow)
 [![QM CI](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
+[![IDT v8 Lean CI](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
 language for interpreting the physical structure of the universe, designed for
@@ -223,7 +224,24 @@ The proof-only lane is:
 python3 scripts/check_proofs.py
 ```
 
-The QM status CI lane behind the README badge runs:
+The IDT v8 Lean CI lane behind the `IDT v8 Lean CI` badge runs:
+
+```bash
+ruff check theory_verifier tests scripts
+mypy --strict theory_verifier tests scripts
+python3 scripts/check_declarative_rules.py --json
+python3 -m unittest tests.test_declarative_verifier
+lake build Proofs
+lake build idt_v8_protocol_status
+lake exe idt_v8_protocol_status -- --check-boundary
+lake exe idt_v8_protocol_status -- --json
+```
+
+This is the current Lean + IDT v8 migration-stop CI lane. It does not run the
+legacy manifest verifier as proof authority and does not claim QM is proved.
+
+The older QM status CI lane behind the `QM CI` badge runs the broader legacy
+compatibility/status probes:
 
 ```bash
 ruff check theory_verifier tests scripts
