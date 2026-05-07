@@ -1,0 +1,80 @@
+{
+  "id": "idt_v8_derivation_residuals",
+  "kind": "verification_specification",
+  "language_version": "v8.0.0",
+  "controlled_vocabulary": [
+    {
+      "term": "derivation",
+      "status": "standard",
+      "domain": "formal methods and scientific reasoning",
+      "definition": "A declared route from dependencies to a target claim or quantity."
+    },
+    {
+      "term": "dependency",
+      "status": "standard",
+      "domain": "graph theory and formal methods",
+      "definition": "A referenced prerequisite object required by a derivation."
+    },
+    {
+      "term": "target",
+      "status": "standard",
+      "domain": "formal methods",
+      "definition": "The object a derivation attempts to establish, compute, or classify."
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "derivation_residual_core_fields_are_declared",
+      "applies_to": {
+        "collection": "derivations"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "id"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "target"
+        },
+        {
+          "predicate": "field_in",
+          "field_path": "status",
+          "allowed_values": [
+            "formula",
+            "target",
+            "derived_conditional",
+            "blocked"
+          ]
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "depends_on[]"
+        }
+      ]
+    },
+    {
+      "id": "derivation_residual_refs_are_grounded",
+      "applies_to": {
+        "collection": "derivations"
+      },
+      "assertions": [
+        {
+          "predicate": "refs_exist",
+          "field_path": "target",
+          "reference_collections": ["symbols"]
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "depends_on[]",
+          "reference_collections": [
+            "symbols",
+            "equations",
+            "derivations",
+            "finite_gates"
+          ]
+        }
+      ]
+    }
+  ]
+}

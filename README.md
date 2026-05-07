@@ -1,7 +1,7 @@
 # IDT Lang
 
 ![QM Scientific Status](https://img.shields.io/badge/QM-context--first_Born--Hilbert_frontier-yellow)
-[![QM CI](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/qm-status.yml)
+[![IDT v8 Lean CI](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
 language for interpreting the physical structure of the universe, designed for
@@ -67,6 +67,17 @@ Current auditable results:
   are grounded against real manifest objects, schema surfaces, verifier checks,
   or Markdown sections, and full-QM frontier blockers now have first-class
   theorem cards.
+- v8 Lean-first migration: the language-level proof-status boundary,
+  context-first primitive base, and current stopped QM frontier are now encoded
+  in Lean under `Proofs/MetaLang/`. The old Python verifier is deprecated
+  compatibility infrastructure; the target proof architecture is Lean + IDT v8.
+  The first Lean-sourced experiment-protocol probe is available as
+  `lake exe idt_v8_protocol_status`; use `--json` for machine-readable status
+  `--documents-json` for the accepted IDT v8 document inventory,
+  `--residuals-json` for the Lean-sourced QM residual experiment list, and
+  `--check-boundary` for the current Lean boundary check. It reports the
+  certified-executable-check boundary and does not assign physical/QM
+  `formal_proof` status.
 - primitive-core contract: the current primitive surface is context-first.
   Admissible context covers, local outcome-event presheaves, inheritance
   transition families, facticization witnesses, and stable distinguishability
@@ -166,9 +177,14 @@ of nature.
 - `scripts/sync_formal_proof_ledger.py` — generates/checks the Lean finite-core
   semantic proof artifact from the current manifest.
 - `scripts/check_proofs.py` — runs proof-card checker commands.
+- `scripts/check_declarative_rules.py` — checks v8 declarative rule files.
 - `scripts/check_all.py` — one-command local verifier, proof, and test pipeline.
 - `Proofs/` — Lean proof artifacts.
-- `theory_verifier/` — executable manifest verifier.
+- `Experiments/` — Lean-sourced executable protocol probes.
+- `rules/v8/` — declarative v8 verification specifications.
+- `theory_verifier/` — compatibility Python package; `declarative.py` remains
+  the active IDT v8 input checker, while the legacy manifest verifier is not
+  proof authority.
 - `theory_verifier_manifest.json` — current machine-checkable manifest.
 - `tests/` — verifier unit tests.
 - `data/` — documented data anchors used by verifier-facing research notes.
@@ -209,12 +225,30 @@ The proof-only lane is:
 python3 scripts/check_proofs.py
 ```
 
-The QM status CI lane behind the README badge runs:
+The IDT v8 Lean CI lane behind the `IDT v8 Lean CI` badge runs:
+
+```bash
+ruff check theory_verifier tests scripts
+mypy --strict theory_verifier tests scripts
+python3 scripts/check_declarative_rules.py --json
+python3 -m unittest tests.test_declarative_verifier
+lake build Proofs
+lake build idt_v8_protocol_status
+lake exe idt_v8_protocol_status -- --check-boundary
+lake exe idt_v8_protocol_status -- --json
+```
+
+This is the current Lean + IDT v8 migration-stop CI lane. It does not run the
+legacy manifest verifier as proof authority and does not claim QM is proved.
+
+The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
+is retained as a compatibility/status recipe, not active proof-authority CI:
 
 ```bash
 ruff check theory_verifier tests scripts
 mypy --strict theory_verifier tests scripts
 python3 -m theory_verifier --json theory_verifier_manifest.json
+python3 scripts/check_declarative_rules.py --json
 python3 scripts/check_proofs.py
 python3 scripts/evaluate_born_direct_one_pass.py
 python3 scripts/evaluate_born_readout_attempt.py
@@ -236,9 +270,9 @@ lake build
 The `QM Scientific Status` badge reports the current scientific proof boundary:
 the finite standard-QM sector is conditionally closed, and the active
 Born/Hilbert frontier is context-first universal endpoint data plus
-carrier-frontier exhaustion. The `QM CI` badge reports whether the
-verifier/proof-boundary workflow is passing. Neither badge means that exact
-fundamental QM has been proved.
+carrier-frontier exhaustion. The `IDT v8 Lean CI` badge reports whether the
+Lean + IDT v8 migration-stop workflow is passing. Neither badge means that
+exact fundamental QM has been proved.
 
 The underlying checks are:
 

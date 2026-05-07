@@ -1,0 +1,54 @@
+name: IDT v8 Lean Status
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  v8-lean-status:
+    name: Lean + IDT v8 boundary
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python tools
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Install Lean toolchain
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Python quality gates
+        run: |
+          ruff check theory_verifier tests scripts
+          mypy --strict theory_verifier tests scripts
+
+      - name: IDT v8 declarative rules
+        run: python scripts/check_declarative_rules.py --json
+
+      - name: IDT v8 declarative tests
+        run: python -m unittest tests.test_declarative_verifier
+
+      - name: Lean proof boundary
+        run: lake build Proofs
+
+      - name: Lean v8 protocol status
+        run: |
+          lake build idt_v8_protocol_status
+          lake exe idt_v8_protocol_status -- --check-boundary
+          lake exe idt_v8_protocol_status -- --json

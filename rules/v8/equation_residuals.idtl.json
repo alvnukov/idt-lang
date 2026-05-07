@@ -1,0 +1,52 @@
+{
+  "id": "idt_v8_equation_residuals",
+  "kind": "verification_specification",
+  "language_version": "v8.0.0",
+  "controlled_vocabulary": [
+    {
+      "term": "equation",
+      "status": "standard",
+      "domain": "mathematics",
+      "definition": "A structured relation with a named left-hand side and expression-valued right-hand side."
+    },
+    {
+      "term": "left-hand side",
+      "status": "standard",
+      "domain": "mathematics",
+      "definition": "The named quantity defined or constrained by an equation."
+    },
+    {
+      "term": "right-hand side",
+      "status": "standard",
+      "domain": "mathematics",
+      "definition": "The expression that defines or constrains the left-hand side of an equation."
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "equation_residual_core_fields_are_declared",
+      "applies_to": {
+        "collection": "equations"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "id"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "lhs"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "rhs"
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "lhs",
+          "reference_collections": ["symbols"]
+        }
+      ]
+    }
+  ]
+}

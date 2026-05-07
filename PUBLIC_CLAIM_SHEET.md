@@ -28,12 +28,13 @@ workflow for:
 
 ## Auditable Successes
 
-Current theory version: `v7.1.0`.
+Current theory version: `v8.0.0`.
 
 The current verifier manifest is executable and checks the public claim ledger:
 
 ```bash
 python3 -m theory_verifier --json theory_verifier_manifest.json
+python3 scripts/check_declarative_rules.py --json
 python3 -m unittest discover -s tests
 ```
 

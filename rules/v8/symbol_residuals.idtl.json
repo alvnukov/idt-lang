@@ -1,0 +1,57 @@
+{
+  "id": "idt_v8_symbol_residuals",
+  "kind": "verification_specification",
+  "language_version": "v8.0.0",
+  "controlled_vocabulary": [
+    {
+      "term": "symbol",
+      "status": "standard",
+      "domain": "formal language and mathematical notation",
+      "definition": "A named object used as a referenceable term in equations, derivations, gates, or theorem cards."
+    },
+    {
+      "term": "dimension vector",
+      "status": "standard",
+      "domain": "dimensional analysis",
+      "definition": "A structured exponent vector describing physical dimensions for a symbol."
+    },
+    {
+      "term": "claim status",
+      "status": "standard",
+      "domain": "scientific claim verification",
+      "definition": "A controlled label describing the justified strength of an object."
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "symbol_residual_core_fields_are_declared",
+      "applies_to": {
+        "collection": "symbols"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "id"
+        },
+        {
+          "predicate": "field_required",
+          "field_path": "dimension"
+        },
+        {
+          "predicate": "field_in",
+          "field_path": "status",
+          "allowed_values": [
+            "primitive",
+            "definition",
+            "bridge_assumption",
+            "derived_conditional",
+            "experimental_gate",
+            "target",
+            "open",
+            "blocked"
+          ]
+        }
+      ]
+    }
+  ]
+}

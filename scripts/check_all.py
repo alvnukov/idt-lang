@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 PIPELINE = (
     ("python3", "-m", "theory_verifier", "--json", "theory_verifier_manifest.json"),
+    ("python3", "scripts/check_declarative_rules.py", "--json"),
     ("python3", "scripts/check_proofs.py"),
     ("python3", "-m", "unittest", "discover", "-s", "tests"),
 )

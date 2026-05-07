@@ -1,0 +1,93 @@
+{
+  "id": "idt_v8_theorem_card_residuals",
+  "kind": "verification_specification",
+  "language_version": "v8.0.0",
+  "controlled_vocabulary": [
+    {
+      "term": "theorem card",
+      "status": "project_local",
+      "domain": "IDT verification",
+      "definition": "A structured theorem, failure, or frontier card with explicit statement, dependencies, evidence, scope, and forbidden upgrades."
+    },
+    {
+      "term": "forbidden claim",
+      "status": "standard",
+      "domain": "scientific claim verification",
+      "definition": "A claim that a card explicitly does not support."
+    },
+    {
+      "term": "physical scope",
+      "status": "standard",
+      "domain": "scientific claim verification",
+      "definition": "The physical or mathematical domain where a claim is allowed to apply."
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "theorem_card_residual_core_fields_are_declared",
+      "applies_to": {
+        "collection": "theorem_cards"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "id"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "statement"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "physical_scope"
+        },
+        {
+          "predicate": "field_in",
+          "field_path": "role",
+          "allowed_values": ["theorem", "failure"]
+        },
+        {
+          "predicate": "field_in",
+          "field_path": "proof_status",
+          "allowed_values": [
+            "conditional_proof",
+            "finite_verifier_pass",
+            "open",
+            "blocked"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "theorem_card_residual_refs_and_boundaries_are_grounded",
+      "applies_to": {
+        "collection": "theorem_cards"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "dependencies[]"
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "dependencies[]",
+          "reference_collections": [
+            "symbols",
+            "finite_gates",
+            "theorem_cards",
+            "qm_core_proof_obligations"
+          ]
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "verifier",
+          "reference_collections": ["finite_gates"]
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "forbidden_claims[]"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "idt_v8_qm_universal_pattern_residuals",
+  "kind": "verification_specification",
+  "language_version": "v8.0.0",
+  "controlled_vocabulary": [
+    {
+      "term": "universal pattern",
+      "status": "standard",
+      "domain": "scientific modeling",
+      "definition": "A reusable structural pattern claimed to organize multiple experiments or proof obligations."
+    },
+    {
+      "term": "experiment reference",
+      "status": "standard",
+      "domain": "scientific claim verification",
+      "definition": "A grounded reference to an experimental residual object."
+    },
+    {
+      "term": "finite gate reference",
+      "status": "project_local",
+      "domain": "IDT verification",
+      "definition": "A grounded reference to an executable finite-gate residual."
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "qm_universal_pattern_core_fields_are_declared",
+      "applies_to": {
+        "collection": "qm_universal_patterns"
+      },
+      "assertions": [
+        {
+          "predicate": "field_non_empty",
+          "field_path": "id"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "title"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "mechanism"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "claim_boundary"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "experiments[]"
+        },
+        {
+          "predicate": "field_non_empty",
+          "field_path": "finite_gates[]"
+        }
+      ]
+    },
+    {
+      "id": "qm_universal_pattern_refs_are_grounded",
+      "applies_to": {
+        "collection": "qm_universal_patterns"
+      },
+      "assertions": [
+        {
+          "predicate": "refs_exist",
+          "field_path": "experiments[]",
+          "reference_collections": ["qm_experiments"]
+        },
+        {
+          "predicate": "refs_exist",
+          "field_path": "finite_gates[]",
+          "reference_collections": ["finite_gates"]
+        }
+      ]
+    }
+  ]
+}

@@ -41,6 +41,9 @@ jobs:
       - name: Manifest verifier
         run: python -m theory_verifier --json theory_verifier_manifest.json
 
+      - name: Declarative v8 rules
+        run: python scripts/check_declarative_rules.py --json
+
       - name: Lean proof ledger
         run: python scripts/check_proofs.py
 
