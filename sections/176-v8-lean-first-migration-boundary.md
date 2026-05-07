@@ -14,6 +14,12 @@ legacy Python verifier -> safety net, not proof source of truth
 The migration freezes new physical research claims until the already recorded
 claim discipline has been moved into Lean. The first Lean layer is:
 
+The non-negotiable v8 goal is not to prove the whole theory at any cost. It is
+to ensure that every recorded conclusion is exactly as strong as the available
+evidence and proof artifacts justify. A research route, plausible argument,
+finite verifier pass, calibration, or successful experiment must never be
+upgraded into a stronger claim than it supports.
+
 ```text
 Proofs/MetaLang/V8VerificationLanguage.lean
 Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean
