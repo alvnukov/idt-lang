@@ -57,6 +57,7 @@ Proofs/MetaLang/V8ResidualEncodingRequirements.lean
 Proofs/MetaLang/V8MigrationCompletionCriterion.lean
 Proofs/MetaLang/V8QmExperimentResidualLedger.lean
 Proofs/MetaLang/V8LeanExperimentProtocolBoundary.lean
+Proofs/MetaLang/V8ExperimentProgramReadiness.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -69,7 +70,7 @@ This layer encodes:
 5. the current proof-status snapshot has no false `formal_proof` closure;
 6. Python/numeric/data gates may supply finite verifier passes only while they
    remain compatibility checks, but not `formal_proof`;
-   The current Lean verification-discipline snapshot contains 230 theorem
+   The current Lean verification-discipline snapshot contains 234 theorem
    declarations, all scoped away from physical/QM closure;
 7. status transitions require explicit evidence and cannot silently upgrade;
 8. dependency records require grounded edges, acyclicity, and clean forward
@@ -143,9 +144,12 @@ This layer encodes:
     fixtures, laboratory data, calibration anchors, and numeric tolerances stay
     visible input boundaries; such runs can be certified executable checks, not
     physical/QM `formal_proof`;
-38. a compressed full research-tree context packer is mandatory research-model
+38. the experiment program has a Lean readiness gate: the protocol boundary is
+    certified executable, but research handoff remains blocked while the 35 QM
+    experiment residuals still need IDT v8 classification;
+39. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-39. the context-first primitive base:
+40. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
