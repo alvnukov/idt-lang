@@ -51,6 +51,7 @@ Proofs/MetaLang/V8TaskBlockerLedger.lean
 Proofs/MetaLang/V8CurrentMigrationState.lean
 Proofs/MetaLang/V8CurrentTheoremAndObligationLedger.lean
 Proofs/MetaLang/V8TheoremDependencyBoundaryLedger.lean
+Proofs/MetaLang/V8CurrentFrontierBlockers.lean
 Proofs/MetaLang/V8StoppedResearchFrontier.lean
 ```
 
@@ -114,9 +115,11 @@ This layer encodes:
     physical/QM closures;
 31. theorem-card dependency and forbidden-claim boundaries, plus QM-obligation
     dependency/open-gap/claim-boundary profiles, are represented in Lean;
-32. a compressed full research-tree context packer is mandatory research-model
+32. the exact/full-QM frontier has explicit active blockers in Lean, including
+    Hilbert-carrier and Born-rule blockers;
+33. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-33. the context-first primitive base:
+34. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)
