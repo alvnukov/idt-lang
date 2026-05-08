@@ -95,6 +95,7 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertIn("idt_lean_build_target", names)
             self.assertIn("idt_run_check", names)
             self.assertIn("idt_guarded_replace", names)
+            self.assertIn("idt_reload_code", names)
 
     def test_mcp_rag_tool_returns_text_and_structured_content(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
@@ -198,6 +199,28 @@ class IdtMcpRagTests(unittest.TestCase):
             content = require_list(result["content"])
             text = require_string(require_mapping(content[0])["text"])
             self.assertIn("requestTimeGraphRefresh", text)
+
+    def test_mcp_reload_code_tool_schedules_in_process_reload(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            server = IdtMcpServer(load_fixture_index(write_fixture_repo(Path(raw_dir))))
+
+            response = server.handle_payload(
+                {
+                    "jsonrpc": "2.0",
+                    "id": "reload-code-1",
+                    "method": "tools/call",
+                    "params": {"name": "idt_reload_code", "arguments": {}},
+                }
+            )
+
+            if response is None:
+                raise AssertionError("expected response")
+            result = require_mapping(response["result"])
+            structured = require_mapping(result["structuredContent"])
+            self.assertEqual(True, structured["ok"])
+            self.assertEqual("reload_scheduled_after_response", structured["status"])
+            self.assertEqual("reload_is_tooling_only_not_proof_evidence", structured["proof_boundary"])
+            self.assertEqual(True, server.reload_code_requested)
 
     def test_graph_diff_reports_changed_live_graph(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:

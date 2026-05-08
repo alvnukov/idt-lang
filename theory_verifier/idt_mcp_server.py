@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import sys
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from importlib import reload
 from pathlib import Path
 from typing import TextIO
 
@@ -38,10 +40,11 @@ class IdtMcpError(ValueError):
     pass
 
 
-@dataclass(frozen=True)
+@dataclass
 class IdtMcpServer:
     index: IdtRagIndex
     auto_refresh: bool = True
+    reload_code_requested: bool = False
 
     def handle_payload(self, payload: Mapping[str, object]) -> JsonObject | None:
         request = parse_json_rpc_request(payload)
@@ -73,9 +76,20 @@ class IdtMcpServer:
         raise IdtMcpError(f"unsupported MCP method {method!r}")
 
     def call_tool(self, params: Mapping[str, object]) -> JsonObject:
-        index = self.current_index()
         tool_name = require_string_arg(params, "name")
         arguments = optional_object(params.get("arguments", {}), "arguments")
+        if tool_name == "idt_reload_code":
+            self.reload_code_requested = True
+            return mcp_text_result(
+                {
+                    "schema": "idt-v8-mcp-code-reload/1",
+                    "ok": True,
+                    "status": "reload_scheduled_after_response",
+                    "proof_boundary": "reload_is_tooling_only_not_proof_evidence",
+                },
+                text="IDT MCP code reload scheduled after this response.",
+            )
+        index = self.current_index()
         if tool_name == "idt_graph_summary":
             return mcp_text_result(index.summary())
         if tool_name == "idt_graph_search":
@@ -152,6 +166,11 @@ class IdtMcpServer:
 
 def mcp_tools() -> list[JsonObject]:
     return [
+        tool_schema(
+            "idt_reload_code",
+            "Reload the IDT MCP server Python modules in-process after the current response.",
+            {},
+        ),
         tool_schema(
             "idt_graph_summary",
             "Summarize the compact IDT v8 AI theory graph.",
@@ -331,15 +350,18 @@ def json_rpc_error(request_id: JsonRpcId, code: int, message: str) -> JsonObject
 
 
 def serve(server: IdtMcpServer, stdin: TextIO, stdout: TextIO) -> int:
+    active_server = server
     for raw_line in stdin:
         line = raw_line.strip()
         if not line:
             continue
-        response = handle_line(server, line)
+        response = handle_line(active_server, line)
         if response is not None:
             stdout.write(json.dumps(response, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
             stdout.write("\n")
             stdout.flush()
+        if active_server.reload_code_requested:
+            active_server = reload_server_code(active_server)
     return 0
 
 
@@ -358,3 +380,29 @@ def handle_line(server: IdtMcpServer, line: str) -> JsonObject | None:
 
 def load_server(repo_root: Path, graph_path: Path) -> IdtMcpServer:
     return IdtMcpServer(IdtRagIndex.load(repo_root, graph_path, check_source_hashes=True, auto_refresh=True))
+
+
+def reload_server_code(server: IdtMcpServer) -> IdtMcpServer:
+    for module_name in reloadable_module_names():
+        module = sys.modules.get(module_name)
+        if module is None:
+            __import__(module_name)
+        else:
+            reload(module)
+    return IdtMcpServer(
+        IdtRagIndex.load(
+            server.index.repo_root,
+            server.index.graph_path,
+            check_source_hashes=True,
+            auto_refresh=True,
+        ),
+        auto_refresh=server.auto_refresh,
+    )
+
+
+def reloadable_module_names() -> tuple[str, ...]:
+    return (
+        "theory_verifier.ai_theory_graph",
+        "theory_verifier.idt_rag",
+        "theory_verifier.idt_mcp_server",
+    )

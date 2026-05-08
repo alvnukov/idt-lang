@@ -384,6 +384,7 @@ idt_graph_diff
 idt_lean_build_target
 idt_run_check
 idt_guarded_replace
+idt_reload_code
 ```
 
 `idt_rag_retrieve` uses the v8 graph plus exact source paths and hashes to
@@ -411,6 +412,12 @@ not introduce forbidden proof-status or overclaim tokens. It supports dry-run by
 default and writes under the same lock/atomic-replace discipline as graph
 refresh. It intentionally refuses generated/internal paths such as `dist/` and
 direct manifest edits.
+
+`idt_reload_code` reloads the MCP server Python modules in-process after the
+current response. Use it after changing the local MCP/RAG implementation so the
+running stdio server can pick up updated tool code without restarting the client
+session. Reload status is tooling-only evidence and never upgrades theory,
+claim, or proof status.
 
 ## Experiment Node Telemetry
 
