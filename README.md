@@ -350,6 +350,68 @@ python scripts/query_ai_theory_graph.py neighbors <node-id-or-alias> --depth 2
 python scripts/query_ai_theory_graph.py sources <node-id-or-alias> --depth 1
 ```
 
+## IDT Development MCP/RAG
+
+The repository also provides a local stdio MCP server for source-grounded IDT
+development context:
+
+```bash
+python scripts/run_idt_mcp_server.py \
+  --repo-root . \
+  --graph dist/idt-v8-ai-theory-graph.json
+```
+
+The server is read-only. Before each tool request it validates the configured
+graph against source hashes and rebuilds it automatically if the graph is
+missing or stale. The generated graph stays outside git; it is a live context
+index for the local checkout, not a committed artifact. Graph refresh is guarded
+by an exclusive lock and atomic file replacement so concurrent MCP requests
+cannot read a partially written graph.
+
+It exposes graph/RAG tools:
+
+```text
+idt_graph_summary
+idt_graph_search
+idt_graph_show
+idt_graph_neighbors
+idt_graph_sources
+idt_rag_retrieve
+idt_research_context
+idt_claim_audit
+idt_missing_proof_artifacts
+idt_graph_diff
+idt_lean_build_target
+idt_run_check
+idt_guarded_replace
+```
+
+`idt_rag_retrieve` uses the v8 graph plus exact source paths and hashes to
+return compact snippets. It is a development aid only: Lean remains proof
+authority, the graph remains context/index metadata, and RAG output must not be
+used to upgrade claim status.
+
+For safer research sessions, start with `idt_research_context` or
+`idt_claim_audit`. These tools are read-only: they summarize the local graph,
+surface nearby dependencies and sources, and flag `formal_proof` residual claims
+that are not grounded in Lean artifacts. They do not edit files, run proof
+commands, or change claim status.
+
+`idt_graph_diff`, `idt_lean_build_target`, and `idt_run_check` provide a
+controlled execution layer. They return compact evidence packs rather than raw
+logs, and their outputs are never proof authority by themselves. `idt_run_check`
+uses an allowlist (`graph_validate`, `declarative_rules`, `mcp_rag_tests`,
+`v8_protocol_boundary`) instead of arbitrary shell commands; `idt_lean_build_target`
+accepts only safe target names and runs `lake build <target>`.
+
+`idt_guarded_replace` is the only write-capable MCP tool. It performs a
+single-file text replacement only when the caller supplies the current `sha16`,
+the old text occurs exactly once, the path is editable, and the replacement does
+not introduce forbidden proof-status or overclaim tokens. It supports dry-run by
+default and writes under the same lock/atomic-replace discipline as graph
+refresh. It intentionally refuses generated/internal paths such as `dist/` and
+direct manifest edits.
+
 ## Experiment Node Telemetry
 
 The v8 experiment telemetry suite is a Lean-sourced executable research aid.
