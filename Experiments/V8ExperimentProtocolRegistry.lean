@@ -81,11 +81,136 @@ def logicalNodeSpecs : List LogicalNodeSpec :=
       claimBoundary := "does not derive Bell correlations from primitives"
     },
     {
+      id := "interference_visibility",
+      label := "finite interference visibility matches declared fixture",
+      claimBoundary := "finite interference fixture only; not Born proof"
+    },
+    {
+      id := "path_marker_distinguishability",
+      label := "path marker and eraser visibility boundary is explicit",
+      claimBoundary := "finite marker/eraser fixture only"
+    },
+    {
+      id := "sorkin_i3_zero",
+      label := "third-order interference term is zero in finite fixture",
+      claimBoundary := "finite Sorkin I3 compatibility check only"
+    },
+    {
+      id := "phase_accumulation",
+      label := "phase accumulation follows declared calibrated relation",
+      claimBoundary := "calibrated phase fixture only; does not derive hbar_I"
+    },
+    {
+      id := "spin_axis_transition",
+      label := "finite spin-axis transition table matches declared fixture",
+      claimBoundary := "finite spin readout fixture only"
+    },
+    {
+      id := "unitary_context_map",
+      label := "finite context map preserves declared readout probabilities",
+      claimBoundary := "finite unitary-context fixture only; not unitary derivation"
+    },
+    {
+      id := "projective_repeatability",
+      label := "ideal finite projective readout repeats in the selected context",
+      claimBoundary := "finite repeatability fixture only; not collapse derivation"
+    },
+    {
+      id := "amplitude_probability_readout",
+      label := "declared amplitude packet yields a finite probability table",
+      claimBoundary := "finite amplitude fixture only; not Born proof"
+    },
+    {
+      id := "singlet_angle_correlation",
+      label := "finite singlet angle grid matches declared correlation table",
+      claimBoundary := "finite angle-grid fixture only; not spin representation derivation"
+    },
+    {
+      id := "decoherence_suppression",
+      label := "finite environment kernel suppresses residual coherence",
+      claimBoundary := "finite decoherence fixture only"
+    },
+    {
+      id := "recoverability_loss",
+      label := "finite visibility loss crosses declared facticity threshold",
+      claimBoundary := "finite recoverability fixture only"
+    },
+    {
+      id := "repeated_context_survival",
+      label := "finite repeated-context survival follows declared Zeno samples",
+      claimBoundary := "finite Zeno fixture only; not continuous measurement derivation"
+    },
+    {
+      id := "context_transfer_branch",
+      label := "finite Bell-branch correction reconstructs the target state",
+      claimBoundary := "finite branch-correction fixture only; not physical teleportation proof"
+    },
+    {
+      id := "no_cloning_obstruction",
+      label := "finite overlap-preservation obstruction rejects universal cloning",
+      claimBoundary := "finite obstruction fixture only; not cloning-machine model"
+    },
+    {
+      id := "barrier_transmission_suppression",
+      label := "finite forbidden-barrier transmission is exponentially suppressed",
+      claimBoundary := "finite barrier fixture only; not material barrier derivation"
+    },
+    {
+      id := "bosonic_coincidence_suppression",
+      label := "finite indistinguishability fixture suppresses coincidence events",
+      claimBoundary := "finite HOM fixture only; not photonic apparatus derivation"
+    },
+    {
+      id := "single_quantum_coincidence_exclusion",
+      label := "finite single-source fixture excludes double coincidence facticity",
+      claimBoundary := "finite antibunching fixture only; not source physics derivation"
+    },
+    {
+      id := "conditional_inheritance_swap",
+      label := "finite Bell outcome transfers declared remote correlations",
+      claimBoundary := "finite swapping fixture only; not source/network derivation"
+    },
+    {
+      id := "contextuality_obstruction",
+      label := "finite parity/context hypergraph has no global assignment",
+      claimBoundary := "finite contextuality obstruction fixture only"
+    },
+    {
+      id := "temporal_facticity_bound",
+      label := "finite temporal-correlation fixture crosses declared macrorealist bound",
+      claimBoundary := "finite Leggett-Garg fixture only"
+    },
+    {
+      id := "partial_facticity_readout",
+      label := "finite weak readout has declared pointer shift without full facticity",
+      claimBoundary := "finite weak-measurement fixture only"
+    },
+    {
+      id := "unitary_graph_walk_distribution",
+      label := "finite unitary graph walk matches declared distribution",
+      claimBoundary := "finite graph-walk fixture only; not general graph-walk theory"
+    },
+    {
       id := "residual_fixture_not_implemented",
       label := "residual QM experiment awaits a v8 telemetry fixture",
       claimBoundary := "coverage only; blocked until a safe fixture exists"
     }
   ]
+
+def protocol
+    (experimentId : String)
+    (fixtureClass : String)
+    (nodes : List String)
+    (boundary : String) : ExperimentProtocolSpec :=
+  {
+    id := experimentId ++ "_protocol",
+    experimentId := experimentId,
+    fixtureClass := fixtureClass,
+    claimBoundary := boundary,
+    logicalNodes := nodes,
+    allowedResultStatuses := allowedTelemetryResultStatuses,
+    forbiddenUpgrades := requiredForbiddenUpgrades
+  }
 
 def residualProtocol (experimentId : String) : ExperimentProtocolSpec :=
   {
@@ -138,38 +263,102 @@ def experimentProtocolSpecs : List ExperimentProtocolSpec :=
       forbiddenUpgrades := requiredForbiddenUpgrades
     }
   ] ++ [
-    residualProtocol "two_path_interference",
-    residualProtocol "finite_i3_actualization",
-    residualProtocol "triple_slit_sorkin_parameter",
-    residualProtocol "which_way_marker",
-    residualProtocol "quantum_eraser",
-    residualProtocol "unitary_measurement_context",
-    residualProtocol "finite_interferometer_network",
-    residualProtocol "projective_repeatability",
-    residualProtocol "bell_chsh_from_amplitudes",
-    residualProtocol "singlet_angle_model",
-    residualProtocol "decoherence_and_recoverability",
-    residualProtocol "stern_gerlach_single_axis",
-    residualProtocol "sequential_stern_gerlach",
-    residualProtocol "delayed_choice",
-    residualProtocol "aharonov_bohm_phase",
-    residualProtocol "ab_flux_period",
-    residualProtocol "ramsey_interferometry",
-    residualProtocol "rabi_oscillation",
-    residualProtocol "photoelectric_threshold",
-    residualProtocol "spectroscopy_lines",
-    residualProtocol "tunneling_barrier",
-    residualProtocol "quantum_zeno",
-    residualProtocol "hong_ou_mandel",
-    residualProtocol "antibunching_single_photon",
-    residualProtocol "entanglement_swapping",
-    residualProtocol "quantum_teleportation",
-    residualProtocol "no_cloning",
-    residualProtocol "ghz_mermin_contextuality",
-    residualProtocol "kochen_specker_contextuality",
-    residualProtocol "leggett_garg_temporal_context",
-    residualProtocol "weak_measurement",
-    residualProtocol "quantum_random_walk"
+    protocol "two_path_interference" "interference_visibility"
+      ["interference_visibility", "context_normalization"]
+      "finite two-path interference fixture only; not Born proof",
+    protocol "finite_i3_actualization" "sorkin_i3"
+      ["sorkin_i3_zero", "context_normalization"]
+      "finite third-order interference compatibility only",
+    protocol "triple_slit_sorkin_parameter" "sorkin_i3"
+      ["sorkin_i3_zero", "context_normalization"]
+      "finite triple-slit Sorkin parameter compatibility only",
+    protocol "which_way_marker" "marker_eraser_visibility"
+      ["path_marker_distinguishability", "interference_visibility"]
+      "finite which-way marker visibility fixture only",
+    protocol "quantum_eraser" "marker_eraser_visibility"
+      ["path_marker_distinguishability", "interference_visibility"]
+      "finite eraser visibility fixture only",
+    protocol "unitary_measurement_context" "unitary_context_readout"
+      ["unitary_context_map", "context_normalization"]
+      "finite unitary measurement-context fixture only; apparatus derivation remains open",
+    protocol "finite_interferometer_network" "phase_accumulation"
+      ["phase_accumulation", "context_normalization"]
+      "finite interferometer phase fixture only",
+    protocol "projective_repeatability" "projective_repeatability"
+      ["projective_repeatability", "positive_measure_readout"]
+      "finite projective repeatability fixture only; irreversible collapse dynamics is not derived",
+    protocol "bell_chsh_from_amplitudes" "bell_amplitude_table"
+      ["amplitude_probability_readout", "bell_chsh_no_signalling", "bounded_correlation_window"]
+      "finite amplitude-to-table fixture only; not Born proof",
+    protocol "singlet_angle_model" "singlet_angle_grid"
+      ["singlet_angle_correlation", "bounded_correlation_window"]
+      "finite singlet angle-grid fixture only; spin representation theory is not derived",
+    protocol "decoherence_and_recoverability" "decoherence_recoverability"
+      ["decoherence_suppression", "recoverability_loss", "positive_measure_readout"]
+      "finite decoherence and recoverability fixtures only",
+    protocol "stern_gerlach_single_axis" "spin_axis_transition"
+      ["spin_axis_transition", "positive_measure_readout"]
+      "finite Stern-Gerlach readout fixture only",
+    protocol "sequential_stern_gerlach" "spin_axis_transition"
+      ["spin_axis_transition", "positive_measure_readout"]
+      "finite sequential Stern-Gerlach transition fixture only",
+    protocol "delayed_choice" "interference_visibility"
+      ["interference_visibility", "phase_accumulation"]
+      "finite delayed-choice interference fixture only",
+    protocol "aharonov_bohm_phase" "phase_accumulation"
+      ["phase_accumulation", "phase_action_conversion_I"]
+      "calibrated phase accumulation fixture only",
+    protocol "ab_flux_period" "phase_accumulation"
+      ["phase_accumulation", "phase_action_conversion_I"]
+      "calibrated AB flux-period fixture only",
+    protocol "ramsey_interferometry" "phase_accumulation"
+      ["phase_accumulation", "phase_action_conversion_I"]
+      "calibrated Ramsey phase fixture only",
+    protocol "rabi_oscillation" "phase_accumulation"
+      ["phase_accumulation", "context_normalization"]
+      "finite Rabi oscillation fixture only; not Schrodinger proof",
+    protocol "photoelectric_threshold" "calibrated_action_scale_reconstruction"
+      ["phase_action_conversion_I", "no_refit_shared_parameter", "hbar_first_principles_boundary"]
+      "calibrated energy-frequency fixture only; hbar_I remains blocked",
+    protocol "spectroscopy_lines" "calibrated_action_scale_reconstruction"
+      ["phase_action_conversion_I", "no_refit_shared_parameter", "hbar_first_principles_boundary"]
+      "calibrated spectral transition fixture only; hbar_I remains blocked",
+    protocol "tunneling_barrier" "barrier_transmission"
+      ["barrier_transmission_suppression", "positive_measure_readout"]
+      "finite suppressed-transmission fixture only; exact material barrier dynamics are not claimed",
+    protocol "quantum_zeno" "repeated_context_zeno"
+      ["repeated_context_survival", "context_normalization"]
+      "finite repeated-context Zeno fixture only; continuous measurement model is open",
+    protocol "hong_ou_mandel" "bosonic_indistinguishability"
+      ["bosonic_coincidence_suppression", "positive_measure_readout"]
+      "finite overlap-to-coincidence fixture only; full photonic source/apparatus derivation is not claimed",
+    protocol "antibunching_single_photon" "single_quantum_facticity"
+      ["single_quantum_coincidence_exclusion", "positive_measure_readout"]
+      "finite coincidence-count fixture only; source physics is not derived",
+    protocol "entanglement_swapping" "conditional_inheritance_swap"
+      ["conditional_inheritance_swap"]
+      "finite Bell-outcome correlation transfer fixture only; full source/network derivation is not claimed",
+    protocol "quantum_teleportation" "context_transfer_no_cloning"
+      ["context_transfer_branch", "no_cloning_obstruction"]
+      "finite Bell-branch correction fixture only; full physical teleportation is not claimed",
+    protocol "no_cloning" "no_cloning_context_invariance"
+      ["no_cloning_obstruction"]
+      "finite inner-product obstruction fixture only; no physical cloning machine model is claimed",
+    protocol "ghz_mermin_contextuality" "multipartite_contextuality"
+      ["contextuality_obstruction"]
+      "finite Mermin parity obstruction fixture only; full multipartite apparatus derivation is not claimed",
+    protocol "kochen_specker_contextuality" "ks_contextuality_obstruction"
+      ["contextuality_obstruction"]
+      "finite parity-hypergraph obstruction fixture only; physical projector-set derivation is not claimed",
+    protocol "leggett_garg_temporal_context" "temporal_facticity"
+      ["temporal_facticity_bound"]
+      "finite temporal-correlation fixture only; no macrorealist residual model is claimed",
+    protocol "weak_measurement" "partial_facticity_readout"
+      ["partial_facticity_readout"]
+      "finite weak pointer-shift and partial-facticity fixture only; full apparatus derivation is open",
+    protocol "quantum_random_walk" "unitary_graph_walk"
+      ["unitary_graph_walk_distribution", "context_normalization"]
+      "finite Hadamard graph-walk fixture only; general graph-walk theory is not claimed"
   ]
 
 def jsonEscape (value : String) : String :=

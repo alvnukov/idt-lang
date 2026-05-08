@@ -347,14 +347,20 @@ python scripts/run_v8_experiment_suite.py \
 
 The JSON report uses schema `idt-v8-experiment-node-stats/1` and includes
 experiment summaries, per-node statistics, telemetry rows, and source hashes.
-The first runner registers all 35 residual QM experiment IDs: implemented
-fixtures produce executable telemetry, while experiments without a safe v8
-fixture are reported as `blocked` coverage through
-`residual_fixture_not_implemented`. Use the report to see where finite fixtures
-place pressure on logical nodes such as shared calibrated action scale, readout
-normalization, and Bell table compatibility. This telemetry is certified
-executable evidence only; it is not proof authority and cannot upgrade Born,
-Hilbert, Schrodinger dynamics, `hbar`, or full QM to proved status.
+The runner registers all 35 residual QM experiment IDs. The current mechanical
+coverage implements deterministic telemetry fixtures for all 35 IDs across
+readout normalization, calibrated action scale, Bell table compatibility,
+interference, Sorkin `I3`, marker/eraser visibility, phase accumulation,
+spin-axis transitions, finite amplitude tables, projective repeatability,
+decoherence/recoverability, Zeno samples, no-cloning/teleportation obstruction,
+contextuality screens, weak readout, tunneling, HOM/antibunching, and finite
+graph walk distributions. Use the report to see where finite fixtures place
+pressure on logical nodes such as shared calibrated action scale, readout
+normalization, interference visibility, phase accumulation, amplitude readout,
+contextuality obstruction, and Bell table compatibility. This telemetry is
+certified executable evidence only; it is not proof authority and cannot
+upgrade Born, Hilbert, Schrodinger dynamics, `hbar`, or full QM to proved
+status.
 
 The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
 is retained as a compatibility/status recipe, not active proof-authority CI:

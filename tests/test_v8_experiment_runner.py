@@ -9,8 +9,15 @@ from pathlib import Path
 from scripts.run_v8_experiment_suite import main
 from theory_experiments.v8_runner import (
     ActionScaleFixture,
+    BellAmplitudeFixture,
     ExperimentRunnerError,
     FixtureSet,
+    MarkerEraserFixture,
+    NoCloningFixture,
+    PhaseAccumulationFixture,
+    RepeatedContextZenoFixture,
+    SpinTransitionFixture,
+    ZenoSample,
     default_fixtures,
     parse_protocol_registry,
     run_experiment_suite,
@@ -67,6 +74,28 @@ class V8ExperimentRunnerTests(unittest.TestCase):
             ),
             readout=fixtures.readout,
             bell=fixtures.bell,
+            interference=fixtures.interference,
+            sorkin=fixtures.sorkin,
+            marker_eraser=fixtures.marker_eraser,
+            phase=fixtures.phase,
+            spin=fixtures.spin,
+            unitary=fixtures.unitary,
+            projective=fixtures.projective,
+            bell_amplitude=fixtures.bell_amplitude,
+            singlet_angle=fixtures.singlet_angle,
+            decoherence=fixtures.decoherence,
+            zeno=fixtures.zeno,
+            context_transfer=fixtures.context_transfer,
+            no_cloning=fixtures.no_cloning,
+            barrier=fixtures.barrier,
+            bosonic=fixtures.bosonic,
+            single_quantum=fixtures.single_quantum,
+            inheritance_swap=fixtures.inheritance_swap,
+            multipartite=fixtures.multipartite,
+            ks_contextuality=fixtures.ks_contextuality,
+            temporal=fixtures.temporal,
+            partial_facticity=fixtures.partial_facticity,
+            graph_walk=fixtures.graph_walk,
         )
 
         payload = run_experiment_suite(
@@ -127,6 +156,280 @@ class V8ExperimentRunnerTests(unittest.TestCase):
 
         experiments = require_rows(result["experiments"])
         self.assertEqual("blocked", experiments[0]["status"])
+
+    def test_wrong_phase_fixture_fails(self) -> None:
+        registry = parse_protocol_registry(phase_registry())
+        fixtures = default_fixtures()
+        phase = dict(fixtures.phase)
+        phase["ab_flux_period"] = PhaseAccumulationFixture(
+            observed_phase=0.0,
+            expected_phase=1.0,
+            context_total=1.0,
+            expected_total=1.0,
+            tolerance=1.0e-10,
+        )
+
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["ab_flux_period"],
+            fixtures=FixtureSet(
+                action_scale=fixtures.action_scale,
+                readout=fixtures.readout,
+                bell=fixtures.bell,
+                interference=fixtures.interference,
+                sorkin=fixtures.sorkin,
+                marker_eraser=fixtures.marker_eraser,
+                phase=phase,
+                spin=fixtures.spin,
+                unitary=fixtures.unitary,
+                projective=fixtures.projective,
+                bell_amplitude=fixtures.bell_amplitude,
+                singlet_angle=fixtures.singlet_angle,
+                decoherence=fixtures.decoherence,
+                zeno=fixtures.zeno,
+                context_transfer=fixtures.context_transfer,
+                no_cloning=fixtures.no_cloning,
+                barrier=fixtures.barrier,
+                bosonic=fixtures.bosonic,
+                single_quantum=fixtures.single_quantum,
+                inheritance_swap=fixtures.inheritance_swap,
+                multipartite=fixtures.multipartite,
+                ks_contextuality=fixtures.ks_contextuality,
+                temporal=fixtures.temporal,
+                partial_facticity=fixtures.partial_facticity,
+                graph_walk=fixtures.graph_walk,
+            ),
+        )
+
+        self.assertEqual("fail", require_rows(result["experiments"])[0]["status"])
+
+    def test_wrong_marker_eraser_fixture_fails(self) -> None:
+        registry = parse_protocol_registry(marker_registry())
+        fixtures = default_fixtures()
+        marker_eraser = dict(fixtures.marker_eraser)
+        marker_eraser["quantum_eraser"] = MarkerEraserFixture(
+            marker_distinguishability=1.0,
+            marker_visibility=0.0,
+            eraser_visibility=0.1,
+            expected_marker_visibility=0.0,
+            expected_eraser_visibility=0.8,
+            tolerance=1.0e-10,
+        )
+
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["quantum_eraser"],
+            fixtures=FixtureSet(
+                action_scale=fixtures.action_scale,
+                readout=fixtures.readout,
+                bell=fixtures.bell,
+                interference=fixtures.interference,
+                sorkin=fixtures.sorkin,
+                marker_eraser=marker_eraser,
+                phase=fixtures.phase,
+                spin=fixtures.spin,
+                unitary=fixtures.unitary,
+                projective=fixtures.projective,
+                bell_amplitude=fixtures.bell_amplitude,
+                singlet_angle=fixtures.singlet_angle,
+                decoherence=fixtures.decoherence,
+                zeno=fixtures.zeno,
+                context_transfer=fixtures.context_transfer,
+                no_cloning=fixtures.no_cloning,
+                barrier=fixtures.barrier,
+                bosonic=fixtures.bosonic,
+                single_quantum=fixtures.single_quantum,
+                inheritance_swap=fixtures.inheritance_swap,
+                multipartite=fixtures.multipartite,
+                ks_contextuality=fixtures.ks_contextuality,
+                temporal=fixtures.temporal,
+                partial_facticity=fixtures.partial_facticity,
+                graph_walk=fixtures.graph_walk,
+            ),
+        )
+
+        self.assertEqual("fail", require_rows(result["experiments"])[0]["status"])
+
+    def test_wrong_spin_transition_fixture_fails(self) -> None:
+        registry = parse_protocol_registry(spin_registry())
+        fixtures = default_fixtures()
+        spin = dict(fixtures.spin)
+        spin["sequential_stern_gerlach"] = SpinTransitionFixture(
+            probabilities=(1.0, 0.0),
+            expected_probabilities=(0.5, 0.5),
+            tolerance=1.0e-10,
+        )
+
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["sequential_stern_gerlach"],
+            fixtures=FixtureSet(
+                action_scale=fixtures.action_scale,
+                readout=fixtures.readout,
+                bell=fixtures.bell,
+                interference=fixtures.interference,
+                sorkin=fixtures.sorkin,
+                marker_eraser=fixtures.marker_eraser,
+                phase=fixtures.phase,
+                spin=spin,
+                unitary=fixtures.unitary,
+                projective=fixtures.projective,
+                bell_amplitude=fixtures.bell_amplitude,
+                singlet_angle=fixtures.singlet_angle,
+                decoherence=fixtures.decoherence,
+                zeno=fixtures.zeno,
+                context_transfer=fixtures.context_transfer,
+                no_cloning=fixtures.no_cloning,
+                barrier=fixtures.barrier,
+                bosonic=fixtures.bosonic,
+                single_quantum=fixtures.single_quantum,
+                inheritance_swap=fixtures.inheritance_swap,
+                multipartite=fixtures.multipartite,
+                ks_contextuality=fixtures.ks_contextuality,
+                temporal=fixtures.temporal,
+                partial_facticity=fixtures.partial_facticity,
+                graph_walk=fixtures.graph_walk,
+            ),
+        )
+
+        self.assertEqual("fail", require_rows(result["experiments"])[0]["status"])
+
+    def test_wrong_bell_amplitude_fixture_fails(self) -> None:
+        registry = parse_protocol_registry(bell_amplitude_registry())
+        fixtures = default_fixtures()
+        bad_fixture = BellAmplitudeFixture(
+            contexts=fixtures.bell_amplitude["bell_chsh_from_amplitudes"].contexts,
+            expected_abs_s=1.0,
+            max_abs_s=2.8284271247461903,
+            tolerance=1.0e-10,
+        )
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["bell_chsh_from_amplitudes"],
+            fixtures=FixtureSet(
+                action_scale=fixtures.action_scale,
+                readout=fixtures.readout,
+                bell=fixtures.bell,
+                interference=fixtures.interference,
+                sorkin=fixtures.sorkin,
+                marker_eraser=fixtures.marker_eraser,
+                phase=fixtures.phase,
+                spin=fixtures.spin,
+                unitary=fixtures.unitary,
+                projective=fixtures.projective,
+                bell_amplitude={"bell_chsh_from_amplitudes": bad_fixture},
+                singlet_angle=fixtures.singlet_angle,
+                decoherence=fixtures.decoherence,
+                zeno=fixtures.zeno,
+                context_transfer=fixtures.context_transfer,
+                no_cloning=fixtures.no_cloning,
+                barrier=fixtures.barrier,
+                bosonic=fixtures.bosonic,
+                single_quantum=fixtures.single_quantum,
+                inheritance_swap=fixtures.inheritance_swap,
+                multipartite=fixtures.multipartite,
+                ks_contextuality=fixtures.ks_contextuality,
+                temporal=fixtures.temporal,
+                partial_facticity=fixtures.partial_facticity,
+                graph_walk=fixtures.graph_walk,
+            ),
+        )
+
+        self.assertEqual("fail", require_rows(result["experiments"])[0]["status"])
+
+    def test_wrong_zeno_fixture_fails(self) -> None:
+        registry = parse_protocol_registry(zeno_registry())
+        fixtures = default_fixtures()
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["quantum_zeno"],
+            fixtures=FixtureSet(
+                action_scale=fixtures.action_scale,
+                readout=fixtures.readout,
+                bell=fixtures.bell,
+                interference=fixtures.interference,
+                sorkin=fixtures.sorkin,
+                marker_eraser=fixtures.marker_eraser,
+                phase=fixtures.phase,
+                spin=fixtures.spin,
+                unitary=fixtures.unitary,
+                projective=fixtures.projective,
+                bell_amplitude=fixtures.bell_amplitude,
+                singlet_angle=fixtures.singlet_angle,
+                decoherence=fixtures.decoherence,
+                zeno={
+                    "quantum_zeno": RepeatedContextZenoFixture(
+                        total_angle=1.0,
+                        samples=(ZenoSample(1, 0.0),),
+                        tolerance=1.0e-10,
+                    )
+                },
+                context_transfer=fixtures.context_transfer,
+                no_cloning=fixtures.no_cloning,
+                barrier=fixtures.barrier,
+                bosonic=fixtures.bosonic,
+                single_quantum=fixtures.single_quantum,
+                inheritance_swap=fixtures.inheritance_swap,
+                multipartite=fixtures.multipartite,
+                ks_contextuality=fixtures.ks_contextuality,
+                temporal=fixtures.temporal,
+                partial_facticity=fixtures.partial_facticity,
+                graph_walk=fixtures.graph_walk,
+            ),
+        )
+
+        self.assertEqual("fail", require_rows(result["experiments"])[0]["status"])
+
+    def test_wrong_no_cloning_fixture_fails(self) -> None:
+        registry = parse_protocol_registry(no_cloning_registry())
+        fixtures = default_fixtures()
+        no_cloning = dict(fixtures.no_cloning)
+        no_cloning["no_cloning"] = NoCloningFixture(
+            state_overlap=0.5,
+            min_obstruction=0.1,
+            expected_obstructed=False,
+            tolerance=1.0e-10,
+        )
+
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["no_cloning"],
+            fixtures=FixtureSet(
+                action_scale=fixtures.action_scale,
+                readout=fixtures.readout,
+                bell=fixtures.bell,
+                interference=fixtures.interference,
+                sorkin=fixtures.sorkin,
+                marker_eraser=fixtures.marker_eraser,
+                phase=fixtures.phase,
+                spin=fixtures.spin,
+                unitary=fixtures.unitary,
+                projective=fixtures.projective,
+                bell_amplitude=fixtures.bell_amplitude,
+                singlet_angle=fixtures.singlet_angle,
+                decoherence=fixtures.decoherence,
+                zeno=fixtures.zeno,
+                context_transfer=fixtures.context_transfer,
+                no_cloning=no_cloning,
+                barrier=fixtures.barrier,
+                bosonic=fixtures.bosonic,
+                single_quantum=fixtures.single_quantum,
+                inheritance_swap=fixtures.inheritance_swap,
+                multipartite=fixtures.multipartite,
+                ks_contextuality=fixtures.ks_contextuality,
+                temporal=fixtures.temporal,
+                partial_facticity=fixtures.partial_facticity,
+                graph_walk=fixtures.graph_walk,
+            ),
+        )
+
+        self.assertEqual("fail", require_rows(result["experiments"])[0]["status"])
 
     def test_output_is_deterministic(self) -> None:
         registry = parse_protocol_registry(sample_registry())
@@ -243,6 +546,163 @@ def sample_registry() -> dict[str, object]:
             },
         ],
     }
+
+
+def phase_registry() -> dict[str, object]:
+    payload = sample_registry()
+    logical_nodes = require_list(payload["logical_nodes"])
+    logical_nodes.extend(
+        [
+            {
+                "id": "phase_accumulation",
+                "label": "phase accumulation",
+                "claim_boundary": "calibrated phase fixture only",
+            },
+        ]
+    )
+    require_list(payload["protocols"]).append(
+        {
+            "id": "ab_flux_period_protocol",
+            "experiment_id": "ab_flux_period",
+            "fixture_class": "phase_accumulation",
+            "claim_boundary": "calibrated phase fixture only",
+            "logical_nodes": ["phase_accumulation", "phase_action_conversion_I"],
+            "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+            "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+        }
+    )
+    return payload
+
+
+def marker_registry() -> dict[str, object]:
+    payload = sample_registry()
+    logical_nodes = require_list(payload["logical_nodes"])
+    logical_nodes.extend(
+        [
+            {
+                "id": "path_marker_distinguishability",
+                "label": "marker distinguishability",
+                "claim_boundary": "finite marker fixture only",
+            },
+            {
+                "id": "interference_visibility",
+                "label": "interference visibility",
+                "claim_boundary": "finite visibility fixture only",
+            },
+        ]
+    )
+    require_list(payload["protocols"]).append(
+        {
+            "id": "quantum_eraser_protocol",
+            "experiment_id": "quantum_eraser",
+            "fixture_class": "marker_eraser_visibility",
+            "claim_boundary": "finite eraser fixture only",
+            "logical_nodes": ["path_marker_distinguishability", "interference_visibility"],
+            "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+            "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+        }
+    )
+    return payload
+
+
+def spin_registry() -> dict[str, object]:
+    payload = sample_registry()
+    logical_nodes = require_list(payload["logical_nodes"])
+    logical_nodes.append(
+        {
+            "id": "spin_axis_transition",
+            "label": "spin transition",
+            "claim_boundary": "finite spin fixture only",
+        }
+    )
+    require_list(payload["protocols"]).append(
+        {
+            "id": "sequential_stern_gerlach_protocol",
+            "experiment_id": "sequential_stern_gerlach",
+            "fixture_class": "spin_axis_transition",
+            "claim_boundary": "finite spin transition fixture only",
+            "logical_nodes": ["spin_axis_transition", "positive_measure_readout"],
+            "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+            "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+        }
+    )
+    return payload
+
+
+def bell_amplitude_registry() -> dict[str, object]:
+    payload = sample_registry()
+    logical_nodes = require_list(payload["logical_nodes"])
+    logical_nodes.append(
+        {
+            "id": "amplitude_probability_readout",
+            "label": "amplitude readout",
+            "claim_boundary": "finite amplitude fixture only",
+        }
+    )
+    require_list(payload["protocols"]).append(
+        {
+            "id": "bell_chsh_from_amplitudes_protocol",
+            "experiment_id": "bell_chsh_from_amplitudes",
+            "fixture_class": "bell_amplitude_table",
+            "claim_boundary": "finite amplitude fixture only",
+            "logical_nodes": [
+                "amplitude_probability_readout",
+                "bell_chsh_no_signalling",
+                "bounded_correlation_window",
+            ],
+            "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+            "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+        }
+    )
+    return payload
+
+
+def zeno_registry() -> dict[str, object]:
+    payload = sample_registry()
+    logical_nodes = require_list(payload["logical_nodes"])
+    logical_nodes.append(
+        {
+            "id": "repeated_context_survival",
+            "label": "Zeno survival",
+            "claim_boundary": "finite Zeno fixture only",
+        }
+    )
+    require_list(payload["protocols"]).append(
+        {
+            "id": "quantum_zeno_protocol",
+            "experiment_id": "quantum_zeno",
+            "fixture_class": "repeated_context_zeno",
+            "claim_boundary": "finite Zeno fixture only",
+            "logical_nodes": ["repeated_context_survival", "context_normalization"],
+            "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+            "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+        }
+    )
+    return payload
+
+
+def no_cloning_registry() -> dict[str, object]:
+    payload = sample_registry()
+    logical_nodes = require_list(payload["logical_nodes"])
+    logical_nodes.append(
+        {
+            "id": "no_cloning_obstruction",
+            "label": "no-cloning obstruction",
+            "claim_boundary": "finite obstruction fixture only",
+        }
+    )
+    require_list(payload["protocols"]).append(
+        {
+            "id": "no_cloning_protocol",
+            "experiment_id": "no_cloning",
+            "fixture_class": "no_cloning_context_invariance",
+            "claim_boundary": "finite obstruction fixture only",
+            "logical_nodes": ["no_cloning_obstruction"],
+            "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+            "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+        }
+    )
+    return payload
 
 
 def require_list(value: object) -> list[object]:
