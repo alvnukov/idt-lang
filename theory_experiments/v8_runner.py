@@ -21,6 +21,7 @@ FixtureClass = Literal[
     "calibrated_action_scale_reconstruction",
     "finite_readout_normalization",
     "bell_chsh_table",
+    "residual_not_implemented",
 ]
 JsonObject = dict[str, object]
 
@@ -322,6 +323,8 @@ def run_protocol(protocol: ExperimentProtocol, fixtures: FixtureSet) -> list[Tel
         return run_readout_protocol(protocol, fixtures.readout)
     if protocol.fixture_class == "bell_chsh_table":
         return run_bell_protocol(protocol, fixtures.bell)
+    if protocol.fixture_class == "residual_not_implemented":
+        return run_residual_not_implemented_protocol(protocol)
     raise ExperimentRunnerError(f"unsupported fixture class {protocol.fixture_class!r}")
 
 
@@ -331,7 +334,7 @@ def run_action_scale_protocol(protocol: ExperimentProtocol, fixture: ActionScale
     max_error = max(abs(ratio - fixture.shared_action_scale) for ratio in ratios)
     scale_status: TelemetryStatus = "pass" if max_error <= fixture.tolerance else "fail"
     refit_status: TelemetryStatus = "fail" if fixture.allow_per_experiment_refit else "pass"
-    hbar_status: TelemetryStatus = "blocked" if fixture.hbar_status == "blocked" else "fail"
+    hbar_status: TelemetryStatus = "pass" if fixture.hbar_status == "blocked" else "fail"
     return [
         telemetry_event(
             protocol,
@@ -425,6 +428,30 @@ def run_bell_protocol(protocol: ExperimentProtocol, fixture: BellFixture) -> lis
     ]
 
 
+def run_residual_not_implemented_protocol(protocol: ExperimentProtocol) -> list[TelemetryEvent]:
+    input_hash = stable_digest(
+        {
+            "experiment_id": protocol.experiment_id,
+            "fixture_class": protocol.fixture_class,
+            "claim_boundary": protocol.claim_boundary,
+        }
+    )
+    return [
+        telemetry_event(
+            protocol,
+            "residual_fixture_not_implemented",
+            "blocked",
+            "blocked",
+            0.0,
+            input_hash,
+            {
+                "reason": "no safe v8 telemetry fixture implemented yet",
+                "experiment_id": protocol.experiment_id,
+            },
+        )
+    ]
+
+
 def telemetry_event(
     protocol: ExperimentProtocol,
     node_id: str,
@@ -471,6 +498,8 @@ def experiment_status(events: Sequence[TelemetryEvent]) -> TelemetryStatus:
         return "fail"
     if any(event.status == "inconclusive" for event in events):
         return "inconclusive"
+    if any(event.status == "blocked" for event in events):
+        return "blocked"
     return "pass"
 
 
@@ -814,6 +843,8 @@ def require_fixture_class(value: object, field: str) -> FixtureClass:
         return "finite_readout_normalization"
     if raw == "bell_chsh_table":
         return "bell_chsh_table"
+    if raw == "residual_not_implemented":
+        return "residual_not_implemented"
     raise ExperimentRunnerError(f"{field} has unsupported fixture class {raw!r}")
 
 

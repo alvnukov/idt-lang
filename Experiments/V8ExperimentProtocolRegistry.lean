@@ -79,14 +79,30 @@ def logicalNodeSpecs : List LogicalNodeSpec :=
       id := "bounded_correlation_window",
       label := "CHSH value stays inside declared finite bound",
       claimBoundary := "does not derive Bell correlations from primitives"
+    },
+    {
+      id := "residual_fixture_not_implemented",
+      label := "residual QM experiment awaits a v8 telemetry fixture",
+      claimBoundary := "coverage only; blocked until a safe fixture exists"
     }
   ]
+
+def residualProtocol (experimentId : String) : ExperimentProtocolSpec :=
+  {
+    id := experimentId ++ "_protocol",
+    experimentId := experimentId,
+    fixtureClass := "residual_not_implemented",
+    claimBoundary := "residual experiment is registered for telemetry coverage; fixture not implemented",
+    logicalNodes := ["residual_fixture_not_implemented"],
+    allowedResultStatuses := allowedTelemetryResultStatuses,
+    forbiddenUpgrades := requiredForbiddenUpgrades
+  }
 
 def experimentProtocolSpecs : List ExperimentProtocolSpec :=
   [
     {
       id := "calibrated_action_scale_reconstruction_protocol",
-      experimentId := "calibrated_action_scale_reconstruction_demo",
+      experimentId := "calibrated_action_phase_holdout",
       fixtureClass := "calibrated_action_scale_reconstruction",
       claimBoundary := "shared calibrated action scale only; hbar_I remains blocked",
       logicalNodes := [
@@ -121,6 +137,39 @@ def experimentProtocolSpecs : List ExperimentProtocolSpec :=
       allowedResultStatuses := allowedTelemetryResultStatuses,
       forbiddenUpgrades := requiredForbiddenUpgrades
     }
+  ] ++ [
+    residualProtocol "two_path_interference",
+    residualProtocol "finite_i3_actualization",
+    residualProtocol "triple_slit_sorkin_parameter",
+    residualProtocol "which_way_marker",
+    residualProtocol "quantum_eraser",
+    residualProtocol "unitary_measurement_context",
+    residualProtocol "finite_interferometer_network",
+    residualProtocol "projective_repeatability",
+    residualProtocol "bell_chsh_from_amplitudes",
+    residualProtocol "singlet_angle_model",
+    residualProtocol "decoherence_and_recoverability",
+    residualProtocol "stern_gerlach_single_axis",
+    residualProtocol "sequential_stern_gerlach",
+    residualProtocol "delayed_choice",
+    residualProtocol "aharonov_bohm_phase",
+    residualProtocol "ab_flux_period",
+    residualProtocol "ramsey_interferometry",
+    residualProtocol "rabi_oscillation",
+    residualProtocol "photoelectric_threshold",
+    residualProtocol "spectroscopy_lines",
+    residualProtocol "tunneling_barrier",
+    residualProtocol "quantum_zeno",
+    residualProtocol "hong_ou_mandel",
+    residualProtocol "antibunching_single_photon",
+    residualProtocol "entanglement_swapping",
+    residualProtocol "quantum_teleportation",
+    residualProtocol "no_cloning",
+    residualProtocol "ghz_mermin_contextuality",
+    residualProtocol "kochen_specker_contextuality",
+    residualProtocol "leggett_garg_temporal_context",
+    residualProtocol "weak_measurement",
+    residualProtocol "quantum_random_walk"
   ]
 
 def jsonEscape (value : String) : String :=

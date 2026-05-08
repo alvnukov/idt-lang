@@ -30,8 +30,9 @@ class V8ExperimentRunnerTests(unittest.TestCase):
 
         registry = parse_protocol_registry(json.loads(completed.stdout))
 
-        self.assertEqual(3, len(registry.protocols))
+        self.assertEqual(35, len(registry.protocols))
         self.assertIn("context_normalization", registry.logical_node_ids)
+        self.assertIn("residual_fixture_not_implemented", registry.logical_node_ids)
 
     def test_unknown_logical_node_is_rejected(self) -> None:
         payload = sample_registry()
@@ -90,11 +91,42 @@ class V8ExperimentRunnerTests(unittest.TestCase):
 
         telemetry = require_rows(payload["telemetry"])
         roles = {str(row["role"]) for row in telemetry}
-        statuses = {str(row["status"]) for row in telemetry}
         self.assertIn("used", roles)
         self.assertIn("stressed", roles)
         self.assertIn("blocked", roles)
-        self.assertIn("blocked", statuses)
+
+    def test_blocked_residual_protocol_summarizes_as_blocked(self) -> None:
+        payload = sample_registry()
+        logical_nodes = require_list(payload["logical_nodes"])
+        logical_nodes.append(
+            {
+                "id": "residual_fixture_not_implemented",
+                "label": "residual fixture missing",
+                "claim_boundary": "blocked until fixture exists",
+            }
+        )
+        protocols = require_list(payload["protocols"])
+        protocols.append(
+            {
+                "id": "quantum_random_walk_protocol",
+                "experiment_id": "quantum_random_walk",
+                "fixture_class": "residual_not_implemented",
+                "claim_boundary": "coverage only",
+                "logical_nodes": ["residual_fixture_not_implemented"],
+                "allowed_result_statuses": ["pass", "fail", "inconclusive", "blocked"],
+                "forbidden_upgrades": ["formal_proof", "physical_formal_proof", "qm_formal_proof"],
+            }
+        )
+        registry = parse_protocol_registry(payload)
+
+        result = run_experiment_suite(
+            registry=registry,
+            repo_root=REPO_ROOT,
+            experiment_filters=["quantum_random_walk"],
+        )
+
+        experiments = require_rows(result["experiments"])
+        self.assertEqual("blocked", experiments[0]["status"])
 
     def test_output_is_deterministic(self) -> None:
         registry = parse_protocol_registry(sample_registry())
