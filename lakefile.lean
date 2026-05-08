@@ -51,6 +51,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8CurrentTheoremAndObligationLedger,
     `Proofs.MetaLang.V8TheoremDependencyBoundaryLedger,
     `Proofs.MetaLang.V8CurrentFrontierBlockers,
+    `Proofs.MetaLang.V8QmResearchTaskLedger,
     `Proofs.MetaLang.V8ResidualGateExperimentProfile,
     `Proofs.MetaLang.V8ResidualEncodingRequirements,
     `Proofs.MetaLang.V8MigrationCompletionCriterion,

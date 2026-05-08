@@ -14,6 +14,7 @@ from theory_verifier.ai_theory_graph import (
     incoming_refs,
     load_theory_graph,
     neighbor_subgraph,
+    search_nodes,
     show_node,
     source_pointers,
     theory_graph_from_payload,
@@ -114,6 +115,56 @@ class AiTheoryGraphQueryTests(unittest.TestCase):
             self.assertNotIn("\n  ", raw)
             parsed = json.loads(raw)
             self.assertEqual("res:theorem_cards:born_card", parsed["resolved"])
+
+    def test_search_finds_nodes_by_label_and_filters_kind(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            graph_path = write_sample_graph(Path(raw_dir), include_sources=False)
+
+            result = search_nodes(
+                load_theory_graph(graph_path),
+                "Born",
+                "manifest.residual",
+                "",
+                10,
+            )
+
+            nodes = rows_by_id(result["nodes"])
+            self.assertIn("res:theorem_cards:born_card", nodes)
+            self.assertIn("res:symbols:born_readout_I", nodes)
+            self.assertNotIn("res:symbols:unrelated_symbol", nodes)
+
+    def test_search_reports_truncation_deterministically(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            graph_path = write_sample_graph(Path(raw_dir), include_sources=False)
+
+            result = search_nodes(load_theory_graph(graph_path), "res:", "", "", 1)
+
+            nodes = require_rows(result["nodes"])
+            self.assertEqual(1, len(nodes))
+            self.assertEqual(True, result["truncated"])
+            self.assertGreater(require_int(result["count"]), 1)
+
+    def test_cli_search_supports_status_filter(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            graph_path = write_sample_graph(Path(raw_dir), include_sources=False)
+            output = io.StringIO()
+
+            exit_code = main(
+                [
+                    "--graph",
+                    str(graph_path),
+                    "search",
+                    "born",
+                    "--status",
+                    "target",
+                ],
+                output,
+            )
+
+            self.assertEqual(0, exit_code)
+            parsed = json.loads(output.getvalue())
+            nodes = rows_by_id(parsed["nodes"])
+            self.assertEqual(["res:symbols:born_readout_I"], sorted(nodes))
 
     def test_cli_validate_reports_ok(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
@@ -250,6 +301,12 @@ def require_rows(value: object) -> list[list[str]]:
             raise AssertionError("expected string row")
         rows.append(item)
     return rows
+
+
+def require_int(value: object) -> int:
+    if not isinstance(value, int):
+        raise AssertionError("expected int")
+    return value
 
 
 def rows_by_id(value: object) -> dict[str, list[str]]:

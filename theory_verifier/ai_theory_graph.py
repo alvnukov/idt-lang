@@ -282,6 +282,47 @@ def source_pointers(graph: TheoryGraph, query: str, depth: int) -> JsonObject:
     }
 
 
+def search_nodes(
+    graph: TheoryGraph,
+    query: str,
+    kind: str,
+    status: str,
+    limit: int,
+) -> JsonObject:
+    if not query:
+        raise V8GraphQueryError("search query must be non-empty")
+    if limit <= 0:
+        raise V8GraphQueryError("limit must be > 0")
+    needle = query.casefold()
+    matches: list[GraphNode] = []
+    for node in graph.nodes:
+        if kind and node.kind != kind:
+            continue
+        if status and node.status != status:
+            continue
+        haystack = "\n".join(
+            [
+                node.identifier,
+                node.kind,
+                node.status,
+                node.label,
+                node.source,
+            ]
+        ).casefold()
+        if needle in haystack:
+            matches.append(node)
+    limited = matches[:limit]
+    return {
+        "query": query,
+        "kind": kind,
+        "status": status,
+        "limit": limit,
+        "count": len(matches),
+        "truncated": len(matches) > len(limited),
+        "nodes": [node.row() for node in limited],
+    }
+
+
 def neighborhood_ids(graph: TheoryGraph, focus: str, depth: int) -> set[str]:
     neighbors: dict[str, set[str]] = {node.identifier: set() for node in graph.nodes}
     for edge in graph.edges:

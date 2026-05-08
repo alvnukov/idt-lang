@@ -106,6 +106,11 @@ b1_primitive_base_yields_import_guards
 This solves the free-admissibility problem for the B1 successor-base route:
 admissibility roles are constructor-generated from the successor primitive base,
 not arbitrary predicates on a detached atom universe. It does not prove that B1
+derives target-specific QM semantics. The current `FullQMObligationBundle`
+route is now explicitly bounded by the CGSC claim-source aliasing audit:
+several target slots can be filled by the same smaller source proposition, so
+slot filling must not be upgraded to independent derivation of local tomography,
+entanglement, spectrality, Born, Hilbert, or full QM.
 is derived from the older `B0CandidateBase`, and it does not prove QM from
 primitives.
 

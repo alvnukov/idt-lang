@@ -964,3 +964,188 @@ Born is conditionally closed from CFS-ready pairwise actualization.
 The live wall is now proving CFS-ready from the primitive base and proving
 carrier-frontier exhaustion, not finding the algebraic Born formula.
 ```
+
+## 177.16. Born-Core Separates From Hilbert/Carrier Fields
+
+The dependency graph with Lean `refs` exposed a useful overloading in the
+previous CFS route: exact Born readout was being routed through a
+Hilbert/frontier-sized package even though the Born theorem only uses the
+readout side.
+
+The route now has a smaller machine-checked core:
+
+```text
+ConstructiveBornReadoutCore
+```
+
+Core fields:
+
+```text
+context-generated source boundary;
+no target imports;
+D-typed signed witness;
+finite compositional stability;
+operational-equivalence respect;
+inheritance transport;
+normalized orientation transport;
+endpoint witness exhaustion;
+endpoint faithfulness;
+no whole-context-only readout residue;
+explicit loss/accounting boundary;
+repeatable finite records;
+affine frequency mixing;
+phase-orientation carrier witness;
+no Born import.
+```
+
+Lean artifacts:
+
+```text
+constructiveBornReadoutCoreToPrimitiveBoundaryCandidate
+constructiveBornReadoutCoreToAffineOverlapBornInputs
+constructiveBornReadoutCoreToUniversalBornContract
+constructive_born_readout_core_closes_direct_finite_born_route
+constructive_born_readout_core_closes_exact_universal_born
+constructive_facticization_semantics_supplies_born_readout_core
+constructive_facticization_semantics_closes_exact_born_via_born_core
+```
+
+Result:
+
+```text
+ConstructiveBornReadoutCoreReady
+=> direct finite Born route
+=> exact universal Born readout contract
+```
+
+This is stronger than the previous phrasing because it separates:
+
+```text
+Born/readout wall:
+  derive ConstructiveBornReadoutCoreReady from the primitive base.
+
+Hilbert/carrier wall:
+  derive carrier-frontier exhaustion and representation uniqueness.
+```
+
+The Born-core route still is not a B0 proof:
+
+```text
+ConstructiveBornReadoutCoreReady is not derived from untyped B0.
+The phase-orientation carrier witness is still a nontrivial lower obligation.
+The all-context closure is still a semantic/core requirement, not an
+experiment table.
+```
+
+Scientific status after this step:
+
+```text
+The algebraic Born formula is no longer the wall.
+The wall is the origin of the Born-core semantics:
+why admissible facticization must be endpoint-faithful,
+constructor-respecting, signed, affine under finite mixtures, and phase-oriented.
+```
+
+## 177.17. CGSC Claim-Source Aliasing Boundary
+
+The v8 graph audit found a deeper proof-discipline issue in the current
+grounded CGSC layer.
+
+The problem is not that Lean failed. Lean correctly checks the code. The issue
+is that several larger package slots are currently populated by the same smaller
+ground source proposition.
+
+Machine-visible boundary now recorded in Lean:
+
+```text
+grounded_cgsc_claim_source_aliasing_boundary
+```
+
+It shows that, in the current grounded constructors, these are source aliases:
+
+```text
+completeExposedContextPartition
+  -> spectralDecomposition
+  -> contextNormalization
+  -> operationalEquivalenceProbability
+  -> physicalPhaseScaleBoundary
+
+reversibleContextAutomorphismClosure
+  -> richDclReversibleSymmetry
+  -> dclAutomorphismDynamics
+  -> overlapPreservationDynamics
+  -> projectiveAction
+
+productContextGenerationClosure
+  -> productContextExhaustion
+  -> localTomography
+  -> monoidalAssociativity
+  -> entanglementClosure
+  -> projectiveLimitConsistency
+
+noHiddenJointOnlyGenerationExtension
+  -> constructiveCarrierWitness
+  -> noHiddenJointOnlyGeneration
+```
+
+Scientific consequence:
+
+```text
+The current package closure is a source-witness scaffold.
+It is not yet a target-specific derivation of all named QM obligations.
+```
+
+This sharpens the wall. The next proof step is not to add more downstream
+theorems over the same `CheckedProp` fields. The next step is to give each
+named target slot its own typed source condition or prove that the smaller
+source proposition genuinely entails that specific target.
+
+This affects the route to QM directly:
+
+```text
+Born/Hilbert progress is real only where the target-specific theorem exists
+  e.g. endpoint data -> Born closure.
+
+Package-slot filling is not enough
+  e.g. product source -> localTomography slot
+  does not by itself prove local tomography as a physical theorem.
+```
+
+## 177.18. Lean Research Task Ledger
+
+The next-step plan is now stored in Lean, not only in Markdown:
+
+```text
+Proofs/MetaLang/V8QmResearchTaskLedger.lean
+```
+
+Current machine-visible task set:
+
+```text
+splitClaimSourceAliases
+proveProductLocalTomographyTarget
+proveProductMonoidalAssociativityTarget
+proveProductEntanglementClosureTarget
+proveExposedSpectralTarget
+proveReversibleOverlapDynamicsTarget
+deriveBornReadoutCoreFromPrimitiveBase
+deriveCarrierFrontierExhaustion
+recompileExperimentsFromTargetSpecificProofs
+```
+
+The ledger proves:
+
+```text
+current_qm_research_task_count
+current_qm_research_tasks_are_open
+current_research_plan_acknowledges_claim_source_aliasing_boundary
+qm_research_plan_does_not_close_current_born_or_hilbert_blockers
+```
+
+Meaning:
+
+```text
+The plan itself is now a Lean-governed artifact.
+It records what blocks exact QM.
+It does not close Born, Hilbert, or full QM.
+```

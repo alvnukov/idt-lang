@@ -15169,3 +15169,55 @@ then turn B1 package projections into semantic target proofs.
 
 This is still not a proof of QM. It is a registered conditional route from B1
 to the current full-QM obligation bundle, with import guards preserved.
+
+### 174.294. Full-QM Obligation Bundle Claim-Source Boundary
+
+A later v8 graph audit found that the phrase "full-QM obligation bundle" must
+be read more narrowly than the earlier pass suggested.
+
+The current grounded CGSC constructors reuse one smaller source proposition to
+populate several named target slots. Lean correctly checks those source
+propositions, but the package field name is not by itself a target-specific
+proof.
+
+Machine-checked boundary:
+
+```text
+grounded_cgsc_claim_source_aliasing_boundary
+```
+
+Examples:
+
+```text
+productContextGenerationClosure
+  -> localTomography
+  -> monoidalAssociativity
+  -> entanglementClosure
+
+completeExposedContextPartition
+  -> spectralDecomposition
+  -> contextNormalization
+  -> operationalEquivalenceProbability
+
+reversibleContextAutomorphismClosure
+  -> richDclReversibleSymmetry
+  -> overlapPreservationDynamics
+  -> projectiveAction
+```
+
+Updated status:
+
+```text
+B1 route to current package slots: machine-checked source-witness scaffold
+target-specific QM derivation: still open
+full QM proof: not proved
+```
+
+This does not destroy the route. It prevents a false upgrade. The next useful
+step is to split each package slot into either:
+
+```text
+1. its own typed source condition; or
+2. a theorem proving that the smaller source proposition entails that exact
+   target-specific meaning.
+```

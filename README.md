@@ -141,8 +141,8 @@ Current auditable results:
   inheritance-action, product-tomography, monoidal associativity,
   projective-limit, and calibrated-scale scaffolds are now compiled as a single
   Lean bundle. This removes a proof-engineering gap for those finite fragments;
-  the later B1/CGSC artifacts now close the six structural target clauses
-  inside the current package semantics.
+  the later B1/CGSC artifacts fill the six structural target slots inside the
+  current package semantics.
 - CGSC structural target kernel: the six structural QM blockers are now
   conditionally closed by one Lean artifact from seven context-generated stable
   closure clauses, while preserving the no-target-import boundary. At this
@@ -150,13 +150,18 @@ Current auditable results:
   clause source, while external QM adequacy remains open.
 - B1 CGSC clause derivation: all seven CGSC clauses are now machine-derived
   from the B1 primitive-base witness interface in Lean, and the same artifact
-  closes the six structural target clauses inside the current IDT package
-  semantics.
+  fills the six structural target slots inside the current IDT package
+  semantics. The grounded CGSC layer now also exposes a claim-source aliasing
+  boundary: several named target slots currently share one smaller source
+  proposition, so these artifacts are source-witness scaffolds, not independent
+  physical derivations of local tomography, entanglement, spectrality, or exact
+  Born/Hilbert QM.
   The remaining frontier is external adequacy: prove that this B1-derived
   package reconstructs Hilbert/Born/unitary/tensor QM with the intended
   universal physical meaning, not only as an internal obligation bundle. The
-  semantic-kernel evaluator now removes the six B1-closed structural blockers
-  and two finite-scaffold closures from the live open core; the remaining
+  semantic-kernel evaluator can route those source-witness slots through the
+  current package, but the live open core must still separate slot filling from
+  target-specific derivation. The remaining
   frontier is the all-context readout boundary: context-first universal endpoint
   data. A new Lean bridge proves that the existing context-first constructive
   witness package supplies primitive pairwise endpoint coverage, endpoint-stable
@@ -181,7 +186,15 @@ Current auditable results:
   principle: endpoint-stable proper-subcontext witnesses must exhaust stable
   readout invariants and block primitive whole-context ternary residue. A new
   Lean bridge shows that CFS-ready pairwise actualization conditionally closes
-  exact universal Born readout; this is not a B0 derivation or a proof upgrade.
+  exact universal Born readout. A smaller Born-only core now separates the
+  readout wall from the Hilbert/carrier wall; it is still not a B0 derivation or
+  a proof upgrade.
+- QM research task ledger: the next-step plan is now encoded in Lean as
+  `Proofs/MetaLang/V8QmResearchTaskLedger.lean`. It records active blockers
+  for claim-source alias splitting, product/local-tomography targets,
+  Born-core derivation, carrier-frontier exhaustion, and experiment recompiles.
+  The ledger is a planning artifact and explicitly preserves the current
+  Born/Hilbert blockers.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,
@@ -332,6 +345,7 @@ For local graph inspection:
 python scripts/query_ai_theory_graph.py summary
 python scripts/query_ai_theory_graph.py validate --repo-root . --check-source-hashes
 python scripts/query_ai_theory_graph.py show <node-id-or-alias>
+python scripts/query_ai_theory_graph.py search <text> --limit 20
 python scripts/query_ai_theory_graph.py neighbors <node-id-or-alias> --depth 2
 python scripts/query_ai_theory_graph.py sources <node-id-or-alias> --depth 1
 ```

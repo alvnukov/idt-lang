@@ -173,6 +173,257 @@ theorem constructive_facticization_semantics_closes_finite_born_hilbert_routes
       semantics
       ready)
 
+/-!
+Born-only core.
+
+The graph-backed dependency audit shows that exact universal Born readout does
+not need the full Hilbert/carrier part of CFS.  This structure isolates the
+readout-side core: endpoint-stable constructor labels, signed oriented
+transport, phase double cover, no higher-order hidden facticization, and
+probability accounting as a downstream readout layer.
+-/
+
+structure ConstructiveBornReadoutCore where
+  contextGeneratedSourceBoundary : Prop
+  noTargetImports : Prop
+  dTypedWitness : Prop
+  finiteCompositionalStability : Prop
+  operationalEquivalenceRespect : Prop
+  inheritanceTransport : Prop
+  normalizedOrientationTransport : Prop
+  endpointWitnessExhaustion : Prop
+  endpointFaithfulness : Prop
+  noWholeContextOnlyReadoutResidue : Prop
+  explicitLossAccounting : Prop
+  repeatableFiniteRecords : Prop
+  affineFrequencyMixing : Prop
+  phaseOrientationCarrierWitness : Prop
+  noBornImport : Prop
+
+def ConstructiveBornReadoutCoreReady
+    (core : ConstructiveBornReadoutCore) : Prop :=
+  core.contextGeneratedSourceBoundary
+    ∧ core.noTargetImports
+    ∧ core.dTypedWitness
+    ∧ core.finiteCompositionalStability
+    ∧ core.operationalEquivalenceRespect
+    ∧ core.inheritanceTransport
+    ∧ core.normalizedOrientationTransport
+    ∧ core.endpointWitnessExhaustion
+    ∧ core.endpointFaithfulness
+    ∧ core.noWholeContextOnlyReadoutResidue
+    ∧ core.explicitLossAccounting
+    ∧ core.repeatableFiniteRecords
+    ∧ core.affineFrequencyMixing
+    ∧ core.phaseOrientationCarrierWitness
+    ∧ core.noBornImport
+
+def constructiveBornReadoutCoreToPrimitiveBoundaryCandidate
+    (core : ConstructiveBornReadoutCore) :
+    PrimitiveBoundaryCandidate :=
+  {
+    b1BoundInterface := core.contextGeneratedSourceBoundary,
+    noTargetImports := core.noTargetImports,
+    compatibleKernelAdditivity :=
+      core.finiteCompositionalStability
+        ∧ core.inheritanceTransport,
+    normalizedOverlapUniqueness :=
+      core.dTypedWitness
+        ∧ core.normalizedOrientationTransport,
+    phaseBundleJ := core.normalizedOrientationTransport,
+    properSubcontextPairwiseCoverage := core.endpointWitnessExhaustion,
+    noHiddenTernaryFact := core.noWholeContextOnlyReadoutResidue
+  }
+
+def constructiveBornReadoutCoreToAffineOverlapBornInputs
+    (core : ConstructiveBornReadoutCore) :
+    AffineOverlapBornInputs :=
+  {
+    signedNormalizedOverlap :=
+      core.dTypedWitness
+        ∧ core.normalizedOrientationTransport,
+    binaryComplementReadout := core.endpointWitnessExhaustion,
+    repeatabilityAndExclusion :=
+      core.repeatableFiniteRecords
+        ∧ core.endpointFaithfulness,
+    unbiasedZeroOverlap := core.operationalEquivalenceRespect,
+    affineMixtureResponse := core.affineFrequencyMixing,
+    phaseBundleDoubleCover := core.phaseOrientationCarrierWitness,
+    constructorRespectingBranchLabels :=
+      core.endpointWitnessExhaustion
+        ∧ core.endpointFaithfulness,
+    noBornImport := core.noBornImport
+  }
+
+def constructiveBornReadoutCoreToUniversalBornContract
+    (core : ConstructiveBornReadoutCore) :
+    UniversalBornReadoutContract :=
+  {
+    finiteDirectBornRoute :=
+      DirectFiniteBornRouteHit
+        (constructiveBornReadoutCoreToPrimitiveBoundaryCandidate core)
+        (constructiveBornReadoutCoreToAffineOverlapBornInputs core),
+    allAdmissibleContextsCloseFiniteBornChain :=
+      core.endpointWitnessExhaustion
+        ∧ core.finiteCompositionalStability
+        ∧ core.noWholeContextOnlyReadoutResidue,
+    universalSignedReadout :=
+      core.dTypedWitness
+        ∧ core.inheritanceTransport
+        ∧ core.normalizedOrientationTransport,
+    universalConstructorRespectingBranchLabels :=
+      core.endpointWitnessExhaustion
+        ∧ core.endpointFaithfulness,
+    universalPhaseDoubleCover := core.phaseOrientationCarrierWitness,
+    noPrimitiveHigherOrderFacticization :=
+      core.noWholeContextOnlyReadoutResidue,
+    probabilityAccountingIsOnlyReadout :=
+      core.explicitLossAccounting,
+    noBornImport := core.noBornImport
+  }
+
+theorem constructive_born_readout_core_closes_direct_finite_born_route
+    (core : ConstructiveBornReadoutCore) :
+    ConstructiveBornReadoutCoreReady core →
+      DirectFiniteBornRouteHit
+        (constructiveBornReadoutCoreToPrimitiveBoundaryCandidate core)
+        (constructiveBornReadoutCoreToAffineOverlapBornInputs core) := by
+  intro ready
+  rcases ready with
+    ⟨contextGenerated, noTarget, dTyped, finiteStability,
+      operationalEquivalence, inheritanceTransport, normalizedTransport,
+      endpointExhaustion, endpointFaithfulness, noWholeContextResidue,
+      _lossAccounting, repeatableRecords, affineFrequency, phaseCarrier,
+      noBorn⟩
+  dsimp [
+    DirectFiniteBornRouteHit,
+    PrimitiveBoundaryClosesFiniteBornChain,
+    PrimitiveBoundarySuppliesFiniteChainInputs,
+    PrimitiveBoundaryClosesPairwiseCoverage,
+    AffineBornSelectorHit,
+    constructiveBornReadoutCoreToPrimitiveBoundaryCandidate,
+    constructiveBornReadoutCoreToAffineOverlapBornInputs,
+  ]
+  exact And.intro
+    (And.intro
+      (And.intro contextGenerated
+        (And.intro noTarget
+          (And.intro
+            (And.intro finiteStability inheritanceTransport)
+            (And.intro
+              (And.intro dTyped normalizedTransport)
+              normalizedTransport))))
+      (And.intro endpointExhaustion noWholeContextResidue))
+    (And.intro
+      finite_born_chain_evidence_is_hit
+      (And.intro
+        (And.intro dTyped normalizedTransport)
+        (And.intro endpointExhaustion
+          (And.intro
+            (And.intro repeatableRecords endpointFaithfulness)
+            (And.intro operationalEquivalence
+              (And.intro affineFrequency
+                (And.intro phaseCarrier
+                  (And.intro
+                    (And.intro endpointExhaustion endpointFaithfulness)
+                    noBorn))))))))
+
+theorem constructive_born_readout_core_closes_exact_universal_born
+    (core : ConstructiveBornReadoutCore) :
+    ConstructiveBornReadoutCoreReady core →
+      ExactUniversalBornReadoutClosed
+        (constructiveBornReadoutCoreToUniversalBornContract core) := by
+  intro ready
+  rcases ready with
+    ⟨contextGenerated, noTarget, dTyped, finiteStability,
+      operationalEquivalence, inheritanceTransport, normalizedTransport,
+      endpointExhaustion, endpointFaithfulness, noWholeContextResidue,
+      lossAccounting, repeatableRecords, affineFrequency, phaseCarrier,
+      noBorn⟩
+  have readyAgain : ConstructiveBornReadoutCoreReady core :=
+    ⟨contextGenerated, noTarget, dTyped, finiteStability,
+      operationalEquivalence, inheritanceTransport, normalizedTransport,
+      endpointExhaustion, endpointFaithfulness, noWholeContextResidue,
+      lossAccounting, repeatableRecords, affineFrequency, phaseCarrier,
+      noBorn⟩
+  exact universal_born_readout_contract_closes_exact_universal_born
+    (constructiveBornReadoutCoreToUniversalBornContract core)
+    (constructive_born_readout_core_closes_direct_finite_born_route
+      core
+      readyAgain)
+    ⟨endpointExhaustion, finiteStability, noWholeContextResidue⟩
+    ⟨dTyped, inheritanceTransport, normalizedTransport⟩
+    ⟨endpointExhaustion, endpointFaithfulness⟩
+    phaseCarrier
+    noWholeContextResidue
+    lossAccounting
+    noBorn
+
+def constructiveFacticizationSemanticsToBornReadoutCore
+    (semantics : ConstructiveFacticizationSemantics) :
+    ConstructiveBornReadoutCore :=
+  {
+    contextGeneratedSourceBoundary :=
+      semantics.contextGeneratedSourceBoundary,
+    noTargetImports := semantics.noTargetImports,
+    dTypedWitness := semantics.dTypedWitness,
+    finiteCompositionalStability :=
+      semantics.finiteCompositionalStability,
+    operationalEquivalenceRespect :=
+      semantics.operationalEquivalenceRespect,
+    inheritanceTransport := semantics.inheritanceTransport,
+    normalizedOrientationTransport :=
+      semantics.normalizedOrientationTransport,
+    endpointWitnessExhaustion :=
+      semantics.endpointWitnessExhaustion,
+    endpointFaithfulness := semantics.endpointFaithfulness,
+    noWholeContextOnlyReadoutResidue :=
+      semantics.noWholeContextOnlyReadoutResidue,
+    explicitLossAccounting := semantics.explicitLossAccounting,
+    repeatableFiniteRecords := semantics.repeatableFiniteRecords,
+    affineFrequencyMixing := semantics.affineFrequencyMixing,
+    phaseOrientationCarrierWitness :=
+      semantics.phaseOrientationCarrierWitness,
+    noBornImport := semantics.noBornImport
+  }
+
+theorem constructive_facticization_semantics_supplies_born_readout_core
+    (semantics : ConstructiveFacticizationSemantics) :
+    ConstructiveFacticizationSemanticsReady semantics →
+      ConstructiveBornReadoutCoreReady
+        (constructiveFacticizationSemanticsToBornReadoutCore semantics) := by
+  intro ready
+  rcases ready with
+    ⟨contextGenerated, noTarget, dTyped, _operationalClosure,
+      _orientedDirectionAccessibility, finiteStability,
+      operationalEquivalence, inheritanceTransport, normalizedTransport,
+      endpointExhaustion, endpointFaithfulness, noWholeContextResidue,
+      lossAccounting, repeatableRecords, affineFrequency, phaseCarrier,
+      _localTomography, _exposedContext, _reversibleSymmetry,
+      _constructiveCarrier, _noHiddenJoint, noBorn, _noHilbert,
+      _noTensor⟩
+  dsimp [
+    ConstructiveBornReadoutCoreReady,
+    constructiveFacticizationSemanticsToBornReadoutCore,
+  ]
+  exact ⟨contextGenerated, noTarget, dTyped, finiteStability,
+    operationalEquivalence, inheritanceTransport, normalizedTransport,
+    endpointExhaustion, endpointFaithfulness, noWholeContextResidue,
+    lossAccounting, repeatableRecords, affineFrequency, phaseCarrier, noBorn⟩
+
+theorem constructive_facticization_semantics_closes_exact_born_via_born_core
+    (semantics : ConstructiveFacticizationSemantics) :
+    ConstructiveFacticizationSemanticsReady semantics →
+      ExactUniversalBornReadoutClosed
+        (constructiveBornReadoutCoreToUniversalBornContract
+          (constructiveFacticizationSemanticsToBornReadoutCore semantics)) := by
+  intro ready
+  exact constructive_born_readout_core_closes_exact_universal_born
+    (constructiveFacticizationSemanticsToBornReadoutCore semantics)
+    (constructive_facticization_semantics_supplies_born_readout_core
+      semantics
+      ready)
+
 def constructiveFacticizationSemanticsToContextStablePairwiseActualization
     (semantics : ConstructiveFacticizationSemantics) :
     ContextStablePairwiseActualization :=
@@ -620,6 +871,8 @@ theorem flattened_faithful_counterpressure_keeps_transport_rigidity_open :
 
 structure ConstructiveFacticizationSemanticsStatus where
   successorSemanticLawCandidate : Prop
+  bornReadoutCoreSeparatedFromHilbertCarrier : Prop
+  bornReadoutCoreDerivedFromUntypedB0 : Prop
   derivedFromUntypedB0 : Prop
   nontrivialOrientedCycleDerivedFromUntypedB0 : Prop
   phaseBundleJDerivedFromUntypedB0 : Prop
@@ -632,6 +885,8 @@ structure ConstructiveFacticizationSemanticsStatus where
 def ConstructiveFacticizationSemanticsBoundaryHonest
     (status : ConstructiveFacticizationSemanticsStatus) : Prop :=
   status.successorSemanticLawCandidate
+    ∧ status.bornReadoutCoreSeparatedFromHilbertCarrier
+    ∧ ¬ status.bornReadoutCoreDerivedFromUntypedB0
     ∧ ¬ status.derivedFromUntypedB0
     ∧ ¬ status.nontrivialOrientedCycleDerivedFromUntypedB0
     ∧ ¬ status.phaseBundleJDerivedFromUntypedB0
@@ -645,6 +900,8 @@ def currentConstructiveFacticizationSemanticsStatus :
     ConstructiveFacticizationSemanticsStatus :=
   {
     successorSemanticLawCandidate := True,
+    bornReadoutCoreSeparatedFromHilbertCarrier := True,
+    bornReadoutCoreDerivedFromUntypedB0 := False,
     derivedFromUntypedB0 := False,
     nontrivialOrientedCycleDerivedFromUntypedB0 := False,
     phaseBundleJDerivedFromUntypedB0 := False,
@@ -658,22 +915,19 @@ def currentConstructiveFacticizationSemanticsStatus :
 theorem current_constructive_facticization_semantics_is_boundary_honest :
     ConstructiveFacticizationSemanticsBoundaryHonest
       currentConstructiveFacticizationSemanticsStatus := by
-  exact And.intro True.intro
-    (And.intro
-      (fun derived => derived)
-      (And.intro
-        (fun cycle => cycle)
-        (And.intro
-          (fun phase => phase)
-          (And.intro
-            (fun classical => classical)
-            (And.intro
-              (fun born => born)
-              (And.intro
-                (fun frontier => frontier)
-                (And.intro
-                  (fun hbar => hbar)
-                  (fun qm => qm))))))))
+  exact ⟨
+    True.intro,
+    True.intro,
+    (fun bornCore => bornCore),
+    (fun derived => derived),
+    (fun cycle => cycle),
+    (fun phase => phase),
+    (fun classical => classical),
+    (fun born => born),
+    (fun frontier => frontier),
+    (fun hbar => hbar),
+    (fun qm => qm)
+  ⟩
 
 end QMClosure
 end IDT

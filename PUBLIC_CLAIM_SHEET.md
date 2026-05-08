@@ -142,11 +142,12 @@ The main current successes are bounded and methodological:
    source, while external QM adequacy remains open.
 20. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
    now machine-derived from the B1 primitive-base witness interface, and the
-   six structural target clauses close inside the current IDT package semantics.
-   The semantic-kernel evaluator now removes those six B1-closed clauses and
-   two finite-scaffold closures from the live open core. This does not yet
-   prove external Hilbert/Born/unitary/tensor equivalence or a B0-alone
-   derivation.
+   six structural target slots are filled inside the current IDT package
+   semantics. A later Lean audit exposes a claim-source aliasing boundary:
+   several named target slots share one smaller source proposition, so this is
+   a source-witness scaffold, not an independent physical derivation of those
+   targets. This does not yet prove external Hilbert/Born/unitary/tensor
+   equivalence or a B0-alone derivation.
 21. The Born/Hilbert frontier is now narrowed rather than opaque. The finite
    Born-square readout is selected under the checked oriented endpoint
    discipline, and a new Lean bridge proves that the existing context-first
