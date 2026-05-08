@@ -389,5 +389,116 @@ theorem grounded_semantic_extension_base_yields_package_import_guards
   typed_semantic_extension_base_yields_package_import_guards
     (groundedSemanticExtensionBaseToTyped base)
 
+/-!
+Claim-source aliasing boundary.
+
+The grounded extension constructors intentionally reuse a small ground witness
+to populate larger package slots.  That is useful for migration scaffolding, but
+it is not a semantic proof that every slot has been independently derived.  The
+equalities below make this boundary explicit: a package field can currently be
+Lean-checked because it shares the same source proposition, not because the
+field name itself has been reconstructed from primitives.
+-/
+
+def CompleteExposedExtensionClaimSourceAliasing
+    (ground : CompleteExposedContextPartitionGround) : Prop :=
+  let extension := completeExposedExtensionFromGround ground
+  extension.completeExposedContextPartition.statement =
+      extension.spectralDecomposition.statement
+    ∧ extension.completeExposedContextPartition.statement =
+      extension.contextNormalization.statement
+    ∧ extension.completeExposedContextPartition.statement =
+      extension.operationalEquivalenceProbability.statement
+    ∧ extension.completeExposedContextPartition.statement =
+      extension.physicalPhaseScaleBoundary.statement
+
+theorem complete_exposed_extension_claim_source_aliasing
+    (ground : CompleteExposedContextPartitionGround) :
+    CompleteExposedExtensionClaimSourceAliasing ground := by
+  simp [
+    CompleteExposedExtensionClaimSourceAliasing,
+    completeExposedExtensionFromGround,
+    groundedChecked,
+  ]
+
+def ReversibleExtensionClaimSourceAliasing
+    (ground : ReversibleContextAutomorphismClosureGround) : Prop :=
+  let extension := reversibleExtensionFromGround ground
+  extension.reversibleContextAutomorphismClosure.statement =
+      extension.richDclReversibleSymmetry.statement
+    ∧ extension.reversibleContextAutomorphismClosure.statement =
+      extension.dclAutomorphismDynamics.statement
+    ∧ extension.reversibleContextAutomorphismClosure.statement =
+      extension.overlapPreservationDynamics.statement
+    ∧ extension.reversibleContextAutomorphismClosure.statement =
+      extension.projectiveAction.statement
+
+theorem reversible_extension_claim_source_aliasing
+    (ground : ReversibleContextAutomorphismClosureGround) :
+    ReversibleExtensionClaimSourceAliasing ground := by
+  simp [
+    ReversibleExtensionClaimSourceAliasing,
+    reversibleExtensionFromGround,
+    groundedChecked,
+  ]
+
+def ProductExtensionClaimSourceAliasing
+    (ground : ProductContextGenerationClosureGround) : Prop :=
+  let extension := productExtensionFromGround ground
+  extension.productContextGenerationClosure.statement =
+      extension.productContextExhaustion.statement
+    ∧ extension.productContextGenerationClosure.statement =
+      extension.localTomography.statement
+    ∧ extension.productContextGenerationClosure.statement =
+      extension.monoidalAssociativity.statement
+    ∧ extension.productContextGenerationClosure.statement =
+      extension.entanglementClosure.statement
+    ∧ extension.productContextGenerationClosure.statement =
+      extension.projectiveLimitConsistency.statement
+
+theorem product_extension_claim_source_aliasing
+    (ground : ProductContextGenerationClosureGround) :
+    ProductExtensionClaimSourceAliasing ground := by
+  simp [
+    ProductExtensionClaimSourceAliasing,
+    productExtensionFromGround,
+    groundedChecked,
+  ]
+
+def NoHiddenJointExtensionClaimSourceAliasing
+    (ground : NoHiddenJointOnlyGenerationGround) : Prop :=
+  let extension := noHiddenJointExtensionFromGround ground
+  extension.noHiddenJointOnlyGenerationExtension.statement =
+      extension.constructiveCarrierWitness.statement
+    ∧ extension.noHiddenJointOnlyGenerationExtension.statement =
+      extension.noHiddenJointOnlyGeneration.statement
+
+theorem no_hidden_joint_extension_claim_source_aliasing
+    (ground : NoHiddenJointOnlyGenerationGround) :
+    NoHiddenJointExtensionClaimSourceAliasing ground := by
+  simp [
+    NoHiddenJointExtensionClaimSourceAliasing,
+    noHiddenJointExtensionFromGround,
+    groundedChecked,
+  ]
+
+def GroundedCGSCClaimSourceAliasing
+    (base : GroundedCGSCSemanticExtensionBase) : Prop :=
+  CompleteExposedExtensionClaimSourceAliasing base.exposed
+    ∧ ReversibleExtensionClaimSourceAliasing base.reversible
+    ∧ ProductExtensionClaimSourceAliasing base.product
+    ∧ NoHiddenJointExtensionClaimSourceAliasing base.noHiddenJoint
+
+theorem grounded_cgsc_claim_source_aliasing_boundary
+    (base : GroundedCGSCSemanticExtensionBase) :
+    GroundedCGSCClaimSourceAliasing base := by
+  exact And.intro
+    (complete_exposed_extension_claim_source_aliasing base.exposed)
+    (And.intro
+      (reversible_extension_claim_source_aliasing base.reversible)
+      (And.intro
+        (product_extension_claim_source_aliasing base.product)
+        (no_hidden_joint_extension_claim_source_aliasing base.noHiddenJoint)))
+
 end QMClosure
 end IDT

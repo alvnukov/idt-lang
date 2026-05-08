@@ -218,7 +218,9 @@ The canonical theory modules are:
 173. [172. Finite QM Core Proof Program](sections/172-finite-qm-core-proof-program.md)
 174. [173. IDT MetaLang Research Graph](sections/173-idt-metalang-research-graph.md)
 175. [174. Context-Bundle Nontriviality Research Note](sections/174-context-bundle-nontriviality-research-note.md)
-176. [176. V8 Lean-First Migration Boundary](sections/176-v8-lean-first-migration-boundary.md)
+176. [175. Born/S2 Context-Only Fact Research Note](sections/175-born-s2-context-only-fact-research-note.md)
+177. [176. V8 Lean-First Migration Boundary](sections/176-v8-lean-first-migration-boundary.md)
+178. [177. Proper Subcontext Endpoint Exhaustion Front](sections/177-proper-subcontext-endpoint-exhaustion-front.md)
 
 ---
 
@@ -328,9 +330,13 @@ finite-difference generator recovery. The \(\hbar_I\) subroute now has finite
 gates for no-fit phase/action scale universality, action-standard provenance,
 action-standard independence, work-time action provenance, and holdout checks
 against \(E=\hbar\omega\), \(p=\hbar k\), and \(\Delta\phi=S/\hbar\). The
-verifier now also rejects `hbar_I=derived_conditional` while \(A_{0,I}\)
-remains only open or normalization-only, and rejects `A0_I=derived_conditional`
-while `primitive_work_unit_I`, `primitive_tick_I`,
+calibrated action-scale scaffold now checks one shared
+`phase_action_conversion_I` anchor across energy-frequency,
+momentum-wavenumber, action-phase, spectral, and interference fixtures, rejects
+per-experiment refit, and keeps `calibrated_hbar_I` as the physical readout in
+our-universe units. The verifier now also rejects `hbar_I=derived_conditional`
+while \(A_{0,I}\) remains only open or normalization-only, and rejects
+`A0_I=derived_conditional` while `primitive_work_unit_I`, `primitive_tick_I`,
 `primitive_work_unit_closure_I`, or `primitive_tick_closure_I` remains open or
 target. The primitive tick/work pass now separates the two objects into
 independent closure fronts and checks finite tick-count, radar-tick,
@@ -503,7 +509,9 @@ public scope until an independent source of mass dimension is supplied. The
 selected calibrated branch introduces a separate action anchor
 `calibrated_action_anchor_I` as a `bridge_assumption`, with `calibrated_hbar_I`
 used only for single-anchor reconstruction and holdout tests. This branch does
-not change `hbar_I = blocked`; it positions the programme as a calibrated
+not change `hbar_I = blocked`; the related `phase_action_conversion_I`
+reconstruction gate is calibrated consistency only, not a first-principles
+action-scale derivation. It positions the programme as a calibrated
 reconstruction framework. The \(G\) route is
 now split the same way: `calibrated_G_I` is a target computed, if possible, from
 `calibrated_hbar_I`, \(c_I\), an independently derived `omega_ell_I`, and

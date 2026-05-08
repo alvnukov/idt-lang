@@ -19,6 +19,7 @@ from theory_verifier.ai_theory_graph import (  # noqa: E402
     incoming_refs,
     load_theory_graph,
     neighbor_subgraph,
+    search_nodes,
     show_node,
     source_pointers,
     validate_source_file_hashes,
@@ -52,6 +53,11 @@ def build_parser() -> argparse.ArgumentParser:
     sources_parser = subparsers.add_parser("sources", help="Show source pointers for a local neighborhood.")
     sources_parser.add_argument("query")
     sources_parser.add_argument("--depth", type=int, default=1)
+    search_parser = subparsers.add_parser("search", help="Search node ids, labels, statuses, kinds, and sources.")
+    search_parser.add_argument("query")
+    search_parser.add_argument("--kind", default="")
+    search_parser.add_argument("--status", default="")
+    search_parser.add_argument("--limit", type=int, default=50)
     return parser
 
 
@@ -60,6 +66,9 @@ def run_command(
     command: str,
     query: str,
     depth: int,
+    kind: str,
+    status: str,
+    limit: int,
     repo_root: Path,
     check_source_hashes: bool,
 ) -> JsonObject:
@@ -83,6 +92,8 @@ def run_command(
         return neighbor_subgraph(graph, query, depth)
     if command == "sources":
         return source_pointers(graph, query, depth)
+    if command == "search":
+        return search_nodes(graph, query, kind, status, limit)
     raise V8GraphQueryError(f"unsupported command {command!r}")
 
 
@@ -93,12 +104,28 @@ def main(argv: Sequence[str] | None = None, output: TextIO | None = None) -> int
     query = raw_query if isinstance(raw_query, str) else ""
     raw_depth = getattr(args, "depth", 1)
     depth = raw_depth if isinstance(raw_depth, int) else 1
+    raw_kind = getattr(args, "kind", "")
+    kind = raw_kind if isinstance(raw_kind, str) else ""
+    raw_status = getattr(args, "status", "")
+    status = raw_status if isinstance(raw_status, str) else ""
+    raw_limit = getattr(args, "limit", 50)
+    limit = raw_limit if isinstance(raw_limit, int) else 50
     raw_repo_root = getattr(args, "repo_root", Path("."))
     repo_root = raw_repo_root if isinstance(raw_repo_root, Path) else Path(".")
     check_source_hashes = bool(getattr(args, "check_source_hashes", False))
     try:
         graph = load_theory_graph(Path(args.graph))
-        result = run_command(graph, str(args.command), query, depth, repo_root, check_source_hashes)
+        result = run_command(
+            graph,
+            str(args.command),
+            query,
+            depth,
+            kind,
+            status,
+            limit,
+            repo_root,
+            check_source_hashes,
+        )
     except V8GraphQueryError as error:
         parser.exit(2, f"query_ai_theory_graph: {error}\n")
     write_json(result, output if output is not None else sys.stdout, bool(args.pretty))

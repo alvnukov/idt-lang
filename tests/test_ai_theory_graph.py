@@ -72,7 +72,12 @@ class AiTheoryGraphTests(unittest.TestCase):
             proof_dir = root / "Proofs" / "MetaLang"
             proof_dir.mkdir(parents=True)
             (proof_dir / "A.lean").write_text("def alpha := 1\n", encoding="utf-8")
-            (proof_dir / "B.lean").write_text("import Proofs.MetaLang.A\n", encoding="utf-8")
+            (proof_dir / "B.lean").write_text(
+                "import Proofs.MetaLang.A\n"
+                "theorem beta : alpha = alpha := by rfl\n"
+                "def gamma := 2 -- beta alpha\n",
+                encoding="utf-8",
+            )
             sections_dir = root / "sections"
             sections_dir.mkdir()
             (sections_dir / "001-test.md").write_text("# Test Section\nBody\n", encoding="utf-8")
@@ -85,6 +90,7 @@ class AiTheoryGraphTests(unittest.TestCase):
             self.assertIn("src:sections/001-test.md", nodes)
             self.assertIn("src:AI_AGENT_GUIDE.md", nodes)
             self.assertIn("decl:Proofs.MetaLang.A.alpha", nodes)
+            self.assertIn("decl:Proofs.MetaLang.B.beta", nodes)
             self.assertEqual("Test Section", nodes["src:sections/001-test.md"][3])
             edges = {tuple(edge) for edge in require_rows(graph["edges"])}
             self.assertIn(
@@ -93,6 +99,24 @@ class AiTheoryGraphTests(unittest.TestCase):
                     "imports",
                     "src:Proofs/MetaLang/A.lean",
                     "line:1",
+                ),
+                edges,
+            )
+            self.assertIn(
+                (
+                    "decl:Proofs.MetaLang.B.beta",
+                    "refs",
+                    "decl:Proofs.MetaLang.A.alpha",
+                    "line:2",
+                ),
+                edges,
+            )
+            self.assertNotIn(
+                (
+                    "decl:Proofs.MetaLang.B.gamma",
+                    "refs",
+                    "decl:Proofs.MetaLang.A.alpha",
+                    "line:3",
                 ),
                 edges,
             )

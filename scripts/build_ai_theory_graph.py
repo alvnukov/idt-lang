@@ -113,6 +113,15 @@ class ManifestObject:
     payload: JsonObject
 
 
+@dataclass(frozen=True)
+class LeanDeclaration:
+    source: SourceFile
+    kind: str
+    name: str
+    node_id: str
+    line_number: int
+
+
 def build_v8_ai_theory_graph(
     repo_root: Path = Path("."),
     manifest_path: Path = DEFAULT_MANIFEST,
@@ -377,6 +386,7 @@ def build_source_layer(
     edges: list[Edge] = []
     aliases: dict[str, set[str]] = {}
     module_index = {source.module_id: source.node_id for source in files if source.module_id}
+    lean_declarations = collect_lean_declarations(files)
     for source in files:
         nodes.append(
             Node(
@@ -390,11 +400,20 @@ def build_source_layer(
         )
         if source.module_id:
             aliases.setdefault(source.module_id, set()).add(source.node_id)
-            source_nodes, source_edges, source_aliases = lean_declaration_nodes(source, max_label_chars)
+            source_declarations = [
+                declaration
+                for declaration in lean_declarations
+                if declaration.source.relative_path == source.relative_path
+            ]
+            source_nodes, source_edges, source_aliases = lean_declaration_nodes(
+                source_declarations,
+                max_label_chars,
+            )
             nodes.extend(source_nodes)
             edges.extend(source_edges)
             merge_aliases(aliases, source_aliases)
             edges.extend(lean_import_edges(source, module_index))
+            edges.extend(lean_declaration_ref_edges(source, lean_declarations))
     return nodes, edges, aliases
 
 
@@ -453,34 +472,116 @@ def lean_module_id(relative: str) -> str:
     return relative.removesuffix(".lean").replace("/", ".")
 
 
+def collect_lean_declarations(files: Sequence[SourceFile]) -> list[LeanDeclaration]:
+    declarations: list[LeanDeclaration] = []
+    for source in files:
+        if not source.module_id:
+            continue
+        text = source.path.read_text(encoding="utf-8")
+        for line_number, line in enumerate(text.splitlines(), start=1):
+            match = DECLARATION_RE.match(line.strip())
+            if match is None:
+                continue
+            decl_kind, decl_name = match.groups()
+            declarations.append(
+                LeanDeclaration(
+                    source=source,
+                    kind=decl_kind,
+                    name=decl_name,
+                    node_id=f"decl:{source.module_id}.{decl_name}",
+                    line_number=line_number,
+                )
+            )
+    return declarations
+
+
 def lean_declaration_nodes(
-    source: SourceFile,
+    declarations: Sequence[LeanDeclaration],
     max_label_chars: int,
 ) -> tuple[list[Node], list[Edge], dict[str, set[str]]]:
     nodes: list[Node] = []
     edges: list[Edge] = []
     aliases: dict[str, set[str]] = {}
-    text = source.path.read_text(encoding="utf-8")
-    for line_number, line in enumerate(text.splitlines(), start=1):
-        match = DECLARATION_RE.match(line.strip())
-        if match is None:
-            continue
-        decl_kind, decl_name = match.groups()
-        decl_node = f"decl:{source.module_id}.{decl_name}"
-        aliases.setdefault(decl_name, set()).add(decl_node)
-        aliases.setdefault(f"{source.module_id}.{decl_name}", set()).add(decl_node)
+    for declaration in declarations:
+        aliases.setdefault(declaration.name, set()).add(declaration.node_id)
+        aliases.setdefault(f"{declaration.source.module_id}.{declaration.name}", set()).add(
+            declaration.node_id
+        )
+        line = declaration.source.path.read_text(encoding="utf-8").splitlines()[
+            declaration.line_number - 1
+        ]
         nodes.append(
             Node(
-                identifier=decl_node,
+                identifier=declaration.node_id,
                 kind="lean.decl",
-                status=decl_kind,
-                label=compact_text(decl_name, max_label_chars),
-                source=f"{source.relative_path}:{line_number}",
+                status=declaration.kind,
+                label=compact_text(declaration.name, max_label_chars),
+                source=f"{declaration.source.relative_path}:{declaration.line_number}",
                 digest=short_digest(line.strip()),
             )
         )
-        edges.append(Edge(source.node_id, "declares", decl_node, f"line:{line_number}"))
+        edges.append(
+            Edge(
+                declaration.source.node_id,
+                "declares",
+                declaration.node_id,
+                f"line:{declaration.line_number}",
+            )
+        )
     return nodes, edges, aliases
+
+
+def lean_declaration_ref_edges(
+    source: SourceFile,
+    declarations: Sequence[LeanDeclaration],
+) -> list[Edge]:
+    declaration_by_name = unique_declaration_names(declarations)
+    source_declarations = [
+        declaration
+        for declaration in declarations
+        if declaration.source.relative_path == source.relative_path
+    ]
+    if not source_declarations:
+        return []
+    lines = source.path.read_text(encoding="utf-8").splitlines()
+    ranges = declaration_ranges(source_declarations, len(lines))
+    edges: set[tuple[str, str, str, str]] = set()
+    for declaration, start, end in ranges:
+        for line_number in range(start, end + 1):
+            for token in lean_identifier_tokens(lines[line_number - 1]):
+                target = declaration_by_name.get(token)
+                if target is None or target == declaration.node_id:
+                    continue
+                edges.add((declaration.node_id, "refs", target, f"line:{line_number}"))
+    return [Edge(source, relation, target, evidence) for source, relation, target, evidence in sorted(edges)]
+
+
+def unique_declaration_names(declarations: Sequence[LeanDeclaration]) -> dict[str, str]:
+    raw: dict[str, set[str]] = {}
+    for declaration in declarations:
+        raw.setdefault(declaration.name, set()).add(declaration.node_id)
+    return {
+        name: next(iter(node_ids))
+        for name, node_ids in raw.items()
+        if len(node_ids) == 1
+    }
+
+
+def declaration_ranges(
+    declarations: Sequence[LeanDeclaration],
+    line_count: int,
+) -> list[tuple[LeanDeclaration, int, int]]:
+    ordered = sorted(declarations, key=lambda declaration: declaration.line_number)
+    ranges: list[tuple[LeanDeclaration, int, int]] = []
+    for index, declaration in enumerate(ordered):
+        next_line = ordered[index + 1].line_number if index + 1 < len(ordered) else line_count + 1
+        ranges.append((declaration, declaration.line_number, next_line - 1))
+    return ranges
+
+
+def lean_identifier_tokens(line: str) -> set[str]:
+    code = line.split("--", maxsplit=1)[0]
+    return set(re.findall(r"\b[A-Za-z_][A-Za-z0-9_']*\b", code))
 
 
 def lean_import_edges(source: SourceFile, module_index: Mapping[str, str]) -> list[Edge]:

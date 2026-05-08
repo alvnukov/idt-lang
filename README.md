@@ -83,6 +83,10 @@ Current auditable results:
   for `hbar_I`, `G_I`, `alpha_em_I`, and `full_QM_I`;
 - calibrated-anchor discipline: `calibrated_hbar_I` may be used as an explicit
   our-universe action anchor, while first-principles `hbar_I` remains blocked;
+- calibrated action-scale reconstruction: one shared
+  `phase_action_conversion_I` anchor is checked across energy-frequency,
+  momentum-wavenumber, action-phase, spectral, and interference fixtures, with
+  per-experiment refits rejected;
 - real-data weak-gravity gates: the SPARC front anchors real DDO154 data,
   rejects post-fit residual provenance, records near misses, and rejects
   held-out transfer for the current frozen candidate;
@@ -117,6 +121,15 @@ Current auditable results:
   deriving context-first universal endpoint data from B0 or the accepted
   successor base, while carrier-frontier exhaustion remains the Hilbert-side
   universal quantifier.
+- v7 recovery layer: the full v7 research map is now preserved as Lean status
+  ledgers under `Proofs/QMClosure/V7*.lean`. The migrated surface covers
+  B0/projection boundaries, B1/B2 pressure, hypothesis batches, NUSD/FPD,
+  zero-base/search results, normalized-overlap/compressed finite-QM routes,
+  Born/readout, Schrodinger-frequency dynamics, Hilbert-carrier pressure, late
+  CGSC routing, and the full-QM burden ledger. This keeps prior research from
+  being collapsed into the v8 residual ledger; every recovered route remains an
+  obligation, conditional hit, rejected route, or wall rather than an upgraded
+  physical/QM proof.
 - QM semantic-kernel route: the current full-QM proof surface is grouped into
   six conditional clusters covering 21 obligations: residual/projective,
   representation, readout, dynamics, composite, and physical scale. B1 now
@@ -128,8 +141,8 @@ Current auditable results:
   inheritance-action, product-tomography, monoidal associativity,
   projective-limit, and calibrated-scale scaffolds are now compiled as a single
   Lean bundle. This removes a proof-engineering gap for those finite fragments;
-  the later B1/CGSC artifacts now close the six structural target clauses
-  inside the current package semantics.
+  the later B1/CGSC artifacts fill the six structural target slots inside the
+  current package semantics.
 - CGSC structural target kernel: the six structural QM blockers are now
   conditionally closed by one Lean artifact from seven context-generated stable
   closure clauses, while preserving the no-target-import boundary. At this
@@ -137,13 +150,18 @@ Current auditable results:
   clause source, while external QM adequacy remains open.
 - B1 CGSC clause derivation: all seven CGSC clauses are now machine-derived
   from the B1 primitive-base witness interface in Lean, and the same artifact
-  closes the six structural target clauses inside the current IDT package
-  semantics.
+  fills the six structural target slots inside the current IDT package
+  semantics. The grounded CGSC layer now also exposes a claim-source aliasing
+  boundary: several named target slots currently share one smaller source
+  proposition, so these artifacts are source-witness scaffolds, not independent
+  physical derivations of local tomography, entanglement, spectrality, or exact
+  Born/Hilbert QM.
   The remaining frontier is external adequacy: prove that this B1-derived
   package reconstructs Hilbert/Born/unitary/tensor QM with the intended
   universal physical meaning, not only as an internal obligation bundle. The
-  semantic-kernel evaluator now removes the six B1-closed structural blockers
-  and two finite-scaffold closures from the live open core; the remaining
+  semantic-kernel evaluator can route those source-witness slots through the
+  current package, but the live open core must still separate slot filling from
+  target-specific derivation. The remaining
   frontier is the all-context readout boundary: context-first universal endpoint
   data. A new Lean bridge proves that the existing context-first constructive
   witness package supplies primitive pairwise endpoint coverage, endpoint-stable
@@ -152,7 +170,8 @@ Current auditable results:
   discipline still admits a local ternary witness, and a B1-only endpoint-data
   negative control is now checked, so current B1/scaffold closure does not
   select universal Born by itself. The calibrated phase-scale bridge remains an
-  accepted boundary only, not a first-principles derivation of `hbar_I`.
+  accepted boundary only, not a first-principles derivation of `hbar_I`; the
+  new action-scale reconstruction gate only tests one shared calibrated anchor.
 - Universal Born/Hilbert frontier: a new Lean contract closes exact universal
   Born readout and frontier-scoped Hilbert representation together under
   context-first universal endpoint data and carrier-frontier exhaustion. This is
@@ -161,6 +180,21 @@ Current auditable results:
   lower obligations are deriving that context-first endpoint data from B0 or the
   accepted successor base and proving carrier-frontier exhaustion without
   importing Born or complex Hilbert space.
+- Proper subcontext endpoint exhaustion front: the current broad QM pass is
+  recorded as a research ledger. The finite 35-experiment telemetry is passing
+  as executable evidence, while the exact frontier remains a candidate lower
+  principle: endpoint-stable proper-subcontext witnesses must exhaust stable
+  readout invariants and block primitive whole-context ternary residue. A new
+  Lean bridge shows that CFS-ready pairwise actualization conditionally closes
+  exact universal Born readout. A smaller Born-only core now separates the
+  readout wall from the Hilbert/carrier wall; it is still not a B0 derivation or
+  a proof upgrade.
+- QM research task ledger: the next-step plan is now encoded in Lean as
+  `Proofs/MetaLang/V8QmResearchTaskLedger.lean`. It records active blockers
+  for claim-source alias splitting, product/local-tomography targets,
+  Born-core derivation, carrier-frontier exhaustion, and experiment recompiles.
+  The ledger is a planning artifact and explicitly preserves the current
+  Born/Hilbert blockers.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,
@@ -311,9 +345,43 @@ For local graph inspection:
 python scripts/query_ai_theory_graph.py summary
 python scripts/query_ai_theory_graph.py validate --repo-root . --check-source-hashes
 python scripts/query_ai_theory_graph.py show <node-id-or-alias>
+python scripts/query_ai_theory_graph.py search <text> --limit 20
 python scripts/query_ai_theory_graph.py neighbors <node-id-or-alias> --depth 2
 python scripts/query_ai_theory_graph.py sources <node-id-or-alias> --depth 1
 ```
+
+## Experiment Node Telemetry
+
+The v8 experiment telemetry suite is a Lean-sourced executable research aid.
+Lean defines the accepted protocol registry and logical nodes; the Python runner
+executes small deterministic fixtures and records which logical nodes were used,
+stressed, blocked, or failed.
+
+Run it locally with:
+
+```bash
+lake exe idt_v8_experiment_protocols -- --json
+python scripts/run_v8_experiment_suite.py \
+  --output dist/v8-experiment-node-stats.json \
+  --report dist/v8-experiment-report.md
+```
+
+The JSON report uses schema `idt-v8-experiment-node-stats/1` and includes
+experiment summaries, per-node statistics, telemetry rows, and source hashes.
+The runner registers all 35 residual QM experiment IDs. The current mechanical
+coverage implements deterministic telemetry fixtures for all 35 IDs across
+readout normalization, calibrated action scale, Bell table compatibility,
+interference, Sorkin `I3`, marker/eraser visibility, phase accumulation,
+spin-axis transitions, finite amplitude tables, projective repeatability,
+decoherence/recoverability, Zeno samples, no-cloning/teleportation obstruction,
+contextuality screens, weak readout, tunneling, HOM/antibunching, and finite
+graph walk distributions. Use the report to see where finite fixtures place
+pressure on logical nodes such as shared calibrated action scale, readout
+normalization, interference visibility, phase accumulation, amplitude readout,
+contextuality obstruction, and Bell table compatibility. This telemetry is
+certified executable evidence only; it is not proof authority and cannot
+upgrade Born, Hilbert, Schrodinger dynamics, `hbar`, or full QM to proved
+status.
 
 The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
 is retained as a compatibility/status recipe, not active proof-authority CI:

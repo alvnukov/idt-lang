@@ -6,6 +6,9 @@ package IDTProofs where
 lean_exe idt_v8_protocol_status where
   root := `Experiments.V8ProtocolStatus
 
+lean_exe idt_v8_experiment_protocols where
+  root := `Experiments.V8ExperimentProtocolRegistry
+
 lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
@@ -48,6 +51,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8CurrentTheoremAndObligationLedger,
     `Proofs.MetaLang.V8TheoremDependencyBoundaryLedger,
     `Proofs.MetaLang.V8CurrentFrontierBlockers,
+    `Proofs.MetaLang.V8QmResearchTaskLedger,
     `Proofs.MetaLang.V8ResidualGateExperimentProfile,
     `Proofs.MetaLang.V8ResidualEncodingRequirements,
     `Proofs.MetaLang.V8MigrationCompletionCriterion,
@@ -89,5 +93,19 @@ lean_lib Proofs where
     `Proofs.QMClosure.PrimitiveBoundaryQMChain,
     `Proofs.QMClosure.ConstructiveWitnessPrimitiveBase,
     `Proofs.QMClosure.BornHilbertUniversalClosure,
+    `Proofs.QMClosure.ConstructiveFacticizationSemantics,
+    `Proofs.QMClosure.V7B0ProjectionBoundary,
+    `Proofs.QMClosure.V7PrimitiveCandidateStack,
+    `Proofs.QMClosure.V7NUSDProjectionDeterminacy,
+    `Proofs.QMClosure.V7B1B2PressureLedger,
+    `Proofs.QMClosure.V7HypothesisBatchLedger,
+    `Proofs.QMClosure.V7ZeroBaseSearchLedger,
+    `Proofs.QMClosure.V7NormalizedOverlapRouteLedger,
+    `Proofs.QMClosure.V7LateCGSCRouteLedger,
+    `Proofs.QMClosure.V7ProbabilityDecomposition,
+    `Proofs.QMClosure.V7BornReadoutRoute,
+    `Proofs.QMClosure.V7SchrodingerDynamicsRoute,
+    `Proofs.QMClosure.V7HilbertCarrierRoute,
+    `Proofs.QMClosure.V7FullQMBurdenLedger,
     `Proofs.QMClosure.FullQMSectorClosure
   ]

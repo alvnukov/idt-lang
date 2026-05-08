@@ -49,7 +49,10 @@ The main current successes are bounded and methodological:
    compatibility checks, not a claim that full QM is derived.
 3. The action-scale route is controlled. `calibrated_hbar_I` can be used as an
    explicit our-universe anchor for operational reconstruction, while
-   first-principles `hbar_I` remains a blocked claim.
+   first-principles `hbar_I` remains a blocked claim. The current verifier also
+   checks a no-refit `phase_action_conversion_I` scaffold across
+   energy-frequency, momentum-wavenumber, action-phase, spectral, and
+   interference fixtures; this is calibrated consistency, not derivation.
 4. The gravity route is controlled. `calibrated_G_I` is a calibrated target, and
    first-principles `G_I` remains blocked until the missing source-response and
    vacuum-stiffness inputs are independently supplied.
@@ -139,11 +142,12 @@ The main current successes are bounded and methodological:
    source, while external QM adequacy remains open.
 20. The B1 CGSC clause derivation is executable. All seven CGSC clauses are
    now machine-derived from the B1 primitive-base witness interface, and the
-   six structural target clauses close inside the current IDT package semantics.
-   The semantic-kernel evaluator now removes those six B1-closed clauses and
-   two finite-scaffold closures from the live open core. This does not yet
-   prove external Hilbert/Born/unitary/tensor equivalence or a B0-alone
-   derivation.
+   six structural target slots are filled inside the current IDT package
+   semantics. A later Lean audit exposes a claim-source aliasing boundary:
+   several named target slots share one smaller source proposition, so this is
+   a source-witness scaffold, not an independent physical derivation of those
+   targets. This does not yet prove external Hilbert/Born/unitary/tensor
+   equivalence or a B0-alone derivation.
 21. The Born/Hilbert frontier is now narrowed rather than opaque. The finite
    Born-square readout is selected under the checked oriented endpoint
    discipline, and a new Lean bridge proves that the existing context-first
@@ -152,6 +156,14 @@ The main current successes are bounded and methodological:
    once universal endpoint data is provided. The remaining mathematical core is
    deriving that endpoint data from B0 or the accepted successor base; a
    B1-only negative control is checked and does not force that endpoint data.
+22. The full v7 recovery layer is now explicit in Lean status ledgers. The
+   migrated surface covers B0/projection boundaries, B1/B2 pressure,
+   hypothesis batches, NUSD/finite-projection determinacy, zero-base/search
+   results, normalized-overlap/compressed finite-QM routes, Born/readout,
+   Schrodinger-frequency dynamics, Hilbert carrier pressure, late CGSC routing,
+   and the full-QM proof burden. These modules preserve the research map; they
+   do not upgrade Born, Hilbert space, Schrodinger dynamics, or full QM to
+   proved.
 
 ## What The Verifier Catches
 
@@ -159,16 +171,17 @@ The verifier is designed to reject progress by relabeling. It blocks:
 
 1. a derived claim that depends on an open or blocked object;
 2. a calibrated anchor presented as a first-principles derivation;
-3. a structural selector used as a dimensional constant;
-4. a bridge assumption relabeled as a derived readout;
-5. SPARC residual claims that reuse the observed residual as their own source;
-6. full-QM claims while the action scale, generator, apparatus, and facticity
+3. per-experiment action-scale refits presented as one universal anchor;
+4. a structural selector used as a dimensional constant;
+5. a bridge assumption relabeled as a derived readout;
+6. SPARC residual claims that reuse the observed residual as their own source;
+7. full-QM claims while the action scale, generator, apparatus, and facticity
    spine remain incomplete;
-7. relabeling current QM imports as primitive or first-principles derived
+8. relabeling current QM imports as primitive or first-principles derived
    structures;
-8. a `formal_proof` marker without a proof-ledger card and machine-checkable
+9. a `formal_proof` marker without a proof-ledger card and machine-checkable
    proof artifacts.
-9. treating the v7 context-first base candidate as a completed proof of
+10. treating the v7 context-first base candidate as a completed proof of
    Hilbert space, Born readout, GR, full QM, `hbar_I`, or `G_I`.
 
 ## What Is Explicitly Not Claimed

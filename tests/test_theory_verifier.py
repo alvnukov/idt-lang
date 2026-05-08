@@ -6820,6 +6820,101 @@ class TheoryVerifierTests(unittest.TestCase):
         report = verify_manifest(manifest)
         self.assertIssueCodes(report, {"phase_action_scale_validation_failed"})
 
+    def test_calibrated_action_scale_reconstruction_accepts_shared_anchor(self) -> None:
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [calibrated_action_scale_gate()],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertFalse(report.issues, [issue.code for issue in report.issues])
+
+    def test_calibrated_action_scale_reconstruction_rejects_per_experiment_refit(self) -> None:
+        gate = calibrated_action_scale_gate({"allow_per_experiment_refit": True})
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"calibrated_action_scale_refit_allowed"})
+
+    def test_calibrated_action_scale_reconstruction_rejects_inconsistent_scale(self) -> None:
+        gate = calibrated_action_scale_gate(
+            {
+                "experiments": [
+                    {
+                        "id": "photoelectric_anchor",
+                        "type": "energy_frequency",
+                        "role": "calibration",
+                        "energy": 6.0,
+                        "omega": 3.0,
+                    },
+                    {
+                        "id": "matter_wave_holdout",
+                        "type": "momentum_wavenumber",
+                        "role": "validation",
+                        "momentum": 10.0,
+                        "wavenumber": 5.0,
+                    },
+                    {
+                        "id": "phase_action_holdout",
+                        "type": "phase_action",
+                        "role": "validation",
+                        "action": 8.0,
+                        "phase": 4.0,
+                    },
+                    {
+                        "id": "spectral_holdout",
+                        "type": "spectral_transition",
+                        "role": "validation",
+                        "energy_gap": 14.0,
+                        "angular_frequency": 7.0,
+                    },
+                    {
+                        "id": "interference_bad_holdout",
+                        "type": "interference_phase",
+                        "role": "validation",
+                        "action_difference": 15.0,
+                        "phase_shift": 6.0,
+                    },
+                ]
+            }
+        )
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"calibrated_action_scale_validation_failed"})
+
+    def test_calibrated_action_scale_reconstruction_rejects_hbar_upgrade(self) -> None:
+        gate = calibrated_action_scale_gate({"hbar_status": "derived_conditional"})
+        manifest = parse_manifest(
+            {
+                "symbols": {},
+                "equations": [],
+                "derivations": [],
+                "forbidden_paths": [],
+                "finite_gates": [gate],
+            }
+        )
+        report = verify_manifest(manifest)
+        self.assertIssueCodes(report, {"calibrated_action_scale_hbar_upgrade"})
+
     def test_action_standard_independence_rejects_forbidden_source(self) -> None:
         manifest = parse_manifest(
             {
@@ -13108,6 +13203,62 @@ def spectral_cost_phase_edges(use_bad_validation_phase: bool) -> list[dict[str, 
             "X": validation_x,
         },
     ]
+
+
+def calibrated_action_scale_gate(overrides: dict[str, object] | None = None) -> dict[str, object]:
+    gate: dict[str, object] = {
+        "id": "calibrated_action_scale_reconstruction_demo",
+        "type": "calibrated_action_scale_reconstruction",
+        "tolerance": 1.0e-10,
+        "epsilon": 0.01,
+        "shared_action_scale": 2.0,
+        "target_anchor": "phase_action_conversion_I",
+        "target_anchor_status": "calibrated_universal_anchor",
+        "physical_readout": "calibrated_hbar_I",
+        "physical_readout_status": "bridge_assumption",
+        "hbar_status": "blocked",
+        "allow_per_experiment_refit": False,
+        "experiments": [
+            {
+                "id": "photoelectric_anchor",
+                "type": "energy_frequency",
+                "role": "calibration",
+                "energy": 6.0,
+                "omega": 3.0,
+            },
+            {
+                "id": "matter_wave_holdout",
+                "type": "momentum_wavenumber",
+                "role": "validation",
+                "momentum": 10.0,
+                "wavenumber": 5.0,
+            },
+            {
+                "id": "phase_action_holdout",
+                "type": "phase_action",
+                "role": "validation",
+                "action": 8.0,
+                "phase": 4.0,
+            },
+            {
+                "id": "spectral_holdout",
+                "type": "spectral_transition",
+                "role": "validation",
+                "energy_gap": 14.0,
+                "angular_frequency": 7.0,
+            },
+            {
+                "id": "interference_holdout",
+                "type": "interference_phase",
+                "role": "validation",
+                "action_difference": 12.0,
+                "phase_shift": 6.0,
+            },
+        ],
+    }
+    if overrides is not None:
+        gate.update(overrides)
+    return gate
 
 
 if __name__ == "__main__":

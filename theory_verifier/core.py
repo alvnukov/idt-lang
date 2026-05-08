@@ -2285,6 +2285,14 @@ class PhaseActionScaleCycle:
 
 
 @dataclass(frozen=True)
+class CalibratedActionScaleExperiment:
+    identifier: str
+    experiment_type: str
+    role: str
+    action_scale_estimate: float
+
+
+@dataclass(frozen=True)
 class SparcRotmodRow:
     radius_kpc: float
     observed_velocity_km_s: float
@@ -18251,6 +18259,116 @@ def check_phase_action_scale_universality_gate(gate: FiniteGate) -> list[Issue]:
     return []
 
 
+def check_calibrated_action_scale_reconstruction_gate(gate: FiniteGate) -> list[Issue]:
+    tolerance = parse_tolerance(gate.payload.get("tolerance", 1.0e-10), f"{gate.identifier}.tolerance")
+    epsilon = parse_tolerance(gate.payload.get("epsilon"), f"{gate.identifier}.epsilon")
+    shared_action_scale = parse_positive_real(
+        gate.payload.get("shared_action_scale"),
+        f"{gate.identifier}.shared_action_scale",
+    )
+    target_anchor = require_string(gate.payload.get("target_anchor"), f"{gate.identifier}.target_anchor")
+    physical_readout = require_string(gate.payload.get("physical_readout"), f"{gate.identifier}.physical_readout")
+    target_anchor_status = require_string(
+        gate.payload.get("target_anchor_status"),
+        f"{gate.identifier}.target_anchor_status",
+    )
+    physical_readout_status = require_string(
+        gate.payload.get("physical_readout_status"),
+        f"{gate.identifier}.physical_readout_status",
+    )
+    hbar_status = require_string(gate.payload.get("hbar_status"), f"{gate.identifier}.hbar_status")
+    allow_per_experiment_refit = parse_bool(
+        gate.payload.get("allow_per_experiment_refit", False),
+        f"{gate.identifier}.allow_per_experiment_refit",
+    )
+    experiments = parse_calibrated_action_scale_experiments(
+        gate.payload.get("experiments"),
+        f"{gate.identifier}.experiments",
+    )
+    if target_anchor not in {"primitive_action_scale_I", "phase_action_conversion_I"}:
+        raise ManifestError(f"{gate.identifier}: target_anchor must be primitive_action_scale_I or phase_action_conversion_I")
+    if physical_readout != "calibrated_hbar_I":
+        return [
+            Issue(
+                "calibrated_action_scale_bad_physical_readout",
+                f"{gate.identifier}: physical readout must be calibrated_hbar_I",
+            )
+        ]
+    if target_anchor_status != "calibrated_universal_anchor":
+        return [
+            Issue(
+                "calibrated_action_scale_anchor_status_mismatch",
+                f"{gate.identifier}: target anchor must remain a calibrated universal anchor",
+            )
+        ]
+    if physical_readout_status != "bridge_assumption":
+        return [
+            Issue(
+                "calibrated_action_scale_readout_status_mismatch",
+                f"{gate.identifier}: calibrated_hbar_I must remain a bridge assumption",
+            )
+        ]
+    if hbar_status != "blocked":
+        return [
+            Issue(
+                "calibrated_action_scale_hbar_upgrade",
+                f"{gate.identifier}: hbar_I must remain blocked in calibrated reconstruction",
+            )
+        ]
+    if allow_per_experiment_refit:
+        return [
+            Issue(
+                "calibrated_action_scale_refit_allowed",
+                f"{gate.identifier}: per-experiment action-scale refit is forbidden",
+            )
+        ]
+    experiment_types = {experiment.experiment_type for experiment in experiments}
+    required_types = {
+        "energy_frequency",
+        "momentum_wavenumber",
+        "phase_action",
+        "spectral_transition",
+        "interference_phase",
+    }
+    missing_types = sorted(required_types - experiment_types)
+    if missing_types:
+        return [
+            Issue(
+                "calibrated_action_scale_experiment_class_missing",
+                f"{gate.identifier}: missing experiment classes: {', '.join(missing_types)}",
+            )
+        ]
+    calibration_estimates = [
+        experiment.action_scale_estimate
+        for experiment in experiments
+        if experiment.role == "calibration"
+    ]
+    validation_experiments = [experiment for experiment in experiments if experiment.role == "validation"]
+    if not calibration_estimates:
+        raise ManifestError(f"{gate.identifier}: calibrated action scale needs at least one calibration experiment")
+    if not validation_experiments:
+        raise ManifestError(f"{gate.identifier}: calibrated action scale needs at least one validation experiment")
+    for estimate in calibration_estimates:
+        residual = abs((estimate / shared_action_scale) - 1.0)
+        if residual > epsilon + tolerance:
+            return [
+                Issue(
+                    "calibrated_action_scale_calibration_inconsistent",
+                    f"{gate.identifier}: calibration residual {residual:g} exceeds epsilon",
+                )
+            ]
+    for experiment in validation_experiments:
+        residual = abs((experiment.action_scale_estimate / shared_action_scale) - 1.0)
+        if residual > epsilon + tolerance:
+            return [
+                Issue(
+                    "calibrated_action_scale_validation_failed",
+                    f"{gate.identifier}: validation experiment {experiment.identifier} residual {residual:g} exceeds epsilon",
+                )
+            ]
+    return []
+
+
 def check_action_standard_independence_gate(gate: FiniteGate) -> list[Issue]:
     candidate_sources = set(
         require_string_tuple(gate.payload.get("candidate_sources"), f"{gate.identifier}.candidate_sources")
@@ -19089,6 +19207,61 @@ def parse_phase_action_scale_cycles(raw: object, field: str) -> list[PhaseAction
             )
         )
     return cycles
+
+
+def parse_calibrated_action_scale_experiments(
+    raw: object,
+    field: str,
+) -> list[CalibratedActionScaleExperiment]:
+    items = require_list(raw, field)
+    experiments: list[CalibratedActionScaleExperiment] = []
+    for index, item in enumerate(items):
+        item_map = require_mapping(item, f"{field}[{index}]")
+        role = require_string(item_map.get("role"), f"{field}[{index}].role")
+        if role not in {"calibration", "validation"}:
+            raise ManifestError(f"{field}[{index}].role must be calibration or validation")
+        experiment_type = require_string(item_map.get("type"), f"{field}[{index}].type")
+        if experiment_type == "energy_frequency":
+            estimate = parse_positive_real(item_map.get("energy"), f"{field}[{index}].energy") / parse_positive_real(
+                item_map.get("omega"),
+                f"{field}[{index}].omega",
+            )
+        elif experiment_type == "momentum_wavenumber":
+            estimate = parse_positive_real(
+                item_map.get("momentum"),
+                f"{field}[{index}].momentum",
+            ) / parse_positive_real(item_map.get("wavenumber"), f"{field}[{index}].wavenumber")
+        elif experiment_type == "phase_action":
+            estimate = parse_positive_real(item_map.get("action"), f"{field}[{index}].action") / parse_positive_real(
+                item_map.get("phase"),
+                f"{field}[{index}].phase",
+            )
+        elif experiment_type == "spectral_transition":
+            estimate = parse_positive_real(
+                item_map.get("energy_gap"),
+                f"{field}[{index}].energy_gap",
+            ) / parse_positive_real(
+                item_map.get("angular_frequency"),
+                f"{field}[{index}].angular_frequency",
+            )
+        elif experiment_type == "interference_phase":
+            estimate = parse_positive_real(
+                item_map.get("action_difference"),
+                f"{field}[{index}].action_difference",
+            ) / parse_positive_real(item_map.get("phase_shift"), f"{field}[{index}].phase_shift")
+        else:
+            raise ManifestError(f"{field}[{index}].type has unknown experiment type")
+        if "fitted_action_scale" in item_map:
+            raise ManifestError(f"{field}[{index}] must not include fitted_action_scale")
+        experiments.append(
+            CalibratedActionScaleExperiment(
+                identifier=require_string(item_map.get("id"), f"{field}[{index}].id"),
+                experiment_type=experiment_type,
+                role=role,
+                action_scale_estimate=estimate,
+            )
+        )
+    return experiments
 
 
 def parse_phase_cost_cycles(raw: object, field: str) -> list[dict[str, object]]:
@@ -20795,6 +20968,7 @@ FINITE_GATE_CHECKS: dict[str, FiniteGateChecker] = {
     "action_anchor_lock_status": check_action_anchor_lock_status_gate,
     "action_standard_provenance": check_action_standard_provenance_gate,
     "phase_action_scale_universality": check_phase_action_scale_universality_gate,
+    "calibrated_action_scale_reconstruction": check_calibrated_action_scale_reconstruction_gate,
     "action_standard_independence": check_action_standard_independence_gate,
     "hbar_known_gate_holdout": check_hbar_known_gate_holdout_gate,
     "probability_admissible_context": check_probability_admissible_context_gate,
