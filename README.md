@@ -329,6 +329,30 @@ python scripts/query_ai_theory_graph.py neighbors <node-id-or-alias> --depth 2
 python scripts/query_ai_theory_graph.py sources <node-id-or-alias> --depth 1
 ```
 
+## Experiment Node Telemetry
+
+The v8 experiment telemetry suite is a Lean-sourced executable research aid.
+Lean defines the accepted protocol registry and logical nodes; the Python runner
+executes small deterministic fixtures and records which logical nodes were used,
+stressed, blocked, or failed.
+
+Run it locally with:
+
+```bash
+lake exe idt_v8_experiment_protocols -- --json
+python scripts/run_v8_experiment_suite.py \
+  --output dist/v8-experiment-node-stats.json \
+  --report dist/v8-experiment-report.md
+```
+
+The JSON report uses schema `idt-v8-experiment-node-stats/1` and includes
+experiment summaries, per-node statistics, telemetry rows, and source hashes.
+Use it to see where finite fixtures place pressure on logical nodes such as
+shared calibrated action scale, readout normalization, and Bell table
+compatibility. This telemetry is certified executable evidence only; it is not
+proof authority and cannot upgrade Born, Hilbert, Schrodinger dynamics, `hbar`,
+or full QM to proved status.
+
 The older QM status lane is archived at `archive/legacy-ci/qm-status.yml`. It
 is retained as a compatibility/status recipe, not active proof-authority CI:
 

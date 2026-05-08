@@ -6,6 +6,9 @@ package IDTProofs where
 lean_exe idt_v8_protocol_status where
   root := `Experiments.V8ProtocolStatus
 
+lean_exe idt_v8_experiment_protocols where
+  root := `Experiments.V8ExperimentProtocolRegistry
+
 lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
