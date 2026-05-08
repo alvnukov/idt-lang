@@ -175,6 +175,13 @@ Current auditable results:
   lower obligations are deriving that context-first endpoint data from B0 or the
   accepted successor base and proving carrier-frontier exhaustion without
   importing Born or complex Hilbert space.
+- Proper subcontext endpoint exhaustion front: the current broad QM pass is
+  recorded as a research ledger. The finite 35-experiment telemetry is passing
+  as executable evidence, while the exact frontier remains a candidate lower
+  principle: endpoint-stable proper-subcontext witnesses must exhaust stable
+  readout invariants and block primitive whole-context ternary residue. A new
+  Lean bridge shows that CFS-ready pairwise actualization conditionally closes
+  exact universal Born readout; this is not a B0 derivation or a proof upgrade.
 - facticizable distinguishability closure frontier: the candidate lower-level
   principle says that stable inherited distinguishability must have finite
   admissible readout witnesses; hidden joint invariants, global fact tables,

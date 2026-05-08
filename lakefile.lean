@@ -92,6 +92,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.PrimitiveBoundaryQMChain,
     `Proofs.QMClosure.ConstructiveWitnessPrimitiveBase,
     `Proofs.QMClosure.BornHilbertUniversalClosure,
+    `Proofs.QMClosure.ConstructiveFacticizationSemantics,
     `Proofs.QMClosure.V7B0ProjectionBoundary,
     `Proofs.QMClosure.V7PrimitiveCandidateStack,
     `Proofs.QMClosure.V7NUSDProjectionDeterminacy,

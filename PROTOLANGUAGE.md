@@ -218,7 +218,9 @@ The canonical theory modules are:
 173. [172. Finite QM Core Proof Program](sections/172-finite-qm-core-proof-program.md)
 174. [173. IDT MetaLang Research Graph](sections/173-idt-metalang-research-graph.md)
 175. [174. Context-Bundle Nontriviality Research Note](sections/174-context-bundle-nontriviality-research-note.md)
-176. [176. V8 Lean-First Migration Boundary](sections/176-v8-lean-first-migration-boundary.md)
+176. [175. Born/S2 Context-Only Fact Research Note](sections/175-born-s2-context-only-fact-research-note.md)
+177. [176. V8 Lean-First Migration Boundary](sections/176-v8-lean-first-migration-boundary.md)
+178. [177. Proper Subcontext Endpoint Exhaustion Front](sections/177-proper-subcontext-endpoint-exhaustion-front.md)
 
 ---
 
