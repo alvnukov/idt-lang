@@ -187,7 +187,22 @@ This layer encodes:
     residual experiment count, and zero physical/QM formal-proof closures;
 42. a compressed full research-tree context packer is mandatory research-model
     work after migration stop/new CI/legacy archive, not current migration work;
-43. the context-first primitive base:
+43. the v7 recovery layer is preserved in Lean, rather than being left only as
+    prose in the old research note. The recovered modules include:
+    `V7B0ProjectionBoundary`, `V7PrimitiveCandidateStack`,
+    `V7B1B2PressureLedger`, `V7HypothesisBatchLedger`,
+    `V7NUSDProjectionDeterminacy`, `V7ZeroBaseSearchLedger`,
+    `V7NormalizedOverlapRouteLedger`, `V7ProbabilityDecomposition`,
+    `V7BornReadoutRoute`, `V7SchrodingerDynamicsRoute`,
+    `V7HilbertCarrierRoute`, `V7LateCGSCRouteLedger`, and
+    `V7FullQMBurdenLedger`. They keep the B0-to-readout/projection boundary,
+    primitive-candidate screen, B1/B2 pressure, hypothesis batches,
+    NUSD/finite-projection-determinacy route, zero-base/search results,
+    normalized-overlap/compressed finite-QM route, probability/Born,
+    frequency-generator dynamics, carrier selection, late CGSC routing, and
+    full-QM proof burden split into named obligations without upgrading them to
+    physical/QM formal proofs;
+44. the context-first primitive base:
 
 ```text
 B0 = (C, O, I, R, D)

@@ -121,6 +121,15 @@ Current auditable results:
   deriving context-first universal endpoint data from B0 or the accepted
   successor base, while carrier-frontier exhaustion remains the Hilbert-side
   universal quantifier.
+- v7 recovery layer: the full v7 research map is now preserved as Lean status
+  ledgers under `Proofs/QMClosure/V7*.lean`. The migrated surface covers
+  B0/projection boundaries, B1/B2 pressure, hypothesis batches, NUSD/FPD,
+  zero-base/search results, normalized-overlap/compressed finite-QM routes,
+  Born/readout, Schrodinger-frequency dynamics, Hilbert-carrier pressure, late
+  CGSC routing, and the full-QM burden ledger. This keeps prior research from
+  being collapsed into the v8 residual ledger; every recovered route remains an
+  obligation, conditional hit, rejected route, or wall rather than an upgraded
+  physical/QM proof.
 - QM semantic-kernel route: the current full-QM proof surface is grouped into
   six conditional clusters covering 21 obligations: residual/projective,
   representation, readout, dynamics, composite, and physical scale. B1 now

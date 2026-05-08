@@ -89,5 +89,18 @@ lean_lib Proofs where
     `Proofs.QMClosure.PrimitiveBoundaryQMChain,
     `Proofs.QMClosure.ConstructiveWitnessPrimitiveBase,
     `Proofs.QMClosure.BornHilbertUniversalClosure,
+    `Proofs.QMClosure.V7B0ProjectionBoundary,
+    `Proofs.QMClosure.V7PrimitiveCandidateStack,
+    `Proofs.QMClosure.V7NUSDProjectionDeterminacy,
+    `Proofs.QMClosure.V7B1B2PressureLedger,
+    `Proofs.QMClosure.V7HypothesisBatchLedger,
+    `Proofs.QMClosure.V7ZeroBaseSearchLedger,
+    `Proofs.QMClosure.V7NormalizedOverlapRouteLedger,
+    `Proofs.QMClosure.V7LateCGSCRouteLedger,
+    `Proofs.QMClosure.V7ProbabilityDecomposition,
+    `Proofs.QMClosure.V7BornReadoutRoute,
+    `Proofs.QMClosure.V7SchrodingerDynamicsRoute,
+    `Proofs.QMClosure.V7HilbertCarrierRoute,
+    `Proofs.QMClosure.V7FullQMBurdenLedger,
     `Proofs.QMClosure.FullQMSectorClosure
   ]

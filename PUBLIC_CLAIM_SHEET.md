@@ -155,6 +155,14 @@ The main current successes are bounded and methodological:
    once universal endpoint data is provided. The remaining mathematical core is
    deriving that endpoint data from B0 or the accepted successor base; a
    B1-only negative control is checked and does not force that endpoint data.
+22. The full v7 recovery layer is now explicit in Lean status ledgers. The
+   migrated surface covers B0/projection boundaries, B1/B2 pressure,
+   hypothesis batches, NUSD/finite-projection determinacy, zero-base/search
+   results, normalized-overlap/compressed finite-QM routes, Born/readout,
+   Schrodinger-frequency dynamics, Hilbert carrier pressure, late CGSC routing,
+   and the full-QM proof burden. These modules preserve the research map; they
+   do not upgrade Born, Hilbert space, Schrodinger dynamics, or full QM to
+   proved.
 
 ## What The Verifier Catches
 
@@ -170,9 +178,9 @@ The verifier is designed to reject progress by relabeling. It blocks:
    spine remain incomplete;
 8. relabeling current QM imports as primitive or first-principles derived
    structures;
-8. a `formal_proof` marker without a proof-ledger card and machine-checkable
+9. a `formal_proof` marker without a proof-ledger card and machine-checkable
    proof artifacts.
-9. treating the v7 context-first base candidate as a completed proof of
+10. treating the v7 context-first base candidate as a completed proof of
    Hilbert space, Born readout, GR, full QM, `hbar_I`, or `G_I`.
 
 ## What Is Explicitly Not Claimed
