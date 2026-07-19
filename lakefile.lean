@@ -103,6 +103,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.V7QPrimitiveIndependence,
     `Proofs.QMClosure.V7ActionPrimitiveIndependence,
     `Proofs.QMClosure.V7PositiveGeometryTwoAlternatives,
+    `Proofs.QMClosure.V7ProductContextExhaustion,
     `Proofs.QMClosure.V7PrimitiveCandidateStack,
     `Proofs.QMClosure.V7NUSDProjectionDeterminacy,
     `Proofs.QMClosure.V7B1B2PressureLedger,
