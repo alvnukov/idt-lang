@@ -109,6 +109,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.V7PositiveGeometryTwoAlternatives,
     `Proofs.QMClosure.V7PositiveGeometryConcrete,
     `Proofs.QMClosure.V7PositiveGeometryGeneral,
+    `Proofs.QMClosure.V7DimensionAnalysis,
     `Proofs.QMClosure.V7ProductContextExhaustion,
     `Proofs.QMClosure.V7LocalTomography,
     `Proofs.QMClosure.V7BoundedCorrelations,
