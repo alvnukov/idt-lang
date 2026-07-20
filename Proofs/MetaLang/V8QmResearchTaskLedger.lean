@@ -556,6 +556,121 @@ theorem born_wall_bridge_remains_pending_concrete_carrier_probe :
     born_wall_bridge_carrier_probe_pending := by
   trivial
 
+/-!
+Born wall: literature grounding and the Γ-coherence negative (2026-07-21).
+
+This block records a concrete advance in shape (not in proof), by tying
+the Born wall diagnosis to the standard reconstruction-of-quantum-theory
+literature, and recording a falsified hypothesis about how the wall
+might have been crossed.
+
+LITERATURE GROUNDING — purification is the known selector.
+The Chiribella–D'Ariano–Perinotti reconstruction
+(G. Chiribella, G. M. D'Ariano, P. Perinotti, "Informational
+derivation of Quantum Theory", Phys. Rev. A 84, 012311 (2011),
+arXiv:1011.6451; companion "Probabilistic theories with purification",
+Phys. Rev. A 81, 062348 (2010), arXiv:0908.1583) derives finite-
+dimensional complex Hilbert space, the Born rule, the tensor-product
+composition, and the spectral theorem from a single informational
+postulate:
+
+  PURIFICATION POSTULATE. Every mixed state ρ on system A admits a
+  purification: a pure state ψ on A ⊗ E (for some auxiliary system E)
+  whose marginal on A is ρ, and every two purifications of the same
+  ρ differ by a reversible transformation on E alone.
+
+The crucial word is UNIQUENESS UP TO REVERSIBLE TRANSFORMATION ON THE
+PURIFYING SYSTEM. Without that half of the postulate, classical
+theories, real-quantum, and box-world all satisfy "every mixed state
+has some extension". The uniqueness half is what kills the
+non-quadratic alternatives.
+
+IDT-native correspondence.
+The IDT field `noHiddenJointOnlyGeneration`
+(ConstructiveWitnessPrimitiveBase.lean:463;
+ContextFirstConstructiveWitnessCompletenessReady requires it at line
+488) is the context-first, history-space reading of the same physical
+content: every stable composite context invariant must be generated
+from subsystem witnesses by a reversible inheritance transport, with
+no invariant that lives only at the joint context (a "hidden joint-
+only generation"). Read this way, the three load-bearing witness
+fields of the bridge layer correspond to:
+  * noHiddenJointOnlyGeneration  ≈  purification-uniqueness half
+  * constructiveCarrierWitness   ≈  existence of an auxiliary carrier
+                                    E that supports the purification
+  * externalFrequencyWitness     ≈  the measurable marginal (the
+                                    "frequency" side of A) being
+                                    stably reconstructable from E
+So the bridge is not ad hoc: it is the IDT-typed shadow of the
+standard reconstruction. The hard research step is the same in both:
+type `noHiddenJointOnlyGeneration` as a real proposition about a
+concrete carrier, not as an abstract `Prop` flag, and either exhibit
+a model or prove impossibility.
+
+FALSIFIED STRENGTHENING — Γ-coherence per single readout is not enough.
+A natural but insufficient strengthening of `StableFiniteReadout`
+accounting is to require the weights to come from a positive-
+semidefinite kernel Γ via the IDT actualization measure
+μ(A) = Σ_{h,h'∈A} W_h W_h' Γ_{h,h'}. This is the form already used by
+the four machine-checked Born-readout proofs (ContextNormalizationProof
+through OperationalEquivalenceProbability), so it is tempting to hope
+it selects the quadratic exponent. It does NOT, in the single-readout
+form. Concrete counterexample, verified by hand:
+  * Linear pair (3,4) is realized by Γ_L = diag(3,4) with W = (1,1),
+    giving μ = (3,4) up to scale.
+  * Quadratic pair (9,16) is realized by Γ_Q = I with W = (3,4),
+    giving μ = (9,16).
+Both Γ_L and Γ_Q are PSD. Requiring the weights to "arise from some
+PSD Γ" therefore does not select the quadratic law; the linear
+countermodel survives. The PSD carrier is per-readout, so this says
+nothing about cross-readout consistency. A Lean formalization of this
+counterexample was drafted and withdrawn only because of unrelated
+`decide`-over-ℝ reduction friction; the mathematical content above is
+the load-bearing part and is correct.
+
+This sharpens the shape of the missing selector. It is NOT enough to
+require Γ-coherence at the level of an individual readout; the
+selector must constrain Γ ACROSS contexts (the same Γ must be shared
+between readouts AND their coarse-graining AND their purifications),
+which is exactly the cross-context content of the purification
+postulate above. IDT's `noHiddenJointOnlyGeneration`, read as
+purification-uniqueness, is precisely the right kind of cross-context
+constraint. The research frontier is to type it as a real proposition.
+
+OPEN PROBE (revised, for a stronger model):
+  * Type `noHiddenJointOnlyGeneration` as a concrete statement about a
+    2-point context with carrier E, in the form
+    "every pure invariant on A ⊗ E has its A-marginal reconstructable
+    from a subsystem witness, and any two purifications differ by a
+    reversible map on E".
+  * Check the smallest case: A = {0,1}, E = {0,1}. Under that typed
+    condition, do linear readouts (3,4) survive? The CDP theorem says
+    no; an explicit IDT-native witness would either reproduce that
+    theorem or expose a divergence between IDT's noHiddenJointOnlyGeneration
+    and the CDP postulate.
+  * If IDT's reading diverges (e.g. it is strictly weaker than the CDP
+    uniqueness half), the Born wall is a real impossibility for the
+    IDT primitive base, not just an under-typing; that would itself be
+    a publishable negative result. If they coincide, the wall is
+    bridgeable and the remaining work is the standard CDP derivation
+    re-expressed in IDT terms.
+
+This block is documentation of research positioning. It does not
+upgrade any scientific status, does not import quantum-theoretic
+machinery, and does not prove physics. The `True` theorems below are
+machine-visible markers that the prose block has been installed.
+-/
+
+def born_wall_literature_grounding_recorded : Prop :=
+  -- The wall has been positioned relative to the CDP purification
+  -- reconstruction, and a falsified single-readout Γ-coherence
+  -- strengthening has been recorded.
+  True
+
+theorem born_wall_positioned_against_purification_reconstruction :
+    born_wall_literature_grounding_recorded := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
