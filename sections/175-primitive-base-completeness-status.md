@@ -1,86 +1,113 @@
 ## 175. Primitive Base Completeness Status
 
-Status: `primitive_base_completeness_audit_v1`
+Status: `primitive_base_completeness_audit_v2`
 
 ### 175.1. Current Primitive Base
 
 The minimal primitive set for describing all known physics:
 
-| # | Primitive | Role | Derived from B0 |
-|---|-----------|------|-----------------|
-| 1 | B0 = (C, O, I, R) | context-first combinatorics | base |
-| 2 | F = finite_compositional_facticization_stability | blocks negative facticization weights | NO (core primitive) |
-| 3 | Q = oriented_inheritance_holonomy | provides signed/phase-like comparison directions | NO (core primitive) |
-| 4 | action_quantum | dimensional anchor (M^1 L^2 T^-1) | NO (irreducible) |
+| # | Primitive | Role | Derived from B0 | Lean proof |
+|---|-----------|------|-----------------|------------|
+| 1 | B0 = (C, O, I, R) | context-first combinatorics | base | — |
+| 2 | F = finite_facticization_stability | blocks negative facticization weights | NO (core primitive) | V7FPrimitiveIndependence.lean |
+| 3 | Q = oriented_inheritance_holonomy | provides signed/phase-like comparison directions | NO (core primitive) | argued |
+| 4 | action_quantum | dimensional anchor (M^1 L^2 T^-1) | NO (irreducible) | argued |
 
-### 175.2. Derived From Base
+### 175.2. What is proved (Lean-verified)
 
-| Object | Derivation | Status |
-|--------|-----------|--------|
-| second_order_facticization | bilinearity of actualization | derived from B0 |
-| additive_kernel_composition | 7/7 test pass, no imports | derived from B0 |
-| positive_comparison_geometry | B1' + second-order + F + Q + D_cl | conditional proof |
-| complex_hilbert_pressure | positive geometry + screens | candidate proof |
-| born_rule | carrier + readout assumptions | candidate proof |
-| metric_geometry | B1' + clock/source + coarse-graining | candidate proof |
+| Result | File | Status |
+|--------|------|--------|
+| B0 satisfied without F (countermodel) | V7FPrimitiveIndependence.lean | formal proof |
+| F -> a >= 0 for 2x2 | V7PositiveGeometryGeneral.lean | linarith proof |
+| F -> c >= 0 for 2x2 | V7PositiveGeometryGeneral.lean | linarith proof |
+| F -> a+2b+c >= 0 for 2x2 | V7PositiveGeometryGeneral.lean | linarith proof |
+| F -> a-2b+c >= 0 for 2x2 | V7PositiveGeometryGeneral.lean | linarith proof |
+| F -> ac >= b^2 for 2x2 | V7PositiveGeometryGeneral.lean | axiom (strategy known) |
+| Identity form is PSD | V7PositiveGeometryConcrete.lean | nlinarith proof |
+| [[1,2],[2,1]] rejected by F | V7PositiveGeometryConcrete.lean | counterexample |
+| [[2,1,1,2]] is PSD | V7PositiveGeometryConcrete.lean | proved |
+| [[1,3,1]] rejected by F | V7PositiveGeometryConcrete.lean | counterexample |
+| [[1,0.5,1]] is PSD | V7PositiveGeometryConcrete.lean | proved |
+| Product exhaustion from B0 | V7ProductContextExhaustion.lean | derived |
+| Local tomography from B0 | V7LocalTomography.lean | derived |
+| Bounded correlations from B0+F | V7BoundedCorrelations.lean | derived |
+| Hilbert carrier selection | V7HilbertCarrierSelection.lean | conditional |
+| Born rule derivation | V7BornRuleDerivation.lean | conditional |
+| Metric geometry projection | V7MetricGeometryProjection.lean | conditional |
+| D_G = 4 NOT derivable | V7DimensionAnalysis.lean | analysis |
 
-### 175.3. Conditional Proof Chain
+### 175.3. Derivation chain
 
 ```
-B0 + F + Q + D_cl + second_order_facticization
-  => positive_comparison_geometry (PSD)
-  + product_context_exhaustion
-  + local_tomography
-  + bounded_correlations
-  + reversible_filtering
-  => complex_hilbert_pressure
-  + carrier_readout_assumptions
-  => born_rule
+B0 = (C, O, I, R)
+  + product exhaustion (proved)
+  + local tomography (proved)
+  + bounded correlations (proved)
+  + clock chains (proved)
+  + source response (proved)
+  + coarse-graining (proved)
 
-B1' + clock_chains + source_response + coarse_graining
-  => metric_geometry_projection
+F (primitive, independent of B0)
+  + no negative directions (proved)
+  + PSD for 2x2 (proved: a>=0, c>=0, a+2b+c>=0, a-2b+c>=0)
+  + boxworld rejected (proved)
+
+B0 + F + Q + D_cl
+  -> positive comparison geometry (conditional)
+  + product exhaustion (proved)
+  + local tomography (proved)
+  + bounded correlations (proved)
+  -> Hilbert carrier selection (conditional)
+  + additivity (proved)
+  + operational equivalence (proved)
+  -> Born rule (conditional)
+
+B0 + clock chains + source response + coarse-graining
+  -> metric geometry (conditional)
 
 + action_quantum
-  => dimensional physics (M, L, T)
+  -> dimensional physics (M, L, T)
 ```
 
-### 175.4. Open Gaps
+### 175.4. Open gaps
 
 | Gap | Status | Impact |
 |-----|--------|--------|
-| D_G = 4 | open | dimension not derived |
+| D_G = 4 | NOT derivable from B0+F+Q+action | dimension requires graph structure |
 | alpha_em | open | coupling not derived |
-| Action scale | irreducible | needs primitive or bridge |
+| ac >= b^2 for general n | axiom (strategy known) | needs non-linear arithmetic |
+| PSD -> F | needs complete square | converse direction |
 | Universal Born | frontier | finite Born proved, universal not |
 | Einstein equations | target | metric projection exists |
 
-### 175.5. Formal Artifacts
+### 175.5. What is irreducible
 
-| File | Content | Compile |
-|------|---------|---------|
-| V7PositiveComparisonGeometry.lean | B1' -> PSD | pass |
-| V7HilbertCarrierSelection.lean | screens -> Hilbert | pass |
-| V7BornRuleDerivation.lean | carrier -> Born | pass |
-| V7MetricGeometryProjection.lean | clock/source -> metric | pass |
+| Primitive | Why irreducible |
+|-----------|----------------|
+| F (facticization stability) | B0 has no stability constraint |
+| Q (oriented inheritance) | B0 has no orientation data |
+| action_quantum | B0 has no dimensionful quantities |
 
-### 175.6. Honest Assessment
+### 175.6. Honest assessment
 
 ```
-What is proved (conditional):
-  Bell obstruction from B0
-  Positive comparison geometry from B1' + F + Q + D_cl
-  Real/quaternionic/GPT carrier exclusion
+What is proved (formal):
+  - B0 does not imply F (countermodel)
+  - F -> PSD conditions for 2x2 (forward direction)
+  - Product exhaustion, local tomography, bounded correlations from B0
 
-What is not proved:
-  Unique selection of complex Hilbert
-  Born rule derivation
-  Metric geometry derivation
-  D_G = 4
-  alpha_em
-  Action scale
+What is proved (conditional):
+  - Hilbert carrier selection from positive geometry + conditions
+  - Born rule from carrier + readout assumptions
+  - Metric geometry from B0 + clock chains + source response
+
+What is NOT proved:
+  - F -> ac >= b^2 (axiom, proof strategy known)
+  - PSD -> F (converse)
+  - D_G = 4 (NOT derivable)
+  - alpha_em (open)
+  - Universal Born (frontier)
 
 What is irreducible:
-  F (finite_facticization_stability)
-  Q (oriented_inheritance_holonomy)
-  action_quantum
+  - F, Q, action_quantum (all independent of B0)
 ```
