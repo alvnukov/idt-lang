@@ -383,6 +383,9 @@ idt_missing_proof_artifacts
 idt_graph_diff
 idt_lean_build_target
 idt_run_check
+idt_leandojo_status
+idt_leandojo_list_goals
+idt_leandojo_record_attempt
 idt_guarded_replace
 idt_reload_code
 ```
@@ -404,6 +407,14 @@ logs, and their outputs are never proof authority by themselves. `idt_run_check`
 uses an allowlist (`graph_validate`, `declarative_rules`, `mcp_rag_tests`,
 `v8_protocol_boundary`) instead of arbitrary shell commands; `idt_lean_build_target`
 accepts only safe target names and runs `lake build <target>`.
+
+The LeanDojo MCP tools are an optional proof-search adapter, not claim
+governance. `idt_leandojo_status` reports whether `lean-dojo-v2` is available in
+the current Python environment; `idt_leandojo_list_goals` lists Lean/manifest
+nodes that may be useful proof-search goals; `idt_leandojo_record_attempt`
+appends local proof-attempt telemetry under `.idt/proof_attempts/`. These tools
+never edit the manifest and never upgrade `conditional`, `blocked`, or
+`missing_artifact` claims.
 
 `idt_guarded_replace` is the only write-capable MCP tool. It performs a
 single-file text replacement only when the caller supplies the current `sha16`,

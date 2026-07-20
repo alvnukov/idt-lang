@@ -293,24 +293,9 @@ def search_nodes(
         raise V8GraphQueryError("search query must be non-empty")
     if limit <= 0:
         raise V8GraphQueryError("limit must be > 0")
-    needle = query.casefold()
-    matches: list[GraphNode] = []
-    for node in graph.nodes:
-        if kind and node.kind != kind:
-            continue
-        if status and node.status != status:
-            continue
-        haystack = "\n".join(
-            [
-                node.identifier,
-                node.kind,
-                node.status,
-                node.label,
-                node.source,
-            ]
-        ).casefold()
-        if needle in haystack:
-            matches.append(node)
+    matches = search_node_matches(graph, query, kind, status)
+    if not matches:
+        matches = search_node_token_union_matches(graph, query, kind, status)
     limited = matches[:limit]
     return {
         "query": query,
@@ -321,6 +306,69 @@ def search_nodes(
         "truncated": len(matches) > len(limited),
         "nodes": [node.row() for node in limited],
     }
+
+
+def search_node_matches(
+    graph: TheoryGraph,
+    query: str,
+    kind: str,
+    status: str,
+) -> list[GraphNode]:
+    needle = query.casefold()
+    return [
+        node
+        for node in graph.nodes
+        if node_matches_filters(node, kind, status)
+        and needle in graph_node_search_text(node)
+    ]
+
+
+def search_node_token_union_matches(
+    graph: TheoryGraph,
+    query: str,
+    kind: str,
+    status: str,
+) -> list[GraphNode]:
+    tokens = search_query_tokens(query)
+    if len(tokens) <= 1:
+        return []
+    token_set = set(tokens)
+    matches: list[GraphNode] = []
+    for node in graph.nodes:
+        if not node_matches_filters(node, kind, status):
+            continue
+        haystack = graph_node_search_text(node)
+        if any(token in haystack for token in token_set):
+            matches.append(node)
+    return matches
+
+
+def search_query_tokens(query: str) -> list[str]:
+    tokens: list[str] = []
+    seen: set[str] = set()
+    for raw_token in re.split(r"\s+", query.strip()):
+        token = raw_token.casefold()
+        if len(token) < 3 or token in seen:
+            continue
+        seen.add(token)
+        tokens.append(token)
+    return tokens
+
+
+def node_matches_filters(node: GraphNode, kind: str, status: str) -> bool:
+    return (not kind or node.kind == kind) and (not status or node.status == status)
+
+
+def graph_node_search_text(node: GraphNode) -> str:
+    return "\n".join(
+        [
+            node.identifier,
+            node.kind,
+            node.status,
+            node.label,
+            node.source,
+        ]
+    ).casefold()
 
 
 def neighborhood_ids(graph: TheoryGraph, focus: str, depth: int) -> set[str]:

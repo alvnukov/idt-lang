@@ -75,4 +75,48 @@ theorem product_context_expr_assoc_up_to_flatten {atom : Type}
 
 end ContextProductExpr
 
+structure PrimitiveMonoidalRouteFrontier where
+  encodedAssociativityWitnessed : Prop
+  contextProductExhaustionWitnessed : Prop
+  localTomographyRouteWitnessed : Prop
+  tensorImportBoundaryAudited : Prop
+  hiddenJointInvariantNegativeControlPreserved : Prop
+  primitiveMonoidalLawDerived : Prop
+
+def PrimitiveMonoidalRouteFrontier.readyForClosure
+    (frontier : PrimitiveMonoidalRouteFrontier) : Prop :=
+  frontier.encodedAssociativityWitnessed
+    ∧ frontier.contextProductExhaustionWitnessed
+    ∧ frontier.localTomographyRouteWitnessed
+    ∧ frontier.tensorImportBoundaryAudited
+    ∧ frontier.hiddenJointInvariantNegativeControlPreserved
+    ∧ frontier.primitiveMonoidalLawDerived
+
+def currentPrimitiveMonoidalRouteFrontier : PrimitiveMonoidalRouteFrontier :=
+  {
+    encodedAssociativityWitnessed := True,
+    contextProductExhaustionWitnessed := True,
+    localTomographyRouteWitnessed := True,
+    tensorImportBoundaryAudited := True,
+    hiddenJointInvariantNegativeControlPreserved := True,
+    primitiveMonoidalLawDerived := False
+  }
+
+theorem current_monoidal_route_frontier_has_encoded_associativity :
+    currentPrimitiveMonoidalRouteFrontier.encodedAssociativityWitnessed := by
+  trivial
+
+theorem current_monoidal_route_frontier_not_ready_for_closure :
+    ¬ currentPrimitiveMonoidalRouteFrontier.readyForClosure := by
+  intro ready
+  unfold PrimitiveMonoidalRouteFrontier.readyForClosure at ready
+  rcases ready with ⟨_, _, _, _, _, primitiveDerived⟩
+  exact primitiveDerived
+
+theorem current_monoidal_route_frontier_preserves_boundary :
+    currentPrimitiveMonoidalRouteFrontier.tensorImportBoundaryAudited
+      ∧ currentPrimitiveMonoidalRouteFrontier.hiddenJointInvariantNegativeControlPreserved
+      ∧ ¬ currentPrimitiveMonoidalRouteFrontier.readyForClosure := by
+  exact ⟨by trivial, by trivial, current_monoidal_route_frontier_not_ready_for_closure⟩
+
 end IDT.QMClosure

@@ -41,6 +41,33 @@ structure QmResearchTask where
   dependsOnClaimSourceAliasingBoundary : Bool
 deriving Repr
 
+inductive QmResearchFrontKind where
+  | compositeMonoidalLocalTomography
+deriving DecidableEq, Repr
+
+inductive CompositeMonoidalProbeKind where
+  | deriveMonoidalFromContextProductExhaustion
+  | preserveRebitHiddenJointInvariantNegativeControl
+  | auditTensorImportBoundary
+deriving DecidableEq, Repr
+
+structure CompositeMonoidalProbe where
+  kind : CompositeMonoidalProbeKind
+  status : QmResearchTaskStatus
+  blocksExactQMUpgrade : Bool
+deriving Repr
+
+structure QmResearchFront where
+  kind : QmResearchFrontKind
+  primaryTask : QmResearchTaskKind
+  localTomographyTask : QmResearchTaskKind
+  openTheoremCard : CurrentTheoremCardId
+  targetObligation : CurrentQmObligationId
+  negativeControl : CurrentTheoremCardId
+  bornHilbertDeferred : Bool
+  status : QmResearchTaskStatus
+deriving Repr
+
 def currentQmResearchTasks : List QmResearchTask :=
   [
     {
@@ -99,6 +126,37 @@ def currentQmResearchTasks : List QmResearchTask :=
     }
   ]
 
+def currentCompositeMonoidalProbes : List CompositeMonoidalProbe :=
+  [
+    {
+      kind := CompositeMonoidalProbeKind.deriveMonoidalFromContextProductExhaustion,
+      status := QmResearchTaskStatus.active,
+      blocksExactQMUpgrade := true
+    },
+    {
+      kind := CompositeMonoidalProbeKind.preserveRebitHiddenJointInvariantNegativeControl,
+      status := QmResearchTaskStatus.active,
+      blocksExactQMUpgrade := true
+    },
+    {
+      kind := CompositeMonoidalProbeKind.auditTensorImportBoundary,
+      status := QmResearchTaskStatus.active,
+      blocksExactQMUpgrade := true
+    }
+  ]
+
+def currentQmResearchFront : QmResearchFront :=
+  {
+    kind := QmResearchFrontKind.compositeMonoidalLocalTomography,
+    primaryTask := QmResearchTaskKind.proveProductMonoidalAssociativityTarget,
+    localTomographyTask := QmResearchTaskKind.proveProductLocalTomographyTarget,
+    openTheoremCard := CurrentTheoremCardId.monoidalTensorCompositionTheorem,
+    targetObligation := CurrentQmObligationId.tensorCompositionLaw,
+    negativeControl := CurrentTheoremCardId.realHilbertCompositeHiddenJointInvariant,
+    bornHilbertDeferred := true,
+    status := QmResearchTaskStatus.active
+  }
+
 def QmResearchTask.isOpenForResearch
     (task : QmResearchTask) : Prop :=
   task.status = QmResearchTaskStatus.active
@@ -111,6 +169,10 @@ def QmResearchTasksOpen
 
 theorem current_qm_research_task_count :
     currentQmResearchTasks.length = 9 := by
+  rfl
+
+theorem current_composite_monoidal_probe_count :
+    currentCompositeMonoidalProbes.length = 3 := by
   rfl
 
 theorem current_qm_research_tasks_are_open :
@@ -156,6 +218,19 @@ theorem local_tomography_target_blocks_exact_qm_research :
     by simp [currentQmResearchTasks],
     And.intro rfl rfl⟩
 
+theorem monoidal_target_blocks_exact_qm_research :
+    TaskBlocksExactQM
+      QmResearchTaskKind.proveProductMonoidalAssociativityTarget
+      currentQmResearchTasks := by
+  exact ⟨{
+      kind := QmResearchTaskKind.proveProductMonoidalAssociativityTarget,
+      status := QmResearchTaskStatus.target,
+      blocksExactQM := true,
+      dependsOnClaimSourceAliasingBoundary := true
+    },
+    by simp [currentQmResearchTasks],
+    And.intro rfl rfl⟩
+
 theorem born_readout_core_task_blocks_exact_qm_research :
     TaskBlocksExactQM
       QmResearchTaskKind.deriveBornReadoutCoreFromPrimitiveBase
@@ -186,6 +261,58 @@ theorem current_claim_source_aliasing_dependent_tasks_remain_open :
     ClaimSourceAliasingDependentTasksOpen := by
   intro task present _depends
   exact current_qm_research_tasks_are_open task present
+
+def CurrentCompositeMonoidalResearchFrontSelected : Prop :=
+  currentQmResearchFront.kind =
+      QmResearchFrontKind.compositeMonoidalLocalTomography
+    ∧ currentQmResearchFront.primaryTask =
+      QmResearchTaskKind.proveProductMonoidalAssociativityTarget
+    ∧ currentQmResearchFront.localTomographyTask =
+      QmResearchTaskKind.proveProductLocalTomographyTarget
+    ∧ currentQmResearchFront.status = QmResearchTaskStatus.active
+
+theorem current_composite_monoidal_research_front_selected :
+    CurrentCompositeMonoidalResearchFrontSelected := by
+  unfold CurrentCompositeMonoidalResearchFrontSelected currentQmResearchFront
+  exact And.intro rfl (And.intro rfl (And.intro rfl rfl))
+
+def CurrentCompositeMonoidalClaimBoundaryPreserved : Prop :=
+  currentQmResearchFront.openTheoremCard =
+      CurrentTheoremCardId.monoidalTensorCompositionTheorem
+    ∧ currentQmResearchFront.targetObligation =
+      CurrentQmObligationId.tensorCompositionLaw
+    ∧ currentQmResearchFront.negativeControl =
+      CurrentTheoremCardId.realHilbertCompositeHiddenJointInvariant
+    ∧ currentQmResearchFront.bornHilbertDeferred = true
+    ∧ currentLedgerTheoremCardFormalProofCount = 0
+    ∧ currentLedgerQmObligationFormalProofCount = 0
+
+theorem current_composite_monoidal_front_preserves_claim_boundary :
+    CurrentCompositeMonoidalClaimBoundaryPreserved := by
+  unfold CurrentCompositeMonoidalClaimBoundaryPreserved currentQmResearchFront
+  exact And.intro rfl
+    (And.intro rfl
+      (And.intro rfl
+        (And.intro rfl
+          (And.intro
+            current_theorem_card_formal_proof_count_is_zero
+            current_qm_obligation_formal_proof_count_is_zero))))
+
+def CompositeMonoidalNegativeControlPreserved : Prop :=
+  ∃ entry, entry ∈ currentTheoremCardLedger
+    ∧ entry.id = CurrentTheoremCardId.realHilbertCompositeHiddenJointInvariant
+    ∧ entry.role = TheoremCardRole.failure
+    ∧ entry.status = CurrentProofStatus.finiteVerifierPass
+
+theorem composite_monoidal_front_preserves_rebit_negative_control :
+    CompositeMonoidalNegativeControlPreserved := by
+  exact ⟨{
+      id := CurrentTheoremCardId.realHilbertCompositeHiddenJointInvariant,
+      role := TheoremCardRole.failure,
+      status := CurrentProofStatus.finiteVerifierPass
+    },
+    by simp [currentTheoremCardLedger],
+    And.intro rfl (And.intro rfl rfl)⟩
 
 theorem qm_research_plan_does_not_close_current_born_or_hilbert_blockers :
     exactQmClosureBlockedByCurrentFrontier :=

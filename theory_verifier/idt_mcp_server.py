@@ -24,6 +24,11 @@ from theory_verifier.idt_rag import (
     research_context_text,
     require_string_arg,
 )
+from theory_verifier.leandojo_adapter import (
+    leandojo_goal_candidates_text,
+    leandojo_record_attempt_text,
+    leandojo_status_text,
+)
 
 
 JsonRpcId = str | int | None
@@ -142,6 +147,21 @@ class IdtMcpServer:
             name = require_string_arg(arguments, "name")
             result = index.run_check(name)
             return mcp_text_result(result, text=check_evidence_text(result))
+        if tool_name == "idt_leandojo_status":
+            result = index.leandojo_status()
+            return mcp_text_result(result, text=leandojo_status_text(result))
+        if tool_name == "idt_leandojo_list_goals":
+            query = optional_string_arg(arguments, "query")
+            limit = optional_int_arg(arguments, "limit", 20)
+            result = index.leandojo_goal_candidates(query, limit)
+            return mcp_text_result(result, text=leandojo_goal_candidates_text(result))
+        if tool_name == "idt_leandojo_record_attempt":
+            goal = require_string_arg(arguments, "goal")
+            status = require_string_arg(arguments, "status")
+            summary = require_string_arg(arguments, "summary")
+            artifact_paths = optional_string_list_arg(arguments, "artifact_paths")
+            result = index.record_leandojo_attempt(goal, status, summary, artifact_paths)
+            return mcp_text_result(result, text=leandojo_record_attempt_text(result))
         if tool_name == "idt_guarded_replace":
             file_path = require_string_arg(arguments, "file_path")
             expected_sha16 = require_string_arg(arguments, "expected_sha16")
@@ -254,6 +274,30 @@ def mcp_tools() -> list[JsonObject]:
             required=("name",),
         ),
         tool_schema(
+            "idt_leandojo_status",
+            "Report optional LeanDojo-v2 adapter readiness without treating it as proof authority.",
+            {},
+        ),
+        tool_schema(
+            "idt_leandojo_list_goals",
+            "List Lean/manifest nodes that may be useful proof-search goals for LeanDojo. Context only.",
+            {
+                "query": {"type": "string"},
+                "limit": {"type": "integer"},
+            },
+        ),
+        tool_schema(
+            "idt_leandojo_record_attempt",
+            "Append a LeanDojo proof-attempt log entry. This never changes manifest or claim status.",
+            {
+                "goal": {"type": "string"},
+                "status": {"type": "string"},
+                "summary": {"type": "string"},
+                "artifact_paths": {"type": "array", "items": {"type": "string"}},
+            },
+            required=("goal", "status", "summary"),
+        ),
+        tool_schema(
             "idt_guarded_replace",
             "Guarded single-file text replacement with hash check, lock, atomic write, and forbidden claim/status scan.",
             {
@@ -330,6 +374,18 @@ def optional_object(value: object, field: str) -> Mapping[str, object]:
     return output
 
 
+def optional_string_list_arg(args: Mapping[str, object], name: str) -> tuple[str, ...]:
+    value = args.get(name, [])
+    if not isinstance(value, list):
+        raise IdtMcpError(f"{name} must be an array")
+    output: list[str] = []
+    for item in value:
+        if not isinstance(item, str):
+            raise IdtMcpError(f"{name} items must be strings")
+        output.append(item)
+    return tuple(output)
+
+
 def json_rpc_result(request_id: JsonRpcId, result: Mapping[str, object]) -> JsonObject:
     return {
         "jsonrpc": "2.0",
@@ -404,5 +460,6 @@ def reloadable_module_names() -> tuple[str, ...]:
     return (
         "theory_verifier.ai_theory_graph",
         "theory_verifier.idt_rag",
+        "theory_verifier.leandojo_adapter",
         "theory_verifier.idt_mcp_server",
     )

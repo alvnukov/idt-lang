@@ -294,6 +294,27 @@ class IdtRagIndex:
             }
         return run_command_evidence(self.repo_root, command)
 
+    def leandojo_status(self) -> JsonObject:
+        from theory_verifier.leandojo_adapter import leandojo_status
+
+        return leandojo_status(self.repo_root)
+
+    def leandojo_goal_candidates(self, query: str = "", limit: int = 20) -> JsonObject:
+        from theory_verifier.leandojo_adapter import leandojo_goal_candidates
+
+        return leandojo_goal_candidates(self.graph, query, limit)
+
+    def record_leandojo_attempt(
+        self,
+        goal: str,
+        status: str,
+        summary: str,
+        artifact_paths: Sequence[str],
+    ) -> JsonObject:
+        from theory_verifier.leandojo_adapter import record_leandojo_attempt
+
+        return record_leandojo_attempt(self.repo_root, goal, status, summary, artifact_paths)
+
     def guarded_replace(
         self,
         file_path: Path,

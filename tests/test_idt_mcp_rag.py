@@ -94,6 +94,9 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertIn("idt_graph_diff", names)
             self.assertIn("idt_lean_build_target", names)
             self.assertIn("idt_run_check", names)
+            self.assertIn("idt_leandojo_status", names)
+            self.assertIn("idt_leandojo_list_goals", names)
+            self.assertIn("idt_leandojo_record_attempt", names)
             self.assertIn("idt_guarded_replace", names)
             self.assertIn("idt_reload_code", names)
 
@@ -172,6 +175,33 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertIn("claim_audit", structured)
             self.assertGreater(len(require_list(structured["neighborhoods"])), 0)
 
+    def test_research_context_token_union_fallback_finds_multiple_aliases(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            server = IdtMcpServer(load_fixture_index(write_fixture_repo(Path(raw_dir))))
+
+            response = server.handle_payload(
+                {
+                    "jsonrpc": "2.0",
+                    "id": "context-token-union",
+                    "method": "tools/call",
+                    "params": {
+                        "name": "idt_research_context",
+                        "arguments": {"query": "born_readout_context localTomography", "depth": 0, "limit": 10},
+                    },
+                }
+            )
+
+            if response is None:
+                raise AssertionError("expected response")
+            result = require_mapping(response["result"])
+            structured = require_mapping(result["structuredContent"])
+            matches = require_mapping(structured["matches"])
+            node_rows = require_list(matches["nodes"])
+            node_text = json.dumps(node_rows, sort_keys=True)
+            self.assertIn("born_readout_context", node_text)
+            self.assertIn("localTomography", node_text)
+            self.assertGreaterEqual(require_int(matches["count"]), 2)
+
     def test_mcp_refreshes_graph_during_tool_request(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
             root = write_fixture_repo(Path(raw_dir))
@@ -248,6 +278,76 @@ class IdtMcpRagTests(unittest.TestCase):
 
             self.assertEqual(True, result["ok"])
             self.assertEqual("check_result_is_not_formal_proof", result["proof_boundary"])
+
+    def test_leandojo_status_is_optional_and_boundary_limited(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+
+            result = index.leandojo_status()
+
+            self.assertEqual("lean_only", result["proof_authority"])
+            self.assertEqual("no_artifact_no_upgrade", result["claim_upgrade_policy"])
+            packages = require_list(result["packages"])
+            package_text = json.dumps(packages, sort_keys=True)
+            self.assertIn("lean-dojo-v2", package_text)
+
+    def test_leandojo_goal_candidates_lists_context_only_goals(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+
+            result = index.leandojo_goal_candidates("born_readout_context", limit=10)
+
+            self.assertEqual("lean_only", result["proof_authority"])
+            items = require_list(result["items"])
+            item_text = json.dumps(items, sort_keys=True)
+            self.assertIn("born_readout_context", item_text)
+            self.assertIn("candidate_goal_context_only", item_text)
+
+    def test_mcp_leandojo_record_attempt_writes_attempt_log_without_manifest_change(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = write_fixture_repo(Path(raw_dir))
+            manifest_before = (root / "theory_verifier_manifest.json").read_text(encoding="utf-8")
+            server = IdtMcpServer(load_fixture_index(root))
+
+            response = server.handle_payload(
+                {
+                    "jsonrpc": "2.0",
+                    "id": "leandojo-attempt-1",
+                    "method": "tools/call",
+                    "params": {
+                        "name": "idt_leandojo_record_attempt",
+                        "arguments": {
+                            "goal": "born_readout_context",
+                            "status": "failed",
+                            "summary": "Fixture attempt failed before proof search.",
+                            "artifact_paths": ["Proofs/QMClosure/A.lean"],
+                        },
+                    },
+                }
+            )
+
+            if response is None:
+                raise AssertionError("expected response")
+            result = require_mapping(response["result"])
+            structured = require_mapping(result["structuredContent"])
+            self.assertEqual(True, structured["ok"])
+            self.assertEqual(manifest_before, (root / "theory_verifier_manifest.json").read_text(encoding="utf-8"))
+            attempt_path = root / ".idt" / "proof_attempts" / "leandojo_attempts.jsonl"
+            attempt_text = attempt_path.read_text(encoding="utf-8")
+            self.assertIn("attempt_log_is_not_claim_status", attempt_text)
+            self.assertIn("born_readout_context", attempt_text)
+
+    def test_leandojo_record_attempt_rejects_unknown_status(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+
+            with self.assertRaisesRegex(IdtRagError, "status must be one of"):
+                index.record_leandojo_attempt(
+                    "born_readout_context",
+                    "formal_proof",
+                    "Do not allow claim-status terms as attempt status.",
+                    (),
+                )
 
     def test_mcp_rejects_unsafe_lean_target(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
