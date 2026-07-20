@@ -110,10 +110,17 @@ The main current successes are bounded and methodological:
    this as an open common-source route, not as a derivation of Hilbert, Bell
    correlations, GR, `hbar_I`, or `G_I`.
 15. The proof-verification boundary is executable. Current `formal_proof`
-   markers are finite IDT-Core/meta-invariants only, and they must be covered by
-   proof cards with machine-checkable artifacts and commands. The proof pipeline
-   checks that the generated Lean finite-core semantic artifact is synchronized
-   with the manifest, then runs Lean 4 and the IDT verifier.
+   markers cover (a) finite IDT-Core/meta-invariants and (b) five finite
+   full-QM-closure sub-obligations proven under the full proof-ledger contract
+   (see item 23). All `formal_proof` markers must be covered by proof cards
+   with machine-checkable artifacts and commands, and the body of each Lean
+   artifact is scanned for forbidden representative symbols
+   (`InnerProductSpace`, `PositiveSemidefinite`, `IsUnitary`,
+   `TensorProduct`, etc.). The proof pipeline checks that the generated Lean
+   finite-core semantic artifact is synchronized with the manifest, then runs
+   Lean 4 and the IDT verifier. None of these formal proofs derives universal
+   QM, Hilbert space, the Born rule, tensor composition, unitary dynamics, or
+   first-principles `hbar_I`.
 16. The v7 context-first primitive-base boundary is executable. It records
    admissible contexts, local outcome-event presheaves, inheritance
    transitions, facticization witnesses, and stable distinguishability as the
@@ -123,11 +130,14 @@ The main current successes are bounded and methodological:
    guards, but remains a conditional route. This does not upgrade QM, Hilbert
    space, Born rule, GR, `hbar_I`, or `G_I`.
 17. The QM semantic-kernel route is executable. It groups the current full-QM
-   proof surface into six conditional clusters covering 21 obligations:
+   proof surface into six clusters spanning 21 sub-obligations:
    residual/projective, representation, readout, dynamics, composite, and
-   physical scale. B1 now projects to that kernel without losing package
-   fields, and each cluster has an explicit B1-projected theorem. The next
-   proof target is the semantic content of the open kernel core; this is not a
+   physical scale. Of those 21 sub-obligations, 5 now carry real
+   machine-checked Lean artifacts under the full proof-ledger contract (see
+   item 23) and 16 carry conditional package artifacts awaiting formalization;
+   0 are missing. B1 projects to that kernel without losing package fields,
+   and each cluster has an explicit B1-projected theorem. The next proof
+   target is the semantic content of the open kernel core; this is not a
    proof of `full_QM_I`.
 18. The QM semantic-content scaffold bundle is executable. It machine-checks
    finite projective, readout, inheritance-action, product-tomography,
@@ -164,6 +174,30 @@ The main current successes are bounded and methodological:
    and the full-QM proof burden. These modules preserve the research map; they
    do not upgrade Born, Hilbert space, Schrodinger dynamics, or full QM to
    proved.
+23. Five finite full-QM-closure sub-obligations now carry real
+   machine-checked Lean artifacts under the full proof-ledger contract, with
+   `claim_count = 38` in the synchronized Lean ledger. They are:
+   `context_normalization` (F → μ(A) ≥ 0), `exclusivity_additivity`
+   (μ(A∪B) = μ(A) + μ(B) under facticity), `coarse_graining_consistency`
+   (3-block iterated additivity), `operational_equivalence_probability`
+   (μ(A) = μ(A') under W/Γ-preserving bijection), and `projective_action`
+   (monoid-action laws for `projectiveAction` on projective facts). Each Lean
+   file compiles under `lake env lean` with no `sorry`/`admit`/`axiom`, and
+   the body of each file is scanned for forbidden representative symbols so
+   that none of them silently imports Hilbert-space, Born-rule,
+   positive-operator, unitary, tensor, or projective-Hilbert machinery. The
+   full-QM-closure verdict remains `CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED`
+   with `proved = 5`, `conditional_artifacts = 16`, `missing_artifacts = 0`.
+   This is a claim about five finite sub-obligations, not a derivation of
+   universal QM, the universal Born rule, Hilbert space, tensor composition,
+   unitary dynamics, or first-principles `hbar_I`. One further dynamics
+   sub-obligation, `overlap_preservation_dynamics`, was investigated and
+   deliberately left conditional: its Lean artifact proves closure properties
+   of an IDT-native `PreservesOverlap` predicate but does not derive
+   preservation from bijectivity alone, so promoting it would have been an
+   overclaim; the wall is recorded in
+   `Proofs/MetaLang/V8QmResearchTaskLedger.lean` as
+   `overlap_preservation_dynamics_bridge_wall_recorded`.
 
 ## What The Verifier Catches
 
@@ -213,9 +247,10 @@ Current public classification:
 
 | Category | Examples |
 |---|---|
+| Machine-checked finite proofs | `context_normalization`, `exclusivity_additivity`, `coarse_graining_consistency`, `operational_equivalence_probability`, `projective_action` (full proof-ledger contract; no QM/Hilbert/Born derivation implied) |
 | Derived or finite executable readouts | context Born table, two-path interference, Sorkin `I3 = 0`, finite Bell/CHSH gates |
 | Derived conditional | amplitude packet, unitary context evolution, generator-side QM spine, operational QM with declared anchors, six-cluster QM semantic-kernel route, finite semantic-content scaffold bundle, universal Born/Hilbert frontier closure under explicit source/frontier assumptions |
-| Diagnosed walls | deriving context-first universal endpoint data from B0 or the accepted successor base; proving carrier-frontier exhaustion over all admissible carriers |
+| Diagnosed walls | deriving context-first universal endpoint data from B0 or the accepted successor base; proving carrier-frontier exhaustion over all admissible carriers; `overlap_preservation_dynamics` bridge wall (recorded in Lean ledger) |
 | Calibrated anchors | `calibrated_hbar_I`, calibrated gravity anchors and targets |
 | Structural selectors | primitive holonomy/source and topology/winding selector targets |
 | Experimental gates | SPARC gates, Bell/CHSH gates, residual provenance gates |

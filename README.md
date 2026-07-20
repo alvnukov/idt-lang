@@ -1,6 +1,6 @@
 # IDT Lang
 
-![QM Scientific Status](https://img.shields.io/badge/QM-context--first_Born--Hilbert_frontier-yellow)
+![QM Scientific Status](https://img.shields.io/badge/QM-conditional_structural_route__formalization_wall-yellow)
 [![IDT v8 Lean CI](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml/badge.svg?branch=main)](https://github.com/alvnukov/idt-lang/actions/workflows/v8-lean-status.yml)
 
 Inherited Distinguishability Protolanguage (IDT) is a candidate executable
@@ -131,18 +131,33 @@ Current auditable results:
   obligation, conditional hit, rejected route, or wall rather than an upgraded
   physical/QM proof.
 - QM semantic-kernel route: the current full-QM proof surface is grouped into
-  six conditional clusters covering 21 obligations: residual/projective,
-  representation, readout, dynamics, composite, and physical scale. B1 now
-  projects to this six-cluster kernel without losing package fields, and each
-  cluster has an explicit B1-projected theorem. This narrows the next proof
-  target to semantic content inside the open kernel core; it is not a proof of
-  `full_QM_I`.
+  six clusters spanning 21 sub-obligations: residual/projective,
+  representation, readout, dynamics, composite, and physical scale. Of those
+  21 sub-obligations, 5 now carry real machine-checked Lean artifacts under
+  the full proof-ledger contract and 16 carry conditional package artifacts
+  awaiting formalization; 0 are missing. B1 now projects to this six-cluster
+  kernel without losing package fields, and each cluster has an explicit
+  B1-projected theorem. This narrows the next proof target to semantic
+  content inside the open kernel core; it is not a proof of `full_QM_I`.
 - QM semantic-content scaffolds: the finite projective, readout,
   inheritance-action, product-tomography, monoidal associativity,
   projective-limit, and calibrated-scale scaffolds are now compiled as a single
   Lean bundle. This removes a proof-engineering gap for those finite fragments;
   the later B1/CGSC artifacts fill the six structural target slots inside the
   current package semantics.
+- Machine-checked finite proofs: five full-QM-closure sub-obligations
+  (`context_normalization`, `exclusivity_additivity`,
+  `coarse_graining_consistency`, `operational_equivalence_probability`,
+  `projective_action`) now carry real machine-checked Lean artifacts under
+  the full proof-ledger contract. Each Lean file compiles under
+  `lake env lean` with no `sorry`/`admit`/`axiom`, and each artifact body is
+  scanned for forbidden representative symbols so none silently imports
+  Hilbert-space, Born-rule, positive-operator, unitary, tensor, or
+  projective-Hilbert machinery. The closure evaluator reports
+  `proved = 5`, `conditional_artifacts = 16`, `missing_artifacts = 0`. This
+  is progress on five finite sub-obligations; it is not a derivation of
+  universal QM, the universal Born rule, Hilbert space, tensor composition,
+  unitary dynamics, or first-principles `hbar_I`.
 - CGSC structural target kernel: the six structural QM blockers are now
   conditionally closed by one Lean artifact from seven context-generated stable
   closure clauses, while preserving the no-target-import boundary. At this
@@ -217,11 +232,19 @@ Current auditable results:
   scale-hidden common-source route. QM-scale gates may expose Hilbert/Bell
   readouts while gravity-facing clock/source response remains suppressed or
   unresolved; this is recorded as an open research route, not a proof.
-- proof-verification ledger: current `formal_proof` markers are finite
-  IDT-Core/meta-invariants only, and they must be covered by proof cards with
-  machine-checkable artifacts and commands. The current proof pipeline first
-  synchronizes the generated Lean finite-core semantic artifact against the
-  manifest, then runs Lean 4 plus the IDT verifier.
+- proof-verification ledger: current `formal_proof` markers cover both finite
+  IDT-Core/meta-invariants and five finite full-QM-closure sub-obligations
+  proven under the full proof-ledger contract (`context_normalization`,
+  `exclusivity_additivity`, `coarse_graining_consistency`,
+  `operational_equivalence_probability`, `projective_action`). They must be
+  covered by proof cards with machine-checkable artifacts and commands, and
+  the body of each Lean artifact is scanned for forbidden representative
+  symbols (`InnerProductSpace`, `PositiveSemidefinite`, `IsUnitary`,
+  `TensorProduct`, etc.). The current proof pipeline first synchronizes the
+  generated Lean finite-core semantic artifact against the manifest, then
+  runs Lean 4 plus the IDT verifier. None of these formal proofs derives
+  universal QM, Hilbert space, the Born rule, tensor composition, unitary
+  dynamics, or first-principles `hbar_I`.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants
@@ -490,9 +513,12 @@ lake build
 ```
 
 The `QM Scientific Status` badge reports the current scientific proof boundary:
-the finite standard-QM sector is conditionally closed, and the active
-Born/Hilbert frontier is context-first universal endpoint data plus
-carrier-frontier exhaustion. The `IDT v8 Lean CI` badge reports whether the
+the full-QM route is conditionally closed as a structural route with a
+formalization wall, and the active Born/Hilbert frontier is context-first
+universal endpoint data plus carrier-frontier exhaustion. Five finite
+full-QM-closure sub-obligations are machine-checked PROVED under the full
+proof-ledger contract; this is progress on finite sub-obligations, not a
+proof of universal QM. The `IDT v8 Lean CI` badge reports whether the
 Lean + IDT v8 migration-stop workflow is passing. Neither badge means that
 exact fundamental QM has been proved.
 
