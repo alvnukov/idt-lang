@@ -1,6 +1,10 @@
 import Lake
 open Lake DSL
 
+
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4.git" @ "v4.29.0"
+
 package IDTProofs where
 
 lean_exe idt_v8_protocol_status where
@@ -103,6 +107,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.V7QPrimitiveIndependence,
     `Proofs.QMClosure.V7ActionPrimitiveIndependence,
     `Proofs.QMClosure.V7PositiveGeometryTwoAlternatives,
+    `Proofs.QMClosure.V7PositiveGeometryConcrete,
     `Proofs.QMClosure.V7ProductContextExhaustion,
     `Proofs.QMClosure.V7LocalTomography,
     `Proofs.QMClosure.V7BoundedCorrelations,
