@@ -1033,6 +1033,124 @@ theorem idt_born_principle_remains_untested_hypothesis :
     idt_born_principle_status_is_open_hypothesis_not_theorem := by
   trivial
 
+/-!
+Honest answer: does the IDT principle select Born? (2026-07-21 analysis).
+
+The previous block recorded the IDT principle as an OPEN hypothesis. A
+follow-up hand analysis asked the question concretely: under any of the
+natural readings of "stable distinction is pairwise comparison data",
+does the principle select Born weights (|a|^2) and exclude linear
+weights (|a|) and cubic weights (|a|^3)?
+
+Answer: NO. Every natural reading either fails to select Born, or is
+circular (equivalent to assuming Born in the first place). This is a
+negative result recorded honestly.
+
+The analysis uses Sorkin I3, the third-order interference invariant:
+  I3(A,B,C) = P(A ∪ B ∪ C) - P(A∪B) - P(A∪C) - P(B∪C) + P(A) + P(B) + P(C).
+In quantum mechanics (Born), I3 = 0 identically (no third-order
+interference). In genuine higher-order theories (e.g. cubic weights
+|a|^3), I3 ≠ 0.
+
+FOUR READINGS OF THE PRINCIPLE, ALL CRITICALLY EXAMINED.
+
+Reading 1 — "absence of ternary facts" (weakest reading).
+"No stable facticizable invariant lives only at the whole-context level."
+  * Linear weights (|a|): PASS trivially. Linear probabilities have no
+    cross-terms at all, so every 'fact' is a singleton, which is a
+    special case of 'no ternary facts'. The principle holds.
+  * Born weights (|a|^2): PASS. Born has only pairwise interference
+    terms (2Re(a*b)); I3 = 0.
+  * Cubic weights (|a|^3): FAIL. Genuine third-order interference.
+  VERDICT: the principle distinguishes cubic from {linear, Born} but
+  does NOT distinguish linear from Born. It does not select Born.
+
+Reading 2 — "existence of pairwise facts" (stronger reading).
+"Stable facts must reduce to pairwise witnesses (not singletons only)."
+  * Linear: FAIL (all facts are singletons, no pairwise interference).
+  * Born: PASS (2Re(a*b) is a pairwise fact).
+  * Cubic: PASS or FAIL depending on whether cubic residue is ternary.
+  VERDICT: this reading selects Born over linear, but it is CIRCULAR.
+  'Existence of pairwise interference facts' is exactly the content of
+  the Born rule itself. Postulating it is postulating Born.
+
+Reading 3 — "pairwise comparison metric" (metricity reading).
+"Stable distinguishability is pairwise metric comparison data."
+  * An L2 metric D(a,b) = ⟨a,b⟩ yields ||a||^2 = ⟨a,a⟩ and hence Born.
+  * An L1 metric D(a,b) = |a-b| yields ||a||_1 = |a| and hence linear.
+  VERDICT: the principle is compatible with both L1 and L2 metrics.
+  It does not select Born. To select Born, one must additionally
+  postulate that the metric is L2 — which is postulating Born.
+
+Reading 4 — "norm-preserving rotations" (orientation-overlap reading,
+sections/175:675-707).
+"Context transport composes by norm-preserving rotations."
+  * L2-norm-preserving rotations are unitary maps; they select Born.
+  * L1-norm-preserving 'rotations' are contractive maps; they select
+    linear weights.
+  VERDICT: 'norm-preserving' alone does not specify which norm. To
+  select Born one must specify L2, which is postulating Born.
+
+SYNTHESIS — the honest answer is NO.
+
+Under every natural reading, the IDT principle "stable distinction is
+pairwise comparison data" does not uniquely select Born:
+  * Weak readings exclude cubic but admit linear (the principle is too
+    weak).
+  * Strong readings exclude linear but are equivalent to assuming Born
+    (the principle is circular).
+  * Metric/orientation readings are norm-agnostic and admit L1 alongside
+    L2.
+
+The principle is therefore not, by itself, a Born selector. The Born
+wall is real at the level of the IDT primitive base as currently
+conceived. To bridge the wall, the project must EITHER:
+  (i) find a fifth reading that selects Born non-circularly (none has
+      been identified despite four natural attempts);
+  (ii) add a primitive that genuinely fixes the L2 norm without
+      postulating it (e.g. a reconstruction-style postulate such as
+      purification-uniqueness on the CDP pattern, see the 2026-07-21
+      literature-grounding block earlier in this file);
+  (iii) accept that Born is a sector law, not a derived theorem — the
+      'sector perspective' of sections/175:182-198 — and stop claiming
+      derivation.
+
+This is a NEGATIVE result. It does not upgrade or downgrade the closure
+verdict. The verdict remains CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED
+(proved=5, conditional=16, missing=0). The new ledger entries below are
+True-recorded documentation of a hand-analysis result; they do not
+prove physics in Lean.
+
+CONSEQUENCE FOR THE PUBLIC SURFACE.
+
+The prose in sections/175:30-36 and the "no hidden context-only fact
+=> S2 => Born" implication chain should be read as a CONDITIONAL
+research route, not as a derivation. The route's first implication
+("no hidden context-only fact => no stable primitive I3") is correct
+only under the weak reading that does NOT exclude linear. The chain
+does not reach Born without an additional, non-circular L2-fixing
+postulate that has not been supplied.
+
+The IDT project can still be honest and useful as a candidate
+reconstruction framework, but the specific claim "IDT primitives
+derive Born" is not supported by the current analysis. The CDP
+reconstruction remains the only published finite-dimensional Born
+derivation known; reproducing it (or any equivalent) inside IDT would
+require importing its purification-uniqueness postulate, which would
+no longer be 'context-first only'.
+-/
+
+def idt_principle_does_not_select_born_under_natural_readings : Prop :=
+  -- Hand analysis over Sorkin I3 and L1/L2 metric alternatives shows
+  -- every natural reading of the IDT principle either admits linear
+  -- (too weak) or is equivalent to assuming Born (circular). The
+  -- principle does not by itself select Born. Negative result.
+  True
+
+theorem idt_principle_for_born_is_not_a_non_circular_selector :
+    idt_principle_does_not_select_born_under_natural_readings := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
