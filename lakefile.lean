@@ -128,5 +128,6 @@ lean_lib Proofs where
     `Proofs.QMClosure.FullQMSectorClosure,
     `Proofs.QMClosure.ExclusivityAdditivityProof,
     `Proofs.QMClosure.CoarseGrainingConsistencyProof,
-    `Proofs.QMClosure.OperationalEquivalenceProbabilityProof
+    `Proofs.QMClosure.OperationalEquivalenceProbabilityProof,
+    `Proofs.QMClosure.ContextNormalizationProof
   ]
