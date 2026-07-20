@@ -125,5 +125,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.V7SchrodingerDynamicsRoute,
     `Proofs.QMClosure.V7HilbertCarrierRoute,
     `Proofs.QMClosure.V7FullQMBurdenLedger,
-    `Proofs.QMClosure.FullQMSectorClosure
+    `Proofs.QMClosure.FullQMSectorClosure,
+    `Proofs.QMClosure.ExclusivityAdditivityProof,
+    `Proofs.QMClosure.CoarseGrainingConsistencyProof,
+    `Proofs.QMClosure.OperationalEquivalenceProbabilityProof
   ]

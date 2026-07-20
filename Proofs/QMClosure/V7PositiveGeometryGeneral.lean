@@ -31,51 +31,67 @@ theorem sum_nonneg (G : CompForm2) (h : FacticizationStability G) : G.a + 2 * G.
 theorem diff_nonneg (G : CompForm2) (h : FacticizationStability G) : G.a - 2 * G.b + G.c ≥ 0 := by
   have := h ⟨1, -1⟩; simp only [quadForm] at this; linarith
 
--- KEY: F → ac ≥ b²
--- Proof by contradiction:
--- Case a > 0: direction v = (-b/a, 1) gives (ac - b²)/a < 0 if ac < b²
--- Case a = 0: then b = 0 (from F), so ac = 0 ≥ 0 = b²
+/-! KEY THEOREM: F → ac ≥ b² (determinant nonnegativity for 2×2 PSD)
+
+Proof strategy (no division required):
+
+Case a > 0: direction v = (-b, a) gives
+  quadForm = a·b² - 2ab² + a²c = a(ac - b²) ≥ 0
+  Since a > 0: ac - b² ≥ 0, i.e. ac ≥ b².
+
+Case a = 0, c > 0: direction v = (c, -b) gives
+  quadForm = ac² - 2b²c + b²c = c(ac - b²) = -b²·c ≥ 0
+  Since c > 0 and -b²·c ≥ 0: b² ≤ 0, so b = 0. Then ac = 0 ≥ 0 = b².
+
+Case a = 0, c = 0: from F(1,1) = 2b ≥ 0 and F(1,-1) = -2b ≥ 0, b = 0.
+  Then ac = 0 ≥ 0 = b². -/
 theorem det_nonneg (G : CompForm2) (h : FacticizationStability G) : G.a * G.c ≥ G.b * G.b := by
-  by_contra h_contra
-  push_neg at h_contra
-  by_cases ha_zero : G.a = 0
-  · -- Case a = 0: then b = 0 from F
-    have hb_zero : G.b = 0 := by
-      have h1 := h ⟨1, 1⟩; simp only [quadForm] at h1
-      have h2 := h ⟨1, -1⟩; simp only [quadForm] at h2
-      linarith [ha_zero]
-    linarith [ha_zero, hb_zero]
-  · -- Case a > 0: direction (-b/a, 1) gives negative value
-    have ha_pos : G.a > 0 := lt_of_le_of_ne (a_nonneg G h) (Ne.symm ha_zero)
-    have hv := h ⟨-G.b / G.a, 1⟩
+  have ha_nonneg := a_nonneg G h
+  have hc_nonneg := c_nonneg G h
+  by_cases ha_pos : G.a > 0
+  · -- Case a > 0: direction (-b, a) gives a(ac - b²) ≥ 0, so ac ≥ b²
+    have hv := h ⟨-G.b, G.a⟩
     simp only [quadForm] at hv
-    -- Simplify: G.a * (-G.b/G.a)² + 2*G.b*(-G.b/G.a) + G.c
-    -- = G.b²/G.a - 2*G.b²/G.a + G.c
-    -- = G.c - G.b²/G.a
-    -- = (G.a*G.c - G.b²)/G.a
-    have h_val : G.a * (-G.b / G.a) * (-G.b / G.a) + 2 * G.b * (-G.b / G.a) + G.c =
-                 (G.a * G.c - G.b * G.b) / G.a := by
-      field_simp; ring
-    rw [h_val] at hv
-    -- hv: (G.a*G.c - G.b²)/G.a ≥ 0
-    -- h_contra: G.a*G.c < G.b²
-    -- So: (G.a*G.c - G.b²) < 0
-    -- And: (G.a*G.c - G.b²)/G.a ≥ 0
-    -- Since G.a > 0: (G.a*G.c - G.b²)/G.a < 0
-    -- Contradiction
-    have h_neg : (G.a * G.c - G.b * G.b) / G.a < 0 := by
-      have : G.a * G.c - G.b * G.b < 0 := by linarith [h_contra]
-      exact div_neg_of_neg_of_pos (by linarith) ha_pos
-    linarith
+    -- hv: a*b² - 2a*b² + a²*c ≥ 0, i.e. a²c - a*b² ≥ 0, i.e. a(ac - b²) ≥ 0
+    nlinarith [ha_pos, hv, sq_nonneg G.b]
+  · -- a ≤ 0, but a ≥ 0, so a = 0
+    have ha_zero : G.a = 0 := by linarith
+    by_cases hc_pos : G.c > 0
+    · -- Case a = 0, c > 0: direction (c, -b) gives -b²*c ≥ 0
+      -- Since c > 0: b² ≤ 0, so b = 0
+      have hv := h ⟨G.c, -G.b⟩
+      simp only [quadForm] at hv
+      -- Substitute a = 0 into hv
+      rw [ha_zero] at hv
+      simp at hv
+      -- hv: -b²*c ≥ 0, i.e. b²*c ≤ 0
+      -- Since c > 0: b² ≤ 0, so b = 0
+      have hb_zero : G.b = 0 := by
+        have : G.b * G.b * G.c ≤ 0 := by nlinarith [hv, hc_pos]
+        have : G.b * G.b ≤ 0 := by
+          by_contra hpos
+          have : G.b * G.b > 0 := by linarith
+          have : G.b * G.b * G.c > 0 := by nlinarith
+          linarith
+        nlinarith [sq_nonneg G.b]
+      rw [ha_zero, hb_zero]
+      simp
+    · -- a = 0 and c ≤ 0, but c ≥ 0, so c = 0
+      have hc_zero : G.c = 0 := by linarith
+      -- From F(1,1) and F(1,-1): 2b ≥ 0 and -2b ≥ 0, so b = 0
+      have h1 := h ⟨1, 1⟩
+      have h2 := h ⟨1, -1⟩
+      simp only [quadForm] at h1 h2
+      rw [ha_zero, hc_zero] at h1 h2
+      simp at h1 h2
+      -- h1: 2*b ≥ 0, h2: -2*b ≥ 0
+      have hb_zero : G.b = 0 := by linarith
+      rw [ha_zero, hb_zero, hc_zero]
 
 -- FULL CHARACTERIZATION
 theorem psd_conditions (G : CompForm2) (h : FacticizationStability G) :
     G.a ≥ 0 ∧ G.c ≥ 0 ∧ G.a * G.c ≥ G.b * G.b :=
   ⟨a_nonneg G h, c_nonneg G h, det_nonneg G h⟩
-
--- CONVERSE: PSD → F (sketch: complete the square)
--- a*x² + 2b*x*y + c*y² = a*(x + b/a*y)² + (c - b²/a)*y²
--- Both terms ≥ 0 when a ≥ 0, c ≥ 0, ac ≥ b²
 
 def status : String := "general_proof_complete"
 
