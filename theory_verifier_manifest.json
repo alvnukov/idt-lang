@@ -11001,13 +11001,78 @@
       ]
     },
     {
-      "id": "formal_proof_ledger_audit_demo",
-      "type": "formal_proof_ledger_audit",
-      "target_scope": "current_formal_proof_claims",
       "expected_ledger_status": "formal_claims_covered",
+      "formal_proof_obligation_claims": [
+        {
+          "id": "full_qm_proof_closure.context_normalization",
+          "target_obligation": "full_qm_proof_closure.context_normalization",
+          "expected_obligation_status": "formal_proof",
+          "card_ref": "context_normalization_machine_checked_artifact",
+          "statement": "Facticization stability F (forall v, v^T Gamma v >= 0) implies the actualization measure is non-negative: mu(A) >= 0 for every finite event A. Established by the Lean theorem IDT.QMClosure.measure_nonneg in Proofs/QMClosure/ContextNormalizationProof.lean. F is an IDT primitive; the proof does not import born_rule, probability_axiom, or hilbert_space.",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_upgrade_other_context_normalization_obligations"
+          ]
+        },
+        {
+          "id": "full_qm_proof_closure.exclusivity_additivity",
+          "target_obligation": "full_qm_proof_closure.exclusivity_additivity",
+          "expected_obligation_status": "formal_proof",
+          "card_ref": "exclusivity_additivity_machine_checked_artifact",
+          "statement": "For disjoint events A, B with vanishing cross-actualization, the actualization measure is additive: mu(A union B) = mu(A) + mu(B). Established by the Lean theorem IDT.QMClosure.exclusivity_additivity in Proofs/QMClosure/ExclusivityAdditivityProof.lean using bilinearity of finite sums and the Hermitian property of Gamma. The proof does not import born_rule, kolmogorov_axioms, or hilbert_space.",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_upgrade_other_exclusivity_additivity_obligations"
+          ]
+        },
+        {
+          "id": "full_qm_proof_closure.coarse_graining_consistency",
+          "target_obligation": "full_qm_proof_closure.coarse_graining_consistency",
+          "expected_obligation_status": "formal_proof",
+          "card_ref": "coarse_graining_consistency_machine_checked_artifact",
+          "statement": "For three pairwise disjoint blocks A, B, C with pairwise facticity, mu(A union B union C) = mu(A) + mu(B) + mu(C). Established by the Lean theorem IDT.QMClosure.coarse_graining_consistency in Proofs/QMClosure/CoarseGrainingConsistencyProof.lean by iterated exclusivity_additivity. The proof does not import born_rule, hilbert_space, or projective_measurement.",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_upgrade_other_coarse_graining_consistency_obligations"
+          ]
+        },
+        {
+          "id": "full_qm_proof_closure.operational_equivalence_probability",
+          "target_obligation": "full_qm_proof_closure.operational_equivalence_probability",
+          "expected_obligation_status": "formal_proof",
+          "card_ref": "operational_equivalence_probability_machine_checked_artifact",
+          "statement": "If two event sets A, A' are related by a bijection sigma preserving W and Gamma, then mu(A) = mu(A'). Established by the Lean theorem IDT.QMClosure.operational_equivalence_probability in Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean using Finset.sum_bij' finite-sum reindexing. The proof does not import born_rule, hilbert_space, or trace_rule.",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_upgrade_other_operational_equivalence_probability_obligations"
+          ]
+        }
+      ],
+      "id": "formal_proof_ledger_audit_demo",
       "proof_cards": [
         {
-          "id": "idt_core_current_formal_claims_machine_checked",
+          "artifact_paths": [
+            "Proofs/IDTCore.lean",
+            "scripts/sync_formal_proof_ledger.py"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "python3 scripts/sync_formal_proof_ledger.py --check",
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
+          ],
           "claim_refs": [
             "finite_gates.idt_core_bounded_arity_frontier_demo.bounded_correlation_arity_bound.status",
             "finite_gates.idt_core_bounded_arity_frontier_demo.context_product_arity_bound.status",
@@ -11043,35 +11108,32 @@
             "finite_gates.uniform_witness_bound_assumption_frontier_demo.finite_context_signature.status",
             "finite_gates.uniform_witness_bound_assumption_frontier_demo.finite_route_generator_basis.status"
           ],
-          "proof_kind": "machine_checked_finite_proof",
-          "backend": "lean4",
-          "statement": "Current finite formal-proof claims are generated from the manifest into a Lean finite-core semantic artifact. Lean proves registry count/digest witnesses, bounded arity witnesses, route-generator witnesses, no-new-effect witnesses, joint-only rejection scope, and proof-ledger consistency; the IDT verifier then replays the manifest checks. This does not prove QM, Hilbert space, Born rule, tensor composition, unitary dynamics, or hbar from primitives.",
-          "artifact_paths": [
-            "Proofs/IDTCore.lean",
-            "scripts/sync_formal_proof_ledger.py"
-          ],
-          "checker_commands": [
-            "python3 scripts/sync_formal_proof_ledger.py --check",
-            "lake env lean Proofs/IDTCore.lean",
-            "python3 -m theory_verifier --json theory_verifier_manifest.json"
-          ],
-          "machine_checks": [
-            "formal_claim_manifest_sync",
-            "lean_finite_core_semantic_checks",
-            "lean4_kernel",
-            "idt_verifier_manifest"
-          ],
-          "scope": "current_finite_idt_core_meta_invariants",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I"
           ],
-          "open_gaps": []
+          "id": "idt_core_current_formal_claims_machine_checked",
+          "machine_checks": [
+            "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
+            "lean4_kernel",
+            "idt_verifier_manifest"
+          ],
+          "open_gaps": [],
+          "proof_kind": "machine_checked_finite_proof",
+          "scope": "current_finite_idt_core_meta_invariants",
+          "statement": "Current finite formal-proof claims are generated from the manifest into a Lean finite-core semantic artifact. Lean proves registry count/digest witnesses, bounded arity witnesses, route-generator witnesses, no-new-effect witnesses, joint-only rejection scope, and proof-ledger consistency; the IDT verifier then replays the manifest checks. This does not prove QM, Hilbert space, Born rule, tensor composition, unitary dynamics, or hbar from primitives."
         },
         {
-          "id": "cgsc_finite_exposed_context_package_conditional_artifact",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
           "claim_refs": [
             "full_qm_proof_closure.finite_projection_determinacy",
             "full_qm_proof_closure.projective_consistency",
@@ -11084,21 +11146,6 @@
             "full_qm_proof_closure.operational_equivalence_probability",
             "full_qm_proof_closure.physical_phase_scale_boundary"
           ],
-          "statement": "Conditional Lean package artifact covering finite exposed-context completion obligations, including FPD/projective consistency, spectral/readout obligations, and the physical phase-scale boundary. The artifact packages checked assumptions; it does not prove these assumptions from primitives.",
-          "theorem": "IDT.QMClosure.finite_exposed_context_package_no_target_imports",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
-          "artifact_paths": [
-            "Proofs/QMClosure/CGSCPackageClosure.lean"
-          ],
-          "checker_commands": [
-            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_package_conditional_artifact"
-          ],
-          "scope": "conditional_cgsc_package_obligation_coverage",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11106,13 +11153,28 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_conditional_package_artifact_as_full_QM_proof"
           ],
+          "id": "cgsc_finite_exposed_context_package_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_package_conditional_artifact"
+          ],
           "open_gaps": [
             "package assumptions are conditional and still require proof from primitives",
             "this card does not prove full_QM_I"
-          ]
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_cgsc_package_obligation_coverage",
+          "statement": "Conditional Lean package artifact covering finite exposed-context completion obligations, including FPD/projective consistency, spectral/readout obligations, and the physical phase-scale boundary. The artifact packages checked assumptions; it does not prove these assumptions from primitives.",
+          "theorem": "IDT.QMClosure.finite_exposed_context_package_no_target_imports"
         },
         {
-          "id": "cgsc_route_automorphism_refinement_package_conditional_artifact",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
           "claim_refs": [
             "full_qm_proof_closure.rich_d_cl_reversible_symmetry",
             "full_qm_proof_closure.d_cl_automorphism_dynamics",
@@ -11121,21 +11183,6 @@
             "full_qm_proof_closure.continuous_inheritance_family",
             "full_qm_proof_closure.generator_closure"
           ],
-          "statement": "Conditional Lean package artifact covering route automorphism/refinement coherence obligations for reversible symmetry, projective action, continuity, and generator closure without importing unitary group or Stone theorem.",
-          "theorem": "IDT.QMClosure.route_automorphism_refinement_package_no_target_imports",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
-          "artifact_paths": [
-            "Proofs/QMClosure/CGSCPackageClosure.lean"
-          ],
-          "checker_commands": [
-            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_package_conditional_artifact"
-          ],
-          "scope": "conditional_cgsc_package_obligation_coverage",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11143,13 +11190,28 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_conditional_package_artifact_as_full_QM_proof"
           ],
+          "id": "cgsc_route_automorphism_refinement_package_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_package_conditional_artifact"
+          ],
           "open_gaps": [
             "package assumptions are conditional and still require proof from primitives",
             "this card does not prove full_QM_I"
-          ]
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_cgsc_package_obligation_coverage",
+          "statement": "Conditional Lean package artifact covering route automorphism/refinement coherence obligations for reversible symmetry, projective action, continuity, and generator closure without importing unitary group or Stone theorem.",
+          "theorem": "IDT.QMClosure.route_automorphism_refinement_package_no_target_imports"
         },
         {
-          "id": "cgsc_generated_composite_package_conditional_artifact",
+          "artifact_paths": [
+            "Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
+          ],
           "claim_refs": [
             "full_qm_proof_closure.product_context_exhaustion",
             "full_qm_proof_closure.local_tomography",
@@ -11157,21 +11219,6 @@
             "full_qm_proof_closure.entanglement_closure",
             "full_qm_proof_closure.projective_limit_consistency"
           ],
-          "statement": "Conditional Lean package artifact covering generated-composite/no-hidden-joint obligations, including product-context exhaustion, local tomography, monoidal associativity, entanglement closure, projective limits, and constructive residual rejection.",
-          "theorem": "IDT.QMClosure.generated_composite_package_rejects_unwitnessed_residual",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
-          "artifact_paths": [
-            "Proofs/QMClosure/CGSCPackageClosure.lean"
-          ],
-          "checker_commands": [
-            "lake env lean Proofs/QMClosure/CGSCPackageClosure.lean"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_package_conditional_artifact"
-          ],
-          "scope": "conditional_cgsc_package_obligation_coverage",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11179,31 +11226,31 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_conditional_package_artifact_as_full_QM_proof"
           ],
+          "id": "cgsc_generated_composite_package_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_package_conditional_artifact"
+          ],
           "open_gaps": [
             "package assumptions are conditional and still require proof from primitives",
             "this card does not prove full_QM_I"
-          ]
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_cgsc_package_obligation_coverage",
+          "statement": "Conditional Lean package artifact covering generated-composite/no-hidden-joint obligations, including product-context exhaustion, local tomography, monoidal associativity, entanglement closure, projective limits, and constructive residual rejection.",
+          "theorem": "IDT.QMClosure.generated_composite_package_rejects_unwitnessed_residual"
         },
         {
-          "id": "cgsc_primitive_extension_bridge_conditional_artifact",
-          "claim_refs": [
-            "cgsc_primitive_bridge.six_extension_base_to_cgsc_package_closure"
-          ],
-          "statement": "Conditional Lean bridge from B0 candidate plus six primitive-extension witnesses into the three CGSC package artifacts covering the 21 full-QM closure obligations. This does not prove the six extensions from B0.",
-          "theorem": "IDT.QMClosure.cgscPackageClosureFromPrimitiveExtensionBase",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CGSCPrimitiveBridge.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCPrimitiveBridge"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_primitive_extension_bridge"
+          "claim_refs": [
+            "cgsc_primitive_bridge.six_extension_base_to_cgsc_package_closure"
           ],
-          "scope": "conditional_b0_extension_bridge_to_cgsc_package_closure",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11212,31 +11259,31 @@
             "does_not_claim_extensions_are_proved_from_B0",
             "does_not_mark_conditional_bridge_as_formal_proof"
           ],
+          "id": "cgsc_primitive_extension_bridge_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_primitive_extension_bridge"
+          ],
           "open_gaps": [
             "six primitive-extension witnesses still require proof from B0 or successor primitives",
             "this card does not prove CGSC or full_QM_I"
-          ]
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_b0_extension_bridge_to_cgsc_package_closure",
+          "statement": "Conditional Lean bridge from B0 candidate plus six primitive-extension witnesses into the three CGSC package artifacts covering the 21 full-QM closure obligations. This does not prove the six extensions from B0.",
+          "theorem": "IDT.QMClosure.cgscPackageClosureFromPrimitiveExtensionBase"
         },
         {
-          "id": "cgsc_semantic_content_wall_failure_artifact",
-          "claim_refs": [
-            "cgsc_semantic_content_wall.vacuous_checked_prop_bridge_detected"
-          ],
-          "statement": "Lean failure-ledger artifact showing that the current CGSC primitive bridge admits a degenerate all-True extension base, so CheckedProp packaging alone is not semantic content and cannot be upgraded to a primitive proof.",
-          "theorem": "IDT.QMClosure.current_bridge_admits_vacuous_six_extension_witnesses",
-          "proof_kind": "proof_sketch",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CGSCSemanticContentWall.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCSemanticContentWall"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_semantic_content_wall"
+          "claim_refs": [
+            "cgsc_semantic_content_wall.vacuous_checked_prop_bridge_detected"
           ],
-          "scope": "failure_ledger_no_vacuous_cgsc_extension_upgrade",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11245,31 +11292,31 @@
             "does_not_treat_checked_prop_packaging_as_semantic_content",
             "does_not_mark_vacuous_bridge_as_formal_proof"
           ],
+          "id": "cgsc_semantic_content_wall_failure_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_semantic_content_wall"
+          ],
           "open_gaps": [
             "typed semantic predicates and no-vacuity obligations are missing for the six CGSC extension witnesses",
             "this card is a failure-ledger guard, not a CGSC proof"
-          ]
+          ],
+          "proof_kind": "proof_sketch",
+          "scope": "failure_ledger_no_vacuous_cgsc_extension_upgrade",
+          "statement": "Lean failure-ledger artifact showing that the current CGSC primitive bridge admits a degenerate all-True extension base, so CheckedProp packaging alone is not semantic content and cannot be upgraded to a primitive proof.",
+          "theorem": "IDT.QMClosure.current_bridge_admits_vacuous_six_extension_witnesses"
         },
         {
-          "id": "cgsc_typed_semantic_extension_contract_conditional_artifact",
-          "claim_refs": [
-            "cgsc_typed_semantic_extensions.no_vacuity_contract_registered"
-          ],
-          "statement": "Conditional Lean artifact registering typed semantic predicates and no-vacuity obligations for all six CGSC primitive-extension witnesses. This blocks the vacuous CheckedProp route but does not prove the typed predicates from B0.",
-          "theorem": "IDT.QMClosure.typed_semantic_extension_base_has_no_vacuity",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CGSCTypedSemanticExtensions.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCTypedSemanticExtensions"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_typed_semantic_no_vacuity_contract"
+          "claim_refs": [
+            "cgsc_typed_semantic_extensions.no_vacuity_contract_registered"
           ],
-          "scope": "conditional_typed_cgsc_extension_semantic_contract",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11278,34 +11325,30 @@
             "does_not_claim_typed_extensions_are_proved_from_B0",
             "does_not_mark_semantic_contract_as_CGSC_proof"
           ],
+          "id": "cgsc_typed_semantic_extension_contract_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_typed_semantic_no_vacuity_contract"
+          ],
           "open_gaps": [
             "typed semantic extension predicates still require proof from B0 or successor primitives",
             "this card registers no-vacuity semantics but does not prove CGSC or full_QM_I"
-          ]
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_typed_cgsc_extension_semantic_contract",
+          "statement": "Conditional Lean artifact registering typed semantic predicates and no-vacuity obligations for all six CGSC primitive-extension witnesses. This blocks the vacuous CheckedProp route but does not prove the typed predicates from B0.",
+          "theorem": "IDT.QMClosure.typed_semantic_extension_base_has_no_vacuity"
         },
         {
-          "id": "cgsc_typed_decorative_wall_failure_artifact",
-          "statement": "Lean failure-ledger artifact showing that the typed semantic no-vacuity contract can still be satisfied by decorative Bool/Unit witnesses with all-True CheckedProp obligations. Therefore typed witness existence alone cannot be upgraded to CGSC or full-QM proof; each obligation must be grounded in semantic source predicates.",
-          "scope": "failure_ledger_no_decorative_typed_cgsc_upgrade",
-          "proof_kind": "proof_sketch",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CGSCTypedDecorativeWall.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCTypedDecorativeWall"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_typed_decorative_wall"
-          ],
           "claim_refs": [
             "cgsc_typed_decorative_wall.decorative_true_extensions_detected"
-          ],
-          "theorem": "IDT.QMClosure.typed_contract_still_admits_decorative_true_extensions",
-          "open_gaps": [
-            "ground each CGSC/QM closure obligation in semantic source predicates rather than arbitrary CheckedProp fields",
-            "this card is a failure-ledger guard, not a CGSC or full_QM_I proof"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11314,31 +11357,31 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_typed_nonvacuity_as_semantic_grounding",
             "does_not_mark_decorative_typed_witnesses_as_CGSC_proof"
-          ]
+          ],
+          "id": "cgsc_typed_decorative_wall_failure_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_typed_decorative_wall"
+          ],
+          "open_gaps": [
+            "ground each CGSC/QM closure obligation in semantic source predicates rather than arbitrary CheckedProp fields",
+            "this card is a failure-ledger guard, not a CGSC or full_QM_I proof"
+          ],
+          "proof_kind": "proof_sketch",
+          "scope": "failure_ledger_no_decorative_typed_cgsc_upgrade",
+          "statement": "Lean failure-ledger artifact showing that the typed semantic no-vacuity contract can still be satisfied by decorative Bool/Unit witnesses with all-True CheckedProp obligations. Therefore typed witness existence alone cannot be upgraded to CGSC or full-QM proof; each obligation must be grounded in semantic source predicates.",
+          "theorem": "IDT.QMClosure.typed_contract_still_admits_decorative_true_extensions"
         },
         {
-          "id": "cgsc_grounded_semantic_extension_kernel_conditional_artifact",
-          "statement": "Conditional Lean artifact that replaces arbitrary typed extension payloads with grounded semantic source predicates for all six CGSC extension families. The generated extension obligations are computed from those sources and include anti-decorative relation boundaries, but the sources still require proof from B0 or successor primitives before any CGSC/full-QM upgrade.",
-          "scope": "conditional_grounded_cgsc_semantic_extension_kernel",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CGSCGroundedSemanticExtensions.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCGroundedSemanticExtensions"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_grounded_semantic_extension_kernel"
-          ],
           "claim_refs": [
             "cgsc_grounded_semantic_extensions.grounded_kernel_to_six_extension_statements"
-          ],
-          "theorem": "IDT.QMClosure.grounded_semantic_extension_base_yields_six_extension_statements",
-          "open_gaps": [
-            "grounded semantic source predicates still require proof from B0 or successor primitives",
-            "this card does not prove CGSC or full_QM_I"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11347,23 +11390,28 @@
             "does_not_prove_full_QM_I",
             "does_not_claim_grounded_sources_are_proved_from_B0",
             "does_not_mark_grounded_kernel_as_CGSC_proof"
-          ]
+          ],
+          "id": "cgsc_grounded_semantic_extension_kernel_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_grounded_semantic_extension_kernel"
+          ],
+          "open_gaps": [
+            "grounded semantic source predicates still require proof from B0 or successor primitives",
+            "this card does not prove CGSC or full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_grounded_cgsc_semantic_extension_kernel",
+          "statement": "Conditional Lean artifact that replaces arbitrary typed extension payloads with grounded semantic source predicates for all six CGSC extension families. The generated extension obligations are computed from those sources and include anti-decorative relation boundaries, but the sources still require proof from B0 or successor primitives before any CGSC/full-QM upgrade.",
+          "theorem": "IDT.QMClosure.grounded_semantic_extension_base_yields_six_extension_statements"
         },
         {
-          "id": "full_qm_assembly_from_grounded_sources_conditional_artifact",
-          "statement": "Conditional Lean artifact assembling all 21 current full-QM closure obligations from a GroundedCGSCSemanticExtensionBase. This proves only the assembly theorem from grounded sources; it does not prove those sources from IDT primitives and therefore is not a full_QM_I proof.",
-          "scope": "conditional_full_qm_obligation_bundle_from_grounded_sources",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/FullQMAssemblyFromGroundedSources.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.FullQMAssemblyFromGroundedSources"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "full_qm_grounded_source_assembly"
           ],
           "claim_refs": [
             "full_qm_assembly.grounded_sources_to_21_obligations",
@@ -11389,12 +11437,6 @@
             "full_qm_proof_closure.projective_limit_consistency",
             "full_qm_proof_closure.physical_phase_scale_boundary"
           ],
-          "theorem": "IDT.QMClosure.grounded_semantic_sources_yield_full_qm_obligation_bundle",
-          "open_gaps": [
-            "universally scoped grounded semantic source predicates still require proof from B0 or successor primitives",
-            "physical hbar_I remains calibrated or separately blocked",
-            "this card does not prove full_QM_I"
-          ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11402,31 +11444,32 @@
             "does_not_prove_full_QM_I",
             "does_not_claim_grounded_sources_are_proved_from_B0",
             "does_not_mark_conditional_assembly_as_QM_proof"
-          ]
+          ],
+          "id": "full_qm_assembly_from_grounded_sources_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "full_qm_grounded_source_assembly"
+          ],
+          "open_gaps": [
+            "universally scoped grounded semantic source predicates still require proof from B0 or successor primitives",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_full_qm_obligation_bundle_from_grounded_sources",
+          "statement": "Conditional Lean artifact assembling all 21 current full-QM closure obligations from a GroundedCGSCSemanticExtensionBase. This proves only the assembly theorem from grounded sources; it does not prove those sources from IDT primitives and therefore is not a full_QM_I proof.",
+          "theorem": "IDT.QMClosure.grounded_semantic_sources_yield_full_qm_obligation_bundle"
         },
         {
-          "id": "cgsc_grounded_toy_wall_failure_artifact",
-          "statement": "Lean failure-ledger artifact showing that the grounded semantic kernel can still be satisfied by a small Bool/Unit toy source model and mechanically assemble the full-QM obligation bundle. Therefore grounded source satisfiability alone is not a proof of QM; the source kernel must be universally scoped and derived from primitives.",
-          "scope": "failure_ledger_no_toy_grounded_full_qm_upgrade",
-          "proof_kind": "proof_sketch",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CGSCGroundedToyWall.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCGroundedToyWall"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "cgsc_grounded_toy_wall"
-          ],
           "claim_refs": [
             "cgsc_grounded_toy_wall.toy_grounded_bundle_detected"
-          ],
-          "theorem": "IDT.QMClosure.grounded_kernel_admits_toy_full_qm_obligation_bundle",
-          "open_gaps": [
-            "rule out freely chosen toy source models by deriving universally scoped grounded sources from B0 or successor primitives",
-            "this card is a failure-ledger guard, not a full_QM_I proof"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11435,24 +11478,28 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_toy_grounded_sources_as_QM_proof",
             "does_not_mark_grounded_source_satisfiability_as_primitive_derivation"
-          ]
+          ],
+          "id": "cgsc_grounded_toy_wall_failure_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "cgsc_grounded_toy_wall"
+          ],
+          "open_gaps": [
+            "rule out freely chosen toy source models by deriving universally scoped grounded sources from B0 or successor primitives",
+            "this card is a failure-ledger guard, not a full_QM_I proof"
+          ],
+          "proof_kind": "proof_sketch",
+          "scope": "failure_ledger_no_toy_grounded_full_qm_upgrade",
+          "statement": "Lean failure-ledger artifact showing that the grounded semantic kernel can still be satisfied by a small Bool/Unit toy source model and mechanically assemble the full-QM obligation bundle. Therefore grounded source satisfiability alone is not a proof of QM; the source kernel must be universally scoped and derived from primitives.",
+          "theorem": "IDT.QMClosure.grounded_kernel_admits_toy_full_qm_obligation_bundle"
         },
         {
-          "id": "universal_primitive_source_kernel_conditional_artifact",
-          "statement": "Conditional Lean artifact showing that a UniversalPrimitiveSourceKernel yields the full 21-obligation QM closure bundle while rejecting the current two-point Bool/Unit toy grounded source wall via AtLeastThree rank predicates. The kernel itself is still not derived from B0 or successor primitives.",
-          "scope": "conditional_full_qm_obligation_bundle_from_universal_primitive_source_kernel",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/UniversalPrimitiveSourceKernel.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.UniversalPrimitiveSourceKernel"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "universal_primitive_source_kernel",
-            "two_point_toy_wall_rejection"
           ],
           "claim_refs": [
             "universal_primitive_source_kernel.to_full_qm_obligation_bundle",
@@ -11478,13 +11525,6 @@
             "full_qm_proof_closure.projective_limit_consistency",
             "full_qm_proof_closure.physical_phase_scale_boundary"
           ],
-          "theorem": "IDT.QMClosure.universal_primitive_source_kernel_yields_full_qm_obligation_bundle",
-          "open_gaps": [
-            "derive the universal primitive source kernel from B0 or successor primitives",
-            "rule out higher-cardinality toy kernels and prove primitive-generated admissibility, not only two-point toy rejection",
-            "physical hbar_I remains calibrated or separately blocked",
-            "this card does not prove full_QM_I"
-          ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
@@ -11492,32 +11532,34 @@
             "does_not_prove_full_QM_I",
             "does_not_claim_universal_kernel_is_proved_from_B0",
             "does_not_mark_conditional_universal_kernel_as_QM_proof"
-          ]
+          ],
+          "id": "universal_primitive_source_kernel_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "universal_primitive_source_kernel",
+            "two_point_toy_wall_rejection"
+          ],
+          "open_gaps": [
+            "derive the universal primitive source kernel from B0 or successor primitives",
+            "rule out higher-cardinality toy kernels and prove primitive-generated admissibility, not only two-point toy rejection",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_full_qm_obligation_bundle_from_universal_primitive_source_kernel",
+          "statement": "Conditional Lean artifact showing that a UniversalPrimitiveSourceKernel yields the full 21-obligation QM closure bundle while rejecting the current two-point Bool/Unit toy grounded source wall via AtLeastThree rank predicates. The kernel itself is still not derived from B0 or successor primitives.",
+          "theorem": "IDT.QMClosure.universal_primitive_source_kernel_yields_full_qm_obligation_bundle"
         },
         {
-          "id": "universal_primitive_toy_wall_failure_artifact",
-          "statement": "Lean failure-ledger artifact showing that the AtLeastThree universal primitive source kernel still admits a three-point toy model that assembles the full-QM obligation bundle and keeps import guards. Therefore cardinality/rank filters and freely chosen source kernels are insufficient for a primitive proof of QM.",
-          "scope": "failure_ledger_no_rank_filtered_universal_kernel_upgrade",
-          "proof_kind": "proof_sketch",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/UniversalPrimitiveToyWall.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.UniversalPrimitiveToyWall"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "universal_primitive_three_point_toy_wall"
-          ],
           "claim_refs": [
             "universal_primitive_toy_wall.three_point_toy_kernel_detected"
-          ],
-          "theorem": "IDT.QMClosure.universal_kernel_admits_three_point_toy_full_qm_obligation_bundle",
-          "open_gaps": [
-            "derive source kernels directly from primitive-generated admissibility instead of selecting arbitrary source types",
-            "rule out rank-filtered finite toy kernels as proof upgrades",
-            "this card is a failure-ledger guard, not a full_QM_I proof"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11526,35 +11568,33 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_rank_filtered_toy_kernel_as_QM_proof",
             "does_not_mark_cardinality_filters_as_primitive_derivation"
-          ]
+          ],
+          "id": "universal_primitive_toy_wall_failure_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "universal_primitive_three_point_toy_wall"
+          ],
+          "open_gaps": [
+            "derive source kernels directly from primitive-generated admissibility instead of selecting arbitrary source types",
+            "rule out rank-filtered finite toy kernels as proof upgrades",
+            "this card is a failure-ledger guard, not a full_QM_I proof"
+          ],
+          "proof_kind": "proof_sketch",
+          "scope": "failure_ledger_no_rank_filtered_universal_kernel_upgrade",
+          "statement": "Lean failure-ledger artifact showing that the AtLeastThree universal primitive source kernel still admits a three-point toy model that assembles the full-QM obligation bundle and keeps import guards. Therefore cardinality/rank filters and freely chosen source kernels are insufficient for a primitive proof of QM.",
+          "theorem": "IDT.QMClosure.universal_kernel_admits_three_point_toy_full_qm_obligation_bundle"
         },
         {
-          "id": "primitive_generated_source_kernel_conditional_artifact",
-          "statement": "Conditional Lean artifact showing that PrimitiveGeneratedAdmissibility builds the CGSC source kernel from one Atom universe and yields the full 21-obligation QM closure bundle. This tightens the route from free source-type selection to one primitive-generated admissibility interface, but the admissibility interface is not yet derived from B0 or successor primitives.",
-          "scope": "conditional_full_qm_obligation_bundle_from_primitive_generated_admissibility",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/PrimitiveGeneratedSourceKernel.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.PrimitiveGeneratedSourceKernel"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "primitive_generated_source_kernel",
-            "single_atom_source_slots"
           ],
           "claim_refs": [
             "primitive_generated_source_kernel.to_full_qm_obligation_bundle",
             "primitive_generated_source_kernel.one_atom_universe"
-          ],
-          "theorem": "IDT.QMClosure.primitive_generated_admissibility_yields_full_qm_obligation_bundle",
-          "open_gaps": [
-            "derive PrimitiveGeneratedAdmissibility from B0 or successor primitives",
-            "prove the single Atom universe is the admissible primitive base rather than another conditional interface",
-            "physical hbar_I remains calibrated or separately blocked",
-            "this card does not prove full_QM_I"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11563,33 +11603,34 @@
             "does_not_prove_full_QM_I",
             "does_not_claim_primitive_generated_admissibility_is_proved_from_B0",
             "does_not_mark_conditional_source_kernel_as_QM_proof"
-          ]
+          ],
+          "id": "primitive_generated_source_kernel_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "primitive_generated_source_kernel",
+            "single_atom_source_slots"
+          ],
+          "open_gaps": [
+            "derive PrimitiveGeneratedAdmissibility from B0 or successor primitives",
+            "prove the single Atom universe is the admissible primitive base rather than another conditional interface",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_full_qm_obligation_bundle_from_primitive_generated_admissibility",
+          "statement": "Conditional Lean artifact showing that PrimitiveGeneratedAdmissibility builds the CGSC source kernel from one Atom universe and yields the full 21-obligation QM closure bundle. This tightens the route from free source-type selection to one primitive-generated admissibility interface, but the admissibility interface is not yet derived from B0 or successor primitives.",
+          "theorem": "IDT.QMClosure.primitive_generated_admissibility_yields_full_qm_obligation_bundle"
         },
         {
-          "id": "primitive_generated_admissibility_wall_failure_artifact",
-          "statement": "Lean failure-ledger artifact showing that the current B0CandidateBase alone can feed a freely selected PrimitiveGeneratedAdmissibility, which then yields the full-QM obligation bundle and import guards as a conditional package. Therefore PrimitiveGeneratedAdmissibility must be bound to B0 or a successor primitive base before any primitive-proof upgrade.",
-          "scope": "failure_ledger_no_free_primitive_generated_admissibility_upgrade",
-          "proof_kind": "proof_sketch",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/PrimitiveGeneratedAdmissibilityWall.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.PrimitiveGeneratedAdmissibilityWall"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "primitive_generated_admissibility_wall",
-            "free_b0_toy_admissibility"
-          ],
           "claim_refs": [
             "primitive_generated_admissibility_wall.free_b0_toy_detected"
-          ],
-          "theorem": "IDT.QMClosure.b0_alone_can_feed_free_primitive_generated_source_kernel",
-          "open_gaps": [
-            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base",
-            "replace proof-boundary flags with typed primitive data or prove admissibility from them",
-            "this card is a failure-ledger guard, not a full_QM_I proof"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11598,35 +11639,34 @@
             "does_not_prove_full_QM_I",
             "does_not_treat_free_admissibility_as_primitive_derivation",
             "does_not_mark_B0CandidateBase_alone_as_sufficient_for_QM"
-          ]
+          ],
+          "id": "primitive_generated_admissibility_wall_failure_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "primitive_generated_admissibility_wall",
+            "free_b0_toy_admissibility"
+          ],
+          "open_gaps": [
+            "bind PrimitiveGeneratedAdmissibility to B0 or a successor primitive base",
+            "replace proof-boundary flags with typed primitive data or prove admissibility from them",
+            "this card is a failure-ledger guard, not a full_QM_I proof"
+          ],
+          "proof_kind": "proof_sketch",
+          "scope": "failure_ledger_no_free_primitive_generated_admissibility_upgrade",
+          "statement": "Lean failure-ledger artifact showing that the current B0CandidateBase alone can feed a freely selected PrimitiveGeneratedAdmissibility, which then yields the full-QM obligation bundle and import guards as a conditional package. Therefore PrimitiveGeneratedAdmissibility must be bound to B0 or a successor primitive base before any primitive-proof upgrade.",
+          "theorem": "IDT.QMClosure.b0_alone_can_feed_free_primitive_generated_source_kernel"
         },
         {
-          "id": "bound_primitive_generated_base_conditional_artifact",
-          "statement": "Conditional Lean artifact showing that a BoundPrimitiveGeneratedBase constructor-generates PrimitiveGeneratedAdmissibility from typed successor-base witness sorts, then yields the primitive-generated source kernel and full-QM obligation bundle. This closes the free-admissibility defect for the successor-base route, while leaving open whether the successor base is promoted as primitive or derived from the older B0CandidateBase.",
-          "scope": "conditional_full_qm_obligation_bundle_from_bound_successor_primitive_base",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.BoundPrimitiveGeneratedBase"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "bound_primitive_generated_base",
-            "constructor_bound_admissibility_roles"
           ],
           "claim_refs": [
             "bound_primitive_generated_base.to_full_qm_obligation_bundle",
             "bound_primitive_generated_base.constructor_bound_roles"
-          ],
-          "theorem": "IDT.QMClosure.bound_primitive_generated_base_yields_full_qm_obligation_bundle",
-          "open_gaps": [
-            "promote BoundPrimitiveGeneratedBase as the primitive base or derive its typed witness data from B0CandidateBase",
-            "prove the six CGSC clauses as formal primitive proofs from the bound base",
-            "physical hbar_I remains calibrated or separately blocked",
-            "this card does not prove full_QM_I"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11635,35 +11675,35 @@
             "does_not_prove_full_QM_I",
             "does_not_claim_bound_successor_base_is_derived_from_B0",
             "does_not_mark_conditional_bound_base_as_QM_proof"
-          ]
+          ],
+          "id": "bound_primitive_generated_base_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "bound_primitive_generated_base",
+            "constructor_bound_admissibility_roles"
+          ],
+          "open_gaps": [
+            "promote BoundPrimitiveGeneratedBase as the primitive base or derive its typed witness data from B0CandidateBase",
+            "prove the six CGSC clauses as formal primitive proofs from the bound base",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_full_qm_obligation_bundle_from_bound_successor_primitive_base",
+          "statement": "Conditional Lean artifact showing that a BoundPrimitiveGeneratedBase constructor-generates PrimitiveGeneratedAdmissibility from typed successor-base witness sorts, then yields the primitive-generated source kernel and full-QM obligation bundle. This closes the free-admissibility defect for the successor-base route, while leaving open whether the successor base is promoted as primitive or derived from the older B0CandidateBase.",
+          "theorem": "IDT.QMClosure.bound_primitive_generated_base_yields_full_qm_obligation_bundle"
         },
         {
-          "id": "b1_primitive_base_conditional_artifact",
-          "statement": "Conditional Lean artifact promoting BoundPrimitiveGeneratedBase into B1PrimitiveBase with explicit no-free-admissibility and no-target-import boundaries, then yielding the CGSC/full-QM obligation bundle. This registers the B1 primitive-base route but does not prove full_QM_I or target Hilbert/Born/unitary/tensor semantics.",
-          "scope": "conditional_b1_primitive_base_to_full_qm_obligation_bundle",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/B1PrimitiveBase.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.B1PrimitiveBase"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "b1_primitive_base",
-            "successor_boundary_promotion"
           ],
           "claim_refs": [
             "b1_primitive_base.to_full_qm_obligation_bundle",
             "b1_primitive_base.boundary_promotion"
-          ],
-          "theorem": "IDT.QMClosure.b1_primitive_base_yields_full_qm_obligation_bundle",
-          "open_gaps": [
-            "derive B1 from older B0 or explicitly migrate the primitive base to B1",
-            "turn B1 package projections into semantic target proofs before any full-QM upgrade",
-            "physical hbar_I remains calibrated or separately blocked",
-            "this card does not prove full_QM_I"
           ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
@@ -11672,7 +11712,23 @@
             "does_not_prove_full_QM_I",
             "does_not_claim_Hilbert_Born_unitary_tensor_semantics_are_proved",
             "does_not_mark_conditional_B1_base_as_full_QM_proof"
-          ]
+          ],
+          "id": "b1_primitive_base_conditional_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "b1_primitive_base",
+            "successor_boundary_promotion"
+          ],
+          "open_gaps": [
+            "derive B1 from older B0 or explicitly migrate the primitive base to B1",
+            "turn B1 package projections into semantic target proofs before any full-QM upgrade",
+            "physical hbar_I remains calibrated or separately blocked",
+            "this card does not prove full_QM_I"
+          ],
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_b1_primitive_base_to_full_qm_obligation_bundle",
+          "statement": "Conditional Lean artifact promoting BoundPrimitiveGeneratedBase into B1PrimitiveBase with explicit no-free-admissibility and no-target-import boundaries, then yielding the CGSC/full-QM obligation bundle. This registers the B1 primitive-base route but does not prove full_QM_I or target Hilbert/Born/unitary/tensor semantics.",
+          "theorem": "IDT.QMClosure.b1_primitive_base_yields_full_qm_obligation_bundle"
         },
         {
           "artifact_paths": [
@@ -11732,6 +11788,17 @@
             "qm_semantic_content_scaffold_bundle.machine_checked_finite_scaffolds",
             "qm_semantic_content_scaffold_bundle.structural_target_blockers"
           ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_derive_Hilbert_carrier",
+            "does_not_derive_tensor_composition",
+            "does_not_derive_unitary_dynamics",
+            "does_not_derive_universal_Born_rule",
+            "does_not_prove_full_QM_I",
+            "does_not_treat_finite_scaffolds_as_target_semantic_proofs"
+          ],
           "id": "qm_semantic_content_scaffold_bundle_conditional_artifact",
           "machine_checks": [
             "lean4_kernel",
@@ -11752,36 +11819,33 @@
           "proof_kind": "conditional_proof",
           "scope": "machine_checked_finite_semantic_content_scaffolds",
           "statement": "Conditional Lean artifact compiling the finite semantic-content scaffolds into one checked bundle: projective idempotent gluing, finite readout normalization/additivity/coarse-graining/equivalence, inheritance-action fragments, product-readout local tomography, monoidal associativity, projective-limit consistency, and calibrated-scale boundary discipline. This removes an unchecked scaffold layer but does not prove full_QM_I or derive Hilbert, Born, unitary, tensor, entanglement, continuity, generator closure, or first-principles action scale.",
-          "theorem": "IDT.QMClosure.qm_semantic_content_scaffold_bundle_is_machine_checked",
-          "forbidden_upgrades": [
-            "does_not_allow_formal_proof_without_proof_card",
-            "does_not_allow_unchecked_proof_card_for_formal_claim",
-            "does_not_convert_conditional_or_sketch_to_formal_proof",
-            "does_not_derive_Hilbert_carrier",
-            "does_not_derive_tensor_composition",
-            "does_not_derive_unitary_dynamics",
-            "does_not_derive_universal_Born_rule",
-            "does_not_prove_full_QM_I",
-            "does_not_treat_finite_scaffolds_as_target_semantic_proofs"
-          ]
+          "theorem": "IDT.QMClosure.qm_semantic_content_scaffold_bundle_is_machine_checked"
         },
         {
-          "id": "cgsc_structural_target_kernel_conditional_artifact",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
-          "statement": "Conditional Lean artifact registering the context-generated stable closure structural target kernel. It proves that, given seven CGSC clauses and explicit derivation rules from those clauses, the six QM structural target clauses are closed inside the B1-projected semantic kernel and no-target-import boundaries are preserved. This is not full_QM_I because the CGSC clauses are not yet machine-derived from B1 or successor primitives.",
-          "scope": "conditional_six_target_clause_structural_kernel",
-          "claim_refs": [
-            "cgsc_structural_target_kernel.conditional_six_target_clause_closure",
-            "cgsc_structural_target_kernel.unproved_clause_frontier"
-          ],
           "artifact_paths": [
             "Proofs/QMClosure/CGSCStructuralTargetKernel.lean",
             "scripts/evaluate_cgsc_structural_target_kernel.py"
           ],
+          "backend": "lean4",
           "checker_commands": [
             "lake build Proofs.QMClosure.CGSCStructuralTargetKernel"
           ],
+          "claim_refs": [
+            "cgsc_structural_target_kernel.conditional_six_target_clause_closure",
+            "cgsc_structural_target_kernel.unproved_clause_frontier"
+          ],
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_derive_Hilbert_carrier",
+            "does_not_derive_universal_Born_rule",
+            "does_not_derive_unitary_dynamics",
+            "does_not_derive_tensor_composition",
+            "does_not_treat_CGSC_clauses_as_derived_from_primitives"
+          ],
+          "id": "cgsc_structural_target_kernel_conditional_artifact",
           "machine_checks": [
             "lean4_kernel",
             "cgsc_clause_interface",
@@ -11794,36 +11858,36 @@
             "derive context-generated stable closure rather than assuming it as a clause bundle",
             "do not treat conditional structural target closure as full_QM_I"
           ],
-          "theorem": "IDT.QMClosure.context_generated_stable_closure_from_b1_yields_full_qm_obligation_bundle",
+          "proof_kind": "conditional_proof",
+          "scope": "conditional_six_target_clause_structural_kernel",
+          "statement": "Conditional Lean artifact registering the context-generated stable closure structural target kernel. It proves that, given seven CGSC clauses and explicit derivation rules from those clauses, the six QM structural target clauses are closed inside the B1-projected semantic kernel and no-target-import boundaries are preserved. This is not full_QM_I because the CGSC clauses are not yet machine-derived from B1 or successor primitives.",
+          "theorem": "IDT.QMClosure.context_generated_stable_closure_from_b1_yields_full_qm_obligation_bundle"
+        },
+        {
+          "artifact_paths": [
+            "Proofs/QMClosure/B1CGSCClauseDerivation.lean",
+            "scripts/evaluate_b1_cgsc_clause_derivation.py"
+          ],
+          "backend": "lean4",
+          "checker_commands": [
+            "lake build Proofs.QMClosure.B1CGSCClauseDerivation"
+          ],
+          "claim_refs": [
+            "b1_cgsc_clause_derivation.machine_derived_clauses",
+            "b1_cgsc_clause_derivation.closed_structural_target_clauses"
+          ],
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I",
-            "does_not_derive_Hilbert_carrier",
-            "does_not_derive_universal_Born_rule",
-            "does_not_derive_unitary_dynamics",
-            "does_not_derive_tensor_composition",
-            "does_not_treat_CGSC_clauses_as_derived_from_primitives"
-          ]
-        },
-        {
+            "does_not_derive_Hilbert_carrier_from_B0_alone",
+            "does_not_derive_universal_Born_rule_from_B0_alone",
+            "does_not_derive_unitary_dynamics_from_B0_alone",
+            "does_not_derive_tensor_composition_from_B0_alone",
+            "does_not_replace_external_QM_equivalence_theorems"
+          ],
           "id": "b1_cgsc_clause_derivation_conditional_artifact",
-          "proof_kind": "conditional_proof",
-          "backend": "lean4",
-          "statement": "Conditional Lean artifact proving that all seven context-generated stable closure clauses are machine-derived from the B1 primitive-base witness interface. The artifact also proves that the B1-derived clauses close the six structural QM target clauses inside the current IDT semantic-kernel package and preserve no-target-import boundaries. This remains B1-relative and does not prove external Hilbert/Born/unitary/tensor equivalence or derive the clauses from the older B0 candidate alone.",
-          "scope": "b1_relative_cgsc_clause_derivation",
-          "claim_refs": [
-            "b1_cgsc_clause_derivation.machine_derived_clauses",
-            "b1_cgsc_clause_derivation.closed_structural_target_clauses"
-          ],
-          "artifact_paths": [
-            "Proofs/QMClosure/B1CGSCClauseDerivation.lean",
-            "scripts/evaluate_b1_cgsc_clause_derivation.py"
-          ],
-          "checker_commands": [
-            "lake build Proofs.QMClosure.B1CGSCClauseDerivation"
-          ],
           "machine_checks": [
             "lean4_kernel",
             "b1_cgsc_clause_sources",
@@ -11836,145 +11900,175 @@
             "do not treat B1-relative clause derivation as a B0-alone derivation",
             "do not treat internal obligation-bundle closure as full_QM_I"
           ],
-          "theorem": "IDT.QMClosure.b1_cgsc_clause_derivation_yields_full_qm_obligation_bundle",
-          "forbidden_upgrades": [
-            "does_not_allow_formal_proof_without_proof_card",
-            "does_not_allow_unchecked_proof_card_for_formal_claim",
-            "does_not_convert_conditional_or_sketch_to_formal_proof",
-            "does_not_prove_full_QM_I",
-            "does_not_derive_Hilbert_carrier_from_B0_alone",
-            "does_not_derive_universal_Born_rule_from_B0_alone",
-            "does_not_derive_unitary_dynamics_from_B0_alone",
-            "does_not_derive_tensor_composition_from_B0_alone",
-            "does_not_replace_external_QM_equivalence_theorems"
-          ]
+          "proof_kind": "conditional_proof",
+          "scope": "b1_relative_cgsc_clause_derivation",
+          "statement": "Conditional Lean artifact proving that all seven context-generated stable closure clauses are machine-derived from the B1 primitive-base witness interface. The artifact also proves that the B1-derived clauses close the six structural QM target clauses inside the current IDT semantic-kernel package and preserve no-target-import boundaries. This remains B1-relative and does not prove external Hilbert/Born/unitary/tensor equivalence or derive the clauses from the older B0 candidate alone.",
+          "theorem": "IDT.QMClosure.b1_cgsc_clause_derivation_yields_full_qm_obligation_bundle"
         },
         {
-          "id": "exclusivity_additivity_machine_checked_artifact",
-          "claim_refs": [
-            "full_qm_proof_closure.exclusivity_additivity"
-          ],
-          "statement": "Machine-checked proof: for disjoint events A,B with vanishing cross-actualization (facticity), the actualization measure is additive: μ(A∪B) = μ(A) + μ(B). Uses bilinearity of finite sums and Hermitian property of Γ. Does NOT import born_rule, kolmogorov_axioms, hilbert_space, or Γ≥0.",
-          "theorem": "IDT.QMClosure.exclusivity_additivity",
-          "proof_kind": "machine_checked_finite_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/ExclusivityAdditivityProof.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
-            "lake env lean Proofs/QMClosure/ExclusivityAdditivityProof.lean"
+            "lake env lean Proofs/QMClosure/ExclusivityAdditivityProof.lean",
+            "python3 scripts/sync_formal_proof_ledger.py --check",
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "born_readout_closure"
+          "claim_refs": [
+            "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.exclusivity_additivity.expected_obligation_status"
           ],
-          "scope": "born_readout_closure_obligation",
           "forbidden_upgrades": [
             "does_not_prove_full_QM_I",
             "does_not_import_born_rule",
             "does_not_import_kolmogorov_axioms",
-            "does_not_import_hilbert_space"
+            "does_not_import_hilbert_space",
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof"
           ],
-          "open_gaps": [
-            "does not derive Γ≥0 from F (uses F as domain condition)",
+          "id": "exclusivity_additivity_machine_checked_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure",
+            "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
+            "idt_verifier_manifest"
+          ],
+          "proof_kind": "machine_checked_finite_proof",
+          "scope": "born_readout_closure_obligation",
+          "scope_notes": [
+            "does not derive \u0393\u22650 from F (uses F as domain condition)",
             "does not prove full QM"
-          ]
+          ],
+          "statement": "Machine-checked proof: for disjoint events A,B with vanishing cross-actualization (facticity), the actualization measure is additive: \u03bc(A\u222aB) = \u03bc(A) + \u03bc(B). Uses bilinearity of finite sums and Hermitian property of \u0393. Does NOT import born_rule, kolmogorov_axioms, hilbert_space, or \u0393\u22650.",
+          "theorem": "IDT.QMClosure.exclusivity_additivity"
         },
         {
-          "id": "coarse_graining_consistency_machine_checked_artifact",
-          "claim_refs": [
-            "full_qm_proof_closure.coarse_graining_consistency"
-          ],
-          "statement": "Machine-checked proof: for three pairwise disjoint blocks A,B,C with facticity between all pairs, μ(A∪B∪C) = μ(A) + μ(B) + μ(C). Uses iterated exclusivity_additivity. Does NOT import born_rule, hilbert_space, projective_measurement.",
-          "theorem": "IDT.QMClosure.coarse_graining_consistency",
-          "proof_kind": "machine_checked_finite_proof",
-          "backend": "lean4",
           "artifact_paths": [
             "Proofs/QMClosure/CoarseGrainingConsistencyProof.lean"
           ],
-          "checker_commands": [
-            "lake env lean Proofs/QMClosure/CoarseGrainingConsistencyProof.lean"
-          ],
-          "machine_checks": [
-            "lean4_kernel",
-            "born_readout_closure"
-          ],
-          "scope": "born_readout_closure_obligation",
-          "forbidden_upgrades": [
-            "does_not_prove_full_QM_I",
-            "does_not_import_born_rule",
-            "does_not_import_hilbert_space"
-          ],
-          "open_gaps": [
-            "finite-block version (3 blocks); general n-block by induction",
-            "does not prove full QM"
-          ]
-        },
-        {
-          "id": "operational_equivalence_probability_machine_checked_artifact",
-          "claim_refs": [
-            "full_qm_proof_closure.operational_equivalence_probability"
-          ],
-          "statement": "Machine-checked proof: if two event sets A,A' are related by a bijection σ preserving W and Γ, then μ(A) = μ(A'). Uses Finset.sum_bij' for finite sum reindexing. Does NOT import born_rule, hilbert_space, trace_rule.",
-          "theorem": "IDT.QMClosure.operational_equivalence_probability",
-          "proof_kind": "machine_checked_finite_proof",
           "backend": "lean4",
-          "artifact_paths": [
-            "Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean"
-          ],
           "checker_commands": [
-            "lake env lean Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean"
+            "lake env lean Proofs/QMClosure/CoarseGrainingConsistencyProof.lean",
+            "python3 scripts/sync_formal_proof_ledger.py --check",
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "born_readout_closure"
+          "claim_refs": [
+            "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.coarse_graining_consistency.expected_obligation_status"
           ],
-          "scope": "born_readout_closure_obligation",
           "forbidden_upgrades": [
             "does_not_prove_full_QM_I",
             "does_not_import_born_rule",
             "does_not_import_hilbert_space",
-            "does_not_import_trace_rule"
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof"
           ],
-          "open_gaps": [
-            "bijection-preserving version; operational equivalence defined as W/Γ-preserving bijection",
+          "id": "coarse_graining_consistency_machine_checked_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure",
+            "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
+            "idt_verifier_manifest"
+          ],
+          "proof_kind": "machine_checked_finite_proof",
+          "scope": "born_readout_closure_obligation",
+          "scope_notes": [
+            "finite-block version (3 blocks); general n-block by induction",
             "does not prove full QM"
-          ]
+          ],
+          "statement": "Machine-checked proof: for three pairwise disjoint blocks A,B,C with facticity between all pairs, \u03bc(A\u222aB\u222aC) = \u03bc(A) + \u03bc(B) + \u03bc(C). Uses iterated exclusivity_additivity. Does NOT import born_rule, hilbert_space, projective_measurement.",
+          "theorem": "IDT.QMClosure.coarse_graining_consistency"
         },
         {
-          "id": "context_normalization_machine_checked_artifact",
-          "claim_refs": [
-            "full_qm_proof_closure.context_normalization"
+          "artifact_paths": [
+            "Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean"
           ],
-          "statement": "Machine-checked proof: facticization stability (F = ∀ v, v^T Γ v ≥ 0) implies μ(A) ≥ 0 for any event A. Proof: v = W restricted to A (0 outside), then F(v) = μ(A) ≥ 0. Uses Finset.sum_subset for sum conversion. Does NOT import born_rule, probability_axiom, hilbert_space. F is an IDT primitive, not a Hilbert-space import.",
-          "theorem": "IDT.QMClosure.measure_nonneg",
-          "proof_kind": "machine_checked_finite_proof",
           "backend": "lean4",
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean",
+            "python3 scripts/sync_formal_proof_ledger.py --check",
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
+          ],
+          "claim_refs": [
+            "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.operational_equivalence_probability.expected_obligation_status"
+          ],
+          "forbidden_upgrades": [
+            "does_not_prove_full_QM_I",
+            "does_not_import_born_rule",
+            "does_not_import_hilbert_space",
+            "does_not_import_trace_rule",
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof"
+          ],
+          "id": "operational_equivalence_probability_machine_checked_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure",
+            "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
+            "idt_verifier_manifest"
+          ],
+          "proof_kind": "machine_checked_finite_proof",
+          "scope": "born_readout_closure_obligation",
+          "scope_notes": [
+            "bijection-preserving version; operational equivalence defined as W/\u0393-preserving bijection",
+            "does not prove full QM"
+          ],
+          "statement": "Machine-checked proof: if two event sets A,A' are related by a bijection \u03c3 preserving W and \u0393, then \u03bc(A) = \u03bc(A'). Uses Finset.sum_bij' for finite sum reindexing. Does NOT import born_rule, hilbert_space, trace_rule.",
+          "theorem": "IDT.QMClosure.operational_equivalence_probability"
+        },
+        {
           "artifact_paths": [
             "Proofs/QMClosure/ContextNormalizationProof.lean"
           ],
+          "backend": "lean4",
           "checker_commands": [
-            "lake env lean Proofs/QMClosure/ContextNormalizationProof.lean"
+            "lake env lean Proofs/QMClosure/ContextNormalizationProof.lean",
+            "python3 scripts/sync_formal_proof_ledger.py --check",
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
           ],
-          "machine_checks": [
-            "lean4_kernel",
-            "born_readout_closure"
+          "claim_refs": [
+            "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.context_normalization.expected_obligation_status"
           ],
-          "scope": "born_readout_closure_obligation",
           "forbidden_upgrades": [
             "does_not_prove_full_QM_I",
             "does_not_import_born_rule",
             "does_not_import_probability_axiom",
             "does_not_import_hilbert_space",
-            "facticization_stability_is_idt_primitive_not_hilbert_import"
+            "facticization_stability_is_idt_primitive_not_hilbert_import",
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof"
           ],
-          "open_gaps": [
+          "id": "context_normalization_machine_checked_artifact",
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure",
+            "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
+            "idt_verifier_manifest"
+          ],
+          "proof_kind": "machine_checked_finite_proof",
+          "scope": "born_readout_closure_obligation",
+          "scope_notes": [
             "F (facticization stability) is assumed as IDT primitive, not derived from B0",
-            "positive semidefiniteness of Γ is a consequence of F, not an imported assumption",
+            "positive semidefiniteness of \u0393 is a consequence of F, not an imported assumption",
             "does not prove full QM"
-          ]
+          ],
+          "statement": "Machine-checked proof: facticization stability (F = \u2200 v, v^T \u0393 v \u2265 0) implies \u03bc(A) \u2265 0 for any event A. Proof: v = W restricted to A (0 outside), then F(v) = \u03bc(A) \u2265 0. Uses Finset.sum_subset for sum conversion. Does NOT import born_rule, probability_axiom, hilbert_space. F is an IDT primitive, not a Hilbert-space import.",
+          "theorem": "IDT.QMClosure.measure_nonneg"
         }
-      ]
+      ],
+      "target_scope": "current_formal_proof_claims",
+      "type": "formal_proof_ledger_audit"
     },
     {
       "id": "phase_branch_additivity_demo",

@@ -251,7 +251,18 @@ def artifact_from_card(card: dict[str, object], obligation: ProofObligation) -> 
     claim_refs = set(require_string_tuple(card.get("claim_refs", []), "proof_card.claim_refs"))
     accepted_refs = {obligation.id, obligation_ref(obligation.id)}
     if claim_refs.isdisjoint(accepted_refs):
-        return None
+        # A formal_proof card may also cite the long formal-claim reference
+        # emitted by ``iter_formal_claims_in_payload`` in the verifier, of the
+        # form ``finite_gates.<gate_id>.full_qm_proof_closure.<id>.<field>``.
+        # Such a ref is not an exact match for the short obligation ref, so we
+        # additionally accept any cited ref that ends with the dotted path
+        # ``.<obligation_ref>`` followed by a single status-field segment. This
+        # keeps the existing short-ref behaviour intact while allowing cards to
+        # satisfy both the closure-evaluator and proof-ledger namespaces.
+        obligation_path = obligation_ref(obligation.id)
+        long_ref_suffix = f".{obligation_path}."
+        if not any(ref.startswith("finite_gates.") and long_ref_suffix in ref for ref in claim_refs):
+            return None
     artifact_paths = require_string_tuple(card.get("artifact_paths", []), "proof_card.artifact_paths")
     checker_commands = require_string_tuple(card.get("checker_commands", []), "proof_card.checker_commands")
     proof_kind = require_string(card.get("proof_kind"), "proof_card.proof_kind")
@@ -271,16 +282,41 @@ def artifact_from_card(card: dict[str, object], obligation: ProofObligation) -> 
     )
 
 
+def artifact_strength_rank(proof_kind: str) -> int:
+    """Rank proof kinds so a stronger artifact wins over a weaker one when both
+    reference the same obligation. Higher rank = stronger evidence.
+
+    Rationale: a `machine_checked_finite_proof` / `external_formal_proof` card
+    is a real Lean/verifier artifact and must not be silently shadowed by an
+    earlier-listed `conditional_proof` / `proof_sketch` package card that merely
+    registers coverage. See the card-ordering hazard audit note: the manifest
+    legitimately lists broad conditional package cards alongside specific
+    machine-checked cards, and both can carry the same `full_qm_proof_closure.<id>`
+    claim_ref. Picking the first match by list order hid real proofs.
+    """
+    if proof_kind in FORMAL_PROOF_KINDS:
+        return 3
+    if proof_kind in CONDITIONAL_PROOF_KINDS:
+        return 2
+    if proof_kind == "proof_sketch":
+        return 1
+    return 0
+
+
 def build_artifact_registry(manifest_path: Path) -> dict[str, ProofArtifact]:
     manifest = load_manifest(manifest_path)
     proof_cards = proof_cards_from_manifest(manifest)
     artifacts: dict[str, ProofArtifact] = {}
     for obligation in OBLIGATIONS:
+        best: ProofArtifact | None = None
         for card in proof_cards:
             artifact = artifact_from_card(card, obligation)
-            if artifact is not None:
-                artifacts[obligation.id] = artifact
-                break
+            if artifact is None:
+                continue
+            if best is None or artifact_strength_rank(artifact.proof_kind) > artifact_strength_rank(best.proof_kind):
+                best = artifact
+        if best is not None:
+            artifacts[obligation.id] = best
     return artifacts
 
 
