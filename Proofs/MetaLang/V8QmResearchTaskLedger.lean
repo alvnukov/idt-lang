@@ -462,6 +462,100 @@ theorem b1_primitive_base_has_no_known_lean_inhabitant :
     True := by
   trivial
 
+/-!
+Refinement of the Born wall diagnosis (2026-07-21 follow-up audit).
+
+The 2026-07-20 entry above classified the wall as an impossibility for B1
+bridgeable on a successor base, on the strength of three PASS probes
+(bridge soundness, semantic-equivalence wall, successor-base countermodel).
+A follow-up pass examined the actual carrier shape the bridge consumes
+and refined the picture. Two structural facts need to be on record so the
+next research pass does not misjudge how close the wall is to closing.
+
+FACT A — the witness completeness layer is a bag of abstract Prop flags.
+`Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean:444-466`
+`ContextFirstConstructiveWitnessCompleteness` is a structure with 22
+fields, ALL of type `Prop`, with no operations, no carrier, no laws. Its
+`Ready` predicate (lines 468-491) is the conjunction of all 22 flags.
+`ConstructiveFacticizationSemantics` (ConstructiveFacticizationSemantics.lean
+:19-43) is the same shape with 24 abstract Prop fields. None of these
+fields is connected to a concrete mathematical object (no `Fin n` carrier,
+no D-endpoint data, no concrete `OrientedTwoCoverCounts`); they are
+abstract propositions whose content lives in markdown, not in Lean.
+
+Consequence: an all-True inhabitant of either structure is trivial to
+build (set every flag to `True`) and would satisfy the `Ready` predicate
+by `trivial`. This means that *at the witness-completeness layer alone*
+the bridge is vacuously satisfiable. The bridge's `Ready` premise does
+not, by itself, encode a non-trivial mathematical constraint.
+
+FACT B — the bridge is NOT purely witness-layer; it also consumes
+concrete data. `ContextFirstUniversalEndpointData`
+(BornHilbertUniversalClosure.lean:288-295) bundles the witness `source`
+plus three concrete fields:
+  * `cover : context → OrientedTwoCoverCounts`
+  * `labels : context → OrientedReadoutBranchLabels`
+  * `endpointAligned : ∀ ctx, (labels ctx).yesBranch = aligned`
+  * `binaryExclusive : ∀ ctx, (labels ctx).yesBranch ≠ (labels ctx).noBranch`
+Similarly `UniversalPrimitiveBoundaryEndpointCoverage` (lines 245-254)
+requires a concrete `boundary : context → PrimitiveBoundaryCandidate`
+plus a non-vacuous `pairwiseClosed :
+∀ ctx, PrimitiveBoundaryClosesPairwiseCoverage (boundary ctx)`.
+
+So the bridge is sound and non-vacuous ONLY IF the concrete combinatorial
+fields (`cover`, `labels`, `boundary`, `pairwiseClosed`, `endpointAligned`,
+`binaryExclusive`) carry real mathematical content for some carrier
+`context`. The witness layer being a bag of True flags is necessary but
+not sufficient; the bridge actually requires a concrete finite model in
+which the oriented two-cover counts, branch labels, and primitive
+boundary candidate all satisfy the closure conditions on every context.
+
+REFINED SYNTHESIS:
+  * The 2026-07-20 PASS probes are still valid: the bridge is not
+    syntactically broken and is not circular.
+  * But the wall is NOT as close to closing as the all-True-inhabitant
+    reading might suggest. The hard step is constructing a concrete
+    carrier with concrete `cover`/`labels`/`boundary` data such that
+    `PrimitiveBoundaryClosesPairwiseCoverage` holds on every context AND
+    `ContextFirstConstructiveWitnessCompletenessReady source` holds AND
+    none of the three import guards (`noBornImport`, `noHilbertImport`,
+    `noTensorImport`) is violated.
+  * The right next probe is therefore NOT "build an all-True witness"
+    (that is vacuous and proves nothing) but "exhibit a concrete finite
+    carrier model, or prove no such model exists without Born". That is
+    constructive model theory on `Fin n` carriers and is beyond
+    mechanical scaffolding.
+
+OPEN FOLLOW-UP PROBE (recorded for a stronger model):
+  * Try `context := Fin 2` or `context := Bool` as the smallest carrier.
+  * Enumerate the `OrientedTwoCoverCounts` and `OrientedReadoutBranchLabels`
+    inhabitants for that carrier.
+  * Check whether ANY combination satisfies `endpointAligned`,
+    `binaryExclusive`, and `PrimitiveBoundaryClosesPairwiseCoverage`
+    simultaneously without importing Born.
+  * If yes: the wall is bridged on a minimal model, and the remaining
+    work is lifting to the universal quantifier.
+  * If no: record the smallest carrier at which no such model exists;
+    that becomes the new hardest obstruction and may require either a
+    larger successor primitive or an explicit impossibility theorem.
+
+This entry is documentation of a research diagnosis. It does not upgrade
+any scientific status. No theorem here proves physics; the `True`
+theorem is a machine-visible marker that the prose block above has been
+installed in the ledger.
+-/
+
+def born_wall_bridge_carrier_probe_pending : Prop :=
+  -- The bridge's witness-completeness layer is vacuously satisfiable,
+  -- but the bridge also requires concrete combinatorial data; the
+  -- refined open probe is to exhibit a concrete finite carrier that
+  -- satisfies both layers without importing Born.
+  True
+
+theorem born_wall_bridge_remains_pending_concrete_carrier_probe :
+    born_wall_bridge_carrier_probe_pending := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
