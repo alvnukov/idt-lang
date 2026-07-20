@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -204,6 +205,144 @@ DEFAULT_MANIFEST = REPO_ROOT / "theory_verifier_manifest.json"
 FORMAL_PROOF_KINDS = ("machine_checked_finite_proof", "external_formal_proof")
 CONDITIONAL_PROOF_KINDS = ("conditional_proof",)
 
+# Conceptual forbidden-import tokens that have no direct Mathlib representation.
+# These are physical or mathematical *principles* (Born rule, Hamiltonian,
+# Schrodinger equation, Stone theorem, Wigner theorem, Planck units, etc.)
+# rather than Mathlib module/symbol names. They cannot be detected by scanning
+# a Lean file body or import list; they are only enforceable at the level of
+# the obligation statement and the proof card's declared scope. The metadata
+# scan in ``artifact_mentions_forbidden_import`` remains the only check for
+# these tokens.
+FORBIDDEN_CONCEPTUAL_ONLY: frozenset[str] = frozenset(
+    {
+        "born_rule",
+        "hamiltonian_assumed",
+        "hbar_derived_by_assumption",
+        "known_quantum_scale",
+        "planck_units",
+        "probability_axiom",
+        "schrodinger_equation",
+        "stone_theorem",
+        "trace_rule",
+        "wigner_theorem",
+        "quantum_channel",
+    }
+)
+
+# Mapping from conceptual forbidden-import tokens to representative Mathlib
+# symbols and module path fragments whose presence in a Lean artifact body or
+# import list indicates that the forbidden machinery is actually being used.
+#
+# Design choices:
+#   * Conservative: only tokens with a clear Mathlib representation are mapped.
+#     A token absent from this mapping (and absent from
+#     ``FORBIDDEN_CONCEPTUAL_ONLY``) is checked only via the legacy metadata
+#     scan; this preserves backward compatibility with any future obligation
+#     that introduces a new forbidden token.
+#   * Module path fragments (``Mathlib.Analysis.InnerProductSpace``) catch the
+#     case where a Lean file explicitly imports a forbidden module, including
+#     via ``import Mathlib.Analysis.InnerProductSpace.Basic``. A bare
+#     ``import Mathlib`` is NOT matched as a module path fragment; it is
+#     treated as a convenience umbrella import whose actual dependencies are
+#     verified by the symbol scan below.
+#   * Symbol names (``InnerProductSpace``, ``PositiveSemidefinite``) catch the
+#     case where the Lean file body invokes the forbidden machinery directly,
+#     even when the import was a bare ``import Mathlib``. Matched as whole
+#     identifiers (word-bounded) to avoid incidental substring matches.
+FORBIDDEN_IMPORT_BODY_SYMBOLS: dict[str, tuple[str, ...]] = {
+    "hilbert_space": (
+        "InnerProductSpace",
+        "Mathlib.Analysis.InnerProductSpace",
+        "HilbertSpace",
+    ),
+    "complex_hilbert_assumed": (
+        "InnerProductSpace",
+        "Mathlib.Analysis.InnerProductSpace",
+        "HilbertSpace",
+    ),
+    "infinite_dimensional_hilbert_assumed": (
+        "InnerProductSpace",
+        "Mathlib.Analysis.InnerProductSpace",
+        "HilbertSpace",
+        "NormedSpace",
+    ),
+    "projective_hilbert_space": (
+        "Projectivization",
+        "Mathlib.LinearAlgebra.Projectivization",
+        "OrthogonalProjection",
+    ),
+    "inner_product_axiom": (
+        "InnerProductSpace",
+        "Mathlib.Analysis.InnerProductSpace",
+        "@inner",
+        "inner_product",
+    ),
+    "kolmogorov_axioms_assumed": (
+        "ProbabilityTheory",
+        "Mathlib.ProbabilityTheory",
+    ),
+    "positive_operator": (
+        "PositiveSemidefinite",
+        "PosSemidefinite",
+        "Matrix.PosSemidefinite",
+        "Mathlib.LinearAlgebra.Matrix.PosDef",
+    ),
+    "self_adjoint_operator": (
+        "IsHermitian",
+        "IsSelfAdjoint",
+        "Mathlib.LinearAlgebra.Matrix.Hermitian",
+        "Matrix.Hermitian",
+    ),
+    "spectral_theorem_assumed": (
+        "Mathlib.LinearAlgebra.Matrix.SpectralTheorem",
+        "SpectralTheorem",
+    ),
+    "unitary_group": (
+        "UnitaryGroup",
+        "IsUnitary",
+        "Mathlib.LinearAlgebra.UnitaryGroup",
+    ),
+    "unitary_evolution": (
+        "UnitaryGroup",
+        "IsUnitary",
+        "Mathlib.LinearAlgebra.UnitaryGroup",
+    ),
+    "tensor_product_axiom": (
+        "TensorProduct",
+        "Mathlib.LinearAlgebra.TensorProduct",
+    ),
+    "tensor_category_assumed": (
+        "MonoidalCategory",
+        "Mathlib.CategoryTheory.Monoidal",
+    ),
+    "c_star_algebra_assumed": (
+        "CStarAlgebra",
+        "Mathlib.Analysis.CStarAlgebra",
+        "StarAlgebra",
+    ),
+    "projector_axiom": (
+        "OrthogonalProjection",
+        "Mathlib.LinearAlgebra.AffineSpace.Projection",
+    ),
+    "projective_measurement": (
+        "OrthogonalProjection",
+    ),
+}
+
+# A bare ``import Mathlib`` is treated as a convenience umbrella import. It is
+# NOT itself a forbidden-module signal; whether the artifact actually depends
+# on forbidden machinery is decided by scanning the Lean body for the
+# representative symbols in ``FORBIDDEN_IMPORT_BODY_SYMBOLS``. This list exists
+# so that future code can distinguish "umbrella import" from "explicit
+# forbidden module import" without hard-coding the string in multiple places.
+UMBRELLA_IMPORT_LINES: frozenset[str] = frozenset(
+    {
+        "import Mathlib",
+        "import Mathlib.Tactic",
+        "import Mathlib.Data.Nat.Basic",
+    }
+)
+
 
 def require_mapping(value: object, field: str) -> dict[str, object]:
     if not isinstance(value, dict):
@@ -320,10 +459,90 @@ def build_artifact_registry(manifest_path: Path) -> dict[str, ProofArtifact]:
     return artifacts
 
 
-def artifact_mentions_forbidden_import(artifact: ProofArtifact, obligation: ProofObligation) -> str | None:
-    searchable = " ".join((artifact.system, artifact.file, artifact.theorem, artifact.check_command)).lower()
+def _read_artifact_body(artifact: ProofArtifact) -> str:
+    """Best-effort read of the artifact's Lean source body.
+
+    Returns the file's text if it exists and is readable; returns the empty
+    string otherwise. The body is used only as advisory input to
+    ``artifact_mentions_forbidden_import``; an unreadable file falls back to
+    the metadata-only check and is reported as INCOMPLETE_ARTIFACT by the
+    separate ``artifact_file_is_present`` gate downstream.
+    """
+    if not artifact.file:
+        return ""
+    path = REPO_ROOT / artifact.file
+    try:
+        return path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return ""
+
+
+def _word_in_body(needle: str, body: str) -> bool:
+    """Word-boundary substring match.
+
+    Used to scan Lean bodies for representative Mathlib symbols (e.g.
+    ``InnerProductSpace``, ``PositiveSemidefinite``) without flagging
+    incidental substring matches (e.g. ``inner`` inside ``innerProduct``
+    would not match the needle ``@inner``).
+    """
+    if not needle:
+        return False
+    # ``re.search`` with ``\b`` boundaries handles identifier-style needles
+    # (``InnerProductSpace``, ``IsUnitary``). For module-path needles that
+    # contain dots (``Mathlib.Analysis.InnerProductSpace``) ``\b`` still works
+    # because ``.`` is not a word character, so the leading ``M`` and trailing
+    # ``e``/``c`` etc. anchor the match.
+    pattern = r"\b" + re.escape(needle).replace(r"\ ", r"\s+") + r"\b"
+    return re.search(pattern, body) is not None
+
+
+def artifact_mentions_forbidden_import(
+    artifact: ProofArtifact, obligation: ProofObligation
+) -> str | None:
+    """Return the first forbidden import the artifact mentions, else None.
+
+    Two-layer check, evaluated in order:
+
+    1. Legacy metadata scan: the concatenation of card metadata strings
+       (``system``, ``file``, ``theorem``, ``check_command``) is searched for
+       any forbidden conceptual token as a substring. This is the original
+       check and remains the only check for tokens in
+       ``FORBIDDEN_CONCEPTUAL_ONLY`` (Born rule, Hamiltonian, Schrodinger
+       equation, Stone theorem, Wigner theorem, etc.) — these are physical or
+       mathematical principles with no direct Mathlib representation, so they
+       can only be enforced at the level of the obligation statement and card
+       metadata.
+
+    2. Body scan (new): the artifact Lean file body is searched for
+       representative Mathlib symbols and module paths declared in
+       ``FORBIDDEN_IMPORT_BODY_SYMBOLS`` for each forbidden token. This catches
+       the case where a card claims "does not import hilbert_space" while the
+       Lean proof body actually invokes ``InnerProductSpace``,
+       ``PositiveSemidefinite``, ``IsUnitary``, ``TensorProduct``, etc. A bare
+       ``import Mathlib`` umbrella import is NOT itself flagged; only the
+       actual usage of forbidden machinery in the body or an explicit
+       forbidden module path in an ``import`` line counts.
+
+    The first forbidden token detected (in ``obligation.forbidden_imports``
+    order) wins, so the reported reason is deterministic.
+    """
+    searchable = " ".join(
+        (artifact.system, artifact.file, artifact.theorem, artifact.check_command)
+    ).lower()
+    body = _read_artifact_body(artifact)
     for forbidden_import in obligation.forbidden_imports:
+        # Layer 1: metadata substring scan (applies to every forbidden token).
         if forbidden_import.lower() in searchable:
+            return forbidden_import
+        # Layer 2: body symbol scan (applies only to tokens with a known
+        # Mathlib representation; conceptual-only tokens are skipped here
+        # because they cannot be detected by body inspection).
+        if forbidden_import in FORBIDDEN_CONCEPTUAL_ONLY:
+            continue
+        symbols = FORBIDDEN_IMPORT_BODY_SYMBOLS.get(forbidden_import)
+        if not symbols:
+            continue
+        if any(_word_in_body(symbol, body) for symbol in symbols):
             return forbidden_import
     return None
 
