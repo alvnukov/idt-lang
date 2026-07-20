@@ -671,6 +671,230 @@ theorem born_wall_positioned_against_purification_reconstruction :
     born_wall_literature_grounding_recorded := by
   trivial
 
+/-!
+Logical-coherence audit of the entire theory (2026-07-21).
+
+A 5-axis audit cross-checked the formal proof ledger, the derivation paths,
+the primitive base coherence, the manifest ↔ Lean correspondence, and the
+hidden assumptions/contradictions. The audit was concrete and brutally
+honest: every finding below is sourced to a specific file:line. The
+purpose is to prevent prose-driven overestimation of how much of the
+theory is actually derived, and to mark the precise locus of each gap.
+
+This block records the audit. It does NOT upgrade any scientific status;
+the `True` theorems are machine-visible markers that the prose has been
+installed. The audit's load-bearing content is in the prose, not in the
+theorems.
+
+FINDING 1 — of the 38 formal_proof refs in IDTCore.lean:7-45, only 5
+carry real mathematical content; the other 33 are registry self-checks.
+
+  * 5/38 are FINITE_COMBINATORIAL_IDENTITY (real Lean theorems):
+    - `IDT.QMClosure.measure_nonneg` (ContextNormalizationProof.lean:22)
+      — F → μ(A) ≥ 0; real `linarith` over `Finset.sum_subset`.
+    - `IDT.QMClosure.exclusivity_additivity` (ExclusivityAdditivityProof.lean:78)
+      — μ(A∪B) = μ(A)+μ(B) under facticity; real `simp`/`rw`.
+    - `IDT.QMClosure.coarse_graining_consistency` (CoarseGrainingConsistencyProof.lean:14)
+      — 3-block iterated additivity; real `abel` after rewriting.
+    - `IDT.QMClosure.operational_equivalence_probability` (OperationalEquivalenceProbabilityProof.lean:16)
+      — μ(A) = μ(A') under W/Γ-preserving bijection; real `Finset.sum_bij'`.
+    - `IDT.QMClosure.projective_action_identity` + `_composition` + `_laws_universal`
+      (ProjectiveActionProof.lean:66, 82, 103) — universal preimage-action laws;
+      real `funext`/`propext`.
+    In all 5 the physics is in the hypotheses (F supplied, Γ Hermitian, cross-
+    actualization vanishes); the theorems verify that the finite algebra is
+    correct given the physics.
+
+  * 33/38 are NATIVE_DECIDE_REGISTRY: literal `"formal_proof"` strings in
+    manifest fields, re-validated by `native_decide` in IDTCore.lean:1199-1261
+    against an in-file copy of the same manifest. They check Nodup, length,
+    SHA-256 digest, count, and string-equality-with-itself. None proves any
+    mathematical fact about the physics; none can fail unless the file
+    disagrees with itself. They are the manifest auditing itself.
+
+FINDING 2 — the only real, non-circular physics derivations in the entire
+proof tree are:
+
+  * `F → 2×2 PSD forward conditions` (V7PositiveGeometryGeneral.lean:22-32):
+    a≥0, c≥0, a+2b+c≥0, a-2b+c≥0, by `linarith` with witnesses (1,0),(0,1),
+    (1,1),(1,-1). Real.
+  * `F → ac≥b²` (V7PositiveGeometryGeneral.lean:48-89, `det_nonneg`): by
+    `nlinarith`/`by_cases` with witnesses (-b,a) and (c,-b). Real.
+    NOTE: sections/175-primitive-base-completeness-status.md:25 still
+    labels this an "axiom (strategy known)"; the label is stale, the
+    theorem is proved.
+  * `F → μ(A) ≥ 0` (ContextNormalizationProof.lean:22) plus the four
+    finite-combinatorial identities in FINDING 1.
+
+That is the entire real derivation surface. Everything else is either
+conditional (`∀ base : B1PrimitiveBase, …`, see FINDING 4) or vacuous.
+
+FINDING 3 — several markdown status labels overstate what the Lean file
+proves. Specifically:
+
+  * `sections/175-primitive-base-completeness-status.md` labels B0 →
+    `product_context_exhaustion` / `local_tomography` / `bounded_correlations`
+    as `derived_from_B0` / `derived_from_B0_F`. The actual Lean theorems
+    (V7ProductContextExhaustion.lean:32, V7LocalTomography.lean:31,
+    V7BoundedCorrelations.lean:27-42) are all `… → True := trivial` with
+    `D := fun _ _ _ => True`. They are vacuous; the markdown labels are
+    not currently supported by the code.
+  * `sections/175:25` labels `F → ac≥b²` an "axiom (strategy known)". It
+    is proved; the label should be updated to "derived".
+  * `sections/175:37,76` labels `D_G = 4` as "NOT derivable". The Lean
+    file V7DimensionAnalysis.lean has `theorem dg4_not_from_b0 : True
+    := trivial` and `def status := "analysis_only"`. The non-derivability
+    is argued in markdown, not proved in Lean.
+  * `sections/175:31` "CONTEXT_FIRST_ENDPOINT_DATA_TO_BORN_HILBERT_PROVED"
+    overstates: the bridge theorem is conditional on an unproven
+    `ContextFirstConstructiveWitnessCompletenessReady source` and a
+    further `ContextFirstUniversalEndpointData context` payload (see
+    FINDING 4); the universal frontier is provably NOT closed
+    (BornHilbertUniversalClosure.lean:547,
+    `current_finite_born_hilbert_route_does_not_close_universal_frontier`).
+
+FINDING 4 — three of the four "primitives" have no Lean formalization,
+and the fourth (F) is only proved independent of a stub of B0.
+
+  * `V7FPrimitiveIndependence.lean`: real countermodel for F vs. a 2-clause
+    toy B0 (`Ctx = Bool, Alt = Bool, R case-wise, D := True`). F is
+    independent of THAT toy B0, not of the full B0 contract.
+  * `V7QPrimitiveIndependence.lean:38`: `def status := "independence_argued"`.
+    No Lean `def Q`, no Lean theorem.
+  * `V7ActionPrimitiveIndependence.lean:57`: `def status :=
+    "independence_argued"`. No Lean `def action_quantum`, no theorem.
+  * No Lean countermodel proves the FOUR primitives are JOINTLY
+    consistent (a model where B0 ∧ F ∧ Q ∧ action_quantum all hold).
+  * No Lean countermodel proves MUTUAL independence of the four
+    (Q vs. (B0∧F∧action), action vs. (B0∧F∧Q), etc.). Only F-vs-toy-B0
+    has a countermodel.
+
+FINDING 5 — `BoundPrimitiveGeneratedBase`, `B1PrimitiveBase`, and
+`GroundedCGSCSemanticExtensionBase` have NO concrete inhabitant anywhere
+in `Proofs/`. Every CGSC/B1 closure theorem is of the form
+`∀ base : <base_structure>, …`. Until a concrete inhabitant is constructed
+these theorems are vacuously true. The CGSC edifice is conditional on a
+hypothesized, not constructed, base.
+
+FINDING 6 — claim-source aliasing structurally inflates apparent coverage
+by roughly 3-4×. Per CGSCGroundedSemanticExtensions.lean:392-501 and the
+recorded boundary `grounded_cgsc_claim_source_aliasing_boundary` (line
+492):
+
+  * `completeExposedSource ground` fills 5 slots
+    (completeExposedContextPartition, spectralDecomposition,
+    contextNormalization, operationalEquivalenceProbability,
+    physicalPhaseScaleBoundary).
+  * `reversibleSource ground` fills 4 slots
+    (richDclReversibleSymmetry, dclAutomorphismDynamics,
+    overlapPreservationDynamics, projectiveAction).
+  * `productSource ground` fills 5 slots
+    (productContextExhaustion, localTomography,
+    monoidalAssociativity, entanglementClosure,
+    projectiveLimitConsistency).
+  * `noHiddenJointSource ground` fills 2 slots
+    (constructiveCarrierWitness, noHiddenJointOnlyGeneration).
+  * `refinementSource ground` fills 2 slots
+    (coherentRefinementCompactness, continuousInheritanceFamily).
+  * `generatorSource ground` fills 2 slots
+    (generatorBookkeepingWithoutStone, generatorClosure).
+
+So ~20 named target slots are populated by ~6 underlying source
+propositions. The theory HONESTLY records this (sections/177:1093-1095:
+"source-witness scaffold, not target-specific derivation"; the task
+`splitClaimSourceAliases` is registered as actively blocking exact-QM
+research at V8QmResearchTaskLedger.lean:195-206). But the count "21 full-
+QM proof obligations" reads as 21 independent claims and is actually
+~6 source propositions restated under multiple names. This is the single
+largest prose-vs-code gap.
+
+FINDING 7 — the seven CGSC clauses (finiteGeneration,
+facticizableSeparation, exposedContextDecomposition,
+reversibleRouteClosure, coherentRefinementFlow,
+compositeRouteGeneration, importBoundary; CGSCStructuralTargetKernel.lean
+:6-13) have NO Lean theorem of mutual non-redundancy or independence.
+The claim "seven independent CGSC clauses" is unverified. Given the
+aliasing in FINDING 6, several clauses are doing double duty.
+
+FINDING 8 — the manifest's machine-checked surface is clean. All 6
+`machine_checked_finite_proof` proof cards in gate 173 cite Lean theorems
+that exist, compile, carry no `sorry`/`admit`, and have signatures
+matching the obligation statements. The bidirectional ledger check
+(check_formal_proof_ledger_coverage, theory_verifier/core.py:5816-5863)
+correctly finds no `missing` or `stale` violation. The verifier is not
+the source of the overstatement; the markdown prose is.
+
+FINDING 9 — no hidden contradiction found. The assumed components
+(facticizable_distinguishability_closure,
+proper_subcontext_endpoint_exhaustion, no_hidden_context_only_fact,
+ContextFirstConstructiveWitnessCompleteness, B1PrimitiveBase,
+BoundPrimitiveGeneratedBase) are not mutually inconsistent; they are
+layered necessities none of which is currently derived from primitives.
+The bridge `context_first_endpoint_data_plus_frontier_closes_born_hilbert`
+(BornHilbertUniversalClosure.lean:343) is provably non-circular with
+respect to Born (the three load-bearing witness fields are strictly
+weaker than Born; see the 2026-07-20 audit block earlier in this file).
+
+SYNTHESIS — IDT is an assembled collection of conditional scaffolds over
+a small, real kernel of finite-combinatorial lemmas, not a coherent
+derivation of QM from primitives. The kernel of real derivation content
+is: F → 2×2 PSD forward conditions + det_nonneg, and F → 4 finite Born-
+readout identities + projective_action universal preimage laws. Around
+this kernel, the theory assembles: (i) three primitives without Lean
+formalization (Q, action_quantum, full B0); (ii) conditional universal
+closures over structures that have no concrete inhabitant
+(BoundPrimitiveGeneratedBase, B1PrimitiveBase,
+GroundedCGSCSemanticExtensionBase); (iii) ~20 named target slots
+populated by ~6 underlying source propositions (acknowledged aliasing);
+(iv) markdown status labels that overstate Lean's content (derived vs.
+trivial, axiom vs. proved, PROVED vs. conditional).
+
+None of this is fraud: the conditional structures are honestly labelled
+in the manifest, the aliasing is recorded as an open blocker, the
+countermodels are real, the forbidden-import discipline is sound. The
+correctable issue is the prose-vs-code gap: markdown uses "derived" /
+"proved" / "from B0" in places where the code is `True := trivial` or
+`∀ base, …` over an uninhabited type.
+
+RECOMMENDED CORRECTIVE WORK (not done in this commit; recorded as a
+target for the next pass):
+  (a) Audit sections/174 and sections/175 line by line against the
+      Lean files; reword or remove every "derived_from_B0" /
+      "PROVED" / "axiom" label that the Lean does not support. FINDING
+      3 lists the specific stale labels.
+  (b) Construct an explicit Lean countermodel for the joint consistency
+      of the four primitives (B0, F, Q, action_quantum) on a minimal
+      carrier, or prove no such model exists. FINDING 4 (d).
+  (c) Prove mutual independence of the four primitives, on the pattern
+      of V7FPrimitiveIndependence.lean, for at least the missing pair
+      Q vs. (B0 ∧ F ∧ action_quantum) and action vs. (B0 ∧ F ∧ Q).
+      FINDING 4 (e).
+  (d) Either prove the seven CGSC clauses mutually independent or
+      reduce the count to the actually-independent subset and rename.
+      FINDING 7.
+  (e) Replace the markdown "21 obligations" framing with the honest
+      "~6 source propositions aliased across ~20 named slots" framing
+      in PUBLIC_CLAIM_SHEET.md and README.md. FINDING 6.
+
+This audit is documentation; it does not upgrade any scientific status.
+The closure verdict remains CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED
+with proved=5, conditional=16, missing=0.
+-/
+
+def theory_logical_coherence_audit_recorded : Prop :=
+  -- A 9-finding logical-coherence audit has been installed in the
+  -- ledger, identifying the real derivation surface (F → 2×2 PSD +
+  -- det_nonneg + 4 finite Born-readout identities + projective_action
+  -- universal preimage laws), the prose-vs-code gaps, the unformalized
+  -- primitives, the uninhabited base structures, and the aliasing
+  -- inflation. No hidden contradiction found; the gap is prose
+  -- overstatement, not manifest fraud.
+  True
+
+theorem theory_logical_coherence_audit_installed :
+    theory_logical_coherence_audit_recorded := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
