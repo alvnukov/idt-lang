@@ -11004,59 +11004,73 @@
       "expected_ledger_status": "formal_claims_covered",
       "formal_proof_obligation_claims": [
         {
-          "id": "full_qm_proof_closure.context_normalization",
-          "target_obligation": "full_qm_proof_closure.context_normalization",
-          "expected_obligation_status": "formal_proof",
           "card_ref": "context_normalization_machine_checked_artifact",
-          "statement": "Facticization stability F (forall v, v^T Gamma v >= 0) implies the actualization measure is non-negative: mu(A) >= 0 for every finite event A. Established by the Lean theorem IDT.QMClosure.measure_nonneg in Proofs/QMClosure/ContextNormalizationProof.lean. F is an IDT primitive; the proof does not import born_rule, probability_axiom, or hilbert_space.",
+          "expected_obligation_status": "formal_proof",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I",
             "does_not_upgrade_other_context_normalization_obligations"
-          ]
+          ],
+          "id": "full_qm_proof_closure.context_normalization",
+          "statement": "Facticization stability F (forall v, v^T Gamma v >= 0) implies the actualization measure is non-negative: mu(A) >= 0 for every finite event A. Established by the Lean theorem IDT.QMClosure.measure_nonneg in Proofs/QMClosure/ContextNormalizationProof.lean. F is an IDT primitive; the proof does not import born_rule, probability_axiom, or hilbert_space.",
+          "target_obligation": "full_qm_proof_closure.context_normalization"
         },
         {
-          "id": "full_qm_proof_closure.exclusivity_additivity",
-          "target_obligation": "full_qm_proof_closure.exclusivity_additivity",
-          "expected_obligation_status": "formal_proof",
           "card_ref": "exclusivity_additivity_machine_checked_artifact",
-          "statement": "For disjoint events A, B with vanishing cross-actualization, the actualization measure is additive: mu(A union B) = mu(A) + mu(B). Established by the Lean theorem IDT.QMClosure.exclusivity_additivity in Proofs/QMClosure/ExclusivityAdditivityProof.lean using bilinearity of finite sums and the Hermitian property of Gamma. The proof does not import born_rule, kolmogorov_axioms, or hilbert_space.",
+          "expected_obligation_status": "formal_proof",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I",
             "does_not_upgrade_other_exclusivity_additivity_obligations"
-          ]
+          ],
+          "id": "full_qm_proof_closure.exclusivity_additivity",
+          "statement": "For disjoint events A, B with vanishing cross-actualization, the actualization measure is additive: mu(A union B) = mu(A) + mu(B). Established by the Lean theorem IDT.QMClosure.exclusivity_additivity in Proofs/QMClosure/ExclusivityAdditivityProof.lean using bilinearity of finite sums and the Hermitian property of Gamma. The proof does not import born_rule, kolmogorov_axioms, or hilbert_space.",
+          "target_obligation": "full_qm_proof_closure.exclusivity_additivity"
         },
         {
-          "id": "full_qm_proof_closure.coarse_graining_consistency",
-          "target_obligation": "full_qm_proof_closure.coarse_graining_consistency",
-          "expected_obligation_status": "formal_proof",
           "card_ref": "coarse_graining_consistency_machine_checked_artifact",
-          "statement": "For three pairwise disjoint blocks A, B, C with pairwise facticity, mu(A union B union C) = mu(A) + mu(B) + mu(C). Established by the Lean theorem IDT.QMClosure.coarse_graining_consistency in Proofs/QMClosure/CoarseGrainingConsistencyProof.lean by iterated exclusivity_additivity. The proof does not import born_rule, hilbert_space, or projective_measurement.",
+          "expected_obligation_status": "formal_proof",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I",
             "does_not_upgrade_other_coarse_graining_consistency_obligations"
-          ]
+          ],
+          "id": "full_qm_proof_closure.coarse_graining_consistency",
+          "statement": "For three pairwise disjoint blocks A, B, C with pairwise facticity, mu(A union B union C) = mu(A) + mu(B) + mu(C). Established by the Lean theorem IDT.QMClosure.coarse_graining_consistency in Proofs/QMClosure/CoarseGrainingConsistencyProof.lean by iterated exclusivity_additivity. The proof does not import born_rule, hilbert_space, or projective_measurement.",
+          "target_obligation": "full_qm_proof_closure.coarse_graining_consistency"
         },
         {
-          "id": "full_qm_proof_closure.operational_equivalence_probability",
-          "target_obligation": "full_qm_proof_closure.operational_equivalence_probability",
-          "expected_obligation_status": "formal_proof",
           "card_ref": "operational_equivalence_probability_machine_checked_artifact",
-          "statement": "If two event sets A, A' are related by a bijection sigma preserving W and Gamma, then mu(A) = mu(A'). Established by the Lean theorem IDT.QMClosure.operational_equivalence_probability in Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean using Finset.sum_bij' finite-sum reindexing. The proof does not import born_rule, hilbert_space, or trace_rule.",
+          "expected_obligation_status": "formal_proof",
           "forbidden_upgrades": [
             "does_not_allow_formal_proof_without_proof_card",
             "does_not_allow_unchecked_proof_card_for_formal_claim",
             "does_not_convert_conditional_or_sketch_to_formal_proof",
             "does_not_prove_full_QM_I",
             "does_not_upgrade_other_operational_equivalence_probability_obligations"
+          ],
+          "id": "full_qm_proof_closure.operational_equivalence_probability",
+          "statement": "If two event sets A, A' are related by a bijection sigma preserving W and Gamma, then mu(A) = mu(A'). Established by the Lean theorem IDT.QMClosure.operational_equivalence_probability in Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean using Finset.sum_bij' finite-sum reindexing. The proof does not import born_rule, hilbert_space, or trace_rule.",
+          "target_obligation": "full_qm_proof_closure.operational_equivalence_probability"
+        },
+        {
+          "id": "full_qm_proof_closure.projective_action",
+          "target_obligation": "full_qm_proof_closure.projective_action",
+          "expected_obligation_status": "formal_proof",
+          "card_ref": "projective_action_machine_checked_artifact",
+          "statement": "Admissible reversible inheritance acts on projective facts via projectiveAction. Established by the Lean theorems IDT.QMClosure.projective_action_identity and IDT.QMClosure.projective_action_composition in Proofs/QMClosure/ProjectiveActionProof.lean, which together verify the monoid-action laws for projectiveAction. The action laws are universal for every pair of inheritance maps; the obligation's 'admissible reversible' qualifier is satisfied as a special case. The proof does not import projective_hilbert_space, wigner_theorem, or unitary_evolution.",
+          "forbidden_upgrades": [
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof",
+            "does_not_prove_full_QM_I",
+            "does_not_upgrade_other_projective_action_obligations"
           ]
         }
       ],
@@ -12065,6 +12079,47 @@
           ],
           "statement": "Machine-checked proof: facticization stability (F = \u2200 v, v^T \u0393 v \u2265 0) implies \u03bc(A) \u2265 0 for any event A. Proof: v = W restricted to A (0 outside), then F(v) = \u03bc(A) \u2265 0. Uses Finset.sum_subset for sum conversion. Does NOT import born_rule, probability_axiom, hilbert_space. F is an IDT primitive, not a Hilbert-space import.",
           "theorem": "IDT.QMClosure.measure_nonneg"
+        },
+        {
+          "id": "projective_action_machine_checked_artifact",
+          "claim_refs": [
+            "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.projective_action.expected_obligation_status"
+          ],
+          "statement": "Machine-checked proof: the projectiveAction operation defines a monoid action of the InheritanceMap monoid (under composition, with unit id) on ProjectiveFact. Both action laws are proven universally: (1) projectiveAction id fact = fact (identity law), (2) projectiveAction (second \u2218 first) fact = projectiveAction second (projectiveAction first fact) (composition law). The laws hold for every pair of inheritance maps, so in particular they hold for admissible reversible inheritance maps. Does NOT import projective_hilbert_space, wigner_theorem, unitary_evolution.",
+          "theorem": "IDT.QMClosure.projective_action_composition",
+          "proof_kind": "machine_checked_finite_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/ProjectiveActionProof.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/ProjectiveActionProof.lean",
+            "python3 scripts/sync_formal_proof_ledger.py --check",
+            "lake env lean Proofs/IDTCore.lean",
+            "python3 -m theory_verifier --json theory_verifier_manifest.json"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "projective_action_closure",
+            "formal_claim_manifest_sync",
+            "lean_finite_core_semantic_checks",
+            "idt_verifier_manifest"
+          ],
+          "scope": "dynamics_projective_action_obligation",
+          "forbidden_upgrades": [
+            "does_not_prove_full_QM_I",
+            "does_not_import_projective_hilbert_space",
+            "does_not_import_wigner_theorem",
+            "does_not_import_unitary_evolution",
+            "does_not_allow_formal_proof_without_proof_card",
+            "does_not_allow_unchecked_proof_card_for_formal_claim",
+            "does_not_convert_conditional_or_sketch_to_formal_proof"
+          ],
+          "scope_notes": [
+            "The action laws are universal for every pair of inheritance maps; the obligation's 'admissible reversible' qualifier is satisfied as a special case (reversibility is not required for the action laws to hold).",
+            "Does not prove Wigner's theorem, unitary dynamics, projective Hilbert space, or any quantum-mechanical symmetry classification.",
+            "Does not prove full QM."
+          ]
         }
       ],
       "target_scope": "current_formal_proof_claims",

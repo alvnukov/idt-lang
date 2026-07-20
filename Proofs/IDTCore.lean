@@ -8,6 +8,7 @@ def currentFormalClaimRefs : List String :=
     "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.context_normalization.expected_obligation_status",
     "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.exclusivity_additivity.expected_obligation_status",
     "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.operational_equivalence_probability.expected_obligation_status",
+    "finite_gates.formal_proof_ledger_audit_demo.full_qm_proof_closure.projective_action.expected_obligation_status",
     "finite_gates.idt_core_bounded_arity_frontier_demo.bounded_correlation_arity_bound.status",
     "finite_gates.idt_core_bounded_arity_frontier_demo.context_product_arity_bound.status",
     "finite_gates.idt_core_bounded_arity_frontier_demo.recoverable_filter_arity_bound.status",
@@ -43,7 +44,7 @@ def currentFormalClaimRefs : List String :=
     "finite_gates.uniform_witness_bound_assumption_frontier_demo.finite_route_generator_basis.status"
   ]
 
-def currentFormalClaimCount : Nat := 37
+def currentFormalClaimCount : Nat := 38
 
 structure RegistryWitness where
   id : String

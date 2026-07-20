@@ -318,6 +318,41 @@ theorem qm_research_plan_does_not_close_current_born_or_hilbert_blockers :
     exactQmClosureBlockedByCurrentFrontier :=
   current_frontier_blocks_exact_qm_closure
 
+/-!
+Recording the `overlap_preservation_dynamics` wall.
+
+The `overlap_preservation_dynamics` full_qm_proof_closure obligation requires
+"reversible inheritance preserves normalized overlap" as a universal statement
+about bijective inheritance maps. The Lean artifact
+`Proofs/QMClosure/OverlapPreservationDynamicsProof.lean` establishes the
+closure properties of the IDT-native `PreservesOverlap` predicate (identity,
+composition, and inverse closure under bijectivity), but does NOT derive
+`PreservesOverlap` from `Bijective` alone.
+
+This is an explicit IDT-native bridge wall: the preservation property must be
+supplied as an IDT-native hypothesis (analogous to how `FacticizationStability`
+is supplied as an IDT primitive for `context_normalization`), and the IDT
+primitive base currently does not provide a `Bijective → PreservesOverlap`
+derivation. Until such a primitive or bridge lemma is added, this obligation
+must not be promoted to formal_proof on the basis of the existing Lean
+artifact.
+
+This ledger entry records the wall so a future agent does not mechanically
+promote `overlap_preservation_dynamics` to formal_proof using the closure
+theorems, which would be an overclaim.
+-/
+
+def overlap_preservation_dynamics_bridge_wall_recorded : Prop :=
+  -- The artifact exists and compiles, but its top-level witness is the
+  -- tautological `reversible_inheritance_preserves_overlap` (a conjunction
+  -- of the supplied hypotheses), which does not derive preservation from
+  -- bijectivity. The closure lemmas are real but weaker than the obligation.
+  True
+
+theorem overlap_preservation_dynamics_remains_behind_bridge_wall :
+    overlap_preservation_dynamics_bridge_wall_recorded := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
