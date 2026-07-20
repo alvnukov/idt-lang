@@ -353,6 +353,115 @@ theorem overlap_preservation_dynamics_remains_behind_bridge_wall :
     overlap_preservation_dynamics_bridge_wall_recorded := by
   trivial
 
+/-!
+Born wall research result (2026-07-20 audit).
+
+The Born wall is machine-diagnosed as an IMPOSSIBILITY for the current
+hypothesized primitive base (B0/B1/B2-accounting), with four independent
+Lean countermodels:
+
+  * `Proofs/QMClosure/BornWallSeparation.lean:69`
+    `readout_accounting_does_not_select_quadratic_actualization`:
+    linear `[3,4]/7` and quadratic `[9,16]/25` are both admitted by
+    `ReadoutAccountingAdmits` with distinct denominators.
+  * `Proofs/QMClosure/S2BornProofSearch.lean:77`
+    `b2_like_accounting_does_not_force_s2` (witness `thirdOrderStableCore`).
+  * `Proofs/QMClosure/S2BornProofSearch.lean:377`
+    `current_primitive_discipline_does_not_force_pairwise_basis`
+    (witness `localTernaryPrimitiveDiscipline`).
+  * `Proofs/QMClosure/BornHilbertUniversalClosure.lean:397`
+    `b1_interface_projection_does_not_force_context_first_endpoint_data`
+    (witness `b1OnlyMissingContextFirstSource`).
+
+Three falsification probes were run against the conditional bridge
+`context_first_endpoint_data_plus_frontier_closes_born_hilbert`
+(`BornHilbertUniversalClosure.lean:343`):
+
+  1. Bridge soundness — PASS. The bridge is a pure field projection
+     composing `context_first_endpoint_data_selects_born`
+     (`BornHilbertUniversalClosure.lean:329`) with
+     `context_first_plus_frontier_exhaustion_closes_hilbert_frontier`.
+     No `sorry`/`admit`/`axiom`/`Classical.choice`. Sound conditional on
+     the existence of a `ContextFirstUniversalEndpointData` inhabitant
+     satisfying `ContextFirstConstructiveWitnessCompletenessReady`.
+  2. Semantic-equivalence wall — PASS. The three load-bearing witness
+     fields of `ContextFirstConstructiveWitnessCompleteness`
+     (`externalFrequencyWitness`, `constructiveCarrierWitness`,
+     `noHiddenJointOnlyGeneration`) are defined strictly weaker than
+     Born. They speak about oriented two-cover counts, endpoint
+     alignment (`yesBranch = aligned`), pairwise closure, and exclusion
+     of hidden joint-only invariants. The quadratic Born weight law
+     appears only as a CONSEQUENCE in the external lemma
+     `constructor_respecting_oriented_readout_select_phase_square`, not
+     as a hypothesis or definition. The bridge is not circular.
+  3. Countermodel on successor base — PASS. Every recorded countermodel
+     targets B0/B1/B2-accounting. No Lean witness or markdown claim
+     exhibits a model where the three witness fields hold AND Born still
+     fails. The bridge is not known to be falsifiable on the successor
+     base.
+
+Synthesis: the Born wall is NOT an impossibility in principle. It is an
+impossibility for B1 specifically, because B1 does not supply three
+independent constructive witnesses that the bridge requires. Crossing
+the wall requires constructing an inhabitant of
+`ContextFirstConstructiveWitnessCompleteness` with
+`externalFrequencyWitness = True`,
+`constructiveCarrierWitness = True`,
+`noHiddenJointOnlyGeneration = True`,
+without importing `born_rule`/`hilbert_space`/`tensor_product_axiom`.
+
+Critical caveat (do not gloss over): no concrete inhabitant of
+`BoundPrimitiveGeneratedBase` or `B1PrimitiveBase` exists anywhere in
+`Proofs/`. Every CGSC/B1 closure theorem is of the form
+`∀ base : B1PrimitiveBase, …`, which is vacuously true if no inhabitant
+exists. So the entire CGSC edifice is conditional on a HYPOTHESIZED
+base, not a proven one. Constructing the successor base is the load-
+bearing research step, not a mechanical lemma.
+
+Most likely shape of the missing input (not a primitive recommendation,
+just the structural shape the evidence points to):
+  * the three witness fields are INDEPENDENT — none is derivable from
+    the other two or from B0/B1 alone;
+  * `noHiddenJointOnlyGeneration` is the narrowest because it overlaps
+    with the composite-closure / local-tomography front and the claim-
+    source aliasing boundary recorded elsewhere in this ledger;
+  * any new primitive that supplies these three witnesses must come with
+    a `V7FPrimitiveIndependence.lean`-style countermodel showing it is
+    strictly weaker than Born (else the wall is being bridged by hidden
+    equivalence, which is the original circularity the wall was erected
+    to prevent).
+
+This entry records the diagnosis so a future research pass does not
+re-derive it and does not mis-classify the wall as either "missing
+proof, keep trying" (it is not — countermodels say B1 cannot do it) or
+"fundamental impossibility" (it is not — the successor-base bridge is
+sound and no countermodel on that base is known).
+-/
+
+def born_wall_diagnosis_recorded : Prop :=
+  -- Three falsification probes (bridge soundness, semantic-equivalence
+  -- wall, successor-base countermodel) all PASS, and the wall is
+  -- recorded as an impossibility for B1 specifically, bridgeable on a
+  -- successor base whose inhabitant is currently absent from Lean.
+  True
+
+theorem born_wall_is_impossibility_for_b1_bridgeable_on_successor_base :
+    born_wall_diagnosis_recorded := by
+  trivial
+
+theorem b1_primitive_base_has_no_known_lean_inhabitant :
+    -- Structural observation recorded for future research passes: the
+    -- CGSC/B1 closure theorems are universally quantified over
+    -- `base : B1PrimitiveBase`, and no concrete inhabitant of that type
+    -- is constructed anywhere in `Proofs/`. This makes the closure
+    -- vacuously sound until an inhabitant is built. The theorem is
+    -- recorded as `True` because the non-existence of an inhabitant in
+    -- the current codebase is an empirical fact about the proof tree,
+    -- not a proposition Lean can decide; the prose above carries the
+    -- load-bearing content.
+    True := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
