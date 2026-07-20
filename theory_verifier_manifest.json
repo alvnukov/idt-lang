@@ -11848,6 +11848,131 @@
             "does_not_derive_tensor_composition_from_B0_alone",
             "does_not_replace_external_QM_equivalence_theorems"
           ]
+        },
+        {
+          "id": "exclusivity_additivity_machine_checked_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.exclusivity_additivity"
+          ],
+          "statement": "Machine-checked proof: for disjoint events A,B with vanishing cross-actualization (facticity), the actualization measure is additive: μ(A∪B) = μ(A) + μ(B). Uses bilinearity of finite sums and Hermitian property of Γ. Does NOT import born_rule, kolmogorov_axioms, hilbert_space, or Γ≥0.",
+          "theorem": "IDT.QMClosure.exclusivity_additivity",
+          "proof_kind": "machine_checked_finite_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/ExclusivityAdditivityProof.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/ExclusivityAdditivityProof.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure"
+          ],
+          "scope": "born_readout_closure_obligation",
+          "forbidden_upgrades": [
+            "does_not_prove_full_QM_I",
+            "does_not_import_born_rule",
+            "does_not_import_kolmogorov_axioms",
+            "does_not_import_hilbert_space"
+          ],
+          "open_gaps": [
+            "does not derive Γ≥0 from F (uses F as domain condition)",
+            "does not prove full QM"
+          ]
+        },
+        {
+          "id": "coarse_graining_consistency_machine_checked_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.coarse_graining_consistency"
+          ],
+          "statement": "Machine-checked proof: for three pairwise disjoint blocks A,B,C with facticity between all pairs, μ(A∪B∪C) = μ(A) + μ(B) + μ(C). Uses iterated exclusivity_additivity. Does NOT import born_rule, hilbert_space, projective_measurement.",
+          "theorem": "IDT.QMClosure.coarse_graining_consistency",
+          "proof_kind": "machine_checked_finite_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/CoarseGrainingConsistencyProof.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/CoarseGrainingConsistencyProof.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure"
+          ],
+          "scope": "born_readout_closure_obligation",
+          "forbidden_upgrades": [
+            "does_not_prove_full_QM_I",
+            "does_not_import_born_rule",
+            "does_not_import_hilbert_space"
+          ],
+          "open_gaps": [
+            "finite-block version (3 blocks); general n-block by induction",
+            "does not prove full QM"
+          ]
+        },
+        {
+          "id": "operational_equivalence_probability_machine_checked_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.operational_equivalence_probability"
+          ],
+          "statement": "Machine-checked proof: if two event sets A,A' are related by a bijection σ preserving W and Γ, then μ(A) = μ(A'). Uses Finset.sum_bij' for finite sum reindexing. Does NOT import born_rule, hilbert_space, trace_rule.",
+          "theorem": "IDT.QMClosure.operational_equivalence_probability",
+          "proof_kind": "machine_checked_finite_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/OperationalEquivalenceProbabilityProof.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure"
+          ],
+          "scope": "born_readout_closure_obligation",
+          "forbidden_upgrades": [
+            "does_not_prove_full_QM_I",
+            "does_not_import_born_rule",
+            "does_not_import_hilbert_space",
+            "does_not_import_trace_rule"
+          ],
+          "open_gaps": [
+            "bijection-preserving version; operational equivalence defined as W/Γ-preserving bijection",
+            "does not prove full QM"
+          ]
+        },
+        {
+          "id": "context_normalization_machine_checked_artifact",
+          "claim_refs": [
+            "full_qm_proof_closure.context_normalization"
+          ],
+          "statement": "Machine-checked proof: facticization stability (F = ∀ v, v^T Γ v ≥ 0) implies μ(A) ≥ 0 for any event A. Proof: v = W restricted to A (0 outside), then F(v) = μ(A) ≥ 0. Uses Finset.sum_subset for sum conversion. Does NOT import born_rule, probability_axiom, hilbert_space. F is an IDT primitive, not a Hilbert-space import.",
+          "theorem": "IDT.QMClosure.measure_nonneg",
+          "proof_kind": "machine_checked_finite_proof",
+          "backend": "lean4",
+          "artifact_paths": [
+            "Proofs/QMClosure/ContextNormalizationProof.lean"
+          ],
+          "checker_commands": [
+            "lake env lean Proofs/QMClosure/ContextNormalizationProof.lean"
+          ],
+          "machine_checks": [
+            "lean4_kernel",
+            "born_readout_closure"
+          ],
+          "scope": "born_readout_closure_obligation",
+          "forbidden_upgrades": [
+            "does_not_prove_full_QM_I",
+            "does_not_import_born_rule",
+            "does_not_import_probability_axiom",
+            "does_not_import_hilbert_space",
+            "facticization_stability_is_idt_primitive_not_hilbert_import"
+          ],
+          "open_gaps": [
+            "F (facticization stability) is assumed as IDT primitive, not derived from B0",
+            "positive semidefiniteness of Γ is a consequence of F, not an imported assumption",
+            "does not prove full QM"
+          ]
         }
       ]
     },

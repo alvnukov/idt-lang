@@ -272,6 +272,7 @@ def registryWitnesses : List RegistryWitness :=
       "bounded_correlation_screen_theorem",
       "bridge_assumption_boundary",
       "broader_generic_gpt_cone_frontier",
+      "calibrated_action_scale_reconstruction",
       "carrier_quantifier_frontier",
       "carrier_selection_frontier",
       "carrier_selection_proof_route",
@@ -486,9 +487,9 @@ def registryWitnesses : List RegistryWitness :=
       "work_scale_lock_status",
       "zero_stress_boundary_no_slip"
   ],
-    expectedCount := 237,
-    expectedDigest := "0419dff8ab7173723bce81261f5ecca294e030812a18b5a36a600141911c7059",
-    computedDigest := "0419dff8ab7173723bce81261f5ecca294e030812a18b5a36a600141911c7059"
+    expectedCount := 238,
+    expectedDigest := "1662c1f0871f1ecf10f1e7d3fc43310f513e1a7244bb08184315250a00fe5f2b",
+    computedDigest := "1662c1f0871f1ecf10f1e7d3fc43310f513e1a7244bb08184315250a00fe5f2b"
   },
   {
     id := "finite_primitive_sort_vocabulary",
