@@ -895,6 +895,144 @@ theorem theory_logical_coherence_audit_installed :
     theory_logical_coherence_audit_recorded := by
   trivial
 
+/-!
+IDT principle for Born: physical-content note + critical falsification
+of an over-claim (2026-07-21).
+
+A first pass at identifying the IDT-native Born selector produced an
+over-claim that this block corrects. The correction matters because
+truth is the project's non-negotiable priority.
+
+PHYSICAL HYPOTHESIS (the candidate principle, stated honestly).
+
+The IDT research notes (sections/175:160-167, 522-545) propose that the
+Born rule's quadratic exponent is the readout shadow of an ontological
+claim about distinction:
+
+  STABLE DISTINCTION IS PAIRWISE COMPARISON DATA.
+  No stable facticizable invariant lives only at the whole-context
+  level; every stable facticizable invariant decomposes into proper-
+  subcontext (singleton + pairwise) witnesses via reversible inheritance
+  transport, with loss/accounting for any residue.
+
+Stated this way, this is the IDT-context-first version of Sorkin I3 = 0
+and the naturality of arity 2. It is conceptually distinct from the
+Chiribella-D'Ariano-Perinotti purification-uniqueness postulate (Phys.
+Rev. A 84, 012311 (2011), arXiv:1011.6451): CDP is system-extension
+(existence and uniqueness-up-to-reversible-E of a purification on
+A ⊗ E), the IDT candidate is context-first ontology (non-existence of
+whole-context-only stable facts). They coincide in conclusion but are
+not known to be equivalent as axioms.
+
+That much is a real research hypothesis worth pursuing.
+
+OVER-CLAIM THAT IS NOW REVERTED.
+
+A previous version of this block (commit 93c283d, since reverted in
+4d8422d) asserted that "the selection theorem is already in the repo",
+citing S2BornProofSearch.lean:122-133 as a machine-checked derivation
+that the IDT principle selects S2. Critical re-examination shows this
+is FALSE.
+
+The Lean in S2BornProofSearch.lean operates over `S2CandidateCore`
+(lines 16-25), a structure whose fields are nine abstract `Prop` flags
+(`dclClosed`, `finiteFacticity`, `orientedComparisons`, `lossAccounting`,
+`singletonWitness`, `pairwiseWitness`, `ternaryWitness`,
+`nonnegativeCompositeWeights`, `stableI3Nonzero`). There is no concrete
+carrier, no measurement algebra, no Born-vs-linear weights, no actual
+Sorkin I3 invariant. The "countermodel" `thirdOrderStableCore`
+(lines 50-61) is the same structure with all nine flags set to `True`
+— it is a degenerate witness of the same bag-of-Prop-flags kind that
+the FINDING 4 audit (above) identified for B1PrimitiveBase.
+
+Concretely:
+  * `HiddenContextOnlyFact core := ternaryWitness ∧ stableI3Nonzero ∧
+    ¬ PairwiseWitnessExhaustive core` (lines 42-45), with
+    `PairwiseWitnessExhaustive core := ternaryWitness → False` (line 40).
+  * Simplifying: `HiddenContextOnlyFact core = ternaryWitness ∧
+    stableI3Nonzero`, and `NoHiddenContextOnlyFact core = ¬(ternary ∧
+    stableI3)`.
+  * `SecondOrderFacticization core := ¬ternary ∧ ¬stableI3` (lines 36-37)
+    is STRICTLY STRONGER than `NoHiddenContextOnlyFact core`.
+  * The "selection lemma" `no_hidden_context_only_fact_supplies_s2_when_
+    ternary_is_i3_source` (lines 122-133) derives the strictly-stronger
+    from the strictly-weaker UNDER the bridge `ternaryWitness ↔
+    stableI3Nonzero`. That bridge is itself an abstract flag equation,
+    not a physical theorem.
+
+The lemma is therefore a tautology about Prop flags. It does not prove
+that the IDT physical principle selects Born, because the structure it
+quantifies over has no mathematical content to select from. This is the
+same pattern the FINDING 4 audit caught for B1: a conditional theorem
+over an uninhabited-of-content type, dressed up as physics.
+
+WHAT REMAINS HONEST.
+
+  (a) The physical hypothesis in the first paragraph is not invalidated
+      by this. It is a real candidate principle, distinct from CDP,
+      worth investigating. But it is currently an UNTESTED hypothesis,
+      not a derived theorem.
+  (b) The literature distinction (IDT context-first ontology vs CDP
+      system-extension) is real and remains the right framing for the
+      research question.
+  (c) The actual test of the hypothesis is constructive: build a
+      concrete carrier model (e.g. context := Fin 2 × Fin 2 with a real
+      measurement algebra over Fin 2 outcomes), define the IDT
+      principle as a real proposition over that model, and check
+      whether it implies Born (weights [9,16]) and excludes linear
+      (weights [3,4]) and cubic (weights [8,27]) readouts. No one has
+      done this yet.
+
+WHAT IS NOT HONEST AND WAS ALMOST COMMITTED.
+
+  * "The IDT principle for Born is already formalized." (No: the
+    formalization is Prop-flag tautology.)
+  * "The linear/cubic countermodels are killed by the IDT principle."
+    (No: the countermodels are degenerate flag-witnesses, not linear/
+    cubic readouts. A real linear readout model has not been built.)
+  * "The wall is not a fundamental obstruction." (Untested: the
+    obstruction has not been honestly probed on a concrete model.)
+
+KILL TEST, RESTATED HONESTLY.
+
+To test the hypothesis one must construct, on a concrete finite
+carrier, a model M that simultaneously:
+  (i) satisfies a real-typed version of "no whole-context-only stable
+      facticizable invariant",
+  (ii) has a linear readout (weights proportional to |a|, not |a|^2),
+  (iii) has identically vanishing Sorkin I3.
+If M exists, the IDT principle is INSUFFICIENT to select Born. If M
+provably cannot exist on any finite carrier, the IDT principle (in its
+real-typed form) is SUFFICIENT. Until one of these is shown, the IDT
+principle for Born is a research hypothesis, not a result.
+
+This block records the correction. The earlier over-claim commit
+(93c283d) is reverted in 4d8422d. No scientific status is upgraded or
+downgraded by this block; the closure verdict is unchanged
+(CONDITIONAL_PACKAGE_ARTIFACTS_REGISTERED, proved=5, conditional=16,
+missing=0).
+
+The lesson recorded for future passes: when a "selection theorem"
+looks too clean, check whether it operates over a bag of abstract
+Prop flags. If it does, it is not a physics theorem regardless of how
+persuasive the prose around it sounds. This is the same discipline as
+FINDING 4 of the logical-coherence audit; it applies at every layer of
+the proof tree, not just at the primitive base.
+-/
+
+def idt_born_principle_status_is_open_hypothesis_not_theorem : Prop :=
+  -- The IDT principle "stable distinction is pairwise comparison data"
+  -- is a real, distinct-from-CDP research hypothesis about why
+  -- probabilities are quadratic. It is NOT a derived theorem: the
+  -- existing Lean operates over abstract Prop flags and is therefore
+  -- tautological. The hypothesis is testable on a concrete Fin n
+  -- carrier but has not been so tested.
+  True
+
+theorem idt_born_principle_remains_untested_hypothesis :
+    idt_born_principle_status_is_open_hypothesis_not_theorem := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
