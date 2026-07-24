@@ -1546,6 +1546,208 @@ theorem jordan_spin_factor_probe_keeps_exact_qm_blocked :
 def jordanSpinFactorClaimBoundary : String :=
   "complex selected only inside the R/C/H qubit family; all-GPT uniqueness remains open"
 
+/-!
+Square-bit purification and phase probe (2026-07-24).
+
+The purification principle used here requires every mixed state to be the
+marginal of a pure bipartite state, with purifications unique up to reversible
+environment dynamics (Chiribella--D'Ariano--Perinotti, arXiv:0908.1583).
+The standard `(2,2,2)` no-signalling polytope has 24 extremal states: 16 local
+deterministic vertices and 8 PR vertices (Bierhorst, arXiv:1511.04127).
+
+This finite probe imports that 24-vertex classification as its model boundary;
+it does not derive the classification from IDT primitives. It proves that a
+noncentral square-bit mixture has no pure-state marginal witness inside this
+standard maximal same-system composite. It also proves that the stabilizer of
+one coordinate effect inside all signed-coordinate square symmetries has only
+two elements. Neither result excludes an exotic composite or a larger
+purifying environment without an additional composite-independence theorem.
+-/
+
+namespace SquareBitPurificationPhaseProbe
+
+open FiniteOperationalPrimitiveMatrix
+
+abbrev SquareBitState := Int × Int
+
+def addSquareBitStates (left right : SquareBitState) : SquareBitState :=
+  (left.1 + right.1, left.2 + right.2)
+
+def doubleSquareBitState (state : SquareBitState) : SquareBitState :=
+  (2 * state.1, 2 * state.2)
+
+/-- The midpoint of the right edge of the normalized square state space. -/
+def squareBitRightEdgeMidpoint : SquareBitState :=
+  (1, 0)
+
+/-- Integer arithmetic records the exact half-half convex-mixture witness. -/
+theorem square_bit_right_edge_midpoint_has_exact_mixture_witness :
+    doubleSquareBitState squareBitRightEdgeMidpoint =
+      addSquareBitStates
+        (squareBitCoordinates .positivePositive)
+        (squareBitCoordinates .positiveNegative) := by
+  decide
+
+inductive SquareBitMaxPureJoint where
+  | localDeterministic (left right : SquareBitPure)
+  | pr (label : Fin 8)
+deriving DecidableEq, Repr
+
+/-- Four local vertices on each side give 16 local deterministic extremes. -/
+def squareBitMaxLocalDeterministicCount : Nat :=
+  4 * 4
+
+/-- The `(2,2,2)` maximal no-signalling polytope has eight PR extremes. -/
+def squareBitMaxPrCount : Nat :=
+  8
+
+def squareBitMaxPureJointCount : Nat :=
+  squareBitMaxLocalDeterministicCount + squareBitMaxPrCount
+
+theorem square_bit_maximal_composite_has_24_modelled_extremes :
+    squareBitMaxLocalDeterministicCount = 16
+      ∧ squareBitMaxPrCount = 8
+      ∧ squareBitMaxPureJointCount = 24 := by
+  decide
+
+/-- Local deterministic extremes have pure marginals; PR extremes are unbiased. -/
+def squareBitMaxPureFirstMarginal : SquareBitMaxPureJoint → SquareBitState
+  | .localDeterministic left _ => squareBitCoordinates left
+  | .pr _ => (0, 0)
+
+/--
+The standard maximal same-square composite cannot purify the noncentral edge
+mixture: no one of its 24 extremal states has that first marginal.
+-/
+theorem square_bit_maximal_pure_states_cannot_purify_right_edge_midpoint :
+    ∀ joint : SquareBitMaxPureJoint,
+      squareBitMaxPureFirstMarginal joint ≠ squareBitRightEdgeMidpoint := by
+  intro joint
+  cases joint with
+  | localDeterministic left right =>
+      cases left <;>
+        simp [squareBitMaxPureFirstMarginal, squareBitRightEdgeMidpoint,
+          squareBitCoordinates]
+  | pr label =>
+      simp [squareBitMaxPureFirstMarginal, squareBitRightEdgeMidpoint]
+
+structure SquareBitSignedSymmetry where
+  swapAxes : Bool
+  flipFirst : Bool
+  flipSecond : Bool
+deriving DecidableEq, Repr
+
+def signedSquareBitCoordinate (flip : Bool) (coordinate : Int) : Int :=
+  if flip then -coordinate else coordinate
+
+/-- The full eight-element family of signed coordinate permutations of a square. -/
+def applySquareBitSignedSymmetry
+    (symmetry : SquareBitSignedSymmetry)
+    (state : SquareBitState) : SquareBitState :=
+  let permuted := if symmetry.swapAxes then (state.2, state.1) else state
+  ( signedSquareBitCoordinate symmetry.flipFirst permuted.1,
+    signedSquareBitCoordinate symmetry.flipSecond permuted.2 )
+
+/-- Preservation of the first coordinate effect, checked on all four pure vertices. -/
+def PreservesFirstSquareBitEffect
+    (symmetry : SquareBitSignedSymmetry) : Prop :=
+  (applySquareBitSignedSymmetry symmetry
+      (squareBitCoordinates .positivePositive)).1 = 1
+    ∧ (applySquareBitSignedSymmetry symmetry
+      (squareBitCoordinates .positiveNegative)).1 = 1
+    ∧ (applySquareBitSignedSymmetry symmetry
+      (squareBitCoordinates .negativePositive)).1 = -1
+    ∧ (applySquareBitSignedSymmetry symmetry
+      (squareBitCoordinates .negativeNegative)).1 = -1
+
+/-- Only no axis swap and no first-coordinate flip preserve the first effect. -/
+theorem square_bit_first_effect_stabilizer_classification
+    (symmetry : SquareBitSignedSymmetry) :
+    PreservesFirstSquareBitEffect symmetry ↔
+      symmetry.swapAxes = false ∧ symmetry.flipFirst = false := by
+  cases symmetry with
+  | mk swapAxes flipFirst flipSecond =>
+      cases swapAxes <;> cases flipFirst <;> cases flipSecond <;>
+        simp [PreservesFirstSquareBitEffect, applySquareBitSignedSymmetry,
+          signedSquareBitCoordinate, squareBitCoordinates]
+
+def squareBitPhaseIdentity : SquareBitSignedSymmetry :=
+  ⟨false, false, false⟩
+
+def squareBitPhaseFlipSecond : SquareBitSignedSymmetry :=
+  ⟨false, false, true⟩
+
+def squareBitFirstEffectStabilizer : List SquareBitSignedSymmetry :=
+  [squareBitPhaseIdentity, squareBitPhaseFlipSecond]
+
+theorem square_bit_first_effect_stabilizer_is_exactly_two_elements
+    (symmetry : SquareBitSignedSymmetry) :
+    PreservesFirstSquareBitEffect symmetry ↔
+      symmetry = squareBitPhaseIdentity ∨
+        symmetry = squareBitPhaseFlipSecond := by
+  cases symmetry with
+  | mk swapAxes flipFirst flipSecond =>
+      cases swapAxes <;> cases flipFirst <;> cases flipSecond <;>
+        simp [PreservesFirstSquareBitEffect, applySquareBitSignedSymmetry,
+          signedSquareBitCoordinate, squareBitCoordinates,
+          squareBitPhaseIdentity, squareBitPhaseFlipSecond]
+
+theorem square_bit_first_effect_stabilizer_order_is_two :
+    squareBitFirstEffectStabilizer.length = 2
+      ∧ squareBitFirstEffectStabilizer.Nodup := by
+  decide
+
+inductive SquareBitPurificationPhaseFinding where
+  | noncentralStateHasExactMixtureWitness
+  | standardMaximalCompositeHas24Extremes
+  | standardMaximalPureMarginalsExcludeEdgeMidpoint
+  | firstEffectStabilizerIsFiniteOrderTwo
+  | arbitraryEnvironmentExclusionRemainsOpen
+deriving DecidableEq, Repr
+
+def squareBitPurificationPhaseFindings :
+    List SquareBitPurificationPhaseFinding :=
+  [ .noncentralStateHasExactMixtureWitness,
+    .standardMaximalCompositeHas24Extremes,
+    .standardMaximalPureMarginalsExcludeEdgeMidpoint,
+    .firstEffectStabilizerIsFiniteOrderTwo,
+    .arbitraryEnvironmentExclusionRemainsOpen ]
+
+theorem square_bit_purification_phase_finding_count :
+    squareBitPurificationPhaseFindings.length = 5 := by
+  rfl
+
+inductive SquareBitPurificationPhaseOpenObligation where
+  | excludePurificationByArbitraryEnvironmentTypes
+  | proveCompositeIndependentSquareBitNoPurification
+  | deriveContinuousOneDimensionalPhaseRequirement
+  | proveOrRefuteUniversalNonComplexSpinFactorPurification
+deriving DecidableEq, Repr
+
+def squareBitPurificationPhaseOpenObligations :
+    List SquareBitPurificationPhaseOpenObligation :=
+  [ .excludePurificationByArbitraryEnvironmentTypes,
+    .proveCompositeIndependentSquareBitNoPurification,
+    .deriveContinuousOneDimensionalPhaseRequirement,
+    .proveOrRefuteUniversalNonComplexSpinFactorPurification ]
+
+theorem square_bit_purification_phase_open_obligation_count :
+    squareBitPurificationPhaseOpenObligations.length = 4 := by
+  rfl
+
+end SquareBitPurificationPhaseProbe
+
+/-- The standard square-bit model fails the probe, but global exclusion is open. -/
+def squareBitPurificationPhaseResearchStatus : QmResearchTaskStatus :=
+  QmResearchTaskStatus.blocked
+
+theorem square_bit_purification_phase_probe_keeps_exact_qm_blocked :
+    squareBitPurificationPhaseResearchStatus = QmResearchTaskStatus.blocked := by
+  rfl
+
+def squareBitPurificationPhaseClaimBoundary : String :=
+  "finite rejection of the standard maximal same-square composite; not a composite-independent square-bit no-go theorem"
+
 end V8
 end MetaLang
 end IDT
