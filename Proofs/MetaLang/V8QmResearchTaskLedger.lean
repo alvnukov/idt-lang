@@ -1151,6 +1151,250 @@ theorem idt_principle_for_born_is_not_a_non_circular_selector :
     idt_principle_does_not_select_born_under_natural_readings := by
   trivial
 
+/-!
+Finite operational primitive countermodel matrix (2026-07-24).
+
+This block replaces the earlier bag-of-Prop pattern with concrete finite
+carriers and exact arithmetic. It does not prove Born, Hilbert-space
+uniqueness, purification uniqueness, or full QM. The results are deliberately
+small:
+
+* a balanced linear mixer uniformly rescales quadratic weight but cannot
+  uniformly rescale linear weight even on two explicit inputs;
+* a classical pure joint state cannot purify the explicit mixed bit;
+* a quadratic bipartite amplitude has an explicit mixed marginal witness;
+* standard observable-dimension counts pass for complex composites and fail
+  for real and quaternionic qubit composites;
+* a square-bit composite passes the dimension-count gate, showing that this
+  gate alone does not select quantum theory.
+-/
+
+namespace FiniteOperationalPrimitiveMatrix
+
+structure SignedPair where
+  left : Int
+  right : Int
+deriving DecidableEq, Repr
+
+def balancedMixer (value : SignedPair) : SignedPair :=
+  ⟨value.left + value.right, value.left - value.right⟩
+
+def doublePair (value : SignedPair) : SignedPair :=
+  ⟨2 * value.left, 2 * value.right⟩
+
+def linearWeight (value : SignedPair) : Nat :=
+  value.left.natAbs + value.right.natAbs
+
+def quadraticWeight (value : SignedPair) : Int :=
+  value.left * value.left + value.right * value.right
+
+def basisLeft : SignedPair := ⟨1, 0⟩
+
+def diagonal : SignedPair := ⟨1, 1⟩
+
+theorem balanced_mixer_squared_on_samples :
+    balancedMixer (balancedMixer basisLeft) = doublePair basisLeft
+      ∧ balancedMixer (balancedMixer diagonal) = doublePair diagonal := by
+  decide
+
+theorem balanced_mixer_uniformly_scales_quadratic_samples :
+    quadraticWeight (balancedMixer basisLeft) = 2 * quadraticWeight basisLeft
+      ∧ quadraticWeight (balancedMixer diagonal) =
+        2 * quadraticWeight diagonal := by
+  decide
+
+/-- Cross-multiplication proves that the two linear-weight scale ratios differ. -/
+theorem balanced_mixer_linear_sample_scalings_disagree :
+    linearWeight (balancedMixer basisLeft) * linearWeight diagonal ≠
+      linearWeight (balancedMixer diagonal) * linearWeight basisLeft := by
+  decide
+
+/-- Real dimension of the unnormalised observable space. -/
+def realObservableDim (levels : Nat) : Nat :=
+  levels * (levels + 1) / 2
+
+/-- Complex dimension of the unnormalised observable space. -/
+def complexObservableDim (levels : Nat) : Nat :=
+  levels * levels
+
+/-- Quaternionic dimension of the unnormalised observable space. -/
+def quaternionicObservableDim (levels : Nat) : Nat :=
+  levels * (2 * levels - 1)
+
+def classicalObservableDim (levels : Nat) : Nat :=
+  levels
+
+def LocallyTomographicDimensionAt
+    (dimension : Nat → Nat)
+    (leftLevels rightLevels : Nat) : Prop :=
+  dimension (leftLevels * rightLevels) =
+    dimension leftLevels * dimension rightLevels
+
+theorem classical_qubit_composite_passes_local_tomography_dimension :
+    LocallyTomographicDimensionAt classicalObservableDim 2 2 := by
+  change 4 = 4
+  rfl
+
+theorem complex_qubit_composite_passes_local_tomography_dimension :
+    LocallyTomographicDimensionAt complexObservableDim 2 2 := by
+  change 16 = 16
+  rfl
+
+theorem real_qubit_composite_fails_local_tomography_dimension :
+    ¬ LocallyTomographicDimensionAt realObservableDim 2 2 := by
+  change ¬ (10 = 9)
+  decide
+
+theorem quaternionic_qubit_composite_fails_local_tomography_dimension :
+    ¬ LocallyTomographicDimensionAt quaternionicObservableDim 2 2 := by
+  change ¬ (28 = 36)
+  decide
+
+inductive SquareBitPure where
+  | positivePositive
+  | positiveNegative
+  | negativePositive
+  | negativeNegative
+deriving DecidableEq, Repr
+
+def squareBitCoordinates : SquareBitPure → Int × Int
+  | .positivePositive => (1, 1)
+  | .positiveNegative => (1, -1)
+  | .negativePositive => (-1, 1)
+  | .negativeNegative => (-1, -1)
+
+theorem square_bit_vertices_are_distinct :
+    List.Nodup
+      [ squareBitCoordinates .positivePositive,
+        squareBitCoordinates .positiveNegative,
+        squareBitCoordinates .negativePositive,
+        squareBitCoordinates .negativeNegative ] := by
+  decide
+
+def squareBitLocalObservableDim : Nat := 3
+
+def squareBitMaxCompositeObservableDim : Nat := 9
+
+theorem square_bit_passes_dimension_count_gate :
+    squareBitMaxCompositeObservableDim =
+      squareBitLocalObservableDim * squareBitLocalObservableDim := by
+  rfl
+
+structure BitWeights where
+  zero : Nat
+  one : Nat
+deriving DecidableEq, Repr
+
+def mixedBitWeights : BitWeights := ⟨1, 1⟩
+
+inductive ClassicalPureJoint where
+  | zeroZero
+  | zeroOne
+  | oneZero
+  | oneOne
+deriving DecidableEq, Repr
+
+def classicalFirstMarginal : ClassicalPureJoint → BitWeights
+  | .zeroZero => ⟨2, 0⟩
+  | .zeroOne => ⟨2, 0⟩
+  | .oneZero => ⟨0, 2⟩
+  | .oneOne => ⟨0, 2⟩
+
+theorem classical_pure_joint_cannot_purify_mixed_bit :
+    ∀ joint : ClassicalPureJoint,
+      classicalFirstMarginal joint ≠ mixedBitWeights := by
+  intro joint
+  cases joint <;> decide
+
+structure NatAmplitude2x2 where
+  a00 : Nat
+  a01 : Nat
+  a10 : Nat
+  a11 : Nat
+deriving DecidableEq, Repr
+
+def quadraticFirstMarginal (amplitude : NatAmplitude2x2) : BitWeights :=
+  ⟨amplitude.a00 * amplitude.a00 + amplitude.a01 * amplitude.a01,
+   amplitude.a10 * amplitude.a10 + amplitude.a11 * amplitude.a11⟩
+
+def bellLikeAmplitude : NatAmplitude2x2 :=
+  ⟨1, 0, 0, 1⟩
+
+def crossBellLikeAmplitude : NatAmplitude2x2 :=
+  ⟨0, 1, 1, 0⟩
+
+def swapEnvironment (amplitude : NatAmplitude2x2) : NatAmplitude2x2 :=
+  ⟨amplitude.a01, amplitude.a00, amplitude.a11, amplitude.a10⟩
+
+theorem bell_like_amplitude_has_mixed_quadratic_marginal :
+    quadraticFirstMarginal bellLikeAmplitude = mixedBitWeights := by
+  rfl
+
+theorem cross_bell_like_amplitude_has_mixed_quadratic_marginal :
+    quadraticFirstMarginal crossBellLikeAmplitude = mixedBitWeights := by
+  rfl
+
+theorem finite_purification_witnesses_are_related_by_environment_swap :
+    swapEnvironment bellLikeAmplitude = crossBellLikeAmplitude := by
+  rfl
+
+inductive FinitePrimitiveMatrixFinding where
+  | quadraticMixerHasUniformScale
+  | linearMixerHasNoUniformScale
+  | classicalPureJointFailsMixedPurification
+  | quadraticAmplitudeHasFinitePurificationWitness
+  | complexCompositePassesDimensionGate
+  | realAndQuaternionicCompositesFailDimensionGate
+  | squareBitAlsoPassesDimensionGate
+deriving DecidableEq, Repr
+
+def finitePrimitiveMatrixFindings : List FinitePrimitiveMatrixFinding :=
+  [ .quadraticMixerHasUniformScale,
+    .linearMixerHasNoUniformScale,
+    .classicalPureJointFailsMixedPurification,
+    .quadraticAmplitudeHasFinitePurificationWitness,
+    .complexCompositePassesDimensionGate,
+    .realAndQuaternionicCompositesFailDimensionGate,
+    .squareBitAlsoPassesDimensionGate ]
+
+theorem finite_primitive_matrix_finding_count :
+    finitePrimitiveMatrixFindings.length = 7 := by
+  rfl
+
+inductive FinitePrimitiveMatrixOpenObligation where
+  | deriveAffineOperationalCarrierWithoutAmplitudeImport
+  | proveUniversalPurificationAndUniqueness
+  | excludeSpinFactorsAndExceptionalJordanModels
+  | liftFiniteTomographyToGaugeCompatibleComposition
+  | deriveComplexBornReadoutWithoutTargetImports
+deriving DecidableEq, Repr
+
+def finitePrimitiveMatrixOpenObligations :
+    List FinitePrimitiveMatrixOpenObligation :=
+  [ .deriveAffineOperationalCarrierWithoutAmplitudeImport,
+    .proveUniversalPurificationAndUniqueness,
+    .excludeSpinFactorsAndExceptionalJordanModels,
+    .liftFiniteTomographyToGaugeCompatibleComposition,
+    .deriveComplexBornReadoutWithoutTargetImports ]
+
+theorem finite_primitive_matrix_open_obligation_count :
+    finitePrimitiveMatrixOpenObligations.length = 5 := by
+  rfl
+
+end FiniteOperationalPrimitiveMatrix
+
+/-- The finite matrix is a real research advance but does not close exact QM. -/
+def finiteOperationalPrimitiveMatrixResearchStatus : QmResearchTaskStatus :=
+  QmResearchTaskStatus.blocked
+
+theorem finite_operational_primitive_matrix_keeps_exact_qm_blocked :
+    finiteOperationalPrimitiveMatrixResearchStatus =
+      QmResearchTaskStatus.blocked := by
+  rfl
+
+def finiteOperationalPrimitiveMatrixClaimBoundary : String :=
+  "finite countermodel evidence; does not derive Born, Hilbert, or full QM"
+
 end V8
 end MetaLang
 end IDT
