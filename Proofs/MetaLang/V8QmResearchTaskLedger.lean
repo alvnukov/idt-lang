@@ -1395,6 +1395,157 @@ theorem finite_operational_primitive_matrix_keeps_exact_qm_blocked :
 def finiteOperationalPrimitiveMatrixClaimBoundary : String :=
   "finite countermodel evidence; does not derive Born, Hilbert, or full QM"
 
+/-!
+Jordan/spin-factor primitive probe (2026-07-24).
+
+This pass checks the remaining division-algebra qubit family with exact finite
+dimension arithmetic. It does not assume or prove the classification of all
+homogeneous self-dual cones. The machine-checked result is narrower:
+
+* real, complex, and quaternionic qubits have the same single-system observable
+  dimensions as spin factors with ball dimensions 2, 3, and 5;
+* the stabilizer-dimension gate selects the complex candidate inside this
+  three-member family only;
+* standard composite observable dimensions fail the local-product dimension
+  gate for real and quaternionic qubits and pass for the complex qubit;
+* the earlier square-bit witness still passes the dimension-count gate, so the
+  result is not a uniqueness proof over all operational theories;
+* universal purification, exceptional Jordan composites, and gauge-compatible
+  composition remain open.
+-/
+
+namespace JordanSpinFactorProbe
+
+open FiniteOperationalPrimitiveMatrix
+
+/-- A spin factor with ball dimension `d` has an observable space of dimension `d + 1`. -/
+def spinFactorObservableDim (ballDim : Nat) : Nat :=
+  ballDim + 1
+
+inductive DivisionAlgebraQubit where
+  | real
+  | complex
+  | quaternionic
+deriving DecidableEq, Repr
+
+def DivisionAlgebraQubit.ballDim : DivisionAlgebraQubit → Nat
+  | .real => 2
+  | .complex => 3
+  | .quaternionic => 5
+
+def DivisionAlgebraQubit.observableDim
+    (candidate : DivisionAlgebraQubit) : Nat :=
+  spinFactorObservableDim candidate.ballDim
+
+/-- Dimension of the connected stabilizer `SO(d-1)` at one pure-state axis. -/
+def spinFactorAxisStabilizerDim (ballDim : Nat) : Nat :=
+  (ballDim - 1) * (ballDim - 2) / 2
+
+def DivisionAlgebraQubit.phaseStabilizerDim
+    (candidate : DivisionAlgebraQubit) : Nat :=
+  spinFactorAxisStabilizerDim candidate.ballDim
+
+theorem matrix_qubits_match_spin_factor_observable_dimensions :
+    realObservableDim 2 = spinFactorObservableDim 2
+      ∧ complexObservableDim 2 = spinFactorObservableDim 3
+      ∧ quaternionicObservableDim 2 = spinFactorObservableDim 5 := by
+  decide
+
+theorem division_algebra_qubit_phase_stabilizer_dimensions :
+    DivisionAlgebraQubit.real.phaseStabilizerDim = 0
+      ∧ DivisionAlgebraQubit.complex.phaseStabilizerDim = 1
+      ∧ DivisionAlgebraQubit.quaternionic.phaseStabilizerDim = 6 := by
+  decide
+
+theorem one_dimensional_phase_stabilizer_selects_complex_within_family :
+    ∀ candidate : DivisionAlgebraQubit,
+      candidate.phaseStabilizerDim = 1 ↔
+        candidate = DivisionAlgebraQubit.complex := by
+  intro candidate
+  cases candidate <;> decide
+
+def spinFactorLocallyTomographicCompositeDim (ballDim : Nat) : Nat :=
+  spinFactorObservableDim ballDim * spinFactorObservableDim ballDim
+
+theorem standard_qubit_composite_dimension_probe :
+    realObservableDim 4 ≠ spinFactorLocallyTomographicCompositeDim 2
+      ∧ complexObservableDim 4 = spinFactorLocallyTomographicCompositeDim 3
+      ∧ quaternionicObservableDim 4 ≠
+        spinFactorLocallyTomographicCompositeDim 5 := by
+  decide
+
+theorem standard_qubit_composite_dimension_values :
+    realObservableDim 4 = 10
+      ∧ spinFactorLocallyTomographicCompositeDim 2 = 9
+      ∧ complexObservableDim 4 = 16
+      ∧ spinFactorLocallyTomographicCompositeDim 3 = 16
+      ∧ quaternionicObservableDim 4 = 28
+      ∧ spinFactorLocallyTomographicCompositeDim 5 = 36 := by
+  decide
+
+/-- Observable dimension of the exceptional Albert algebra `H₃(O)`. -/
+def exceptionalJordanObservableDim : Nat := 27
+
+def exceptionalJordanLocallyTomographicCompositeBurden : Nat :=
+  exceptionalJordanObservableDim * exceptionalJordanObservableDim
+
+theorem exceptional_jordan_local_composite_burden_is_729 :
+    exceptionalJordanLocallyTomographicCompositeBurden = 729 := by
+  rfl
+
+inductive JordanSpinFactorFinding where
+  | matrixQubitsMatchSpinFactorDimensions
+  | phaseDimensionSelectsComplexOnlyWithinRCHFamily
+  | standardCompositeDimensionsRejectRealAndQuaternionic
+  | squareBitPreventsDimensionGateUniqueness
+  | exceptionalJordanCompositeRemainsOpen
+deriving DecidableEq, Repr
+
+def jordanSpinFactorFindings : List JordanSpinFactorFinding :=
+  [ .matrixQubitsMatchSpinFactorDimensions,
+    .phaseDimensionSelectsComplexOnlyWithinRCHFamily,
+    .standardCompositeDimensionsRejectRealAndQuaternionic,
+    .squareBitPreventsDimensionGateUniqueness,
+    .exceptionalJordanCompositeRemainsOpen ]
+
+theorem jordan_spin_factor_finding_count :
+    jordanSpinFactorFindings.length = 5 := by
+  rfl
+
+inductive JordanSpinFactorOpenObligation where
+  | proveOrRefuteUniversalSpinFactorPurification
+  | constructSquareBitPhaseGroupAndPurificationProbe
+  | classifyExceptionalJordanCompositeCompatibility
+  | deriveCompositeRuleWithoutTargetTensorImport
+  | scopeTomographyAcrossGaugeSuperselectionSectors
+  | deriveBornPairingFromOperationalPrimitives
+deriving DecidableEq, Repr
+
+def jordanSpinFactorOpenObligations : List JordanSpinFactorOpenObligation :=
+  [ .proveOrRefuteUniversalSpinFactorPurification,
+    .constructSquareBitPhaseGroupAndPurificationProbe,
+    .classifyExceptionalJordanCompositeCompatibility,
+    .deriveCompositeRuleWithoutTargetTensorImport,
+    .scopeTomographyAcrossGaugeSuperselectionSectors,
+    .deriveBornPairingFromOperationalPrimitives ]
+
+theorem jordan_spin_factor_open_obligation_count :
+    jordanSpinFactorOpenObligations.length = 6 := by
+  rfl
+
+end JordanSpinFactorProbe
+
+/-- Single-system and dimension gates do not yet isolate complex QM globally. -/
+def jordanSpinFactorPrimitiveSearchStatus : QmResearchTaskStatus :=
+  QmResearchTaskStatus.blocked
+
+theorem jordan_spin_factor_probe_keeps_exact_qm_blocked :
+    jordanSpinFactorPrimitiveSearchStatus = QmResearchTaskStatus.blocked := by
+  rfl
+
+def jordanSpinFactorClaimBoundary : String :=
+  "complex selected only inside the R/C/H qubit family; all-GPT uniqueness remains open"
+
 end V8
 end MetaLang
 end IDT
