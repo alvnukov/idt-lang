@@ -81,21 +81,121 @@ theorem quadratic_pair_history_allows_destructive_interference :
       pairHistoryQuadraticWeight (-1) = 1 := by
   norm_num [pairHistoryQuadraticWeight]
 
+/--
+The exact finite signature checked above. It is deliberately weaker than a
+quantum reconstruction: it asks only for nonnegative weight, zero third-order
+interference, multiplicative product weight, and one nonadditive two-path
+witness.
+-/
+structure PairHistoryFiniteGateWitness (Amplitude : Type) where
+  add : Amplitude → Amplitude → Amplitude
+  mul : Amplitude → Amplitude → Amplitude
+  weight : Amplitude → ℤ
+  weightNonnegative : ∀ amplitude, 0 ≤ weight amplitude
+  sorkinI3Zero : ∀ a b c,
+    weight (add (add a b) c) - weight (add a b) -
+      weight (add a c) - weight (add b c) +
+      weight a + weight b + weight c = 0
+  productFactorizes : ∀ left right,
+    weight (mul left right) = weight left * weight right
+  hasTwoPathInterference : ∃ a b,
+    weight (add a b) ≠ weight a + weight b
+
+def signedScalarPairHistoryGate : PairHistoryFiniteGateWitness ℤ where
+  add := (· + ·)
+  mul := (· * ·)
+  weight := pairHistoryQuadraticWeight
+  weightNonnegative := quadratic_pair_history_weight_is_nonnegative
+  sorkinI3Zero := by
+    intro a b c
+    simp only [pairHistoryQuadraticWeight]
+    ring
+  productFactorizes := quadratic_pair_history_product_factorizes
+  hasTwoPathInterference := by
+    refine ⟨1, 1, ?_⟩
+    norm_num [pairHistoryQuadraticWeight]
+
+structure GaussianHistoryAmplitude where
+  re : ℤ
+  im : ℤ
+deriving DecidableEq, Repr
+
+def gaussianHistoryAdd
+    (left right : GaussianHistoryAmplitude) : GaussianHistoryAmplitude :=
+  ⟨left.re + right.re, left.im + right.im⟩
+
+def gaussianHistoryMul
+    (left right : GaussianHistoryAmplitude) : GaussianHistoryAmplitude :=
+  ⟨left.re * right.re - left.im * right.im,
+   left.re * right.im + left.im * right.re⟩
+
+def gaussianHistoryWeight (amplitude : GaussianHistoryAmplitude) : ℤ :=
+  amplitude.re ^ 2 + amplitude.im ^ 2
+
+def gaussianPairHistoryGate :
+    PairHistoryFiniteGateWitness GaussianHistoryAmplitude where
+  add := gaussianHistoryAdd
+  mul := gaussianHistoryMul
+  weight := gaussianHistoryWeight
+  weightNonnegative := by
+    intro amplitude
+    simp only [gaussianHistoryWeight]
+    positivity
+  sorkinI3Zero := by
+    intro a b c
+    rcases a with ⟨aRe, aIm⟩
+    rcases b with ⟨bRe, bIm⟩
+    rcases c with ⟨cRe, cIm⟩
+    simp only [gaussianHistoryAdd, gaussianHistoryWeight]
+    ring
+  productFactorizes := by
+    intro left right
+    rcases left with ⟨leftRe, leftIm⟩
+    rcases right with ⟨rightRe, rightIm⟩
+    simp only [gaussianHistoryMul, gaussianHistoryWeight]
+    ring
+  hasTwoPathInterference := by
+    refine ⟨⟨1, 0⟩, ⟨1, 0⟩, ?_⟩
+    norm_num [gaussianHistoryAdd, gaussianHistoryWeight]
+
+def gaussianUnitSamples : List GaussianHistoryAmplitude :=
+  [⟨1, 0⟩, ⟨-1, 0⟩, ⟨0, 1⟩, ⟨0, -1⟩]
+
+theorem gaussian_gate_has_four_distinct_unit_weight_samples :
+    gaussianUnitSamples.Nodup ∧
+      gaussianUnitSamples.map gaussianHistoryWeight = [1, 1, 1, 1] := by
+  decide
+
+theorem signed_scalar_unit_weight_is_only_a_sign
+    (amplitude : ℤ)
+    (unitWeight : pairHistoryQuadraticWeight amplitude = 1) :
+    amplitude = 1 ∨ amplitude = -1 := by
+  simp only [pairHistoryQuadraticWeight] at unitWeight
+  have factorization : (amplitude - 1) * (amplitude + 1) = 0 := by
+    nlinarith
+  rcases mul_eq_zero.mp factorization with positive | negative
+  · left
+    omega
+  · right
+    omega
+
 inductive PairHistoryMeasureFinding where
   | pairwiseWeightForcesZeroI3
   | signedQuadraticWeightAllowsTwoPathInterference
   | quadraticWeightIsNonnegative
   | independentAmplitudeProductFactorizes
+  | currentGatesUnderdetermineAmplitudeCarrier
 deriving DecidableEq, Repr
 
 def pairHistoryMeasureFindings : List PairHistoryMeasureFinding :=
   [ .pairwiseWeightForcesZeroI3,
     .signedQuadraticWeightAllowsTwoPathInterference,
     .quadraticWeightIsNonnegative,
-    .independentAmplitudeProductFactorizes ]
+    .independentAmplitudeProductFactorizes,
+    .currentGatesUnderdetermineAmplitudeCarrier ]
 
-theorem pair_history_measure_probe_records_four_findings :
-    pairHistoryMeasureFindings.length = 4 := by
+theorem pair_history_measure_probe_records_five_findings :
+    pairHistoryMeasureFindings.length = 5 := by
   rfl
 
 inductive PairHistoryMeasureOpenObligation where
@@ -119,9 +219,9 @@ theorem pair_history_measure_probe_keeps_five_open_obligations :
   rfl
 
 def pairHistoryMeasureProbeStatus : String :=
-  "finite_pair_history_mechanism_only"
+  "pair_history_gates_underdetermine_amplitude_carrier"
 
 def pairHistoryMeasureProbeClaimBoundary : String :=
-  "Does not derive the pair functional, Hilbert space, the Born rule, full QM, the Standard Model, or gravity."
+  "Two inequivalent finite amplitude carriers pass the current gates. The probe does not derive the pair functional, select complex quantum theory, or prove the Born rule, full QM, the Standard Model, or gravity."
 
 end IDT.QMClosure
