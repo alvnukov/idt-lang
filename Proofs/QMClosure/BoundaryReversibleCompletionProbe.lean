@@ -183,12 +183,100 @@ def boundaryCompletionFiniteSeparator : BoundaryCompletionFiniteSeparator :=
       complex_qubit_passes_local_tomography_dimension
   }
 
+/--
+Raw boundary completion, before probability or convexity is available. The
+structure requires concrete completion and reversible hidden-boundary
+transport for every state; it does not merely store abstract proposition flags.
+-/
+structure UniversalEquivalentSystemCompletion (State Pure : Type) where
+  marginal : Pure → State
+  canonicalCompletion : State → Pure
+  canonicalCompletes : ∀ state,
+    marginal (canonicalCompletion state) = state
+  hiddenRewrite : Pure → Pure → Pure → Pure
+  hiddenRewriteRelates : ∀ first second,
+    marginal first = marginal second →
+      hiddenRewrite first second first = second
+  hiddenRewriteReversible : ∀ first second,
+    Function.Involutive (hiddenRewrite first second)
+
+def boolBoundaryMarginal (value : Bool × Bool) : Bool :=
+  value.1
+
+def boolBoundaryCompletion (state : Bool) : Bool × Bool :=
+  (state, false)
+
+def boolHiddenBoundaryRewrite
+    (first second value : Bool × Bool) : Bool × Bool :=
+  if first.2 = second.2 then value else (value.1, !value.2)
+
+theorem bool_hidden_boundary_rewrite_relates_equal_marginals
+    (first second : Bool × Bool)
+    (sameMarginal : boolBoundaryMarginal first = boolBoundaryMarginal second) :
+    boolHiddenBoundaryRewrite first second first = second := by
+  rcases first with ⟨firstState, firstHidden⟩
+  rcases second with ⟨secondState, secondHidden⟩
+  simp only [boolBoundaryMarginal] at sameMarginal
+  subst secondState
+  cases firstHidden <;> cases secondHidden <;>
+    simp [boolHiddenBoundaryRewrite]
+
+theorem bool_hidden_boundary_rewrite_is_involutive
+    (first second : Bool × Bool) :
+    Function.Involutive (boolHiddenBoundaryRewrite first second) := by
+  intro value
+  by_cases sameHidden : first.2 = second.2
+  · simp [boolHiddenBoundaryRewrite, sameHidden]
+  · simp [boolHiddenBoundaryRewrite, sameHidden]
+
+def boolUniversalBoundaryCompletion :
+    UniversalEquivalentSystemCompletion Bool (Bool × Bool) :=
+  {
+    marginal := boolBoundaryMarginal
+    canonicalCompletion := boolBoundaryCompletion
+    canonicalCompletes := by
+      intro state
+      rfl
+    hiddenRewrite := boolHiddenBoundaryRewrite
+    hiddenRewriteRelates :=
+      bool_hidden_boundary_rewrite_relates_equal_marginals
+    hiddenRewriteReversible :=
+      bool_hidden_boundary_rewrite_is_involutive
+  }
+
+structure RawBoundaryCompletionCandidate where
+  State : Type
+  Pure : Type
+  completion : UniversalEquivalentSystemCompletion State Pure
+  observableDimension : Nat → Nat
+
+def boolRealProfileBoundaryCandidate : RawBoundaryCompletionCandidate :=
+  {
+    State := Bool
+    Pure := Bool × Bool
+    completion := boolUniversalBoundaryCompletion
+    observableDimension := realObservableDim
+  }
+
+def RawBoundaryCompletionCandidate.PassesLocalTomographyDimension
+    (candidate : RawBoundaryCompletionCandidate) : Prop :=
+  LocallyTomographicDimensionAt candidate.observableDimension 2 2
+
+theorem raw_boundary_completion_does_not_force_local_tomography :
+    ¬ ∀ candidate : RawBoundaryCompletionCandidate,
+      candidate.PassesLocalTomographyDimension := by
+  intro forced
+  exact real_qubit_fails_local_tomography_dimension
+    (forced boolRealProfileBoundaryCandidate)
+
 inductive BoundaryCompletionProbeFinding where
   | classicalPassesLocalDimensionButFailsPurification
   | sampleAmplitudePurificationExistsAndIsReversiblyRelated
   | realAndQuaternionicProfilesFailLocalDimension
   | complexProfilePassesBothFiniteScreens
   | ambientProbabilityAndCompositionRemainImported
+  | rawBoundaryCompletionDoesNotForceLocalTomography
+  | twoPostulateCausalOperationalTargetRemainsConditional
 deriving DecidableEq, Repr
 
 def boundaryCompletionProbeFindings : List BoundaryCompletionProbeFinding :=
@@ -196,16 +284,19 @@ def boundaryCompletionProbeFindings : List BoundaryCompletionProbeFinding :=
     .sampleAmplitudePurificationExistsAndIsReversiblyRelated,
     .realAndQuaternionicProfilesFailLocalDimension,
     .complexProfilePassesBothFiniteScreens,
-    .ambientProbabilityAndCompositionRemainImported ]
+    .ambientProbabilityAndCompositionRemainImported,
+    .rawBoundaryCompletionDoesNotForceLocalTomography,
+    .twoPostulateCausalOperationalTargetRemainsConditional ]
 
-theorem boundary_completion_probe_records_five_findings :
-    boundaryCompletionProbeFindings.length = 5 := by
+theorem boundary_completion_probe_records_seven_findings :
+    boundaryCompletionProbeFindings.length = 7 := by
   rfl
 
 inductive BoundaryCompletionOpenObligation where
+  | derivePurityAndConvexityFromRewriteSubstrate
   | deriveOperationalProbabilitiesFromRewriteSubstrate
   | deriveLocalEquivalenceFromBoundaryExtensionality
-  | proveUniversalEquivalentSystemPurification
+  | proveUniversalEquivalentSystemPurificationInsideCausalTheory
   | liftFiniteDimensionScreenToUniversalCarrierSelection
   | deriveFieldLocalityAndStandardModelSector
   | deriveDynamicalSpacetimeGeometry
@@ -213,21 +304,22 @@ deriving DecidableEq, Repr
 
 def boundaryCompletionOpenObligations :
     List BoundaryCompletionOpenObligation :=
-  [ .deriveOperationalProbabilitiesFromRewriteSubstrate,
+  [ .derivePurityAndConvexityFromRewriteSubstrate,
+    .deriveOperationalProbabilitiesFromRewriteSubstrate,
     .deriveLocalEquivalenceFromBoundaryExtensionality,
-    .proveUniversalEquivalentSystemPurification,
+    .proveUniversalEquivalentSystemPurificationInsideCausalTheory,
     .liftFiniteDimensionScreenToUniversalCarrierSelection,
     .deriveFieldLocalityAndStandardModelSector,
     .deriveDynamicalSpacetimeGeometry ]
 
-theorem boundary_completion_probe_keeps_six_open_obligations :
-    boundaryCompletionOpenObligations.length = 6 := by
+theorem boundary_completion_probe_keeps_seven_open_obligations :
+    boundaryCompletionOpenObligations.length = 7 := by
   rfl
 
 def boundaryCompletionProbeStatus : String :=
-  "finite_separator_hit_universal_derivation_open"
+  "raw_boundary_completion_rejected_two_postulate_operational_target_retained"
 
 def boundaryCompletionProbeClaimBoundary : String :=
-  "The finite separator matches the expected classical/real/complex pattern, but does not derive the operational-probabilistic framework, universal complex quantum theory, the Standard Model, or gravity from local rewrites."
+  "Raw reversible boundary completion is insufficient: a concrete universal completion model fails local tomography. Local equivalence plus equivalent-system purification remains a conditional finite-dimensional causal-OPT reconstruction target, not a substrate derivation or a proof of the Standard Model or gravity."
 
 end IDT.QMClosure
