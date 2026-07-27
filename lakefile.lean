@@ -90,6 +90,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.ParallelCompositionFixesScale,
     `Proofs.QMClosure.StableDistinguishabilityGivesCancellation,
     `Proofs.QMClosure.BornSurvivesTheThreeDemands,
+    `Proofs.QMClosure.InterferenceOrderSelectsTheExponent,
     `Proofs.QMClosure.QMSemanticKernelRoute,
     `Proofs.QMClosure.ProjectionScaffoldsDraft,
     `Proofs.QMClosure.ReadoutScaffoldsDraft,
