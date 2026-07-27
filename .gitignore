@@ -16,3 +16,4 @@ dist/
 build/
 *.egg-info/
 data/sparc/raw/
+build_status_report.txt
