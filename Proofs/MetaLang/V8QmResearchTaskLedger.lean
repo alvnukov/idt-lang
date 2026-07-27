@@ -1,5 +1,38 @@
+-- `Fintype` and `Fintype.card_le_of_surjective` are Mathlib, and nothing in the
+-- transitive closure of the two imports below provides them. Without this
+-- import `Fintype` is silently auto-bound as an implicit variable and the
+-- finite-polytope purification no-go does not elaborate.
+import Mathlib.Data.Fintype.Card
+
 import Proofs.MetaLang.V8CurrentFrontierBlockers
 import Proofs.QMClosure.CGSCGroundedSemanticExtensions
+
+/-!
+EMPTY_PLACEHOLDER
+
+8 of the 61 theorems in this file have conclusion `True` and therefore assert
+nothing, regardless of how they are proved:
+
+  overlap_preservation_dynamics_remains_behind_bridge_wall
+  born_wall_is_impossibility_for_b1_bridgeable_on_successor_base
+  b1_primitive_base_has_no_known_lean_inhabitant
+  born_wall_bridge_remains_pending_concrete_carrier_probe
+  born_wall_positioned_against_purification_reconstruction
+  theory_logical_coherence_audit_installed
+  idt_born_principle_remains_untested_hypothesis
+  idt_principle_for_born_is_not_a_non_circular_selector
+
+Those eight are status records, not evidence, and must not be cited as
+derivations. The remaining results in this file -- for example the
+finite-polytope purification no-go in
+`SquareBitFinitePolytopePurificationNoGo` -- are ordinary Lean proofs with
+non-trivial conclusions and are not covered by this marker.
+
+See `INVENTORY_AUDIT.md` and
+`sections/175-primitive-base-completeness-status.md`.
+
+Enforced by `scripts/check_vacuous_theorems.py`.
+-/
 
 namespace IDT
 namespace MetaLang
@@ -1747,6 +1780,123 @@ theorem square_bit_purification_phase_probe_keeps_exact_qm_blocked :
 
 def squareBitPurificationPhaseClaimBoundary : String :=
   "finite rejection of the standard maximal same-square composite; not a composite-independent square-bit no-go theorem"
+
+/-!
+Finite-polytope purification no-go (2026-07-25).
+
+This pass removes the dependence on the standard 24-vertex boxworld composite.
+For any proposed composite with `n` pure joint states, the right edge of the
+square contains `n + 1` distinct strict convex mixtures. A first-marginal map
+from `n` pure joints cannot cover those `n + 1` mixtures. Hence no finite
+polytopic composite can satisfy existence of purification for the square bit.
+
+The theorem is deliberately not an unrestricted square-bit no-go: a proposed
+non-polytopic composite may have infinitely many pure joint states, and an
+arbitrary purifying environment may have continuous reversible dynamics. Those
+possibilities require an additional structural primitive or a separate no-go.
+-/
+
+namespace SquareBitFinitePolytopePurificationNoGo
+
+/--
+For `n` proposed pure joint states, these positive weights encode `n + 1`
+strict mixtures of the two pure vertices on the right edge of the square.
+Every pair has common total weight `n + 2`.
+-/
+def squareBitRightEdgeInteriorWeights
+    (pureJointCount : Nat)
+    (index : Fin (pureJointCount + 1)) : Nat × Nat :=
+  (index.val + 1, pureJointCount - index.val + 1)
+
+theorem square_bit_right_edge_interior_weights_are_positive_and_normalized
+    (pureJointCount : Nat)
+    (index : Fin (pureJointCount + 1)) :
+    let weights := squareBitRightEdgeInteriorWeights pureJointCount index
+    0 < weights.1
+      ∧ 0 < weights.2
+      ∧ weights.1 + weights.2 = pureJointCount + 2 := by
+  dsimp [squareBitRightEdgeInteriorWeights]
+  omega
+
+/-- Distinct indices give distinct mixtures because their first weights differ. -/
+theorem square_bit_right_edge_interior_weights_are_injective
+    (pureJointCount : Nat) :
+    Function.Injective (squareBitRightEdgeInteriorWeights pureJointCount) := by
+  intro left right equalWeights
+  apply Fin.ext
+  have equalFirstWeights := congrArg Prod.fst equalWeights
+  dsimp [squareBitRightEdgeInteriorWeights] at equalFirstWeights
+  omega
+
+/--
+A finite pure-joint family cannot cover even the selected `n + 1` interior
+square-bit mixtures. This uses only finite cardinality, not Hilbert space,
+Born probabilities, a tensor product, or the standard boxworld composite.
+-/
+theorem finite_pure_joint_family_cannot_cover_selected_square_bit_mixtures
+    {PureJoint : Type}
+    [Fintype PureJoint]
+    (firstMarginal :
+      PureJoint → Fin (Fintype.card PureJoint + 1)) :
+    ¬ Function.Surjective firstMarginal := by
+  intro coverage
+  have cardinalityBound :
+      Fintype.card (Fin (Fintype.card PureJoint + 1)) ≤
+        Fintype.card PureJoint :=
+    Fintype.card_le_of_surjective firstMarginal coverage
+  simp only [Fintype.card_fin] at cardinalityBound
+  omega
+
+inductive SquareBitFinitePolytopeNoGoFinding where
+  | arbitrarilyLargeFiniteInteriorMixtureFamilies
+  | finitePureMarginalMapCannotBeSurjective
+  | everyFinitePolytopicCompositeFailsPurificationExistence
+  | nonPolytopicCompositeRemainsOpen
+deriving DecidableEq, Repr
+
+def squareBitFinitePolytopeNoGoFindings :
+    List SquareBitFinitePolytopeNoGoFinding :=
+  [ .arbitrarilyLargeFiniteInteriorMixtureFamilies,
+    .finitePureMarginalMapCannotBeSurjective,
+    .everyFinitePolytopicCompositeFailsPurificationExistence,
+    .nonPolytopicCompositeRemainsOpen ]
+
+theorem square_bit_finite_polytope_no_go_finding_count :
+    squareBitFinitePolytopeNoGoFindings.length = 4 := by
+  rfl
+
+inductive SquareBitFinitePolytopeOpenObligation where
+  | excludeInfinitePureJointComposite
+  | constrainArbitraryPurifyingEnvironment
+  | derivePurificationUniquenessFromReversibleDynamics
+  | testNonPolytopicSquareCompositeAgainstLocalTomography
+  | testNonPolytopicSquareCompositeAgainstContinuousPhase
+deriving DecidableEq, Repr
+
+def squareBitFinitePolytopeOpenObligations :
+    List SquareBitFinitePolytopeOpenObligation :=
+  [ .excludeInfinitePureJointComposite,
+    .constrainArbitraryPurifyingEnvironment,
+    .derivePurificationUniquenessFromReversibleDynamics,
+    .testNonPolytopicSquareCompositeAgainstLocalTomography,
+    .testNonPolytopicSquareCompositeAgainstContinuousPhase ]
+
+theorem square_bit_finite_polytope_open_obligation_count :
+    squareBitFinitePolytopeOpenObligations.length = 5 := by
+  rfl
+
+end SquareBitFinitePolytopePurificationNoGo
+
+/-- Finite-polytopic composites are rejected; the unrestricted route stays open. -/
+def squareBitFinitePolytopeNoGoResearchStatus : QmResearchTaskStatus :=
+  QmResearchTaskStatus.blocked
+
+theorem square_bit_finite_polytope_no_go_keeps_exact_qm_blocked :
+    squareBitFinitePolytopeNoGoResearchStatus = QmResearchTaskStatus.blocked := by
+  rfl
+
+def squareBitFinitePolytopeNoGoClaimBoundary : String :=
+  "composite-independent over finite pure-joint families only; infinite non-polytopic composites and arbitrary environments remain open"
 
 end V8
 end MetaLang
