@@ -88,6 +88,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.OrderDeterminedReadoutNoGo,
     `Proofs.QMClosure.CoarseGrainingDoesNotFixScale,
     `Proofs.QMClosure.ParallelCompositionFixesScale,
+    `Proofs.QMClosure.StableDistinguishabilityGivesCancellation,
     `Proofs.QMClosure.QMSemanticKernelRoute,
     `Proofs.QMClosure.ProjectionScaffoldsDraft,
     `Proofs.QMClosure.ReadoutScaffoldsDraft,
