@@ -13,6 +13,10 @@ lean_exe idt_v8_protocol_status where
 lean_exe idt_v8_experiment_protocols where
   root := `Experiments.V8ExperimentProtocolRegistry
 
+-- Without this, `lake build` has no default target and reports
+-- "Build completed successfully (0 jobs)" without compiling anything, so a
+-- broken Lean file can sit in the tree indefinitely and still look green.
+@[default_target]
 lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
@@ -129,5 +133,23 @@ lean_lib Proofs where
     `Proofs.QMClosure.ExclusivityAdditivityProof,
     `Proofs.QMClosure.CoarseGrainingConsistencyProof,
     `Proofs.QMClosure.OperationalEquivalenceProbabilityProof,
-    `Proofs.QMClosure.ContextNormalizationProof
+    `Proofs.QMClosure.ContextNormalizationProof,
+
+    -- Previously in no target at all, so `lake build` could not reach them and
+    -- INVENTORY_AUDIT.md recorded them as "never compiled". They all compile;
+    -- the gap was the lakefile. Two back registered proof cards
+    -- (`projective_action`, and the `overlap_preservation_dynamics` bridge
+    -- wall), so leaving them unbuilt was not harmless.
+    `Proofs.MetaLang.V8PrimitiveEmpiricalConstraintLedger,
+    `Proofs.QMClosure.BoundaryReversibleCompletionProbe,
+    `Proofs.QMClosure.ContextFirstBellCountermodel,
+    `Proofs.QMClosure.ContextFirstReadoutUnderdeterminationProbe,
+    `Proofs.QMClosure.ContextualNoSignallingPRCountermodel,
+    `Proofs.QMClosure.OrientedRelationalProcessCountermodel,
+    `Proofs.QMClosure.OverlapPreservationDynamicsProof,
+    `Proofs.QMClosure.PairHistoryMeasureProbe,
+    `Proofs.QMClosure.ProjectiveActionProof,
+    `Proofs.QMClosure.StringTheoryPrimitiveHintAudit,
+    `Proofs.QMClosure.TwoPostulateReconstructionImportAudit,
+    `Proofs.QMClosure.TypedRewriteStructureUnderdeterminationProbe
   ]

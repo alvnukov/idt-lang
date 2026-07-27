@@ -1,3 +1,5 @@
+import Proofs.QMClosure.V7PositiveComparisonGeometry
+
 /-!
 EMPTY_PLACEHOLDER
 
@@ -10,8 +12,6 @@ See `INVENTORY_AUDIT.md` and
 
 Enforced by `scripts/check_vacuous_theorems.py`.
 -/
-
-import Proofs.QMClosure.V7PositiveComparisonGeometry
 
 /-!
 V7 Metric Geometry Projection.
@@ -33,22 +33,31 @@ def Ctx := Bool
 def Alt := Bool
 
 -- Clock chains: stable fact-producing cycles
+-- The three antecedents below were written as `theorem X : True := trivial` and
+-- then used as hypothesis types in `metricGeometryProjection`. A theorem is a
+-- proof term, not a proposition, so that did not typecheck and this file never
+-- compiled. Each is now a named Prop plus the trivial theorem that was already
+-- here. They still reduce to `True` and still assert nothing.
+
 -- Follows from B0's inheritance structure
-theorem clockChainsFromB0 :
-  -- Inheritance transitions form stable cycles
-  True := trivial
+def ClockChainsFromB0 : Prop := True
 
 -- Source response: inherited activity response
 -- Follows from B0's inheritance and facticization
-theorem sourceResponseFromB0 :
-  -- Source weight defined from inheritance
-  True := trivial
+def SourceResponseFromB0 : Prop := True
 
 -- Coarse-graining: scale-separated projection
 -- Follows from B0's presheaf structure
-theorem coarseGrainingFromB0 :
-  -- Stability under refinement
-  True := trivial
+def CoarseGrainingFromB0 : Prop := True
+
+-- Inheritance transitions form stable cycles
+theorem clockChainsFromB0 : ClockChainsFromB0 := trivial
+
+-- Source weight defined from inheritance
+theorem sourceResponseFromB0 : SourceResponseFromB0 := trivial
+
+-- Stability under refinement
+theorem coarseGrainingFromB0 : CoarseGrainingFromB0 := trivial
 
 -- Metric geometry result
 def MetricGeometry : Prop := True
@@ -57,9 +66,9 @@ def MetricGeometry : Prop := True
 theorem metricGeometryProjection :
   -- B0 + clock chains + source response + coarse-graining
   -- => metric-like geometry
-  clockChainsFromB0 →
-  sourceResponseFromB0 →
-  coarseGrainingFromB0 →
+  ClockChainsFromB0 →
+  SourceResponseFromB0 →
+  CoarseGrainingFromB0 →
   MetricGeometry :=
   fun _ _ _ => trivial
 

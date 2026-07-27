@@ -1,3 +1,5 @@
+import Mathlib.Tactic
+
 /-!
 EMPTY_PLACEHOLDER
 
@@ -10,8 +12,6 @@ See `INVENTORY_AUDIT.md` and
 
 Enforced by `scripts/check_vacuous_theorems.py`.
 -/
-
-import Mathlib.Tactic
 
 /-!
 V7 Dimension Analysis.

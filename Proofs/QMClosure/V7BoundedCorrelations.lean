@@ -28,8 +28,13 @@ def Alt := Bool
 def I : Ctx → Ctx → Alt → Prop := fun _ _ _ => True
 def D : Ctx → Alt → Alt → Prop := fun _ _ _ => True
 
--- F: facticization stability axiom
-axiom facticizationStability : True
+-- F: facticization stability.
+-- Was `axiom facticizationStability : True`, which is a proof term, not a
+-- proposition, so `facticizationStability → True` below did not typecheck and
+-- this file never compiled. Stated as a Prop alias instead: it postulates
+-- nothing either way, and as an alias the vacuity is visible to
+-- `scripts/check_vacuous_theorems.py`.
+def FacticizationStability : Prop := True
 
 -- Bounded correlations: no superquantum composition
 -- This follows from F (no negative facticization weights)
@@ -51,7 +56,7 @@ theorem tsirelsonLike :
 -- Because boxworld requires negative facticization weights
 theorem boxworldRejected :
   -- F blocks boxworld correlations
-  facticizationStability → True :=
+  FacticizationStability → True :=
   fun _ => trivial
 
 def status : String := "derived_from_B0_F"

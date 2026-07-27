@@ -5,7 +5,10 @@ V7 Positive Comparison Geometry for 2 Alternatives.
 namespace IDT
 namespace QMClosure
 
-def Real := Rat
+-- Not the reals: this file works over `Rat` and never imported Mathlib.
+-- Was `def Real := Rat`, which is irreducible for instance search, so `*`, `≥`
+-- and the literal `0` below had no instances and this file never compiled.
+abbrev Real := Rat
 
 structure CompForm2 where
   a : Real

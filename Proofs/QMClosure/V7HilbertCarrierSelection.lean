@@ -1,4 +1,20 @@
 /-!
+This file used to open with
+
+    import Proofs.QMClosure.V7PositiveComparisonGeometry
+    import Proofs.QMClosure.V7ProductContextExhaustion
+    import Proofs.QMClosure.V7LocalTomography
+    import Proofs.QMClosure.V7BoundedCorrelations
+
+but referenced no name from any of them: every antecedent below is declared
+locally, from scratch, as `True`. The imports were also mutually inconsistent --
+`V7ProductContextExhaustion` and `V7LocalTomography` each declare
+`IDT.QMClosure.Ctx`, so importing both is a duplicate-declaration error and this
+file never compiled. They are removed rather than repaired, because repairing
+them would suggest a derivation dependency that the Lean below does not have.
+-/
+
+/-!
 EMPTY_PLACEHOLDER
 
 One or more theorems in this file have conclusion `True` and therefore assert
@@ -10,11 +26,6 @@ See `INVENTORY_AUDIT.md` and
 
 Enforced by `scripts/check_vacuous_theorems.py`.
 -/
-
-import Proofs.QMClosure.V7PositiveComparisonGeometry
-import Proofs.QMClosure.V7ProductContextExhaustion
-import Proofs.QMClosure.V7LocalTomography
-import Proofs.QMClosure.V7BoundedCorrelations
 
 /-!
 V7 Hilbert Carrier Selection.
@@ -35,14 +46,26 @@ namespace QMClosure
 axiom facticizationNonneg :
   ∀ (G : Prop) (v : Prop), True
 
--- Product-context exhaustion (proved from B0)
-theorem pce_from_B0 : True := trivial
+-- The three antecedents below were written as `theorem X : True := trivial` and
+-- then used as hypothesis types in `hilbertCarrierSelection`. A theorem is a
+-- proof term, not a proposition, so that did not typecheck. Each is now a named
+-- Prop plus the trivial theorem that was already here. They still reduce to
+-- `True` and still assert nothing.
 
--- Local tomography (proved from B0)
-theorem lt_from_B0 : True := trivial
+-- Product-context exhaustion (claimed from B0)
+def PceFromB0 : Prop := True
 
--- Bounded correlations (proved from B0 + F)
-theorem bc_from_B0_F : True := trivial
+-- Local tomography (claimed from B0)
+def LtFromB0 : Prop := True
+
+-- Bounded correlations (claimed from B0 + F)
+def BcFromB0F : Prop := True
+
+theorem pce_from_B0 : PceFromB0 := trivial
+
+theorem lt_from_B0 : LtFromB0 := trivial
+
+theorem bc_from_B0_F : BcFromB0F := trivial
 
 -- Complex Hilbert pressure
 def ComplexHilbertPressure : Prop := True
@@ -52,7 +75,7 @@ def ComplexHilbertPressure : Prop := True
 -- => complex Hilbert-like carrier pressure
 theorem hilbertCarrierSelection :
   -- All conditions met
-  pce_from_B0 → lt_from_B0 → bc_from_B0_F →
+  PceFromB0 → LtFromB0 → BcFromB0F →
   -- Therefore complex Hilbert pressure
   ComplexHilbertPressure :=
   fun _ _ _ => trivial
