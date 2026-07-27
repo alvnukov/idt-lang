@@ -87,6 +87,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.B1PrimitiveBaseRankThreeWall,
     `Proofs.QMClosure.OrderDeterminedReadoutNoGo,
     `Proofs.QMClosure.CoarseGrainingDoesNotFixScale,
+    `Proofs.QMClosure.ParallelCompositionFixesScale,
     `Proofs.QMClosure.QMSemanticKernelRoute,
     `Proofs.QMClosure.ProjectionScaffoldsDraft,
     `Proofs.QMClosure.ReadoutScaffoldsDraft,
