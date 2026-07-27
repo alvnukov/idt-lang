@@ -26,6 +26,8 @@ from scripts.evaluate_full_qm_proof_closure import (
     OBLIGATIONS,
     ProofArtifact,
     ProofObligation,
+    _expand_local_imports,
+    _structural_pattern_in_body,
     _word_in_body,
     artifact_mentions_forbidden_import,
     artifact_strength_rank,
@@ -559,30 +561,73 @@ class ForbiddenImportMappingCoverageTests(unittest.TestCase):
 
 
 class LiveManifestForbiddenImportScanTests(unittest.TestCase):
-    """End-to-end: against the live manifest, the four Born-readout + one
-    projective_action machine-checked cards must all pass the body scan.
+    """End-to-end scan of the five machine-checked cards against the live manifest.
 
-    This is the test that would catch a future edit that adds forbidden
-    Mathlib machinery to a proof body while the card still claims a clean
-    forbidden-import contract.
+    History: this class previously asserted that all five cards pass the body
+    scan. The inventory audit recorded in ``INVENTORY_AUDIT.md`` showed that
+    assertion was an artifact of the scan's coverage, not of the proofs. The
+    scan matched named Mathlib types only, while three of the five artifacts
+    build a complex sesquilinear form by hand:
+
+        variable (W : H -> C)
+        variable (Gamma : H -> H -> C)
+        sum over A, sum over A, W h * star (W h') * Gamma h h'
+
+    That is the Hilbert structure without the name, and
+    ``01-primitives.md`` already classifies ``W : H -> C`` as a QM carrier
+    import. With the structural-pattern layer in place the scan reports it.
+
+    The expectation below is therefore inverted for those three cards. It is
+    not a regression: it is the scan finally seeing what was always there.
+    Removing the flag requires rebuilding those proofs without complex
+    amplitudes, not weakening the scan.
     """
 
     LIVE_MANIFEST = REPO_ROOT / "theory_verifier_manifest.json"
+
+    # Cards whose Lean artifact carries a hand-rolled complex sesquilinear
+    # structure, directly or through a local import.
+    CARRIER_IMPORTING_CARDS = {
+        "exclusivity_additivity": "hilbert_space",
+        "coarse_graining_consistency": "hilbert_space",
+        # inherits actualizationMeasure via
+        # `import Proofs.QMClosure.ExclusivityAdditivityProof`
+        "operational_equivalence_probability": "hilbert_space",
+    }
+
+    # Cards that remain clean: context_normalization is real-valued, and
+    # projective_action uses no complex carrier.
+    CLEAN_CARDS = ("context_normalization", "projective_action")
 
     @unittest.skipUnless(
         LIVE_MANIFEST.is_file(),
         "live manifest not present; run from repo root",
     )
-    def test_five_machine_checked_cards_pass_body_scan(self) -> None:
+    def test_carrier_importing_cards_are_flagged(self) -> None:
         registry = build_artifact_registry(self.LIVE_MANIFEST)
-        expected_proved = (
-            "context_normalization",
-            "exclusivity_additivity",
-            "coarse_graining_consistency",
-            "operational_equivalence_probability",
-            "projective_action",
-        )
-        for obligation_id in expected_proved:
+        for obligation_id, expected_token in self.CARRIER_IMPORTING_CARDS.items():
+            self.assertIn(obligation_id, registry)
+            artifact = registry[obligation_id]
+            obligation = next(o for o in OBLIGATIONS if o.id == obligation_id)
+            self.assertEqual(
+                artifact_mentions_forbidden_import(artifact, obligation),
+                expected_token,
+                msg=(
+                    f"{obligation_id} builds a complex sesquilinear form by "
+                    "hand and must be reported as importing "
+                    f"{expected_token!r}. If this proof is rebuilt without "
+                    "complex amplitudes, move it to CLEAN_CARDS rather than "
+                    "relaxing the scan."
+                ),
+            )
+
+    @unittest.skipUnless(
+        LIVE_MANIFEST.is_file(),
+        "live manifest not present; run from repo root",
+    )
+    def test_clean_cards_pass_body_scan(self) -> None:
+        registry = build_artifact_registry(self.LIVE_MANIFEST)
+        for obligation_id in self.CLEAN_CARDS:
             self.assertIn(obligation_id, registry)
             artifact = registry[obligation_id]
             obligation = next(o for o in OBLIGATIONS if o.id == obligation_id)
@@ -593,9 +638,54 @@ class LiveManifestForbiddenImportScanTests(unittest.TestCase):
                     f"{obligation_id} body scan flagged forbidden token "
                     f"{flagged!r}; the Lean artifact must not invoke "
                     "InnerProductSpace / PositiveSemidefinite / IsUnitary / "
-                    "TensorProduct / etc."
+                    "TensorProduct / etc., nor build them by hand."
                 ),
             )
+
+
+class StructuralPatternScanTests(unittest.TestCase):
+    """Layer-3 structural scan: hand-built machinery and local-import inheritance."""
+
+    def test_complex_sesquilinear_form_is_detected(self) -> None:
+        body = (
+            "variable (W : H → ℂ)\n"
+            "def m (A : Finset H) : ℂ :=\n"
+            "  ∑ h ∈ A, ∑ h' ∈ A, W h * star (W h') * Γ h h'\n"
+        )
+        self.assertTrue(_structural_pattern_in_body("SESQUILINEAR", body))
+
+    def test_real_valued_double_sum_is_not_sesquilinear(self) -> None:
+        body = "def m (A : Finset H) : ℝ := ∑ h ∈ A, ∑ h' ∈ A, W h * W h' * Γ h h'\n"
+        self.assertFalse(_structural_pattern_in_body("SESQUILINEAR", body))
+
+    def test_lone_star_is_not_enough(self) -> None:
+        self.assertFalse(_structural_pattern_in_body("SESQUILINEAR", "star x"))
+
+    def test_hand_written_psd_form_is_detected(self) -> None:
+        body = (
+            "def Stability (Γ : H → H → ℝ) : Prop :=\n"
+            "  ∀ (v : H → ℝ), ∑ h, ∑ h', v h * v h' * Γ h h' ≥ 0\n"
+        )
+        self.assertTrue(_structural_pattern_in_body("PSD_FORM", body))
+
+    def test_unknown_pattern_key_is_false(self) -> None:
+        self.assertFalse(_structural_pattern_in_body("NO_SUCH_PATTERN", "anything"))
+
+    def test_local_import_body_is_expanded(self) -> None:
+        body = "import Proofs.QMClosure.ExclusivityAdditivityProof\n"
+        expanded = _expand_local_imports(body, REPO_ROOT)
+        self.assertIn("actualizationMeasure", expanded)
+        self.assertTrue(_structural_pattern_in_body("SESQUILINEAR", expanded))
+
+    def test_missing_local_import_is_skipped(self) -> None:
+        body = "import Proofs.QMClosure.NoSuchModule\n"
+        self.assertEqual(
+            _expand_local_imports(body, REPO_ROOT).strip(), body.strip()
+        )
+
+    def test_import_cycle_terminates(self) -> None:
+        body = "import Proofs.IDTCore\nimport Proofs.IDTCore\n"
+        self.assertIsInstance(_expand_local_imports(body, REPO_ROOT), str)
 
 
 if __name__ == "__main__":

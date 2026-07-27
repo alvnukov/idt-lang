@@ -329,6 +329,113 @@ FORBIDDEN_IMPORT_BODY_SYMBOLS: dict[str, tuple[str, ...]] = {
     ),
 }
 
+# Structural patterns for hand-rolled forbidden machinery.
+#
+# ``FORBIDDEN_IMPORT_BODY_SYMBOLS`` above matches *named Mathlib types*. That is
+# necessary but not sufficient: an artifact can build the same mathematical
+# object from primitive pieces and never mention the type name. The audit in
+# ``INVENTORY_AUDIT.md`` found exactly this. For example
+# ``ExclusivityAdditivityProof.lean`` declares
+# ``Forbidden imports: born_rule, kolmogorov_axioms_assumed, hilbert_space``
+# while defining
+#
+#     variable (W : H -> C)
+#     variable (Gamma : H -> H -> C)
+#     sum over A, sum over A, W h * star (W h') * Gamma h h'
+#
+# which is a sesquilinear form on a complex space with Hermitian kernel, i.e.
+# the Hilbert structure without the name. Likewise
+# ``ContextNormalizationProof.lean`` states positive semidefiniteness directly
+# as ``forall v, sum sum v * v * Gamma >= 0`` while the symbol scan looks for
+# ``PositiveSemidefinite``.
+#
+# These patterns close that gap. They are deliberately conjunctive (several
+# independent markers must co-occur) so that incidental use of ``star`` or a
+# single summation does not trip the check.
+FORBIDDEN_IMPORT_BODY_PATTERNS: dict[str, tuple[tuple[str, str], ...]] = {
+    "hilbert_space": (
+        ("hand_rolled_complex_sesquilinear_form", "SESQUILINEAR"),
+    ),
+    "complex_hilbert_assumed": (
+        ("hand_rolled_complex_sesquilinear_form", "SESQUILINEAR"),
+    ),
+    "inner_product_axiom": (
+        ("hand_rolled_complex_sesquilinear_form", "SESQUILINEAR"),
+    ),
+    "positive_operator": (
+        ("hand_rolled_positive_semidefinite_form", "PSD_FORM"),
+    ),
+}
+
+# Concrete regexes for the named structural patterns above.
+#
+# SESQUILINEAR: complex scalars, conjugation, and a double summation occurring
+# together in one artifact body. Any one alone is innocuous; all three together
+# are a hand-built sesquilinear form.
+#
+# PSD_FORM: a universally quantified double summation asserted nonnegative,
+# which is the definition of a positive semidefinite form.
+_STRUCTURAL_PATTERNS: dict[str, tuple[re.Pattern[str], ...]] = {
+    "SESQUILINEAR": (
+        re.compile(r"(?:ℂ|\bComplex\b)"),
+        re.compile(r"\bstar\b"),
+        re.compile(r"∑[\s\S]{0,400}?∑"),
+    ),
+    "PSD_FORM": (
+        re.compile(
+            r"∀[^,]{0,120},[\s\S]{0,400}?"
+            r"∑[\s\S]{0,400}?∑[\s\S]{0,400}?"
+            r"(?:≥\s*0|>=\s*0)"
+        ),
+    ),
+}
+
+
+_LOCAL_IMPORT = re.compile(r"^import\s+(Proofs\.[A-Za-z0-9_.]+)", re.M)
+
+
+def _expand_local_imports(body: str, root: Path, _seen: set[str] | None = None) -> str:
+    """Return ``body`` concatenated with the bodies of the local modules it imports.
+
+    An artifact that writes ``import Proofs.QMClosure.ExclusivityAdditivityProof``
+    and then uses ``actualizationMeasure`` depends on the structure defined
+    there just as surely as if it had inlined it. Scanning only the artifact's
+    own text lets a forbidden structure enter through a one-line import, which
+    is how ``operational_equivalence_probability`` inherits the complex
+    sesquilinear measure without mentioning ``star`` itself.
+
+    Cycles and repeated imports are visited once. Missing modules are skipped
+    silently: a broken import is a compile-time problem, not a scan problem.
+    """
+    if _seen is None:
+        _seen = set()
+    collected = [body]
+    for module in _LOCAL_IMPORT.findall(body):
+        if module in _seen:
+            continue
+        _seen.add(module)
+        path = root / (module.replace(".", "/") + ".lean")
+        try:
+            imported = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        collected.append(_expand_local_imports(imported, root, _seen))
+    return "\n".join(collected)
+
+
+def _structural_pattern_in_body(pattern_key: str, body: str) -> bool:
+    """True when every regex making up ``pattern_key`` matches ``body``.
+
+    Conjunctive by design: a structural pattern is only reported when all of
+    its independent markers are present, which keeps incidental matches (a lone
+    ``star`` in an unrelated lemma) from being flagged.
+    """
+    regexes = _STRUCTURAL_PATTERNS.get(pattern_key)
+    if not regexes:
+        return False
+    return all(regex.search(body) for regex in regexes)
+
+
 # A bare ``import Mathlib`` is treated as a convenience umbrella import. It is
 # NOT itself a forbidden-module signal; whether the artifact actually depends
 # on forbidden machinery is decided by scanning the Lean body for the
@@ -530,6 +637,7 @@ def artifact_mentions_forbidden_import(
         (artifact.system, artifact.file, artifact.theorem, artifact.check_command)
     ).lower()
     body = _read_artifact_body(artifact)
+    expanded_body = _expand_local_imports(body, REPO_ROOT)
     for forbidden_import in obligation.forbidden_imports:
         # Layer 1: metadata substring scan (applies to every forbidden token).
         if forbidden_import.lower() in searchable:
@@ -540,9 +648,18 @@ def artifact_mentions_forbidden_import(
         if forbidden_import in FORBIDDEN_CONCEPTUAL_ONLY:
             continue
         symbols = FORBIDDEN_IMPORT_BODY_SYMBOLS.get(forbidden_import)
-        if not symbols:
-            continue
-        if any(_word_in_body(symbol, body) for symbol in symbols):
+        if symbols and any(_word_in_body(symbol, body) for symbol in symbols):
+            return forbidden_import
+        # Layer 3: structural pattern scan over the artifact body together with
+        # the bodies of the local Proofs modules it imports. Catches machinery
+        # that is built by hand from primitive pieces (and therefore never
+        # mentions the Mathlib type name layer 2 looks for), including the case
+        # where it is inherited through a local import.
+        patterns = FORBIDDEN_IMPORT_BODY_PATTERNS.get(forbidden_import)
+        if patterns and any(
+            _structural_pattern_in_body(key, expanded_body)
+            for _name, key in patterns
+        ):
             return forbidden_import
     return None
 

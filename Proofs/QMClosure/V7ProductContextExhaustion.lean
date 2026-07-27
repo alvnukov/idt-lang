@@ -1,4 +1,17 @@
 /-!
+EMPTY_PLACEHOLDER
+
+One or more theorems in this file have conclusion `True` and therefore assert
+nothing, regardless of how they are proved. This file is not evidence for any
+claim and must not be cited as a derivation.
+
+See `INVENTORY_AUDIT.md` and
+`sections/175-primitive-base-completeness-status.md`.
+
+Enforced by `scripts/check_vacuous_theorems.py`.
+-/
+
+/-!
 V7 Product-Context Exhaustion from B0.
 
 Shows that product-context exhaustion follows from B0's
