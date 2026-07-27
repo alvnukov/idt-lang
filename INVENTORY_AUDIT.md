@@ -10,6 +10,12 @@
 запускалась. Статус компиляции выведен из наличия и времени `.olean` файлов.
 Все выводы о содержании получены чтением исходников, а не проверкой компилятором.
 
+**Обновление 2026-07-27, машина с Lean 4.29.0:** всё, что ниже помечено как
+непроверенное, прогнано. Раздел 10 содержит результат прогона и список мест,
+где аудит оказался неверен. Числа в разделах 1–9 оставлены в том виде, в
+котором были получены статически; там, где прогон их опроверг, стоит ссылка
+на раздел 10.
+
 ---
 
 ## 1. Сводные числа
@@ -37,6 +43,13 @@
 Среди никогда не компилировавшихся — `V7LocalTomography.lean` и
 `V7BoundedCorrelations.lean`, на которые секция 175 ссылается как на `derived`.
 
+> **Опровергнуто прогоном (раздел 10.1).** Причина не в файлах, а в
+> `lakefile.lean`: в нём не было `@[default_target]`, поэтому `lake build`
+> печатал «Build completed successfully (0 jobs)» и не компилировал ничего.
+> 12 из 15 файлов вообще не входили ни в одну цель сборки, но компилируются
+> без ошибок по отдельности. Реально сломанных файлов было 2, а не 15, и
+> `V7LocalTomography.lean` в их число не входит.
+
 ---
 
 ## 2. Что является настоящей математикой
@@ -56,6 +69,13 @@
 
 Доказательства корректны и нетривиальны в смысле формализации. Замечания по
 существу — в разделе 4.
+
+> **Уточнено прогоном (раздел 10.2).** Последняя строка не относится к
+> «настоящей математике». `V7PositiveGeometryTwoAlternatives.lean` не
+> компилировался из-за ошибки типов (`def Real := Rat` нередуцируем для поиска
+> инстансов), работает не над ℝ, а над `Rat`, и его единственная «теорема»
+> `positiveGeometry2` — это его собственная аксиома `facticizationNonneg`,
+> переписанная под другим именем. Файлов с настоящим содержанием — 6, не 7.
 
 ---
 
@@ -303,11 +323,164 @@ forbidden_ref_hits = tuple(sorted(r for r in forbidden_refs if r in scanned))
 
 1. `rm -f .git/index.lock .git/HEAD.lock tests/_tmp_forbidden_import_probe.lean`
    — песочница не может удалять файлы, эти три остались после прогонов.
+   **Сделано.**
 2. `lake build` — 15 файлов никогда не компилировались, включая
    `ProjectiveActionProof.lean`, который числится одним из пяти `proved`.
+   **Сделано; диагноз был неверен, см. 10.1.**
 3. Прогнать `evaluate_full_qm_proof_closure.py` и обновить `proved = 5`.
+   **Сделано: `proved = 2`, см. 10.4.**
 4. Правка `README.md` и `PUBLIC_CLAIM_SHEET.md` п. 23 под новый вердикт.
+   **Сделано, коммит `538b9b6`.**
 5. Переформулировать F так, чтобы она не отрицала контекстуальность; текущая
-   версия в `V7FPrimitiveIndependence.lean` заведомо ложна.
+   версия в `V7FPrimitiveIndependence.lean` заведомо ложна. **Открыто.**
 6. Формализовать отношение редукции между базами. Без него «нижние примитивы»
-   не является утверждением.
+   не является утверждением. **Открыто.**
+
+---
+
+## 10. Прогон на машине с Lean (2026-07-27)
+
+Toolchain: Lean 4.29.0, Lake 5.0.0, Mathlib v4.29.0, macOS arm64.
+Отчёт: `build_status_report.txt` (не коммитится).
+
+### 10.1. Главная ошибка аудита: `lake build` ничего не собирал
+
+Аудит вывел «15 файлов никогда не компилировались» из отсутствия `.olean`.
+Вывод верен, причина — нет.
+
+В `lakefile.lean` не было `@[default_target]`. Поэтому `lake build` печатал
+
+```
+Build completed successfully (0 jobs).
+```
+
+и не компилировал ни одного файла. Зелёный результат ничего не значил. Кроме
+того, 12 файлов не были перечислены в `roots` библиотеки `Proofs` и не входили
+ни в одну цель сборки:
+
+```
+V8PrimitiveEmpiricalConstraintLedger      OverlapPreservationDynamicsProof
+BoundaryReversibleCompletionProbe         PairHistoryMeasureProbe
+ContextFirstBellCountermodel              ProjectiveActionProof
+ContextFirstReadoutUnderdeterminationProbe StringTheoryPrimitiveHintAudit
+ContextualNoSignallingPRCountermodel      TwoPostulateReconstructionImportAudit
+OrientedRelationalProcessCountermodel     TypedRewriteStructureUnderdeterminationProbe
+```
+
+**Все 12 компилируются без ошибок** под `lake env lean`. В том числе
+`ProjectiveActionProof.lean`, поэтому карточка `projective_action` прогоном не
+опровергнута — опасение из раздела 9 не подтвердилось. То же для
+`OverlapPreservationDynamicsProof.lean`, на котором держится запись о bridge
+wall.
+
+После добавления `@[default_target]` и этих 12 файлов в `roots` сборка стала
+осмысленной: `lake build` проходит 8375 задач.
+
+### 10.2. Что действительно не компилировалось
+
+Реально сломанных файлов было два, и оба по одной и той же причине, которую
+статический аудит не поймал: **терм-доказательство использовалось как тип**.
+
+- `V7BoundedCorrelations.lean:54` — `axiom facticizationStability : True`
+  объявляет обитателя `True`, то есть доказательство, а не пропозицию. Запись
+  `facticizationStability → True` не типизируется. Файл не компилировался
+  никогда.
+- `V7PositiveGeometryTwoAlternatives.lean` — `def Real := Rat` нередуцируем
+  при поиске инстансов, поэтому `*`, `≥` и литерал `0` остались без
+  `HMul`/`LE`/`OfNat`.
+
+Обе ошибки исправлены минимально, без изменения того, что файлы утверждают
+(а утверждают они по-прежнему ничего).
+
+### 10.3. Чего аудит не увидел вовсе: цепочки вывода не существует
+
+Это результат, которого в разделах 1–9 нет.
+
+Секция 175 и заголовки файлов описывают цепочку
+`B0 → product exhaustion → local tomography → bounded correlations →
+Hilbert carrier → Born rule`. В Lean этой цепочки нет:
+
+1. `V7HilbertCarrierSelection.lean` импортировал четыре модуля и **не
+   использовал ни одного имени из них**. Все антецеденты объявлены в нём
+   заново как `True`. То же у `V7BornRuleDerivation.lean` относительно
+   `V7HilbertCarrierSelection`.
+2. Импорты были взаимно несовместимы: `V7ProductContextExhaustion` и
+   `V7LocalTomography` оба объявляют `IDT.QMClosure.Ctx`, поэтому импорт обоих
+   — ошибка дублирующего объявления. `V7HilbertCarrierSelection` не мог
+   скомпилироваться ни при каких условиях.
+3. Та же ошибка «терм как тип», что в 10.2, есть в
+   `V7MetricGeometryProjection`, `V7HilbertCarrierSelection` и
+   `V7BornRuleDerivation`.
+
+То есть каждое звено переобъявляет вывод предыдущего как свежий `True` и ни на
+что не ссылается. Импорты удалены, а не починены: чинить их значило бы
+утверждать зависимость, которой в Lean нет.
+
+Побочно: `quadraticFromCarrier` был спрятан за `axiom ... : True` и не
+попадал в счётчик пустых теорем. После перевода в `def ... : Prop := True`
+счётчик вырос с 32 до 33 — то есть видимость пустоты увеличилась, а не
+уменьшилась.
+
+### 10.4. Вердикт closure-эвалуатора
+
+Предсказание раздела 8.3 подтвердилось полностью:
+
+```
+full_qm_proof_closure=IMPORTED_ASSUMPTION_REJECTED
+route_status=CONDITIONAL_FULL_QM_ROUTE
+proved=2  imported_artifacts=3  conditional_artifacts=16  missing_artifacts=0
+```
+
+```
+PROVED          context_normalization      [born_readout]
+PROVED          projective_action          [dynamics]
+IMPORT_REJECTED exclusivity_additivity     — forbidden target import: hilbert_space
+IMPORT_REJECTED coarse_graining_consistency — то же
+IMPORT_REJECTED operational_equivalence_probability — то же
+```
+
+`README.md` и `PUBLIC_CLAIM_SHEET.md` п. 23 приведены в соответствие
+(коммит `538b9b6`). Формулировка п. 23 о том, что тело каждого из пяти
+артефактов сканируется, «so that none of them silently imports Hilbert-space
+machinery», заменена на прямое признание: три из пяти несут собранный вручную
+комплексный носитель.
+
+### 10.5. Коммит `b60e055` ломал сборку
+
+Маркеры `EMPTY_PLACEHOLDER` были вставлены **выше** строк `import`. Lean это
+запрещает: `invalid 'import' command, it must be used in the beginning of the
+file`. Из-за этого перестали компилироваться пять файлов, четыре из которых
+до `b60e055` компилировались:
+
+```
+V8QmResearchTaskLedger  V7HilbertCarrierSelection  V7BornRuleDerivation
+V7MetricGeometryProjection  V7DimensionAnalysis
+```
+
+Маркеры перенесены под импорты. Ни один маркер не снят. Прямое следствие того,
+что среда аудита не могла запустить компилятор.
+
+### 10.6. Тесты
+
+Шесть ошибок в `tests/test_evaluate_full_qm_proof_closure.py`, наблюдавшихся в
+контейнере, **не воспроизвелись**: `583 passed, 2 skipped`. Они были артефактом
+песочницы, как и предполагалось.
+
+Прочие гейты: `check_proofs`, `sync_formal_proof_ledger --check`,
+`theory_verifier` (`ok=true`, `issues=0`), `evaluate_full_qm_proof_attempt`,
+`check_vacuous_theorems`, `ruff`, `git diff --check` — все проходят.
+`evaluate_full_qm_proof_closure` возвращает 1, и это правильное поведение:
+он отвергает импорт.
+
+### 10.7. Осталось решением, а не патчем
+
+- `proved = 5` осталось в комментариях
+  `Proofs/MetaLang/V8QmResearchTaskLedger.lean` (строки ~913, 1045, 1152) и в
+  `sections/174-...md`. Это исторические записи прошлых сессий; вносить в
+  Lean-ledger новую запись о вердикте — работа по теории, не правка текста.
+- Стоит ли удалить пустые файлы `V7*` целиком вместо того, чтобы держать их
+  компилируемыми и помеченными. Сейчас выбран второй вариант: он сохраняет
+  запись о том, что было предпринято.
+- `context_normalization` не помечается сканером, потому что
+  `positive_operator` не входит в список запрещённого для этого обязательства,
+  хотя PSD в файле постулируется определением (см. конец 8.3).
