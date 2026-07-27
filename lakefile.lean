@@ -85,6 +85,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.BoundPrimitiveGeneratedBase,
     `Proofs.QMClosure.B1PrimitiveBase,
     `Proofs.QMClosure.B1PrimitiveBaseRankThreeWall,
+    `Proofs.QMClosure.OrderDeterminedReadoutNoGo,
     `Proofs.QMClosure.QMSemanticKernelRoute,
     `Proofs.QMClosure.ProjectionScaffoldsDraft,
     `Proofs.QMClosure.ReadoutScaffoldsDraft,
