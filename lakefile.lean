@@ -93,6 +93,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.InterferenceOrderSelectsTheExponent,
     `Proofs.QMClosure.ArityBoundsInterferenceOrder,
     `Proofs.QMClosure.ContextualIndistinguishabilityGivesInterference,
+    `Proofs.QMClosure.LocalTomographySelectsComplex,
     `Proofs.QMClosure.QMSemanticKernelRoute,
     `Proofs.QMClosure.ProjectionScaffoldsDraft,
     `Proofs.QMClosure.ReadoutScaffoldsDraft,
