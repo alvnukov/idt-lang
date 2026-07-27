@@ -145,17 +145,28 @@ Current auditable results:
   Lean bundle. This removes a proof-engineering gap for those finite fragments;
   the later B1/CGSC artifacts fill the six structural target slots inside the
   current package semantics.
-- Machine-checked finite proofs: five full-QM-closure sub-obligations
-  (`context_normalization`, `exclusivity_additivity`,
-  `coarse_graining_consistency`, `operational_equivalence_probability`,
-  `projective_action`) now carry real machine-checked Lean artifacts under
-  the full proof-ledger contract. Each Lean file compiles under
-  `lake env lean` with no `sorry`/`admit`/`axiom`, and each artifact body is
-  scanned for forbidden representative symbols so none silently imports
-  Hilbert-space, Born-rule, positive-operator, unitary, tensor, or
-  projective-Hilbert machinery. The closure evaluator reports
-  `proved = 5`, `conditional_artifacts = 16`, `missing_artifacts = 0`. This
-  is progress on five finite sub-obligations; it is not a derivation of
+- Machine-checked finite proofs: **two** full-QM-closure sub-obligations
+  (`context_normalization`, `projective_action`) carry real machine-checked
+  Lean artifacts that survive the forbidden-import scan. Each compiles under
+  `lake env lean` with no `sorry`/`admit`/`axiom`. The closure evaluator
+  reports `proved = 2`, `imported_artifacts = 3`,
+  `conditional_artifacts = 16`, `missing_artifacts = 0`, and the overall
+  verdict is `IMPORTED_ASSUMPTION_REJECTED`.
+
+  Three artifacts that were previously counted here —
+  `exclusivity_additivity`, `coarse_graining_consistency`, and
+  `operational_equivalence_probability` — are now **rejected for importing
+  Hilbert-space structure**. They compile and their theorems are correct, but
+  each builds a complex sesquilinear form by hand (`W : H → ℂ`, `star`, a
+  double sum over a finite set) while its own header declares `hilbert_space`
+  a forbidden import. `sections/01-primitives.md` already classifies
+  `W : H → ℂ` as a QM carrier import. The earlier scan missed this because it
+  searched for Mathlib type names such as `InnerProductSpace`, and a
+  hand-rolled construction of the same object uses none of them. What those
+  three files prove is true of the structure they assume; they do not derive
+  it.
+
+  This is progress on two finite sub-obligations; it is not a derivation of
   universal QM, the universal Born rule, Hilbert space, tensor composition,
   unitary dynamics, or first-principles `hbar_I`.
 - CGSC structural target kernel: the six structural QM blockers are now
@@ -233,18 +244,21 @@ Current auditable results:
   readouts while gravity-facing clock/source response remains suppressed or
   unresolved; this is recorded as an open research route, not a proof.
 - proof-verification ledger: current `formal_proof` markers cover both finite
-  IDT-Core/meta-invariants and five finite full-QM-closure sub-obligations
-  proven under the full proof-ledger contract (`context_normalization`,
-  `exclusivity_additivity`, `coarse_graining_consistency`,
-  `operational_equivalence_probability`, `projective_action`). They must be
-  covered by proof cards with machine-checkable artifacts and commands, and
-  the body of each Lean artifact is scanned for forbidden representative
-  symbols (`InnerProductSpace`, `PositiveSemidefinite`, `IsUnitary`,
-  `TensorProduct`, etc.). The current proof pipeline first synchronizes the
-  generated Lean finite-core semantic artifact against the manifest, then
-  runs Lean 4 plus the IDT verifier. None of these formal proofs derives
-  universal QM, Hilbert space, the Born rule, tensor composition, unitary
-  dynamics, or first-principles `hbar_I`.
+  IDT-Core/meta-invariants and two finite full-QM-closure sub-obligations
+  that pass the forbidden-import scan (`context_normalization`,
+  `projective_action`). They must be covered by proof cards with
+  machine-checkable artifacts and commands, and the body of each Lean
+  artifact is scanned for forbidden imports. That scan now works
+  structurally — it looks for a complex sesquilinear form (`ℂ` plus `star`
+  plus a double sum) and for hand-written positive-semidefiniteness — and not
+  only for Mathlib type names such as `InnerProductSpace` or
+  `PositiveSemidefinite`, because naming a construction differently was
+  enough to pass the old check. Three previously listed artifacts fail the
+  structural scan and are reported as `IMPORT_REJECTED`. The current proof
+  pipeline first synchronizes the generated Lean finite-core semantic
+  artifact against the manifest, then runs Lean 4 plus the IDT verifier.
+  None of these formal proofs derives universal QM, Hilbert space, the Born
+  rule, tensor composition, unitary dynamics, or first-principles `hbar_I`.
 
 These are successes of reconstruction discipline and executable claim control.
 They are not claims that IDT has already derived all of QM, GR, or the constants
@@ -515,10 +529,11 @@ lake build
 The `QM Scientific Status` badge reports the current scientific proof boundary:
 the full-QM route is conditionally closed as a structural route with a
 formalization wall, and the active Born/Hilbert frontier is context-first
-universal endpoint data plus carrier-frontier exhaustion. Five finite
-full-QM-closure sub-obligations are machine-checked PROVED under the full
-proof-ledger contract; this is progress on finite sub-obligations, not a
-proof of universal QM. The `IDT v8 Lean CI` badge reports whether the
+universal endpoint data plus carrier-frontier exhaustion. Two finite
+full-QM-closure sub-obligations are machine-checked PROVED and survive the
+forbidden-import scan; three further artifacts are rejected for importing
+Hilbert-space structure by hand. This is progress on finite sub-obligations,
+not a proof of universal QM. The `IDT v8 Lean CI` badge reports whether the
 Lean + IDT v8 migration-stop workflow is passing. Neither badge means that
 exact fundamental QM has been proved.
 
