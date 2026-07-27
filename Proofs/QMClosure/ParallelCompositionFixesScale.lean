@@ -4,7 +4,7 @@ namespace IDT
 namespace QMClosure
 
 /-!
-# Parallel composition removes the scale freedom, but not by itself
+# Parallel composition restricts the scale freedom without removing it
 
 `CoarseGrainingDoesNotFixScale` left the merge law determined only up to a
 relabelling of the value axis: `combine x y = x + y + lambda * x * y` satisfies
@@ -23,10 +23,16 @@ is that scaling by an independent context commutes with merging alternatives:
 The answer comes in three layers, and each layer is a separate primitive doing
 exactly one job.
 
-1. Distributivity kills the whole relabelling family at once. Multiplication
-   distributes over `combine_lambda` only when `lambda = 0`. So parallel
-   composition does fix the scale, and it does so without mentioning
+1. Distributivity kills the `lambda` family. Multiplication distributes over
+   `combine_lambda` only when `lambda = 0`, and it does so without mentioning
    probability, amplitude, or the Born rule.
+
+   It does **not** kill the relabelling freedom in general. See
+   `BornSurvivesTheThreeDemands`: the Born readout is addition through the
+   relabelling `weight |-> sqrt weight`, and it passes distributivity and
+   cancellation while failing additivity. The claim that parallel composition
+   selects addition out of all relabellings was recorded here first and is
+   false; only the `lambda` case is proved.
 
 2. Distributivity alone does not force addition. `max` satisfies every
    coarse-graining demand on non-negative weights and multiplication
@@ -36,12 +42,12 @@ exactly one job.
 3. `max` is separated from addition by cancellation, not by distributivity:
    `max 2 1 = max 2 0` while `2 + 1 ≠ 2 + 0`.
 
-So selecting addition needs merging, independent composition, and cancellation,
-and no two of the three suffice. None of them is the Born rule.
+So each of the three demands does separate work, and none of them is the Born
+rule. What they do **not** do is pin addition: see `BornSurvivesTheThreeDemands`
+for a merge law that passes all three and is not additive.
 
-Scope. Finite, over ℚ. Layer 1 is proved for the whole `lambda` family, not for
-arbitrary merge laws. That the three demands together pin addition uniquely is
-the classical Aczel result; it is not proved here and stays open.
+Scope. Finite, over ℚ. Layer 1 is proved for the `lambda` family only, not for
+arbitrary merge laws, and that difference turned out to matter.
 -/
 
 /-- Scaling by an independent context commutes with merging alternatives. -/
@@ -74,8 +80,8 @@ theorem independent_scale_distributes_over_addition :
 /--
 Layer 1, the point. For every non-zero `lambda` the relabelled merge law fails
 distributivity, witnessed at `outer = 1/2`, `left = right = 1`. So parallel
-composition selects `lambda = 0` out of the entire family that coarse-graining
-could not separate.
+composition selects `lambda = 0` within this family. It does not follow, and is
+not true, that it selects addition among all relabellings.
 -/
 theorem independent_scale_distributes_only_over_addition
     (lambda : ℚ) (nonzero : lambda ≠ 0) :
@@ -157,14 +163,14 @@ theorem relabelled_merge_is_cancellative
   linarith
 
 inductive ScaleSelectionFinding where
-  | parallelCompositionKillsTheRelabellingFamily
+  | parallelCompositionKillsTheLambdaFamily
   | distributivityAloneDoesNotForceAddition
   | possibilisticMaxSurvivesDistributivity
   | cancellationSeparatesAdditionFromMax
   deriving DecidableEq, Repr
 
 def scaleSelectionFindings : List ScaleSelectionFinding :=
-  [ .parallelCompositionKillsTheRelabellingFamily,
+  [ .parallelCompositionKillsTheLambdaFamily,
     .distributivityAloneDoesNotForceAddition,
     .possibilisticMaxSurvivesDistributivity,
     .cancellationSeparatesAdditionFromMax ]
@@ -174,14 +180,14 @@ theorem scale_selection_records_four_findings :
   rfl
 
 inductive ScaleSelectionOpenObligation where
-  | proveTheThreeDemandsPinAdditionUniquely
+  | refutedThreeDemandsDoNotPinAdditionSeeBornSurvives
   | deriveParallelCompositionFromContextFirstPrimitives
   | justifyCancellationWithoutAssumingProbability
   | separateAdditivityFromQuadraticReadout
   deriving DecidableEq, Repr
 
 def scaleSelectionOpenObligations : List ScaleSelectionOpenObligation :=
-  [ .proveTheThreeDemandsPinAdditionUniquely,
+  [ .refutedThreeDemandsDoNotPinAdditionSeeBornSurvives,
     .deriveParallelCompositionFromContextFirstPrimitives,
     .justifyCancellationWithoutAssumingProbability,
     .separateAdditivityFromQuadraticReadout ]
@@ -191,7 +197,7 @@ theorem scale_selection_keeps_four_open_obligations :
   rfl
 
 def scaleSelectionClaimBoundary : String :=
-  "Finite result over ℚ. Independent composition distributing over merging selects lambda = 0 from the whole relabelling family, so the value scale can be fixed without importing the Born rule. It does not force addition on its own, because max survives; cancellation is the separate demand that excludes max. That the three demands pin addition uniquely is the classical Aczel theorem and is not proved here. Nothing here derives the Born rule or the quadratic form of the readout."
+  "Finite result over ℚ. Independent composition distributing over merging selects lambda = 0 within that family. It does not select addition among all relabellings: see BornSurvivesTheThreeDemands. It does not force addition on its own, because max survives; cancellation is the separate demand that excludes max. That the three demands pin addition uniquely is the classical Aczel theorem and is not proved here. Nothing here derives the Born rule or the quadratic form of the readout."
 
 end QMClosure
 end IDT

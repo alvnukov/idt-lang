@@ -6,11 +6,15 @@ namespace QMClosure
 /-!
 # Cancellation is the stability clause of distinguishability
 
-`ParallelCompositionFixesScale` reduced the selection of addition to three
-demands -- merging, independent composition, cancellation -- and left open
-whether a contextual theory can justify the third without assuming
-probability. This file settles what can be settled and marks precisely what
-cannot.
+`ParallelCompositionFixesScale` isolated three demands -- merging, independent
+composition, cancellation -- and left open whether a contextual theory can
+justify the third without assuming probability. This file settles what can be
+settled and marks precisely what cannot.
+
+Note that the three demands do not pin addition; `BornSurvivesTheThreeDemands`
+exhibits a non-additive law passing all of them. That does not affect anything
+below: what is at stake here is only whether cancellation itself is a
+probabilistic assumption, and it is not.
 
 Cancellation says merging does not forget its parts. Read contrapositively it
 says that two alternatives told apart before merging are still told apart
@@ -182,7 +186,7 @@ inductive StableDistinguishabilityOpenObligation where
   | giveStableDistinguishabilityAnActualDefinitionInTheBase
   | decideWhetherTheStrictReadingIsTheIntendedOne
   | deriveTheClauseRatherThanPostulateIt
-  | proveTheThreeDemandsPinAdditionUniquely
+  | refutedThreeDemandsDoNotPinAdditionSeeBornSurvives
   | separateAdditivityFromQuadraticReadout
   deriving DecidableEq, Repr
 
@@ -191,7 +195,7 @@ def stableDistinguishabilityOpenObligations :
   [ .giveStableDistinguishabilityAnActualDefinitionInTheBase,
     .decideWhetherTheStrictReadingIsTheIntendedOne,
     .deriveTheClauseRatherThanPostulateIt,
-    .proveTheThreeDemandsPinAdditionUniquely,
+    .refutedThreeDemandsDoNotPinAdditionSeeBornSurvives,
     .separateAdditivityFromQuadraticReadout ]
 
 theorem stable_distinguishability_keeps_five_open_obligations :
