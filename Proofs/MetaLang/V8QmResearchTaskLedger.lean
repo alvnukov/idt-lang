@@ -2594,6 +2594,43 @@ the exhaustive campaign were a solver artifact — Dantzig cycling on
 degenerate peel systems — not mathematical openness; degenerate
 feasibility LPs in this thread must run Bland-only from iteration 1,
 and any iteration-cap report must name the pivoting rule.
+
+   BEYOND FIN 4 (same session, Rust+Python campaign): the empty case
+   EXISTS.  Exhaustive integer-grid enumeration ({-1,0,1} data,
+   canonical under the full symmetric group) produced 289 nonneg
+   signed Fin-4 classes (72 sub-free, matching the earlier pool — a
+   validation anchor) and 6743 Fin-5 classes (1510 sub-free, exact LP
+   threshold 1/5!).  Rust scans over ALL equal-mass sub-free pairs:
+   431,292 pairs on Fin 5 x Fin 5 (61.1% full dominance, 38.5% T1
+   pair-peel, 48 T2 zero-morphism, 1682 survivors) and 2 x 22,454
+   cross-size pairs (76.3% dominance, 23.4% T1, 71 survivors each
+   orientation).  Pattern-cone LP on every survivor: the cross-size
+   survivors are ALL genuine EMPTY-CASE instances — no dominance,
+   no T1, no T2, and an empty pattern cone in BOTH orientations
+   (exact Bland LPs, zero caps); the Fin-5 x Fin-5 rerun confirms the
+   same at scale.  By the pattern reduction theorem this means the
+   PEEL ROUTE PROVABLY DOES NOT CLOSE beyond Fin 4: pairs of
+   shadow-free weights (the Fin-5 census found 15 shadow-free classes,
+   of which only ONE is the classic spider — fourteen are new
+   multi-center shapes) resist every peel mechanism.  The naive
+   structure hope "sub-free = cone over spiders and pure pairs" is
+   REFUTED outright on Fin 4 (only 7/72 classes lie in that cone).
+   The original gluing question for these pairs is still open and is
+   being decided by a certified hybrid cutting plane (exact Bland LP +
+   exhaustive exact integer subset scan; scipy/HiGHS only proposes
+   rows, never decides): the spider-4 instance already closes as
+   GLUABLE with a fully verified witness (exhaustive nonneg scan over
+   all 2^20 subsets — the first gluing that no peel route explains),
+   while the bi-center instance is still grinding.  Discipline notes
+   from this pass: (d) a survivor-file parsing bug (the mass field
+   was read as a coefficient) silently corrupted the first round of
+   pattern verdicts — fixed, all verdicts rerun, and the corrected
+   outcome is recorded here; the earlier "71/71 T3" reading was an
+   artifact; (e) a hand "zero-block lemma" (nonneg 2-additive with
+   zero total on >= 3 points vanishes) was REFUTED by the
+   counterexample (1,1,1,-1,-1,-1) before it could poison the record
+   — zero-total nonneg weights on 3+ points form the mass-zero
+   sector, they do not vanish.
 -/
 
 def transportAdditiveGluingResult : Prop :=
@@ -2612,9 +2649,14 @@ def transportAdditiveGluingResult : Prop :=
   -- canonical pairs admit a verified forward peel, and the peel
   -- question reduces exactly to zero-set patterns (pattern reduction
   -- theorem), with the pair-to-pair certificate covering all of them.
-  -- Open beyond Fin 4: whether a shadow-free x shadow-free (spider
-  -- union) pair can resist peeling, and whether any equal-mass
-  -- nonnegative pair fails to glue at all.
+  -- BEYOND Fin 4 the empty case is REAL: exhaustive Fin-5 pools show
+  -- equal-mass sub-free pairs with no dominance, no pair-peel, no
+  -- zero-morphism and an empty pattern cone in both orientations —
+  -- the peel route provably does not close there.  At least one such
+  -- pair (the spider-4 instance) still GLUES, with a verified witness
+  -- no peel explains; the bi-center instance is undecided.  The open
+  -- question is now exactly: does every equal-mass nonneg pairwise
+  -- pair glue, even when every peel mechanism fails?
   True
 
 theorem transport_additive_gluing_result_recorded :
