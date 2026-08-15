@@ -92,6 +92,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.BornSurvivesTheThreeDemands,
     `Proofs.QMClosure.InterferenceOrderSelectsTheExponent,
     `Proofs.QMClosure.ArityBoundsInterferenceOrder,
+    `Proofs.QMClosure.SorkinGradeIffPairwiseGeneration,
     `Proofs.QMClosure.ContextualIndistinguishabilityGivesInterference,
     `Proofs.QMClosure.LocalTomographySelectsComplex,
     `Proofs.QMClosure.QMSemanticKernelRoute,
