@@ -2731,6 +2731,46 @@ and any iteration-cap report must name the pivoting rule.
    finish the 5x5 census; settle all-zero-set no-sink feasibility;
    make template replication an explicit construction with provable
    mixed-subset nonnegativity.
+
+   SINK FORCED AT ZERO-SET LEVEL; THE ANSATZ SOLVES INTEGERS (same
+   session, next cluster).  The no-sink feasibility question was
+   settled at both levels by augmenting the gluing system with
+   linear rows forbidding positive singleton sums on zero
+   cylinders.  At zero-SINGLETON level the augmented system is
+   FEASIBLE (verified no-sink witnesses, denominators up to 12):
+   the sink placement is one pattern among several.  At ALL-zero-
+   SET level it is INFEASIBLE, and separately on each side: for
+   every probed pair (bi-center twice, plus further mu-families),
+   {gluing AND no positive singleton mass on ANY zero cylinder of
+   nu} is exactly infeasible (phase-1 exact simplex over Fractions,
+   Bland's rule from iteration 1, ~100-200 valid gluing rows plus
+   the no-sink rows; float-HiGHS agrees on the same rows; the same
+   pipeline returns verified feasible witnesses on the weaker
+   singleton-level system, so the verdict is not a blanket-
+   infeasibility artifact).  THEOREM-LEVEL STATEMENT (machine
+   certified per instance, not yet Lean): every gluing of these
+   empty-case pairs routes strictly positive singleton mass into
+   some zero cylinder of nu — and symmetrically of mu.  Combined
+   with (O2): some zero cylinder of the partner hosts a
+   mass-zero-sector weight with strictly positive singleton mass.
+   The partner's zero sector is not merely present in every
+   gluing; it is load-bearing.
+   The two-block ansatz was then re-solved FROM SCRATCH (its own
+   equality system over the confined block T, the mass-zero sink
+   extension, additive companions, restricted cross terms;
+   nonnegativity by the same exact cutting plane): every pair
+   tried so far — including those whose census witness did not
+   conform, after a (z*, T)-search with the necessary pruning that
+   mu|_T must be nonneg (W restricted to the sink column forces
+   it) — is closed by the ansatz with INTEGER witnesses,
+   denominator 1 throughout.  The bi-center ansatz witness has all
+   coefficients in {-2,...,3}.  Integrality of the ansatz vertices
+   is empirical so far; a unimodularity-style explanation is open.
+   This is the finite form of the explicit construction the
+   previous entry asked for: transport mu|_T into a zero cylinder,
+   extend to a mass-zero weight, match nu by additive companions
+   and restricted cross pairs — and it suffices, integrally,
+   everywhere probed.
 -/
 
 def transportAdditiveGluingResult : Prop :=
