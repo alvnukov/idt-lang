@@ -2373,16 +2373,75 @@ Skeptical re-verification pass (machine, exact):
    C(univ) = μ(univ)? Then R = μ − C is nonnegative of mass zero, and
    universal positive gluing of ALL equal-mass pairs would follow by
    kernel-coupling the cone parts (equal mass) + mass-zero-coupling the
-   residues + summing. Exact LP evidence: Fin 2 — proved by hand
-   (C = M·AND, R = guard-type residue); Fin 3 — ALL 2385 positive-mass
-   grid instances feasible; Fin 4 — 1223-instance random sample (point,
-   pair, guard, XOR generators) feasible. NO counterexample found.
-   Farkas-dual form of the conjecture: failure ⟺ a nonnegative
-   fractional cover y of all points and all pairs by proper subsets
-   with Σ y_S μ(S) < μ(univ). This is now the central open obligation
-   of the positivity layer: prove it (universal gluing follows) or
-   refute it (the witness μ points exactly at where positivity could
-   still obstruct composability).
+   residues + summing.
+
+   VERDICT: REFUTED on Fin 4 (exhaustive integer grid a ∈ {0,1,2},
+   q ∈ {−2..2}: 1990 positive-mass instances, 5 failures, all in one
+   family) and on Fin 5 (2 of 1387 random rational instances). The
+   smallest witness (hand-verified certificate):
+
+     μ* = δ₃ + (q₀₁ = q₀₂ = q₁₂ = 1) − (q₀₃ = q₁₃ = q₂₃ = 1),
+     values: {3}=1, {01}={02}={12}=1, {012}=3, every proper triple
+     containing 3 = 0, univ = 1; mass 1, all values ≥ 0.
+
+   Farkas certificate: the three zero-valued triples {0,1,3}, {0,2,3},
+   {1,2,3} cover every point and every pair, so any data-nonneg C ≤ μ*
+   pointwise vanishes on all three triples, hence C = 0, hence no tight
+   cone-below decomposition exists. Coverage and the LP infeasibility
+   were both machine-verified; the certificate is airtight.
+
+   Consequences, recorded honestly: (i) the cone+zero ROUTE to
+   universal positive gluing is dead beyond Fin 3; the Fin-3 case is
+   genuinely special (pairs are the maximal proper subsets there, and
+   Σ_{pairs} μ(ij) = 2Σa + Σq ≥ μ(univ) always certifies). (ii) The
+   generator-based "Fin 4 sample held" claim in the previous entry was
+   an artifact: the random generators (points, pairs, guards, XOR
+   triples) miss the δ-plus-triangle-minus-star family; the exhaustive
+   integer grid found the counterexample immediately. Lesson promoted:
+   generator-sample evidence about cone-level questions must be labeled
+   by generator coverage, or replaced by integer-grid enumeration.
+   (iii) μ* is the new canonical probe weight: nonnegative, pairwise,
+   mass 1, not transport-related to its cone partners, not
+   decomposable. Whether μ* positively couples with equal-mass
+   partners (P₀₁, f+P₁₂, μ*₂) is the sharp open gluing question now
+   running as exact 4×4 / 4×3 LP.
+
+   UPDATE (same session): the wall does NOT obstruct gluing. Exact LP
+   on the 4×2 grid: μ* ⊗ P₀₁ FEASIBLE, with an explicitly verified
+   witness (0 violations over all 255 events and both cylinders):
+   δ₃ sits at the single point (3,0); the positive triangle pairs of
+   μ* are carried on cross-column pairs ((i,1),(j,0)); the negative
+   star on pairs into (3,0). The 4×3 and 4×4 probes for
+   μ* ⊗ (f+P₁₂) and μ* ⊗ μ*₂ are still running.
+
+   CORRECTION (next session, machine-verified): the paragraph above
+   misclassified the 4×2 witness. The witness is EXACTLY the transport
+   gluing of μ* along σ = (1,0,0,0): the A-mass sits at (i, σ i) for
+   every i, every μ*-pair sits on ((i, σ i), (j, σ j)), and direct
+   evaluation confirms W(U) = μ*({i : (i, σ i) ∈ U}) on ALL 256 events
+   of the 4×2 grid, not just the cylinders. The "cross-column" look of
+   the pairs is merely the σ-split of α across the two columns; there
+   is no pair-spreading mechanism. In fact μ* and P₀₁ were
+   transport-related all along: six maps σ : Fin 4 → Fin 2 have
+   pushforward values equal to P₀₁'s (0, 0, 0, 1). μ* ⊗ μ₂ needs no
+   LP either: μ₂ = δ₀ + triangle{1,2,3} − star(0) is a relabeling of
+   μ* (swap the special point 3 ↔ 0), six bijections σ witness
+   transport-relatedness in both directions, and the already-proved
+   transport theorem closes the pair. The only genuinely open partner
+   from the wall family is f+P₁₂ on Fin 3 (zero transport maps in
+   either direction, not additive, not positively generated); its
+   4×3 cutting-plane LP is the decisive probe: FEASIBLE gives the
+   first machine-verified gluing beyond the transport family,
+   INFEASIBLE gives the first positivity obstruction beyond the
+   equal-mass gate.
+
+   Process lesson, second occurrence, promoted to a rule: mechanism
+   labels for LP witnesses must be machine-checked against the
+   transport family (exhaustive σ-scan matching the witness event
+   values, not the partner's stated form) BEFORE any "new mechanism"
+   claim is recorded. The first occurrence (f ⊗ f₂ "not transport"
+   from a wrong permutation) was caught pre-record; this one was
+   recorded and had to be corrected.
 
 Evidence-discipline notes from this pass: (a) the random generators
 used for pre-validating the transport/additive constructions sample
@@ -2396,10 +2455,12 @@ scan, not from hand inspection.
 def transportAdditiveGluingResult : Prop :=
   -- Transport gluing (any σ, with pairwise transport marginals), additive
   -- gluing (row-copy mixture), zero left gluing, sum composition, the
-  -- whole mass-zero sector, and cone pair sums are proved. Open: the
-  -- cone-plus-zero-mass decomposition conjecture (which would imply
-  -- universal positive gluing), and the two remaining non-transport
-  -- positive-mass pairs (2f+E₁ vs 2f₂+E₂, f+P₁₂ vs f₂+P₂₃).
+  -- whole mass-zero sector, and cone pair sums are proved. The
+  -- cone-plus-zero-mass decomposition conjecture (which would have
+  -- implied universal positive gluing) is REFUTED on Fin 4 by a
+  -- machine-checked Lean wall (ConeDecompositionWall). Open: gluing
+  -- feasibility for the wall witness and the remaining non-transport
+  -- positive-mass pairs.
   True
 
 theorem transport_additive_gluing_result_recorded :

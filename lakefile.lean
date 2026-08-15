@@ -101,6 +101,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.DiagonalSelfGluing,
     `Proofs.QMClosure.ColumnEmbeddingGluing,
     `Proofs.QMClosure.TransportAndAdditiveGluing,
+    `Proofs.QMClosure.ConeDecompositionWall,
     `Proofs.QMClosure.ContextualIndistinguishabilityGivesInterference,
     `Proofs.QMClosure.LocalTomographySelectsComplex,
     `Proofs.QMClosure.QMSemanticKernelRoute,
