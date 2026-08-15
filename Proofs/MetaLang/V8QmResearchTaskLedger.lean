@@ -2507,6 +2507,32 @@ Skeptical re-verification pass (machine, exact):
    sequence; the unproved core is exactly the both-sub-free partial
    peel, and it has never failed.
 
+   ADVERSARIAL CAMPAIGN (same session, next cluster): the peel lemma's
+   unproved core was attacked beyond the grids with exact LPs.
+   (i) Random rational pairs up to 5×5 (476 instances, integer and
+   half-integer data, exact mass rescaling): every pair closes — 463
+   by an additive sub-weight (theorem-backed), 9 by full dominance,
+   0 survivors. Random weights almost always contain additive
+   sub-weights; the hard regime is genuinely the structured one.
+   (ii) Dissection of the no-full-dominance pairs: they are pure pair
+   structures (e.g. a 3-star cannot dominate a triangle: the shared
+   apex forces fiber values 2 > 1) that split into pure pair pieces,
+   each universally dominant at equal mass — the cone mechanism in
+   disguise. (iii) EXHAUSTIVE signed×signed scan on Fin 4 x Fin 4:
+   all 1284 additive-sub-free weights with a negative coefficient
+   (the mu* family), 505,520 equal-mass cross pairs — 447,408 full
+   dominance (88.5%), the rest undecidable only by LP iteration caps
+   (honestly labeled no-verdict), ZERO survivors and ZERO decidable
+   pairs needing even a partial peel. (iv) Mixed signed×unsigned 4×4,
+   400 sampled: 353 full dominance, 0 survivors. Unsigned×unsigned
+   equal-mass pairs are cone-covered outright (theorem, no probe
+   needed). Net frontier statement: the universal-gluing conjecture
+   reduces to a complete case split — additive sub-weight (theorem) /
+   both positively generated (cone theorem) / otherwise full or
+   partial dominance peel — and the residual empty case (signed,
+   both sub-free, no dominance peel of any positive mass) has NEVER
+   been observed in any probe of this thread.
+
 Evidence-discipline notes from this pass: (a) the random generators
 used for pre-validating the transport/additive constructions sample
 only a subcone of all nonnegative weights (guards were absent from the
