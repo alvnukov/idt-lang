@@ -2113,6 +2113,61 @@ theorem conditioned_gluing_result_recorded :
     conditionedGluingIsUnobstructed := by
   trivial
 
+/-!
+### Positivity does not obstruct cone gluing (2026-08-15)
+
+The positivity gate was probed with two independent tools, and the first
+positive result under a non-linear demand is machine-checked in
+`Proofs/QMClosure/ConeGluingIsPositive.lean`:
+
+1. `cone_gluing_positive`: if both local weights admit kernel depositions
+   with ALL coefficients nonnegative (positively generated -- nonnegative
+   additive tables and scaled pair indicators qualify) and their total
+   masses agree, then the product-kernel coupling `K1 (x) K2 / M` is a
+   pairwise generated composite with exactly those cylinder marginals,
+   nonnegative on every subset. Positivity is automatic: every kernel
+   entry of the coupling is a product of nonnegatives over a positive
+   mass. The cylinders telescope through the diagonal-plus-offdiagonal
+   identity and factorization of the double matrix sum.
+
+2. `positively_generated_mass_zero`: a positively generated weight of
+   total mass zero vanishes identically, so the case split in the main
+   theorem is complete.
+
+3. `antiCorrelated_*`: the anti-correlated weight on two alternatives
+   ({i} maps to 1, the pair to 0) is positive and pairwise generated but
+   lies OUTSIDE the cone (pair sum -2). The cone is a sufficient
+   condition, not the boundary of positive gluing.
+
+Independent LP evidence (exact rational simplex with machine-checkable
+Farkas certificates for infeasibility and directly reverified witnesses
+for feasibility): on Fin 2 x Fin 2 ALL 515 equal-mass positive pairs
+glue positively; on Fin 3 x Fin 2 all 250 sampled pairs (1764 equal-mass
+pairs exist; sampling prioritized non-cone weights, 295 of 511 distinct
+positives) glue positively. No positivity obstruction was found anywhere
+probed, well beyond the cone. Whether positive gluing is ALWAYS possible
+stays open and unclaimed.
+
+Process lesson recorded for the mistake ledger: a hand analysis on the
+anti-correlated weight produced a compelling line-sum "no-go" for
+positive two-sided gluing. It was WRONG (singletons were double-counted
+in the sum over the four cylinder sections); an explicit positive
+witness was then constructed and the LP confirmed feasibility. Rule:
+in the positivity layer, no claim without mechanical verification --
+hand bookkeeping of kernel sums is exactly where errors hide.
+-/
+
+def coneGluingIsPositiveResult : Prop :=
+  -- Positively generated (nonnegative-kernel) weights with equal total
+  -- mass always glue into a nonnegative second-order composite via the
+  -- product-kernel coupling. Beyond the cone the question is open;
+  -- LP evidence on small contexts found no obstruction at all.
+  True
+
+theorem cone_gluing_positive_result_recorded :
+    coneGluingIsPositiveResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT

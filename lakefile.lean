@@ -97,6 +97,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.CylinderGluingForcesBinaryArity,
     `Proofs.QMClosure.TwoSidedCylinderGluing,
     `Proofs.QMClosure.ConditionedGluingIsUnobstructed,
+    `Proofs.QMClosure.ConeGluingIsPositive,
     `Proofs.QMClosure.ContextualIndistinguishabilityGivesInterference,
     `Proofs.QMClosure.LocalTomographySelectsComplex,
     `Proofs.QMClosure.QMSemanticKernelRoute,
