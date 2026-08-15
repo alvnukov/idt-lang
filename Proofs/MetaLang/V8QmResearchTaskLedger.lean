@@ -2607,8 +2607,9 @@ and any iteration-cap report must name the pivoting rule.
    orientation).  Pattern-cone LP on every survivor: the cross-size
    survivors are ALL genuine EMPTY-CASE instances — no dominance,
    no T1, no T2, and an empty pattern cone in BOTH orientations
-   (exact Bland LPs, zero caps); the Fin-5 x Fin-5 rerun confirms the
-   same at scale.  By the pattern reduction theorem this means the
+   (exact Bland LPs, zero caps); the Fin-5 x Fin-5 rerun finished at
+   1682/1682 EMPTY (zero caps) — 1824 canonical empty-case pairs in
+   total across the three size orientations.  By the pattern reduction theorem this means the
    PEEL ROUTE PROVABLY DOES NOT CLOSE beyond Fin 4: pairs of
    shadow-free weights (the Fin-5 census found 15 shadow-free classes,
    of which only ONE is the classic spider — fourteen are new
