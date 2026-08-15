@@ -2057,6 +2057,62 @@ theorem two_sided_gluing_result_recorded :
     twoSidedCylinderGluingCharacterized := by
   trivial
 
+/-!
+### Conditioned gluing is unobstructed; the linear layer cannot see Bell
+### (2026-08-15)
+
+The gluing cluster was completed by a skeptical re-verification pass and a
+new file, `Proofs/QMClosure/ConditionedGluingIsUnobstructed.lean`, all
+machine-checked:
+
+1. `rectangle_marginal_two_decomposable`: for ANY fixed right-hand event T
+   (not just univ), the rectangle marginal of a second-order composite is
+   second order.
+
+2. `conditioned_gluing_iff`: prescribing the FULL conditioned family
+   (mu y on every `S × {y}`) together with the left cylinder marginal nu is
+   possible exactly when every mu y and nu are second order and the overlap
+   values agree, `nu {y} = mu y univ`. No other constraint exists. The
+   witness is the slice family plus a vertical-slice left-over correction.
+
+3. `additive_table_two_decomposable`: every additive table is grade at most
+   one. Every joint outcome table of a box at fixed settings is additive,
+   so interference grade cannot see nonlocality: a PR table is as
+   acceptable to the grade machinery as a classical one.
+
+Reading: the entire linear layer of the weight calculus -- cylinder,
+two-sided, and conditioned gluing -- is obstruction-free up to linear
+consistency. The first gates that can carry physical selection content must
+be non-linear, positivity of weights or of the generating kernel above all.
+That is now the leading open obligation of the cluster.
+
+Process note (honest): the F1/F2/F2.5 cluster and both new
+characterizations were re-verified INDEPENDENTLY of Lean by exact linear
+algebra over Q (subspace images against constraint sets, exhaustive over
+all rational weights, contexts up to 4x2 and 3x3), and the
+slice-and-junction construction was re-verified numerically. The
+independent check also refuted one hand analysis: prescribing the
+unconditioned right marginal on top of the conditioned family adds NO
+further linear constraints (for at least two right-hand alternatives) --
+a cross-kernel witness is sketched but not yet formalized, so it stays an
+open obligation, not a result.
+
+Scope unchanged: set-function weights over Q, no positivity, no complex
+amplitudes, no Hilbert carrier, no Born derivation, and the
+second-orderness of composites remains an input.
+-/
+
+def conditionedGluingIsUnobstructed : Prop :=
+  -- Conditioned families glue exactly on overlap consistency; additive
+  -- tables are grade at most one, so grade cannot see nonlocality; the
+  -- linear gluing layer is obstruction-free. The first real gate must be
+  -- non-linear (positivity) -- recorded as an obligation, not a result.
+  True
+
+theorem conditioned_gluing_result_recorded :
+    conditionedGluingIsUnobstructed := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
