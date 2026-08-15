@@ -2710,12 +2710,18 @@ and any iteration-cap report must name the pivoting rule.
    concentrate on the heavy rows; (v) the 15 nonconforming
    witnesses have T empty and carry pair mass inside positive
    columns instead.
-   Two observations that are theorems (short proofs, Lean
-   candidates, not yet formalized): (O1) every sub-free nonneg
-   weight has a nonempty zero set — otherwise eps*1 with eps <=
-   min mu(S)/|S| is a positive additive sub-weight; (O2) in ANY
+   Two observations that are theorems — NOW FORMALIZED in Lean this
+   session, in `Proofs/QMClosure/TransportAndAdditiveGluing.lean`
+   (kernel-checked under `lake env lean`, no sorry, no new axioms):
+   (O1) `exists_nonempty_zero_set_of_no_additive_subweight`: every sub-free
+   nonneg weight has a nonempty zero set — otherwise eps*1 with eps <=
+   min mu(S)/|S| is a positive additive sub-weight; (O2)
+   `zero_cylinder_restriction_is_mass_zero` (with
+   `cylinderRestriction_two_decomposable` and
+   `cylinderRestriction_nonneg`): in ANY
    gluing W of (mu, nu) and for every zero set Z of nu, the
-   restriction W|_{alpha x Z} is nonnegative with total nu(Z) = 0,
+   restriction of W to the cylinder alpha x Z is a nonnegative
+   two-decomposable weight with total nu(Z) = 0,
    i.e. a mass-zero-sector weight — every gluing of an empty-case
    pair NECESSARILY contains mass-zero sector sub-weights over the
    partner's zero cylinders, symmetrically for mu's zero sets.

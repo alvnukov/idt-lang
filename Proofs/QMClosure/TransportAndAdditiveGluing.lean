@@ -813,6 +813,128 @@ theorem sigma_dominance_gluing (mu : Finset α → ℚ)
     simp only [] at h
     linarith
 
+/-! ## Forced zero-cylinder structure of gluings
+
+Two structural facts behind the empty-case gluing census.  A pairwise
+weight with no nonzero additive sub-weight must vanish on some nonempty
+event; and restricting any gluing to a zero cylinder of its right-hand
+marginal always produces a member of the mass-zero sector.  Together:
+whenever the right-hand weight has no additive sub-weight (the empty
+peel case), every gluing necessarily carries mass-zero sector structure
+over the partner's zero cylinder. -/
+
+/-- **No additive sub-weight forces a zero set.** If a nonnegative
+pairwise weight of positive mass admits no nonzero additive sub-weight
+bounded by it, then it takes the value zero on some nonempty event:
+otherwise `ε • 1` with `ε` the minimum of `mu S / #S` over nonempty
+events is a positive additive sub-weight. -/
+theorem exists_nonempty_zero_set_of_no_additive_subweight
+    (mu : Finset α → ℚ) (hmu : TwoDecomposable mu)
+    (hpos : ∀ S, 0 ≤ mu S) (hmass : 0 < mu Finset.univ)
+    (hns : ∀ c : α → ℚ, (∀ i, 0 ≤ c i) →
+      (∀ S : Finset α, (∑ i ∈ S, c i) ≤ mu S) → (∀ i, c i = 0)) :
+    ∃ S : Finset α, S.Nonempty ∧ mu S = 0 := by
+  by_contra hcon
+  push_neg at hcon
+  have h0 : mu ∅ = 0 := by
+    obtain ⟨a, b, hb⟩ := hmu
+    rw [hb ∅]
+    simp
+  have hne : (Finset.univ : Finset α).Nonempty := by
+    rcases Finset.eq_empty_or_nonempty (Finset.univ : Finset α) with h | h
+    · rw [h, h0] at hmass
+      exact absurd hmass (lt_irrefl 0)
+    · exact h
+  have hgt : ∀ S : Finset α, S.Nonempty → 0 < mu S := fun S hS =>
+    lt_of_le_of_ne (hpos S) (Ne.symm (hcon S hS))
+  set F : Finset (Finset α) := Finset.univ.filter (fun S => S.Nonempty)
+    with hF
+  have hFne : F.Nonempty :=
+    ⟨Finset.univ, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hne⟩⟩
+  set g : Finset α → ℚ := fun S => mu S / (S.card : ℚ) with hg
+  have hgpos : ∀ S ∈ F, 0 < g S := by
+    intro S hS
+    rw [hF, Finset.mem_filter] at hS
+    obtain ⟨-, hSne⟩ := hS
+    exact div_pos (hgt S hSne)
+      (Nat.cast_pos.mpr (Finset.card_pos.mpr hSne))
+  obtain ⟨m, hm⟩ : ∃ m : ℚ,
+      m = (F.image g).min' (Finset.image_nonempty.mpr hFne) :=
+    ⟨_, rfl⟩
+  have hmpos : 0 < m := by
+    obtain ⟨S, hS, hSeq⟩ := Finset.mem_image.mp
+      (Finset.min'_mem (F.image g) (Finset.image_nonempty.mpr hFne))
+    rw [hm, ← hSeq]
+    exact hgpos S hS
+  have hsums : ∀ S : Finset α, (∑ i ∈ S, m) ≤ mu S := by
+    intro S
+    rcases Finset.eq_empty_or_nonempty S with h | h
+    · rw [h, h0]
+      simp
+    · have hS : S ∈ F := Finset.mem_filter.mpr ⟨Finset.mem_univ _, h⟩
+      have hle : m ≤ g S := by
+        rw [hm]
+        exact Finset.min'_le (F.image g) (g S)
+          (Finset.mem_image.mpr ⟨S, hS, rfl⟩)
+      rw [hg] at hle
+      have hc : (0 : ℚ) < (S.card : ℚ) :=
+        Nat.cast_pos.mpr (Finset.card_pos.mpr h)
+      have hmul := (le_div_iff₀ hc).mp hle
+      rw [Finset.sum_const, nsmul_eq_mul, mul_comm]
+      exact hmul
+  obtain ⟨i, -⟩ := hne
+  exact absurd (hns (fun _ => m) (fun _ => le_of_lt hmpos) hsums i)
+    (ne_of_gt hmpos)
+
+/-- Restriction of an event weight to the cylinder `α ×ˢ T`. -/
+def cylinderRestriction (W : Finset (α × β) → ℚ) (T : Finset β)
+    (U : Finset (α × β)) : ℚ :=
+  W (U ∩ ((Finset.univ : Finset α) ×ˢ T))
+
+theorem cylinderRestriction_two_decomposable (W : Finset (α × β) → ℚ)
+    (hW : TwoDecomposable W) (T : Finset β) :
+    TwoDecomposable (cylinderRestriction W T) := by
+  obtain ⟨a, b, hb⟩ := hW
+  refine ⟨fun x => if x ∈ (Finset.univ : Finset α) ×ˢ T then a x else 0,
+    fun p q => if p ∈ (Finset.univ : Finset α) ×ˢ T
+        ∧ q ∈ (Finset.univ : Finset α) ×ˢ T then b p q else 0, ?_⟩
+  intro U
+  simp only [cylinderRestriction]
+  rw [hb (U ∩ ((Finset.univ : Finset α) ×ˢ T)),
+    ← Finset.filter_mem_eq_inter, Finset.sum_filter]
+  congr 1
+  have hoff : ((U.filter fun x => x ∈ (Finset.univ : Finset α) ×ˢ T).offDiag)
+      = U.offDiag.filter
+        (fun p => p.1 ∈ (Finset.univ : Finset α) ×ˢ T
+          ∧ p.2 ∈ (Finset.univ : Finset α) ×ˢ T) := by
+    ext p
+    simp only [Finset.mem_offDiag, Finset.mem_filter]
+    tauto
+  rw [hoff, Finset.sum_filter]
+
+/-- The cylinder restriction of a nonnegative weight is nonnegative. -/
+theorem cylinderRestriction_nonneg (W : Finset (α × β) → ℚ)
+    (hnn : ∀ U, 0 ≤ W U) (T : Finset β) :
+    ∀ U, 0 ≤ cylinderRestriction W T U := fun _ => hnn _
+
+/-- **Zero cylinders of the partner force the mass-zero sector.** In any
+gluing `W` of `(mu, nu)`, the restriction of `W` to the cylinder over a
+zero event of `nu` is a nonnegative pairwise weight of total zero — a
+member of the mass-zero sector. -/
+theorem zero_cylinder_restriction_is_mass_zero
+    (W : Finset (α × β) → ℚ) (hW : TwoDecomposable W)
+    (hnn : ∀ U, 0 ≤ W U)
+    (nu : Finset β → ℚ)
+    (hmarg : ∀ T : Finset β,
+      W ((Finset.univ : Finset α) ×ˢ T) = nu T)
+    (T : Finset β) (hT : nu T = 0) :
+    TwoDecomposable (cylinderRestriction W T)
+      ∧ (∀ U, 0 ≤ cylinderRestriction W T U)
+      ∧ cylinderRestriction W T Finset.univ = 0 := by
+  refine ⟨cylinderRestriction_two_decomposable W hW T,
+    cylinderRestriction_nonneg W hnn T, ?_⟩
+  simp only [cylinderRestriction, Finset.univ_inter, hmarg T, hT]
+
 end
 
 inductive TransportAdditiveFinding where
