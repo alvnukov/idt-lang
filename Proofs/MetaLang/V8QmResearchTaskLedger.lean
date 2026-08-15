@@ -2615,13 +2615,29 @@ and any iteration-cap report must name the pivoting rule.
    multi-center shapes) resist every peel mechanism.  The naive
    structure hope "sub-free = cone over spiders and pure pairs" is
    REFUTED outright on Fin 4 (only 7/72 classes lie in that cone).
-   The original gluing question for these pairs is still open and is
-   being decided by a certified hybrid cutting plane (exact Bland LP +
-   exhaustive exact integer subset scan; scipy/HiGHS only proposes
-   rows, never decides): the spider-4 instance already closes as
-   GLUABLE with a fully verified witness (exhaustive nonneg scan over
-   all 2^20 subsets — the first gluing that no peel route explains),
-   while the bi-center instance is still grinding.  Discipline notes
+   The original gluing question for these pairs is being decided by a
+   certified hybrid pipeline whose load-bearing trick is SYMMETRY
+   REDUCTION: Aut(mu) x Aut(nu) acts on the grid, the constraint set
+   (cylinders + W >= 0 on all subsets) is invariant, and averaging
+   over the group maps solutions to solutions — so a gluing exists
+   IFF a group-symmetric one does, and infeasibility of the
+   orbit-reduced system (typically 20-60 orbit variables instead of
+   210 cell coefficients) proves infeasibility of the full system.
+   The exhaustive 2^(nA*nB) subset scan — the certification loop's
+   bottleneck — runs as a Rust cdylib called from Python via ctypes
+   (58 ms per full 2^20 scan versus 10-15 s in pure Python).  With
+   this machinery the verdicts so far: the spider-4 instance GLUABLE
+   (den 36, |G| = 144), the bi-center instance GLUABLE (den 4) — the
+   one that had ground unstoppably in the unsymmetrized cutting
+   plane — plus two more families GLUABLE (den 2, den 4); four
+   further mu-families are still resolving.  Every GLUABLE verdict
+   carries a fully verified witness: cylinders exact by construction
+   (rational Gaussian elimination) and nonnegativity certified by an
+   exhaustive exact integer scan over ALL 2^20 subsets.  Net result
+   so far: the empty case is real for the PEEL route but every
+   decided instance still glues — universal positive gluing survives
+   Fin 5, but through gluings no peel mechanism explains.
+   Discipline notes
    from this pass: (d) a survivor-file parsing bug (the mass field
    was read as a coefficient) silently corrupted the first round of
    pattern verdicts — fixed, all verdicts rerun, and the corrected
@@ -2654,7 +2670,9 @@ def transportAdditiveGluingResult : Prop :=
   -- zero-morphism and an empty pattern cone in both orientations —
   -- the peel route provably does not close there.  At least one such
   -- pair (the spider-4 instance) still GLUES, with a verified witness
-  -- no peel explains; the bi-center instance is undecided.  The open
+  -- no peel explains; the bi-center instance and two further
+  -- families also GLUE (certified witnesses, symmetry-reduced exact
+  -- cutting plane); remaining families resolving.  The open
   -- question is now exactly: does every equal-mass nonneg pairwise
   -- pair glue, even when every peel mechanism fails?
   True
