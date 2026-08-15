@@ -2488,6 +2488,25 @@ Skeptical re-verification pass (machine, exact):
    sector). This lemma is exactly LP-checkable per pair and is the
    candidate route to the universal theorem.
 
+   ADVERSARIAL FRONTIER (same session): the peel route reduces to a
+   dichotomy. If either side contains a positive-mass additive
+   sub-weight (exact LP test: a >= 0, sum a i <= v(S) for all S,
+   vertex-mass threshold 1/4!), the pair peels by the additive
+   mechanism with a scaled partner — a theorem already. The resisting
+   case is both sides ADDITIVE-SUB-FREE (the Fin-4 wall witness mu*
+   is such: its three zero triples force every a i to 0). Probes on
+   the integer grids: among additive-sub-free equal-mass positive-mass
+   pairs, 406/406 on 3x3 have a FULL dominance map (both directions
+   scanned exhaustively); on 4x3, 12659/13123 have full dominance and
+   ALL 464 remaining pairs admit a positive-mass PARTIAL dominance
+   peel with {−1,0,1} integer pieces (464/464, zero survivors). No
+   probed pair, anywhere, resists the inductive scheme: additive peel
+   / full dominance / partial dominance peel / terminal mass-zero
+   sector. The universal-gluing conjecture now has a precise shape:
+   every equal-mass nonnegative pairwise pair admits a finite peeling
+   sequence; the unproved core is exactly the both-sub-free partial
+   peel, and it has never failed.
+
 Evidence-discipline notes from this pass: (a) the random generators
 used for pre-validating the transport/additive constructions sample
 only a subcone of all nonnegative weights (guards were absent from the
