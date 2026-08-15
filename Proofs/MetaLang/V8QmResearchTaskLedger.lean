@@ -2638,6 +2638,26 @@ and any iteration-cap report must name the pivoting rule.
    so far: the empty case is real for the PEEL route but every
    decided instance still glues — universal positive gluing survives
    Fin 5, but through gluings no peel mechanism explains.
+   DISSECTION of the certified witnesses (same session): the
+   non-peel gluings have a consistent structure — ZERO-SINK
+   COUPLING.  For every decided family the witness routes 50-70% of
+   its total positive singleton mass into the partner's ZERO column
+   block alpha x Z (Z a zero set of nu, so only the block total is
+   pinned to 0); internally that block is a full mass-zero-sector
+   weight (sumA = +28/+12/+108/+20 with internal pair sums exactly
+   the negatives), NOT an empty block — the zero cylinder is used as
+   free capacity.  Meanwhile the 'cheap' rows of mu (zero singletons
+   in mu) vanish on nu's positive columns (up to 12 of 15 cells
+   exactly zero), and nu's positive-column mass rides on the few
+   heavy rows with compensating negative row-pairs.  The reading is
+   empirical (four certified witnesses, structural metrics machine
+   tabulated), not a proved construction; the shape inside the zero
+   cylinder adapts to mu but is not a sign-copy of it.  This is the
+   candidate replacement vocabulary the failed peel catalogue was
+   missing: peels match POSITIVE sub-structures transport-by-transport;
+   gluings exploit the partner's ZERO sector as the load-bearing free
+   space.  Next theory target: make zero-sink coupling an explicit
+   construction and test whether it closes every empty-case pair.
    Discipline notes
    from this pass: (d) a survivor-file parsing bug (the mass field
    was read as a coefficient) silently corrupted the first round of
