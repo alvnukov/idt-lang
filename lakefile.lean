@@ -95,6 +95,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.SorkinGradeIffPairwiseGeneration,
     `Proofs.QMClosure.CompositionForcesBinaryArity,
     `Proofs.QMClosure.CylinderGluingForcesBinaryArity,
+    `Proofs.QMClosure.TwoSidedCylinderGluing,
     `Proofs.QMClosure.ContextualIndistinguishabilityGivesInterference,
     `Proofs.QMClosure.LocalTomographySelectsComplex,
     `Proofs.QMClosure.QMSemanticKernelRoute,

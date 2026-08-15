@@ -48,10 +48,11 @@ composites be second-order at all is an input here, not a derivation; the
 no-gluing theorem says ternary locals cannot be glued INTO a second-order
 composite, which is the direction the literature predicts. (2) Two-sided
 gluing -- one composite extending BOTH local weights on their cylinders --
-is left open and is genuinely constrained: the additive lift below cannot be
-made two-sided without extra structure, which is a signal that composites
-carry amplitude-level, not weight-level, information. (3) Stronger gluing
-demands (conditioning, no-signalling on non-cylinder events, local
+is characterized in the companion file `TwoSidedCylinderGluing`: it is
+possible exactly when both locals are second order and their total masses
+agree, so at the cylinder-marginal level there is no Bell-type obstruction
+and no amplitude-level residue; weight data alone suffice. (3) Stronger
+gluing demands (conditioning, no-signalling on non-cylinder events, local
 tomography degree counting) are not yet formalised.
 
 Scope. Set-function weights over ℚ on selection algebras; the composite
@@ -264,23 +265,21 @@ theorem cylinder_records_four_findings :
 
 inductive CylinderOpenObligation where
   | deriveThatCompositesMustBeSecondOrderRatherThanAssumeIt
-  | twoSidedGluingFromWeightDataAlone
   | formalizeStrongerGluingDemandsThanCylinderConsistency
   | connectTheNoGluingToDensityCubeLocalTomographyCounts
   deriving DecidableEq, Repr
 
 def cylinderOpenObligations : List CylinderOpenObligation :=
   [ .deriveThatCompositesMustBeSecondOrderRatherThanAssumeIt,
-    .twoSidedGluingFromWeightDataAlone,
     .formalizeStrongerGluingDemandsThanCylinderConsistency,
     .connectTheNoGluingToDensityCubeLocalTomographyCounts ]
 
-theorem cylinder_keeps_four_open_obligations :
-    cylinderOpenObligations.length = 4 := by
+theorem cylinder_keeps_three_open_obligations :
+    cylinderOpenObligations.length = 3 := by
   rfl
 
 def cylinderClaimBoundary : String :=
-  "For set-function weights over ℚ: the cylinder marginal of a pairwise generated composite weight is pairwise generated (via the grade equivalence, since products distribute over unions), so a weight with nonzero third-order term on some disjoint triple has no pairwise generated composite with a consistent cylinder marginal, while every pairwise generated local weight does admit such a composite. The cubic weight |S|^3 instantiates the no-gluing. The demand that composites be second-order at all is an input here, not a derivation; two-sided gluing and stronger gluing demands are open; the per-particle mask degree notion of many-body interference is a different parameterisation about which nothing is claimed. Nothing here derives complex amplitudes, a Hilbert carrier, purification, or the Born rule."
+  "For set-function weights over ℚ: the cylinder marginal of a pairwise generated composite weight is pairwise generated (via the grade equivalence, since products distribute over unions), so a weight with nonzero third-order term on some disjoint triple has no pairwise generated composite with a consistent cylinder marginal, while every pairwise generated local weight does admit such a composite. The cubic weight |S|^3 instantiates the no-gluing. The demand that composites be second-order at all is an input here, not a derivation; two-sided gluing is characterized in the companion file TwoSidedCylinderGluing (possible exactly when both locals are second order and total masses agree); stronger gluing demands remain open; the per-particle mask degree notion of many-body interference is a different parameterisation about which nothing is claimed. Nothing here derives complex amplitudes, a Hilbert carrier, purification, or the Born rule."
 
 end QMClosure
 end IDT

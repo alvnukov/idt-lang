@@ -1996,6 +1996,67 @@ theorem c_arity_probe_result_recorded :
     cArityProbeReturnedOneSidedTheorem := by
   trivial
 
+/-!
+### Two-sided cylinder gluing CHARACTERIZED (2026-08-15)
+
+The two-sided question left open by the previous block is now closed in
+`Proofs/QMClosure/TwoSidedCylinderGluing.lean`, all machine-checked:
+
+1. `cylinder_mass_conservation`: mass conservation through both cylinder
+   marginals needs no grade assumption at all -- any composite weight of
+   any order conserves total mass, because both marginals read the same
+   full product event `univ ×ˢ univ`.
+
+2. `two_sided_gluing_necessity`: a second-order composite carrying both
+   cylinder marginals forces both marginals to be second order (the
+   one-sided theorem applied to each side) and their total masses to
+   agree.
+
+3. `two_sided_gluing_sufficiency` and `two_sided_gluing_iff`: on NONEMPTY
+   contexts these conditions are also sufficient. The witness is the
+   slice-and-junction lift: carry mu on the slice `α × {t₀}`, carry nu on
+   the slice `{s₀} × β`, subtract a junction singleton of mass
+   `nu univ` at the crossing point. Weight data alone suffice.
+
+4. `unequal_masses_do_not_glue`: the mass gate bites concretely -- the
+   block weight (mass 2) and the counting weight (mass 4) on four
+   alternatives are both second order yet do not glue.
+
+This refines the signal recorded in the previous block: additive lifts do
+fail two-sidedly, but non-additive weight-level lifts exist, so that
+failure carries no amplitude-level information after all.
+
+Reading for the research programme: at cylinder-marginal level the
+second-order world has NO Bell-type obstruction -- every consistent pair
+of second-order locals with matching mass is jointly realizable.
+Whatever excludes boxworld-style composites must enter through stronger
+demands (conditioning, no-signalling on non-cylinder events, local
+tomography), which remain open obligations in the file. Combined with
+the one-sided no-go, the weight-level gluing picture is closed: the
+pairs that glue are exactly the second-order pairs with equal total
+mass, and ternary residues are precisely what breaks gluing. The
+top-level demand that composites be second order remains an input, not a
+derivation.
+
+Scope discipline: set-function weights over ℚ, finite NONEMPTY contexts
+(on an empty context the mass gate alone is not sufficient and nothing
+is claimed there); cylinder marginals only; no complex amplitudes,
+Hilbert carrier, purification, or Born derived; no status upgraded
+anywhere.
+-/
+
+def twoSidedCylinderGluingCharacterized : Prop :=
+  -- Two-sided gluing of second-order weights is characterized exactly:
+  -- both marginals second order AND equal total mass, on nonempty
+  -- contexts, via an explicit slice-and-junction witness. Bell-type
+  -- questions are NOT settled by this and stay at the stronger gluing
+  -- demands.
+  True
+
+theorem two_sided_gluing_result_recorded :
+    twoSidedCylinderGluingCharacterized := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
