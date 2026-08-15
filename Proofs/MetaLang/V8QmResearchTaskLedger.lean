@@ -1946,6 +1946,56 @@ theorem composition_forces_binary_arity_stays_research_hypothesis :
     compositionForcesBinaryArityHypothesis := by
   trivial
 
+/-!
+### C-arity probe result: one-sided cylinder no-go PROVED (2026-08-15)
+
+The decisive probe proposed above has been run at the weight-calculus level
+in `Proofs/QMClosure/CylinderGluingForcesBinaryArity.lean`, all machine-checked:
+
+1. `cylinder_two_decomposable`: the cylinder marginal `fun S => W (S ×ˢ univ)`
+   of a pairwise generated composite W is pairwise generated. The proof goes
+   through the grade equivalence with no sum manipulations: products
+   distribute over unions, so the cylinder image of a disjoint triple is a
+   disjoint triple of cylinder events.
+
+2. `no_ternary_cylinder_gluing`: a weight with nonzero third-order term on
+   some disjoint triple has NO pairwise generated composite with a consistent
+   cylinder marginal. Ternary residues cannot be glued into second-order
+   composites. The cubic weight |S|^3 (third-order term 6 on singletons),
+   the arithmetic shadow of the density-cube construction, instantiates the
+   no-go concretely.
+
+3. `cylinder_gluing_lift`: non-vacuity -- every pairwise generated local
+   weight does admit such a composite (explicit lift concentrating the data
+   on one right-hand alternative).
+
+This confirms, as a theorem of the weight calculus, the literature prediction
+recorded with the hypothesis (density cubes violate local tomography;
+Galley-Masanes 2018). What REMAINS of C-arity after this result:
+
+- the top-level demand that composites be second-order at all is an input,
+  not a derivation;
+- two-sided gluing (one composite extending BOTH locals) is open and is
+  genuinely constrained by the failure of additive lifts, a signal that
+  composites carry amplitude-level structure;
+- stronger gluing demands (conditioning, no-signalling on non-cylinder
+  events, local-tomography degree counting) are not yet formalised.
+
+No status is upgraded: this is a weight-calculus theorem, not a derivation
+of complex amplitudes, Hilbert carriers, purification, or Born.
+-/
+
+def cArityProbeReturnedOneSidedTheorem : Prop :=
+  -- The one-sided cylinder direction of the C-arity prediction is now a
+  -- theorem of the weight calculus; the residual content of the hypothesis
+  -- is the top-level second-order-composite demand and the two-sided and
+  -- stronger-gluing questions, all recorded as open obligations in the file.
+  True
+
+theorem c_arity_probe_result_recorded :
+    cArityProbeReturnedOneSidedTheorem := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
