@@ -2631,7 +2631,9 @@ and any iteration-cap report must name the pivoting rule.
    (den 36, |G| = 144), the bi-center instance GLUABLE (den 4) — the
    one that had ground unstoppably in the unsymmetrized cutting
    plane — plus two more families GLUABLE (den 2, den 4); four
-   further mu-families are still resolving.  Every GLUABLE verdict
+   further mu-families are still resolving (superseded by the
+   pair-level census recorded next: the launch deduplicated by mu
+   alone).  Every GLUABLE verdict
    carries a fully verified witness: cylinders exact by construction
    (rational Gaussian elimination) and nonnegativity certified by an
    exhaustive exact integer scan over ALL 2^20 subsets.  Net result
@@ -2668,6 +2670,67 @@ and any iteration-cap report must name the pivoting rule.
    counterexample (1,1,1,-1,-1,-1) before it could poison the record
    — zero-total nonneg weights on 3+ points form the mass-zero
    sector, they do not vanish.
+
+   CROSS-SIZE CLOSURE, WITNESS ANATOMY, FORCED ZERO CYLINDERS
+   (next session).  Pair-level census: the symmetry-reduced
+   certified pipeline now decides PAIRS, not mu-families, and every
+   GLUABLE verdict is re-verified through an independent code path
+   (exact Fraction cylinder values recomputed from the raw
+   coefficient lists against mu(S), nu(T) directly; nonnegativity
+   via the exhaustive Rust DP minimum; a pure-Python DP cross-check
+   of that Rust DP on the first witnesses of each stage).  Result:
+   ALL 71 canonical 5x4 empty-case pairs GLUABLE (0.1-0.4 s each;
+   denominators 2-36).  The 71 4x5 pairs need no separate
+   computation: transposing the grid maps a gluing of (mu, nu) to a
+   gluing of (nu, mu), preserving nonnegativity pointwise and
+   swapping the marginal roles.  So the ENTIRE cross-size empty
+   case — 142 canonical ternary pairs — glues with certified
+   witnesses.  The 5x5 census (1682 pairs) runs in the same
+   pipeline; at the time of this entry the first 187 verdicts are
+   all GLUABLE, none infeasible, none stuck.
+   Sink necessity was probed by augmenting the gluing system with
+   linear no-sink rows (column singleton sums <= 0 on zero
+   cylinders).  At zero-SINGLETON level the system stays FEASIBLE:
+   verified no-sink witnesses exist (denominators up to 12), so the
+   visible sink is a construction pattern, not a necessity; the
+   all-zero-SET version is still resolving.  The no-sink witnesses
+   reuse the same vocabulary with the mu-shaped template replicated
+   on POSITIVE columns (two identical full columns in the dissected
+   instance) and the zero column empty — the mechanism is TEMPLATE
+   REPLICATION, of which the zero-sink is one deployment.
+   Witness anatomy, machine-tabulated across the census (strict
+   conformance 103/118 at press time): (i) a confined block T of
+   rows lives entirely in one zero column z* of nu and carries an
+   EXACT transport of the sub-weight mu|_T, nonnegative, with mass
+   1, 3 or 7 in the data; (ii) the sink column weight omega*
+   extends that transport to a weight nonnegative on ALL subsets of
+   alpha with total 0 — a mass-zero-sector weight; (iii) positive
+   columns are additive with nonnegative coefficients on the
+   remaining rows; (iv) cross-pair corrections avoid T x T and
+   concentrate on the heavy rows; (v) the 15 nonconforming
+   witnesses have T empty and carry pair mass inside positive
+   columns instead.
+   Two observations that are theorems (short proofs, Lean
+   candidates, not yet formalized): (O1) every sub-free nonneg
+   weight has a nonempty zero set — otherwise eps*1 with eps <=
+   min mu(S)/|S| is a positive additive sub-weight; (O2) in ANY
+   gluing W of (mu, nu) and for every zero set Z of nu, the
+   restriction W|_{alpha x Z} is nonnegative with total nu(Z) = 0,
+   i.e. a mass-zero-sector weight — every gluing of an empty-case
+   pair NECESSARILY contains mass-zero sector sub-weights over the
+   partner's zero cylinders, symmetrically for mu's zero sets.
+   With (O1), the empty case always has zero cylinders on both
+   sides, so the forced structure is always present; sink witnesses
+   are its positive-singleton-rich elements.  This is the
+   ontology-level reading of why the arithmetic-complete peel
+   catalogue could not close the empty case: gluings live on the
+   partner's zero sector, a space the peel vocabulary does not
+   name.  Scope honesty: the census covers the canonical ternary
+   {-1,0,1} Fin-5 grids; off-grid coefficients are covered only by
+   the proved peel theorems outside the empty case.  Next targets:
+   finish the 5x5 census; settle all-zero-set no-sink feasibility;
+   make template replication an explicit construction with provable
+   mixed-subset nonnegativity.
 -/
 
 def transportAdditiveGluingResult : Prop :=
@@ -2693,9 +2756,11 @@ def transportAdditiveGluingResult : Prop :=
   -- pair (the spider-4 instance) still GLUES, with a verified witness
   -- no peel explains; the bi-center instance and two further
   -- families also GLUE (certified witnesses, symmetry-reduced exact
-  -- cutting plane); remaining families resolving.  The open
-  -- question is now exactly: does every equal-mass nonneg pairwise
-  -- pair glue, even when every peel mechanism fails?
+  -- cutting plane); the pair-level census has since decided the
+  -- whole cross-size empty case (71/71 in 5x4, transpose closes 4x5)
+  -- and the 5x5 census is in progress with no failure so far.  The
+  -- open question is now exactly: does every equal-mass nonneg
+  -- pairwise pair glue, even when every peel mechanism fails?
   True
 
 theorem transport_additive_gluing_result_recorded :
