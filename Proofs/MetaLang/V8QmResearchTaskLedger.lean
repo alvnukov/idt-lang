@@ -2533,13 +2533,67 @@ Skeptical re-verification pass (machine, exact):
    both sub-free, no dominance peel of any positive mass) has NEVER
    been observed in any probe of this thread.
 
+   RESOLUTION OF THE NO-VERDICT BLOCK (next session): all 58,112 pairs
+   left open by the LP iteration caps are now DECIDED, and the empty
+   case is EMPTY on Fin 4. Three machine results. (1) The 1284-weight
+   signed sub-free pool collapses to 72 S4-canonical classes; the
+   1534 canonical equal-mass ordered pairs contain 222 without full
+   dominance in either direction (reconfirmed by the exhaustive
+   LP-free sigma scan). With an exact Bland-rule simplex (no cycling,
+   zero-rhs rows folded to equalities, singleton zeros eliminated as
+   variables; positive-mass threshold 1/150000, which is exact since
+   vertex denominators of the 10-variable 0/1 system divide a 10x10
+   0/1 determinant <= 10^5 by Hadamard against integer rhs), ALL 222
+   classes admit a FORWARD dominance peel mu -> nu with an
+   arithmetically verified witness (0 <= eta <= mu valuewise,
+   sigma*eta <= nu valuewise, positive mass): zero empty cases, zero
+   unresolved. (2) The mixed signed x pure-pair frontier is closed
+   exhaustively at the canonical level: 44 oriented no-dominance
+   pairs, all peel, zero empty cases (this supersedes the 47 sampled
+   no-verdict pairs of the mixed campaign). Fin 4 x Fin 4 is now
+   completely classified: additive peel (theorem) / cone (theorem) /
+   full dominance / verified forward peel. (3) PATTERN REDUCTION
+   THEOREM (hand-proved, machine-cross-validated): a dominance peel
+   mu -> nu exists IFF some sigma makes the cone {eta >= 0 valuewise,
+   eta vanishing on every zero set of mu and on every pullback of a
+   zero set of nu} contain a positive-mass element — the peel question
+   depends ONLY on the zero-set hypergraphs, by lambda-scaling to the
+   infinitesimal limit in both directions. Machine check: class-level
+   agreement on all 44 mixed no-dominance pairs and per-sigma
+   agreement on 25 signed classes (6400 sigma verdicts), zero
+   disagreements. Consequence: every Fin-4 no-dominance class closes
+   by the PAIR-TO-PAIR certificate — both sides have a positively
+   shadowed pair (rho_ij = min over supersets S >= {i,j} of mu(S) >
+   0), eta = min(rho_mu, rho_nu) * p_ij, sigma maps the two pairs
+   onto each other — 222/222 classes are of this LP-free type. The
+   unique shadow-free weight of the whole signed pool (all six pair
+   shadows zero) is the spider itself; its zero pattern forces
+   eta = t * spider (the singleton, {leg,center} and {leg,leg,center}
+   zeros solve all ten coefficients up to one parameter t), so its
+   sub-weight cone is exactly the ray [0, spider], and the spider
+   never lands in a no-dominance equal-mass pair (its partners all
+   reach full dominance, both directions scanned exhaustively). All
+   72 canonical weights have an integral zero-set cover: the
+   fractional/integral gap of the sub-free characterization never
+   materializes on Fin 4. The general lemma now has a precise target:
+   pair-peel (hand proof, immediate) whenever both sides carry a
+   positively shadowed pair; the only possible resistance is
+   shadow-free against shadow-free (spider unions), first
+   constructible beyond Fin 4 — e.g. spider_4 on Fin 5 (mass 3)
+   against three disjoint Fin-4 spiders (mass 3) — and that family is
+   the next adversarial probe.
+
 Evidence-discipline notes from this pass: (a) the random generators
 used for pre-validating the transport/additive constructions sample
 only a subcone of all nonnegative weights (guards were absent from the
 Fin-3 generator); the Lean theorems themselves are unconditional, but
 future probes must use the guard-inclusive generator; (b) every
 transport-relatedness judgment now comes from the exhaustive 27-map
-scan, not from hand inspection.
+scan, not from hand inspection; (c) the 58,112 no-verdict labels of
+the exhaustive campaign were a solver artifact — Dantzig cycling on
+degenerate peel systems — not mathematical openness; degenerate
+feasibility LPs in this thread must run Bland-only from iteration 1,
+and any iteration-cap report must name the pivoting rule.
 -/
 
 def transportAdditiveGluingResult : Prop :=
@@ -2553,9 +2607,14 @@ def transportAdditiveGluingResult : Prop :=
   -- (ConeDecompositionWall), but the wall does not obstruct gluing:
   -- every probed equal-mass partner of the wall witness closes inside
   -- the proved family (transport for P01 and the relabel mu2,
-  -- sigma-dominance for f+P12). Open: whether some equal-mass
-  -- nonnegative pair fails to glue at all, and whether dominance +
-  -- additivity cover all pairs.
+  -- sigma-dominance for f+P12). The Fin-4 empty case (both sub-free,
+  -- no dominance peel) is now EXHAUSTIVELY EMPTY: all no-dominance
+  -- canonical pairs admit a verified forward peel, and the peel
+  -- question reduces exactly to zero-set patterns (pattern reduction
+  -- theorem), with the pair-to-pair certificate covering all of them.
+  -- Open beyond Fin 4: whether a shadow-free x shadow-free (spider
+  -- union) pair can resist peeling, and whether any equal-mass
+  -- nonnegative pair fails to glue at all.
   True
 
 theorem transport_additive_gluing_result_recorded :
