@@ -99,6 +99,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.ConditionedGluingIsUnobstructed,
     `Proofs.QMClosure.ConeGluingIsPositive,
     `Proofs.QMClosure.DiagonalSelfGluing,
+    `Proofs.QMClosure.ColumnEmbeddingGluing,
     `Proofs.QMClosure.ContextualIndistinguishabilityGivesInterference,
     `Proofs.QMClosure.LocalTomographySelectsComplex,
     `Proofs.QMClosure.QMSemanticKernelRoute,

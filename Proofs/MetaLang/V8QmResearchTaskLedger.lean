@@ -2246,6 +2246,54 @@ theorem diagonal_self_gluing_result_recorded :
     diagonalSelfGluingProvedResult := by
   trivial
 
+/-!
+### Column embedding: point-mass and zero right marginals always couple
+
+`Proofs/QMClosure/ColumnEmbeddingGluing.lean` (machine-checked, clean
+axioms) adds a third universal positive-coupling class with a two-line
+mechanism: carry the whole left weight on one right-hand alternative,
+`W U = mu {i | (i, t0) ∈ U}` (the `sliceWeightTop` of the two-sided file).
+Consequences: every nonnegative pairwise weight positively couples with
+the point mass of its own total mass, and every mass-zero nonnegative
+pairwise weight positively couples with the zero weight. No nonemptiness,
+mass, or cone-coefficient condition.
+
+The mechanism was found by hand AND independently by exact LP: the primal
+solve of (H₁₂ ⊗ 0) returned the witness `A₀₀ = 1, B_{(0,0),(1,0)} = −1`,
+which is exactly the column embedding of H₁₂ into column 0. The probe
+pipeline (Farkas-alternative simplex) was also validated for direction on
+known-answer instances: (H₁₂,H₁₂) cross-guard, (f,f) diagonal, (D,D) on
+Fin 2 from the previous session — all verdicts correct.
+
+Process lesson, repeated and worth escalating: during this session hand
+kernel-sum analyses twice "proved" infeasibility of (H₁₂ ⊗ 0) and
+(f ⊗ 0); both were arithmetic slips (double counting, wrong H values,
+mis-added FO sums). The already-recorded rule stands but was violated
+again before the machine check: in the positivity layer, NO claim of
+infeasibility or feasibility from hand bookkeeping alone — hand analysis
+proposes, exact computation disposes.
+
+Updated picture of the positive-gluing frontier: universal classes now
+proved are cone⊗cone (product kernel), μ⊗μ (diagonal), μ⊗M·δ_{t₀}
+(column embedding), and mass-zero⊗zero (column embedding). All exact LP
+probes on Fin 3 x Fin 3 (adversarial mass-zero rays, guard pairs, the
+positive-mass XOR ray against kernels) came out feasible. Still open:
+two arbitrary distinct weights of equal mass. Candidate mechanisms for
+the general case are the witness structures being extracted by primal
+solves; if the positivity layer stays obstruction-free even there, the
+physical selection content must live in spectral/phase structure.
+-/
+
+def columnEmbeddingGluingResult : Prop :=
+  -- Column embedding: every nonnegative pairwise weight couples positively
+  -- with the point mass of its own total mass; mass-zero weights couple
+  -- with the zero weight. Distinct-weight universal gluing stays open.
+  True
+
+theorem column_embedding_gluing_result_recorded :
+    columnEmbeddingGluingResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
