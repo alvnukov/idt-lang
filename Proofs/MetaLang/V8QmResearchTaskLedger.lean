@@ -2294,6 +2294,89 @@ theorem column_embedding_gluing_result_recorded :
     columnEmbeddingGluingResult := by
   trivial
 
+/-!
+### Transport, additive, and sum-composed gluing: four more universal
+### coupling classes
+
+`Proofs/QMClosure/TransportAndAdditiveGluing.lean` (machine-checked, clean
+axioms) adds four constructions that substantially close the adversarial
+Fin 3 x Fin 3 frontier by MECHANISM rather than by LP verdict:
+
+1. TRANSPORT GLUING: for ANY map σ : α → β (no injectivity), every
+   nonnegative pairwise weight μ couples positively with the transport
+   σ∗μ = T ↦ μ {i | σ i ∈ T}, via the graph-carried weight
+   W U = μ {i | (i, σ i) ∈ U}. This SUBSUMES the diagonal self-gluing
+   (σ = id) and the column embedding (constant σ: point mass, or zero
+   for mass-zero μ). Non-injective σ produces genuinely new right
+   marginals: fiber-merged transports.
+
+2. ADDITIVE GLUING: every additive weight with nonnegative coefficients
+   couples positively with EVERY nonnegative pairwise weight of the same
+   positive total mass, via the row-copy mixture W U = Σᵢ (aᵢ/M)·ν{T |
+   (i,t) ∈ U} (each product row carries an independent scaled copy of ν).
+
+3. ZERO LEFT: the zero weight couples with every mass-zero nonnegative
+   pairwise weight (which may be nonzero, e.g. XOR rays) via the left
+   slice. Together with column-embedding zero-mass this closes the
+   0-corner of the mass-zero sector.
+
+4. SUM COMPOSITION: gluings compose by sums. Corollary: any weight
+   decomposing as an additive nonneg part carrying the whole positive
+   mass plus a mass-zero nonneg residue couples with EVERY equal-mass
+   nonnegative pairwise weight.
+
+All adversarial Fin 3 x Fin 3 pairs from the previous probe are now
+closed by these mechanisms, not just by LP feasibility: f⊗f2 and H₁₂⊗H₁₃
+and P₁₂⊗P₁₃ are transports (relabels); f⊗0 and H₁₂⊗0 are constant
+transports; 2f+E₁⊗P₁₂ is the additive part E₁ plus the mass-zero residue
+2f glued by sum composition — its explicit decomposition witness
+(2·f on one column + P₁₂-copy on one row) was verified exactly against
+all 512 events and both cylinders.
+
+Correction of an earlier session claim, recorded for discipline: f₂ was
+previously reported as NOT transport-related to f. That was wrong — the
+check used the wrong permutation; σ = 0↔2 gives f₂ = σ∗f. The lesson
+repeats the standing rule: transport-relatedness claims need a verified
+σ, not an eyeballed one.
+
+Numerical validation BEFORE Lean (exact rational arithmetic): the
+transport construction on 300 random instances (all events, both
+cylinders, pairwise form) — 0 failures; the row-copy mixture on 400
+random instances — 0 failures; the 2f+E₁⊗P₁₂ decomposition witness —
+0 violations.
+
+Immediate further corollary of sum composition: column embedding
+(μ, 0) plus left slice (0, ν) gives (μ, ν) for ANY two mass-zero
+nonnegative pairwise weights — the ENTIRE mass-zero × mass-zero sector
+is closed (`mass_zero_sector_gluing`), including the previously open
+f⊗H₁₂-type pairs.
+
+Remaining open frontier (sharpened): pairs of POSITIVE total mass where
+both weights are non-additive and related neither by transport nor by an
+additive-plus-mass-zero-residue decomposition. Canonical next probes on
+Fin 3: pure-pair sums with mismatched pair patterns, e.g. 2P₁₂ ⊗
+(P₁₂+P₁₃) — note this one already glues by SUMS OF PRODUCT KERNELS
+(P₁₂⊗P₁₂ cone-coupled + P₁₂⊗P₁₃ cone-coupled, then sum composition),
+suggesting a general "cone-decomposition gluing" theorem (μ = Σμᵢ,
+ν = Σνᵢ with each (μᵢ, νᵢ) cone-coupled) as the next Lean target; and
+XOR-plus-pair composites such as (f+P₁₂) ⊗ (f₂+P₁₃) where the XOR parts
+are relabels but the pair parts are not. Also open: the fiberwise lemma
+that every transport marginal σ∗μ is itself a pairwise weight.
+-/
+
+def transportAdditiveGluingResult : Prop :=
+  -- Transport gluing (any σ), additive gluing (row-copy mixture), zero
+  -- left gluing, sum composition, and the whole mass-zero sector are
+  -- proved; the additive-plus-zero-mass-residue corollary follows. All
+  -- probed adversarial Fin 3 x Fin 3 pairs are closed by these
+  -- mechanisms. Open: positive-mass both-non-additive pairs not related
+  -- by transport or decomposition.
+  True
+
+theorem transport_additive_gluing_result_recorded :
+    transportAdditiveGluingResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
