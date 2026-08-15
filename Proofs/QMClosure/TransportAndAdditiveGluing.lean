@@ -745,6 +745,74 @@ theorem cone_pair_sum_gluing (mu₁ mu₂ : Finset α → ℚ)
   exact gluing_sum_composition W₁ W₂ hW₁ hW₂ hp₁ hp₂ mu₁ mu₂ nu₁ nu₂
     hL₁ hL₂ hR₁ hR₂
 
+/-! ## Sigma-dominance gluing -/
+
+/-- Transport preimages of the full context are full: every `σ i` lies in
+the universe. -/
+theorem transportPreimage_univ (σ : α → β) :
+    transportPreimage σ (Finset.univ : Finset β) = Finset.univ := by
+  simp [transportPreimage]
+
+/-- **Sigma-dominance gluing.** If the masses agree and some map
+`σ : α → β` dominates `nu` in the sense that the transport of `mu` along
+`σ` never exceeds `nu` (`mu {i | σ i ∈ T} ≤ nu T` for every `T`), then
+`(mu, nu)` couples positively: transport `mu` along `σ` and add the left
+slice of the residual `T ↦ nu T − mu {i | σ i ∈ T}`, which is nonnegative
+by dominance and mass-zero because the masses agree. The residual needs no
+structure of its own beyond that. Verified end-to-end at the value level on
+the Fin 4 x Fin 3 wall pair (`delta_3 + triangle − star` against
+`f + P₁₂`, sigma = (0,1,2,2), zero violations over all 4095 events). -/
+theorem sigma_dominance_gluing (mu : Finset α → ℚ)
+    (hmu : TwoDecomposable mu) (hpos : ∀ S, 0 ≤ mu S)
+    (nu : Finset β → ℚ) (hnu : TwoDecomposable nu) (hposnu : ∀ T, 0 ≤ nu T)
+    (hmass : mu (Finset.univ : Finset α) = nu (Finset.univ : Finset β))
+    (σ : α → β) (hdom : ∀ T, mu (transportPreimage σ T) ≤ nu T)
+    (s₀ : α) :
+    ∃ W : Finset (α × β) → ℚ, TwoDecomposable W ∧
+      (∀ S, W (S ×ˢ (Finset.univ : Finset β)) = mu S) ∧
+      (∀ T, W ((Finset.univ : Finset α) ×ˢ T) = nu T) ∧
+      (∀ U, 0 ≤ W U) := by
+  obtain ⟨W₁, hW₁, hL₁, hR₁, hp₁⟩ := transport_gluing mu hmu hpos σ
+  obtain ⟨c, d, hc⟩ := hnu
+  obtain ⟨c', d', hc'⟩ := transport_marginal_two_decomposable mu hmu hpos σ
+  have hBpos : ∀ T, 0 ≤ (fun T => nu T - mu (transportPreimage σ T)) T :=
+    fun T => sub_nonneg.mpr (hdom T)
+  have hBzero : (fun T => nu T - mu (transportPreimage σ T))
+      (Finset.univ : Finset β) = 0 := by
+    show nu (Finset.univ : Finset β)
+      - mu (transportPreimage σ (Finset.univ : Finset β)) = 0
+    rw [transportPreimage_univ, ← hmass]
+    ring
+  have hB : TwoDecomposable (fun T => nu T - mu (transportPreimage σ T)) := by
+    refine ⟨fun t => c t - c' t, fun t u => d t u - d' t u, fun T => ?_⟩
+    have h1 := hc T
+    have h2 := hc' T
+    dsimp only at h2
+    have e1 : (∑ t ∈ T, (c t - c' t)) = (∑ t ∈ T, c t) - (∑ t ∈ T, c' t) :=
+      Finset.sum_sub_distrib c c'
+    have e2 : (∑ p ∈ T.offDiag, (d p.1 p.2 - d' p.1 p.2))
+        = (∑ p ∈ T.offDiag, d p.1 p.2) - (∑ p ∈ T.offDiag, d' p.1 p.2) :=
+      Finset.sum_sub_distrib (fun p : β × β => d p.1 p.2)
+        (fun p : β × β => d' p.1 p.2)
+    simp only [e1, e2]
+    linarith
+  obtain ⟨W₂, hW₂, hL₂, hR₂, hp₂⟩ :=
+    zero_weight_gluing (fun T => nu T - mu (transportPreimage σ T))
+      hB hBpos hBzero s₀
+  obtain ⟨W, hW, hL, hR, hp⟩ :=
+    gluing_sum_composition W₁ W₂ hW₁ hW₂ hp₁ hp₂
+      mu (fun _ => 0) (fun T => mu (transportPreimage σ T))
+      (fun T => nu T - mu (transportPreimage σ T)) hL₁ hL₂ hR₁ hR₂
+  refine ⟨W, hW, ?_, ?_, hp⟩
+  · intro S
+    have h := hL S
+    simp only [] at h
+    linarith
+  · intro T
+    have h := hR T
+    simp only [] at h
+    linarith
+
 end
 
 inductive TransportAdditiveFinding where
@@ -757,6 +825,8 @@ inductive TransportAdditiveFinding where
   | theWholeMassZeroSectorGlues
   | transportMarginalsArePairwiseWeights
   | coneCouplingsAlsoComposeBySums
+  | conePlusZeroMassDecompositionRefutedOnFin4
+  | sigmaDominanceCouplesEveryDominatedEqualMassPair
   deriving DecidableEq, Repr
 
 def transportAdditiveFindings : List TransportAdditiveFinding :=
@@ -768,27 +838,27 @@ def transportAdditiveFindings : List TransportAdditiveFinding :=
     .additivePartPlusMassZeroResidueCouplesWithEverything,
     .theWholeMassZeroSectorGlues,
     .transportMarginalsArePairwiseWeights,
-    .coneCouplingsAlsoComposeBySums ]
+    .coneCouplingsAlsoComposeBySums,
+    .conePlusZeroMassDecompositionRefutedOnFin4,
+    .sigmaDominanceCouplesEveryDominatedEqualMassPair ]
 
-theorem transport_additive_records_nine_findings :
-    transportAdditiveFindings.length = 9 := by
+theorem transport_additive_records_eleven_findings :
+    transportAdditiveFindings.length = 11 := by
   rfl
 
 inductive TransportAdditiveOpenObligation where
-  | proveOrRefuteTheConePlusZeroMassDecompositionConjecture
   | closeOrCounterexampleTheRemainingNonTransportPositiveMassPairs
   deriving DecidableEq, Repr
 
 def transportAdditiveOpenObligations : List TransportAdditiveOpenObligation :=
-  [ .proveOrRefuteTheConePlusZeroMassDecompositionConjecture,
-    .closeOrCounterexampleTheRemainingNonTransportPositiveMassPairs ]
+  [ .closeOrCounterexampleTheRemainingNonTransportPositiveMassPairs ]
 
-theorem transport_additive_keeps_two_open_obligations :
-    transportAdditiveOpenObligations.length = 2 := by
+theorem transport_additive_keeps_one_open_obligation :
+    transportAdditiveOpenObligations.length = 1 := by
   rfl
 
 def transportAdditiveClaimBoundary : String :=
-  "For set-function weights over Q on finite contexts: (1) for every nonnegative-valued pairwise generated weight mu and EVERY map sigma : alpha -> beta (no injectivity), the graph-carried transport weight is pairwise generated, nonnegative on every event, has left cylinder marginal mu exactly, and right cylinder marginal T |-> mu {i | sigma i in T}, and that transport marginal is itself pairwise generated; sigma = id recovers the diagonal self-gluing and constant sigma recovers the column embedding. (2) Every additive weight with nonnegative coefficients couples positively with every nonnegative-valued pairwise weight of the same positive total mass via the row-copy mixture. (3) Positive couplings compose by sums; consequently any additive-nonnegative part carrying the whole positive mass plus a mass-zero nonnegative pairwise residue couples with every equal-mass nonnegative pairwise weight, ANY two nonnegative-valued pairwise weights of total mass zero couple (the whole mass-zero sector), and pairs whose two sides split into positively generated pieces with matching masses couple (cone pair sums; e.g. 2*P12 with P12+P13). Machine status beyond the theorems: exhaustive transport-relatedness over all 27 maps on Fin 3 confirms f2, H13, P13, P23, H21 and f2+P13 as transports of f, H12, P12, P12, H12 and f+P12 respectively, while 2f+E1 vs 2f2+E2 and f+P12 vs f2+P23 are NOT transport-related. The cone-plus-zero-mass decomposition (mu = positively generated C of full mass + nonneg mass-zero residue), which would have implied universal positive gluing by kernel-coupling the cone parts and mass-zero-coupling the residues, holds on Fin 2 (hand proof) and on ALL 2385 positive-mass grid weights on Fin 3 (exact LP), but is REFUTED on Fin 4: ConeDecompositionWall gives an explicit nonnegative pairwise weight of mass 1 (delta_3 + positive triangle on 012 - star from 3) for which no positively generated part can carry the mass below it, with a machine-checked Lean proof. Open: whether that witness still couples with equal-mass partners (the refutation kills the route, not the gluing), and the remaining non-transport positive-mass pairs. Nothing here is uniqueness, nothing concerns entangled or interference-optimal couplings, and nothing derives complex amplitudes, a Hilbert carrier, purification, or the Born rule."
+  "For set-function weights over Q on finite contexts: (1) for every nonnegative-valued pairwise generated weight mu and EVERY map sigma : alpha -> beta (no injectivity), the graph-carried transport weight is pairwise generated, nonnegative on every event, has left cylinder marginal mu exactly, and right cylinder marginal T |-> mu {i | sigma i in T}, and that transport marginal is itself pairwise generated; sigma = id recovers the diagonal self-gluing and constant sigma recovers the column embedding. (2) Every additive weight with nonnegative coefficients couples positively with every nonnegative-valued pairwise weight of the same positive total mass via the row-copy mixture. (3) Positive couplings compose by sums; consequently any additive-nonnegative part carrying the whole positive mass plus a mass-zero nonnegative pairwise residue couples with every equal-mass nonnegative pairwise weight, ANY two nonnegative-valued pairwise weights of total mass zero couple (the whole mass-zero sector), and pairs whose two sides split into positively generated pieces with matching masses couple (cone pair sums; e.g. 2*P12 with P12+P13). (4) SIGMA-DOMINANCE GLUING (machine-checked Lean): if the masses agree and some sigma : alpha -> beta satisfies mu {i | sigma i in T} <= nu T for EVERY T, then (mu, nu) couples positively -- transport mu along sigma and add the left slice of the residual T |-> nu T - mu {i | sigma i in T}, which is nonnegative by dominance and mass-zero because the masses agree. Dominance is sufficient, not necessary: delta_0 versus P12 has no dominance map either way yet glues by additivity. Machine status beyond the theorems: exhaustive transport-relatedness over all 27 maps on Fin 3 confirms f2, H13, P13, P23, H21 and f2+P13 as transports of f, H12, P12, P12, H12 and f+P12 respectively, while 2f+E1 vs 2f2+E2 and f+P12 vs f2+P23 are NOT transport-related. The cone-plus-zero-mass decomposition (mu = positively generated C of full mass + nonneg mass-zero residue), which would have implied universal positive gluing, holds on Fin 2 (hand proof) and on ALL 2385 positive-mass grid weights on Fin 3 (exact LP), but is REFUTED on Fin 4: ConeDecompositionWall gives an explicit nonnegative pairwise weight of mass 1 (delta_3 + positive triangle on 012 - star from 3) for which no positively generated part can carry the mass below it, with a machine-checked Lean proof. The wall does NOT obstruct gluing: every probed equal-mass partner of the wall witness couples INSIDE the proved family -- mu* vs P01 by transport along sigma=(1,0,0,0) (the 4x2 witness first recorded as a 'pair-spreading' new mechanism IS this transport; direct evaluation matches W U = mu* {i | (i, sigma i) in U} on all 256 events), mu* vs its relabel mu2 by transport along a bijection, and mu* vs f+P12 (not transport-related in either direction) by sigma-dominance with sigma=(0,1,2,2): the residual nu_B = nu - sigma_* mu* is nonnegative of mass zero, and the composed transport-plus-left-slice weight was verified at the value level with zero violations over all 4095 events and both cylinder families. Open: whether SOME equal-mass nonnegative pair fails to glue at all (no counterexample anywhere so far; the equal-mass gate remains the only obstruction ever seen), and whether dominance-plus-additivity covers all pairs. Nothing here is uniqueness, nothing concerns entangled or interference-optimal couplings, and nothing derives complex amplitudes, a Hilbert carrier, purification, or the Born rule."
 
 end QMClosure
 end IDT

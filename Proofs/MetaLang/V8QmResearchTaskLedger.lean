@@ -2443,6 +2443,51 @@ Skeptical re-verification pass (machine, exact):
    from a wrong permutation) was caught pre-record; this one was
    recorded and had to be corrected.
 
+   RESOLUTION (same follow-up session, machine-checked): the last open
+   wall pair μ* ⊗ (f+P₁₂) CLOSES constructively, and the construction
+   is a new THEOREM, not a new mechanism family. Splitting scan over
+   integer piece data found ν = ν_A + ν_B with ν_A = P₀₁ embedded in
+   Fin 3 (values {01}=1, {012}=1) and ν_B = f − q₀₂ (mass 0, values
+   {0}=1, {12}=1, {012}=0), where ν_A is the transport of μ* along
+   σ = (0,1,2,2) (σ-dominance: μ*({i : σ i ∈ T}) ≤ ν(T) on every T,
+   checked directly). The composed weight W = transport(μ*, σ) +
+   zeroLeft(ν_B) was verified at the value level with ZERO violations
+   over all 4095 events and all 21 cylinders. Generalized and proved
+   in Lean (TransportAndAdditiveGluing.lean):
+
+     sigma_dominance_gluing: equal masses + (∃ σ, ∀ T,
+     μ {i | σ i ∈ T} ≤ ν T) ⇒ positive gluing,
+
+   a pure composition of transport_gluing + zero_weight_gluing +
+   gluing_sum_composition; the residual ν_B = ν − σ∗μ needs no
+   structure beyond nonnegativity (dominance) and mass zero (equal
+   masses). Dominance is sufficient, not necessary: δ₀ vs P₁₂ has no
+   dominance map either way yet glues by additivity. With this, ALL
+   probed equal-mass partners of the wall witness close inside the
+   proved family, and no positivity obstruction beyond the equal-mass
+   gate has appeared anywhere. The sharp remaining questions: does
+   some equal-mass pair fail to glue at all, and do dominance +
+   additivity (+ cone pieces) cover all pairs.
+
+   COVERAGE (same session, exhaustive integer grids a, q ∈ {−1,0,1}):
+   single-mechanism coverage of equal-mass nonnegative pairwise pairs —
+   2×2: 35/35, 2×3: 386/386, 3×2: 386/386, 3×3: 5334/5532 (96.4%,
+   dominance alone covers 4826), 4×3: 155955/173044 (90.1%). The 198
+   uncovered 3×3 pairs: the 12 probed by the exact gluing LP are ALL
+   gluing-FEASIBLE (Farkas alternative infeasible; no certificate
+   exists), and ALL 198 close by 2-splittings into single-mechanism
+   piece pairs on the scanned {−1,0,1} piece grid — zero survivors. A
+   seeded uniform sample of 300 of the 17089 uncovered 4×3 pairs:
+   300/300 close by 2-splittings, zero survivors. No positivity
+   obstruction beyond the equal-mass gate has appeared in any probe,
+   LP-decided or constructive. Next sharp question (peelability): if
+   for every equal-mass pair there always exist a map σ and nonneg
+   pieces μ_A ≤ μ, ν_A ≤ ν of equal POSITIVE mass with μ_A
+   dominance-related to ν_A along σ, then universal positive gluing
+   follows by induction (peel + sum compose + terminal mass-zero
+   sector). This lemma is exactly LP-checkable per pair and is the
+   candidate route to the universal theorem.
+
 Evidence-discipline notes from this pass: (a) the random generators
 used for pre-validating the transport/additive constructions sample
 only a subcone of all nonnegative weights (guards were absent from the
@@ -2455,12 +2500,17 @@ scan, not from hand inspection.
 def transportAdditiveGluingResult : Prop :=
   -- Transport gluing (any σ, with pairwise transport marginals), additive
   -- gluing (row-copy mixture), zero left gluing, sum composition, the
-  -- whole mass-zero sector, and cone pair sums are proved. The
-  -- cone-plus-zero-mass decomposition conjecture (which would have
-  -- implied universal positive gluing) is REFUTED on Fin 4 by a
-  -- machine-checked Lean wall (ConeDecompositionWall). Open: gluing
-  -- feasibility for the wall witness and the remaining non-transport
-  -- positive-mass pairs.
+  -- whole mass-zero sector, cone pair sums, and sigma-dominance gluing
+  -- (equal masses + a dominance map sigma with mu {i | sigma i in T} <=
+  -- nu T for all T) are proved. The cone-plus-zero-mass decomposition
+  -- conjecture (which would have implied universal positive gluing) is
+  -- REFUTED on Fin 4 by a machine-checked Lean wall
+  -- (ConeDecompositionWall), but the wall does not obstruct gluing:
+  -- every probed equal-mass partner of the wall witness closes inside
+  -- the proved family (transport for P01 and the relabel mu2,
+  -- sigma-dominance for f+P12). Open: whether some equal-mass
+  -- nonnegative pair fails to glue at all, and whether dominance +
+  -- additivity cover all pairs.
   True
 
 theorem transport_additive_gluing_result_recorded :
