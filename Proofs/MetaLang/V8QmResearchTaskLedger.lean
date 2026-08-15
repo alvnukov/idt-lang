@@ -2349,28 +2349,57 @@ Immediate further corollary of sum composition: column embedding
 (μ, 0) plus left slice (0, ν) gives (μ, ν) for ANY two mass-zero
 nonnegative pairwise weights — the ENTIRE mass-zero × mass-zero sector
 is closed (`mass_zero_sector_gluing`), including the previously open
-f⊗H₁₂-type pairs.
+f⊗H₁₂-type pairs. Further corollaries of the same session: the transport
+marginal σ∗μ is itself pairwise generated (via the left-cylinder lemma —
+the previously recorded obligation was stale and is now closed), and
+cone couplings compose by sums (splits of both sides into positively
+generated pieces with matching masses glue; canonical case
+2P₁₂ ⊗ (P₁₂+P₁₃)).
 
-Remaining open frontier (sharpened): pairs of POSITIVE total mass where
-both weights are non-additive and related neither by transport nor by an
-additive-plus-mass-zero-residue decomposition. Canonical next probes on
-Fin 3: pure-pair sums with mismatched pair patterns, e.g. 2P₁₂ ⊗
-(P₁₂+P₁₃) — note this one already glues by SUMS OF PRODUCT KERNELS
-(P₁₂⊗P₁₂ cone-coupled + P₁₂⊗P₁₃ cone-coupled, then sum composition),
-suggesting a general "cone-decomposition gluing" theorem (μ = Σμᵢ,
-ν = Σνᵢ with each (μᵢ, νᵢ) cone-coupled) as the next Lean target; and
-XOR-plus-pair composites such as (f+P₁₂) ⊗ (f₂+P₁₃) where the XOR parts
-are relabels but the pair parts are not. Also open: the fiberwise lemma
-that every transport marginal σ∗μ is itself a pairwise weight.
+Skeptical re-verification pass (machine, exact):
+
+1. All transport-relatedness claims were re-checked EXHAUSTIVELY over
+   all 27 maps σ : Fin 3 → Fin 3 (the earlier checks were hand
+   calculations). Confirmed related: f→f₂, H₁₂→H₁₃, P₁₂→P₁₃, P₁₂→P₂₃,
+   H₁₂→H₂₁, and — a NEW closure correcting another hand judgment —
+   f+P₁₂ → f₂+P₁₃ (via the 3-cycle σ = (2,0,1); the hand analysis had
+   guessed "not related"). Genuinely unrelated: 2f+E₁ vs 2f₂+E₂ and
+   f+P₁₂ vs f₂+P₂₃ — these two are the honest remaining positive-mass
+   frontier pairs.
+
+2. Cone-plus-zero-mass DECOMPOSITION probe (the reduction carrier):
+   does every nonnegative pairwise weight μ of positive total mass
+   admit a positively generated C with C ≤ μ pointwise and
+   C(univ) = μ(univ)? Then R = μ − C is nonnegative of mass zero, and
+   universal positive gluing of ALL equal-mass pairs would follow by
+   kernel-coupling the cone parts (equal mass) + mass-zero-coupling the
+   residues + summing. Exact LP evidence: Fin 2 — proved by hand
+   (C = M·AND, R = guard-type residue); Fin 3 — ALL 2385 positive-mass
+   grid instances feasible; Fin 4 — 1223-instance random sample (point,
+   pair, guard, XOR generators) feasible. NO counterexample found.
+   Farkas-dual form of the conjecture: failure ⟺ a nonnegative
+   fractional cover y of all points and all pairs by proper subsets
+   with Σ y_S μ(S) < μ(univ). This is now the central open obligation
+   of the positivity layer: prove it (universal gluing follows) or
+   refute it (the witness μ points exactly at where positivity could
+   still obstruct composability).
+
+Evidence-discipline notes from this pass: (a) the random generators
+used for pre-validating the transport/additive constructions sample
+only a subcone of all nonnegative weights (guards were absent from the
+Fin-3 generator); the Lean theorems themselves are unconditional, but
+future probes must use the guard-inclusive generator; (b) every
+transport-relatedness judgment now comes from the exhaustive 27-map
+scan, not from hand inspection.
 -/
 
 def transportAdditiveGluingResult : Prop :=
-  -- Transport gluing (any σ), additive gluing (row-copy mixture), zero
-  -- left gluing, sum composition, and the whole mass-zero sector are
-  -- proved; the additive-plus-zero-mass-residue corollary follows. All
-  -- probed adversarial Fin 3 x Fin 3 pairs are closed by these
-  -- mechanisms. Open: positive-mass both-non-additive pairs not related
-  -- by transport or decomposition.
+  -- Transport gluing (any σ, with pairwise transport marginals), additive
+  -- gluing (row-copy mixture), zero left gluing, sum composition, the
+  -- whole mass-zero sector, and cone pair sums are proved. Open: the
+  -- cone-plus-zero-mass decomposition conjecture (which would imply
+  -- universal positive gluing), and the two remaining non-transport
+  -- positive-mass pairs (2f+E₁ vs 2f₂+E₂, f+P₁₂ vs f₂+P₂₃).
   True
 
 theorem transport_additive_gluing_result_recorded :

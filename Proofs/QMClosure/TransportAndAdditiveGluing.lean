@@ -2,6 +2,7 @@ import Mathlib.Tactic
 import Proofs.QMClosure.SorkinGradeIffPairwiseGeneration
 import Proofs.QMClosure.TwoSidedCylinderGluing
 import Proofs.QMClosure.ColumnEmbeddingGluing
+import Proofs.QMClosure.ConeGluingIsPositive
 
 namespace IDT
 namespace QMClosure
@@ -712,6 +713,38 @@ theorem mass_zero_sector_gluing (mu : Finset α → ℚ)
     rw [hR T]
     exact zero_add (nu T)
 
+/-- **Transport marginals are pairwise weights.** The right cylinder
+marginal produced by transport gluing is itself pairwise generated (it is
+the left cylinder marginal of a pairwise composite). -/
+theorem transport_marginal_two_decomposable (mu : Finset α → ℚ)
+    (hmu : TwoDecomposable mu) (hpos : ∀ S, 0 ≤ mu S) (σ : α → β) :
+    TwoDecomposable (fun T => mu (transportPreimage σ T)) := by
+  obtain ⟨W, hW, -, hR, -⟩ := transport_gluing mu hmu hpos σ
+  have heq : (fun T => mu (transportPreimage σ T))
+      = (fun T => W ((Finset.univ : Finset α) ×ˢ T)) :=
+    funext fun T => (hR T).symm
+  rw [heq]
+  exact cylinder_left_two_decomposable hW
+
+/-- **Cone couplings compose by sums.** If both sides split into
+positively generated pieces with matching masses, the pair glues: kernel
+couple the pieces and sum. Canonical covered case on Fin 3:
+`2·P₁₂ ⊗ (P₁₂ + P₁₃)` via `(P₁₂ ⊗ P₁₂) + (P₁₂ ⊗ P₁₃)`. -/
+theorem cone_pair_sum_gluing (mu₁ mu₂ : Finset α → ℚ)
+    (nu₁ nu₂ : Finset β → ℚ)
+    (h₁ : PositivelyGenerated mu₁) (h₂ : PositivelyGenerated mu₂)
+    (hn₁ : PositivelyGenerated nu₁) (hn₂ : PositivelyGenerated nu₂)
+    (hm₁ : mu₁ (Finset.univ : Finset α) = nu₁ (Finset.univ : Finset β))
+    (hm₂ : mu₂ (Finset.univ : Finset α) = nu₂ (Finset.univ : Finset β)) :
+    ∃ W : Finset (α × β) → ℚ, TwoDecomposable W ∧
+      (∀ S, W (S ×ˢ (Finset.univ : Finset β)) = mu₁ S + mu₂ S) ∧
+      (∀ T, W ((Finset.univ : Finset α) ×ˢ T) = nu₁ T + nu₂ T) ∧
+      (∀ U, 0 ≤ W U) := by
+  obtain ⟨W₁, hW₁, hL₁, hR₁, hp₁⟩ := cone_gluing_positive mu₁ nu₁ h₁ hn₁ hm₁
+  obtain ⟨W₂, hW₂, hL₂, hR₂, hp₂⟩ := cone_gluing_positive mu₂ nu₂ h₂ hn₂ hm₂
+  exact gluing_sum_composition W₁ W₂ hW₁ hW₂ hp₁ hp₂ mu₁ mu₂ nu₁ nu₂
+    hL₁ hL₂ hR₁ hR₂
+
 end
 
 inductive TransportAdditiveFinding where
@@ -722,6 +755,8 @@ inductive TransportAdditiveFinding where
   | positiveCouplingsComposeBySums
   | additivePartPlusMassZeroResidueCouplesWithEverything
   | theWholeMassZeroSectorGlues
+  | transportMarginalsArePairwiseWeights
+  | coneCouplingsAlsoComposeBySums
   deriving DecidableEq, Repr
 
 def transportAdditiveFindings : List TransportAdditiveFinding :=
@@ -731,27 +766,29 @@ def transportAdditiveFindings : List TransportAdditiveFinding :=
     .zeroWeightsCoupleWithEveryMassZeroWeightFromTheLeft,
     .positiveCouplingsComposeBySums,
     .additivePartPlusMassZeroResidueCouplesWithEverything,
-    .theWholeMassZeroSectorGlues ]
+    .theWholeMassZeroSectorGlues,
+    .transportMarginalsArePairwiseWeights,
+    .coneCouplingsAlsoComposeBySums ]
 
-theorem transport_additive_records_seven_findings :
-    transportAdditiveFindings.length = 7 := by
+theorem transport_additive_records_nine_findings :
+    transportAdditiveFindings.length = 9 := by
   rfl
 
 inductive TransportAdditiveOpenObligation where
-  | coupleTwoNonAdditiveWeightsNotRelatedByTransportOrDecomposition
-  | showTransportMarginalsArePairwiseWeightsFiberwise
+  | proveOrRefuteTheConePlusZeroMassDecompositionConjecture
+  | closeOrCounterexampleTheRemainingNonTransportPositiveMassPairs
   deriving DecidableEq, Repr
 
 def transportAdditiveOpenObligations : List TransportAdditiveOpenObligation :=
-  [ .coupleTwoNonAdditiveWeightsNotRelatedByTransportOrDecomposition,
-    .showTransportMarginalsArePairwiseWeightsFiberwise ]
+  [ .proveOrRefuteTheConePlusZeroMassDecompositionConjecture,
+    .closeOrCounterexampleTheRemainingNonTransportPositiveMassPairs ]
 
 theorem transport_additive_keeps_two_open_obligations :
     transportAdditiveOpenObligations.length = 2 := by
   rfl
 
 def transportAdditiveClaimBoundary : String :=
-  "For set-function weights over Q on finite contexts: (1) for every nonnegative-valued pairwise generated weight mu and EVERY map sigma : alpha -> beta (no injectivity), the graph-carried transport weight is pairwise generated, nonnegative on every event, has left cylinder marginal mu exactly, and right cylinder marginal T |-> mu {i | sigma i in T}; sigma = id recovers the diagonal self-gluing and constant sigma recovers the column embedding (point mass of the total mass, or the zero weight for mass-zero mu). (2) Every additive weight with nonnegative coefficients couples positively with every nonnegative-valued pairwise weight of the same positive total mass via the row-copy mixture (each product row carries an independent scaled copy of the right weight). (3) Positive couplings compose by sums, so any additive-nonnegative part carrying the whole positive mass plus a mass-zero nonnegative pairwise residue couples with every equal-mass nonnegative pairwise weight, and ANY two nonnegative-valued pairwise weights of total mass zero couple (the whole mass-zero sector). Exact rational probes on Fin 3 x Fin 3 close every probed adversarial equal-mass pair by these mechanisms (f with its relabel f2 and H12 with H13 and P12 with P13 are transports; 2f+E1 with P12 is an additive part E1 plus the mass-zero residue 2f, and its explicit decomposition witness was verified exactly against all 512 events and both cylinders). Still open: pairs of positive total mass where both weights are non-additive and related neither by transport nor by an additive-plus-zero-mass decomposition (pure-pair sums with mismatched pair patterns, XOR-plus-pair composites), and the fiberwise statement that transport marginals are themselves pairwise weights. Nothing here is uniqueness, nothing concerns entangled or interference-optimal couplings, and nothing derives complex amplitudes, a Hilbert carrier, purification, or the Born rule."
+  "For set-function weights over Q on finite contexts: (1) for every nonnegative-valued pairwise generated weight mu and EVERY map sigma : alpha -> beta (no injectivity), the graph-carried transport weight is pairwise generated, nonnegative on every event, has left cylinder marginal mu exactly, and right cylinder marginal T |-> mu {i | sigma i in T}, and that transport marginal is itself pairwise generated; sigma = id recovers the diagonal self-gluing and constant sigma recovers the column embedding. (2) Every additive weight with nonnegative coefficients couples positively with every nonnegative-valued pairwise weight of the same positive total mass via the row-copy mixture. (3) Positive couplings compose by sums; consequently any additive-nonnegative part carrying the whole positive mass plus a mass-zero nonnegative pairwise residue couples with every equal-mass nonnegative pairwise weight, ANY two nonnegative-valued pairwise weights of total mass zero couple (the whole mass-zero sector), and pairs whose two sides split into positively generated pieces with matching masses couple (cone pair sums; e.g. 2*P12 with P12+P13). Machine status beyond the theorems: exhaustive transport-relatedness over all 27 maps on Fin 3 confirms f2, H13, P13, P23, H21 and f2+P13 as transports of f, H12, P12, P12, H12 and f+P12 respectively, while 2f+E1 vs 2f2+E2 and f+P12 vs f2+P23 are NOT transport-related; the cone-plus-zero-mass decomposition (mu = positively generated C of full mass + nonneg mass-zero residue) was verified by exact LP on ALL 2385 positive-mass grid weights on Fin 3 and on a 1223-instance random sample on Fin 4 (and proved by hand on Fin 2); if it holds in general, universal positive gluing of all equal-mass pairs follows by kernel-coupling the cone parts and mass-zero-coupling the residues, then summing. Open: prove or refute that decomposition in general, and close or counterexample the remaining non-transport positive-mass pairs. Nothing here is uniqueness, nothing concerns entangled or interference-optimal couplings, and nothing derives complex amplitudes, a Hilbert carrier, purification, or the Born rule."
 
 end QMClosure
 end IDT
