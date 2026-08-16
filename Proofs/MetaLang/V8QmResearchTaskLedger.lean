@@ -3068,6 +3068,70 @@ theorem born_readout_weight_calculus_result_recorded :
     bornReadoutWeightCalculusResult := by
   trivial
 
+/-!
+### The facticization-stability route to the visibility cap: dead at
+### both readings
+
+Section 174.37 proposed the bridge "finite facticization stability →
+positive comparison geometry": a negative quadratic direction should
+generate a finite refinement or spectator extension with a negative
+facticization weight, so stability would forbid the direction and
+derive the Cauchy-Schwarz cap (the exact Born gap) from a primitive
+demand.  `Proofs/QMClosure/FacticizationStabilityWall.lean`
+(machine-checked, clean axioms, no sorry) kills both available
+readings on two alternatives:
+
+1. DISGUISE.  `FacticizationStability` as formalized in
+   `V7PositiveGeometryGeneral` is `∀ v, quadForm G v ≥ 0` — PSD of the
+   comparison form.  `form_psd_iff_cap` proves this is EXACTLY the cap
+   `a ≥ 0 ∧ c ≥ 0 ∧ ac ≥ b²` (V7 supplied the forward direction; the
+   backward direction is completed by completing the square).  As a
+   demand, it assumes the visibility bound; it derives nothing.
+
+2. VACUOUS.  If facticization witnesses are generated freely — any
+   four-cell pairwise table that coarsens back to the weight counts —
+   then `free_refinement_stability_is_vacuous` shows stability is
+   satisfied by NO event-nonnegative weight at all: a uniform witness
+   (halve each alternative, zero the intra fibers, put −t with
+   t = (a0+a1)/2 + 1 on one mixed pair) makes a negative event for
+   EVERY (a0, a1, q) with a0, a1 ≥ 0 — additive and Born-representable
+   weights included.  (Constructions machine-verified in exact
+   arithmetic before the Lean pass.)
+
+Spectator extensions cannot help either: direct-sum and product
+composites preserve event-nonnegativity componentwise (arithmetic
+observation, recorded in the file header, not formalized), so no
+spectator realizes a signed direction as a negative event.
+
+Consequence.  The bridge from facticity stability to the visibility
+cap has no construction at either reading.  What is missing is the
+WITNESS-ADMISSIBILITY RULE: which refinements count as facticization
+witnesses.  Any rule that does the job must admit refinements that
+kill super-visibility weights while excluding refinements that kill
+additive weights — and the two classes are separated by exactly the
+Cauchy-Schwarz bound, so the rule must encode the bound it was
+supposed to derive.  The super-visibility countermodel of BornConeGap
+therefore survives the whole F-family as currently formalized, and
+bridge family 1 of the QM-provability audit requires genuinely NEW
+primitive content, not a redeployment of F.
+-/
+
+def facticizationStabilityWallResult : Prop :=
+  -- The 174.37 bridge "facticity stability → positivity" is dead at
+  -- both readings: F-as-PSD is the cap in disguise (form_psd_iff_cap,
+  -- both directions proved); F-as-free-refinement-stability is
+  -- vacuous (a uniform refinement witness makes a negative event for
+  -- EVERY event-nonneg two-alternative weight).  The missing
+  -- primitive is the witness-admissibility rule, and any working rule
+  -- must encode the CS bound it should derive.  The super-visibility
+  -- countermodel survives the F-family; bridge family 1 needs new
+  -- primitive content.
+  True
+
+theorem facticization_stability_wall_result_recorded :
+    facticizationStabilityWallResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
