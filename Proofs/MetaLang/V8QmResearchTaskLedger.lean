@@ -2839,6 +2839,89 @@ theorem transport_additive_gluing_result_recorded :
     transportAdditiveGluingResult := by
   trivial
 
+/-!
+### The Born representation gap: exact cap on two alternatives, and
+### composability does not close it
+
+Research question for this cluster: settling whether QM is provable
+from the primitives requires knowing exactly which demand forces the
+Born/amplitude form.  The strengthened closure evaluator first demoted
+three formerly "proved" born_readout artifacts to IMPORT_REJECTED (they
+assume `W : H → ℂ`, i.e. import the carrier they should derive), so
+the closure route currently stands at 2/21 obligations proved from
+primitives.  This cluster isolates the representation bridge exactly.
+
+`Proofs/QMClosure/BornConeGap.lean` (machine-checked, clean axioms, no
+sorry) proves on two alternatives, in both directions:
+
+1. `exists_amplitudes_iff`: a real amplitude representation of the
+   weight (a0, a1, q) exists IFF 0 ≤ a0, 0 ≤ a1, q² ≤ 4·a0·a1 —
+   Gram PSD, which on two alternatives is Cauchy–Schwarz (necessity:
+   the by-hand `cs_two_dim`; sufficiency: explicit vectors with
+   `Real.sqrt`).
+2. `twoAltWeight_nonneg_iff`: nonnegativity on every event is exactly
+   0 ≤ a0, 0 ≤ a1, 0 ≤ a0+a1+q.
+3. `born_iff_nonneg_and_cap`: Born-representable ⟺ nonnegative on all
+   events ∧ the CS cap.  The gap between the nonneg cone and the Born
+   cone is EXACTLY the cap q² ≤ 4a0a1 (fringe contrast ≤ 1, both
+   sides: the cap also bites below when a0 ≠ a1).
+4. The witness (1,1,3): nonnegative on all four events (0, 1, 1, 5),
+   q² = 9 > 4, so it is not Born over the reals
+   (`super_visibility_not_born`) and not over ANY complex inner
+   product space (`no_complex_amplitudes`, triangle inequality) —
+   "super-visibility", interference visibility > 1.
+
+Then the decisive finite probe (exact symmetry-reduced LP, certified
+witnesses, independent Fraction-cylinder + exhaustive-DP
+verification; scripts not committed, methodology per the census
+entries): does COMPOSITE CLOSURE exclude super-visibility?  NO, on
+everything probed:
+
+- Fin 2 matched-mass rational grid (singletons in {1/2..2},
+  interference in {-2..4}, halves): 1315 informative equal-mass
+  pairs, ALL GLUABLE — including 186 SUPER⊗SUPER and 335 SUPER⊗BORN.
+- Fin 3 battery: the fully symmetric super weight (1,1,1; q=3), mass
+  12, against 15 equal-mass partners — sub-free Fin 3 (2), Born
+  non-additive (1), census sub-free Fin 5 rescaled (4, cross-size
+  3×5), mixed-profile super (8): ALL GLUABLE, witnesses verified,
+  several with independent pure-Python DP cross-checks.
+
+Consequence for the QM-provability question: pairwise arity +
+event-nonnegativity + equal-mass composite closure UNDERDETERMINE the
+readout.  A super-visibility weight satisfies every weight-calculus
+demand tested so far and is not a quantum weight; composite closure
+does not cut it away (on everything probed).  The representation
+bridge must import a visibility/spectral demand — exactly the
+declared-but-empty `V7BoundedCorrelations` obligation, or the
+`spectral_decomposition` representation obligation.  Where the
+cap could still come from: the measurement/projective layer
+(residual_closure, fpd_projective_derivation) or dynamics
+(overlap_preservation) — those remain the live bridge candidates.
+Scope honesty: the two-alternative characterization is a theorem;
+the composability non-exclusion is a finite machine-checked
+statement (grid + battery), not a universal theorem; no closure
+obligation status was changed by this cluster.
+-/
+
+def bornConeGapResult : Prop :=
+  -- Born-representability on two alternatives equals event
+  -- nonnegativity plus the Cauchy-Schwarz cap (Lean, both
+  -- directions); the witness (1,1,3) is nonnegative on all events
+  -- and not Born over the reals or any complex inner product space;
+  -- and composability does not exclude super-visibility on any
+  -- probed instance (1315/1315 Fin-2 matched-mass grid pairs
+  -- including 186 super⊗super; 15/15 Fin-3 battery partners,
+  -- cross-size included, all with certified witnesses).  Arity +
+  -- nonnegativity + composite closure underdetermine the readout;
+  -- the representation bridge needs a visibility/spectral demand
+  -- (V7BoundedCorrelations / spectral_decomposition).  Finite
+  -- statement; no obligation status changed.
+  True
+
+theorem born_cone_gap_result_recorded :
+    bornConeGapResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
