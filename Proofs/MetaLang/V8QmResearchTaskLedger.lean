@@ -3132,6 +3132,78 @@ theorem facticization_stability_wall_result_recorded :
     facticizationStabilityWallResult := by
   trivial
 
+/-!
+### The missing primitive identified: oriented unit-modulus
+### comparisons (Q deployed at the weight level)
+
+Constructive question after the wall: WHICH primitive content closes
+bridge family 1?  Analysis plus machine checks this session:
+
+1. NO constructive demand kills super-visibility: with q > 0, every
+   nonnegative mixture a0·α + a1·β + q·√(αβ) is nonnegative on the
+   whole positive quadrant — positive-side CS violations are invisible
+   to any intensity-scaling stability.  What exposes them is only the
+   ORIENTED structure: q_ij = 2√(a_i·a_j)·Re(u_ij) with |u_ij| = 1
+   forces |q_ij| ≤ 2√(a_i a_j) — the witness (1,1,3) would need
+   Re u = 3/2 > 1, excluded by unit modulus alone.
+
+2. Caps alone are INSUFFICIENT at n = 3 — the demand must live on the
+   complex/phase system, not on real event weights.  Two
+   machine-checked obstruction classes (exact arithmetic, numpy
+   eigensolver):
+   - SATURATION CYCLE INCONSISTENCY: (1,1,1; q = 2,2,-2) — every pair
+     cap met with equality, the Hermitian completion is forced
+     (Re G_ij = ±1 pins G_ij), eigenvalues (-1, 2, 2): no PSD
+     completion.  The phases u12·u23·u31 = -1 do not close the cycle.
+   - PARTIAL-CORRELATION VIOLATION: (1,1,1; q = 1,1,-1.9) — caps met
+     strictly, yet NO PSD completion exists even with full imaginary
+     freedom (best min-eigenvalue -0.327 at t = 0).  Strong alignment
+     of 2,3 to 1 forbids strong anti-alignment of 2,3: the geometric
+     transitivity bound Re G23 ≥ Re G12·Re G13 - |Im|-slack, a
+     triangle-type inequality on comparison angles.
+
+3. Saturation with CONSISTENT phases gives rank-1 Born (Gram
+   all-ones) — the amplitude form appears as soon as the orientation
+   system is globally coherent.
+
+READING.  The missing primitive is the ORIENTED COMPARISON STRUCTURE:
+pairwise unit-modulus phases with cycle consistency — exactly the
+namesake content of the undeveloped base primitive Q (oriented
+inheritance holonomy).  It is operationally the WAVE structure
+(measurable fringe positions and visibilities), it is strictly weaker
+than QM (classical waves obey the same cap), so it is not Born in
+disguise; with it, bridge family 1 becomes a THEOREM TARGET: pairwise
+caps + orientation consistency ⟺ PSD completion ⟺ Born
+representability.  Status: n = 2 closed by BornConeGap (cap ⟺ Born);
+n = 3 criterion (caps + cycle consistency + transitivity bound) is the
+next provable step; general n is the PSD-completion problem with free
+imaginary parts.  Honesty guard: a demand stated directly as "the
+overlap data is Gram/PSD" would be a disguise like F-as-PSD — the
+primitive must be the operational orientation family (phase-rotated
+contexts as inheritance, covariance of comparisons, nonneg at every
+orientation), from which PSD must be DERIVED.  That derivation
+(covariant phase family ⟹ Hermitian PSD, Weyl-style) is the open
+theorem of this route.  Nothing here changes any obligation status.
+-/
+
+def orientedComparisonPrimitiveResult : Prop :=
+  -- The primitive closing bridge family 1 is identified: oriented
+  -- unit-modulus pairwise comparisons with cycle consistency (Q
+  -- deployed; the wave structure).  Unit modulus alone kills the
+  -- super-visibility witness (Re u = 3/2 impossible); caps alone are
+  -- insufficient at n=3 (two machine-checked obstruction classes:
+  -- saturation cycle inconsistency, partial-correlation violation);
+  -- consistent saturation yields rank-1 Born.  n=2 representation is
+  -- proved (BornConeGap); n=3 criterion and the
+  -- covariance-to-PSD derivation are the open theorem targets.  The
+  -- operational demand must be the orientation family, not PSD
+  -- itself, to avoid the F-disguise.
+  True
+
+theorem oriented_comparison_primitive_result_recorded :
+    orientedComparisonPrimitiveResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
