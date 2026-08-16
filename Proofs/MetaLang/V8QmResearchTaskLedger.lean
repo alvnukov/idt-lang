@@ -2922,6 +2922,108 @@ theorem born_cone_gap_result_recorded :
     bornConeGapResult := by
   trivial
 
+/-!
+### QM-provability audit: the 19 unclosed obligations reduce to four
+### bridge families, three reprovements, two hypothesis decisions, one
+### calibration keeper
+
+Cluster goal: settle the shape of "can QM be proved from the
+primitives".  The closure evaluator currently reports 2/21 PROVED
+(context_normalization, projective_action), 3 IMPORT_REJECTED
+(born_readout artifacts assuming `W : H → ℂ`), 16 CONDITIONAL package
+artifacts.  Classification of every unclosed obligation, from the
+required statements plus the machine evidence now in hand:
+
+**Reprovable now (weight-calculus-native; the old artifacts merely
+imported the complex carrier):**
+- exclusivity_additivity: disjoint events with vanishing cross
+  interference are additive BY 2-additivity — restatable and provable
+  in the weight calculus.
+- coarse_graining_consistency: readout stability across partitions IS
+  the 2-additive expansion (partition sums plus exactly the cross
+  terms).
+- operational_equivalence_probability: invariance under
+  weight-preserving bijections is transport/relabel invariance, whose
+  machinery is proved.
+These three need reimplementation under the full proof-card contract;
+the mathematics is bounded and mechanical once stated.
+
+**Bridge family 1 — visibility/spectral cap (named by BornConeGap):**
+- spectral_decomposition: needs the CS-cap demand (fringe contrast ≤ 1;
+  the declared-but-empty V7BoundedCorrelations).
+- finite_projection_determinacy, projective_consistency: the projective
+  layer presupposes the same spectral structure.
+
+**Bridge family 2 — preservation/Wigner (dynamics trio):**
+- overlap_preservation_dynamics: NEEDS-BRIDGE and the bridge is STATABLE
+  in primitive vocabulary: "reversible inheritance is a
+  distinguishability-kernel automorphism".  Not derivable from
+  bijectivity (recorded wall) NOR from singleton-preservation — new
+  machine-checked counterexample this session: the weight
+  a = (1,1,1), q = (3,3,0) (nonnegative on all events, mass 9) with
+  sigma = swap(0,1): every singleton weight preserved, transported
+  kernel differs (q'_{12} = 3 vs q_{12} = 0).  The bridge is
+  necessarily quantitative-kernel-level.
+- d_cl_automorphism_dynamics: SAME bridge (a D_cl automorphism is the
+  kernel automorphism); closure under identity/composition/inverse is
+  already proved in OverlapPreservationDynamicsProof.
+- rich_d_cl_reversible_symmetry: same family plus a separate RICHNESS
+  demand ("enough" symmetry), statable but with its own content.
+
+**Bridge family 3 — continuity/limit:**
+- continuous_inheritance_family, generator_closure,
+  projective_limit_consistency: continuity is a genuinely new
+  (infinite-structure) demand; the obligation texts themselves permit
+  boundary-assumption marking.
+
+**Bridge family 4 — product encoding (composites):**
+- product_context_exhaustion, monoidal_associativity (recorded as
+  blocked on a product-encoding bridge), entanglement_closure,
+  local_tomography (selection-by-parameter-count is proved; full
+  separation of composite facts needs the representation upstream).
+
+**Hypothesis decisions (the fpd layer allows both outcomes):**
+- nonunital_stable_distinguishability: theorem or explicit boundary
+  assumption.
+- conservative_projective_gluing: same choice; combinatorially adjacent
+  to the proved transport-gluing conservativity of marginals.
+
+**Calibration keeper (by design, not a proof target):**
+- physical_phase_scale_boundary: hbar_I stays calibrated; anchors carry
+  no world-information (sections 145-147).
+
+Bottom line.  "QM from primitives" = base + at most FOUR named,
+primitive-statable bridge families + two explicit hypothesis decisions
++ three mechanical reprovements + one calibration keeper.  The base
+alone demonstrably underdetermines (BornConeGap; the
+singleton-preservation counterexample).  No bridge family is an
+import-wall — every one is statable without Hilbert/Born/unitary
+vocabulary.  For family 1 there is positive evidence the base CANNOT
+supply it (composability does not force the cap).  Whether any family
+can be DERIVED from the existing base, rather than adopted, is now the
+exact open question of the whole closure route.  Scope honesty: these
+classifications are research judgments backed by the cited machine
+evidence, not proofs; no obligation status was changed.
+-/
+
+def qmProvabilityAuditResult : Prop :=
+  -- The 19 unclosed QM-closure obligations decompose into: 3
+  -- weight-calculus reprovements (exclusivity additivity,
+  -- coarse-graining consistency, operational equivalence — the old
+  -- artifacts only wrongly imported the complex carrier), 4 named
+  -- primitive-statable bridge families (visibility/spectral cap;
+  -- preservation/Wigner with the swap(0,1) counterexample killing
+  -- singleton-level derivation; continuity/limit; product encoding),
+  -- 2 explicit hypothesis decisions (NUSD, conservative projective
+  -- gluing), 1 calibration keeper (hbar_I).  The base alone
+  -- underdetermines the readout; no family is an import-wall; whether
+  -- any bridge is derivable from the base is the exact open question.
+  True
+
+theorem qm_provability_audit_result_recorded :
+    qmProvabilityAuditResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
