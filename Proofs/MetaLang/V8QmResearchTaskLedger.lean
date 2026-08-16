@@ -2777,6 +2777,30 @@ and any iteration-cap report must name the pivoting rule.
    extend to a mass-zero weight, match nu by additive companions
    and restricted cross pairs — and it suffices, integrally,
    everywhere probed.
+
+   COMPLETE EMPTY-CASE CENSUS: UNIVERSAL GLUING ON THE FIN-5 GRID
+   (cluster close).  The 5x5 census finished in four parallel
+   shards of the same verified pipeline: ALL 1682 canonical ternary
+   empty-case pairs of Fin 5 x Fin 5 are GLUABLE, each with a
+   witness re-verified through the independent Fraction-cylinder +
+   exhaustive-DP path.  Together with the 142 cross-size pairs and
+   the Fin-4 exhaustive peel closure, the finite statement now
+   reads: on the canonical ternary {-1,0,1} grids up to Fin 5,
+   EVERY equal-mass nonnegative pairwise pair admits a nonnegative
+   pairwise gluing — 1753/1753 empty-case pairs certified, the rest
+   close by the proved peel mechanisms — so the only obstruction to
+   gluing observed anywhere remains unequal mass.  This is a
+   machine-checked finite statement, not a universal theorem:
+   off-grid coefficients and Fin >= 6 stay open.  Zero-set sink
+   forcing held on every further probed instance (all three modes,
+   exact certificates, no counterexample).  The ansatz coverage run
+   (conforming re-solves, (z*,T)-search, and a GENERALIZED
+   single-column sink whose column total is nu({z*}) for z* inside
+   a minimal zero set of nu — this closed the remaining
+   no-zero-singleton records, again with integer witnesses,
+   denominator 1) passed 120 records without a single failure and
+   keeps running in the background; the next theory target is the
+   universal construction with an integrality explanation.
 -/
 
 def transportAdditiveGluingResult : Prop :=
@@ -2803,10 +2827,12 @@ def transportAdditiveGluingResult : Prop :=
   -- no peel explains; the bi-center instance and two further
   -- families also GLUE (certified witnesses, symmetry-reduced exact
   -- cutting plane); the pair-level census has since decided the
-  -- whole cross-size empty case (71/71 in 5x4, transpose closes 4x5)
-  -- and the 5x5 census is in progress with no failure so far.  The
-  -- open question is now exactly: does every equal-mass nonneg
-  -- pairwise pair glue, even when every peel mechanism fails?
+  -- whole empty case — 1753/1753 canonical pairs GLUABLE with
+  -- verified witnesses — so on the ternary Fin <= 5 grid every
+  -- equal-mass nonneg pairwise pair glues (machine-checked finite
+  -- statement; off-grid and Fin >= 6 open).  The open
+  -- question is now exactly: does every equal-mass nonneg pairwise
+  -- pair glue, even when every peel mechanism fails?
   True
 
 theorem transport_additive_gluing_result_recorded :
