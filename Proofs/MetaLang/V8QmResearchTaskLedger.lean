@@ -3024,6 +3024,50 @@ theorem qm_provability_audit_result_recorded :
     qmProvabilityAuditResult := by
   trivial
 
+/-!
+### The three demoted born_readout obligations re-derived in the weight
+### calculus
+
+`Proofs/QMClosure/BornReadoutFromWeightCalculus.lean` (machine-checked,
+clean axioms, no sorry) delivers the "reprovable now" family of the
+audit above at the correct primitive level — no complex carrier, no
+amplitudes, only the 2-additive weight calculus:
+
+* `merge_expansion` + `coarse_graining_three_set`: merging disjoint
+  events adds exactly the ordered cross-pair sum, and the three-event
+  readout is the partition expansion — coarse-graining stability IS
+  the 2-additive expansion identity.
+* `exclusive_events_are_additive`: exclusivity (vanishing cross pair
+  coefficients) is exactly vanishing interference, and then merging is
+  additive.
+* `operational_equivalence_invariance`: a relabeling preserving the
+  generating data (singletons and pair coefficients) preserves the
+  readout on every event.
+
+These are the weight-calculus shadows of the three IMPORT_REJECTED
+artifacts, closing their import rejection at the level where the
+primitive base lives.  Status honesty: the Lean mathematics is done and
+kernel-checked; REGISTERING them as closure proof cards under the full
+checker contract (manifest card, sync_formal_proof_ledger, forbidden
+import scan, checker commands) is a separate bounded mechanical step
+and has NOT been done yet — the evaluator still counts them as
+import-rejected until then.  After registration, the closure count
+would move from 2/21 to 5/21 proved from primitives.
+-/
+
+def bornReadoutWeightCalculusResult : Prop :=
+  -- The three import-rejected born_readout obligations are re-proved
+  -- at the weight-calculus level (merge expansion, coarse-graining
+  -- partition identity, exclusivity additivity, kernel-preserving
+  -- relabel invariance) in BornReadoutFromWeightCalculus.lean, clean
+  -- axioms, no sorry.  Proof-card registration under the checker
+  -- contract is pending; obligation statuses unchanged until then.
+  True
+
+theorem born_readout_weight_calculus_result_recorded :
+    bornReadoutWeightCalculusResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
