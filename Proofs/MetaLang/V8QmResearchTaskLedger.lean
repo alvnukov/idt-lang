@@ -3204,6 +3204,71 @@ theorem oriented_comparison_primitive_result_recorded :
     orientedComparisonPrimitiveResult := by
   trivial
 
+/-!
+### Three-alternative representation criterion (n = 3 closed)
+
+`Proofs/QMClosure/ThreeAlternativeRepresentation.lean`
+(`exists_amplitudes_three_iff`, machine-checked, axioms
+[propext, Classical.choice, Quot.sound]).
+
+For three alternatives with a positive anchor `a0` and a nondegenerate
+anchor pair (`b01^2 < a0 * a1`), real amplitudes with norms `a_i` and
+overlaps `b_ij` (for a weight, `q_ij = 2 * b_ij`) exist IF AND ONLY IF
+the single transitivity bound
+
+    (a0 * b12 - b01 * b02)^2 ≤ (a0 * a1 - b01^2) * (a0 * a2 - b02^2)
+
+holds.  Normalized (`c_ij = b_ij / √(a_i a_j)`):
+`|c12 - c01·c02| ≤ √((1 - c01²)(1 - c02²))` — alignment is transitive
+up to geometric slack.  The two caps other than the strict anchor cap
+are forced by the bound itself (RHS ≥ 0 with positive first factor),
+so the criterion really is caps + ONE transitivity inequality.
+Sufficiency: explicit construction in ℝ³ (anchor axis, residual of
+alternative 1, residual of alternative 2 beyond the anchor line).
+Necessity: orthogonal decomposition with respect to the anchor plus
+by-hand Cauchy-Schwarz (`cs_three`, Lagrange identity; no Mathlib
+inner-product machinery imported).
+
+Corollary `partial_correlation_witness_not_born`: the machine
+obstruction class PARTIAL-CORRELATION VIOLATION, witness
+(a, b) = ((1,1,1), (1/2, 1/2, -19/20)) — all pairwise caps strict —
+is NOT representable, now as a Lean theorem (36/25 > 9/16).  Of the
+two n = 3 obstruction classes recorded above, this one is promoted
+from machine-checked-example to formal theorem.
+
+SHARPENING OF THE PRIMITIVE PICTURE.  At n = 3 the criterion is REAL:
+no phase content enters, and the same real bound characterizes
+Hermitian PSD completions with the given real parts (the imaginary
+freedom is absorbed by Cauchy-Schwarz on the (Im, Re-orthogonal)
+decomposition — argued in the file header, not formalized).  The
+genuinely complex content of the oriented comparison structure —
+cycle holonomy `u12·u23·u31 ≠ 1` that cannot be gauged away — first
+becomes irreducible on FOUR alternatives (4-cycles).  So the
+unit-modulus vocabulary of Q earns its keep exactly from n = 4; at
+n = 3 the new primitive speaks pure real transitivity geometry.
+
+Scope: generic case only.  Degenerate saturation cases (a collapsed
+pair `b_ij^2 = a_i a_j`, zero anchor) are the forced-phase logic and
+remain open.  Coefficients over ℝ.  Nothing here changes any
+obligation status.
+-/
+
+def threeAlternativeRepresentationResult : Prop :=
+  -- n = 3 representation criterion is a machine-checked Lean theorem:
+  -- with 0 < a0 and b01^2 < a0*a1, amplitudes exist IFF the anchor
+  -- transitivity bound holds (caps + one inequality).  Explicit ℝ³
+  -- construction for sufficiency; anchor decomposition + by-hand CS
+  -- for necessity.  The partial-correlation obstruction class is now
+  -- a formal theorem, not just a machine example.  The criterion is
+  -- REAL at n = 3; phase/holonomy content of the oriented comparison
+  -- primitive is irreducible only from n = 4.  Degenerate saturation
+  -- cases remain open; no obligation status changes.
+  True
+
+theorem three_alternative_representation_result_recorded :
+    threeAlternativeRepresentationResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT
