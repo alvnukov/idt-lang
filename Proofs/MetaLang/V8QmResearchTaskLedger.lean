@@ -3269,6 +3269,72 @@ theorem three_alternative_representation_result_recorded :
     threeAlternativeRepresentationResult := by
   trivial
 
+/-!
+### Orientation-covariance wall (phase-only covariance is not Born)
+
+`Proofs/QMClosure/OrientationCovarianceWall.lean`
+(`orientation_nonneg_not_born`, machine-checked, axioms
+[propext, Classical.choice, Quot.sound]).
+
+The planned Weyl-style derivation target of bridge family 1 was:
+"covariant phase family ⟹ Hermitian PSD" — demand that the event
+readout be nonnegative at every phase orientation of the comparison
+family, and derive PSD.  Probing BEFORE formalizing the positive
+direction found the route FALSE at n = 3, and the wall is now a
+machine-checked theorem.  Witness (norms, overlaps)
+(a, b) = ((1, 1, 321/200), (0, 9/10, 9/10)):
+
+- at every sub-event and every phase orientation the oriented readout
+  is ≥ 0 (binding case: full support, both cross terms anti-aligned,
+  slack 1/200);
+- no real amplitudes realize the family (transitivity bound fails:
+  (2889/2000)^2 > 159/200).
+
+The witness is an interior point of an open family g02 = g12 = t,
+a2 = 4t - 2 + ε, t ∈ (1/2, 1), 0 < ε < 2(t-1)^2 (machine-checked
+numerically over the family; Lean fixes one rational point).
+
+LANDSCAPE AFTER THE WALL.
+
+1. n = 2: the all-orientation minimum is a0 + a1 - 2|b01| ≥ 0 — the
+   cap, i.e. Born (remark; not re-formalized as an equivalence).
+2. n = 3: phase-only covariance is strictly between caps and Born.
+   What closes the gap is the TRANSITIVITY bound.  The operational
+   demand of the oriented-comparison primitive at n = 3 is
+   transitivity of alignment, not covariance.
+3. Adding local attenuation (arbitrary radius per alternative) makes
+   the demand literally ∀ x, Re (x† G x) ≥ 0 — PSD by
+   definition-unfolding, a disguise with no derivation content.
+4. Unit-modulus-only comparisons (visibility ≡ 1) force rank-1 Gram
+   by Cauchy-Schwarz equality — the primitive must carry visibility in
+   [0, 1] alongside phase (argued; not formalized).
+5. Genuinely phase-holonomic content (4-cycle holonomy) is irreducible
+   only from n = 4.
+
+CORRECTED TARGET for bridge family 1: caps + transitivity are the
+real demand system (proved: n = 2 BornConeGap, n = 3
+ThreeAlternativeRepresentation); phase holonomy enters at n ≥ 4.  The
+Weyl-covariance route is recorded as rejected in phase-only form and
+as a disguise in attenuated form.  Nothing here changes any obligation
+status.
+-/
+
+def orientationCovarianceWallResult : Prop :=
+  -- Phase-only orientation covariance (nonneg of the oriented readout
+  -- at every sub-event and phase orientation) does not imply Born at
+  -- n = 3: machine-checked wall with rational witness
+  -- (1, 1, 321/200; 0, 9/10, 9/10), slack 1/200, open counterexample
+  -- family.  n = 2 covariance equals the cap equals Born; the
+  -- attenuated version is PSD by definition (disguise); unit-modulus
+  -- visibility forces rank-1; holonomy is irreducible from n = 4.
+  -- Bridge-family-1 demand system corrected to caps + transitivity.
+  -- No obligation status changes.
+  True
+
+theorem orientation_covariance_wall_result_recorded :
+    orientationCovarianceWallResult := by
+  trivial
+
 end V8
 end MetaLang
 end IDT

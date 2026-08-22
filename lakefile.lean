@@ -171,5 +171,15 @@ lean_lib Proofs where
     `Proofs.QMClosure.ProjectiveActionProof,
     `Proofs.QMClosure.StringTheoryPrimitiveHintAudit,
     `Proofs.QMClosure.TwoPostulateReconstructionImportAudit,
-    `Proofs.QMClosure.TypedRewriteStructureUnderdeterminationProbe
+    `Proofs.QMClosure.TypedRewriteStructureUnderdeterminationProbe,
+
+    -- Born-gap / oriented-comparison cluster (weight-calculus level,
+    -- carrier-free): n=2 gap theorem, born-readout reprovements,
+    -- facticization-stability wall, n=3 representation criterion, and
+    -- the orientation-covariance wall (which imports the n=3 file).
+    `Proofs.QMClosure.BornConeGap,
+    `Proofs.QMClosure.BornReadoutFromWeightCalculus,
+    `Proofs.QMClosure.FacticizationStabilityWall,
+    `Proofs.QMClosure.ThreeAlternativeRepresentation,
+    `Proofs.QMClosure.OrientationCovarianceWall
   ]
