@@ -46,9 +46,9 @@ jobs:
 
       - name: Hypothesis checker quality
         run: |
-          ruff check theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py theory_experiments/candidate_history.py theory_experiments/source_candidate.py
-          mypy --strict theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py theory_experiments/candidate_history.py theory_experiments/source_candidate.py
-          python -m unittest tests.test_primitive_screen tests.test_physics_screen tests.test_candidate_pipeline tests.test_quadratic_certificate tests.test_candidate_history tests.test_source_candidate
+          ruff check theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py theory_experiments/candidate_history.py theory_experiments/source_candidate.py theory_experiments/amplitude_algebra.py
+          mypy --strict theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py theory_experiments/candidate_history.py theory_experiments/source_candidate.py theory_experiments/amplitude_algebra.py
+          python -m unittest tests.test_primitive_screen tests.test_physics_screen tests.test_candidate_pipeline tests.test_quadratic_certificate tests.test_candidate_history tests.test_source_candidate tests.test_amplitude_algebra
 
       - name: IDT v8 declarative rules
         run: python scripts/check_declarative_rules.py --json

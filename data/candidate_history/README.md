@@ -84,10 +84,15 @@ See `data/existing_primitive_inventory.json`, the original capture addresses in
 `data/existing_primitive_registration.json`, and the
 [two-track research program](../../CHECKER_RESEARCH_PROGRAM.md).
 
-These `source_theory` inputs embed exact source text and hashes. Their current
-prediction adapter is missing: rechecks explicitly return `unsupported`, retain
-all missing bridges, and execute no embedded code. An `unchanged` regression
-result is not a passing physical screen. `evaluation_status_counts` and
+These `source_theory` inputs embed exact source text and hashes. Twenty-two
+still return `unsupported` because their prediction adapter is missing. Two
+reviewed pair-history realizations now bind by full specification hash to
+native integer algebra; their new bounded observations supplement, not replace,
+the original unsupported observations. All missing physical bridges remain
+visible, and no embedded source code is executed. Six native-algebra controls
+are also retained, including a surviving degenerate carrier. See the
+[adapter result and baseline review](../../PAIR_HISTORY_ADAPTER_RESULT.md).
+An `unchanged` regression result is not a passing physical screen. `evaluation_status_counts` and
 `source_adapter_missing` expose the remaining gaps. A historical source's own
 success label cannot promote the current result. Source capture requires the
 recorded whole-file hash; changes require reviewed inventory spans. Historical

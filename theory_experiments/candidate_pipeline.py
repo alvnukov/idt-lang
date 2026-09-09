@@ -14,6 +14,12 @@ from pathlib import Path
 from typing import TypeAlias
 
 from theory_experiments import primitive_screen as primitive
+from theory_experiments.amplitude_algebra import (
+    AmplitudeAlgebra,
+    evaluate_amplitude_algebra,
+    evaluate_archived_source,
+    parse_amplitude_algebra,
+)
 from theory_experiments.physics_screen import (
     ChiralSpectrum,
     PhysicsCandidate,
@@ -34,11 +40,10 @@ from theory_experiments.primitive_screen import (
 from theory_experiments.quadratic_certificate import certify, verify_certificate
 from theory_experiments.source_candidate import (
     SourceCandidate,
-    evaluate_source_candidate,
     parse_source_candidate,
 )
 
-Hypothesis: TypeAlias = primitive.Candidate | PhysicsCandidate | SourceCandidate
+Hypothesis: TypeAlias = primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
@@ -47,7 +52,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
     "theory_experiments/quadratic_certificate.py",
     "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
-    "theory_experiments/source_candidate.py",
+    "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
 
@@ -71,6 +76,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "amplitude_algebra":
+        return parse_amplitude_algebra(row)
     if row.get("family") == "source_theory":
         return parse_source_candidate(row)
     return (parse_physics(row) if row.get("family") in ("qm_readout", "sm_chiral")
@@ -106,7 +113,9 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
     checks: tuple[Check, ...]
     details: dict[str, object]
     if isinstance(candidate, SourceCandidate):
-        checks, details = evaluate_source_candidate(candidate)
+        checks, details = evaluate_archived_source(candidate, limits)
+    elif isinstance(candidate, AmplitudeAlgebra):
+        checks, details = evaluate_amplitude_algebra(candidate, limits)
     elif isinstance(candidate, QuantumReadout):
         checks, details = evaluate_qm(candidate, limits), scope(candidate)
     elif isinstance(candidate, ChiralSpectrum):

@@ -67,7 +67,24 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
     acceptance := ["minimal_content_mismatch_is_not_global_rejection_of_extensions",
       "do_not_infer_neutrino_masses_from_neutral_singlet_content",
       "independent_controls_and_history_regression_before_checker_changes"]
-    blockers := [] }
+    blockers := [] },
+  { id := "native_pair_history_adapter_and_composition_wall"
+    track := .primitiveResearch
+    state := .active
+    inputs := ["pair_history_signed_scalar_realization",
+      "pair_history_gaussian_realization", "pair_history_lower_law"]
+    requiredOutputs := ["theory_experiments/amplitude_algebra.py",
+      "Proofs/QMClosure/PairHistoryAdapterSafety.lean",
+      "data/amplitude_algebra_controls.json", "PAIR_HISTORY_ADAPTER_RESULT.md"]
+    acceptance := ["bind_exact_source_specification_to_its_original_integer_operations",
+      "retain_old_unsupported_observations_and_review_only_two_changed_baselines",
+      "real_projection_composition_counterexample_rejects_bridge_not_candidate",
+      "scalar_and_gaussian_and_degenerate_dual_survival_does_not_select_physics",
+      "phase_samples_are_diagnostics_not_rejection_requirements",
+      "finite_missing_existence_witness_is_inconclusive"]
+    blockers := ["generic_lower_law_does_not_supply_a_carrier_or_weight",
+      "native_multiplication_does_not_derive_physical_composite_closure",
+      "operational_preparation_readout_and_empirical_bridge_are_missing"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [

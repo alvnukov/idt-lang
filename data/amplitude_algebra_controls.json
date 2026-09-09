@@ -1,0 +1,8 @@
+[
+  {"id": "native_quartic_control", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quartic"},
+  {"id": "native_absolute_control", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "absolute"},
+  {"id": "native_zero_control", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "zero"},
+  {"id": "native_deformed_norm_control", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": -1, "imaginary_weight": 2, "weight_rule": "quadratic"},
+  {"id": "native_split_norm_control", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": 1, "imaginary_weight": -1, "weight_rule": "quadratic"},
+  {"id": "native_dual_blindspot_control", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quadratic"}
+]

@@ -116,6 +116,47 @@ version. The 12 non-PSD kernels missed by the earlier radius-2 grid are explicit
 regression cases and are now rejected automatically, even with a small grid
 budget. Existing primitive-only CLI behavior remains unchanged.
 
+## Native integer amplitude algebra
+
+The `amplitude_algebra` family preserves supplied addition, multiplication and
+weight. Its scalar carrier is Z; its plane carrier is Z[u]/(u^2-k), represented
+by integer pairs. Fields are `carrier` (`integer_scalar` or `integer_plane`),
+`product_square` (k), `imaginary_weight` (eta), and `weight_rule`
+(`quadratic`, `quartic`, scalar-only `absolute`, or `zero`). Both parameters
+are integers from -2 to 2; scalar parameters must be zero. Quadratic weight is
+`a*a + eta*b*b`; quartic squares that expression. These are supplied laws,
+not laws inferred from a source's name or a successful benchmark.
+
+Six checks cover empty weight, unit-amplitude convention, bounded nonnegative
+weights, seven-term Sorkin I3, product-weight factorization and an interference
+existence witness. Histories stay fixed; no context-dependent normalization is
+introduced. The coefficient radius bounds inputs, not their sums/products.
+A finite failure to find an existence witness is inconclusive, never a universal
+rejection. Unit-phase and zero-weight samples are diagnostics, not selection
+gates. `reference_radius` and `max_copies` are explicitly unused here: algebraic
+multiplication is not a derivation of physical tensor products.
+
+Two exact archived `source_theory` specifications now bind to this adapter:
+the signed-integer and Gaussian-integer pair-history realizations. Binding uses
+the full specification hash; changed/unknown sources remain unsupported. The
+request keeps the original source and all its open bridges. Both realizations
+pass at default bounds; neither is thereby selected as physical. The generic
+pair-history lower law still has no executable carrier/readout bridge.
+
+A real Gram projection must not replace the Gaussian operations: it preserves
+single-system weights but changes a composite event from 0 to 1/2. The exact
+counterexample is checked in `Proofs/QMClosure/PairHistoryAdapterSafety.lean`.
+See [the adapter result](PAIR_HISTORY_ADAPTER_RESULT.md) for scope and controls.
+
+```sh
+python3 scripts/screen_hypotheses.py --batch-file data/amplitude_algebra_controls.json --no-cache
+python3 -m unittest tests.test_amplitude_algebra
+```
+
+The control batch intentionally exits 1: five laws have scoped counterexamples;
+a degenerate dual carrier survives, exposing an insufficiency of these gates.
+No experiment, continuous phase space, full QM, SM or gravity is checked here.
+
 ## QM: a conditional readout benchmark
 
 The supplied carrier is complex amplitudes with rational real/imaginary parts.

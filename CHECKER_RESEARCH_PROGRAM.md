@@ -30,12 +30,15 @@ historical replay uses the retained text, so later editing or removal of the
 original source does not erase the proposal. Source text is never executed by
 this archival adapter.
 
-These records use `family: source_theory`. The checker returns `unsupported`,
-zero physical cases checked, `adapter_status: missing`, and no proof/empirical
-upgrade. A historical claim in source text cannot change that result. An
-unchanged-history result means only no regression; the report separately lists
-all missing source adapters and per-status evaluation counts. Old toy routines
-have not been silently translated into modern QM/SM tests.
+These records use `family: source_theory`. Twenty-two still return
+`unsupported` with `adapter_status: missing`. Two exact pair-history
+realizations now have native integer algebra adapters; they pass only the
+selected bounded laws, with no proof/empirical upgrade. Physical predictions
+remain untested for all 24 records. A historical claim in source text cannot
+promote a result. An unchanged-history result means only no regression; the
+report separately lists missing source adapters and per-status counts. Old toy
+routines have not been silently translated into modern QM/SM tests.
+See [the first shared-adapter result](PAIR_HISTORY_ADAPTER_RESULT.md).
 
 ```sh
 python3 scripts/archive_existing_primitives.py
