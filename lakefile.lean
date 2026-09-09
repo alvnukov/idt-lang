@@ -94,6 +94,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.InternalDetectorReadoutSeparation,
     `Proofs.QMClosure.RecordReplicationAndLocalReadout,
     `Proofs.QMClosure.LinearMixingCoordinateBoundary,
+    `Proofs.QMClosure.CoherentReferencePositivity,
     `Proofs.QMClosure.ArityBoundsInterferenceOrder,
     `Proofs.QMClosure.SorkinGradeIffPairwiseGeneration,
     `Proofs.QMClosure.CompositionForcesBinaryArity,

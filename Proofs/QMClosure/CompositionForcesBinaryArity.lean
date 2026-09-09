@@ -35,8 +35,12 @@ multiplying weights is not the composite readout rule; a composite of two
 second-order readouts cannot be second order through weight multiplication.
 This is a finite-arithmetic companion, inside the weight calculus, of the
 decoherence-functional literature: arbitrary grade-two measures do not
-compose either, and the strongly positive subclass is the unique maximal
-composition-closed extension (Boes-Navascues 2017; Dowker-Wilkes 2022).
+compose either. Strong positivity is maximal against adding systems compatible
+with all strongly positive systems (Boes-Navascues 2017). The uniqueness theorem
+of Dowker-Wilkes (2022), Theorem 3, assumes BOTH tensor closure and Galois
+self-duality; tensor closure by itself does not select strong positivity.
+CoherentReferencePositivity supplies a finite rational counterexample to the
+weaker self-copy argument and states the signed-reference import explicitly.
 
 The research hypothesis, NOT a theorem here: composition closure forces
 binary arity (the C-arity conjecture of the July 2026 research notes). Every
