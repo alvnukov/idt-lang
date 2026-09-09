@@ -1,0 +1,150 @@
+{
+  "archived": 24,
+  "meaning": "retained_with_missing_prediction_adapters_not_physically_tested",
+  "records": [
+    {
+      "id": "context_first_b0_five",
+      "observation": "75b5306c2612bacd571fada663d1d19a0e8d9d285fc5e38784482e1fe00fa2b6",
+      "status": "unsupported",
+      "submission": "b541d2417eeeea497dc9a834769c16ead79e8705fbf13992ab3927c56e2d2978"
+    },
+    {
+      "id": "historical_b0_four",
+      "observation": "54f9c3e0209616d6718f4f0d69c67c087f403634811d5d2637470250175a316a",
+      "status": "unsupported",
+      "submission": "428e018220067845646d5550d7deae4a19347e11a041c90abcc3ca6fd90f283e"
+    },
+    {
+      "id": "historical_b0_f_q_action",
+      "observation": "dc75d4e09e3032426ba6fb7110edeaf4e93a3e7450d72547bfc48f6f3f82389d",
+      "status": "unsupported",
+      "submission": "b5337a27906ceb9fff3c15fa1b4daf7d3faa8800c1ee5f64d7ef7b830e74693e"
+    },
+    {
+      "id": "historical_b1_f_q",
+      "observation": "5ce3bc017b07e9a6a3d64eeb97df8b3aa11384d0fdcccd08393e3856ed7f6d3b",
+      "status": "unsupported",
+      "submission": "ed386af272dfbd5352a8c4858f075a879dad48ce3110b3a23a3935e8116c6e7d"
+    },
+    {
+      "id": "historical_b1_f_q_a",
+      "observation": "f014b3c1808811aec5aae1262f7bceae6b46bfadd8eae22e76e773f704224dab",
+      "status": "unsupported",
+      "submission": "6046c3d8ea2e28c2bb45fd21696e6a8a81786890ea5f6250a695e28c4cb5db00"
+    },
+    {
+      "id": "historical_b1_f_q_aq",
+      "observation": "3ec18c4907dae8b30a8667427cf92673671681e7bb0a533104279b96aa8d7460",
+      "status": "unsupported",
+      "submission": "f89b0f1d018bc041ff1835634cfb3b9574fd41b78c131589cb66f0bcbec85f8b"
+    },
+    {
+      "id": "historical_b1_closed_distinction",
+      "observation": "ca16d8925016963e88ab85bc5f8ef9e6eeea78b85b9c163a98bd5b35d569f237",
+      "status": "unsupported",
+      "submission": "2576bdcb34a42dbadf077446f41d02de874999e00f0f412c2bb1af7685b6bf00"
+    },
+    {
+      "id": "historical_b2_loss_accounting",
+      "observation": "1374743cdabcf6eb8e3d19c945334663b2649f3b1d0655b464b65d43331bcceb",
+      "status": "unsupported",
+      "submission": "d3b35ad95425ddc285552651111c7accd8c55a40216fd979ba00aec7952c8041"
+    },
+    {
+      "id": "historical_b2_qm_sector",
+      "observation": "9242fe0450fbabc7d5cd3516d6b7675950297e377f4c6b6389fc2f6bd47d42ab",
+      "status": "unsupported",
+      "submission": "28a69a0c7dbbee51de7eecb5e8343d865754e93819d207a1df7317f165d80893"
+    },
+    {
+      "id": "historical_b2_full_scope",
+      "observation": "47a16b62a04a1330a82a53ff341c3557fea73776dd9193b677060a34ac81a8da",
+      "status": "unsupported",
+      "submission": "c047ba76935ebae4435edbbe3d3d2bb1945597b37491f6fe52f7ca8aae2b590e"
+    },
+    {
+      "id": "historical_b3_witness_compactness",
+      "observation": "a70e0c2372f54dcb48f9c075dff9a4eec1254c52e024d4a52b205820777c491a",
+      "status": "unsupported",
+      "submission": "1eb14cd1b69e8cb5105ed64656971a9068642cf270114cef94000992f81c4509"
+    },
+    {
+      "id": "zero_base_zb1",
+      "observation": "9b43c76398b71b46573cc920f551d29b66dada6f70294e8a0ec2d9fe46dc8d94",
+      "status": "unsupported",
+      "submission": "cea7221870e608f638be564bdad6d43aa2b90bb8a042a95a2f0d6f97e838c153"
+    },
+    {
+      "id": "zero_base_zb2",
+      "observation": "3395360e88fa98e1889253f3afab9f2494eb6591ccf54a5e471ee9c4be7babc4",
+      "status": "unsupported",
+      "submission": "53fb9b39fc1fd64cd2099b626f3a2bd89c7dda02672537276a13675f9aab46e5"
+    },
+    {
+      "id": "zero_base_u0",
+      "observation": "9e67272883d0671cb040eb2f43571f4ab5ac188ced8c44a6a9f778ac67aa264c",
+      "status": "unsupported",
+      "submission": "a988eed71e5f9312c85733d31dde9832960342c819756493a614ebc8257fc71f"
+    },
+    {
+      "id": "pair_history_lower_law",
+      "observation": "12e80fad9a22d36854024b3f76ccaf82b3576c27225d53b427629aa75dcd1fbd",
+      "status": "unsupported",
+      "submission": "70d5ef3b98cd523fa3b1457bf11348f8fdce188158484a0856f58f556be555f8"
+    },
+    {
+      "id": "legacy_global_readout_scaffold",
+      "observation": "29eb99b706ce76dc3815ba78aeee524db2eea0c67a90a2d3841155758ee41419",
+      "status": "unsupported",
+      "submission": "2e477d51d75e12761c450658f0542544fd7de16dd035111b819f29fd7ebbe502"
+    },
+    {
+      "id": "b0_checked_boundary_contract",
+      "observation": "3901a5d4505056d578d42ee32d69d195f0a4c0143f0b077d125a6bf067ccfcaf",
+      "status": "unsupported",
+      "submission": "2f5d40e1f68ef81a5e936852cfa2c4b0d74d482462b6c03740d12062a26968b9"
+    },
+    {
+      "id": "bound_primitive_generated_contract",
+      "observation": "3b6fe929ba941b1af669c2b0728165849988ab3b44627b51b6a3cfb5f5baeee1",
+      "status": "unsupported",
+      "submission": "fa04971284c928989a1273b0398e9d3c19d0966678c79bd733103cb3d3348709"
+    },
+    {
+      "id": "b1_successor_semantic_contract",
+      "observation": "898ebbf9628398ed797aa91aafb3e0636dcfdf8bb5e425ce51213282e595dcb7",
+      "status": "unsupported",
+      "submission": "cf5f03263ed9418f0a10077ced6ad39f9e3d833de85b765799c61716e7a14761"
+    },
+    {
+      "id": "b2_constructive_witness_contract",
+      "observation": "3606b39588341d0add43ab8c5cd54bf7779a7f892174b1c6d0d6cf53456278fc",
+      "status": "unsupported",
+      "submission": "11dbe0d394c32779e613a5c08b1137260dbfa7f7ed766da4a824af89082a939d"
+    },
+    {
+      "id": "pair_history_signed_scalar_realization",
+      "observation": "3ed6b4dfa2b92c1fa0fb1a65ee93df221d9fd84a2f0f1779ab97416bf1a3b69f",
+      "status": "unsupported",
+      "submission": "f81c9cf36a2109ded6f5c37c5bad78ea9a65daa85b5d86e919400ece9925468f"
+    },
+    {
+      "id": "pair_history_gaussian_realization",
+      "observation": "7d74b571d44e96b023a09fcf08d98cf3805f746cd0c8560ff2ee109e8e92888a",
+      "status": "unsupported",
+      "submission": "c28530212a1a1fb89bebe487542e33694152c9c184a4055638745e5fa6aab84d"
+    },
+    {
+      "id": "historical_closed_selector_route",
+      "observation": "43c157a86e9b2fc0bedb5b19689a5015ca503dbca78d91349a29a4d13a2c71a4",
+      "status": "unsupported",
+      "submission": "82f7d50f6f2f4a0e21a1fb4d2b765d23b7287cadc99df783b625d27cbaa3b828"
+    },
+    {
+      "id": "u0_law_family_collection",
+      "observation": "4f24c69e6fdbbcfc883ead019357f1ec5359b2b759575fa7bef6c1f65f3af2c1",
+      "status": "unsupported",
+      "submission": "39aa6525d7fb78fcd029869a5addf8dc5f1ac6b4630ae5458c6d8055f0d35d87"
+    }
+  ]
+}

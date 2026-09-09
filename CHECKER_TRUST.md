@@ -77,6 +77,21 @@ computational observations, not independently established truth labels.
 The checker CI step includes history replay. This protects known examples from
 unnoticed regression, not every possible correct candidate from false rejection.
 
+## Existing primitives and parallel research
+
+The [two-track program](CHECKER_RESEARCH_PROGRAM.md) separates checker coverage
+from primitive selection. The archive now also contains 24 source-backed records
+(14 historical bases, one lower-law candidate and nine supporting constructions)
+and a neutral-singlet SM scope control. Missing prediction adapters are reported
+as unsupported, never as physical rejection or successful QM/SM derivation.
+
+The Lean empirical ledger now requires every canonical requirement exactly once
+with unchanged metadata before classifying a coverage table. Empty, incomplete,
+duplicate or forged inventories are unassessed. Fourteen Lean regression
+statements cover this guard. Caller-supplied status labels still lack independent
+evidence linkage; that open obligation prevents treating the classifier as a
+world-confirmation authority.
+
 ## Improvement loop
 
 For every new check, specify the scientific statement, imported assumptions,

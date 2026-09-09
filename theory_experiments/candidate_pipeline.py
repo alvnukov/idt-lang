@@ -32,8 +32,13 @@ from theory_experiments.primitive_screen import (
     parse_limits,
 )
 from theory_experiments.quadratic_certificate import certify, verify_certificate
+from theory_experiments.source_candidate import (
+    SourceCandidate,
+    evaluate_source_candidate,
+    parse_source_candidate,
+)
 
-Hypothesis: TypeAlias = primitive.Candidate | PhysicsCandidate
+Hypothesis: TypeAlias = primitive.Candidate | PhysicsCandidate | SourceCandidate
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
@@ -42,6 +47,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
     "theory_experiments/quadratic_certificate.py",
     "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
+    "theory_experiments/source_candidate.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
 
@@ -65,6 +71,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "source_theory":
+        return parse_source_candidate(row)
     return (parse_physics(row) if row.get("family") in ("qm_readout", "sm_chiral")
             else primitive.parse_candidate(row))
 
@@ -97,7 +105,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, QuantumReadout):
+    if isinstance(candidate, SourceCandidate):
+        checks, details = evaluate_source_candidate(candidate)
+    elif isinstance(candidate, QuantumReadout):
         checks, details = evaluate_qm(candidate, limits), scope(candidate)
     elif isinstance(candidate, ChiralSpectrum):
         checks, details = evaluate_sm(candidate, limits), scope(candidate)

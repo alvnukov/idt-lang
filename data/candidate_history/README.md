@@ -76,6 +76,27 @@ in a reviewed change. Keep the old observation. There is no blanket snapshot
 refresh command. A new interpretation should normally be a new specification
 or adapter, not a retroactive rewrite of the original input.
 
+## Existing theory candidates
+
+The archive additionally preserves 24 source-backed records: 14 historical bases,
+one lower-law candidate and nine separately categorized supporting constructions.
+See `data/existing_primitive_inventory.json`, the original capture addresses in
+`data/existing_primitive_registration.json`, and the
+[two-track research program](../../CHECKER_RESEARCH_PROGRAM.md).
+
+These `source_theory` inputs embed exact source text and hashes. Their current
+prediction adapter is missing: rechecks explicitly return `unsupported`, retain
+all missing bridges, and execute no embedded code. An `unchanged` regression
+result is not a passing physical screen. `evaluation_status_counts` and
+`source_adapter_missing` expose the remaining gaps. A historical source's own
+success label cannot promote the current result. Source capture requires the
+recorded whole-file hash; changes require reviewed inventory spans. Historical
+replay uses immutable snapshots rather than whichever source happens to exist now.
+
+`sm_neutral_singlet_scope_probe` is also retained: it fails only the imported
+minimal-content SM target, while passing the six anomaly checks and neutral-Higgs
+check. This is a scope control, not a blanket physical exclusion of extensions.
+
 ## Initial research campaign
 
 The initial inventory contains 275 candidates in five original input batches:

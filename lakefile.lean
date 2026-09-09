@@ -23,6 +23,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8VerificationLanguage,
     `Proofs.MetaLang.V8ContextFirstPrimitiveBase,
     `Proofs.MetaLang.V8PrimitiveScreenBoundary,
+    `Proofs.MetaLang.V8CheckerResearchProgram,
     `Proofs.MetaLang.V8TheoremCardLedger,
     `Proofs.MetaLang.V8CurrentStatusSnapshot,
     `Proofs.MetaLang.V8ExternalCheckerBoundary,

@@ -289,6 +289,8 @@ def recheck_history(history: History, *, record: bool = False) -> dict[str, obje
     changes: list[dict[str, object]] = []
     errors: list[dict[str, object]] = []
     candidates = 0
+    status_counts: dict[str, int] = {}
+    missing_adapters: list[dict[str, object]] = []
     sources = pipeline.provenance()
     if sources.get("source_sha256") != pipeline.LOADED_SOURCE_HASHES:
         raise ValueError("sources changed since import; restart before history recheck")
@@ -316,6 +318,16 @@ def recheck_history(history: History, *, record: bool = False) -> dict[str, obje
                     "meaning": "checker_error_not_candidate_rejection"})
             else:
                 reports.append(result.report)
+                status = result.report["status"]
+                if not isinstance(status, str):
+                    raise TypeError("history result status must be a string")
+                status_counts[status] = status_counts.get(status, 0) + 1
+                request = object_fields(result.report["request"])
+                candidate = object_fields(request["candidate"])
+                if (candidate.get("family") == "source_theory"
+                        and object_fields(result.report["scope"]).get("adapter_status") == "missing"):
+                    missing_adapters.append({"id": candidate["id"], "role": candidate["role"],
+                        "missing_bridges": candidate["missing_bridges"], "status": status})
                 if baseline is not None:
                     previous = _list(baseline["reports"])[index]
                     batch_changes.extend({**change, "index": index} for change in
@@ -336,4 +348,5 @@ def recheck_history(history: History, *, record: bool = False) -> dict[str, obje
     return {"schema": SCHEMA, "status": "review_required" if changes or errors else "unchanged",
             "submissions": len(submissions), "candidates": candidates,
             "retained_observations": observation_count, "changes": changes, "errors": errors,
+            "evaluation_status_counts": status_counts, "source_adapter_missing": missing_adapters,
             "meaning": "regression_comparison_not_a_physical_truth_verdict"}

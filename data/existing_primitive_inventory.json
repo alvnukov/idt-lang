@@ -1,0 +1,801 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "context_first_b0_five",
+      "role": "primitive_base",
+      "components": [
+        "C: admissible context cover/category",
+        "O: local outcome-event presheaf",
+        "I: admissible inheritance transitions",
+        "R: facticization/readout witness relation",
+        "D: stable distinguishability"
+      ],
+      "declared_status": "Canonical Lean migration vocabulary candidate; neither minimality nor physical completeness is established.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Semantic structures and laws for the vocabulary.",
+        "Born/readout, Hilbert representation, dynamics and composite closure without target imports."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 123,
+          "file_sha256": "342d912d64bd08ca49b3299276d9d9e7cc773fc2482749b2b0f9236f28762000"
+        },
+        {
+          "path": "sections/175-primitive-base-completeness-status.md",
+          "first_line": 14,
+          "last_line": 35,
+          "file_sha256": "a202c1f0a46c0e28ab22aaa77e8bf6c21a41310eb1173e1e58a31fa8f19881cb"
+        }
+      ]
+    },
+    {
+      "id": "historical_b0_four",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R"
+      ],
+      "declared_status": "Historical four-component B0 in the corrected completeness audit; inconsistency with the canonical five-component base remains unresolved.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Reconcile C,O,I,R with C,O,I,R,D through an explicit theory decision, not aliasing.",
+        "A formal reduction or interpretation relation between bases."
+      ],
+      "sources": [
+        {
+          "path": "sections/175-primitive-base-completeness-status.md",
+          "first_line": 14,
+          "last_line": 35,
+          "file_sha256": "a202c1f0a46c0e28ab22aaa77e8bf6c21a41310eb1173e1e58a31fa8f19881cb"
+        },
+        {
+          "path": "sections/175-primitive-base-completeness-status.md",
+          "first_line": 152,
+          "last_line": 175,
+          "file_sha256": "a202c1f0a46c0e28ab22aaa77e8bf6c21a41310eb1173e1e58a31fa8f19881cb"
+        }
+      ]
+    },
+    {
+      "id": "historical_b0_f_q_action",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R",
+        "F: finite_facticization_stability",
+        "Q: oriented_inheritance_holonomy",
+        "action_quantum: dimensional anchor M^1 L^2 T^-1"
+      ],
+      "declared_status": "Historical completeness-audit candidate stack; independence of F, Q and action_quantum from B0 is not established; action_quantum is a calibration anchor.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Resolve the conflicting base descriptions.",
+        "Prove actual independence statements rather than different or empty statements.",
+        "Do not treat a dimensional calibration choice as a derived physical constant."
+      ],
+      "sources": [
+        {
+          "path": "sections/175-primitive-base-completeness-status.md",
+          "first_line": 14,
+          "last_line": 79,
+          "file_sha256": "a202c1f0a46c0e28ab22aaa77e8bf6c21a41310eb1173e1e58a31fa8f19881cb"
+        },
+        {
+          "path": "sections/175-primitive-base-completeness-status.md",
+          "first_line": 152,
+          "last_line": 175,
+          "file_sha256": "a202c1f0a46c0e28ab22aaa77e8bf6c21a41310eb1173e1e58a31fa8f19881cb"
+        }
+      ]
+    },
+    {
+      "id": "historical_b1_f_q",
+      "role": "primitive_base",
+      "components": [
+        "C: admissible context cover/category",
+        "O: local outcome-event presheaf",
+        "I: admissible inheritance transitions",
+        "R: facticization/readout witness relation",
+        "D: stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition"
+      ],
+      "declared_status": "Candidate B1 route in section 174.36; F and Q are proposed wall-breaking rules, not a completed reconstruction.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Operational accessibility of comparison directions.",
+        "Derive positive comparison geometry and the carrier/composition bridges."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 1960,
+          "last_line": 1992,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 123,
+          "file_sha256": "342d912d64bd08ca49b3299276d9d9e7cc773fc2482749b2b0f9236f28762000"
+        }
+      ]
+    },
+    {
+      "id": "historical_b1_f_q_a",
+      "role": "primitive_base",
+      "components": [
+        "C: admissible context cover/category",
+        "O: local outcome-event presheaf",
+        "I: admissible inheritance transitions",
+        "R: facticization/readout witness relation",
+        "D: stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition",
+        "A: finite comparison-direction accessibility"
+      ],
+      "declared_status": "Revised B1 candidate in section 174.40; positivity pressure depends on finite operational access to comparison directions.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive or justify finite comparison-direction accessibility.",
+        "Translate the accessibility requirement into operational oriented witnesses."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 2148,
+          "last_line": 2189,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 123,
+          "file_sha256": "342d912d64bd08ca49b3299276d9d9e7cc773fc2482749b2b0f9236f28762000"
+        }
+      ]
+    },
+    {
+      "id": "historical_b1_f_q_aq",
+      "role": "primitive_base",
+      "components": [
+        "C: admissible context cover/category",
+        "O: local outcome-event presheaf",
+        "I: admissible inheritance transitions",
+        "R: facticization/readout witness relation",
+        "D: stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition",
+        "A_Q: finite oriented comparison-direction accessibility"
+      ],
+      "declared_status": "Revised oriented-accessibility B1 candidate in section 174.43; not a primitive assertion that every complex Hilbert vector is physical.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Finite oriented refinements and spectator extensions witnessing declared stable directions.",
+        "Derive carrier selection rather than assume Hilbert accessibility."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 2334,
+          "last_line": 2369,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 123,
+          "file_sha256": "342d912d64bd08ca49b3299276d9d9e7cc773fc2482749b2b0f9236f28762000"
+        }
+      ]
+    },
+    {
+      "id": "historical_b1_closed_distinction",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R",
+        "D_cl: operationally closed stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition"
+      ],
+      "declared_status": "B1-prime candidate with A_Q folded into D_cl; positive-comparison-geometry claim is recorded as candidate_conditional_proof, not complex Hilbert selection.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Second-order facticization and readout continuity assumptions.",
+        "Positive geometry, oriented cycle composition, product-context exhaustion and local-tomography separation."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 2575,
+          "last_line": 2666,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 123,
+          "file_sha256": "342d912d64bd08ca49b3299276d9d9e7cc773fc2482749b2b0f9236f28762000"
+        }
+      ]
+    },
+    {
+      "id": "historical_b2_loss_accounting",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R",
+        "D_cl: operationally closed stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition",
+        "L: pre-facticity reversible loss accounting"
+      ],
+      "declared_status": "Historical B2 and recovered V7 core candidate stack; pre-facticity loss must be accountable, but universal purification is not established.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Finite witnesses for preserved, recovered, facticized or inadmissible loss.",
+        "Recoverability and carrier-selection bridges beyond proposition-valued bookkeeping."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 3396,
+          "last_line": 3420,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 3694,
+          "last_line": 3732,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7PrimitiveCandidateStack.lean",
+          "first_line": 1,
+          "last_line": 223,
+          "file_sha256": "0109b1ff130f494183c93e5a7d978c717484a4f3f6bfe4ab486101e693cd0331"
+        }
+      ]
+    },
+    {
+      "id": "historical_b2_qm_sector",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R",
+        "D_cl: operationally closed stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition",
+        "L: pre-facticity reversible loss accounting",
+        "S2?: second-order facticization sector-law candidate"
+      ],
+      "declared_status": "Historical B2_QM candidate; S2 is explicitly sector_limited_candidate, not a universal core primitive.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive second-order facticization or maintain its explicit sector-law status.",
+        "Product, correlation and recoverable-oriented-extension obligations."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 4044,
+          "last_line": 4076,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7PrimitiveCandidateStack.lean",
+          "first_line": 1,
+          "last_line": 223,
+          "file_sha256": "0109b1ff130f494183c93e5a7d978c717484a4f3f6bfe4ab486101e693cd0331"
+        }
+      ]
+    },
+    {
+      "id": "historical_b2_full_scope",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R",
+        "D_cl: operationally closed stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition",
+        "L: pre-facticity reversible loss accounting",
+        "S_r: source-response accounting",
+        "S_p: scale-projection discipline"
+      ],
+      "declared_status": "Historical broader B2_full candidate; S_r is a parallel gravity candidate and S_p a boundary principle, not a demonstrated metric/GR derivation.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Source-response witnesses without importing a G_N calibration.",
+        "Scale-transfer or suppression theorems.",
+        "S2, product exhaustion, bounded correlations and oriented extension remain obligations."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 3999,
+          "last_line": 4076,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7PrimitiveCandidateStack.lean",
+          "first_line": 1,
+          "last_line": 223,
+          "file_sha256": "0109b1ff130f494183c93e5a7d978c717484a4f3f6bfe4ab486101e693cd0331"
+        }
+      ]
+    },
+    {
+      "id": "historical_b3_witness_compactness",
+      "role": "primitive_base",
+      "components": [
+        "C",
+        "O",
+        "I",
+        "R",
+        "D_cl: operationally closed stable distinguishability",
+        "F: finite compositional facticization stability",
+        "Q: oriented inheritance-cycle composition",
+        "L: pre-facticity reversible loss accounting",
+        "NUSD: no unwitnessed stable difference",
+        "FRC: finite route compactness"
+      ],
+      "declared_status": "Historical B3 proposal; NUSD alone does not force uniform finite witness closure or Hilbert representation, and FRC is explicitly a dangerous extra primitive.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive FRC from finite context generation and stability/facticization constraints.",
+        "Preserve loss accounting and continuum limits; do not require every distinction to be directly observable.",
+        "Carrier selection remains conditional on FRC/FUW."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 5941,
+          "last_line": 5969,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 6258,
+          "last_line": 6304,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        }
+      ]
+    },
+    {
+      "id": "zero_base_zb1",
+      "role": "primitive_base",
+      "components": [
+        "D: distinction",
+        "E: exposure",
+        "R: record",
+        "K: compatibility",
+        "I: inheritance",
+        "L: loss/residue",
+        "S: scale projection"
+      ],
+      "declared_status": "Zero-base ZB1 candidate; recovered Lean ledger retains a missing quantitative-readout law and does not prove a primitive base.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "A quantitative readout law.",
+        "Derive probabilities, phase and metric instead of importing their target structures."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 7262,
+          "last_line": 7340,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7ZeroBaseSearchLedger.lean",
+          "first_line": 1,
+          "last_line": 115,
+          "file_sha256": "a7cce7d27ff61851323c829e0a2f73fd687a71cce02989b5aaa66f077974c0c3"
+        }
+      ]
+    },
+    {
+      "id": "zero_base_zb2",
+      "role": "primitive_base",
+      "components": [
+        "D: distinction",
+        "E: exposure",
+        "R: record",
+        "K: compatibility",
+        "I: inheritance",
+        "L: loss/residue",
+        "G: generative update under repeated exposure/inheritance",
+        "S: scale projection / stable law compression",
+        "governing-law candidate: residue-preserving stability selection"
+      ],
+      "declared_status": "Zero-base ZB2 self-organization proposal; a governing-law candidate with a quantitative-readout wall, not established physical primitives.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Specify and independently test the generative update and quantitative readout law.",
+        "Derive stable scale-compressions without fitted target laws."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 7719,
+          "last_line": 7774,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7ZeroBaseSearchLedger.lean",
+          "first_line": 1,
+          "last_line": 115,
+          "file_sha256": "a7cce7d27ff61851323c829e0a2f73fd687a71cce02989b5aaa66f077974c0c3"
+        }
+      ]
+    },
+    {
+      "id": "zero_base_u0",
+      "role": "primitive_base",
+      "components": [
+        "slots",
+        "adjacency: possible local influence, not metric distance",
+        "alphabet: empty, plus, minus, residue (X)",
+        "update: edge_of_facticity_selection"
+      ],
+      "declared_status": "U0 toy substrate and executable discovery program; negative controls and unresolved residue matter, but the program does not prove the primitive base.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Law-level quantitative readout and physical projection.",
+        "Separate active unresolved residue from hidden global facts, inert X and erased conflict."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 7951,
+          "last_line": 7993,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7ZeroBaseSearchLedger.lean",
+          "first_line": 1,
+          "last_line": 115,
+          "file_sha256": "a7cce7d27ff61851323c829e0a2f73fd687a71cce02989b5aaa66f077974c0c3"
+        }
+      ]
+    },
+    {
+      "id": "pair_history_lower_law",
+      "role": "lower_law",
+      "components": [
+        "singleton event-weight terms",
+        "pair-history event-weight terms",
+        "third-order Sorkin interference cancellation"
+      ],
+      "declared_status": "Pair-history probe contains narrow mathematical gate results; the current gates underdetermine the amplitude carrier and do not reconstruct QM.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive the pair functional from local rewrite rules.",
+        "Derive strong positivity.",
+        "Select complex phase or equivalent holonomy.",
+        "Prove continuum and composite closure.",
+        "Exclude non-quantum pair-measure models."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/PairHistoryMeasureProbe.lean",
+          "first_line": 1,
+          "last_line": 227,
+          "file_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d"
+        }
+      ]
+    },
+    {
+      "id": "legacy_global_readout_scaffold",
+      "role": "legacy_scaffold",
+      "components": [
+        "H: global histories",
+        "E: event algebra",
+        "M: readout context family",
+        "I: inheritance-act family"
+      ],
+      "declared_status": "Explicitly demoted legacy compatibility/readout scaffold; legacyScaffoldIsPrimitive is false.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Recover the scaffold from the context-first base without installing a primitive global fact table."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/MetaLang/V8ContextFirstPrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 123,
+          "file_sha256": "342d912d64bd08ca49b3299276d9d9e7cc773fc2482749b2b0f9236f28762000"
+        }
+      ]
+    },
+    {
+      "id": "b0_checked_boundary_contract",
+      "role": "semantic_contract",
+      "components": [
+        "finiteGeneration",
+        "facticizableSeparation",
+        "importBoundary",
+        "noPrimitiveGlobalSection",
+        "noHilbertPrimitive",
+        "noBornPrimitive",
+        "noUnitaryPrimitive",
+        "noTensorPrimitive",
+        "noStonePrimitive",
+        "noSpectralPrimitive"
+      ],
+      "declared_status": "B0CandidateBase is a CheckedProp boundary contract, not the five-component context-first semantic model.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Bind the admissible atom/context universe to the context/outcome/inheritance/readout/distinction data.",
+        "Do not infer independent target derivations from populated proposition slots."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/CGSCPrimitiveBridge.lean",
+          "first_line": 1,
+          "last_line": 195,
+          "file_sha256": "c7573896eccaa73648ecd5d71f98e5ee8c3285feb409a47e4eb275c82d7ecb6b"
+        }
+      ]
+    },
+    {
+      "id": "bound_primitive_generated_contract",
+      "role": "semantic_contract",
+      "components": [
+        "B0CandidateBase boundary contract",
+        "ContextWitness",
+        "FactWitness",
+        "BlockWitness",
+        "RouteWitness",
+        "RefinementWitness",
+        "StateWitness",
+        "GeneratorWitness",
+        "LocalFactWitness",
+        "constructor-generated BoundSourceAtom",
+        "exposure, route, generation and joint-witness relations with explicit boundaries"
+      ],
+      "declared_status": "BoundPrimitiveGeneratedBase binds role atoms by constructors; its structural obligation bundle is not a target-specific QM derivation.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive or explicitly adopt the bound successor structure from B0.",
+        "Audit claim-source aliasing and supply target-specific semantics, not merely inhabited structural slots."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/BoundPrimitiveGeneratedBase.lean",
+          "first_line": 1,
+          "last_line": 337,
+          "file_sha256": "10443f1862a2ccf6407716585bdb834520cb77ac5f9be2cdcc861df89293de08"
+        }
+      ]
+    },
+    {
+      "id": "b1_successor_semantic_contract",
+      "role": "semantic_contract",
+      "components": [
+        "bound: BoundPrimitiveGeneratedBase",
+        "successorBasePromoted: CheckedProp",
+        "noFreeAdmissibilityBoundary: CheckedProp",
+        "noTargetImportBoundary: CheckedProp"
+      ],
+      "declared_status": "B1PrimitiveBase promotes the bound successor contract; constructor binding and stated boundaries are not a proof of full QM.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive or explicitly accept the successor base.",
+        "Genuine target-specific semantics for the QM obligation bundle."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/B1PrimitiveBase.lean",
+          "first_line": 1,
+          "last_line": 100,
+          "file_sha256": "e502ef84c0fa0e10523b1ba1a8d697eb572a3ae5818d7b077debbb9470ded0e9"
+        }
+      ]
+    },
+    {
+      "id": "b2_constructive_witness_contract",
+      "role": "semantic_contract",
+      "components": [
+        "b1BoundInterface",
+        "noTargetImports",
+        "compatibleKernelAdditivity",
+        "normalizedOverlapUniqueness",
+        "phaseBundleJ",
+        "properSubcontextPairwiseCoverage",
+        "noHiddenTernaryFact",
+        "signedNormalizedOverlap",
+        "binaryComplementReadout",
+        "repeatabilityAndExclusion",
+        "unbiasedZeroOverlap",
+        "affineMixtureResponse",
+        "phaseBundleDoubleCover",
+        "constructorRespectingBranchLabels",
+        "phaseBundleCarrierScreen",
+        "localTomography",
+        "spectralDecomposition",
+        "richDclReversibleSymmetry",
+        "constructiveCarrierWitness",
+        "noHiddenJointOnlyGeneration",
+        "noBornImport",
+        "noHilbertImport",
+        "noTensorImport"
+      ],
+      "declared_status": "B2ConstructiveWitnessBase is a proposition-valued conditional route package; its current finite status explicitly lacks universal carrier uniqueness and empirical finality.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive constructive witness and representation conditions from lower primitives.",
+        "Universal carrier uniqueness and exclusion of non-Hilbert constructive countermodels.",
+        "Do not convert finite route/package closure into exact fundamental QM."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean",
+          "first_line": 156,
+          "last_line": 275,
+          "file_sha256": "2a75f0be493e60cd5054aa98284e1852d1711369f45cdc0692629d912ae3ebdc"
+        },
+        {
+          "path": "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean",
+          "first_line": 584,
+          "last_line": 674,
+          "file_sha256": "2a75f0be493e60cd5054aa98284e1852d1711369f45cdc0692629d912ae3ebdc"
+        },
+        {
+          "path": "Proofs/QMClosure/ConstructiveWitnessPrimitiveBase.lean",
+          "first_line": 884,
+          "last_line": 936,
+          "file_sha256": "2a75f0be493e60cd5054aa98284e1852d1711369f45cdc0692629d912ae3ebdc"
+        }
+      ]
+    },
+    {
+      "id": "pair_history_signed_scalar_realization",
+      "role": "realization",
+      "components": [
+        "carrier: integers",
+        "addition: integer addition",
+        "composition: integer multiplication",
+        "weight: amplitude squared"
+      ],
+      "declared_status": "signedScalarPairHistoryGate realizes narrow nonnegative, zero-I3, multiplicative and two-path-interference gates; carrier selection is not established.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Connection to operational preparations, effects and physical context transformations.",
+        "Complex-carrier selection and full composite/continuum physics."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/PairHistoryMeasureProbe.lean",
+          "first_line": 1,
+          "last_line": 227,
+          "file_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d"
+        }
+      ]
+    },
+    {
+      "id": "pair_history_gaussian_realization",
+      "role": "realization",
+      "components": [
+        "carrier: integer real/imaginary pairs",
+        "addition: componentwise addition",
+        "composition: Gaussian integer multiplication",
+        "weight: re squared plus im squared"
+      ],
+      "declared_status": "gaussianPairHistoryGate is a distinct carrier realization passing the same narrow gates as signed scalars; the pair functional and complex carrier are supplied, not derived.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive the carrier and multiplication from a lower generative law.",
+        "Connect finite amplitude algebra to full operational/composite physics."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/PairHistoryMeasureProbe.lean",
+          "first_line": 1,
+          "last_line": 227,
+          "file_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d"
+        }
+      ]
+    },
+    {
+      "id": "historical_closed_selector_route",
+      "role": "route",
+      "components": [
+        "primitive distinctions rather than states",
+        "reversible context transport of unexposed distinctions",
+        "global consistency selecting joint record constraints",
+        "critical selection at the non-superquantum boundary",
+        "metric obstruction attenuation by additive/multiplicative composition",
+        "local readout with unsupported residue"
+      ],
+      "declared_status": "Historical closed metric-orientation selector toy route; recovered ledger records toy hits but failure of the full Born-angle curve and metric composition.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Normalized-overlap readout law.",
+        "Full angle-curve and metric-composition tests without target imports.",
+        "No claim of parameter-free universe constants or replacement experimental physics."
+      ],
+      "sources": [
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 9904,
+          "last_line": 9940,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7ZeroBaseSearchLedger.lean",
+          "first_line": 1,
+          "last_line": 115,
+          "file_sha256": "a7cce7d27ff61851323c829e0a2f73fd687a71cce02989b5aaa66f077974c0c3"
+        }
+      ]
+    },
+    {
+      "id": "u0_law_family_collection",
+      "role": "law_family_collection",
+      "components": [
+        "least_residue_update: variants 0,1,2,3",
+        "residue_circulation_update: variants 0,1,2,3",
+        "boundary_cancellation_update: variants 0,1,2,3",
+        "compatibility_relaxation_update: variants 0,1,2,3",
+        "reversible_exposure_readout_split: variants 0,1,2,3",
+        "coarse_grained_residue_geometry: variants 0,1,2,3",
+        "global_constraint_local_readout_split: variants 0,1,2,3",
+        "parity_holonomy_residue: variants 0,1,2,3",
+        "record_residue_dual_flow: variants 0,1,2,3",
+        "scale_critical_update: variants 0,1,2,3"
+      ],
+      "declared_status": "Ten executable schema families with four variants each, evaluated by historical toy context/Bell/metric projections; their HIT/NEAR_MISS/KILL labels are not current QM/SM checker verdicts.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Source-faithful automaton adapter with explicit initialization, bounds and seeds.",
+        "Physical validation of toy projection assumptions.",
+        "Independent checks against inert-residue and conflict-erasure controls."
+      ],
+      "sources": [
+        {
+          "path": "scripts/evaluate_unknownness_schemas.py",
+          "first_line": 1,
+          "last_line": 393,
+          "file_sha256": "b90d4d31586770a761bd1acc82bcb97d5af72c4a93da723339998f8d9cf2a84c"
+        },
+        {
+          "path": "scripts/search_unknownness_automata.py",
+          "first_line": 1,
+          "last_line": 458,
+          "file_sha256": "019caa62f1f061c4df9225ca04728c652a813d24810b34f9954a96506472878d"
+        },
+        {
+          "path": "sections/174-context-bundle-nontriviality-research-note.md",
+          "first_line": 9109,
+          "last_line": 9156,
+          "file_sha256": "ea74b6327eb073ab29a1cd7ce0e444f816e01987433cca9be7825be0e59a56e2"
+        },
+        {
+          "path": "Proofs/QMClosure/V7ZeroBaseSearchLedger.lean",
+          "first_line": 1,
+          "last_line": 115,
+          "file_sha256": "a7cce7d27ff61851323c829e0a2f73fd687a71cce02989b5aaa66f077974c0c3"
+        }
+      ]
+    }
+  ]
+}
