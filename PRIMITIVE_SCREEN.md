@@ -1,5 +1,9 @@
 # Fast primitive-candidate screen
 
+For batches, dependency-keyed caching and optional conditional QM/SM benchmarks,
+see the [hypothesis pipeline](HYPOTHESIS_PIPELINE.md). The scope below describes
+this original primitive-only command.
+
 An offline **pre-proof counterexample search**, not a universe simulator, an
 experimental confirmation, or a replacement for Lean. A run computes outputs
 from a candidate's rules; it never accepts a candidate's expected test results.

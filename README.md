@@ -76,6 +76,8 @@ blocked.
 For rapid pre-proof hypothesis testing, see the [primitive-candidate screen](PRIMITIVE_SCREEN.md).
 It computes exact finite counterexamples from editable candidate rules and records
 search bounds and imports; it does not certify primitive truth or empirical agreement.
+The [batch hypothesis pipeline](HYPOTHESIS_PIPELINE.md) adds full-result caching,
+compact AI cards and conditional finite QM/chiral-SM benchmarks, with explicit imports.
 
 Current auditable results:
 
