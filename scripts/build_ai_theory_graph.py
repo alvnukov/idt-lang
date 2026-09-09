@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import hashlib
 import json
 import re
@@ -21,6 +20,8 @@ from theory_verifier.ai_theory_graph import (  # noqa: E402
     GraphNode as Node,
     JsonObject,
     graph_json_text,
+    selected_source_paths,
+    source_inventory,
     validate_graph_payload,
 )
 
@@ -155,8 +156,10 @@ def build_v8_ai_theory_graph(
     edges.extend(rule_edges)
     merge_aliases(aliases, rule_aliases)
 
+    selected_paths: list[str] = []
     if include_sources:
         source_nodes, source_edges, source_aliases = build_source_layer(root, source_globs, max_label_chars)
+        selected_paths = [node.source for node in source_nodes if node.kind == "source.file"]
         nodes.extend(source_nodes)
         edges.extend(source_edges)
         merge_aliases(aliases, source_aliases)
@@ -203,6 +206,7 @@ def build_v8_ai_theory_graph(
             "depth": depth if focus else 0,
         },
         "coverage": {
+            "source_inventory": source_inventory(source_globs if include_sources else (), selected_paths),
             "manifest_counts": manifest_counts(manifest),
             "nodes": len(nodes),
             "edges": len(edges),
@@ -419,14 +423,8 @@ def build_source_layer(
 
 def discover_source_files(repo_root: Path, source_globs: Sequence[str]) -> list[SourceFile]:
     files: list[SourceFile] = []
-    for path in sorted(repo_root.rglob("*")):
-        if not path.is_file():
-            continue
-        relative = path.relative_to(repo_root).as_posix()
-        if source_path_ignored(relative):
-            continue
-        if not any(fnmatch.fnmatch(relative, pattern) for pattern in source_globs):
-            continue
+    for relative in selected_source_paths(repo_root, source_globs):
+        path = repo_root / relative
         raw = path.read_bytes()
         text = raw.decode("utf-8", errors="replace")
         module_id = lean_module_id(relative) if relative.endswith(".lean") else ""
@@ -442,10 +440,6 @@ def discover_source_files(repo_root: Path, source_globs: Sequence[str]) -> list[
             )
         )
     return files
-
-
-def source_path_ignored(relative: str) -> bool:
-    return relative.startswith(".git/") or relative.startswith(".lake/") or relative.startswith("archive/")
 
 
 def file_kind(relative: str) -> str:

@@ -1,0 +1,4 @@
+[
+  {"id": "native_composition_activation_probe", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": -1, "imaginary_weight": 0, "weight_rule": "quadratic"},
+  {"id": "native_weighted_plane_probe", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": -2, "imaginary_weight": 2, "weight_rule": "quadratic"}
+]

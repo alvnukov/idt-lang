@@ -459,6 +459,7 @@ def reload_server_code(server: IdtMcpServer) -> IdtMcpServer:
 def reloadable_module_names() -> tuple[str, ...]:
     return (
         "theory_verifier.ai_theory_graph",
+        "scripts.build_ai_theory_graph",
         "theory_verifier.idt_rag",
         "theory_verifier.leandojo_adapter",
         "theory_verifier.idt_mcp_server",

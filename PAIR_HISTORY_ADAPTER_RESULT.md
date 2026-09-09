@@ -1,5 +1,10 @@
 # First shared native pair-history adapter
 
+Follow-up: [native observability](NATIVE_OBSERVABILITY_RESULT.md) proves that the
+dual control is a redundant scalar description for the supplied operation
+grammar, and classifies a larger family of compatible weights. A surviving
+zero-weight direction is not by itself grounds for candidate rejection.
+
 ## Result and boundary
 
 The archived signed-integer and Gaussian-integer realizations both satisfy the

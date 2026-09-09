@@ -176,12 +176,18 @@ SOURCE_BINDINGS: dict[str, tuple[Carrier, int, int]] = {
 }
 
 
-def evaluate_archived_source(candidate: SourceCandidate, limits: Limits) -> tuple[tuple[Check, ...], dict[str, object]]:
+def resolve_source_algebra(candidate: SourceCandidate) -> tuple[AmplitudeAlgebra, str] | None:
+    """Resolve only reviewed immutable sources; never execute their retained text."""
     key = hashlib.sha256(canonical_json(candidate.specification()).encode("utf-8")).hexdigest()
     binding = SOURCE_BINDINGS.get(key)
-    if binding is None:
+    return None if binding is None else (AmplitudeAlgebra(candidate.id, *binding), key)
+
+
+def evaluate_archived_source(candidate: SourceCandidate, limits: Limits) -> tuple[tuple[Check, ...], dict[str, object]]:
+    resolved = resolve_source_algebra(candidate)
+    if resolved is None:
         return evaluate_source_candidate(candidate)
-    model = AmplitudeAlgebra(candidate.id, *binding)
+    model, key = resolved
     checks, details = evaluate_amplitude_algebra(model, limits)
     details.update({"source_specification_sha256": key, "role": candidate.role,
         "binding_relation": "direct_integer_operations_adapter",

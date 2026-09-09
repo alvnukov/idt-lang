@@ -84,7 +84,25 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "finite_missing_existence_witness_is_inconclusive"]
     blockers := ["generic_lower_law_does_not_supply_a_carrier_or_weight",
       "native_multiplication_does_not_derive_physical_composite_closure",
-      "operational_preparation_readout_and_empirical_bridge_are_missing"] }
+      "operational_preparation_readout_and_empirical_bridge_are_missing"] },
+  { id := "native_observable_quotient_and_parameter_classification"
+    track := .primitiveResearch
+    state := .active
+    inputs := ["native_dual_blindspot_control", "pair_history_signed_scalar_realization",
+      "pair_history_gaussian_realization", "native_composition_activation_probe",
+      "native_weighted_plane_probe"]
+    requiredOutputs := ["Proofs/QMClosure/NativeAmplitudeObservability.lean",
+      "theory_experiments/native_observability.py", "data/native_observability_review.json",
+      "NATIVE_OBSERVABILITY_RESULT.md"]
+    acceptance := ["all_integer_parameter_classification_is_scoped_to_supplied_quadratic_algebra",
+      "dual_to_scalar_quotient_preserves_only_declared_polynomial_grammar",
+      "projection_failure_is_not_candidate_rejection",
+      "null_weight_alone_does_not_justify_quotient_under_composition",
+      "retain_equivalent_descriptions_in_history_without_merging_or_deleting",
+      "new_diagnostics_do_not_change_old_candidate_baselines"]
+    blockers := ["physical_preparability_and_allowed_operations_are_not_derived",
+      "additional_operations_can_break_the_restricted_quotient",
+      "nonnegative_multiplicative_weights_do_not_select_gaussian_integers_or_QM"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [

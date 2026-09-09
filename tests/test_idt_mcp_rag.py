@@ -4,13 +4,21 @@ import io
 import hashlib
 import json
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from unittest.mock import patch
 
-from scripts.build_ai_theory_graph import build_v8_ai_theory_graph
-from theory_verifier.ai_theory_graph import V8GraphQueryError
+import scripts.build_ai_theory_graph as graph_builder
+from scripts.build_ai_theory_graph import DEFAULT_SOURCE_GLOBS, build_v8_ai_theory_graph
+from theory_verifier.ai_theory_graph import (
+    V8GraphQueryError,
+    theory_graph_from_payload,
+    validate_source_file_hashes,
+)
 from theory_verifier.idt_mcp_server import IdtMcpServer, handle_line, serve
 from theory_verifier.idt_rag import (
     IdtRagError,
@@ -230,6 +238,127 @@ class IdtMcpRagTests(unittest.TestCase):
             text = require_string(require_mapping(content[0])["text"])
             self.assertIn("requestTimeGraphRefresh", text)
 
+    def test_mcp_refreshes_graph_when_new_source_file_is_added(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = write_fixture_repo(Path(raw_dir))
+            server = IdtMcpServer(load_fixture_index(root))
+            (root / "Proofs" / "QMClosure" / "Added.lean").write_text(
+                "theorem newlyAddedSource : True := by trivial\n",
+                encoding="utf-8",
+            )
+
+            response = server.handle_payload(
+                {
+                    "jsonrpc": "2.0",
+                    "id": "new-source",
+                    "method": "tools/call",
+                    "params": {
+                        "name": "idt_graph_search",
+                        "arguments": {"query": "newlyAddedSource", "limit": 2},
+                    },
+                }
+            )
+
+            if response is None:
+                raise AssertionError("expected response")
+            result = require_mapping(response["result"])
+            structured = require_mapping(result["structuredContent"])
+            self.assertEqual(1, structured["count"])
+            nodes = require_list(structured["nodes"])
+            self.assertIn("newlyAddedSource", json.dumps(nodes))
+
+    def test_rag_rejects_added_source_when_refresh_disabled(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = write_fixture_repo(Path(raw_dir))
+            (root / "Proofs" / "QMClosure" / "Added.lean").write_text(
+                "def newlyAddedSource := True\n", encoding="utf-8"
+            )
+
+            with self.assertRaisesRegex(V8GraphQueryError, "source inventory mismatch"):
+                IdtRagIndex.load(root, check_source_hashes=True, auto_refresh=False)
+
+    def test_rag_refreshes_legacy_graph_without_source_inventory(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = write_fixture_repo(Path(raw_dir))
+            graph_path = root / "dist" / "idt-v8-ai-theory-graph.json"
+            graph = graph_json_load_for_tests(graph_path)
+            require_mapping(graph["coverage"]).pop("source_inventory")
+            write_locked_graph_for_tests(graph_path, graph)
+
+            index = load_fixture_index(root)
+
+            self.assertIn("source_inventory", index.graph.coverage)
+
+    def test_auto_refresh_does_not_expand_custom_or_focused_graphs(self) -> None:
+        for mode in ("custom", "focused", "disabled"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as raw_dir:
+                root = write_fixture_repo(Path(raw_dir))
+                graph = build_v8_ai_theory_graph(
+                    repo_root=root,
+                    source_globs=("Proofs/QMClosure/A.lean",) if mode == "custom" else DEFAULT_SOURCE_GLOBS,
+                    focus="localTomography" if mode == "focused" else None,
+                    include_sources=mode != "disabled",
+                )
+                graph_path = root / "dist" / "idt-v8-ai-theory-graph.json"
+                write_locked_graph_for_tests(graph_path, graph)
+                original = graph_path.read_bytes()
+                if mode == "disabled":
+                    # A missing inventory must not turn a disabled source layer on.
+                    require_mapping(graph["coverage"]).pop("source_inventory")
+                    write_locked_graph_for_tests(graph_path, graph)
+                    original = graph_path.read_bytes()
+                else:
+                    (root / "Proofs" / "QMClosure" / "A.lean").write_text(
+                        "def changed := True\n", encoding="utf-8"
+                    )
+
+                with self.assertRaisesRegex(IdtRagError, "custom or partial graph scope"):
+                    load_fixture_index(root)
+
+                self.assertEqual(original, graph_path.read_bytes())
+
+    def test_legacy_custom_path_requires_explicit_graph_options(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = write_fixture_repo(Path(raw_dir))
+            graph = build_v8_ai_theory_graph(
+                repo_root=root, source_globs=("Proofs/QMClosure/A.lean",)
+            )
+            require_mapping(graph["coverage"]).pop("source_inventory")
+            graph_path = root / "dist" / "custom-legacy-graph.json"
+            write_locked_graph_for_tests(graph_path, graph)
+            original = graph_path.read_bytes()
+
+            with self.assertRaisesRegex(IdtRagError, "unknown source options"):
+                IdtRagIndex.load(root, graph_path)
+
+            self.assertEqual(original, graph_path.read_bytes())
+
+    def test_source_inventory_respects_selected_scope(self) -> None:
+        for mode in ("default", "custom", "focused", "disabled"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as raw_dir:
+                root = write_fixture_repo(Path(raw_dir))
+                graph = theory_graph_from_payload(build_v8_ai_theory_graph(
+                    repo_root=root,
+                    source_globs=("Proofs/QMClosure/A.lean",) if mode == "custom" else DEFAULT_SOURCE_GLOBS,
+                    focus="localTomography" if mode == "focused" else None,
+                    include_sources=mode != "disabled",
+                ))
+                validate_source_file_hashes(graph, root, require_inventory=True)
+                for excluded in ("unrelated.txt", ".lake/Proofs/B.lean", ".git/B.lean", "archive/B.lean"):
+                    path = root / excluded
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text("def outsideSelectedScope := True\n", encoding="utf-8")
+                validate_source_file_hashes(graph, root, require_inventory=True)
+                (root / "Proofs" / "QMClosure" / "B.lean").write_text(
+                    "def newlyAddedSource := True\n", encoding="utf-8"
+                )
+
+                if mode in {"custom", "disabled"}:
+                    validate_source_file_hashes(graph, root, require_inventory=True)
+                else:
+                    with self.assertRaisesRegex(V8GraphQueryError, "source inventory mismatch"):
+                        validate_source_file_hashes(graph, root, require_inventory=True)
+
     def test_mcp_reload_code_tool_schedules_in_process_reload(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
             server = IdtMcpServer(load_fixture_index(write_fixture_repo(Path(raw_dir))))
@@ -251,6 +380,18 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertEqual("reload_scheduled_after_response", structured["status"])
             self.assertEqual("reload_is_tooling_only_not_proof_evidence", structured["proof_boundary"])
             self.assertEqual(True, server.reload_code_requested)
+
+    def test_reload_refreshes_cached_builder_before_rebuilding_legacy_graph(self) -> None:
+        process = subprocess.run(
+            [sys.executable, "-c", "from tests.test_idt_mcp_rag import exercise_stale_builder_reload; exercise_stale_builder_reload()"],
+            cwd=Path(__file__).resolve().parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=20,
+        )
+
+        self.assertEqual(0, process.returncode, process.stderr)
 
     def test_graph_diff_reports_changed_live_graph(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
@@ -527,6 +668,37 @@ class IdtMcpRagTests(unittest.TestCase):
                 raise AssertionError("expected response")
             error = require_mapping(response["error"])
             self.assertEqual(-32700, error["code"])
+
+
+def exercise_stale_builder_reload() -> None:
+    """Exercise old cached builder / new validator skew in an isolated process."""
+    with tempfile.TemporaryDirectory() as raw_dir:
+        root = write_fixture_repo(Path(raw_dir))
+        server = IdtMcpServer(load_fixture_index(root))
+        graph_path = root / "dist" / "idt-v8-ai-theory-graph.json"
+        graph = graph_json_load_for_tests(graph_path)
+        require_mapping(graph["coverage"]).pop("source_inventory")
+        write_locked_graph_for_tests(graph_path, graph)
+        current_builder = graph_builder.build_v8_ai_theory_graph
+
+        def legacy_builder(*, repo_root: Path) -> dict[str, object]:
+            payload = current_builder(repo_root=repo_root)
+            require_mapping(payload["coverage"]).pop("source_inventory")
+            return payload
+
+        requests = [
+            {"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": "idt_reload_code", "arguments": {}}},
+            {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "idt_graph_search", "arguments": {"query": "localTomography", "limit": 2}}},
+        ]
+        stdout = io.StringIO()
+        with patch.object(graph_builder, "build_v8_ai_theory_graph", legacy_builder):
+            result = serve(server, io.StringIO("\n".join(json.dumps(row) for row in requests)), stdout)
+        responses = [require_mapping(json.loads(line)) for line in stdout.getvalue().splitlines()]
+        if result != 0 or len(responses) != 2:
+            raise AssertionError("reload must return both replies without closing the transport")
+        search = require_mapping(require_mapping(responses[1]["result"])["structuredContent"])
+        if search["count"] != 1:
+            raise AssertionError("fresh graph must remain searchable after reload")
 
 
 def write_fixture_repo(root: Path, formal_proof_card: bool = False) -> Path:

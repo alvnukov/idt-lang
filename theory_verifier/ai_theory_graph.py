@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import fnmatch
 import hashlib
 import json
+import os
 import re
 from collections import deque
 from collections.abc import Iterable, Mapping, Sequence
@@ -107,7 +109,9 @@ def validate_theory_graph(graph: TheoryGraph) -> None:
     validate_coverage(graph.coverage, graph.nodes, graph.edges)
 
 
-def validate_source_file_hashes(graph: TheoryGraph, repo_root: Path) -> None:
+def validate_source_file_hashes(
+    graph: TheoryGraph, repo_root: Path, *, require_inventory: bool = False
+) -> None:
     root = repo_root.resolve()
     for node in graph.nodes:
         if node.kind != "source.file":
@@ -132,6 +136,50 @@ def validate_source_file_hashes(graph: TheoryGraph, repo_root: Path) -> None:
                 f"source hash mismatch for node {node.identifier!r}: "
                 f"graph={node.digest} actual={actual}"
             )
+    validate_source_inventory(graph, root, required=require_inventory)
+
+
+def selected_source_paths(repo_root: Path, source_globs: Sequence[str]) -> list[str]:
+    """Match the builder's source scope without traversing excluded root trees."""
+    if not source_globs:
+        return []
+    paths: list[str] = []
+    for directory, subdirs, filenames in os.walk(repo_root):
+        if Path(directory) == repo_root:
+            subdirs[:] = [name for name in subdirs if name not in {".git", ".lake", "archive"}]
+        for filename in filenames:
+            path = Path(directory) / filename
+            relative = path.relative_to(repo_root).as_posix()
+            if path.is_file() and any(fnmatch.fnmatch(relative, pattern) for pattern in source_globs):
+                paths.append(relative)
+    return sorted(paths)
+
+
+def source_inventory(source_globs: Sequence[str], paths: Sequence[str]) -> JsonObject:
+    encoded = json.dumps(sorted(paths), ensure_ascii=True, separators=(",", ":")).encode("utf-8")
+    return {
+        "globs": list(source_globs),
+        "path_count": len(paths),
+        "paths_sha256": hashlib.sha256(encoded).hexdigest(),
+    }
+
+
+def validate_source_inventory(graph: TheoryGraph, repo_root: Path, *, required: bool) -> None:
+    recorded = graph.coverage.get("source_inventory")
+    if recorded is None:
+        if required:
+            raise V8GraphQueryError("graph is missing source inventory; rebuild required")
+        return
+    inventory = require_object(recorded, "coverage.source_inventory")
+    raw_globs = inventory.get("globs")
+    if not isinstance(raw_globs, list):
+        raise V8GraphQueryError("coverage.source_inventory.globs must be a list")
+    globs = [require_string(value, "coverage.source_inventory.globs[]") for value in raw_globs]
+    actual = source_inventory(globs, selected_source_paths(repo_root, globs))
+    if inventory != actual:
+        raise V8GraphQueryError(
+            "source inventory mismatch: selected source paths changed; rebuild required"
+        )
 
 
 def validate_contract(contract: Mapping[str, object]) -> None:

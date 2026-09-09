@@ -527,7 +527,7 @@ def checked_load_graph(
 ) -> TheoryGraph:
     graph = load_theory_graph(graph_path)
     if check_source_hashes:
-        validate_source_file_hashes(graph, repo_root)
+        validate_source_file_hashes(graph, repo_root, require_inventory=True)
     return graph
 
 
@@ -549,7 +549,35 @@ def lock_path_for(path: Path) -> Path:
 
 
 def rebuild_graph(repo_root: Path, graph_path: Path) -> None:
-    from scripts.build_ai_theory_graph import build_v8_ai_theory_graph
+    from scripts.build_ai_theory_graph import (
+        DEFAULT_SOURCE_GLOBS,
+        build_v8_ai_theory_graph,
+    )
+
+    if graph_path.exists():
+        try:
+            previous = require_json_object(json.loads(graph_path.read_text(encoding="utf-8")), "graph")
+        except (OSError, ValueError):
+            previous = {}
+        metadata = previous.get("meta")
+        coverage = previous.get("coverage")
+        inventory = coverage.get("source_inventory") if isinstance(coverage, dict) else None
+        if previous and inventory is None and graph_path.resolve() != (repo_root / DEFAULT_GRAPH).resolve():
+            raise IdtRagError(
+                "legacy graph outside the canonical default path has unknown source options; "
+                "rebuild explicitly with the original graph options"
+            )
+        custom_globs = isinstance(inventory, dict) and inventory.get("globs") != list(DEFAULT_SOURCE_GLOBS)
+        partial = isinstance(metadata, dict) and (
+            metadata.get("focus", "") != ""
+            or metadata.get("source_mode", "included") != "included"
+            or metadata.get("manifest_residuals", True) is not True
+        )
+        if custom_globs or partial:
+            raise IdtRagError(
+                "automatic refresh cannot preserve a custom or partial graph scope; "
+                "rebuild explicitly with the original graph options"
+            )
 
     graph = build_v8_ai_theory_graph(repo_root=repo_root)
     atomic_write_text(graph_path, graph_json_text(graph, pretty=False) + "\n")
