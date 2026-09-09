@@ -73,6 +73,10 @@ checked claim ledger. It shows which parts are finite executable readouts, which
 parts are calibrated, which bridges are still conditional, and which claims are
 blocked.
 
+For rapid pre-proof hypothesis testing, see the [primitive-candidate screen](PRIMITIVE_SCREEN.md).
+It computes exact finite counterexamples from editable candidate rules and records
+search bounds and imports; it does not certify primitive truth or empirical agreement.
+
 Current auditable results:
 
 - finite QM readout gates: Born/context tables, two-path interference, Sorkin
