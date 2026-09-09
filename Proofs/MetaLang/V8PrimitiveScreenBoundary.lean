@@ -95,4 +95,33 @@ def pipelineResearchObligations : List String := [
   "no_status_upgrade_from_cache_hit_or_short_card"
 ]
 
+/-! Checker quality is the current engineering/research priority. These are
+work-ledger entries, not proofs of Python execution or of physical claims. -/
+def currentDevelopmentPriority : String :=
+  "improve_checker_coverage_and_independent_quality_checks_while_advancing_research"
+
+def exactAlgebraicCheckIds : List String := ["exact_kernel_positivity"]
+
+def kernelCertificateEvidence : String :=
+  "Python_checked_weighted_square_identity_or_negative_reference_not_Lean_proof"
+
+def checkerQualityControls : List String := [
+  "independent_principal_minor_comparison_on_729_three_by_three_matrices",
+  "169_normalized_kernel_regressions_including_12_previous_grid_misses",
+  "permutation_positive_scaling_and_invertible_congruence_checks",
+  "certificate_mutations_and_generator_failure_are_not_candidate_results",
+  "cache_hits_reverify_certificates_without_repeating_search",
+  "CI_runs_primitive_QM_SM_pipeline_and_certificate_tests"
+]
+
+def checkerQualityOpenObligations : List String := [
+  "prove_certificate_validator_soundness_in_Lean_and_connect_runtime_evidence",
+  "add_source_code_mutation_testing_beyond_certificate_mutations",
+  "expand_QM_states_settings_and_independent_implementation_comparisons",
+  "add_SM_interaction_process_and_neutrino_sector_benchmarks",
+  "add_versioned_empirical_data_uncertainties_and_independent_holdouts",
+  "audit_all_adapter_imports_before_any_joint_primitive_claim",
+  "measure_speedups_only_under_preserved_coverage_and_evidence_contracts"
+]
+
 end IDT.MetaLang.V8.PrimitiveScreen

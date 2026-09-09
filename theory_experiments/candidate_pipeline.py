@@ -31,14 +31,16 @@ from theory_experiments.primitive_screen import (
     object_fields,
     parse_limits,
 )
+from theory_experiments.quadratic_certificate import certify, verify_certificate
 
 Hypothesis: TypeAlias = primitive.Candidate | PhysicsCandidate
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA = "idt-hypothesis-screen/1"
+SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
+    "theory_experiments/quadratic_certificate.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
 
@@ -77,6 +79,20 @@ def request_for(candidate: Hypothesis, limits: Limits, sources: dict[str, object
             "limits": limits.specification(), "provenance": sources}
 
 
+def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object) -> Check:
+    if not verify_certificate(candidate.matrix, certificate):
+        raise ValueError("invalid positivity certificate: checker error, not candidate rejection")
+    row = object_fields(certificate)
+    negative = row["kind"] == "negative_direction"
+    witness = ({"inputs": {"reference_vector": row["vector"]},
+                "actual": row["normalized_reference_weight"], "required": ">=0"} if negative else None)
+    return Check("exact_kernel_positivity",
+                 "counterexample" if negative else "no_counterexample_within_bounds",
+                 1, 1, ">=0", ("symmetric_rational_kernel_dimension_1_to_3",
+                     "admit_all_normalized_signed_rank_one_references_with_nonzero_sum",
+                     "tensor_multiplication", "exact_algebraic_certificate_not_Lean_proof"), witness)
+
+
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
@@ -86,9 +102,15 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
         checks, details = evaluate_sm(candidate, limits), scope(candidate)
     else:
         checks, details = primitive.evaluate(candidate, limits), {"untested": list(primitive.UNTESTED)}
+        if isinstance(candidate, primitive.PairKernel):
+            certificate = certify(candidate.matrix)
+            checks += (_certified_kernel_check(candidate, certificate),)
+            details["positivity_certificate"] = certificate
+            details["positivity_scope"] = "all_rational_coefficient_vectors_for_this_supplied_matrix"
+            details["positivity_coverage"] = "one_exact_certificate_not_one_sampled_direction"
     return {"request": request, "status": primitive.aggregate_status(checks),
             "checks": [check.specification() for check in checks], "scope": details,
-            "arithmetic": "exact_rational", "evidence_kind": "bounded_computation",
+            "arithmetic": "exact_rational", "evidence_kind": "computation_with_explicit_algebraic_or_bounded_scope",
             "proof_status": "not_attempted", "empirical_status": "not_tested",
             "rejection_scope": "candidate_plus_stated_imports_and_selected_requirements"}
 
@@ -112,6 +134,16 @@ def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
             or canonical_json(report["request"]) != canonical_json(request)
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
+    candidate = parse_hypothesis(request["candidate"])
+    if isinstance(candidate, primitive.PairKernel):
+        # A cache hit rechecks the small certificate, not the expensive search/generation.
+        certificate = object_fields(report["scope"]).get("positivity_certificate")
+        exact_check = _certified_kernel_check(candidate, certificate)
+        checks = report["checks"]
+        if (not isinstance(checks, list) or not checks
+                or canonical_json(checks[-1]) != canonical_json(exact_check.specification())
+                or (exact_check.status == "counterexample" and report["status"] != "counterexample")):
+            raise ValueError("cached positivity check/status disagrees with verified certificate")
     return report
 
 

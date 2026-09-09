@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import redirect_stderr, redirect_stdout
+from fractions import Fraction as F
 from pathlib import Path
 from unittest.mock import patch
 
@@ -15,6 +16,7 @@ from scripts.screen_hypotheses import main
 from theory_experiments import candidate_pipeline as pipeline
 from theory_experiments import primitive_screen as primitive
 from theory_experiments.primitive_screen import Limits, canonical_json, object_fields
+from theory_experiments.quadratic_certificate import verify_certificate
 
 
 def specifications(*names: str) -> list[object]:
@@ -28,8 +30,15 @@ class PipelineTests(unittest.TestCase):
         singles = tuple(pipeline.run_batch([spec])[0] for spec in specs)
         self.assertEqual([r.report for r in batch], [r.report for r in singles])
         for result, candidate in zip(batch[:3], primitive.builtin_candidates().values()):
-            self.assertEqual(result.report["checks"], [check.specification()
-                             for check in primitive.evaluate(candidate, Limits())])
+            values = result.report["checks"]
+            assert isinstance(values, list)
+            legacy = [check.specification() for check in primitive.evaluate(candidate, Limits())]
+            self.assertEqual(values[:len(legacy)], legacy)
+            if isinstance(candidate, primitive.PairKernel):
+                self.assertEqual(len(values), len(legacy)+1)
+                self.assertEqual(object_fields(values[-1])["id"], "exact_kernel_positivity")
+            else:
+                self.assertEqual(values, legacy)
         self.assertEqual(pipeline.exit_code(batch), 1)
 
     def test_cache_hit_never_executes_and_retains_full_report(self) -> None:
@@ -61,11 +70,82 @@ class PipelineTests(unittest.TestCase):
             second = pipeline.run_batch(specifications("non_psd"), Limits(reference_radius=2), path)[0]
             self.assertNotEqual(first.key, second.key)
             self.assertFalse(second.reused)
-            self.assertEqual(first.report["status"], "no_counterexample_within_bounds")
+            # The old grid still misses the witness, but the added exact gate now rejects it.
+            first_checks = first.report["checks"]
+            assert isinstance(first_checks, list)
+            self.assertEqual(object_fields(first_checks[4])["status"], "no_counterexample_within_bounds")
+            self.assertEqual(object_fields(first_checks[5])["status"], "counterexample")
+            self.assertEqual(first.report["status"], "counterexample")
             self.assertEqual(second.report["status"], "counterexample")
         limited = pipeline.run_batch(specifications("qm_born"), Limits(max_cases=1))
         self.assertEqual(limited[0].card()["status"], "inconclusive")
         self.assertEqual(pipeline.exit_code(limited), 3)
+
+    def test_all_twelve_previous_grid_misses_are_automatically_rejected(self) -> None:
+        pairs = ((0, 8), (0, 9), (0, 10), (0, 11), (1, 6), (2, 4),
+                 (4, 2), (6, 1), (8, 0), (9, 0), (10, 0), (11, 0))
+        specs: list[object] = []
+        for i, j in pairs:
+            a, c = F(i, 12), F(j, 12)
+            b = (1-a-c)/2
+            specs.append(primitive.PairKernel(f"miss_{i}_{j}", ((a, b), (b, c))).specification())
+        for result in pipeline.run_batch(specs):
+            checks = result.report["checks"]
+            assert isinstance(checks, list)
+            self.assertTrue(all(object_fields(row)["status"] == "no_counterexample_within_bounds"
+                                for row in checks[:5]))
+            self.assertEqual(object_fields(checks[-1])["status"], "counterexample")
+            self.assertEqual(result.report["status"], "counterexample")
+
+    def test_exact_certificate_is_not_limited_by_grid_budget(self) -> None:
+        result = pipeline.run_batch(specifications("non_psd"), Limits(max_cases=1, reference_radius=1))[0]
+        checks = result.report["checks"]
+        assert isinstance(checks, list)
+        self.assertEqual(object_fields(checks[2])["status"], "inconclusive")
+        self.assertEqual(object_fields(checks[-1])["status"], "counterexample")
+        self.assertEqual(result.report["status"], "counterexample")
+
+    def test_kernel_cache_hits_reverify_without_generating(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            first = pipeline.run_batch(specifications("square", "non_psd"), cache_dir=path)
+            with patch.object(pipeline, "certify", side_effect=AssertionError("generated on hit")), patch.object(
+                    pipeline, "verify_certificate", wraps=verify_certificate) as verify:
+                second = pipeline.run_batch(specifications("square", "non_psd"), cache_dir=path)
+            self.assertEqual(verify.call_count, 2)
+            self.assertEqual([r.report for r in first], [r.report for r in second])
+            self.assertTrue(all(r.reused for r in second))
+
+    def test_bad_generator_certificate_is_operational_error(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(pipeline, "certify", return_value={}), self.assertRaisesRegex(ValueError, "invalid positivity certificate"):
+                pipeline.run_batch(specifications("non_psd"), cache_dir=Path(directory))
+            self.assertEqual(list(Path(directory).iterdir()), [])
+
+    def test_forged_cache_digest_cannot_hide_invalid_certificate_or_its_counterexample(self) -> None:
+        for fault in ("certificate", "check", "aggregate"):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as directory:
+                result = pipeline.run_batch(specifications("non_psd"), cache_dir=Path(directory))[0]
+                assert result.artifact is not None
+                envelope = object_fields(primitive.load_json(result.artifact))
+                report = object_fields(envelope["report"])
+                if fault == "certificate":
+                    details = object_fields(report["scope"])
+                    details["positivity_certificate"] = {}
+                    report["scope"] = details
+                elif fault == "check":
+                    checks = report["checks"]
+                    assert isinstance(checks, list)
+                    checks[-1] = {"id": "exact_kernel_positivity", "status": "no_counterexample_within_bounds"}
+                else:
+                    report["status"] = "no_counterexample_within_bounds"
+                envelope["report"] = report
+                envelope["report_sha256"] = pipeline.digest(report)
+                result.artifact.write_text(canonical_json(envelope), encoding="utf-8")
+                before = result.artifact.read_bytes()
+                with self.assertRaisesRegex(ValueError, "certificate|positivity"):
+                    pipeline.run_batch(specifications("non_psd"), cache_dir=Path(directory))
+                self.assertEqual(result.artifact.read_bytes(), before)
 
     def test_provenance_and_candidate_changes_invalidate(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

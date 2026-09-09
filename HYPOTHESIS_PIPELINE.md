@@ -1,9 +1,11 @@
 # Cheap hypothesis screening without weaker evidence
 
-This is a batch **finite counterexample/compatibility screen**, not a universal
+This is a batch **algebraic and finite compatibility screen**, not a universal
 physics simulator. It uses exact rational arithmetic, no model/API calls, no
 fitting and no external solver dependencies (Python 3.10+, macOS/Linux). The
 original [primitive screen](PRIMITIVE_SCREEN.md) remains available unchanged.
+See [checker trust and development priority](CHECKER_TRUST.md) for guarantees,
+automated quality controls, limitations and proposed safe accelerations.
 
 ## Run
 
@@ -66,6 +68,35 @@ The same bounds apply with and without caching. A limited search is
 terminates that check only; neighboring checks and their gaps remain visible.
 No aggressive surrogate rejection, cross-candidate witness transfer, shrinking,
 approximate arithmetic or automated promotion to a formal claim is implemented.
+
+## Exact pair-kernel positivity (protocol 2)
+
+Pair kernels now have an additional mandatory `exact_kernel_positivity` check.
+For each admitted rational symmetric matrix of dimension 1–3, a Schur-complement
+algorithm constructs either a weighted-square decomposition or a negative
+coefficient vector with nonzero sum. A separate verifier checks the full matrix
+identity or directly recomputes the negative quadratic/reference weight.
+The finite grid is not used to decide this algebraic property.
+
+The full certificate and its scope are retained in the report. A negative
+certificate rejects the candidate under the explicitly admitted rank-one
+reference and tensor-composition assumptions. A positive certificate covers
+all rational coefficient vectors for that one supplied matrix; it does not
+prove the primitive representation, full QM, or the program itself in Lean.
+The reported `checked=planned=1` means one algebraic certificate, not one
+sampled direction. The overall status still preserves all other bounded,
+incomplete or unsupported checks. Those checks are not skipped.
+
+Disk cache hits reverify the positivity certificate and its associated
+check/status without rerunning generation or grid search. An invalid certificate
+is an operational error (exit 2), not a counterexample to the candidate.
+Other cached results retain the trusted-local-cache contract above.
+
+The report request schema is now `idt-hypothesis-screen/2`. Old artifacts are
+not overwritten or silently upgraded; replay them at their matching source
+version. The 12 non-PSD kernels missed by the earlier radius-2 grid are explicit
+regression cases and are now rejected automatically, even with a small grid
+budget. Existing primitive-only CLI behavior remains unchanged.
 
 ## QM: a conditional readout benchmark
 
@@ -151,9 +182,9 @@ do not establish such a bridge. That remains an explicit research obligation in
 ## Verification
 
 ```sh
-python3 -m unittest tests.test_physics_screen tests.test_candidate_pipeline tests.test_primitive_screen
-ruff check theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py scripts/screen_hypotheses.py tests/test_physics_screen.py tests/test_candidate_pipeline.py
-mypy --strict theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py scripts/screen_hypotheses.py tests/test_physics_screen.py tests/test_candidate_pipeline.py
+python3 -m unittest tests.test_primitive_screen tests.test_physics_screen tests.test_candidate_pipeline tests.test_quadratic_certificate
+ruff check theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py scripts/screen_hypotheses.py tests/test_primitive_screen.py tests/test_physics_screen.py tests/test_candidate_pipeline.py tests/test_quadratic_certificate.py
+mypy --strict theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py scripts/screen_hypotheses.py tests/test_primitive_screen.py tests/test_physics_screen.py tests/test_candidate_pipeline.py tests/test_quadratic_certificate.py
 ```
 
 Tests compare batch/single and cold/hit results, ensure a hit does not execute

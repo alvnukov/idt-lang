@@ -44,6 +44,12 @@ jobs:
           ruff check theory_verifier tests scripts
           mypy --strict theory_verifier tests scripts
 
+      - name: Hypothesis checker quality
+        run: |
+          ruff check theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py
+          mypy --strict theory_experiments/primitive_screen.py theory_experiments/physics_screen.py theory_experiments/candidate_pipeline.py theory_experiments/quadratic_certificate.py
+          python -m unittest tests.test_primitive_screen tests.test_physics_screen tests.test_candidate_pipeline tests.test_quadratic_certificate
+
       - name: IDT v8 declarative rules
         run: python scripts/check_declarative_rules.py --json
 
