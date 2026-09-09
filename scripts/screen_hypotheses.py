@@ -9,13 +9,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from theory_experiments.candidate_history import DEFAULT_HISTORY, History, record_batch
 from theory_experiments.candidate_pipeline import (
     Result,
     controls,
     digest,
     exit_code,
     replay_artifact,
-    run_batch,
 )
 from theory_experiments.primitive_screen import Limits, canonical_json, load_json
 
@@ -29,6 +29,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--show-candidates", action="store_true")
     parser.add_argument("--cache-dir", type=Path)
     parser.add_argument("--no-cache", action="store_true")
+    parser.add_argument("--history-dir", type=Path, default=DEFAULT_HISTORY,
+                        help="durable candidate history, independent of the disposable cache")
     parser.add_argument("--fresh", action="store_true", help="recompute; compare any existing entry")
     parser.add_argument("--max-cases", type=int)
     parser.add_argument("--reference-radius", type=int)
@@ -38,6 +40,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         results: tuple[Result, ...]
+        history_info: dict[str, object] | None = None
+        changed = False
         bounds = (args.max_cases, args.coefficient_radius, args.reference_radius, args.max_copies)
         if args.no_cache and args.cache_dir is not None:
             raise ValueError("--no-cache conflicts with --cache-dir")
@@ -67,11 +71,20 @@ def main(argv: list[str] | None = None) -> int:
                             args.reference_radius if args.reference_radius is not None else defaults.reference_radius,
                             args.max_copies if args.max_copies is not None else defaults.max_copies)
             cache = None if args.no_cache else (args.cache_dir or ROOT / "dist/primitive-screen-cache")
-            results = run_batch(specifications, limits, cache, fresh=args.fresh)
+            recorded = record_batch(specifications, limits, cache, fresh=args.fresh,
+                                    history=History(args.history_dir))
+            results = recorded.results
+            changed = bool(recorded.changes)
+            history_info = {"submission": recorded.submission,
+                "observation": str(args.history_dir.resolve() / "observations" / (recorded.observation + ".json.gz")),
+                "review_required": changed, "changes": recorded.changes}
         for result in results:
-            print(canonical_json(result.report if args.json else result.card()))
-        return exit_code(results)
-    except (ValueError, TypeError, OSError, RecursionError) as error:
+            output = dict(result.report if args.json else result.card())
+            if history_info is not None:
+                output["history"] = history_info
+            print(canonical_json(output))
+        return 4 if changed else exit_code(results)
+    except (ValueError, TypeError, OSError, KeyError, RecursionError, EOFError) as error:
         print(f"screen_hypotheses: {error}", file=sys.stderr)
         return 2
 

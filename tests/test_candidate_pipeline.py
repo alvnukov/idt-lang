@@ -24,6 +24,13 @@ def specifications(*names: str) -> list[object]:
 
 
 class PipelineTests(unittest.TestCase):
+    def setUp(self) -> None:
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        history = patch("scripts.screen_hypotheses.DEFAULT_HISTORY", Path(directory.name) / "history")
+        history.start()
+        self.addCleanup(history.stop)
+
     def test_batch_single_and_legacy_checks_agree(self) -> None:
         specs = specifications(*pipeline.controls())
         batch = pipeline.run_batch(specs)

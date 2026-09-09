@@ -33,11 +33,29 @@ complete local artifact, including exact witness inputs, imports and gaps.
 a counterexample; 1 = at least one counterexample; 2 = invalid input/operational
 error; 3 = incomplete or unsupported. Code 0 never means physical truth.
 
+## Candidate history and false-rejection protection
+
+Normal batch runs now save inputs before adapter validation and complete results
+in tracked `data/candidate_history/`, independently of the disposable cache.
+Rejected, incomplete and unsupported candidates are retained. Use
+`--history-dir` to select another archive. For programmatic research use
+`theory_experiments.candidate_history.record_batch`; the low-level `run_batch`
+remains side-effect-free unless a cache is requested.
+
+`python3 scripts/check_candidate_history.py` freshly recomputes the complete
+history at original bounds. Both directions of verdict change, changes to
+requirements/imports/coverage and checker failures require review (exit 4).
+`--record` appends current evidence but never refreshes a baseline. Screening
+also returns exit 4 for drift against an existing baseline. Old observations
+are comparison points, not physical truth labels. See the
+[archive contract](data/candidate_history/README.md) for review and scope limits.
+
 ## Cost reduction and cache contract
 
 - A batch runs in one process. Duplicate identical requests reuse the result.
 - Persistent entries default to ignored `dist/primitive-screen-cache/`;
-  `--cache-dir` selects a directory and `--no-cache` disables persistence.
+  `--cache-dir` selects a directory and `--no-cache` disables cache persistence
+  only; candidate history remains enabled.
 - A key includes normalized candidate input (including its id), every bound,
   protocol version, relevant source/ledger/document hashes, Python version,
   implementation and platform. Dependency hashes are a conservative superset;

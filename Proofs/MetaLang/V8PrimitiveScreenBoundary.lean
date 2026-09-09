@@ -114,6 +114,21 @@ def checkerQualityControls : List String := [
   "CI_runs_primitive_QM_SM_pipeline_and_certificate_tests"
 ]
 
+/-! Candidate history protects both directions of checker drift. These are
+engineering contracts, not a proof that a physically correct candidate exists
+in the inventory or that the checker can never reject one. -/
+def candidateHistoryDiscipline : List String := [
+  "retain_submitted_candidates_including_rejected_unsupported_and_checker_errors",
+  "archive_complete_observations_without_overwriting_prior_generations",
+  "recompute_all_history_with_original_bounds_and_current_checker_without_disk_cache",
+  "review_survival_to_counterexample_and_counterexample_to_survival_changes",
+  "review_changed_assumptions_requirements_coverage_witnesses_and_claim_scope",
+  "checker_failure_is_not_candidate_rejection_and_does_not_skip_neighbors",
+  "historical_baseline_is_an_observation_not_physical_ground_truth",
+  "CI_replays_initial_275_candidate_inventory_and_new_archived_submissions",
+  "no_automatic_baseline_refresh_or_proof_status_upgrade"
+]
+
 def checkerQualityOpenObligations : List String := [
   "prove_certificate_validator_soundness_in_Lean_and_connect_runtime_evidence",
   "add_source_code_mutation_testing_beyond_certificate_mutations",

@@ -60,6 +60,23 @@ arithmetic. They do not eliminate all common-mode errors. Certificate mutation
 tests are not the same as a source-code mutation-testing campaign; the latter
 remains open.
 
+## Candidate retention and two-sided regression
+
+The [durable candidate history](data/candidate_history/README.md) retains the
+275-candidate research inventory and both original generations of complete
+results, including rejected candidates and the 12 earlier grid misses. Normal
+batch screens archive input before adapter validation and retain checker errors
+without converting them into scientific rejections. The history regression test
+freshly rechecks all candidates with original bounds and current code, without
+the persistent cache. A failing adapter does not skip neighboring candidates.
+
+Changes in either verdict direction, assumptions, requirements, coverage,
+witnesses and claim scope require review; old evidence is never overwritten and
+comparison baselines are never automatically refreshed. Initial baselines are
+computational observations, not independently established truth labels.
+The checker CI step includes history replay. This protects known examples from
+unnoticed regression, not every possible correct candidate from false rejection.
+
 ## Improvement loop
 
 For every new check, specify the scientific statement, imported assumptions,

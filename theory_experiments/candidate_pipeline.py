@@ -41,6 +41,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
     "theory_experiments/quadratic_certificate.py",
+    "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
 
