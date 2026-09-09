@@ -102,7 +102,28 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "new_diagnostics_do_not_change_old_candidate_baselines"]
     blockers := ["physical_preparability_and_allowed_operations_are_not_derived",
       "additional_operations_can_break_the_restricted_quotient",
-      "nonnegative_multiplicative_weights_do_not_select_gaussian_integers_or_QM"] }
+      "nonnegative_multiplicative_weights_do_not_select_gaussian_integers_or_QM"] },
+  { id := "native_operation_bridge_and_false_rejection_controls"
+    track := .primitiveResearch
+    state := .active
+    inputs := ["native_dual_blindspot_control", "pair_history_signed_scalar_realization",
+      "pair_history_gaussian_realization", "data/native_operation_probes.json"]
+    requiredOutputs := ["Proofs/QMClosure/NativeOperationBridge.lean",
+      "theory_experiments/native_operations.py", "tests/test_native_operations.py",
+      "NATIVE_OPERATION_BRIDGE_RESULT.md"]
+    acceptance := ["reversible_individual_weight_preservation_does_not_imply_reference_equivalence",
+      "additivity_plus_weight_preservation_is_a_conditional_pair_sum_bridge",
+      "matrix_weight_identity_uses_exact_coefficients_not_finite_absence_of_counterexamples",
+      "all_operation_contracts_are_diagnostics_not_primitive_rejection_requirements",
+      "actual_scalar_carrier_not_ambient_determinant_controls_reversibility",
+      "gaussian_quarter_turn_must_not_be_rejected_for_nonmultiplicativity",
+      "new_operations_may_refine_old_equivalence_without_refuting_the_base",
+      "preserve_all_candidate_history_and_existing_baselines"]
+    blockers := ["joint_physical_realizability_of_preparations_operation_and_coherent_reference_readout",
+      "coherent_amplitude_additivity_is_not_derived_from_probabilistic_mixture_affinity",
+      "distinguishability_noncollapse_is_not_indistinguishability_congruence",
+      "signed_unnormalized_pair_weight_is_not_the_existing_Nat_normalized_overlap",
+      "no_full_QM_SM_gravity_or_empirical_closure_is_established"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [

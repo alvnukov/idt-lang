@@ -1,0 +1,9 @@
+[
+  {"id": "identity", "kind": "integer_matrix", "matrix": [[1, 0], [0, 1]]},
+  {"id": "hidden_shear", "kind": "integer_matrix", "matrix": [[1, 0], [1, 1]]},
+  {"id": "parity_sign", "kind": "parity_sign"},
+  {"id": "coordinate_swap", "kind": "integer_matrix", "matrix": [[0, 1], [1, 0]]},
+  {"id": "quarter_turn", "kind": "integer_matrix", "matrix": [[0, -1], [1, 0]]},
+  {"id": "scale_two", "kind": "integer_matrix", "matrix": [[2, 0], [0, 2]]},
+  {"id": "scalar_projection", "kind": "integer_matrix", "matrix": [[1, 0], [0, 0]]}
+]

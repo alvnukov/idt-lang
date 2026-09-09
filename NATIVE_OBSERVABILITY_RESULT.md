@@ -33,6 +33,11 @@ to select physics, but failure to distinguish these two restricted descriptions
 is not by itself a checker defect. An added coordinate-swap operation would
 make a hidden coordinate observable; that operation is not in the proved grammar.
 
+The follow-up [operation bridge result](NATIVE_OPERATION_BRIDGE_RESULT.md) proves
+that even reversibility and individual weight preservation are insufficient
+to extend this quotient to arbitrary added operations. Its analyzer keeps
+operation-contract failures separate from candidate verdicts.
+
 ## Countercontrols
 
 | Model | Proposed scalar projection | Existing candidate screen |
