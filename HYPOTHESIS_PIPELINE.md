@@ -249,6 +249,20 @@ specification and derived bridges to both adapters. Separate positive controls
 do not establish such a bridge. That remains an explicit research obligation in
 `Proofs/MetaLang/V8PrimitiveScreenBoundary.lean`; no manifest claim is upgraded.
 
+## Conditional published-summary comparison
+
+The distinct `published_observation` family keeps raw algebra, the explicit
+`fixed_path_quadratic_rate_v1` bridge, and the frozen Sinha 2010 HSPS summary
+separate. It computes a parameter-independent fixed-path ideal null before
+reading measured values, then reports exact descriptive residual arithmetic.
+It does not assess empirical acceptance, select a primitive, model apparatus
+bias, or interpret the quoted uncertainty as a Gaussian confidence measure.
+Scalar, Gaussian and degenerate-dual quadratic controls remain indistinguishable.
+Unsupported mappings do not refute a model. Existing family reports and history
+baselines remain unchanged. See [PUBLISHED_OBSERVATION_RESULT.md](PUBLISHED_OBSERVATION_RESULT.md)
+for the source extraction, eight-context assumptions, zero-denominator exclusion,
+slit-boundary caveat and reproducible command.
+
 ## Verification
 
 ```sh

@@ -1,0 +1,43 @@
+{
+  "schema": "idt-published-summary/1",
+  "id": "sinha2010_hsps_kappa_v1",
+  "source": {
+    "title": "Ruling Out Multi-Order Interference in Quantum Mechanics",
+    "authors": "Sinha et al.",
+    "year": 2010,
+    "doi": "10.1126/science.1190545",
+    "abstract_url": "https://arxiv.org/abs/1007.4193",
+    "pdf_url": "https://arxiv.org/pdf/1007.4193v1",
+    "pdf_sha256": "58f815646f439747e81506ce732aa88923451641ea61ed466b3fa885112aa448",
+    "extraction": "Manual extraction checked against PDF text and page images; no raw counts or full PDF retained here."
+  },
+  "observable": {
+    "name": "kappa",
+    "dimension": "dimensionless",
+    "epsilon": "pABC-pAB-pAC-pBC+pA+pB+pC-p0",
+    "delta": "abs(pAB-pA-pB+p0)+abs(pAC-pA-pC+p0)+abs(pBC-pB-pC+p0)",
+    "kappa": "epsilon/delta; defined only for nonzero delta",
+    "locator": "PDF page 5, equations (4), (5), (6)"
+  },
+  "regime": "Heralded single photons (HSPS), central interference maximum",
+  "primary": {
+    "value": "0.0064",
+    "quoted_uncertainty": "0.0120",
+    "locator": "PDF page 8, body-text HSPS result"
+  },
+  "alternative_same_summary": {
+    "value": "0.0064",
+    "quoted_uncertainty": "0.0119",
+    "locator": "PDF page 6, Figure 3",
+    "relation": "Same data summary with different quoted uncertainty; retain discrepancy, do not average or count as independent evidence."
+  },
+  "uncertainty_interpretation": "Quoted published uncertainty only; no iid Gaussian SEM, total likelihood, significance, confidence interval or acceptance interpretation is assigned.",
+  "limitations": [
+    "Published summary, not raw context counts, covariance or an apparatus likelihood.",
+    "Mask displacement can produce illustrative abs(kappa) of order 0.01 (page 7); this is not a rigorous bound or a zero-bias guarantee.",
+    "APD counts were kept below 100000 per second to limit dead-time effects; apparatus nuisance bias remains unmodeled.",
+    "The meter-only 0.003 systematic estimate is not assigned to the HSPS result.",
+    "Historical-source selection is not prospective preregistration.",
+    "The null is a fixed-path algebra identity, not an exact universal apparatus prediction for actual triple slits. Slit switching changes boundary conditions; nonclassical paths can give nonzero kappa within ordinary QM. Source: Sawant et al., Non-classical paths in interference experiments, https://arxiv.org/html/1308.2022v2. Its Imax normalization is not imported into this Sinha sum-of-pair-interference comparison; no numerical correction is applied."
+  ]
+}

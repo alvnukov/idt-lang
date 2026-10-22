@@ -42,6 +42,11 @@ from theory_experiments.primitive_screen import (
     object_fields,
     parse_limits,
 )
+from theory_experiments.published_observation import (
+    PublishedObservation,
+    evaluate_published_observation,
+    parse_published_observation,
+)
 from theory_experiments.quadratic_certificate import certify, verify_certificate
 from theory_experiments.source_candidate import (
     SourceCandidate,
@@ -55,6 +60,7 @@ from theory_experiments.universe_bench import (
 
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
+    | PublishedObservation
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -66,6 +72,10 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
     "theory_experiments/universe_bench.py",
+    "theory_experiments/published_observation.py",
+    "data/published_observations/sinha2010_hsps_kappa.json",
+    "Proofs/QMClosure/PublishedSorkinNull.lean",
+    "lakefile.lean", "lean-toolchain",
     "theory_experiments/identical_particles.py", "scripts/check_identical_particles.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
@@ -90,6 +100,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "published_observation":
+        return parse_published_observation(row)
     if row.get("family") == "universe_bench":
         return parse_universe_bench(row)
     if row.get("family") == "identical_pair_amplitudes":
@@ -130,7 +142,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, SourceCandidate):
+    if isinstance(candidate, PublishedObservation):
+        checks, details = evaluate_published_observation(candidate, limits)
+    elif isinstance(candidate, SourceCandidate):
         checks, details = evaluate_archived_source(candidate, limits)
     elif isinstance(candidate, UniverseBench):
         checks, details = evaluate_universe_bench(candidate, limits)
@@ -150,11 +164,15 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
             details["positivity_certificate"] = certificate
             details["positivity_scope"] = "all_rational_coefficient_vectors_for_this_supplied_matrix"
             details["positivity_coverage"] = "one_exact_certificate_not_one_sampled_direction"
+    completed_observation = isinstance(candidate, PublishedObservation) and details["execution_status"] == "complete"
     return {"request": request, "status": primitive.aggregate_status(checks),
             "checks": [check.specification() for check in checks], "scope": details,
             "arithmetic": "exact_rational", "evidence_kind": "computation_with_explicit_algebraic_or_bounded_scope",
-            "proof_status": "not_attempted", "empirical_status": "not_tested",
-            "rejection_scope": "candidate_plus_stated_imports_and_selected_requirements"}
+            "proof_status": "not_attempted",
+            "empirical_status": "published_summary_compared_conditionally" if completed_observation else "not_tested",
+            "rejection_scope": ("no_primitive_rejection_descriptive_comparison_only"
+                                if isinstance(candidate, PublishedObservation)
+                                else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
 def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:

@@ -1,5 +1,6 @@
 import Proofs.MetaLang.V8PrimitiveEmpiricalConstraintLedger
 import Proofs.MetaLang.V8PrimitiveScreenBoundary
+import Proofs.QMClosure.PublishedSorkinNull
 
 namespace IDT.MetaLang.V8
 
@@ -160,7 +161,27 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
     blockers := ["native_base_to_model_and_protocol_bridge_is_missing",
       "physical_preparability_allowed_path_operations_and_detector_readout_are_not_derived",
       "no_empirical_data_uncertainty_model_or_physical_validation",
-      "finite_execution_does_not_derive_QM_SM_Pauli_or_gravity"] }
+      "finite_execution_does_not_derive_QM_SM_Pauli_or_gravity"] },
+  { id := "published_summary_fixed_path_null_comparison"
+    track := .checker
+    state := .active
+    inputs := ["data/published_observations/sinha2010_hsps_kappa.json",
+      "retained_amplitude_algebra_and_exact_source_bindings"]
+    requiredOutputs := ["theory_experiments/published_observation.py",
+      "Proofs/QMClosure/PublishedSorkinNull.lean",
+      "tests/test_published_observation.py", "PUBLISHED_OBSERVATION_RESULT.md"]
+    acceptance := ["prediction_without_measurement_access_then_independent_exact_comparison",
+      "supplied_real_quadratic_extension_fixed_paths_common_gain_background_nonzero_denominator",
+      "undefined_zero_denominator_not_total_division_readout",
+      "retain_body_and_figure_uncertainty_discrepancy_without_averaging",
+      "descriptive_completion_only_no_threshold_fit_ranking_or_primitive_verdict",
+      "preserve_all_old_candidate_semantics_and_history_pins",
+      "fixed_path_identity_not_universal_triple_slit_QM_apparatus_prediction"]
+    blockers := ["physical_path_assignment_preparability_and_detector_bridge_unestablished",
+      "raw_context_counts_covariance_and_apparatus_nuisance_model_unavailable",
+      "slit_switching_boundary_changes_and_nonclassical_paths_not_modeled",
+      "historical_data_selection_is_not_prospective_preregistration",
+      "conditional_ring_identity_does_not_establish_empirical_acceptance_or_full_QM"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [
