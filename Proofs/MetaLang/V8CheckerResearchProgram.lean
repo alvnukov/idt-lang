@@ -123,7 +123,25 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "coherent_amplitude_additivity_is_not_derived_from_probabilistic_mixture_affinity",
       "distinguishability_noncollapse_is_not_indistinguishability_congruence",
       "signed_unnormalized_pair_weight_is_not_the_existing_Nat_normalized_overlap",
-      "no_full_QM_SM_gravity_or_empirical_closure_is_established"] }
+      "no_full_QM_SM_gravity_or_empirical_closure_is_established"] },
+  { id := "supplied_identical_pair_benchmark_and_native_bridge_wall"
+    track := .checker
+    state := .active
+    inputs := ["data/identical_particle_controls.json", "retained_candidate_history"]
+    requiredOutputs := ["theory_experiments/identical_particles.py",
+      "scripts/check_identical_particles.py", "tests/test_identical_particles.py",
+      "PAULI_CHECKER_RESULT.md"]
+    acceptance := ["independent_exact_diagonal_and_transpose_exchange_residuals",
+      "complete_mode_includes_internal_labels_but_labels_do_not_certify_completeness",
+      "boson_pauli_is_not_applicable_not_success",
+      "zero_tensor_is_inconclusive_prepared_state_not_vacuum_rejection",
+      "sparse_unnormalized_nonzero_states_are_allowed_for_homogeneous_identities",
+      "missing_native_pair_adapter_is_unsupported_not_candidate_rejection",
+      "preserve_all_old_baselines_and_append_only_new_fixture_observations"]
+    blockers := ["native_primitive_to_two_particle_amplitudes_bridge_is_missing",
+      "statistics_selection_and_physical_mode_completeness_are_external_inputs",
+      "empirical_preparation_probability_and_occupation_readout_bridge_is_missing",
+      "finite_benchmark_does_not_derive_CAR_spin_statistics_or_full_QM"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [

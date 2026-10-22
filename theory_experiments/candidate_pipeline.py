@@ -20,6 +20,11 @@ from theory_experiments.amplitude_algebra import (
     evaluate_archived_source,
     parse_amplitude_algebra,
 )
+from theory_experiments.identical_particles import (
+    IdenticalPairAmplitudes,
+    evaluate_identical_pair,
+    parse_identical_pair,
+)
 from theory_experiments.physics_screen import (
     ChiralSpectrum,
     PhysicsCandidate,
@@ -43,7 +48,9 @@ from theory_experiments.source_candidate import (
     parse_source_candidate,
 )
 
-Hypothesis: TypeAlias = primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra
+Hypothesis: TypeAlias = (
+    primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes
+)
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
@@ -53,6 +60,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/quadratic_certificate.py",
     "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
+    "theory_experiments/identical_particles.py", "scripts/check_identical_particles.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
 
@@ -76,6 +84,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "identical_pair_amplitudes":
+        return parse_identical_pair(row)
     if row.get("family") == "amplitude_algebra":
         return parse_amplitude_algebra(row)
     if row.get("family") == "source_theory":
@@ -114,6 +124,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
     details: dict[str, object]
     if isinstance(candidate, SourceCandidate):
         checks, details = evaluate_archived_source(candidate, limits)
+    elif isinstance(candidate, IdenticalPairAmplitudes):
+        checks, details = evaluate_identical_pair(candidate, limits)
     elif isinstance(candidate, AmplitudeAlgebra):
         checks, details = evaluate_amplitude_algebra(candidate, limits)
     elif isinstance(candidate, QuantumReadout):
