@@ -47,9 +47,14 @@ from theory_experiments.source_candidate import (
     SourceCandidate,
     parse_source_candidate,
 )
+from theory_experiments.universe_bench import (
+    UniverseBench,
+    evaluate_universe_bench,
+    parse_universe_bench,
+)
 
 Hypothesis: TypeAlias = (
-    primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes
+    primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -60,6 +65,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/quadratic_certificate.py",
     "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
+    "theory_experiments/universe_bench.py",
     "theory_experiments/identical_particles.py", "scripts/check_identical_particles.py",
     "scripts/screen_hypotheses.py", "HYPOTHESIS_PIPELINE.md",
 }))
@@ -84,6 +90,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "universe_bench":
+        return parse_universe_bench(row)
     if row.get("family") == "identical_pair_amplitudes":
         return parse_identical_pair(row)
     if row.get("family") == "amplitude_algebra":
@@ -124,6 +132,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
     details: dict[str, object]
     if isinstance(candidate, SourceCandidate):
         checks, details = evaluate_archived_source(candidate, limits)
+    elif isinstance(candidate, UniverseBench):
+        checks, details = evaluate_universe_bench(candidate, limits)
     elif isinstance(candidate, IdenticalPairAmplitudes):
         checks, details = evaluate_identical_pair(candidate, limits)
     elif isinstance(candidate, AmplitudeAlgebra):

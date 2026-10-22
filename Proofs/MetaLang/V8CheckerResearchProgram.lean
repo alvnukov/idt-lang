@@ -141,7 +141,26 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
     blockers := ["native_primitive_to_two_particle_amplitudes_bridge_is_missing",
       "statistics_selection_and_physical_mode_completeness_are_external_inputs",
       "empirical_preparation_probability_and_occupation_readout_bridge_is_missing",
-      "finite_benchmark_does_not_derive_CAR_spin_statistics_or_full_QM"] }
+      "finite_benchmark_does_not_derive_CAR_spin_statistics_or_full_QM"] },
+  { id := "deterministic_finite_two_path_universe_bench"
+    track := .checker
+    state := .active
+    inputs := ["retained_amplitude_algebra_and_exact_source_bindings",
+      "data/universe_bench_controls.json"]
+    requiredOutputs := ["theory_experiments/universe_bench.py",
+      "tests/test_universe_bench.py", "UNIVERSE_BENCH_RESULT.md",
+      "append_only_candidate_history_observation"]
+    acceptance := ["execute_supplied_native_operations_not_static_expected_answers",
+      "explicit_supplied_laws_protocol_preparations_and_conditional_arithmetic",
+      "raw_weight_is_not_probability_or_a_derived_detector_law",
+      "ordered_trace_dependencies_and_deterministic_step_budget",
+      "exhaustion_is_inconclusive_and_unsupported_mapping_does_not_refute_base",
+      "completion_check_is_not_physical_compatibility_or_model_selection",
+      "independent_software_oracles_cache_replay_and_old_history_unchanged"]
+    blockers := ["native_base_to_model_and_protocol_bridge_is_missing",
+      "physical_preparability_allowed_path_operations_and_detector_readout_are_not_derived",
+      "no_empirical_data_uncertainty_model_or_physical_validation",
+      "finite_execution_does_not_derive_QM_SM_Pauli_or_gravity"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [

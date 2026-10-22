@@ -1,0 +1,38 @@
+[
+  {"id": "bench_scalar_common", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "signed_scalar", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quadratic"},
+   "preparations": [
+     {"id": "in_phase", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [1, 0]},
+     {"id": "opposite", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [-1, 0]}]},
+  {"id": "bench_gaussian_common", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "gaussian", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": -1, "imaginary_weight": 1, "weight_rule": "quadratic"},
+   "preparations": [
+     {"id": "in_phase", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [1, 0]},
+     {"id": "opposite", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [-1, 0]}]},
+  {"id": "bench_dual_common", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "degenerate_dual", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quadratic"},
+   "preparations": [
+     {"id": "in_phase", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [1, 0]},
+     {"id": "opposite", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [-1, 0]}]},
+  {"id": "bench_scalar_nonreal", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "signed_scalar", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quadratic"},
+   "preparations": [{"id": "native_square", "left": [1, 0], "right": [0, 1], "left_factor": [1, 0], "right_factor": [0, 1]}]},
+  {"id": "bench_gaussian_nonreal", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "gaussian", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": -1, "imaginary_weight": 1, "weight_rule": "quadratic"},
+   "preparations": [{"id": "native_square", "left": [1, 0], "right": [0, 1], "left_factor": [1, 0], "right_factor": [0, 1]}]},
+  {"id": "bench_dual_nonreal", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "degenerate_dual", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quadratic"},
+   "preparations": [{"id": "native_square", "left": [1, 0], "right": [0, 1], "left_factor": [1, 0], "right_factor": [0, 1]}]},
+  {"id": "bench_quartic", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "quartic", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "quartic"},
+   "preparations": [{"id": "in_phase", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [1, 0]}]},
+  {"id": "bench_zero", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "zero", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "zero"},
+   "preparations": [{"id": "in_phase", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [1, 0]}]},
+  {"id": "bench_negative_weight", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "split", "family": "amplitude_algebra", "carrier": "integer_plane", "product_square": 1, "imaginary_weight": -1, "weight_rule": "quadratic"},
+   "preparations": [{"id": "negative", "left": [0, 1], "right": [0, 1], "left_factor": [1, 0], "right_factor": [1, 0]}]},
+  {"id": "bench_absolute", "family": "universe_bench", "scenario": "two_path_v1",
+   "model": {"id": "absolute", "family": "amplitude_algebra", "carrier": "integer_scalar", "product_square": 0, "imaginary_weight": 0, "weight_rule": "absolute"},
+   "preparations": [{"id": "in_phase", "left": [1, 0], "right": [1, 0], "left_factor": [1, 0], "right_factor": [1, 0]}]}
+]

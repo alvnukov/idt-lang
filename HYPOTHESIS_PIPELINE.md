@@ -157,6 +157,17 @@ The control batch intentionally exits 1: five laws have scoped counterexamples;
 a degenerate dual carrier survives, exposing an insufficiency of these gates.
 No experiment, continuous phase space, full QM, SM or gravity is checked here.
 
+## First deterministic finite universe bench
+
+The `universe_bench` family executes one supplied `two_path_v1` protocol through
+existing native integer amplitude operations. Its ordered exact trace records
+preparation, path multiplication, recombination, raw and blocked-arm weights,
+and their diagnostic residual. All laws and preparations are supplied; computed
+weights are not probabilities or derived detector laws. Completion checks only
+execution, not physical validity or model selection. Unsupported carrier/scenario
+mappings leave the candidate verdict unchanged. See the bounded input contract,
+controls and run/replay instructions in [the bench result](UNIVERSE_BENCH_RESULT.md).
+
 ## QM: a conditional readout benchmark
 
 The supplied carrier is complex amplitudes with rational real/imaginary parts.
