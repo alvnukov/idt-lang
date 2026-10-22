@@ -1,0 +1,95 @@
+{
+  "schema": "idt-gstir2021-raw-registry/1",
+  "provenance": {
+    "title": "Datasets for \"Towards probing for hypercomplex quantum mechanics in a waveguide interferometer\"",
+    "authors": ["Sebastian Gstir", "Edmond Chan", "Toni Eichelkraut", "Alexander Szameit", "Robert Keil", "Gregor Weihs"],
+    "publication_date": "2021-09-07",
+    "dataset_doi": "10.5281/zenodo.5497283",
+    "zenodo_record": "5497283",
+    "archive_version": "1.0.0",
+    "license": "CC-BY-4.0",
+    "metadata_url": "https://zenodo.org/api/records/5497283",
+    "paper_doi": "10.1088/1367-2630/ac2451",
+    "paper_url": "https://arxiv.org/html/2104.11577v2",
+    "recipe_locators": "Section 4 same-cycle empty background; Appendix B equations 32 and 33",
+    "mask_assignment": "A low bit, B next bit, C high bit",
+    "author_cut_origin": "Zenodo description Mathematica index lists; base not explicitly stated",
+    "historical_selection": "not_prospective_preregistration"
+  },
+  "limitations": [
+    "Full recorded sample window is our reduction recipe, not the authors' settling-time processing or inference pipeline.",
+    "Exact binary64 fractions describe digitized voltage arithmetic, not exact physical means or probabilities.",
+    "No uncertainty, covariance, acceptance threshold, fit, nuisance correction, or Born-rule violation inference.",
+    "Authors attribute nonzero kappa to shutter crosstalk and independently bound detector nonlinearity; these effects are not corrected here.",
+    "Sample times are calendar components, not exposure durations or trigger counts.",
+    "Housing temperature channel remains native volts; no conversion to degrees Celsius.",
+    "30°C housing telemetry contains one recorded NaN at record 1167, cycle 146; retained explicitly, unused in reduction. 23°C has no temperature channel.",
+    "A common positive affine response preserves kappa and a negative gain flips its sign; neither response convention is inferred from these files.",
+    "No candidate family, primitive verdict, proof-status upgrade, or completed QM derivation."
+  ],
+  "runs": [
+    {
+      "id": "23degrees",
+      "filename": "23degrees_measurement.h5",
+      "source_url": "https://zenodo.org/api/records/5497283/files/23degrees%20measurement.h5/content",
+      "sha256": "d45d525407eb64668cdecbf085a93bd7da31d8c48690ea7bcaaa98e0c0402a6a",
+      "zenodo_md5": "9e3e411dd70fef2e8f249bfbf89b23c9",
+      "size_bytes": 7559592,
+      "nominal_temperature_label": "23°C",
+      "cycles": 420,
+      "samples_per_context": 40,
+      "detector": "Physimetron A139-001 @Agilent 34410A",
+      "temperature_housing": false,
+      "author_cut_indices_by_mask": {
+        "0": [204,222,226],
+        "1": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80],
+        "2": [], "3": [], "4": [45,65,156,226,333,366],
+        "5": [121,227,341], "6": [46,63,252,335,376], "7": []
+      },
+      "independent_numpy_reference_not_exact": {
+        "all_cycles_mean_epsilon_volt": "-0.00134503161222478",
+        "all_cycles_mean_delta_volt": "1.03035238993436",
+        "all_cycles_kappa": "-0.00130540931953432",
+        "cut_diagnostic_cycles": 328,
+        "cut_diagnostic_kappa": "-0.00140221277074117"
+      },
+      "independent_exact_binary64_reference": {
+        "mean_epsilon_volt": "-11382304109514986012961/8462480737302404222943232",
+        "mean_delta_volt": "31140490187332160311348801/30223145490365729367654400",
+        "kappa": "-284557602737874650324025/217983431311325122179441607"
+      },
+      "paper_reported_kappa_not_reproduced": "-0.00140 ± 0.00008"
+    },
+    {
+      "id": "30degrees",
+      "filename": "30degrees_measurement.h5",
+      "source_url": "https://zenodo.org/api/records/5497283/files/30degrees%20measurement.h5/content",
+      "sha256": "e78c032673c3aabca6eff54c6f26a6b41f1f50f9e3fb7e9200e20ead291d53af",
+      "zenodo_md5": "fa0dea18c1d9446a1c2a95bfc4c91a1b",
+      "size_bytes": 10145888,
+      "nominal_temperature_label": "30°C",
+      "cycles": 450,
+      "samples_per_context": 50,
+      "detector": "Physimetron A139-001 @Agilent 34410A",
+      "temperature_housing": true,
+      "temperature_device": "NTC 10kOhm (TDK B57703M103G) @Keithley 2010",
+      "author_cut_indices_by_mask": {
+        "0": [], "1": [186,371], "2": [], "3": [47,67,149,271,335,393],
+        "4": [272,444,446], "5": [40,424,439], "6": [301,410], "7": [51]
+      },
+      "independent_numpy_reference_not_exact": {
+        "all_cycles_mean_epsilon_volt": "0.000342929919478714",
+        "all_cycles_mean_delta_volt": "0.703538370090745",
+        "all_cycles_kappa": "0.000487435986518378",
+        "cut_diagnostic_cycles": 433,
+        "cut_diagnostic_kappa": "0.001127318358195"
+      },
+      "independent_exact_binary64_reference": {
+        "mean_epsilon_volt": "142333660346436225821/415051741658464911360000",
+        "mean_delta_volt": "292004825829721527679517/415051741658464911360000",
+        "kappa": "142333660346436225821/292004825829721527679517"
+      },
+      "paper_reported_kappa_not_reproduced": "0.0011 ± 0.0004"
+    }
+  ]
+}

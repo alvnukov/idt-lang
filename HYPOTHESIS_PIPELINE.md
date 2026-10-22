@@ -170,6 +170,12 @@ controls and run/replay instructions in [the bench result](UNIVERSE_BENCH_RESULT
 
 ## QM: a conditional readout benchmark
 
+A separate [raw detector-voltage replay](RAW_SIGNAL_REPLAY_RESULT.md) processes
+both pinned Gstir2021 runs without introducing a candidate family or changing
+any candidate/history verdict. It retains all 870 cycles and treats historical
+cuts only as a separately labeled unconfirmed-index diagnostic; no uncertainty,
+physical calibration or empirical acceptance is inferred.
+
 The supplied carrier is complex amplitudes with rational real/imaginary parts.
 Linear context maps, projective measurements, tensor composition and chosen
 states are **imports**. The candidate computes

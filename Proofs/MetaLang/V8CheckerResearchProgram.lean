@@ -181,7 +181,32 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "raw_context_counts_covariance_and_apparatus_nuisance_model_unavailable",
       "slit_switching_boundary_changes_and_nonclassical_paths_not_modeled",
       "historical_data_selection_is_not_prospective_preregistration",
-      "conditional_ring_identity_does_not_establish_empirical_acceptance_or_full_QM"] }
+      "conditional_ring_identity_does_not_establish_empirical_acceptance_or_full_QM"] },
+  { id := "gstir2021_pinned_raw_detector_voltage_replay"
+    track := .checker
+    state := .active
+    inputs := ["data/raw_observations/gstir2021.json",
+      "zenodo_5497283_version_1_0_0_both_pinned_hdf5_runs"]
+    requiredOutputs := ["theory_experiments/raw_signal_replay.py",
+      "scripts/replay_gstir2021.py", "tests/test_raw_signal_replay.py",
+      "RAW_SIGNAL_REPLAY_RESULT.md", "ignored_full_deterministic_cycle_inventory"]
+    acceptance := ["all_314400_recorded_PD_samples_and_870_cycles_primary_without_fits_or_cuts",
+      "exact_binary64_voltage_fractions_not_exact_physical_means_or_probabilities",
+      "same_cycle_background_term_and_ratio_of_mean_epsilon_to_mean_cycle_delta",
+      "zero_delta_cycles_retained_with_explicit_undefined_kappa",
+      "original_cycle_ids_acquisition_order_native_units_and_source_hashes",
+      "historical_author_cuts_separate_unconfirmed_one_based_diagnostic_not_reproduction",
+      "ancillary_temperature_nonfinite_classification_retained_unused_without_imputation",
+      "30_degree_record_1167_cycle_146_has_one_temperature_nan_23_degree_channel_absent",
+      "invalid_PD_mask_time_schema_or_hash_is_data_error_not_primitive_counterexample",
+      "preserve_existing_candidate_semantics_and_every_history_baseline",
+      "standalone_replay_not_new_candidate_family_no_physics_status_upgrade"]
+    blockers := ["physical_preparation_path_assignment_and_detector_bridge_unestablished",
+      "apparatus_nuisance_bias_and_uncertainty_covariance_model_unmodeled_not_zero",
+      "nominal_temperature_metadata_and_sensor_volts_do_not_certify_physical_temperature",
+      "full_window_recipe_is_not_author_settling_treatment_or_inference_pipeline",
+      "published_cut_index_base_not_explicitly_confirmed_historical_selection_not_preregistration",
+      "no_empirical_acceptance_Born_violation_or_completed_QM_derivation"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [
