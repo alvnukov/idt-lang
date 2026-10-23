@@ -99,6 +99,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.CoherentReferencePositivity,
     `Proofs.QMClosure.FixedCancellationSeed,
     `Proofs.QMClosure.QuarticContextTransport,
+    `Proofs.QMClosure.HistoryMergeDescent,
     `Proofs.QMClosure.DestructiveCompositionBoundary,
     `Proofs.QMClosure.ArityBoundsInterferenceOrder,
     `Proofs.QMClosure.SorkinGradeIffPairwiseGeneration,

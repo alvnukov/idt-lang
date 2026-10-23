@@ -278,6 +278,26 @@ def quarticRotate (a b : ℝ) (v : Plane) : Plane := planeDecode (rotate a b (pl
 @[simp] theorem plane_decode_encode (v : Plane) : planeDecode (planeEncode v) = v := by
   apply Prod.ext <;> simp [planeEncode, planeDecode]
 
+theorem psi_phi_mul (t z : ℝ) : psi (phi t * z) = t * psi z := by
+  rw [psi_mul, psi_phi]
+
+/-- Homogeneity is for all real scalars, not merely positive ones. -/
+theorem quartic_rotation_homogeneous (a b t : ℝ) (v : Plane) :
+    quarticRotate a b (t • v) = t • quarticRotate a b v := by
+  apply Prod.ext
+  · change psi (a * phi (t * v.1) - b * phi (t * v.2)) =
+      t * psi (a * phi v.1 - b * phi v.2)
+    rw [phi_mul, phi_mul]
+    have h : a * (phi t * phi v.1) - b * (phi t * phi v.2) =
+        phi t * (a * phi v.1 - b * phi v.2) := by ring
+    rw [h, psi_phi_mul]
+  · change psi (b * phi (t * v.1) + a * phi (t * v.2)) =
+      t * psi (b * phi v.1 + a * phi v.2)
+    rw [phi_mul, phi_mul]
+    have h : b * (phi t * phi v.1) + a * (phi t * phi v.2) =
+        phi t * (b * phi v.1 + a * phi v.2) := by ring
+    rw [h, psi_phi_mul]
+
 theorem quartic_rotation_preserves_q4 (a b : ℝ) (hab : a ^ 2 + b ^ 2 = 1) (v : Plane) :
     planeQ4 (quarticRotate a b v) = planeQ4 v := by
   have h : ∀ z : ℝ, psi z ^ 4 = z ^ 2 := fun z => by rw [← phi_sq, phi_psi]
