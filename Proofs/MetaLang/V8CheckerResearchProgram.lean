@@ -3,6 +3,7 @@ import Proofs.MetaLang.V8PrimitiveScreenBoundary
 import Proofs.QMClosure.PublishedSorkinNull
 import Proofs.QMClosure.SorkinErrorBudget
 import Proofs.QMClosure.BellLocalTrialNull
+import Proofs.QMClosure.NativeBellScaledBridge
 
 namespace IDT.MetaLang.V8
 
@@ -237,6 +238,28 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "cross_influence_drift_and_nonlinear_response_not_covered_by_affine_cube_identity",
       "scalar_endpoint_witnesses_and_zero_epsilon_do_not_establish_model_or_apparatus_feasibility",
       "no_empirical_acceptance_primitive_rejection_or_QM_proof_upgrade"] },
+  { id := "native_integer_bell_scaled_readout_bridge"
+    track := .primitiveResearch
+    state := .blocked
+    inputs := ["pair_history_signed_scalar_realization", "pair_history_gaussian_realization",
+      "data/native_bell_bridge_controls.json"]
+    requiredOutputs := ["theory_experiments/native_bell_bridge.py",
+      "Proofs/QMClosure/NativeBellScaledBridge.lean", "NATIVE_BELL_BRIDGE_RESULT.md",
+      "tests/test_native_bell_bridge.py", "retained_structured_batch_observation"]
+    acceptance := ["exact_full_source_specification_binding_not_labels",
+      "native_integer_methods_compute_D_equals_A_C_B_transpose_and_weights",
+      "supplied_normalized_weight_witness_CHSH_14_over_5_win_17_over_20",
+      "all_identity_control_CHSH_2_is_complete_not_candidate_rejection",
+      "positive_scaled_isometry_not_exact_norm_or_integer_lattice_inverse",
+      "common_scale_equivalence_only_under_homogeneous_continuations",
+      "fixed_reference_breaks_normalized_common_scale_equivalence",
+      "four_context_completion_only_not_empirical_acceptance_or_QM_derivation",
+      "preserve_every_old_history_observation_pin_and_candidate_semantics"]
+    blockers := ["source_derived_same_symbolic_preparation_and_setting_operation_map_missing",
+      "composite_preparation_local_action_outcomes_normalized_readout_and_settings_supplied",
+      "physical_preparability_and_projective_reversibility_not_derived",
+      "Lean_mathematical_artifact_is_not_formal_verification_of_Python",
+      "no_dataset_comparison_no_Born_tensor_or_QM_closure_upgrade"] },
   { id := "hensen2015_local_response_conditional_fixed_trial_test"
     track := .checker
     state := .active
@@ -261,6 +284,45 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "local_operational_realization_is_not_entailed_by_context_first_primitive_base",
       "Lean_does_not_formally_verify_Python_replay_or_establish_empirical_QM_IDT_acceptance"] }
 ]
+
+inductive NativeBellBridgeRecordedResult where
+  | suppliedNonlocalWitnessWithSourceBridgeWall
+deriving DecidableEq, Repr
+
+structure NativeBellBridgeEvidenceRecord where
+  result : NativeBellBridgeRecordedResult
+  witnessChshNumerator : Nat
+  witnessChshDenominator : Nat
+  witnessWinNumerator : Nat
+  witnessWinDenominator : Nat
+  identityChsh : Nat
+  retainedControlCount : Nat
+  sourceDerivedOperationalMap : Bool
+  physicalPreparabilityEstablished : Bool
+  normalizedReadoutDerived : Bool
+  globalScaleQuotientEstablished : Bool
+  pythonFormallyVerified : Bool
+  empiricalComparisonPerformed : Bool
+  qmDerived : Bool
+deriving Repr
+
+/-- Conditional supplied-protocol arithmetic; not a source-derived physical law. -/
+def nativeBellBridgeConditionalEvidence : NativeBellBridgeEvidenceRecord := {
+  result := .suppliedNonlocalWitnessWithSourceBridgeWall
+  witnessChshNumerator := 14
+  witnessChshDenominator := 5
+  witnessWinNumerator := 17
+  witnessWinDenominator := 20
+  identityChsh := 2
+  retainedControlCount := 8
+  sourceDerivedOperationalMap := false
+  physicalPreparabilityEstablished := false
+  normalizedReadoutDerived := false
+  globalScaleQuotientEstablished := false
+  pythonFormallyVerified := false
+  empiricalComparisonPerformed := false
+  qmDerived := false
+}
 
 inductive BellTrialRecordedResult where
   | conditionalStatisticalExclusion
