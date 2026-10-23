@@ -1,0 +1,110 @@
+{
+  "schema": "idt-rational-phase-extension-leads/1",
+  "scope": "exact_supplied_rational_extension_finite_observations_only",
+  "candidate_verdict": "unchanged",
+  "empirical_status": "not_tested",
+  "adapter_status": "not_registered",
+  "adapter_scope": "source_proposal_only_not_an_integer_amplitude_adapter",
+  "proof_status": "finite_exact_calculation_not_formal_proof",
+  "missing_bridges": [
+    "physical_preparation",
+    "physical_readout_map",
+    "physical_composites",
+    "full_QM",
+    "SM",
+    "gravity"
+  ],
+  "candidates": [
+    {
+      "id": "rational_phase_weighted_two_v1",
+      "status": "synthetic_finite_rational_extension_hit",
+      "candidate_verdict": "unchanged",
+      "empirical_status": "not_tested",
+      "adapter_status": "not_registered",
+      "integer_screen_status": "not_applicable_rational_domain_extension",
+      "specification": {
+        "carrier": "Q^2",
+        "addition": "(a,b)+(c,d)=(a+c,b+d)",
+        "zero": ["0", "0"],
+        "unit": ["1", "0"],
+        "product_square": -2,
+        "imaginary_weight": 2,
+        "multiplication": "(a,b)*(c,d)=(a*c-2*b*d,a*d+b*c)",
+        "weight": "W(a,b)=a^2+2*b^2",
+        "seed": ["1", "0"],
+        "reference": ["1", "0"],
+        "multiplier": ["1/3", "2/3"],
+        "transition": "x[t+1]=x[t]*multiplier",
+        "plus_port_weight": "W(x+(1,0))",
+        "minus_port_weight": "W(x-(1,0))",
+        "readout": "p(x)=W(x+(1,0))/(W(x+(1,0))+W(x-(1,0)))",
+        "reported_readout_times": [0, 1, 2, 3, 4, 5, 6, 7],
+        "multiplications_checked": 8
+      },
+      "observations": [
+        {"t": 0, "state": ["1", "0"], "weight": "1", "plus_weight": "4", "minus_weight": "0", "denominator": "4", "p": "1"},
+        {"t": 1, "state": ["1/3", "2/3"], "weight": "1", "plus_weight": "8/3", "minus_weight": "4/3", "denominator": "4", "p": "2/3"},
+        {"t": 2, "state": ["-7/9", "4/9"], "weight": "1", "plus_weight": "4/9", "minus_weight": "32/9", "denominator": "4", "p": "1/9"},
+        {"t": 3, "state": ["-23/27", "-10/27"], "weight": "1", "plus_weight": "8/27", "minus_weight": "100/27", "denominator": "4", "p": "2/27"},
+        {"t": 4, "state": ["17/81", "-56/81"], "weight": "1", "plus_weight": "196/81", "minus_weight": "128/81", "denominator": "4", "p": "49/81"},
+        {"t": 5, "state": ["241/243", "-22/243"], "weight": "1", "plus_weight": "968/243", "minus_weight": "4/243", "denominator": "4", "p": "242/243"},
+        {"t": 6, "state": ["329/729", "460/729"], "weight": "1", "plus_weight": "2116/729", "minus_weight": "800/729", "denominator": "4", "p": "529/729"},
+        {"t": 7, "state": ["-1511/2187", "1118/2187"], "weight": "1", "plus_weight": "1352/2187", "minus_weight": "7396/2187", "denominator": "4", "p": "338/2187"}
+      ],
+      "next_state_observation": {"t": 8, "state": ["-5983/6561", "-1904/6561"], "weight": "1", "plus_weight": "1156/6561", "minus_weight": "25088/6561", "denominator": "4", "p": "289/6561"},
+      "visited_weights_equal_one": true,
+      "orbit_status": "no_repeat_observed_through_eight_multiplications",
+      "continuation_status": "no_finite_orbit_certificate",
+      "weight_scope": "visited_states_only_no_universal_statement_tested"
+    },
+    {
+      "id": "rational_phase_gaussian_v1",
+      "status": "synthetic_finite_rational_extension_hit",
+      "candidate_verdict": "unchanged",
+      "empirical_status": "not_tested",
+      "adapter_status": "not_registered",
+      "integer_screen_status": "not_applicable_rational_domain_extension",
+      "specification": {
+        "carrier": "Q^2",
+        "addition": "(a,b)+(c,d)=(a+c,b+d)",
+        "zero": ["0", "0"],
+        "unit": ["1", "0"],
+        "product_square": -1,
+        "imaginary_weight": 1,
+        "multiplication": "(a,b)*(c,d)=(a*c-b*d,a*d+b*c)",
+        "weight": "W(a,b)=a^2+b^2",
+        "seed": ["1", "0"],
+        "reference": ["1", "0"],
+        "multiplier": ["3/5", "4/5"],
+        "transition": "x[t+1]=x[t]*multiplier",
+        "plus_port_weight": "W(x+(1,0))",
+        "minus_port_weight": "W(x-(1,0))",
+        "readout": "p(x)=W(x+(1,0))/(W(x+(1,0))+W(x-(1,0)))",
+        "reported_readout_times": [0, 1, 2, 3, 4, 5, 6, 7],
+        "multiplications_checked": 8
+      },
+      "observations": [
+        {"t": 0, "state": ["1", "0"], "weight": "1", "plus_weight": "4", "minus_weight": "0", "denominator": "4", "p": "1"},
+        {"t": 1, "state": ["3/5", "4/5"], "weight": "1", "plus_weight": "16/5", "minus_weight": "4/5", "denominator": "4", "p": "4/5"},
+        {"t": 2, "state": ["-7/25", "24/25"], "weight": "1", "plus_weight": "36/25", "minus_weight": "64/25", "denominator": "4", "p": "9/25"},
+        {"t": 3, "state": ["-117/125", "44/125"], "weight": "1", "plus_weight": "16/125", "minus_weight": "484/125", "denominator": "4", "p": "4/125"},
+        {"t": 4, "state": ["-527/625", "-336/625"], "weight": "1", "plus_weight": "196/625", "minus_weight": "2304/625", "denominator": "4", "p": "49/625"},
+        {"t": 5, "state": ["-237/3125", "-3116/3125"], "weight": "1", "plus_weight": "5776/3125", "minus_weight": "6724/3125", "denominator": "4", "p": "1444/3125"},
+        {"t": 6, "state": ["11753/15625", "-10296/15625"], "weight": "1", "plus_weight": "54756/15625", "minus_weight": "7744/15625", "denominator": "4", "p": "13689/15625"},
+        {"t": 7, "state": ["76443/78125", "16124/78125"], "weight": "1", "plus_weight": "309136/78125", "minus_weight": "3364/78125", "denominator": "4", "p": "77284/78125"}
+      ],
+      "next_state_observation": {"t": 8, "state": ["164833/390625", "354144/390625"], "weight": "1", "plus_weight": "1110916/390625", "minus_weight": "451584/390625", "denominator": "4", "p": "277729/390625"},
+      "visited_weights_equal_one": true,
+      "orbit_status": "no_repeat_observed_through_eight_multiplications",
+      "continuation_status": "no_finite_orbit_certificate",
+      "weight_scope": "visited_states_only_no_universal_statement_tested"
+    }
+  ],
+  "interpretation": {
+    "weighted_two_real_embedding": "z=a+i*sqrt(2)*b identifies the weighted-two real algebra with complex multiplication",
+    "rational_field_boundary": "Q(sqrt(-2)) and Q(i) are different quadratic fields over Q",
+    "novel_real_algebra_claim": false,
+    "finite_orbit_or_global_preservation_claim": false,
+    "scientific_status_upgrade": false
+  }
+}

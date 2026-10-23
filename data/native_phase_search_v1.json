@@ -1,0 +1,18 @@
+{
+  "schema": "idt-native-phase-search-config/1",
+  "parameter_min": -2,
+  "parameter_max": 2,
+  "weight_rules": ["quadratic", "quartic"],
+  "include_scalar_controls": true,
+  "multiplier_radius": 2,
+  "multiplier_filter": "W(u)=1",
+  "reference": [1, 0],
+  "plane_seeds": [[1, 0], [1, 1]],
+  "scalar_seeds": [[1, 0]],
+  "max_multiplications": 16,
+  "trace_length": 5,
+  "readout": "W(x+1)/(W(x+1)+W(x-1))",
+  "limits": {"max_cases": 1000, "coefficient_radius": 1, "reference_radius": 2, "max_copies": 2},
+  "scope": "selected_integer_box_multiplier_family_and_readout_convention_only",
+  "search_bias": "unit_weight_filter_strongly_favors_Gaussian_roots_no_physical_selection"
+}
