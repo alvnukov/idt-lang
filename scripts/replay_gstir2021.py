@@ -17,7 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw-directory", type=Path, required=True,
                         help="directory containing the two fixed registry filenames; never downloaded")
-    parser.add_argument("--output", type=Path, default=ROOT / "dist/gstir2021-raw-replay.json",
+    parser.add_argument("--output", type=Path, default=ROOT / "dist/gstir2021-raw-replay-v2.json",
                         help="full deterministic JSON; refuses to overwrite different existing contents")
     args = parser.parse_args(argv)
     try:
@@ -33,7 +33,12 @@ def main(argv: list[str] | None = None) -> int:
         runs = cast(list[dict[str, object]], report["runs"])
         print(canonical_json({"execution_status": "complete", "candidate_verdict": "not_assessed",
                               "report": str(args.output), "primary_all_cycles": [
-                                  run["primary_all_cycles"] for run in runs]}))
+                                  run["primary_all_cycles"] for run in runs],
+                              "nuisance_assessments": [
+                                  {key: assessment[key] for key in
+                                   ("target", "status", "missing_bounds", "candidate_verdict")}
+                                  for run in runs
+                                  for assessment in [cast(dict[str, object], run["nuisance_assessment"])]]}))
         return 0
     except (OSError, ValueError, TypeError, KeyError, ImportError) as error:
         print(f"replay_gstir2021: input/data/operational error (not primitive counterexample): {error}",

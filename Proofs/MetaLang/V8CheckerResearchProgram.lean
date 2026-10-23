@@ -1,6 +1,7 @@
 import Proofs.MetaLang.V8PrimitiveEmpiricalConstraintLedger
 import Proofs.MetaLang.V8PrimitiveScreenBoundary
 import Proofs.QMClosure.PublishedSorkinNull
+import Proofs.QMClosure.SorkinErrorBudget
 
 namespace IDT.MetaLang.V8
 
@@ -206,7 +207,35 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "nominal_temperature_metadata_and_sensor_volts_do_not_certify_physical_temperature",
       "full_window_recipe_is_not_author_settling_treatment_or_inference_pipeline",
       "published_cut_index_base_not_explicitly_confirmed_historical_selection_not_preregistration",
-      "no_empirical_acceptance_Born_violation_or_completed_QM_derivation"] }
+      "no_empirical_acceptance_Born_violation_or_completed_QM_derivation"] },
+  { id := "gstir2021_replay_bound_conditional_epsilon_enclosure"
+    track := .checker
+    state := .active
+    inputs := ["gstir2021_pinned_raw_detector_voltage_replay",
+      "source_audited_nuisance_evidence_not_a_bound_budget"]
+    requiredOutputs := ["theory_experiments/nuisance_bounds.py",
+      "Proofs/QMClosure/SorkinErrorBudget.lean", "tests/test_nuisance_bounds.py",
+      "per_run_bound_provenance_eligibility_and_conditional_epsilon_assessment"]
+    acceptance := ["ehat_is_exact_all_cycle_epsilon_mu_is_same_estimator_expectation_under_supplied_ensemble",
+      "s_is_recorded_minus_expected_b_is_expected_minus_ideal_both_simultaneously_bounded",
+      "exact_scalar_enclosure_ehat_minus_sU_minus_bU_to_ehat_minus_sL_minus_bL",
+      "missing_bounds_never_default_to_zero_actual_both_runs_inconclusive",
+      "SD_SEM_confidence_intervals_and_explicit_null_fit_not_deterministic_bounds",
+      "same_data_provenance_alone_is_not_circularity_joint_validity_is_external",
+      "zero_including_endpoints_not_excluded_is_not_acceptance_or_model_feasibility",
+      "strict_zero_exclusion_refutes_joint_null_bridge_bounds_not_primitive",
+      "universal_scalar_soundness_null_containment_widening_and_scalar_endpoint_sharpness",
+      "affine_cube_fixed_open_closed_amplitudes_include_coherent_baseline_in_empty_context",
+      "all_real_quadratic_affine_cube_identity_is_not_arbitrary_imperfect_shutter_model",
+      "no_kappa_error_propagation_no_estimator_or_automatic_bound_selection",
+      "preserve_all_samples_cycles_telemetry_candidate_history_and_manifest_statuses"]
+    blockers := ["actual_supported_sampling_and_bias_bounds_are_both_missing",
+      "ensemble_expectation_complete_error_decomposition_simultaneous_validity_and_physical_bridge_external",
+      "source_DeltaF_corrections_have_no_epsilon_voltage_transfer_bound",
+      "null_inferred_crosstalk_phase_cannot_independently_test_the_same_null",
+      "cross_influence_drift_and_nonlinear_response_not_covered_by_affine_cube_identity",
+      "scalar_endpoint_witnesses_and_zero_epsilon_do_not_establish_model_or_apparatus_feasibility",
+      "no_empirical_acceptance_primitive_rejection_or_QM_proof_upgrade"] }
 ]
 
 def scopedSearchReadinessRequirements : List String := [

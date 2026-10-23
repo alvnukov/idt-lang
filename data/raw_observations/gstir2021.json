@@ -19,14 +19,74 @@
   "limitations": [
     "Full recorded sample window is our reduction recipe, not the authors' settling-time processing or inference pipeline.",
     "Exact binary64 fractions describe digitized voltage arithmetic, not exact physical means or probabilities.",
-    "No uncertainty, covariance, acceptance threshold, fit, nuisance correction, or Born-rule violation inference.",
-    "Authors attribute nonzero kappa to shutter crosstalk and independently bound detector nonlinearity; these effects are not corrected here.",
+    "No uncertainty estimator, covariance, acceptance threshold, fit, automatic nuisance correction, or Born-rule violation inference. Optional supplied deterministic epsilon bounds support conditional scalar transfer only.",
+    "Authors attribute nonzero kappa to shutter crosstalk; independent detector-nonlinearity measurements yield Peres DeltaF correction estimates, not a transferable epsilon-voltage bound. These effects are not corrected here.",
     "Sample times are calendar components, not exposure durations or trigger counts.",
     "Housing temperature channel remains native volts; no conversion to degrees Celsius.",
     "30°C housing telemetry contains one recorded NaN at record 1167, cycle 146; retained explicitly, unused in reduction. 23°C has no temperature channel.",
     "A common positive affine response preserves kappa and a negative gain flips its sign; neither response convention is inferred from these files.",
     "No candidate family, primitive verdict, proof-status upgrade, or completed QM derivation."
   ],
+  "nuisance_evidence": {
+    "role": "source_evidence_audit_not_a_bound_budget",
+    "actual_supported_sampling_bound": null,
+    "actual_supported_bias_bound": null,
+    "bound_target": "mean_cycle_epsilon_volt_of_all_recorded_cycles_under_the_named_replay_recipe",
+    "sampling_definition": "s=ehat-mu; mu is expectation of the identical acquisition/reduction estimator under a supplied ensemble",
+    "bias_definition": "b=mu-q; q is corresponding ideal fixed-path epsilon",
+    "eligibility_boundary": "Declared deterministic bounds must bind run, raw SHA256 and recipe SHA256 and hold simultaneously; software cannot certify their truth. Same-data provenance alone is not disqualifying; explicit dependence on the tested null is.",
+    "items": [
+      {
+        "id": "detector_nonlinearity",
+        "source_url": "https://arxiv.org/html/2104.11577v2#S5.SS1",
+        "locator": "Section 5.1, equation 9",
+        "status": "different_observable_no_transferable_epsilon_bound",
+        "evidence": "Independent detector-nonlinearity measurement is reported through Peres DeltaF correction estimates -4.7e-5 and -9.4e-5; no epsilon-voltage bound, transfer curve or uncertainty artifact is supplied."
+      },
+      {
+        "id": "shutter_crosstalk_phase",
+        "source_url": "https://arxiv.org/html/2104.11577v2#S5.SS4",
+        "locator": "Section 5.4 equations 14-16, Table 3; Appendix B equations 31 and 36",
+        "status": "unsupported_circular_null_calibration",
+        "evidence": "Delta phi_DH is inferred from the same measured epsilon under the Born/null assumption and corrected phases, selecting the smaller of two roots. Values -0.017 and -0.014 rad are not independent calibration and cannot bound a test of that null."
+      },
+      {
+        "id": "power_phase_fluctuations",
+        "source_url": "https://arxiv.org/html/2104.11577v2#S5.SS2",
+        "locator": "Section 5.2; Appendix A.2",
+        "status": "unsupported_stochastic_summary_not_deterministic_bound",
+        "evidence": "The analysis assumes Gaussian independent power/phase fluctuations with moments obtained from the tested data. SD and SEM are not deterministic signed-error bounds."
+      },
+      {
+        "id": "autocorrelation_sem",
+        "source_url": "https://arxiv.org/html/2104.11577v2#S4",
+        "locator": "Section 4; Appendix B",
+        "status": "sem_not_bound_author_lag_window_algorithm_unavailable",
+        "evidence": "Reported SEM is autocorrelation-corrected, but the implemented lag/window algorithm is unavailable; this replay implements neither SEM nor an inferred algorithm."
+      },
+      {
+        "id": "shutter_leakage",
+        "source_url": "https://arxiv.org/html/2104.11577v2#S5.SS5",
+        "locator": "Section 5.5",
+        "status": "main_data_assumption_dependent_not_independent_interval",
+        "evidence": "Leakage tau estimates 2.20(2)e-4 and 2.707(4)e-4 use main data and additional assumptions with unknown shutter phase; these are not independent epsilon-bias intervals."
+      },
+      {
+        "id": "correction_table_disagreement",
+        "source_url": "https://arxiv.org/html/2104.11577v2#S5.SS6",
+        "locator": "Section 5.6 Table 4 versus Section 5.4 Table 3",
+        "status": "unresolved_table_discrepancy_no_consolidated_budget",
+        "evidence": "The 23-degree DeltaF_CT entry is -6.4e-3 in Table 4 versus -9.0e-3 in Table 3. No reconciled correction budget or epsilon transfer is manufactured."
+      },
+      {
+        "id": "archive_coverage",
+        "source_url": "https://zenodo.org/records/5497283",
+        "locator": "Version 1.0.0 file inventory",
+        "status": "raw_data_present_calibration_and_author_analysis_absent",
+        "evidence": "The archive contains two main HDF5 runs and a contrast HDF5 file, but no detector-calibration artifact or author analysis code."
+      }
+    ]
+  },
   "runs": [
     {
       "id": "23degrees",

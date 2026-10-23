@@ -39,7 +39,10 @@ python3 -m unittest tests.test_raw_signal_replay
 ```
 
 The CLI prints a compact primary summary. The full deterministic report defaults
-to ignored `dist/gstir2021-raw-replay.json`; select `--output` for another path.
+to ignored `dist/gstir2021-raw-replay-v2.json`; select `--output` for another path.
+The `/2` schema adds per-run nuisance assessments. Old `/1` reports are retained,
+not overwritten. The compact summary prints each assessment and missing bounds
+alongside arithmetic execution status.
 An identical existing report is left intact; different existing contents are
 never overwritten. Exit 0 means completed descriptive processing only. Exit 2
 means input/data/operational error, never a primitive counterexample. Reports
@@ -136,11 +139,123 @@ A common positive affine detector
 response preserves kappa; negative gain flips its sign. Neither gain/polarity
 convention is inferred from these files. Context-dependent gains, nonlinearity,
 shutter effects and other nuisance biases are unmodeled, not assumed zero.
-The paper attributes its nonzero results to shutter crosstalk and independently
-bounds detector nonlinearity; this replay makes no correction or contrary claim.
+The paper attributes its nonzero results to shutter crosstalk and reports
+independent detector-nonlinearity measurements as Peres ΔF corrections, not
+transferable epsilon-voltage bounds; this replay makes no automatic correction
+or contrary claim.
 
 Native primitives still lack a derived physical preparation/path/detector bridge.
 No confidence/acceptance rule, inference engine, universal apparatus prediction,
 physical-temperature calibration or proof-status upgrade is introduced. The
 typed task/boundary record is in
 `Proofs/MetaLang/V8CheckerResearchProgram.lean`.
+
+## Conditional signed epsilon enclosure
+
+The new scalar layer separates a recorded estimator from its expectation and
+from a supplied ideal quantity. It does not estimate any of them from the paper:
+
+```text
+ehat = existing exact mean_cycle_epsilon_volt, ALL recorded cycles
+mu   = expectation of the identical acquisition/reduction estimator
+       under a supplied ensemble (not an observed mean or a fitted null)
+q    = corresponding ideal fixed-path epsilon
+s    = ehat - mu       supplied sampling/measurement error [sL, sU]
+b    = mu - q          supplied apparatus/context-switch bias [bL, bU]
+q in [ehat - sU - bU, ehat - sL - bL]
+```
+
+Both signed bounds must hold **simultaneously**. No independence, Gaussian
+distribution or covariance assumption is needed for this algebraic implication.
+The ensemble/expectation definition, complete decomposition, validity of both
+bounds, and physical bridge remain supplied external assumptions. Software
+checks declared provenance and eligibility, not their truth or independence.
+
+`theory_experiments/nuisance_bounds.py` provides a small typed Python interface:
+exact `Fraction` intervals, provenance-bearing `SuppliedBound` records,
+`NuisanceBounds`, and `assess_epsilon`. `replay(raw_directory)` still works;
+an explicit operator may supply `bounds_by_run` as a keyword argument. There is
+no candidate input, command-line bound parser, automatic bound selection, fitted
+shutter simulator, SEM/variance implementation, threshold or kappa propagation.
+Each bound must match the observable, error quantity, sign convention, volts,
+run ID, raw SHA256 and recipe SHA256, with nonempty source and assumptions.
+Invalid bindings/shapes are input/contract errors, not primitive counterexamples.
+
+The statuses have deliberately narrow meanings:
+
+| Input/result | Status | Meaning |
+| --- | --- | --- |
+| Either bound missing, without ineligible supplied evidence | `inconclusive_missing_bounds` | Never substitute zero. |
+| SD, SEM, confidence interval or other unsupported kind | `unsupported_evidence_kind` | Not interpreted as a deterministic signed bound. |
+| Explicit dependence on tested null | `unsupported_circular_null_calibration` | Cannot independently test that null. Same-data provenance alone is not disqualifying. |
+| Enclosure contains zero, including endpoints | `zero_not_excluded_by_supplied_bounds` | Not empirical acceptance or model feasibility. |
+| Enclosure strictly excludes zero | `conditional_joint_null_bridge_bounds_inconsistent` | The joint null/bridge/bounds assumptions are inconsistent; not primitive rejection. |
+
+Input/contract errors raise before eligibility assessment. Ineligible supplied
+evidence takes status precedence over a simultaneously missing slot, while
+`missing_bounds` still lists every absent slot. Neither case yields an enclosure.
+Circularity is determined only by the explicit null-dependence declaration, not
+by an evidence-kind label or a shared dataset/hash.
+
+`candidate_verdict` remains `not_assessed` in every assessment. For **both actual
+runs**, both supported bounds are missing, despite nonzero recorded epsilon.
+Consequently both are `inconclusive_missing_bounds`, not an accepted null,
+rejected primitive, Born violation, or successful physical comparison.
+
+### Why published corrections do not fill the missing bounds
+
+The fixed registry now carries a source-linked evidence audit, with actual
+sampling and bias bounds explicitly null:
+
+| Source | Evidence and boundary |
+| --- | --- |
+| [§5.1, Eq. 9](https://arxiv.org/html/2104.11577v2#S5.SS1) | Independent detector measurements yield ΔF correction estimates (-4.7e-5, -9.4e-5), but no epsilon-voltage bound, transfer curve or uncertainty artifact. |
+| [§5.4, Eqs. 14–16, Table 3; App. B, Eqs. 31/36](https://arxiv.org/html/2104.11577v2#S5.SS4) | Crosstalk phases -0.017/-0.014 rad are inferred from the same epsilon under the Born/null assumption, selecting the smaller root. They are not independent calibration. |
+| [§5.2 and App. A.2](https://arxiv.org/html/2104.11577v2#S5.SS2) | Independent Gaussian power/phase fluctuation assumptions and moments from tested data do not make SD/SEM deterministic bounds. |
+| [§4 and App. B](https://arxiv.org/html/2104.11577v2#S4) | Autocorrelation-corrected SEM is reported, but the implemented lag/window algorithm is unavailable. None is invented here. |
+| [§5.5](https://arxiv.org/html/2104.11577v2#S5.SS5) | Leakage estimates 2.20(2)e-4 / 2.707(4)e-4 use main data and assumptions, with unknown shutter phase; not independent bias intervals. |
+| [§5.6 Table 4 versus Table 3](https://arxiv.org/html/2104.11577v2#S5.SS6) | The 23°C ΔF_CT entries disagree (-6.4e-3 versus -9.0e-3). No consolidated correction budget is manufactured. |
+| [Zenodo v1.0.0 inventory](https://zenodo.org/records/5497283) | Two main runs and a contrast HDF5 file; no detector-calibration artifact or author analysis code. |
+
+ΔF is a different observable from epsilon in volts; a numerical correction
+cannot be transferred without a justified bridge. No numbers above are used as
+deterministic bounds or fitted to the replay result.
+
+### Universal algebra and countercontrols
+
+`Proofs/QMClosure/SorkinErrorBudget.lean` proves scalar-transfer soundness,
+null-containment and strict-exclusion consequences, zero-retention under interval
+widening, and endpoint sharpness in the **unconstrained scalar error abstraction**.
+Endpoint witnesses are not physical preparations or proof of model feasibility.
+The file is an explicit Lake root and imported by the typed research ledger.
+
+It also proves epsilon zero for an affine cube of fixed amplitudes: each path
+has an independent fixed closed/open amplitude; the coherent baseline is the
+sum of closed amplitudes, increments are open-minus-closed, and the empty context
+includes that baseline. The quadratic-weight/common-affine-rate identity holds
+for all real eta, gain and background without positivity assumptions. It does
+not cover cross-influence, drift, nonlinear detection, arbitrary imperfect
+shutters, Peres F, or the actual apparatus. A conditional corollary composes this
+identity with the supplied signed bounds; it does not establish their validity.
+These are mathematical Lean proofs, not formal verification of Python or
+physical-coverage proofs. No theorem card, manifest or theory version is upgraded.
+
+Controls include bias explaining or hiding a nonzero signal, inclusive endpoints,
+missing/unsupported bounds, exact signed fractions, wrong bindings, same-data
+non-null-derived assertions, and independent fixed open/closed leakage cancellation.
+Changing only ABC (cross-influence) or applying nonlinear response can break that
+cancellation without rejecting a primitive. A separate vector in mask order 0–7,
+`[0,1,1,9,1,1,1,8]`, has epsilon zero but cannot meet the supplied nonnegative
+quadratic/common-zero-background pair bound: pAB=9 exceeds
+`(sqrt(pA)+sqrt(pB))^2=4`. Zero epsilon alone is not model feasibility.
+
+```sh
+python3 -m unittest tests.test_nuisance_bounds tests.test_raw_signal_replay
+IDT_GSTIR2021_RAW_DIRECTORY="$raw_dir" uv run --with h5py --no-project python -m unittest tests.test_nuisance_bounds tests.test_raw_signal_replay
+lake build Proofs.QMClosure.SorkinErrorBudget
+lake build Proofs.MetaLang.V8CheckerResearchProgram
+```
+
+Run Lake commands sequentially. All 314,400 samples, 870 cycles and ancillary
+NaN metadata remain retained; the scalar assessment changes none of the raw
+arithmetic, candidate pipeline, published-summary adapter or history baselines.

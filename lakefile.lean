@@ -175,6 +175,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.OverlapPreservationDynamicsProof,
     `Proofs.QMClosure.PairHistoryMeasureProbe,
     `Proofs.QMClosure.PublishedSorkinNull,
+    `Proofs.QMClosure.SorkinErrorBudget,
     `Proofs.QMClosure.PairHistoryAdapterSafety,
     `Proofs.QMClosure.NativeAmplitudeObservability,
     `Proofs.QMClosure.NativeOperationBridge,

@@ -132,12 +132,14 @@ class RawArithmeticTests(unittest.TestCase):
                 raw.replay(Path("/unused"))
             read.assert_not_called()
         with (patch.object(raw, "provenance", side_effect=[raw.LOADED_SOURCE_HASHES, changed]),
-              patch.object(raw, "_read_run", return_value={}),
+              patch.object(raw, "_read_run", return_value={
+                  "primary_all_cycles": {"mean_epsilon_volt": raw.number(Fraction(1))}}),
               self.assertRaisesRegex(ValueError, "during execution")):
             raw.replay(Path("/unused"))
 
     def test_ideal_kappa_requires_ideal_denominator_not_just_positive_recorded_delta(self) -> None:
-        positive_observation = {"primary_all_cycles": {"mean_delta_volt": raw.number(Fraction(1))}}
+        positive_observation = {"primary_all_cycles": {"mean_delta_volt": raw.number(Fraction(1)),
+                                                     "mean_epsilon_volt": raw.number(Fraction(1))}}
         with patch.object(raw, "_read_run", return_value=positive_observation):
             report = raw.replay(Path("/unused"))
         comparison: Any = report["conditional_ideal_zero_comparison"]
@@ -166,7 +168,9 @@ class RawArithmeticTests(unittest.TestCase):
             self.assertIn("not primitive counterexample", error.getvalue())
 
     def test_cli_deterministic_no_overwrite(self) -> None:
-        report = {"runs": [{"primary_all_cycles": {"cycles": 1}}]}
+        report = {"runs": [{"primary_all_cycles": {"cycles": 1}, "nuisance_assessment": {
+            "target": {}, "status": "inconclusive_missing_bounds", "missing_bounds": ["sampling", "bias"],
+            "candidate_verdict": "not_assessed"}}]}
         with tempfile.TemporaryDirectory() as directory, patch("scripts.replay_gstir2021.replay", return_value=report):
             output = Path(directory) / "report.json"
             args = ["--raw-directory", directory, "--output", str(output)]
@@ -285,6 +289,13 @@ class RealRawReplayTests(unittest.TestCase):
             primary = run["primary_all_cycles"]
             self.assertEqual(primary["cycles"], cycles)
             self.assertEqual(primary["zero_delta_cycles_retained"], 0)
+            assessment = run["nuisance_assessment"]
+            self.assertEqual(assessment["status"], "inconclusive_missing_bounds")
+            self.assertEqual(assessment["missing_bounds"], ("sampling", "bias"))
+            self.assertIsNone(assessment["ideal_epsilon_enclosure_volt"])
+            self.assertEqual(assessment["candidate_verdict"], "not_assessed")
+            self.assertNotEqual(primary["mean_epsilon_volt"]["exact"], "0")
+            self.assertEqual(assessment["recorded_mean_cycle_epsilon_volt_exact"], primary["mean_epsilon_volt"]["exact"])
             for field, expected in source["independent_exact_binary64_reference"].items():
                 self.assertEqual(primary[field]["exact"], expected)
             diagnostic = run["author_cut_diagnostic_unconfirmed_one_based"]

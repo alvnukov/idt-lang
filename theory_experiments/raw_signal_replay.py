@@ -10,13 +10,20 @@ import hashlib
 import importlib
 import json
 import math
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date
 from decimal import ROUND_HALF_EVEN, Context, Decimal, localcontext
 from fractions import Fraction
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
+
+from theory_experiments.nuisance_bounds import (
+    NuisanceBounds,
+    ReplayTarget,
+    assert_loaded_source_unchanged,
+    assess_epsilon,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data/raw_observations/gstir2021.json"
@@ -51,10 +58,15 @@ def sha256(path: Path) -> str:
 
 
 PROVENANCE_PATHS = (REGISTRY, Path(__file__), ROOT / "scripts/replay_gstir2021.py",
-                    ROOT / "Proofs/QMClosure/PublishedSorkinNull.lean")
+                    ROOT / "theory_experiments/nuisance_bounds.py",
+                    ROOT / "Proofs/QMClosure/PublishedSorkinNull.lean",
+                    ROOT / "Proofs/QMClosure/SorkinErrorBudget.lean",
+                    ROOT / "Proofs/MetaLang/V8CheckerResearchProgram.lean",
+                    ROOT / "lakefile.lean")
 
 
 def provenance() -> dict[str, str]:
+    assert_loaded_source_unchanged()
     return {str(p.relative_to(ROOT)): sha256(p) for p in PROVENANCE_PATHS}
 
 
@@ -237,23 +249,37 @@ def _read_run(path: Path, source: dict[str, Any]) -> dict[str, object]:
                 "aggregate": aggregate(diagnostic)}, "cycle_inventory": inventory}
 
 
-def replay(raw_directory: Path) -> dict[str, object]:
-    """Both fixed runs only; no candidate/data-path bridge and no statistical verdict."""
+def replay(raw_directory: Path, *,
+           bounds_by_run: Mapping[str, NuisanceBounds] | None = None) -> dict[str, object]:
+    """Fixed runs; optional operator-supplied bounds, never candidate configuration."""
     hashes = provenance()
     if hashes != LOADED_SOURCE_HASHES:
         raise ValueError("replay sources changed since import; restart interpreter")
     sources = registry()
-    runs = [_read_run(raw_directory / source["filename"], source) for source in sources["runs"]]
+    supplied = dict(bounds_by_run) if bounds_by_run is not None else {}
+    if set(supplied) - {source["id"] for source in sources["runs"]}:
+        raise ValueError("bounds supplied for an unknown fixed run")
+    recipe_sha = hashlib.sha256(canonical_json(RECIPE).encode()).hexdigest()
+    runs = []
+    for source in sources["runs"]:
+        run = _read_run(raw_directory / source["filename"], source)
+        primary = cast(dict[str, Any], run["primary_all_cycles"])
+        target = ReplayTarget(source["id"], source["sha256"], recipe_sha)
+        run["nuisance_assessment"] = assess_epsilon(
+            Fraction(primary["mean_epsilon_volt"]["exact"]), target,
+            supplied.get(source["id"], NuisanceBounds())).as_report()
+        runs.append(run)
     if hashes != provenance():
         raise ValueError("replay implementation or registry changed during execution")
-    return {"schema": "idt-gstir2021-raw-replay/1", "execution_status": "complete",
+    return {"schema": "idt-gstir2021-raw-replay/2", "execution_status": "complete",
             "scientific_status": "descriptive_digitized_voltage_replay_only",
             "candidate_verdict": "not_assessed", "native_PD_unit": "volt",
             "arithmetic": "exact_fractions_of_recorded_binary64_not_exact_physical_means",
             "recipe": RECIPE,
-            "recipe_sha256": hashlib.sha256(canonical_json(RECIPE).encode()).hexdigest(),
+            "recipe_sha256": recipe_sha,
             "source_and_implementation_sha256": hashes,
             "provenance": sources["provenance"],
+            "nuisance_evidence_audit": sources["nuisance_evidence"],
             "conditional_ideal_zero_comparison": {
                 "ideal_epsilon": "0", "ideal_kappa": "0",
                 "ideal_kappa_condition": "ideal_model_delta_nonzero",
