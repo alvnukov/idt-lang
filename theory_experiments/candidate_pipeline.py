@@ -43,6 +43,11 @@ from theory_experiments.native_readout_probe import (
     evaluate_native_readout_probe,
     parse_native_readout_probe,
 )
+from theory_experiments.native_readout_search import (
+    NativeReadoutSearch,
+    evaluate_native_readout_search,
+    parse_native_readout_search,
+)
 from theory_experiments.physics_screen import (
     ChiralSpectrum,
     PhysicsCandidate,
@@ -78,7 +83,7 @@ from theory_experiments.universe_bench import (
 
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
-    | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe
+    | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -92,6 +97,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/universe_bench.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
+    "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
     "Proofs/QMClosure/NativeReadoutSelection.lean",
     "Proofs/QMClosure/NativeBellScaledBridge.lean",
     "theory_experiments/published_observation.py",
@@ -125,6 +131,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "native_readout_search":
+        return parse_native_readout_search(row)
     if row.get("family") == "native_readout_probe":
         return parse_native_readout_probe(row)
     if row.get("family") == "native_bell_bridge":
@@ -173,7 +181,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, NativeReadoutProbe):
+    if isinstance(candidate, NativeReadoutSearch):
+        checks, details = evaluate_native_readout_search(candidate, limits)
+    elif isinstance(candidate, NativeReadoutProbe):
         checks, details = evaluate_native_readout_probe(candidate, limits)
     elif isinstance(candidate, NativeBellBridge):
         checks, details = evaluate_native_bell_bridge(candidate, limits)
@@ -213,7 +223,7 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 else "no_primitive_rejection_descriptive_comparison_only"
                                 if isinstance(candidate, PublishedObservation)
                                 else "no_primitive_rejection_execution_diagnostics_only"
-                                if isinstance(candidate, (NativeBellBridge, NativeReadoutProbe))
+                                if isinstance(candidate, (NativeBellBridge, NativeReadoutProbe, NativeReadoutSearch))
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
@@ -282,7 +292,7 @@ class Result:
         if not isinstance(values, list):
             raise TypeError("invalid report checks")
         checks = [object_fields(value) for value in values]
-        return {"id": candidate["id"], "family": candidate["family"],
+        card = {"id": candidate["id"], "family": candidate["family"],
                 "status": self.report["status"], "reused": self.reused,
                 "checks": [{"id": row["id"], "status": row["status"],
                             "checked": row["checked"], "planned": row["planned"],
@@ -291,6 +301,28 @@ class Result:
                 "artifact": str(self.artifact) if self.artifact else None,
                 "key": self.key, "proof_status": self.report["proof_status"],
                 "empirical_status": self.report["empirical_status"]}
+        if candidate["family"] == "native_readout_search":
+            details = object_fields(self.report["scope"])
+            responses = details["responses"]
+            if not isinstance(responses, list):
+                raise TypeError("invalid search response rows")
+            summary: list[dict[str, object]] = []
+            for value in responses:
+                row = object_fields(value)
+                witness = row["first_witness"]
+                first = None if witness is None else object_fields(witness)
+                summary.append({"response": row["response"], "state": row["state"],
+                    "preparations_checked": row["preparations_checked"],
+                    "first_witness": None if first is None else {key: first[key]
+                        for key in ("preparation_index", "coordinates", "reference_row")}})
+            search_summary: dict[str, object] = {
+                "completion_only": True, "rejection_scope": self.report["rejection_scope"],
+                "stop_reason": details["stop_reason"], "search_complete": details["search_complete"],
+                "domain_exhausted": details["domain_exhausted"], "responses": summary}
+            if "unsupported_reason" in details:
+                search_summary["unsupported_reason"] = details["unsupported_reason"]
+            card["search"] = search_summary
+        return card
 
 
 def run_batch(specifications: list[object], limits: Limits | None = None,

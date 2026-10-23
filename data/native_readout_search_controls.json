@@ -1,0 +1,145 @@
+[
+  {
+    "id": "search_scalar_all_responses",
+    "family": "native_readout_search",
+    "model": {
+      "id": "scalar_reference",
+      "family": "amplitude_algebra",
+      "carrier": "integer_scalar",
+      "product_square": 0,
+      "imaginary_weight": 0,
+      "weight_rule": "quadratic"
+    },
+    "radius": 4,
+    "responses": [
+      "native_weight",
+      "squared_native_weight",
+      "spike_49"
+    ]
+  },
+  {
+    "id": "search_spike_radius_three",
+    "family": "native_readout_search",
+    "model": {
+      "id": "scalar_reference",
+      "family": "amplitude_algebra",
+      "carrier": "integer_scalar",
+      "product_square": 0,
+      "imaginary_weight": 0,
+      "weight_rule": "quadratic"
+    },
+    "radius": 3,
+    "responses": [
+      "spike_49"
+    ]
+  },
+  {
+    "id": "search_zero_radius",
+    "family": "native_readout_search",
+    "model": {
+      "id": "scalar_reference",
+      "family": "amplitude_algebra",
+      "carrier": "integer_scalar",
+      "product_square": 0,
+      "imaginary_weight": 0,
+      "weight_rule": "quadratic"
+    },
+    "radius": 0,
+    "responses": [
+      "native_weight",
+      "squared_native_weight",
+      "spike_49"
+    ]
+  },
+  {
+    "id": "search_unknown_response",
+    "family": "native_readout_search",
+    "model": {
+      "id": "scalar_reference",
+      "family": "amplitude_algebra",
+      "carrier": "integer_scalar",
+      "product_square": 0,
+      "imaginary_weight": 0,
+      "weight_rule": "quadratic"
+    },
+    "radius": 4,
+    "responses": [
+      "native_weight",
+      "future_response"
+    ]
+  },
+  {
+    "id": "search_archived_scalar_all_responses",
+    "family": "native_readout_search",
+    "model": {
+      "id": "pair_history_signed_scalar_realization",
+      "family": "source_theory",
+      "role": "realization",
+      "components": [
+        "carrier: integers",
+        "addition: integer addition",
+        "composition: integer multiplication",
+        "weight: amplitude squared"
+      ],
+      "declared_status": "signedScalarPairHistoryGate realizes narrow nonnegative, zero-I3, multiplicative and two-path-interference gates; carrier selection is not established.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Connection to operational preparations, effects and physical context transformations.",
+        "Complex-carrier selection and full composite/continuum physics."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/PairHistoryMeasureProbe.lean",
+          "first_line": 1,
+          "last_line": 227,
+          "file_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d",
+          "text": "import Mathlib\n\nnamespace IDT.QMClosure\n\n/-!\n# Pair-history measure probe\n\nThis file tests a deliberately small candidate below the current IDT primitive\npackages: event weights may contain only singleton and pair-history terms.\n\nThe proved result is intentionally narrow. Pairwise event weights force the\nthird-order Sorkin interference term to vanish, while a quadratic weight on\nsigned history amplitudes still permits ordinary two-path interference,\nnonnegative weights, and multiplicative composition.\n\nNothing here derives the pair functional from a local rewrite rule, selects\ncomplex phases, proves strong positivity, or reconstructs quantum mechanics.\n-/\n\nstructure PairHistoryTripleData where\n  singletonA : \u2124\n  singletonB : \u2124\n  singletonC : \u2124\n  pairAB : \u2124\n  pairAC : \u2124\n  pairBC : \u2124\nderiving DecidableEq, Repr\n\ndef pairHistorySorkinI3 (data : PairHistoryTripleData) : \u2124 :=\n  (data.singletonA + data.singletonB + data.singletonC +\n      data.pairAB + data.pairAC + data.pairBC) -\n    (data.singletonA + data.singletonB + data.pairAB) -\n    (data.singletonA + data.singletonC + data.pairAC) -\n    (data.singletonB + data.singletonC + data.pairBC) +\n    data.singletonA + data.singletonB + data.singletonC\n\ntheorem pair_history_measure_has_zero_sorkin_i3\n    (data : PairHistoryTripleData) :\n    pairHistorySorkinI3 data = 0 := by\n  simp only [pairHistorySorkinI3]\n  ring\n\ndef pairHistoryQuadraticWeight (amplitude : \u2124) : \u2124 :=\n  amplitude ^ 2\n\ndef pairHistoryQuadraticSorkinI3 (a b c : \u2124) : \u2124 :=\n  pairHistoryQuadraticWeight (a + b + c) -\n    pairHistoryQuadraticWeight (a + b) -\n    pairHistoryQuadraticWeight (a + c) -\n    pairHistoryQuadraticWeight (b + c) +\n    pairHistoryQuadraticWeight a +\n    pairHistoryQuadraticWeight b +\n    pairHistoryQuadraticWeight c\n\ntheorem quadratic_pair_history_measure_has_zero_sorkin_i3\n    (a b c : \u2124) :\n    pairHistoryQuadraticSorkinI3 a b c = 0 := by\n  simp only [pairHistoryQuadraticSorkinI3, pairHistoryQuadraticWeight]\n  ring\n\ntheorem quadratic_pair_history_weight_is_nonnegative\n    (amplitude : \u2124) :\n    0 \u2264 pairHistoryQuadraticWeight amplitude := by\n  exact sq_nonneg amplitude\n\ntheorem quadratic_pair_history_product_factorizes\n    (left right : \u2124) :\n    pairHistoryQuadraticWeight (left * right) =\n      pairHistoryQuadraticWeight left * pairHistoryQuadraticWeight right := by\n  simp only [pairHistoryQuadraticWeight]\n  ring\n\ntheorem quadratic_pair_history_allows_constructive_interference :\n    pairHistoryQuadraticWeight (1 + 1) = 4 \u2227\n      pairHistoryQuadraticWeight 1 + pairHistoryQuadraticWeight 1 = 2 := by\n  norm_num [pairHistoryQuadraticWeight]\n\ntheorem quadratic_pair_history_allows_destructive_interference :\n    pairHistoryQuadraticWeight (1 + (-1)) = 0 \u2227\n      pairHistoryQuadraticWeight 1 = 1 \u2227\n      pairHistoryQuadraticWeight (-1) = 1 := by\n  norm_num [pairHistoryQuadraticWeight]\n\n/--\nThe exact finite signature checked above. It is deliberately weaker than a\nquantum reconstruction: it asks only for nonnegative weight, zero third-order\ninterference, multiplicative product weight, and one nonadditive two-path\nwitness.\n-/\nstructure PairHistoryFiniteGateWitness (Amplitude : Type) where\n  add : Amplitude \u2192 Amplitude \u2192 Amplitude\n  mul : Amplitude \u2192 Amplitude \u2192 Amplitude\n  weight : Amplitude \u2192 \u2124\n  weightNonnegative : \u2200 amplitude, 0 \u2264 weight amplitude\n  sorkinI3Zero : \u2200 a b c,\n    weight (add (add a b) c) - weight (add a b) -\n      weight (add a c) - weight (add b c) +\n      weight a + weight b + weight c = 0\n  productFactorizes : \u2200 left right,\n    weight (mul left right) = weight left * weight right\n  hasTwoPathInterference : \u2203 a b,\n    weight (add a b) \u2260 weight a + weight b\n\ndef signedScalarPairHistoryGate : PairHistoryFiniteGateWitness \u2124 where\n  add := (\u00b7 + \u00b7)\n  mul := (\u00b7 * \u00b7)\n  weight := pairHistoryQuadraticWeight\n  weightNonnegative := quadratic_pair_history_weight_is_nonnegative\n  sorkinI3Zero := by\n    intro a b c\n    simp only [pairHistoryQuadraticWeight]\n    ring\n  productFactorizes := quadratic_pair_history_product_factorizes\n  hasTwoPathInterference := by\n    refine \u27e81, 1, ?_\u27e9\n    norm_num [pairHistoryQuadraticWeight]\n\nstructure GaussianHistoryAmplitude where\n  re : \u2124\n  im : \u2124\nderiving DecidableEq, Repr\n\ndef gaussianHistoryAdd\n    (left right : GaussianHistoryAmplitude) : GaussianHistoryAmplitude :=\n  \u27e8left.re + right.re, left.im + right.im\u27e9\n\ndef gaussianHistoryMul\n    (left right : GaussianHistoryAmplitude) : GaussianHistoryAmplitude :=\n  \u27e8left.re * right.re - left.im * right.im,\n   left.re * right.im + left.im * right.re\u27e9\n\ndef gaussianHistoryWeight (amplitude : GaussianHistoryAmplitude) : \u2124 :=\n  amplitude.re ^ 2 + amplitude.im ^ 2\n\ndef gaussianPairHistoryGate :\n    PairHistoryFiniteGateWitness GaussianHistoryAmplitude where\n  add := gaussianHistoryAdd\n  mul := gaussianHistoryMul\n  weight := gaussianHistoryWeight\n  weightNonnegative := by\n    intro amplitude\n    simp only [gaussianHistoryWeight]\n    positivity\n  sorkinI3Zero := by\n    intro a b c\n    rcases a with \u27e8aRe, aIm\u27e9\n    rcases b with \u27e8bRe, bIm\u27e9\n    rcases c with \u27e8cRe, cIm\u27e9\n    simp only [gaussianHistoryAdd, gaussianHistoryWeight]\n    ring\n  productFactorizes := by\n    intro left right\n    rcases left with \u27e8leftRe, leftIm\u27e9\n    rcases right with \u27e8rightRe, rightIm\u27e9\n    simp only [gaussianHistoryMul, gaussianHistoryWeight]\n    ring\n  hasTwoPathInterference := by\n    refine \u27e8\u27e81, 0\u27e9, \u27e81, 0\u27e9, ?_\u27e9\n    norm_num [gaussianHistoryAdd, gaussianHistoryWeight]\n\ndef gaussianUnitSamples : List GaussianHistoryAmplitude :=\n  [\u27e81, 0\u27e9, \u27e8-1, 0\u27e9, \u27e80, 1\u27e9, \u27e80, -1\u27e9]\n\ntheorem gaussian_gate_has_four_distinct_unit_weight_samples :\n    gaussianUnitSamples.Nodup \u2227\n      gaussianUnitSamples.map gaussianHistoryWeight = [1, 1, 1, 1] := by\n  decide\n\ntheorem signed_scalar_unit_weight_is_only_a_sign\n    (amplitude : \u2124)\n    (unitWeight : pairHistoryQuadraticWeight amplitude = 1) :\n    amplitude = 1 \u2228 amplitude = -1 := by\n  simp only [pairHistoryQuadraticWeight] at unitWeight\n  have factorization : (amplitude - 1) * (amplitude + 1) = 0 := by\n    nlinarith\n  rcases mul_eq_zero.mp factorization with positive | negative\n  \u00b7 left\n    omega\n  \u00b7 right\n    omega\n\ninductive PairHistoryMeasureFinding where\n  | pairwiseWeightForcesZeroI3\n  | signedQuadraticWeightAllowsTwoPathInterference\n  | quadraticWeightIsNonnegative\n  | independentAmplitudeProductFactorizes\n  | currentGatesUnderdetermineAmplitudeCarrier\nderiving DecidableEq, Repr\n\ndef pairHistoryMeasureFindings : List PairHistoryMeasureFinding :=\n  [ .pairwiseWeightForcesZeroI3,\n    .signedQuadraticWeightAllowsTwoPathInterference,\n    .quadraticWeightIsNonnegative,\n    .independentAmplitudeProductFactorizes,\n    .currentGatesUnderdetermineAmplitudeCarrier ]\n\ntheorem pair_history_measure_probe_records_five_findings :\n    pairHistoryMeasureFindings.length = 5 := by\n  rfl\n\ninductive PairHistoryMeasureOpenObligation where\n  | derivePairFunctionalFromLocalRewrite\n  | deriveStrongPositivity\n  | selectComplexPhaseOrEquivalentHolonomy\n  | proveContinuumAndCompositeClosure\n  | excludeNonQuantumPairMeasureModels\nderiving DecidableEq, Repr\n\ndef pairHistoryMeasureOpenObligations :\n    List PairHistoryMeasureOpenObligation :=\n  [ .derivePairFunctionalFromLocalRewrite,\n    .deriveStrongPositivity,\n    .selectComplexPhaseOrEquivalentHolonomy,\n    .proveContinuumAndCompositeClosure,\n    .excludeNonQuantumPairMeasureModels ]\n\ntheorem pair_history_measure_probe_keeps_five_open_obligations :\n    pairHistoryMeasureOpenObligations.length = 5 := by\n  rfl\n\ndef pairHistoryMeasureProbeStatus : String :=\n  \"pair_history_gates_underdetermine_amplitude_carrier\"\n\ndef pairHistoryMeasureProbeClaimBoundary : String :=\n  \"Two inequivalent finite amplitude carriers pass the current gates. The probe does not derive the pair functional, select complex quantum theory, or prove the Born rule, full QM, the Standard Model, or gravity.\"\n\nend IDT.QMClosure\n",
+          "text_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d"
+        }
+      ]
+    },
+    "radius": 4,
+    "responses": [
+      "native_weight",
+      "squared_native_weight",
+      "spike_49"
+    ]
+  },
+  {
+    "id": "search_archived_gaussian_all_responses",
+    "family": "native_readout_search",
+    "model": {
+      "id": "pair_history_gaussian_realization",
+      "family": "source_theory",
+      "role": "realization",
+      "components": [
+        "carrier: integer real/imaginary pairs",
+        "addition: componentwise addition",
+        "composition: Gaussian integer multiplication",
+        "weight: re squared plus im squared"
+      ],
+      "declared_status": "gaussianPairHistoryGate is a distinct carrier realization passing the same narrow gates as signed scalars; the pair functional and complex carrier are supplied, not derived.",
+      "missing_bridges": [
+        "A prediction adapter that preserves the source-defined candidate and its assumptions is not implemented.",
+        "Derive the carrier and multiplication from a lower generative law.",
+        "Connect finite amplitude algebra to full operational/composite physics."
+      ],
+      "sources": [
+        {
+          "path": "Proofs/QMClosure/PairHistoryMeasureProbe.lean",
+          "first_line": 1,
+          "last_line": 227,
+          "file_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d",
+          "text": "import Mathlib\n\nnamespace IDT.QMClosure\n\n/-!\n# Pair-history measure probe\n\nThis file tests a deliberately small candidate below the current IDT primitive\npackages: event weights may contain only singleton and pair-history terms.\n\nThe proved result is intentionally narrow. Pairwise event weights force the\nthird-order Sorkin interference term to vanish, while a quadratic weight on\nsigned history amplitudes still permits ordinary two-path interference,\nnonnegative weights, and multiplicative composition.\n\nNothing here derives the pair functional from a local rewrite rule, selects\ncomplex phases, proves strong positivity, or reconstructs quantum mechanics.\n-/\n\nstructure PairHistoryTripleData where\n  singletonA : \u2124\n  singletonB : \u2124\n  singletonC : \u2124\n  pairAB : \u2124\n  pairAC : \u2124\n  pairBC : \u2124\nderiving DecidableEq, Repr\n\ndef pairHistorySorkinI3 (data : PairHistoryTripleData) : \u2124 :=\n  (data.singletonA + data.singletonB + data.singletonC +\n      data.pairAB + data.pairAC + data.pairBC) -\n    (data.singletonA + data.singletonB + data.pairAB) -\n    (data.singletonA + data.singletonC + data.pairAC) -\n    (data.singletonB + data.singletonC + data.pairBC) +\n    data.singletonA + data.singletonB + data.singletonC\n\ntheorem pair_history_measure_has_zero_sorkin_i3\n    (data : PairHistoryTripleData) :\n    pairHistorySorkinI3 data = 0 := by\n  simp only [pairHistorySorkinI3]\n  ring\n\ndef pairHistoryQuadraticWeight (amplitude : \u2124) : \u2124 :=\n  amplitude ^ 2\n\ndef pairHistoryQuadraticSorkinI3 (a b c : \u2124) : \u2124 :=\n  pairHistoryQuadraticWeight (a + b + c) -\n    pairHistoryQuadraticWeight (a + b) -\n    pairHistoryQuadraticWeight (a + c) -\n    pairHistoryQuadraticWeight (b + c) +\n    pairHistoryQuadraticWeight a +\n    pairHistoryQuadraticWeight b +\n    pairHistoryQuadraticWeight c\n\ntheorem quadratic_pair_history_measure_has_zero_sorkin_i3\n    (a b c : \u2124) :\n    pairHistoryQuadraticSorkinI3 a b c = 0 := by\n  simp only [pairHistoryQuadraticSorkinI3, pairHistoryQuadraticWeight]\n  ring\n\ntheorem quadratic_pair_history_weight_is_nonnegative\n    (amplitude : \u2124) :\n    0 \u2264 pairHistoryQuadraticWeight amplitude := by\n  exact sq_nonneg amplitude\n\ntheorem quadratic_pair_history_product_factorizes\n    (left right : \u2124) :\n    pairHistoryQuadraticWeight (left * right) =\n      pairHistoryQuadraticWeight left * pairHistoryQuadraticWeight right := by\n  simp only [pairHistoryQuadraticWeight]\n  ring\n\ntheorem quadratic_pair_history_allows_constructive_interference :\n    pairHistoryQuadraticWeight (1 + 1) = 4 \u2227\n      pairHistoryQuadraticWeight 1 + pairHistoryQuadraticWeight 1 = 2 := by\n  norm_num [pairHistoryQuadraticWeight]\n\ntheorem quadratic_pair_history_allows_destructive_interference :\n    pairHistoryQuadraticWeight (1 + (-1)) = 0 \u2227\n      pairHistoryQuadraticWeight 1 = 1 \u2227\n      pairHistoryQuadraticWeight (-1) = 1 := by\n  norm_num [pairHistoryQuadraticWeight]\n\n/--\nThe exact finite signature checked above. It is deliberately weaker than a\nquantum reconstruction: it asks only for nonnegative weight, zero third-order\ninterference, multiplicative product weight, and one nonadditive two-path\nwitness.\n-/\nstructure PairHistoryFiniteGateWitness (Amplitude : Type) where\n  add : Amplitude \u2192 Amplitude \u2192 Amplitude\n  mul : Amplitude \u2192 Amplitude \u2192 Amplitude\n  weight : Amplitude \u2192 \u2124\n  weightNonnegative : \u2200 amplitude, 0 \u2264 weight amplitude\n  sorkinI3Zero : \u2200 a b c,\n    weight (add (add a b) c) - weight (add a b) -\n      weight (add a c) - weight (add b c) +\n      weight a + weight b + weight c = 0\n  productFactorizes : \u2200 left right,\n    weight (mul left right) = weight left * weight right\n  hasTwoPathInterference : \u2203 a b,\n    weight (add a b) \u2260 weight a + weight b\n\ndef signedScalarPairHistoryGate : PairHistoryFiniteGateWitness \u2124 where\n  add := (\u00b7 + \u00b7)\n  mul := (\u00b7 * \u00b7)\n  weight := pairHistoryQuadraticWeight\n  weightNonnegative := quadratic_pair_history_weight_is_nonnegative\n  sorkinI3Zero := by\n    intro a b c\n    simp only [pairHistoryQuadraticWeight]\n    ring\n  productFactorizes := quadratic_pair_history_product_factorizes\n  hasTwoPathInterference := by\n    refine \u27e81, 1, ?_\u27e9\n    norm_num [pairHistoryQuadraticWeight]\n\nstructure GaussianHistoryAmplitude where\n  re : \u2124\n  im : \u2124\nderiving DecidableEq, Repr\n\ndef gaussianHistoryAdd\n    (left right : GaussianHistoryAmplitude) : GaussianHistoryAmplitude :=\n  \u27e8left.re + right.re, left.im + right.im\u27e9\n\ndef gaussianHistoryMul\n    (left right : GaussianHistoryAmplitude) : GaussianHistoryAmplitude :=\n  \u27e8left.re * right.re - left.im * right.im,\n   left.re * right.im + left.im * right.re\u27e9\n\ndef gaussianHistoryWeight (amplitude : GaussianHistoryAmplitude) : \u2124 :=\n  amplitude.re ^ 2 + amplitude.im ^ 2\n\ndef gaussianPairHistoryGate :\n    PairHistoryFiniteGateWitness GaussianHistoryAmplitude where\n  add := gaussianHistoryAdd\n  mul := gaussianHistoryMul\n  weight := gaussianHistoryWeight\n  weightNonnegative := by\n    intro amplitude\n    simp only [gaussianHistoryWeight]\n    positivity\n  sorkinI3Zero := by\n    intro a b c\n    rcases a with \u27e8aRe, aIm\u27e9\n    rcases b with \u27e8bRe, bIm\u27e9\n    rcases c with \u27e8cRe, cIm\u27e9\n    simp only [gaussianHistoryAdd, gaussianHistoryWeight]\n    ring\n  productFactorizes := by\n    intro left right\n    rcases left with \u27e8leftRe, leftIm\u27e9\n    rcases right with \u27e8rightRe, rightIm\u27e9\n    simp only [gaussianHistoryMul, gaussianHistoryWeight]\n    ring\n  hasTwoPathInterference := by\n    refine \u27e8\u27e81, 0\u27e9, \u27e81, 0\u27e9, ?_\u27e9\n    norm_num [gaussianHistoryAdd, gaussianHistoryWeight]\n\ndef gaussianUnitSamples : List GaussianHistoryAmplitude :=\n  [\u27e81, 0\u27e9, \u27e8-1, 0\u27e9, \u27e80, 1\u27e9, \u27e80, -1\u27e9]\n\ntheorem gaussian_gate_has_four_distinct_unit_weight_samples :\n    gaussianUnitSamples.Nodup \u2227\n      gaussianUnitSamples.map gaussianHistoryWeight = [1, 1, 1, 1] := by\n  decide\n\ntheorem signed_scalar_unit_weight_is_only_a_sign\n    (amplitude : \u2124)\n    (unitWeight : pairHistoryQuadraticWeight amplitude = 1) :\n    amplitude = 1 \u2228 amplitude = -1 := by\n  simp only [pairHistoryQuadraticWeight] at unitWeight\n  have factorization : (amplitude - 1) * (amplitude + 1) = 0 := by\n    nlinarith\n  rcases mul_eq_zero.mp factorization with positive | negative\n  \u00b7 left\n    omega\n  \u00b7 right\n    omega\n\ninductive PairHistoryMeasureFinding where\n  | pairwiseWeightForcesZeroI3\n  | signedQuadraticWeightAllowsTwoPathInterference\n  | quadraticWeightIsNonnegative\n  | independentAmplitudeProductFactorizes\n  | currentGatesUnderdetermineAmplitudeCarrier\nderiving DecidableEq, Repr\n\ndef pairHistoryMeasureFindings : List PairHistoryMeasureFinding :=\n  [ .pairwiseWeightForcesZeroI3,\n    .signedQuadraticWeightAllowsTwoPathInterference,\n    .quadraticWeightIsNonnegative,\n    .independentAmplitudeProductFactorizes,\n    .currentGatesUnderdetermineAmplitudeCarrier ]\n\ntheorem pair_history_measure_probe_records_five_findings :\n    pairHistoryMeasureFindings.length = 5 := by\n  rfl\n\ninductive PairHistoryMeasureOpenObligation where\n  | derivePairFunctionalFromLocalRewrite\n  | deriveStrongPositivity\n  | selectComplexPhaseOrEquivalentHolonomy\n  | proveContinuumAndCompositeClosure\n  | excludeNonQuantumPairMeasureModels\nderiving DecidableEq, Repr\n\ndef pairHistoryMeasureOpenObligations :\n    List PairHistoryMeasureOpenObligation :=\n  [ .derivePairFunctionalFromLocalRewrite,\n    .deriveStrongPositivity,\n    .selectComplexPhaseOrEquivalentHolonomy,\n    .proveContinuumAndCompositeClosure,\n    .excludeNonQuantumPairMeasureModels ]\n\ntheorem pair_history_measure_probe_keeps_five_open_obligations :\n    pairHistoryMeasureOpenObligations.length = 5 := by\n  rfl\n\ndef pairHistoryMeasureProbeStatus : String :=\n  \"pair_history_gates_underdetermine_amplitude_carrier\"\n\ndef pairHistoryMeasureProbeClaimBoundary : String :=\n  \"Two inequivalent finite amplitude carriers pass the current gates. The probe does not derive the pair functional, select complex quantum theory, or prove the Born rule, full QM, the Standard Model, or gravity.\"\n\nend IDT.QMClosure\n",
+          "text_sha256": "cf2182be446fcba2670f20c4517550c0d7336718714d3aac9499a2436b7ec58d"
+        }
+      ]
+    },
+    "radius": 4,
+    "responses": [
+      "native_weight",
+      "squared_native_weight",
+      "spike_49"
+    ]
+  }
+]

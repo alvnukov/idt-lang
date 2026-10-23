@@ -51,6 +51,12 @@ def referenceAfter (g : ℤ → ℝ) (x y : ℤ) : ℝ :=
 def ReferenceInvariant (g : ℤ → ℝ) : Prop :=
   ∀ x y : ℤ, referenceBefore g x y = referenceAfter g x y
 
+/-- One exact reference-row violation refutes this supplied universal equality,
+not the underlying primitive theory or the physical admissibility of a detector. -/
+theorem reference_counterexample_refutes_invariance {g : ℤ → ℝ} {x y : ℤ}
+    (h : referenceBefore g x y ≠ referenceAfter g x y) : ¬ ReferenceInvariant g :=
+  fun all => h (all x y)
+
 theorem reference_denominators_positive (g : ℤ → ℝ) (a : Admissible g)
     (x y : ℤ) :
     0 < g x + g y + g 1 ∧

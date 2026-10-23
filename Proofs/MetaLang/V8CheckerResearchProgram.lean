@@ -32,6 +32,24 @@ structure CheckerResearchWorkItem where
 deriving Repr
 
 def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
+  { id := "bounded_native_reference_readout_search"
+    track := .checker
+    state := .active
+    inputs := ["nativeReadoutSelectionConditionalEvidence",
+      "theory_experiments/native_readout_probe.py", "data/native_readout_search_controls.json"]
+    requiredOutputs := ["theory_experiments/native_readout_search.py",
+      "tests/test_native_readout_search.py", "NATIVE_READOUT_SEARCH_RESULT.md",
+      "nativeReadoutSearchConditionalEvidence"]
+    acceptance := ["full_signed_integer_reference_square_radius_zero_to_four",
+      "one_native_trace_per_atomic_four_context_preparation_reused_across_responses",
+      "first_witness_only_in_declared_bounded_order_and_exact_replayable_evidence",
+      "unknown_response_and_unbound_source_unsupported_before_native_arithmetic",
+      "budget_inconclusive_preserves_found_conditional_witnesses",
+      "no_finite_success_upgrades_to_universal_invariance_or_physical_acceptance",
+      "preserve_all_old_reports_history_pins_native_laws_and_claim_statuses"]
+    blockers := ["reference_accessibility_and_H_admissibility_remain_supplied_bridges",
+      "entrywise_context_independent_normalized_detector_is_not_primitive_derived",
+      "Lean_does_not_formally_verify_the_Python_search"] },
   { id := "retain_existing_primitive_candidates"
     track := .checker
     state := .active
@@ -382,6 +400,46 @@ def nativeReadoutSelectionConditionalEvidence : NativeReadoutSelectionEvidenceRe
   oldCombinedOperationalReadoutObligationClosed := false
   gaussianOffRealResponseClassified := false
   continuousResponseClassified := false
+  pythonFormallyVerified := false
+  empiricalComparisonPerformed := false
+  fullQmSmOrGravityProved := false
+}
+
+inductive NativeReadoutSearchRecordedResult where
+  | boundedReferenceWitnessesWithOperationalBridgeWall
+deriving DecidableEq, Repr
+
+structure NativeReadoutSearchEvidenceRecord where
+  result : NativeReadoutSearchRecordedResult
+  counterexampleRefutesInvariance :
+    ∀ (g : ℤ → ℝ) (x y : ℤ),
+      IDT.QMClosure.NativeReadoutSelection.referenceBefore g x y ≠
+        IDT.QMClosure.NativeReadoutSelection.referenceAfter g x y →
+      ¬ IDT.QMClosure.NativeReadoutSelection.ReferenceInvariant g
+  maximumInputRadius : Nat
+  contextsPerPreparation : Nat
+  recordedQuarticFirstIndex : Nat
+  recordedSpikeFirstIndex : Nat
+  universalInvarianceInferredFromFiniteExhaustion : Bool
+  primitiveOperationalBridgeEstablished : Bool
+  physicalReversibilityOfHEstablished : Bool
+  pythonFormallyVerified : Bool
+  empiricalComparisonPerformed : Bool
+  fullQmSmOrGravityProved : Bool
+
+/-- A checked logical implication and separately recorded finite software evidence.
+The numerical fields are records, not a formal verification of the Python run. -/
+def nativeReadoutSearchConditionalEvidence : NativeReadoutSearchEvidenceRecord := {
+  result := .boundedReferenceWitnessesWithOperationalBridgeWall
+  counterexampleRefutesInvariance := fun _ _ _ h =>
+    IDT.QMClosure.NativeReadoutSelection.reference_counterexample_refutes_invariance h
+  maximumInputRadius := 4
+  contextsPerPreparation := 4
+  recordedQuarticFirstIndex := 6
+  recordedSpikeFirstIndex := 70
+  universalInvarianceInferredFromFiniteExhaustion := false
+  primitiveOperationalBridgeEstablished := false
+  physicalReversibilityOfHEstablished := false
   pythonFormallyVerified := false
   empiricalComparisonPerformed := false
   fullQmSmOrGravityProved := false

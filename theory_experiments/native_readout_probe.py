@@ -16,6 +16,7 @@ from theory_experiments.primitive_screen import (
     Check,
     Limits,
     Status,
+    aggregate_status,
     bounded_int,
     candidate_id,
     canonical_json,
@@ -86,6 +87,22 @@ def _selected_weights(context: dict[str, object], response: str) -> list[list[Fr
 
 
 def evaluate_native_readout_probe(probe: NativeReadoutProbe, limits: Limits) -> tuple[tuple[Check, ...], dict[str, object]]:
+    # Unknown responses must never trigger native arithmetic.
+    if probe.response not in RESPONSES:
+        return evaluate_response_on_native_trace(probe, limits, (), {})
+    checks, native = evaluate_native_bell_bridge(probe.protocol, limits)
+    return evaluate_response_on_native_trace(probe, limits, checks, native)
+
+
+def evaluate_response_on_native_trace(
+    probe: NativeReadoutProbe, limits: Limits,
+    native_checks: tuple[Check, ...], native_scope: dict[str, object],
+) -> tuple[tuple[Check, ...], dict[str, object]]:
+    """Read an already evaluated native trace without changing or recomputing it.
+
+    Callers supply the evidence for this exact probe protocol. This internal reuse
+    seam is not a verifier for arbitrary externally supplied traces.
+    """
     scope: dict[str, object] = {
         "adapter_status": "selected_response_over_validated_native_trace",
         "candidate_verdict": "unchanged", "scientific_status": "unassessed",
@@ -118,14 +135,19 @@ def evaluate_native_readout_probe(probe: NativeReadoutProbe, limits: Limits) -> 
     if probe.response not in RESPONSES:
         scope["unsupported_reason"] = "unknown_selected_response"
         return finish("unsupported")
-    checks, native = evaluate_native_bell_bridge(probe.protocol, limits)
+    if not native_checks:
+        raise ValueError("native completion checks required: checker error")
+    checks, native = native_checks, native_scope
     scope["native_protocol_evidence"] = native
-    if checks[0].status != "no_counterexample_within_bounds":
+    status = aggregate_status(checks)
+    if status == "counterexample":
+        raise ValueError("native execution cannot reject primitives: checker error")
+    if status != "no_counterexample_within_bounds":
         scope["execution_status"] = native["execution_status"]
         for key in ("unsupported_reason", "incomplete_reason"):
             if key in native:
                 scope[key] = native[key]
-        return finish(checks[0].status)
+        return finish(status)
     trace = native["contexts"]
     if not isinstance(trace, list) or len(trace) != 4:
         raise ValueError("complete native trace must contain four contexts: checker error")
