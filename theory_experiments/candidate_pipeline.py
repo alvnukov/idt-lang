@@ -20,6 +20,14 @@ from theory_experiments.amplitude_algebra import (
     evaluate_archived_source,
     parse_amplitude_algebra,
 )
+from theory_experiments.bell_trial_test import (
+    BellLocalResponse,
+    evaluate_bell_local_response,
+    parse_bell_local_response,
+)
+from theory_experiments.bell_trial_test import (
+    assert_loaded_sources as assert_bell_sources,
+)
 from theory_experiments.identical_particles import (
     IdenticalPairAmplitudes,
     evaluate_identical_pair,
@@ -60,7 +68,7 @@ from theory_experiments.universe_bench import (
 
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
-    | PublishedObservation
+    | PublishedObservation | BellLocalResponse
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -73,6 +81,9 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
     "theory_experiments/universe_bench.py",
     "theory_experiments/published_observation.py",
+    "theory_experiments/bell_trial_test.py", "scripts/replay_hensen2015.py",
+    "data/raw_observations/hensen2015.json", "data/bell_local_response_controls.json",
+    "Proofs/QMClosure/BellLocalTrialNull.lean",
     "data/published_observations/sinha2010_hsps_kappa.json",
     "Proofs/QMClosure/PublishedSorkinNull.lean",
     "lakefile.lean", "lean-toolchain",
@@ -100,6 +111,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "bell_local_response":
+        return parse_bell_local_response(row)
     if row.get("family") == "published_observation":
         return parse_published_observation(row)
     if row.get("family") == "universe_bench":
@@ -142,7 +155,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, PublishedObservation):
+    if isinstance(candidate, BellLocalResponse):
+        checks, details = evaluate_bell_local_response(candidate, limits)
+    elif isinstance(candidate, PublishedObservation):
         checks, details = evaluate_published_observation(candidate, limits)
     elif isinstance(candidate, SourceCandidate):
         checks, details = evaluate_archived_source(candidate, limits)
@@ -169,8 +184,11 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
             "checks": [check.specification() for check in checks], "scope": details,
             "arithmetic": "exact_rational", "evidence_kind": "computation_with_explicit_algebraic_or_bounded_scope",
             "proof_status": "not_attempted",
-            "empirical_status": "published_summary_compared_conditionally" if completed_observation else "not_tested",
-            "rejection_scope": ("no_primitive_rejection_descriptive_comparison_only"
+            "empirical_status": (details["empirical_status"] if isinstance(candidate, BellLocalResponse)
+                                 else "published_summary_compared_conditionally" if completed_observation else "not_tested"),
+            "rejection_scope": ("conditional_statistical_null_and_bridges_not_exact_counterexample"
+                                if isinstance(candidate, BellLocalResponse)
+                                else "no_primitive_rejection_descriptive_comparison_only"
                                 if isinstance(candidate, PublishedObservation)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
@@ -256,6 +274,8 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     primitive.bounded_int(len(specifications), 1, 64)
     # Validate the entire input before creating cache files.
     candidates = tuple(parse_hypothesis(value) for value in specifications)
+    if any(isinstance(candidate, BellLocalResponse) for candidate in candidates):
+        assert_bell_sources()
     limits = limits if limits is not None else Limits()
     sources = provenance()
     if sources.get("source_sha256") != LOADED_SOURCE_HASHES:

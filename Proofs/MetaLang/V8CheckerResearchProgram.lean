@@ -2,6 +2,7 @@ import Proofs.MetaLang.V8PrimitiveEmpiricalConstraintLedger
 import Proofs.MetaLang.V8PrimitiveScreenBoundary
 import Proofs.QMClosure.PublishedSorkinNull
 import Proofs.QMClosure.SorkinErrorBudget
+import Proofs.QMClosure.BellLocalTrialNull
 
 namespace IDT.MetaLang.V8
 
@@ -235,8 +236,64 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "null_inferred_crosstalk_phase_cannot_independently_test_the_same_null",
       "cross_influence_drift_and_nonlinear_response_not_covered_by_affine_cube_identity",
       "scalar_endpoint_witnesses_and_zero_epsilon_do_not_establish_model_or_apparatus_feasibility",
-      "no_empirical_acceptance_primitive_rejection_or_QM_proof_upgrade"] }
+      "no_empirical_acceptance_primitive_rejection_or_QM_proof_upgrade"] },
+  { id := "hensen2015_local_response_conditional_fixed_trial_test"
+    track := .checker
+    state := .active
+    inputs := ["data/raw_observations/hensen2015.json",
+      "data/bell_local_response_controls.json", "pinned_released_event_candidates"]
+    requiredOutputs := ["theory_experiments/bell_trial_test.py",
+      "scripts/replay_hensen2015.py", "Proofs/QMClosure/BellLocalTrialNull.lean",
+      "tests/test_bell_trial_test.py", "BELL_TRIAL_TEST_RESULT.md"]
+    acceptance := ["actual_local_A0_A1_B0_B1_tables_not_is_local_label",
+      "prediction_before_observation_no_binding_context_first_base_to_locality",
+      "all_4746_released_rows_retained_361_herald_248_markers_245_trials_196_wins",
+      "no_click_is_minus_one_not_discarded_no_full_timetag_reconstruction",
+      "exact_binomial_tail_recurrence_independent_comb_oracle",
+      "real_probability_history_tree_domination_and_fixed_threshold_risk_bound",
+      "one_shared_local_class_test_not_sixteen_independent_discoveries",
+      "conditional_statistical_exclusion_not_exact_counterexample_or_primitive_rejection",
+      "preserve_every_old_candidate_semantics_history_pin_and_manifest_status"]
+    blockers := ["physical_conditional_joint_setting_contract_not_verified_by_fair_marginals",
+      "paper_QRNG_two_sigma_estimate_is_not_certified_conditional_probability_cap",
+      "independently_timestamped_data_independent_N245_commitment_not_verified",
+      "retrospective_dataset_policy_selection_outside_per_run_risk_guarantee",
+      "local_operational_realization_is_not_entailed_by_context_first_primitive_base",
+      "Lean_does_not_formally_verify_Python_replay_or_establish_empirical_QM_IDT_acceptance"] }
 ]
+
+inductive BellTrialRecordedResult where
+  | conditionalStatisticalExclusion
+deriving DecidableEq, Repr
+
+structure BellTrialEvidenceRecord where
+  result : BellTrialRecordedResult
+  releasedRows : Nat
+  acceptedTrials : Nat
+  observedWins : Nat
+  qNumerator : Nat
+  qDenominator : Nat
+  alphaNumerator : Nat
+  alphaDenominator : Nat
+  physicalConditionalCapVerified : Bool
+  dataIndependentStoppingCommitmentVerified : Bool
+  unconditionalVerdictEstablished : Bool
+deriving Repr
+
+/-- Typed replay result, not a theorem asserting physical calibration/locality. -/
+def hensen2015ConditionalEvidence : BellTrialEvidenceRecord := {
+  result := .conditionalStatisticalExclusion
+  releasedRows := 4746
+  acceptedTrials := 245
+  observedWins := 196
+  qNumerator := 4687702502187
+  qDenominator := 6250000000000
+  alphaNumerator := 1
+  alphaDenominator := 20
+  physicalConditionalCapVerified := false
+  dataIndependentStoppingCommitmentVerified := false
+  unconditionalVerdictEstablished := false
+}
 
 def scopedSearchReadinessRequirements : List String := [
   "published_versioned_requirement_inventory_not_all_timeless_physics",

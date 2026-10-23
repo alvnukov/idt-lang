@@ -1,0 +1,53 @@
+{
+  "schema": "idt-hensen2015-registry/1",
+  "provenance": {
+    "title": "Loophole-free Bell inequality violation using electron spins separated by 1.3 kilometres",
+    "dataset_doi": "10.4121/uuid:6e19e9b2-4a2d-40b5-8dd3-a660bf3c0a31",
+    "paper_url": "https://arxiv.org/abs/1508.05949",
+    "supplement_url": "https://static-content.springer.com/esm/art%3A10.1038%2Fnature15759/MediaObjects/41586_2015_BFnature15759_MOESM113_ESM.pdf",
+    "official_metadata": "https://api.figshare.com/v2/articles/12703235",
+    "official_download": "https://ndownloader.figshare.com/files/24056582",
+    "retrieval_status": "official_download_timed_out_mirror_matches_published_size_and_MD5_not_independently_retrieved_original_bytes",
+    "mirror": "https://raw.githubusercontent.com/DenBraun/onto2d/c737171a38313566feb15c346837229ee1914bb4/references/canonical/data/hensen2015-data.zip",
+    "archive_size_bytes": 152913,
+    "archive_published_md5": "342f29f8288c46575818acd2acebd535",
+    "archive_sha256": "c28eb0f075759aef620a0b2e00a70fd675ce712bc8214d11c103f5a3d29492c0",
+    "license": "4TU General Terms of Use; no verified raw redistribution permission; raw records not committed",
+    "recipe_source": "released author analysis read only, not executed; supplement K event selection, I QRNG, N tail, O locality, P stopping",
+    "tau": "27/2500000",
+    "tau_status": "paper QRNG two-sigma estimate plus model, not a certified deterministic conditional bound",
+    "alpha": "1/20",
+    "alpha_policy": "conventional fixed analysis policy, retrospective not newly preregistered",
+    "fixed_N_provenance": "paper requires data-independent N; independently timestamped N=245 commitment not verified"
+  },
+  "recipe": {
+    "id": "hensen2015_released_candidate_records_v1",
+    "herald_starts_ps_by_channel": [5426350, 5425700],
+    "herald_length_ps": 52450,
+    "second_window_shift_ps": 250000,
+    "herald_endpoints": "left_closed_right_open_different_detectors",
+    "invalid_marker": "each_age_zero_or_strictly_greater_than_250",
+    "post_excitation": "both_fields_zero",
+    "readout": "plus_one_iff_10620_lt_t_le_14320_ns_else_minus_one_including_zero",
+    "win": "(-1)^(a*b)*x*y=1",
+    "record_scope": "released_broad_two_photon_preselected_candidates_not_full_timetags"
+  },
+  "raw": {
+    "filename": "bell_open_data.txt",
+    "sha256": "5a6b1853554ad508d35c795415d64922ed9e5bc0469f6052ad222486ad3566ff",
+    "size_bytes": 431094,
+    "columns": ["naive_timestamp", "day", "run", "t1_ps", "channel1", "t2_ps", "channel2", "a", "b", "rng_A_ns", "rng_B_ns", "first_readout_A_ns", "first_readout_B_ns", "post_excite_A", "post_excite_B", "last_invalid_age_A", "last_invalid_age_B"]
+  },
+  "reviewed_counts": {
+    "released_rows": 4746, "herald": 361, "also_markers": 248, "N": 245, "K": 196,
+    "matrix": [[23,3,4,23],[33,11,5,30],[22,10,6,24],[4,20,21,6]]
+  },
+  "limitations": [
+    "Released records are broadly two-photon preselected, not full raw timetag acquisition; no excluded-attempt or first-photon reconstruction.",
+    "No-click readouts are retained with sign -1, never discarded.",
+    "Timestamp is naive calendar time, not certified UTC.",
+    "Counts in this registry are reviewed derived records, not raw reexecution.",
+    "Conditional exclusion targets local-response realization plus settings, herald/readout, calibration and fixed-N assumptions; no IDT/QM acceptance or unconditional primitive rejection.",
+    "Retrospective dataset/policy selection and unverified calibration/stopping provenance are outside the per-run conditional risk guarantee."
+  ]
+}

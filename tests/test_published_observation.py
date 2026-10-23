@@ -313,7 +313,10 @@ class PublishedObservationTests(unittest.TestCase):
                 limits = object_fields(request["limits"])
                 current = pipeline.run_batch([spec], parse_limits(limits))[0].report
                 self.assertEqual(semantic_report(current), semantic_report(object_fields(report)))
-                self.assertEqual(current["empirical_status"], "not_tested")
+                # Bell adds a scoped empirical test; its pinned semantics remain checked above.
+                expected_empirical = ("conditional_statistical_exclusion"
+                                      if family == "bell_local_response" else "not_tested")
+                self.assertEqual(current["empirical_status"], expected_empirical)
         self.assertIn("universe_bench", seen)
 
     def test_existing_cli_and_exit_statuses_preserve_descriptive_completion(self) -> None:

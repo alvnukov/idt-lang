@@ -1,0 +1,18 @@
+[
+  {"id":"bell_local_0000","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":1,"B0":1,"B1":1},
+  {"id":"bell_local_0001","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":1,"B0":1,"B1":-1},
+  {"id":"bell_local_0010","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":1,"B0":-1,"B1":1},
+  {"id":"bell_local_0011","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":1,"B0":-1,"B1":-1},
+  {"id":"bell_local_0100","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":-1,"B0":1,"B1":1},
+  {"id":"bell_local_0101","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":-1,"B0":1,"B1":-1},
+  {"id":"bell_local_0110","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":-1,"B0":-1,"B1":1},
+  {"id":"bell_local_0111","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":1,"A1":-1,"B0":-1,"B1":-1},
+  {"id":"bell_local_1000","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":1,"B0":1,"B1":1},
+  {"id":"bell_local_1001","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":1,"B0":1,"B1":-1},
+  {"id":"bell_local_1010","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":1,"B0":-1,"B1":1},
+  {"id":"bell_local_1011","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":1,"B0":-1,"B1":-1},
+  {"id":"bell_local_1100","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":-1,"B0":1,"B1":1},
+  {"id":"bell_local_1101","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":-1,"B0":1,"B1":-1},
+  {"id":"bell_local_1110","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":-1,"B0":-1,"B1":1},
+  {"id":"bell_local_1111","family":"bell_local_response","experiment":"hensen2015_fixed_n_v1","bridge":"local_response_fixed_n_v1","A0":-1,"A1":-1,"B0":-1,"B1":-1}
+]

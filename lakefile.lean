@@ -169,6 +169,7 @@ lean_lib Proofs where
     `Proofs.MetaLang.V8PrimitiveEmpiricalConstraintLedger,
     `Proofs.QMClosure.BoundaryReversibleCompletionProbe,
     `Proofs.QMClosure.ContextFirstBellCountermodel,
+    `Proofs.QMClosure.BellLocalTrialNull,
     `Proofs.QMClosure.ContextFirstReadoutUnderdeterminationProbe,
     `Proofs.QMClosure.ContextualNoSignallingPRCountermodel,
     `Proofs.QMClosure.OrientedRelationalProcessCountermodel,
