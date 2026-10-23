@@ -1,0 +1,18 @@
+{
+  "schema": "idt-rational-phase-search-config/1",
+  "candidate_ids": ["rational_scalar_quadratic", "rational_dual_quadratic", "rational_gaussian_quadratic", "rational_weighted_two_quadratic", "rational_gaussian_quartic"],
+  "denominator_min": 1,
+  "denominator_max": 8,
+  "coordinate_radius": 2,
+  "coordinate_rule": "sorted unique Fraction(n,d), -2*d<=n<=2*d, 1<=d<=8",
+  "unit_filter": "W(u)=1",
+  "matrix_states": "all_selected_units",
+  "matrix_actions": "all_selected_units",
+  "matrix_depth": 1,
+  "clip_products_to_grid": false,
+  "max_multiplications": 8,
+  "scalar_seeds": [[1, 0]],
+  "plane_seeds": [[1, 0], [1, 1]],
+  "readout": "W(x+1)/(W(x+1)+W(x-1))",
+  "scope": "selected_rational_grid_supplied_operations_readout_and_trace_bound_only"
+}
