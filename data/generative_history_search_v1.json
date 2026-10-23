@@ -1,0 +1,28 @@
+{
+  "schema": "idt-generative-history-search-config/1",
+  "candidate_ids": [
+    "history_c2_diagonal", "history_c4_diagonal", "history_c6_diagonal", "history_c8_diagonal",
+    "history_c3_triangle", "history_c4_raw_cardinality", "history_c4_residual_l1", "history_c4_diagonal_square",
+    "history_c6_kernel_a2_n4", "history_c6_kernel_a2_n3", "history_c6_kernel_a2_n2", "history_c6_kernel_a2_n1",
+    "history_c6_kernel_a2_p0", "history_c6_kernel_a2_p1", "history_c6_kernel_a2_p2", "history_c6_kernel_a2_p3", "history_c6_kernel_a2_p4",
+    "history_c8_kernel_a2_n4", "history_c8_kernel_a2_n3", "history_c8_kernel_a2_n2", "history_c8_kernel_a2_n1",
+    "history_c8_kernel_a2_p0", "history_c8_kernel_a2_p1", "history_c8_kernel_a2_p2", "history_c8_kernel_a2_p3", "history_c8_kernel_a2_p4",
+    "history_c8_quartic"
+  ],
+  "bag_total_bound": 2,
+  "cyclic_orders": [2, 3, 4, 6, 8],
+  "kernel_a2_grid": [-4, -3, -2, -1, 0, 1, 2, 3, 4],
+  "bag_order": "lexicographic_count_vectors",
+  "all_ordered_pairs": true,
+  "all_ordered_triples": true,
+  "all_generator_insertions": true,
+  "descent_continuations": "all_bounded_bags_both_left_and_right",
+  "clip_operation_outputs": false,
+  "arithmetic": "exact_integer_twice_weights",
+  "kernel_selection": {
+    "orders": [3, 4],
+    "kernel_a2_b2_grid": [-4, -3, -2, -1, 0, 1, 2, 3, 4],
+    "criterion": "reference_invariant_cancellation_not_isolated_zero"
+  },
+  "scope": "fixed_context_local_toy_histories_not_universal_or_physical"
+}
