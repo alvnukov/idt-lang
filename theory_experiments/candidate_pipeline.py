@@ -38,6 +38,11 @@ from theory_experiments.native_bell_bridge import (
     evaluate_native_bell_bridge,
     parse_native_bell_bridge,
 )
+from theory_experiments.native_readout_probe import (
+    NativeReadoutProbe,
+    evaluate_native_readout_probe,
+    parse_native_readout_probe,
+)
 from theory_experiments.physics_screen import (
     ChiralSpectrum,
     PhysicsCandidate,
@@ -73,7 +78,7 @@ from theory_experiments.universe_bench import (
 
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
-    | PublishedObservation | BellLocalResponse | NativeBellBridge
+    | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -86,6 +91,8 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
     "theory_experiments/universe_bench.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
+    "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
+    "Proofs/QMClosure/NativeReadoutSelection.lean",
     "Proofs/QMClosure/NativeBellScaledBridge.lean",
     "theory_experiments/published_observation.py",
     "theory_experiments/bell_trial_test.py", "scripts/replay_hensen2015.py",
@@ -118,6 +125,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "native_readout_probe":
+        return parse_native_readout_probe(row)
     if row.get("family") == "native_bell_bridge":
         return parse_native_bell_bridge(row)
     if row.get("family") == "bell_local_response":
@@ -164,7 +173,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, NativeBellBridge):
+    if isinstance(candidate, NativeReadoutProbe):
+        checks, details = evaluate_native_readout_probe(candidate, limits)
+    elif isinstance(candidate, NativeBellBridge):
         checks, details = evaluate_native_bell_bridge(candidate, limits)
     elif isinstance(candidate, BellLocalResponse):
         checks, details = evaluate_bell_local_response(candidate, limits)
@@ -202,7 +213,7 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 else "no_primitive_rejection_descriptive_comparison_only"
                                 if isinstance(candidate, PublishedObservation)
                                 else "no_primitive_rejection_execution_diagnostics_only"
-                                if isinstance(candidate, NativeBellBridge)
+                                if isinstance(candidate, (NativeBellBridge, NativeReadoutProbe))
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 

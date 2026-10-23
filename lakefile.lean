@@ -181,6 +181,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeAmplitudeObservability,
     `Proofs.QMClosure.NativeOperationBridge,
     `Proofs.QMClosure.NativeBellScaledBridge,
+    `Proofs.QMClosure.NativeReadoutSelection,
     `Proofs.QMClosure.ProjectiveActionProof,
     `Proofs.QMClosure.StringTheoryPrimitiveHintAudit,
     `Proofs.QMClosure.TwoPostulateReconstructionImportAudit,

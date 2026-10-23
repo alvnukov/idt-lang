@@ -4,6 +4,7 @@ import Proofs.QMClosure.PublishedSorkinNull
 import Proofs.QMClosure.SorkinErrorBudget
 import Proofs.QMClosure.BellLocalTrialNull
 import Proofs.QMClosure.NativeBellScaledBridge
+import Proofs.QMClosure.NativeReadoutSelection
 
 namespace IDT.MetaLang.V8
 
@@ -260,6 +261,31 @@ def currentCheckerResearchProgram : List CheckerResearchWorkItem := [
       "physical_preparability_and_projective_reversibility_not_derived",
       "Lean_mathematical_artifact_is_not_formal_verification_of_Python",
       "no_dataset_comparison_no_Born_tensor_or_QM_closure_upgrade"] },
+  { id := "native_arbitrary_integer_response_selection_and_operational_wall"
+    track := .primitiveResearch
+    state := .blocked
+    inputs := ["pair_history_signed_scalar_realization", "pair_history_gaussian_realization",
+      "data/native_readout_controls.json", "RecordReplicationAndLocalReadout",
+      "InternalDetectorReadoutSeparation"]
+    requiredOutputs := ["Proofs/QMClosure/NativeReadoutSelection.lean",
+      "theory_experiments/native_readout_probe.py", "tests/test_native_readout_probe.py",
+      "NATIVE_READOUT_SELECTION_RESULT.md", "append_only_candidate_history_observation"]
+    acceptance := ["arbitrary_real_valued_response_on_integer_amplitudes_not_assumed_even_or_monomial",
+      "nonnegative_g_zero_at_zero_positive_at_one_and_supplied_reference_row_invariance_iff_quadratic",
+      "native_scalar_weight_remains_n_squared_separate_from_selected_detector_response",
+      "weight_response_classifier_only_on_reachable_integer_squares_not_Gaussian_off_real",
+      "reference_family_C_x_y_1_0_and_Bob_I_H_are_supplied_not_established_accessibility",
+      "exact_source_binding_and_actual_native_raw_weight_trace_before_response_normalization",
+      "finite_symmetric_Bell_survival_does_not_select_unique_detector_response",
+      "spike49_bounded_agreement_not_universal_reference_invariance",
+      "completion_even_when_selected_response_diagnostic_signals_conditional_incompatibility",
+      "preserve_every_old_history_file_baseline_and_candidate_semantics"]
+    blockers := ["primitive_to_all_reference_preparations_and_physical_local_H_bridge_missing",
+      "entrywise_context_independent_normalized_response_and_no_extra_apparatus_freedoms_external",
+      "ideal_zero_response_and_positive_unit_response_are_math_hypotheses_not_empirical_certification",
+      "physical_no_signalling_not_established_by_finite_or_conditional_mathematical_artifact",
+      "old_combined_operational_readout_obligation_not_fully_closed",
+      "no_Gaussian_off_real_continuous_QM_SM_gravity_or_empirical_closure"] },
   { id := "hensen2015_local_response_conditional_fixed_trial_test"
     track := .checker
     state := .active
@@ -322,6 +348,43 @@ def nativeBellBridgeConditionalEvidence : NativeBellBridgeEvidenceRecord := {
   pythonFormallyVerified := false
   empiricalComparisonPerformed := false
   qmDerived := false
+}
+
+inductive NativeReadoutSelectionRecordedResult where
+  | conditionalArbitraryIntegerResponseClassifierWithOperationalBridgeWall
+deriving DecidableEq, Repr
+
+structure NativeReadoutSelectionEvidenceRecord where
+  result : NativeReadoutSelectionRecordedResult
+  conditionalClassifier :
+    ∀ (g : ℤ → ℝ), IDT.QMClosure.NativeReadoutSelection.Admissible g →
+      (IDT.QMClosure.NativeReadoutSelection.ReferenceInvariant g ↔
+        ∀ n : ℤ, g n = g 1 * (n : ℝ) ^ 2)
+  retainedControlCount : Nat
+  primitiveOperationalBridgeEstablished : Bool
+  physicalReferenceAccessibilityEstablished : Bool
+  contextIndependentDetectorResponseDerived : Bool
+  oldCombinedOperationalReadoutObligationClosed : Bool
+  gaussianOffRealResponseClassified : Bool
+  continuousResponseClassified : Bool
+  pythonFormallyVerified : Bool
+  empiricalComparisonPerformed : Bool
+  fullQmSmOrGravityProved : Bool
+
+/-- The theorem field is checked; every physical/operational upgrade remains blocked. -/
+def nativeReadoutSelectionConditionalEvidence : NativeReadoutSelectionEvidenceRecord := {
+  result := .conditionalArbitraryIntegerResponseClassifierWithOperationalBridgeWall
+  conditionalClassifier := IDT.QMClosure.NativeReadoutSelection.reference_invariant_iff_quadratic
+  retainedControlCount := 12
+  primitiveOperationalBridgeEstablished := false
+  physicalReferenceAccessibilityEstablished := false
+  contextIndependentDetectorResponseDerived := false
+  oldCombinedOperationalReadoutObligationClosed := false
+  gaussianOffRealResponseClassified := false
+  continuousResponseClassified := false
+  pythonFormallyVerified := false
+  empiricalComparisonPerformed := false
+  fullQmSmOrGravityProved := false
 }
 
 inductive BellTrialRecordedResult where
