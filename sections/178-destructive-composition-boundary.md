@@ -30,6 +30,43 @@ with repeated copies of that companion. D also passes arbitrarily many
 self-copy tests, as established in the reused module. Neither fact selects
 strong positivity by itself.
 
+## Checked fixed-seed integer and rational reference tests
+
+The imported artifact
+[`FixedCancellationSeed.lean`](../Proofs/QMClosure/FixedCancellationSeed.lean),
+namespace `IDT.QMClosure.FixedCancellationSeed`, fixes the particular supplied
+seed C = t tᵀ with t = (1,1,−1). `seed_normalized` proves total weight 1,
+and `seed_all_copy_events_nonnegative` proves nonnegative local event weights
+for every tensor power of C.
+
+For any finite candidate carrier and arbitrary rational kernel K:
+
+- `integer_vector_is_seed_event` constructs an actual correlated event E with
+  weight exactly `quadratic K v` for every integer vector v. Explicit unary
+  labels use k = 1 + Σ |vᵢ| copies, with distinct histories of each sign;
+  reference labels may be reused at different candidate indices.
+- `rational_vector_is_scaled_seed_event` clears a common positive denominator
+  d and constructs E with weight exactly d² · `quadratic K q` for every
+  rational vector q. This is an exact rational certificate, not an approximation
+  or an event-dependent renormalization.
+- `seed_tests_force_quadratic_nonnegative` proves `QuadraticNonnegative K`
+  over rational vectors if **every** correlated event of K ⊗ C^⊗k has
+  nonnegative weight for **every** finite copy count k.
+- `negative_quadratic_yields_negative_seed_event` turns every negative rational
+  quadratic direction into a negative event at some finite copy count.
+  `candidate_rejected_by_fixed_seed` recovers an event of exact weight −1/2
+  for the candidate D above.
+
+No symmetry is required for these rational statements; positive
+semidefiniteness terminology requires a supplied symmetric representation.
+The copy bound is nonoptimal, and these are no algorithmic speed claims.
+Pair-kernel representation, the tensor/event rules, availability of this exact
+seed, unlimited copies, and admission of all correlated events remain supplied
+assumptions. The theorem's universal positivity hypothesis is not established
+by checking finitely many events. Real-continuum and complex extensions,
+detector probabilities, Born readout, and QM closure are not supplied by this
+result.
+
 ## Checked outer countermodel: cancellation and composition do not fix I3
 
 For any finite rational amplitude vector a with sum a = 1, define
@@ -64,11 +101,16 @@ detector-outcome probabilities.
 The following are recorded in Lean as `paperOnlyPendingFormalization`, not as
 checked universal theorems:
 
-1. Supply the exact rank-one seed C = t tᵀ, t = (1,1,−1). Its kth tensor power
-   has (3^k+1)/2 positive and (3^k−1)/2 negative amplitudes. Correlated events
-   can therefore generate integer reference coefficients v when
-   3^k ≥ 2 max |v| + 1. With all such events admitted, this supplies a route
-   from repeated-seed compatibility to real positive semidefiniteness.
+1. The remaining exact-seed counting argument states that C^⊗k has
+   (3^k+1)/2 positive and (3^k−1)/2 negative amplitudes, giving the sufficient
+   copy bound 3^k ≥ 2 max |v| + 1. These exact counts and this sharper bound
+   remain unformalized, as does extension from rational to real quadratic
+   nonnegativity (real positive semidefiniteness when symmetry is supplied).
+   Integer encoding and rational certificates are already checked by the
+   nonoptimal unary construction above. `fixedSeedArgument` therefore remains
+   `paperOnlyPendingFormalization`; the narrower ledger entries
+   `fixedSeedGeneratesIntegerReferenceCoefficients` and
+   `fixedSeedRationalQuadraticCertificates` are `compiledArtifact`.
 2. Assume a Hermitian representation D = A+iB. For real vectors x,y and
    w = x⊗y−y⊗x, the square-composite form is
 

@@ -1,4 +1,5 @@
 import Proofs.QMClosure.CoherentReferencePositivity
+import Proofs.QMClosure.FixedCancellationSeed
 
 namespace IDT.QMClosure.DestructiveCompositionBoundary
 
@@ -146,9 +147,10 @@ theorem quartic_example_disjoint_events :
 /-!
 ## Machine-visible research ledger
 
-Only the entries marked `compiledArtifact` name theorems proved above. The
-paper-only entries record arguments awaiting formalization, not checked
-universal theorems. None of the statuses is a manifest proof-status upgrade.
+Entries marked `compiledArtifact` name theorems proved above or in imported
+modules, including `FixedCancellationSeed`. Paper-only entries record the
+remaining unformalized extensions, not checked universal theorems. None of
+these local research statuses is a manifest proof-status upgrade.
 -/
 
 inductive ResearchStatus where
@@ -162,6 +164,7 @@ inductive ResearchItem where
   | quarticNormalizedTensorAndCoarseClosure
   | quarticCancellationWithNonzeroThirdOrder
   | fixedSeedGeneratesIntegerReferenceCoefficients
+  | fixedSeedRationalQuadraticCertificates
   | hermitianRealSquareTestImpliesComplexPositivity
   | imperfectNegativeSeedParityLimit
   | pairArityAndThirdOrderOrigin
@@ -173,8 +176,9 @@ inductive ResearchItem where
 def researchStatus : ResearchItem → ResearchStatus
   | .oneDestructiveCompanionInsufficient
   | .quarticNormalizedTensorAndCoarseClosure
-  | .quarticCancellationWithNonzeroThirdOrder => .compiledArtifact
+  | .quarticCancellationWithNonzeroThirdOrder
   | .fixedSeedGeneratesIntegerReferenceCoefficients
+  | .fixedSeedRationalQuadraticCertificates => .compiledArtifact
   | .hermitianRealSquareTestImpliesComplexPositivity
   | .imperfectNegativeSeedParityLimit => .paperOnlyPendingFormalization
   | .pairArityAndThirdOrderOrigin
@@ -196,11 +200,16 @@ def compositionRouteAssumptions : List SuppliedAssumption :=
     .unlimitedIndependentCopies, .allCorrelatedEventsAdmitted,
     .destructiveCompanionAvailable]
 
-/-- Paper argument, NOT a checked theorem: the exact seed C = t tᵀ with
-t=(1,1,-1) must be supplied as an available companion.
-Its kth tensor power has (3^k+1)/2 positive and (3^k-1)/2 negative amplitudes.
-Correlated events encode any integer vector v once 3^k ≥ 2 max |v| + 1;
-under the supplied composition assumptions this would force real PSD. -/
+/-- Remaining paper-only extension, NOT a checked theorem: the exact counts
+(3^k+1)/2 positive and (3^k-1)/2 negative amplitudes, the resulting sufficient
+bound 3^k ≥ 2 max |v| + 1, and extension to real quadratic nonnegativity
+(real PSD when symmetry is supplied) are not formalized here.
+The imported `FixedCancellationSeed` module DOES prove integer event encoding
+by a nonoptimal unary construction with k=1+Σ natAbs(v_i), rational certificates
+up to a positive denominator square, and `QuadraticNonnegative` over ℚ under
+the all-copy/all-correlated-event positivity hypothesis. No symmetry is needed
+for that rational conclusion. The particular seed C=t tᵀ, t=(1,1,-1), and the
+pair-kernel/tensor/event rules remain supplied assumptions, not conclusions from primitives. -/
 def fixedSeedArgument : ResearchStatus := .paperOnlyPendingFormalization
 
 /-- Paper argument, NOT a checked theorem: assuming a Hermitian representation

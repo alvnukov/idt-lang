@@ -97,6 +97,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.RecordReplicationAndLocalReadout,
     `Proofs.QMClosure.LinearMixingCoordinateBoundary,
     `Proofs.QMClosure.CoherentReferencePositivity,
+    `Proofs.QMClosure.FixedCancellationSeed,
+    `Proofs.QMClosure.QuarticContextTransport,
     `Proofs.QMClosure.DestructiveCompositionBoundary,
     `Proofs.QMClosure.ArityBoundsInterferenceOrder,
     `Proofs.QMClosure.SorkinGradeIffPairwiseGeneration,
