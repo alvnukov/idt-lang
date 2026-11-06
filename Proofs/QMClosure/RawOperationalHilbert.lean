@@ -33,7 +33,7 @@ namespace Data
 
 variable {V : Type*} (d : Data V)
 
-private def normalizedLaws : Laws (DiagonalNormalization.normalized (firstChannel d.operation)) :=
+def normalizedLaws : Laws (DiagonalNormalization.normalized (firstChannel d.operation)) :=
   CompleteOperation.normalizedLaws d.operation d.square d.medial
 
 /-- The group is an output, with its zero fixed by the raw chosen zero. -/
@@ -47,11 +47,11 @@ def Carrier (d : Data V) := V
 
 instance : AddCommGroup (Carrier d) := d.derivedGroup
 
-private def normalizedOperation : (Carrier d × Carrier d) →+ (Carrier d × Carrier d) :=
+def normalizedOperation : (Carrier d × Carrier d) →+ (Carrier d × Carrier d) :=
   letI : Zero V := ⟨d.chosenZero⟩
   canonicalOperation d.normalizedLaws
 
-private theorem reconstruction :
+theorem reconstruction :
     OperationalQuadraticReconstruction.Reconstruction (V := Carrier d)
       d.normalizedOperation d.weight := by
   letI : Zero V := ⟨d.chosenZero⟩

@@ -464,29 +464,83 @@ def compositeProductControls : ResearchTask := {
 
 def operationalContextQuotient : ResearchTask := {
   id := "operational_context_quotient"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Planned operational contexts are one-hole compositions selecting either first or second output, with the hole in either input slot and all native reference preparations.",
-    "Planned ObsEq means equality of readout for all such future contexts; square-swap and medial laws are supplied observationally.",
-    "The remaining raw-data hypotheses are retained: chosen zero, real readout, zero vacuum weight, global nonnegativity and conservation on all input pairs."]
+    "Generated contexts are finite one-hole compositions selecting either first or second output, with the hole in either input slot and all native reference preparations.",
+    "ObservedData supplies universal observational square-swap and first-channel mediality relative to all tests in this grammar.",
+    "Chosen zero and real readout with zero vacuum weight, global nonnegativity and conservation on all input pairs remain supplied."]
   conclusions := [
-    "Analytic target: ObsEq is a congruence and observational square-swap and mediality become exact laws on the quotient.",
-    "Analytic target: the quotient supplies exact RawOperationalHilbert.Data and hence a Hilbert realization.",
-    "Analytic target: eventual feature equality is exactly equality of all future context tests, with a separate single-output coherent-reference separation result."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "UNCHECKED planned artifact: Proofs/QMClosure/OperationalContextQuotient.lean.",
-    "UNCHECKED planned artifact: Proofs/QMClosure/RawOperationalSeparation.lean."]
+    "ObservationalEq is a congruence and the largest weight-preserving relation stable under both outputs in both input slots.",
+    "Observed square-swap and mediality become exact laws on the quotient, yielding RawOperationalHilbert.Data and its Hilbert realization.",
+    "For exact raw data, diagonal normalization preserves quadratic difference weight; each raw output in either input slot divides difference weight by two.",
+    "A mathematical separating reference gives raw first-output weight equal to half the quadratic difference weight.",
+    "Feature equality is exactly equality of all generated future-context tests, equivalently equality of first-output tests with every native reference.",
+    "The quotient feature is injective, and the original feature image is dense."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/OperationalContextQuotient.lean"
+      declarations := [
+        "IDT.QMClosure.OperationalContextQuotient.Context",
+        "IDT.QMClosure.OperationalContextQuotient.ObservationalEq",
+        "IDT.QMClosure.OperationalContextQuotient.output_congr",
+        "IDT.QMClosure.OperationalContextQuotient.relation_le_observationalEq",
+        "IDT.QMClosure.OperationalContextQuotient.ObservedData.quotientData",
+        "IDT.QMClosure.OperationalContextQuotient.ObservedData.feature_eq_iff_observationalEq",
+        "IDT.QMClosure.OperationalContextQuotient.ObservedData.observationalEq_iff_single_tests",
+        "IDT.QMClosure.OperationalContextQuotient.ObservedData.quotient_feature_injective",
+        "IDT.QMClosure.OperationalContextQuotient.ObservedData.denseRange_feature"] },
+    { sourcePath := "Proofs/QMClosure/RawOperationalSeparation.lean"
+      declarations := [
+        "IDT.QMClosure.RawOperationalSeparation.diagonal_distance",
+        "IDT.QMClosure.RawOperationalSeparation.raw_first_left_distance",
+        "IDT.QMClosure.RawOperationalSeparation.raw_first_right_distance",
+        "IDT.QMClosure.RawOperationalSeparation.raw_second_left_distance",
+        "IDT.QMClosure.RawOperationalSeparation.raw_second_right_distance",
+        "IDT.QMClosure.RawOperationalSeparation.separating_reference",
+        "IDT.QMClosure.RawOperationalSeparation.feature_eq_iff_raw_tests"] }]
+  plannedArtifacts := []
   dependencies := ["raw_operational_hilbert_facade"]
   limits := [
-    "No checked quotient or operational separation result is recorded yet.",
+    "All future tests means only the explicit generated one-hole grammar with all native references, not an arbitrary physical experiment.",
+    "The universal observed laws are premises, not finite certification or an algorithm.",
     "Physical justification of the original laws and coverage of the reference/context family remain open.",
-    "No copying of unknown inputs or manufacture of an unknown-input phase process is established."] }
+    "The separating reference is mathematical; no copying or manufacture of an unknown-input phase process is established.",
+    "Density is not surjectivity and does not establish physically available completion states or processes."] }
+
+def operationalContextControls : ResearchTask := {
+  id := "operational_context_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Explicit supplied complex-amplitude carrier with a Boolean NAND label and readout ignoring that label."]
+  conclusions := [
+    "An actual ObservedData instance satisfies the universal observed laws, nonnegativity, zero vacuum weight and conservation.",
+    "Exact raw square-swap fails on labels (true,false), witnessed at the second output label.",
+    "Exact raw first-channel mediality fails on labels (true,true,false,false).",
+    "Preparations with amplitudes 1 and i have equal bare readout, but one legal first-output reference context distinguishes them with weights 1 and 0.",
+    "Bare readout equality is neither observational equivalence nor a congruence for this control."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/OperationalContextControls.lean"
+      declarations := [
+        "IDT.QMClosure.OperationalContextControls.observedData",
+        "IDT.QMClosure.OperationalContextControls.observed_square",
+        "IDT.QMClosure.OperationalContextControls.observed_medial",
+        "IDT.QMClosure.OperationalContextControls.exact_square_fails",
+        "IDT.QMClosure.OperationalContextControls.exact_medial_fails",
+        "IDT.QMClosure.OperationalContextControls.same_present_weight",
+        "IDT.QMClosure.OperationalContextControls.referenceProbe_one",
+        "IDT.QMClosure.OperationalContextControls.referenceProbe_I",
+        "IDT.QMClosure.OperationalContextControls.same_weight_not_observational",
+        "IDT.QMClosure.OperationalContextControls.bare_weight_equality_not_congruent"] }]
+  plannedArtifacts := []
+  dependencies := ["operational_context_quotient"]
+  limits := [
+    "No identification of this control's quotient with the complex plane is recorded.",
+    "The supplied control is not a justification of physical primitive laws, physical reference availability or actualization."] }
 
 def recordEffects : ResearchTask := {
   id := "record_effects_after_completion"
-  stage := .analyticAwaitingFormalization
+  stage := .inFormalization
   review := .notYetKernelChecked
   assumptions := [
     "Canonical completion plus finite dominated positive quadratic phase-invariant branch forms resolving the total readout Q, with sum_r q_r(x)=Q(x) for every x, or a natural channel resolution."]
@@ -494,9 +548,12 @@ def recordEffects : ResearchTask := {
     "Analytic target: bounded complex effects summing to identity.",
     "Analytic target: natural affine channels descend to contractions after null quotient under the resolution contract."]
   checkedEvidence := []
-  plannedArtifacts := ["Formalize bounded effects and resolved channel descent after completion; artifact name not assigned."]
+  plannedArtifacts := [
+    "UNCHECKED in-progress artifact: Proofs/QMClosure/QuadraticReadoutEffects.lean."]
   dependencies := ["canonical_hilbert_completion", "mixer_record_naturality", "positive_quadratic_polarization"]
-  limits := ["No actualization, projectivity, repeatability or state update is derived."] }
+  limits := [
+    "No checked effects artifact is recorded yet.",
+    "No actualization, projectivity, repeatability or state update is established."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -532,7 +589,7 @@ def researchTasks : List ResearchTask := [
   rawMedialAddition, diagonalNormalization, canonicalHilbertCompletion,
   rawOperationalHilbertFacade, normalizedMixerGeneratedProcessWall,
   canonicalHilbertUniqueness, compositeProductKernel, compositeProductControls,
-  operationalContextQuotient, recordEffects]
+  operationalContextQuotient, operationalContextControls, recordEffects]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
