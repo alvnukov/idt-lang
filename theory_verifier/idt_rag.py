@@ -708,10 +708,20 @@ def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
             "command": list(check.command),
             "stdout_tail": tail_text(completed.stdout),
             "stderr_tail": tail_text(completed.stderr),
+            **failure_diagnostics(
+                completed.stdout if completed.returncode else "",
+                completed.stderr if completed.returncode else "",
+            ),
             "proof_boundary": "check_result_is_not_formal_proof",
         }
     except subprocess.TimeoutExpired as error:
         duration = time.monotonic() - started
+        stdout = error.stdout.decode("utf-8", errors="replace") if isinstance(error.stdout, bytes) else error.stdout or ""
+        stderr = (
+            error.stderr.decode("utf-8", errors="replace")
+            if isinstance(error.stderr, bytes)
+            else error.stderr if isinstance(error.stderr, str) else "timeout expired"
+        )
         return {
             "schema": "idt-v8-check-evidence/1",
             "name": check.name,
@@ -720,10 +730,37 @@ def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
             "exit_code": -1,
             "duration_seconds": round(duration, 3),
             "command": list(check.command),
-            "stdout_tail": tail_text(error.stdout if isinstance(error.stdout, str) else ""),
-            "stderr_tail": tail_text(error.stderr if isinstance(error.stderr, str) else "timeout expired"),
+            "stdout_tail": tail_text(stdout),
+            "stderr_tail": tail_text(stderr),
+            **failure_diagnostics(stdout, stderr),
             "proof_boundary": "check_result_is_not_formal_proof",
         }
+
+
+def failure_diagnostics(stdout: str, stderr: str) -> JsonObject:
+    """Keep early Lean errors visible even when warning output fills the tails."""
+    diagnostics: list[JsonObject] = []
+    count = 0
+    truncated = False
+    for stream, output in (("stdout", stdout), ("stderr", stderr)):
+        lines = output.splitlines()
+        retained = 0
+        for index, line in enumerate(lines):
+            if re.match(r"(?:error:|.+:\d+:\d+:\s*error:)", line.lstrip()) is None:
+                continue
+            count += 1
+            if retained >= 4:
+                truncated = True
+                continue
+            excerpt = "\n".join(lines[index:index + 3])
+            truncated = truncated or len(excerpt) > 800
+            diagnostics.append({"stream": stream, "line": index + 1, "excerpt": excerpt[:800]})
+            retained += 1
+    return {
+        "diagnostics": diagnostics,
+        "diagnostic_count": count,
+        "diagnostics_truncated": truncated,
+    }
 
 
 def tail_text(text: str, max_lines: int = 20, max_chars: int = 4000) -> str:
@@ -1034,11 +1071,23 @@ def research_context_text(result: Mapping[str, object]) -> str:
 
 
 def check_evidence_text(result: Mapping[str, object]) -> str:
-    return (
+    summary = (
         f"IDT check: name={result.get('name', '')}; ok={result.get('ok', False)}; "
         f"exit_code={result.get('exit_code', '')}; duration={result.get('duration_seconds', '')}s; "
         "proof_boundary=check_result_is_not_formal_proof"
     )
+    lines = [summary]
+    diagnostics = result.get("diagnostics", [])
+    if isinstance(diagnostics, list):
+        for item in diagnostics:
+            diagnostic = require_json_object(item, "diagnostic")
+            lines.append(
+                f"{diagnostic.get('stream', '')} line {diagnostic.get('line', '')}:\n"
+                f"{diagnostic.get('excerpt', '')}"
+            )
+    if result.get("diagnostics_truncated"):
+        lines.append(f"Diagnostics truncated; detected error lines={result.get('diagnostic_count', 0)}")
+    return "\n".join(lines)
 
 
 def graph_diff_text(result: Mapping[str, object]) -> str:

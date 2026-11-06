@@ -420,6 +420,96 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertEqual(True, result["ok"])
             self.assertEqual("check_result_is_not_formal_proof", result["proof_boundary"])
 
+    def test_mcp_lean_failure_retains_early_errors_before_warning_tail(self) -> None:
+        stdout_error = "Proofs/A.lean:4:7: error: type mismatch"
+        stderr_error = "error: Proofs/B.lean:9:2: tactic failed"
+        warnings = "\n".join(f"Proofs/A.lean:{line}:1: warning: unused variable" for line in range(100))
+        stdout = f"{stdout_error}\n  actual type\n  expected type\n{warnings}"
+        stderr = f"{stderr_error}\n  remaining goal\n{warnings}"
+        with tempfile.TemporaryDirectory() as raw_dir:
+            server = IdtMcpServer(load_fixture_index(write_fixture_repo(Path(raw_dir))))
+            with patch(
+                "theory_verifier.idt_rag.subprocess.run",
+                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 1, stdout, stderr),
+            ):
+                response = server.handle_payload({
+                    "jsonrpc": "2.0",
+                    "id": "lean-failed",
+                    "method": "tools/call",
+                    "params": {"name": "idt_lean_build_target", "arguments": {"target": "Fixture"}},
+                })
+
+            if response is None:
+                raise AssertionError("expected response")
+            result = require_mapping(response["result"])
+            evidence = require_mapping(result["structuredContent"])
+            self.assertEqual(False, evidence["ok"])
+            self.assertEqual(1, evidence["exit_code"])
+            self.assertNotIn(stdout_error, require_string(evidence["stdout_tail"]))
+            self.assertNotIn(stderr_error, require_string(evidence["stderr_tail"]))
+            diagnostics = [require_mapping(item) for item in require_list(evidence["diagnostics"])]
+            self.assertEqual(["stdout", "stderr"], [item["stream"] for item in diagnostics])
+            self.assertEqual([1, 1], [item["line"] for item in diagnostics])
+            self.assertIn("expected type", require_string(diagnostics[0]["excerpt"]))
+            self.assertIn(stderr_error, require_string(diagnostics[1]["excerpt"]))
+            self.assertEqual(2, evidence["diagnostic_count"])
+            self.assertEqual(False, evidence["diagnostics_truncated"])
+            text = require_string(require_mapping(require_list(result["content"])[0])["text"])
+            self.assertIn(stdout_error, text)
+            self.assertIn(stderr_error, text)
+
+    def test_lean_failure_diagnostics_bound_count_and_excerpt_length(self) -> None:
+        output = "\n".join(f"Proofs/A.lean:{line}:1: error: {'x' * 1000}" for line in range(12))
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+            with patch(
+                "theory_verifier.idt_rag.subprocess.run",
+                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 1, output, output),
+            ):
+                evidence = index.lean_build_target("Fixture")
+
+            diagnostics = [require_mapping(item) for item in require_list(evidence["diagnostics"])]
+            self.assertEqual(8, len(diagnostics))
+            self.assertEqual(24, evidence["diagnostic_count"])
+            self.assertEqual(True, evidence["diagnostics_truncated"])
+            self.assertEqual(["stdout"] * 4 + ["stderr"] * 4, [item["stream"] for item in diagnostics])
+            self.assertTrue(all(len(require_string(item["excerpt"])) <= 800 for item in diagnostics))
+
+    def test_lean_success_does_not_become_failure_from_error_like_output(self) -> None:
+        output = "Proofs/A.lean:1:1: error: quoted diagnostic example"
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+            with patch(
+                "theory_verifier.idt_rag.subprocess.run",
+                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 0, output, ""),
+            ):
+                evidence = index.lean_build_target("Fixture")
+
+            self.assertEqual(True, evidence["ok"])
+            self.assertEqual(0, evidence["exit_code"])
+            self.assertEqual(output, evidence["stdout_tail"])
+            self.assertEqual([], evidence["diagnostics"])
+            self.assertEqual(0, evidence["diagnostic_count"])
+            self.assertEqual(False, evidence["diagnostics_truncated"])
+
+    def test_lean_timeout_preserves_early_error_diagnostics(self) -> None:
+        output = "error: Proofs/A.lean:1:1: tactic failed\n" + "warning: later output\n" * 100
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+            for captured_output in (output, output.encode("utf-8")):
+                with self.subTest(output_type=type(captured_output).__name__), patch(
+                    "theory_verifier.idt_rag.subprocess.run",
+                    side_effect=subprocess.TimeoutExpired(("lake", "build", "Fixture"), 60, output=captured_output),
+                ):
+                    evidence = index.lean_build_target("Fixture")
+
+                self.assertEqual(False, evidence["ok"])
+                self.assertEqual(-1, evidence["exit_code"])
+                self.assertEqual("timeout expired", evidence["stderr_tail"])
+                diagnostics = require_list(evidence["diagnostics"])
+                self.assertEqual(1, len(diagnostics))
+                self.assertIn("tactic failed", require_string(require_mapping(diagnostics[0])["excerpt"]))
+
     def test_leandojo_status_is_optional_and_boundary_limited(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
             index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
