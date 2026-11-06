@@ -192,7 +192,7 @@ def positiveGramKernel : ResearchTask := {
   dependencies := ["positive_quadratic_polarization"]
   limits := [
     "Kernel checked and independently accepted under the stated mathematical assumptions.",
-    "No topology or scalar action on the native carrier is supplied; no Hilbert completion is yet proved."] }
+    "This kernel artifact alone does not construct completion; see canonical_hilbert_completion."] }
 
 def rawMedialAddition : ResearchTask := {
   id := "raw_medial_addition"
@@ -258,24 +258,141 @@ def diagonalNormalization : ResearchTask := {
 
 def canonicalHilbertCompletion : ResearchTask := {
   id := "canonical_hilbert_completion"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "The positive quadratic Hermitian kernel contract and a genuine half for density of the native image."]
+    "Additive group with globally positive real quadratic Q and additive J with J squared equal to minus identity and Q(Jx)=Q(x).",
+    "Density of the feature image additionally uses a supplied additive half with half(x)+half(x)=x."]
   conclusions := [
-    "Analytic construction: free complex space on the carrier, kernel form, null quotient and metric completion.",
-    "Analytic target: additive phi, phi(Jx)=i phi(x), norm(phi(x)) squared equals W(x), dense native image and unique unitary dense realization."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "UNCHECKED in-progress artifact: Proofs/QMClosure/CanonicalQuadraticHilbert.lean.",
-    "Formalize the free-space/null-quotient completion and dense realization.",
-    "Candidate library interfaces only: PreInnerProductSpace.Core and UniformSpace.Completion."]
-  dependencies := ["positive_quadratic_gram_and_hermitian_kernel", "operational_positive_readout"]
+    "The free complex space carries the kernel semidefinite form; separated completion constructs an actual complete complex Hilbert output.",
+    "Feature inner products equal the kernel, squared feature norm equals Q, and the feature respects addition and J.",
+    "Feature equality is exactly Q-null difference, equivalently equality of all canonical coherent-reference readouts.",
+    "The complex span of the feature image is dense in general; the feature image itself is dense with the supplied additive half."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CanonicalQuadraticHilbert.lean"
+      declarations := [
+        "IDT.QMClosure.CanonicalQuadraticHilbert.Free",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.Hilbert",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.inner_feature",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.norm_feature_sq",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.feature_add",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.feature_phase",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.feature_eq_iff",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.feature_eq_iff_all_reference_tests",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.dense_span_feature",
+        "IDT.QMClosure.CanonicalQuadraticHilbert.denseRange_feature"] }]
+  plannedArtifacts := []
+  dependencies := ["positive_quadratic_gram_and_hermitian_kernel"]
   limits := [
-    "Complex structure is an output of the construction, not an assumed native complex scalar action.",
+    "Complex scalars and topology belong to the constructed output, not the native input carrier.",
     "The native carrier may be incomplete or degenerate.",
     "Physical availability of completion states and processes is not established.",
+    "Unitary uniqueness is recorded separately in the accepted canonical_hilbert_uniqueness task.",
     "The original hilbert_carrier_derivation and Born obligations remain open."] }
+
+def rawOperationalHilbertFacade : ResearchTask := {
+  id := "raw_operational_hilbert_facade"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "RawOperationalHilbert.Data on raw V supplies chosen zero, raw complete T, T squared equal to swap and global mediality of its first channel.",
+    "Real W has zero weight at the chosen zero, is globally nonnegative and is conserved on all input pairs.",
+    "No algebraic or topological typeclass on raw V is an input."]
+  conclusions := [
+    "The diagonal-normalized operation reconstructs the canonical additive group, positive quadratic weight, phase and genuine half.",
+    "An actual complete complex Hilbert output and feature map from the original raw V are constructed.",
+    "The feature respects canonical addition and phase, has squared norm W, and identifies exactly null differences and equality of all canonical coherent-reference tests.",
+    "The feature image is dense using the operationally reconstructed half."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawOperationalHilbert.lean"
+      declarations := [
+        "IDT.QMClosure.RawOperationalHilbert.Data",
+        "IDT.QMClosure.RawOperationalHilbert.Data.derivedGroup",
+        "IDT.QMClosure.RawOperationalHilbert.Data.carrier_add",
+        "IDT.QMClosure.RawOperationalHilbert.Data.quadratic",
+        "IDT.QMClosure.RawOperationalHilbert.Data.phase",
+        "IDT.QMClosure.RawOperationalHilbert.Data.Hilbert",
+        "IDT.QMClosure.RawOperationalHilbert.Data.feature",
+        "IDT.QMClosure.RawOperationalHilbert.Data.norm_feature_sq",
+        "IDT.QMClosure.RawOperationalHilbert.Data.feature_add",
+        "IDT.QMClosure.RawOperationalHilbert.Data.feature_phase",
+        "IDT.QMClosure.RawOperationalHilbert.Data.feature_eq_iff",
+        "IDT.QMClosure.RawOperationalHilbert.Data.feature_eq_iff_all_reference_tests",
+        "IDT.QMClosure.RawOperationalHilbert.Data.denseRange_feature"] }]
+  plannedArtifacts := []
+  dependencies := ["diagonal_normalization", "canonical_hilbert_completion"]
+  limits := [
+    "Original T is not asserted additive; reconstructed addition concerns its mathematical diagonal normal form.",
+    "Normalization does not assert physical copying or process availability.",
+    "The supplied raw laws are not justified from the original IDT primitive base here.",
+    "The original Hilbert-carrier and Born obligations remain open."] }
+
+def normalizedMixerGeneratedProcessWall : ResearchTask := {
+  id := "normalized_mixer_generated_process_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Fixed finite wire set and explicit Circuit syntax: identity, distinct-wire normalized transparent additive pair mixer T, permutations and composition.",
+    "T squared equals swap; readout conclusions additionally use a globally positive real quadratic Q conserved by T.",
+    "Retained-output null and phase obstructions use retained lossless weight; the exact-vacuum phase obstruction uses the reconstructed half and no readout."]
+  conclusions := [
+    "The generated circuits preserve coherent sum and total conserved readout.",
+    "Literal vacuum input/output on all other wires forces retained output y=x; exact quarter-phase output forces x=0 without a readout premise.",
+    "Retained lossless weight forces identity modulo Q-null directions; quarter-phase output forces Q(x)=0.",
+    "A fixed reference with exact phase correctness at x and zero does not evade the obstruction because circuit evolution is additive.",
+    "Selecting the A branch twice gives half(Jx) with weight Q(x)/4.",
+    "The full coherent-reference family can distinguish x from Jx when Q(x)>0, using an explicit reference; this is not a statement about every individual test."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/MixerGeneratedProcessWall.lean"
+      declarations := [
+        "IDT.QMClosure.MixerGeneratedProcessWall.Circuit",
+        "IDT.QMClosure.MixerGeneratedProcessWall.Circuit.preserves_sum",
+        "IDT.QMClosure.MixerGeneratedProcessWall.Circuit.preserves_readout",
+        "IDT.QMClosure.MixerGeneratedProcessWall.exact_vacuum_identity",
+        "IDT.QMClosure.MixerGeneratedProcessWall.reconstructed_exact_phase_forces_zero",
+        "IDT.QMClosure.MixerGeneratedProcessWall.lossless_identity_mod_null",
+        "IDT.QMClosure.MixerGeneratedProcessWall.reconstructed_phase_requires_null",
+        "IDT.QMClosure.MixerGeneratedProcessWall.fixed_reference_phase_requires_null",
+        "IDT.QMClosure.MixerGeneratedProcessWall.selected_two_A_branch",
+        "IDT.QMClosure.MixerGeneratedProcessWall.coherent_reference_test"] }]
+  plannedArtifacts := []
+  dependencies := ["operational_positive_readout", "positive_quadratic_polarization"]
+  limits := [
+    "This wall concerns only the explicitly normalized transparent gate language; decorated raw T is outside it.",
+    "Variable-width embedding, physical discard, coherent-reference availability and branch selection are not established.",
+    "The branch fraction Q(x)/4 is an algebraic weight, not an event probability.",
+    "Mathematical phase existence does not establish that these processes generate a phase gate.",
+    "This restricted wall does not rule out physical phase gates in a separately justified process language."] }
+
+def canonicalHilbertUniqueness : ResearchTask := {
+  id := "canonical_hilbert_uniqueness"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Native additive group, globally positive real quadratic Q and additive quarter-turn J preserving Q.",
+    "A complete comparison complex Hilbert output with feature family realizing the same kernel.",
+    "Whole-output equivalence additionally requires dense generated complex span of the comparison features."]
+  conclusions := [
+    "There is a unique feature-preserving complex linear isometric embedding into the comparison output.",
+    "Without a density premise, its exact range is the closed complex span of the comparison features.",
+    "With dense generated complex span, there is a unique feature-preserving complex linear isometry equivalence onto the whole comparison output.",
+    "An additive comparison feature map preserving squared norm Q and phase covariance realizes the same kernel; the dense-span equivalence follows under these operational conditions."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CanonicalHilbertUniqueness.lean"
+      declarations := [
+        "IDT.QMClosure.CanonicalHilbertUniqueness.embedding_feature",
+        "IDT.QMClosure.CanonicalHilbertUniqueness.embedding_unique",
+        "IDT.QMClosure.CanonicalHilbertUniqueness.range_embedding",
+        "IDT.QMClosure.CanonicalHilbertUniqueness.existsUnique_equivalence",
+        "IDT.QMClosure.CanonicalHilbertUniqueness.inner_eq_kernel_of_weight_phase",
+        "IDT.QMClosure.CanonicalHilbertUniqueness.existsUnique_equivalence_of_weight_phase"] }]
+  plannedArtifacts := []
+  dependencies := ["canonical_hilbert_completion"]
+  limits := [
+    "No native topology, scalar action, half or definiteness premise is required; the zero readout is allowed.",
+    "The comparison Hilbert structure belongs to an output realization, not to the native input carrier.",
+    "Uniqueness is among feature-preserving complex linear isometries, relative to Q and J.",
+    "Uniqueness of mathematical realizations does not establish physically available states or processes."] }
 
 def recordEffects : ResearchTask := {
   id := "record_effects_after_completion"
@@ -322,7 +439,9 @@ def globalBridges : List ResearchTask := [
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
-  rawMedialAddition, diagonalNormalization, canonicalHilbertCompletion, recordEffects]
+  rawMedialAddition, diagonalNormalization, canonicalHilbertCompletion,
+  rawOperationalHilbertFacade, normalizedMixerGeneratedProcessWall,
+  canonicalHilbertUniqueness, recordEffects]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
