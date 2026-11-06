@@ -752,9 +752,19 @@ def failure_diagnostics(stdout: str, stderr: str) -> JsonObject:
             if retained >= 4:
                 truncated = True
                 continue
-            excerpt = "\n".join(lines[index:index + 3])
-            truncated = truncated or len(excerpt) > 800
-            diagnostics.append({"stream": stream, "line": index + 1, "excerpt": excerpt[:800]})
+            end = index + 1
+            while end < len(lines) and re.match(
+                r"(?:(?:error|warning|info):|.+:\d+:\d+:\s*(?:error|warning|info):|"
+                r"(?:[✔✖⚠ℹ]\s*)?\[\d+/\d+\]|Build (?:completed|failed)|Some required (?:builds|targets) logged failures:)",
+                lines[end].lstrip(),
+            ) is None:
+                end += 1
+            excerpt = "\n".join(lines[index:end]).rstrip()
+            if len(excerpt) > 800:
+                # Keep the error location and the final goal after long variable contexts.
+                excerpt = excerpt[:400] + "\n[...]\n" + excerpt[-393:]
+                truncated = True
+            diagnostics.append({"stream": stream, "line": index + 1, "excerpt": excerpt})
             retained += 1
     return {
         "diagnostics": diagnostics,

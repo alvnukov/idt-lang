@@ -23,6 +23,7 @@ from theory_verifier.idt_mcp_server import IdtMcpServer, handle_line, serve
 from theory_verifier.idt_rag import (
     IdtRagError,
     IdtRagIndex,
+    failure_diagnostics,
     graph_json_load_for_tests,
     lock_path_for,
     write_locked_graph_for_tests,
@@ -491,6 +492,67 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertEqual([], evidence["diagnostics"])
             self.assertEqual(0, evidence["diagnostic_count"])
             self.assertEqual(False, evidence["diagnostics_truncated"])
+
+    def test_lean_long_error_context_retains_location_and_trailing_goal(self) -> None:
+        header = "error: Proofs/FixedReferenceBalanceBridge.lean:42:7: unsolved goals"
+        context = "\n".join(f"h{line} : {'LongVariableContext ' * 6}" for line in range(40))
+        goal = "⊢ fixedReferenceBalance left right = normalizedBalance left right"
+        warnings = "\n".join(f"Proofs/A.lean:{line}:1: warning: unused variable" for line in range(100))
+        output = f"{header}\ncase h.e'_9\nV : Type*\n{context}\n{goal}\n{warnings}"
+        with tempfile.TemporaryDirectory() as raw_dir:
+            index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
+            with patch(
+                "theory_verifier.idt_rag.subprocess.run",
+                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 1, output, ""),
+            ):
+                evidence = index.lean_build_target("Fixture")
+
+            diagnostics = require_list(evidence["diagnostics"])
+            self.assertEqual(1, len(diagnostics))
+            excerpt = require_string(require_mapping(diagnostics[0])["excerpt"])
+            self.assertTrue(excerpt.startswith(header))
+            self.assertTrue(excerpt.endswith(goal))
+            self.assertIn("\n[...]\n", excerpt)
+            self.assertEqual(800, len(excerpt))
+            self.assertNotIn("warning:", excerpt)
+            self.assertNotIn(goal, require_string(evidence["stdout_tail"]))
+            self.assertEqual(True, evidence["diagnostics_truncated"])
+            self.assertEqual(False, evidence["ok"])
+
+    def test_lean_error_block_stops_at_next_diagnostic_or_build_header(self) -> None:
+        block = "error: Proofs/A.lean:1:1: unsolved goals\ncase h\nV : Type*\nx : V\n⊢ x = x"
+        for boundary in (
+            "Proofs/A.lean:2:1: warning: unused variable",
+            "warning: Proofs/A.lean:2:1: unused variable",
+            "Proofs/A.lean:2:1: error: another error",
+            "error: Proofs/A.lean:2:1: another error",
+            "info: Proofs/A.lean:2:1: another message",
+            "✔ [2/3] Built Another",
+            "✖ [2/3] Building Another",
+            "⚠ [2/3] Replayed Another",
+            "ℹ [2/3] Replayed Another",
+            "[2/3] Building Another",
+            "Build completed successfully.",
+            "Build failed.",
+            "Some required builds logged failures:",
+            "Some required targets logged failures:",
+        ):
+            with self.subTest(boundary=boundary):
+                evidence = failure_diagnostics(f"{block}\n{boundary}\nunrelated output", "")
+                diagnostics = require_list(evidence["diagnostics"])
+                excerpt = require_string(require_mapping(diagnostics[0])["excerpt"])
+                self.assertEqual(block, excerpt)
+                self.assertEqual(False, evidence["diagnostics_truncated"])
+
+    def test_lean_letterlike_identifier_is_not_a_build_header(self) -> None:
+        block = "error: Proofs/A.lean:1:1: unsolved goals\nℹ : ℝ\n⊢ ℹ = 0"
+
+        evidence = failure_diagnostics(block, "")
+
+        diagnostics = require_list(evidence["diagnostics"])
+        self.assertEqual(1, len(diagnostics))
+        self.assertEqual(block, require_mapping(diagnostics[0])["excerpt"])
+        self.assertEqual(False, evidence["diagnostics_truncated"])
 
     def test_lean_timeout_preserves_early_error_diagnostics(self) -> None:
         output = "error: Proofs/A.lean:1:1: tactic failed\n" + "warning: later output\n" * 100
