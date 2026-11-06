@@ -101,6 +101,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.LinearMixingCoordinateBoundary,
     `Proofs.QMClosure.InfinitesimalReadoutSelection,
     `Proofs.QMClosure.InfinitesimalPairReadoutSelection,
+    `Proofs.QMClosure.FixedReferenceBalanceBridge,
+    `Proofs.QMClosure.ReferenceNormalizationCountermodels,
     `Proofs.QMClosure.CoherentReferencePositivity,
     `Proofs.QMClosure.FixedCancellationSeed,
     `Proofs.QMClosure.QuarticContextTransport,
