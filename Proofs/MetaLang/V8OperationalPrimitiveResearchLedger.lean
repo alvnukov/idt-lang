@@ -505,7 +505,8 @@ def operationalContextQuotient : ResearchTask := {
     "The universal observed laws are premises, not finite certification or an algorithm.",
     "Physical justification of the original laws and coverage of the reference/context family remain open.",
     "The separating reference is mathematical; no copying or manufacture of an unknown-input phase process is established.",
-    "Density is not surjectivity and does not establish physically available completion states or processes."] }
+    "Density is not surjectivity and does not establish physically available completion states or processes.",
+    "The coherent_preparation_ray_interface bridge remains open; native coherent preparations are not identified with isolated physical rays."] }
 
 def operationalContextControls : ResearchTask := {
   id := "operational_context_controls"
@@ -608,24 +609,115 @@ def readoutEffectControls : ResearchTask := {
 
 def normalizedRecordEffects : ResearchTask := {
   id := "normalized_record_effects"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Raw source data and a finite dependent family of raw target data supply their complete raw operational laws and readout contracts.",
+    "Family supplies only the channels, exact Intertwines laws for the reconstructed normalized mixers and universal total target-weight resolution of source weight.",
+    "No raw algebraic typeclasses or standalone branch positive-quadratic, phase-invariance or domination premises are inputs."]
+  conclusions := [
+    "Finite resolution and positivity force observed branch vacuum W_r(L_r(0))=0 without strict L_r(0)=0.",
+    "Affine normalized naturality and null translations give positive quadratic branch pullbacks invariant under the shared source phase.",
+    "The family packages as QuadraticReadoutEffects.Resolution, with branch domination following from finite resolution.",
+    "Effects on the source Hilbert output have expectations equal to the unnormalized target record weights, are positive, are at most identity and have norm at most one.",
+    "The finite effects sum to identity and satisfy the mathematical finite POVM contract."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NormalizedRecordEffects.lean"
+      declarations := [
+        "IDT.QMClosure.NormalizedRecordEffects.Family",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.branch_vacuum",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.branch_quadratic",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.branch_phase_invariant",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.toResolution",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.branch_dominated",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.effect_expectation",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.effect_positive",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.effect_le_one",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.effect_norm_le",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.sum_effect_eq_one",
+        "IDT.QMClosure.NormalizedRecordEffects.Family.finite_povm"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_operational_hilbert_facade", "mixer_record_naturality", "record_effects_after_completion"]
+  limits := [
+    "Channel naturality and universal resolution remain supplied bridge laws.",
+    "No actualization, physical instrument, projectivity, state update or repeatability is established.",
+    "Physical availability of the coherent preparations and completed outputs remains open."] }
+
+def coherentPortRayBoundary : ResearchTask := {
+  id := "coherent_port_ray_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Explicit supplied complex-coordinate coherent mixer control.",
+    "For normalized expectations, a supplied complex inner-product output and bounded complex-linear operator; positivity and completeness are not required.",
+    "The bilinear comparison separately supplies a complex-bilinear map."]
+  conclusions := [
+    "Independent input phase classes do not preserve chosen port weights: the control gives weights 1 versus 0 and normalized ratios 1/2 versus 0.",
+    "The mixer is covariant under simultaneous scalar multiplication, preserves nonzero pairs, and its normalized port ratio is invariant under common nonzero rescaling.",
+    "Normalized complex-linear operator expectations are invariant under nonzero rescaling; genuine ray representatives remain nonzero.",
+    "A supplied bilinear comparison is scalar covariant and inherits normalized-expectation invariance."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CoherentPortRayBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.CoherentPortRayBoundary.chosen_weight_one",
+        "IDT.QMClosure.CoherentPortRayBoundary.chosen_weight_I",
+        "IDT.QMClosure.CoherentPortRayBoundary.independent_phase_compatibility_fails",
+        "IDT.QMClosure.CoherentPortRayBoundary.normalized_port_one",
+        "IDT.QMClosure.CoherentPortRayBoundary.normalized_port_I",
+        "IDT.QMClosure.CoherentPortRayBoundary.normalized_independent_phase_compatibility_fails",
+        "IDT.QMClosure.CoherentPortRayBoundary.N_scalar",
+        "IDT.QMClosure.CoherentPortRayBoundary.normalizedPortWeight_scalar",
+        "IDT.QMClosure.CoherentPortRayBoundary.N_nonzero",
+        "IDT.QMClosure.CoherentPortRayBoundary.normalizedExpectation_scalar",
+        "IDT.QMClosure.CoherentPortRayBoundary.nonzero_rescaling",
+        "IDT.QMClosure.CoherentPortRayBoundary.bilinear_left_scalar",
+        "IDT.QMClosure.CoherentPortRayBoundary.bilinear_normalizedExpectation_scalar"] }]
+  plannedArtifacts := []
+  dependencies := ["operational_positive_readout", "record_effects_after_completion"]
+  limits := [
+    "No ray quotient construction, physical coherent lift, reference availability, separation by available effects or event-probability interpretation is established.",
+    "The supplied bilinear comparison is not a tensor reconstruction.",
+    "ProjectiveActionProof.ProjectiveFact denotes predicates, not a Hilbert-ray quotient; accepted predicate-action theorems are unchanged.",
+    "A named frame, independent tensor ancilla or algebraic quarter-turn does not establish relative-phase preparation availability."] }
+
+def scalarActualizationRefinement : ResearchTask := {
+  id := "scalar_actualization_refinement"
   stage := .inFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "Raw source data and a finite dependent family of raw target data.",
-    "Supplied exact normalized-channel Intertwines laws and universal sum of target weights W_r(L_r(x)) equal to source W(x).",
-    "Raw quadratic forms, phases and halves are outputs of RawOperationalHilbert.Data; standalone branch positive-quadratic or phase-invariance premises are not supplied."]
+    "A shared universal scalar actualization map F from the real unit interval to itself, respecting complement and half refinement for every interval value.",
+    "The rich real weight domain, shared use across preparations and actual-record refinement laws remain supplied event bridges."]
   conclusions := [
-    "Analytic target: finite resolution and positivity give observed branch vacuum W_r(L_r(0))=0 without strict L_r(0)=0.",
-    "Analytic target: normalized naturality and raw reconstruction yield positive quadratic branch pullbacks invariant under the common source phase, packaged as QuadraticReadoutEffects.Resolution.",
-    "Analytic target: natural affine target-feature channels extend to contractions after the null quotient."]
+    "Analytic target: complement and half refinement force F to be identity without a continuity or additivity premise.",
+    "Analytic control target: at one fixed preparation, rational diagonal coordinates with irrational parameter t give injective weights w_t.",
+    "Analytic control target: an alternative p_s is normalized, positive, compatible with all available merges and calibrated rational weights, yet differs from w_t on that restricted domain."]
   checkedEvidence := []
   plannedArtifacts := [
-    "UNCHECKED in-progress artifact: Proofs/QMClosure/NormalizedRecordEffects.lean."]
-  dependencies := ["raw_operational_hilbert_facade", "mixer_record_naturality", "record_effects_after_completion"]
+    "UNCHECKED in-progress artifact: Proofs/QMClosure/ScalarActualizationRefinement.lean.",
+    "UNCHECKED planned artifact: Proofs/QMClosure/RestrictedActualizationControls.lean."]
+  dependencies := ["record_effects_after_completion"]
   limits := [
-    "No checked normalized-record adapter is recorded yet.",
-    "Channel naturality and universal resolution remain supplied bridge laws.",
-    "No actualization, physical instrument, projectivity, state update or repeatability is established."] }
+    "The restricted fixed-preparation control is not a counterexample to a shared universal F across preparations.",
+    "No checked scalar-actualization theorem or restricted-domain control is recorded yet.",
+    "Actual record laws and richness of available weights are not consequences of quadratic readout alone."] }
+
+def calibratedEffectActualization : ResearchTask := {
+  id := "calibrated_effect_actualization"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "On a rich positive-effect domain of a Hilbert output, supply actual probabilities p with p(I)=1, nonnegativity, partial additivity and effect noncontextuality.",
+    "For a supplied unit vector psi and its matched rank-one effect P_psi, supply calibration p(P_psi)=1."]
+  conclusions := [
+    "Analytic target: an elementary block bound and order squeeze force p(E) to equal the vector expectation of E in psi."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize the calibrated effect-domain order-squeeze argument; artifact name not assigned."]
+  dependencies := ["record_effects_after_completion", "coherent_port_ray_boundary"]
+  limits := [
+    "All effects, or an adequate domain of order witnesses, must be available; that physical domain richness is not established.",
+    "The analytic route uses no Gleason invocation or normality premise, but is not yet encoded as a checked theorem.",
+    "Actual probability assignment, noncontextuality, additivity and matched-state calibration remain supplied event bridges."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -645,7 +737,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Derive or explicitly supply the probability/event actualization bridge.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The scalar-refinement and calibrated-effect routes are conditional research tasks, not established physical event laws.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
@@ -653,7 +745,9 @@ def globalBridges : List ResearchTask := [
   openBridge "tensor_local_tomography_bell"
     "Close tensor/composite, local-tomography and Bell obligations.",
   openBridge "physical_scales"
-    "First-principles hbar, G and alpha remain unresolved; calibrated anchors do not close them."]
+    "First-principles hbar, G and alpha remain unresolved; calibrated anchors do not close them.",
+  openBridge "coherent_preparation_ray_interface"
+    "Native coherent preparations retain relative phase and unnormalized weight relative to the declared grammar; they are not identified with isolated physical rays. Physical port pairing requires a coherent-preparation lift carrying relative amplitude and phase beyond two independently unknown rays. Specify physical states, admissible references, context transitions and which processes/readouts descend; ray separation by available effects remains open. A named frame, independent tensor ancilla or algebraic J is not a proof of availability."]
 
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
@@ -662,7 +756,8 @@ def researchTasks : List ResearchTask := [
   rawOperationalHilbertFacade, normalizedMixerGeneratedProcessWall,
   canonicalHilbertUniqueness, compositeProductKernel, compositeProductControls,
   operationalContextQuotient, operationalContextControls, recordEffects,
-  readoutEffectControls, normalizedRecordEffects]
+  readoutEffectControls, normalizedRecordEffects, coherentPortRayBoundary,
+  scalarActualizationRefinement, calibratedEffectActualization]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
