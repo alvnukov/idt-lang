@@ -268,6 +268,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeAttenuationReadout,
     `Proofs.QMClosure.NativeAttenuationCircuit,
     `Proofs.QMClosure.NativeAttenuationCutoffControl,
+    `Proofs.QMClosure.NativeContextualProbabilityControl,
+    `Proofs.QMClosure.RawNativeScalarCircuitBridge,
+    `Proofs.QMClosure.NativeEventProbabilityBridge,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]

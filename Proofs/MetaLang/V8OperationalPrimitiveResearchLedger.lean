@@ -1193,6 +1193,135 @@ def nativeAttenuationCalibratedSelection : ResearchTask := {
     "Physical native-event availability, coordinate noncontextuality, midpoint event/accounting laws and matched calibration remain supplied premises.",
     "No physical actual-event generator, Born-rule closure or full-QM closure is established."] }
 
+def nativeContextualProbabilityControl : ResearchTask := {
+  id := "native_contextual_probability_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Keep the existing supplied complex native mixer and literal circuit grammar unchanged, including conserved structural squared-norm weights.",
+    "For a finite normalized complex output x, let w_i=normSq(x_i), sum_i w_i=1, and assign q_i=w_i^2/(sum_j w_j^2).",
+    "FairProtocol has native-circuit leaves and binary fair mixtures; leaf assignments use q and mixture assignments recursively average probability vectors. This fair randomization is supplied syntax."]
+  conclusions := [
+    "The denominator is strictly positive on every normalized finite output; q is nonnegative, normalized and bounded by one, with exact identity-basis calibration.",
+    "The assignment is covariant under output permutations, unchanged on data outputs by inert vacuum padding with zero ancillary probabilities, and invariant under equality of complete evaluated native circuit maps.",
+    "For every native circuit from a basis source, structural output weights remain normalized and assigned probabilities are normalized and bounded. Every finite FairProtocol retains those bounds and normalization and satisfies syntactic midpoint accounting.",
+    "On Fin 3 at input e_0, c=T_01 has weights (1/2,1/2,0) and assigned q_0=1/2, while c'=T_01 then T_12 has weights (1/2,1/4,1/4) and assigned q_0=2/3.",
+    "The selected output-0 amplitudes of c,c' agree for every complex input, hence their complete selected-weight profiles agree, despite the different assigned probabilities. No function of the deterministic all-input selected-weight profile can reproduce this assignment on every native circuit.",
+    "Thus the supplied native circuit algebra, conserved structural weights, full-process equivalence, normalization, identity-basis calibration and syntactic fair mixing do not alone imply individual-event profile sufficiency or independence from operations on other outputs."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeContextualProbabilityControl.lean"
+      declarations := [
+        "IDT.QMClosure.NativeContextualProbabilityControl.denominator_pos",
+        "IDT.QMClosure.NativeContextualProbabilityControl.probability_nonneg",
+        "IDT.QMClosure.NativeContextualProbabilityControl.probability_le_one",
+        "IDT.QMClosure.NativeContextualProbabilityControl.probability_sum",
+        "IDT.QMClosure.NativeContextualProbabilityControl.basis_calibration",
+        "IDT.QMClosure.NativeContextualProbabilityControl.probability_permutation",
+        "IDT.QMClosure.NativeContextualProbabilityControl.probability_vacuum_data",
+        "IDT.QMClosure.NativeContextualProbabilityControl.probability_vacuum_ancilla",
+        "IDT.QMClosure.NativeContextualProbabilityControl.circuit_output_normalized",
+        "IDT.QMClosure.NativeContextualProbabilityControl.circuit_probability_bounds",
+        "IDT.QMClosure.NativeContextualProbabilityControl.circuit_probability_sum",
+        "IDT.QMClosure.NativeContextualProbabilityControl.identity_calibration",
+        "IDT.QMClosure.NativeContextualProbabilityControl.complete_process_equivalence",
+        "IDT.QMClosure.NativeContextualProbabilityControl.syntactic_midpoint",
+        "IDT.QMClosure.NativeContextualProbabilityControl.protocol_probability_bounds",
+        "IDT.QMClosure.NativeContextualProbabilityControl.protocol_probability_sum",
+        "IDT.QMClosure.NativeContextualProbabilityControl.selected_amplitude_equal",
+        "IDT.QMClosure.NativeContextualProbabilityControl.selected_profile_equal",
+        "IDT.QMClosure.NativeContextualProbabilityControl.witness_before_weights",
+        "IDT.QMClosure.NativeContextualProbabilityControl.witness_after_weights",
+        "IDT.QMClosure.NativeContextualProbabilityControl.witness_before_probability",
+        "IDT.QMClosure.NativeContextualProbabilityControl.witness_after_probability",
+        "IDT.QMClosure.NativeContextualProbabilityControl.spectator_operation_changes_probability",
+        "IDT.QMClosure.NativeContextualProbabilityControl.no_selected_profile_readout"] }]
+  plannedArtifacts := []
+  dependencies := ["normalized_mixer_generated_process_wall", "native_attenuation_calibrated_selection"]
+  limits := [
+    "The assignment is a mathematical countermodel to automatic profile sufficiency, not a physical probability proposal, a change to native dynamics or a QuarticContextTransport result.",
+    "It does not descend to the current rational coordinate-domain event law; syntactic midpoint accounting does not provide midpoint accounting after individual-event profile identifications.",
+    "Spectator-output locality, deterministic all-input selected-profile sufficiency and mixture-event profile sufficiency remain distinct premises. Spectator-output locality excludes this witness; no theorem equating these premises is asserted.",
+    "Probability-preserving descent for the relevant full event profiles, including required mixture-event identifications, remains a supplied bridge rather than a consequence of the listed controls.",
+    "No Bell no-signalling claim, physical actual-event generator, Born-rule closure or full-QM closure is established."] }
+
+def rawNativeScalarCircuitBridge : ResearchTask := {
+  id := "raw_native_scalar_circuit_bridge"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use existing RawOperationalHilbert.Data d: the original raw operation, chosen zero, global square-to-swap and medial laws, nonnegative real weight W with W(chosenZero)=0, and all-input weight conservation.",
+    "Use only d's reconstructed group, phase, half, canonical Hilbert output and feature F; no independent Hilbert carrier or complex scalar action on raw V is supplied.",
+    "The generic circuit invariant assumes one common reference v and raw inputs x_i satisfying F(x_i)=z_i*F(v) for arbitrary mathematical complex coordinates z_i. Scalar multiplication is only in d's constructed Hilbert output."]
+  conclusions := [
+    "The reconstructed normalized operation has feature outputs (a*F(x)+b*F(y),b*F(x)+a*F(y)), with a=(1+i)/2 and b=(1-i)/2.",
+    "The syntax lift retargets the existing scalar Circuit to d.normalizedOperation while retaining identity, pair indices, permutations and chronological sequence.",
+    "For every supplied common-reference feature relation F(x_i)=z_i*F(v), every lifted circuit obeys F(rawEval(c,x)_k)=scalarEval(c,z)_k*F(v) and W(rawEval(c,x)_k)=normSq(scalarEval(c,z)_k)*W(v).",
+    "Input v at one source and chosenZero elsewhere automatically satisfies that feature relation with scalar basis input e_s. Its selected output weight is normSq(scalarEval(c,e_s)_k)*W(v), including null references and all-null models.",
+    "The corresponding relative weight equals the scalar selected squared norm only under the additional explicit hypothesis W(v)>0."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawNativeScalarCircuitBridge.lean"
+      declarations := [
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.feature_normalized_fst",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.feature_normalized_snd",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.liftCircuit",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.circuit_feature",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.circuit_weight",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.circuit_weight_ratio",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.single_feature",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.single_circuit_feature",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.single_circuit_weight",
+        "IDT.QMClosure.RawNativeScalarCircuitBridge.single_circuit_weight_ratio"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_operational_hilbert_facade", "normalized_mixer_generated_process_wall"]
+  limits := [
+    "The adapter concerns the mathematically reconstructed d.normalizedOperation; physical access to this normalization control remains open.",
+    "The original raw operation differs through its diagonal involution D(x)=first(T_raw(x,x)). This mathematical expression supplies no copying procedure for an unknown raw input.",
+    "The general invariant is conditional on the supplied feature relation and establishes no availability of arbitrary complex raw preparations. The basis-input construction is an algebraic theorem, not physical preparation availability.",
+    "No raw state of weight one, actual calibration, physical wire availability, probability interpretation, coordinate noncontextuality, midpoint accounting or full-QM closure follows.",
+    "Finite wire arrays represent coherent alternatives, not tensor composites. No general raw faithfulness, Gaussian quotient or denominator-consistency result is asserted."] }
+
+def nativeEventProbabilityBridge : ResearchTask := {
+  id := "native_event_probability_bridge"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For general factorization, supply any e:S->A and pi:S->R with a chosen zero in R. Kernel constancy means e(s)=e(t) implies pi(s)=pi(t).",
+    "The concrete Event grammar has zero, total, basis_i, all four attenuation(q,m) leaves and binary fair mixtures. Its independent structural profile evaluates actual attenuation selected circuits and averages mixture profiles.",
+    "ProbabilityLaw on Event(n+1) supplies real probabilities, zero value 0, total value 1, basis_0 calibration 1, global event nonnegativity, fair-mixture averaging and full-profile probability sufficiency for every syntax event, including mixtures."]
+  conclusions := [
+    "A total factor q exists exactly when kernel constancy holds; any two such factors agree on range(e), with no uniqueness assertion outside the image.",
+    "For every event and complex input, profile(s,x)=quadratic(effect(s),x), independently of any probability law. The total profile sums all data input weights, while attenuation leaves evaluate literal retained-ancilla circuits.",
+    "Under a supplied ProbabilityLaw, equal effects have equal all-input profiles and hence equal probability. Factoring through D=range(effect) transfers zero, midpoint, representative, nonnegativity, normalization and calibration laws to the committed attenuation selection and gives prob(s)=effect(s)_00.",
+    "For every event and complex input, its profile is nonnegative and bounded above by the total input squared-norm weight.",
+    "The explicit canonicalProbabilityLaw evaluates each profile at basis input single_0(1), satisfies every supplied law and establishes mathematical nonemptiness of ProbabilityLaw for each n.",
+    "All ProbabilityLaw probability functions agree extensionally on this certified event grammar, and every such law assigns every event a probability in [0,1]. This is function equality, not an assertion identifying proof fields of law structures.",
+    "The canonical model is a downstream mathematical consistency witness appended after selection; its definition and existence are not premises of the conditional selection argument."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeEventProbabilityBridge.lean"
+      declarations := [
+        "IDT.QMClosure.NativeEventProbabilityBridge.factorization_iff_fibre_constancy",
+        "IDT.QMClosure.NativeEventProbabilityBridge.factors_agree_on_range",
+        "IDT.QMClosure.NativeEventProbabilityBridge.profile_soundness",
+        "IDT.QMClosure.NativeEventProbabilityBridge.equal_effect_implies_equal_profile",
+        "IDT.QMClosure.NativeEventProbabilityBridge.probability_factors",
+        "IDT.QMClosure.NativeEventProbabilityBridge.probability_selected",
+        "IDT.QMClosure.NativeEventProbabilityBridge.profile_nonnegative",
+        "IDT.QMClosure.NativeEventProbabilityBridge.profile_le_total",
+        "IDT.QMClosure.NativeEventProbabilityBridge.canonicalProbabilityLaw",
+        "IDT.QMClosure.NativeEventProbabilityBridge.probabilityLaw_nonempty",
+        "IDT.QMClosure.NativeEventProbabilityBridge.probability_unique",
+        "IDT.QMClosure.NativeEventProbabilityBridge.probability_bounds"] }]
+  plannedArtifacts := []
+  dependencies := ["native_attenuation_calibrated_selection", "native_contextual_probability_control"]
+  limits := [
+    "The identity effect is represented by the total event; it is not one selected output of an identity circuit.",
+    "The concrete grammar provides explicit rational coordinates only for its named leaves and finite mixtures. No generic rational effect extraction for arbitrary native circuits is assumed or asserted.",
+    "Full-profile sufficiency on all event syntax, physical availability of every finite ancillary width, fair-coin availability, mixture accounting and matched calibration remain supplied bridges.",
+    "Spectator-output locality, deterministic all-input profile sufficiency and all-mixture profile sufficiency remain different premises; the contextual countermodel supplies none of them physically.",
+    "The canonical witness concerns this mathematical grammar at one basis input. It asserts no probability-law existence on arbitrary physical event domains and imports no Born premise into the uniqueness argument.",
+    "Extensional uniqueness is limited to probability functions on the certified grammar; arbitrary total coordinate factors remain unconstrained outside range(effect).",
+    "No physical actual-event generator, arbitrary-preparation selection, general mixed-state reconstruction, Born-rule closure or full-QM closure is established."] }
+
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
   stage := .openPhysicalBridge
@@ -1211,7 +1340,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. Those finite-span and eight-event results alone do not establish all-circuit positivity, global state positivity, a density-matrix theorem or a physically generated full event domain. The checked conditional attenuation route now supplies exact finite native circuit adapters with retained ancillary leakage, family-based rational span and basis-calibrated selection: all-depth family positivity plus normalization, nonnegative diagonals and calibration select ell(v)=v_00 on all rational coordinates, with p agreeing on its supplied domain D. This selected pure extension is mathematically positive; general mixed-state reconstruction and agreement of p outside D do not follow. The checked universal finite-cutoff countermodel passes all four family bounds through any chosen M yet fails at E_6(M+1), separating finite testing from the universal all-depth hypothesis. Physical native availability at arbitrarily large fresh-wire widths, coordinate noncontextuality, classical midpoint event/accounting laws and calibration remain supplied. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. Those finite-span and eight-event results alone do not establish all-circuit positivity, global state positivity, a density-matrix theorem or a physically generated full event domain. The checked conditional attenuation route now supplies exact finite native circuit adapters with retained ancillary leakage, family-based rational span and basis-calibrated selection: all-depth family positivity plus normalization, nonnegative diagonals and calibration select ell(v)=v_00 on all rational coordinates, with p agreeing on its supplied domain D. This selected pure extension is mathematically positive; general mixed-state reconstruction and agreement of p outside D do not follow. The checked universal finite-cutoff countermodel passes all four family bounds through any chosen M yet fails at E_6(M+1), separating finite testing from the universal all-depth hypothesis. Physical native availability at arbitrarily large fresh-wire widths, coordinate noncontextuality, classical midpoint event/accounting laws and calibration remain supplied. The checked contextual-probability control leaves native dynamics unchanged: its normalized squared-structural-weight assignment obeys calibration, output permutations, inert vacuum padding, full-process equivalence and syntactic fair mixtures, yet the exact three-port witness has identical all-input selected amplitudes and probabilities 1/2 versus 2/3. No function of the deterministic selected-weight profile reproduces this assignment on all native circuits. It does not descend to the coordinate-domain event law. Spectator-output locality, deterministic all-input profile sufficiency and mixture-event profile sufficiency remain distinct, and probability-preserving profile descent is still a supplied bridge. The checked raw normalized-operation/scalar circuit adapter uses only the Hilbert output constructed from RawOperationalHilbert.Data: the same finite syntax preserves a supplied common-reference feature relation, and a raw basis input has selected weight normSq(scalar output)*W(reference), including null references. Relative weights require W(reference)>0. Physical normalization control, copying, arbitrary raw preparation availability and probability laws remain separate open bridges. The checked conditional native event-probability adapter supplies image factorization, the explicit zero/total/basis/attenuation/fair-mixture grammar, independent all-input structural profiles and transfer to the basis formula under supplied ProbabilityLaw. Its checked downstream canonicalProbabilityLaw at basis input establishes mathematical nonemptiness; probability functions are extensionally unique on the certified grammar and every law has [0,1] bounds. The witness is not a premise of selection and asserts no law existence on arbitrary physical event domains. The contextual control, raw scalar adapter and event-probability adapter are checked conditional results; physical justification of full-profile probability sufficiency, event availability, fair-mixture accounting and matched calibration remains open. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
@@ -1236,7 +1365,9 @@ def researchTasks : List ResearchTask := [
   generatedEventConeControl, conditionalRecordProbabilities,
   nativeMixerEventConeExclusion, nativeMixerGroupPortGeometry,
   dyadicMixtureLinearization, vacuumPortEffectCompletion, nativeMixerInfiniteOrder,
-  nativeWireEffectSpan, nativeAttenuationCalibratedSelection]
+  nativeWireEffectSpan, nativeAttenuationCalibratedSelection,
+  nativeContextualProbabilityControl, rawNativeScalarCircuitBridge,
+  nativeEventProbabilityBridge]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
