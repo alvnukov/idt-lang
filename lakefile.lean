@@ -262,5 +262,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.BornReadoutFromWeightCalculus,
     `Proofs.QMClosure.FacticizationStabilityWall,
     `Proofs.QMClosure.ThreeAlternativeRepresentation,
-    `Proofs.QMClosure.OrientationCovarianceWall
+    `Proofs.QMClosure.OrientationCovarianceWall,
+    `Proofs.QMClosure.DyadicMixtureLinearization,
+    `Proofs.QMClosure.VacuumPortEffectCompletion,
+    `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]

@@ -989,7 +989,8 @@ def nativeMixerGroupPortGeometry : ResearchTask := {
   checkedEvidence := []
   plannedArtifacts := [
     "Independently reviewed analytic route; no current Lean proof artifact is assigned."]
-  dependencies := ["normalized_mixer_generated_process_wall", "generated_event_cone_control"]
+  dependencies := ["normalized_mixer_generated_process_wall", "generated_event_cone_control",
+    "native_mixer_infinite_order", "vacuum_port_effect_completion"]
   limits := [
     "Topological closure is not exact finite-word reachability. An exact fixed-strength finite slice can be empty: at n=3, c=1/48 is not dyadic, so approximation may require varying strengths.",
     "A one-ancilla vector-completion argument alone does not establish two-wire circuit reachability.",
@@ -999,42 +1000,128 @@ def nativeMixerGroupPortGeometry : ResearchTask := {
 
 def dyadicMixtureLinearization : ResearchTask := {
   id := "dyadic_mixture_linearization"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "A supplied rational vector space V contains an event domain D with zero; a real-valued assignment p on D satisfies p(0)=0.",
-    "D is closed under midpoints and p respects every such midpoint; the full rational linear span of D is V."]
+    "A supplied rational vector space V has an event domain D containing zero; a single real-valued assignment p has p(0)=0.",
+    "D is closed under midpoints, p((x+y)/2)=(p(x)+p(y))/2 for all x,y in D, and the full rational linear span of D is V.",
+    "The optional continuous real extension additionally uses the supplied finite rational coordinate space Fin d -> Q, with coordinatewise inclusion into Fin d -> R; dimension zero is allowed."]
   conclusions := [
-    "Analytic target: a unique rational-linear functional on V agrees with p on D, using integer relations scaled into dyadic padded mixtures.",
-    "Finite rational-coordinate target: the resulting coefficient functional has a mathematical real-linear continuous extension on the associated finite real coordinate space."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "UNCHECKED planned artifact: Proofs/QMClosure/DyadicMixtureLinearization.lean."]
+    "There is a unique rational-linear functional on V agreeing with p on D, with no finite-dimensional assumption on the generic theorem.",
+    "The proof uses dyadic graph mixtures and integer saturation to clear rational denominators; no boundedness, positivity, arbitrary-mixture accounting or continuity is assumed.",
+    "For finite rational coordinates, ell(q)=sum_i ell(e_i)*q_i. A finite sum of continuous real coordinate projections constructs the unique continuous real-linear extension with the same coefficients.",
+    "The finite-coordinate existence/uniqueness theorem agrees with p at cast points of D; the extension agrees with ell at every rational coordinate point."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DyadicMixtureLinearization.lean"
+      declarations := [
+        "IDT.QMClosure.DyadicMixtureLinearization.exists_unique_rational_linear_extension",
+        "IDT.QMClosure.DyadicMixtureLinearization.rational_linear_coordinate_formula",
+        "IDT.QMClosure.DyadicMixtureLinearization.continuousRealExtension_apply",
+        "IDT.QMClosure.DyadicMixtureLinearization.continuousRealExtension_agrees",
+        "IDT.QMClosure.DyadicMixtureLinearization.continuousRealExtension_unique",
+        "IDT.QMClosure.DyadicMixtureLinearization.exists_unique_continuous_real_extension"] }]
+  plannedArtifacts := []
   dependencies := []
   limits := [
-    "The event domain and midpoint probability law are supplied, and the targets are not yet checked.",
-    "The coordinate corollary does not establish agreement with p on arbitrary irrational events outside D.",
+    "The domain, its spanning property and midpoint probability accounting remain supplied; no native event-domain generation follows.",
+    "The generic rational-linear theorem does not assert real linearity or continuity on an arbitrary real ambient space.",
+    "The finite-coordinate corollary supplies a mathematical extension, not automatic agreement with a separate probability assignment on irrational events outside cast(D).",
     "No positivity theorem, density-matrix representation, physical availability, probability actualization or full-QM closure is asserted."] }
 
 def vacuumPortEffectCompletion : ResearchTask := {
   id := "vacuum_port_effect_completion"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "A supplied unit complex vector psi on Fin n, with n>=1, and a scalar c in [0,1] describe a mathematical n+2 coordinate lift with two ancillary entries.",
-    "The geometric criterion is |1-sqrt(c)*sum(psi)|^2 <= 2*(1-c); no group-density or circuit-realizability premise is supplied."]
+    "A supplied finite complex vector psi on Fin n has coordinateWeight(psi)=1; c is a supplied nonnegative real scalar.",
+    "The general completion theorem assumes the sufficient budget normSq(1-sqrt(c)*sum(psi)) <= 2*(1-c). The uniform-strength theorem additionally assumes n>=1.",
+    "The input embedding adds two zero coordinates; no group-density, circuit-realizability, physical-port or probability-law premise is supplied."]
   conclusions := [
-    "Analytic target: writing d=1-sqrt(c)*sum(psi), the ancillary entries r_0=d/2+t and r_1=d/2-t, with real t=sqrt((1-c-normSq(d)/2)/2), complete data entries sqrt(c)*psi to a vector phi of squared norm one and coordinate sum one.",
-    "Analytic target: the uniform value c=1/(16*n) satisfies the geometric criterion for every supplied unit psi.",
-    "Analytic target: vacuum compression of the completed row gives weight c*|sum(conj(psi)*x)|^2 for every data input x."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "UNCHECKED planned artifact: Proofs/QMClosure/VacuumPortEffectCompletion.lean."]
+    "Writing d=1-sqrt(c)*sum(psi), explicit ancillary entries d/2+t and d/2-t, for real t=sqrt((1-c-normSq(d)/2)/2), sum to d and have total squared weight 1-c under the budget.",
+    "The completed vector with data entries sqrt(c)*psi has coordinate sum one and total squared weight one.",
+    "Compression against every complex input x, without an input-normalization assumption, gives squared overlap c*|sum(conj(psi)*x)|^2.",
+    "The coordinate Cauchy-Schwarz bound proves that the uniform positive strength c=1/(16*n) satisfies the sufficient budget for every unit psi when n>=1."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/VacuumPortEffectCompletion.lean"
+      declarations := [
+        "IDT.QMClosure.VacuumPortEffectCompletion.completionAncilla_sum",
+        "IDT.QMClosure.VacuumPortEffectCompletion.completionAncilla_weight",
+        "IDT.QMClosure.VacuumPortEffectCompletion.completedVector_sum",
+        "IDT.QMClosure.VacuumPortEffectCompletion.completedVector_weight",
+        "IDT.QMClosure.VacuumPortEffectCompletion.completedVector_overlap_weight",
+        "IDT.QMClosure.VacuumPortEffectCompletion.exists_two_coordinate_completion",
+        "IDT.QMClosure.VacuumPortEffectCompletion.normSq_sum_le_dimension",
+        "IDT.QMClosure.VacuumPortEffectCompletion.uniformStrength_budget",
+        "IDT.QMClosure.VacuumPortEffectCompletion.uniform_two_coordinate_completion"] }]
+  plannedArtifacts := []
   dependencies := []
   limits := [
-    "This is a supplied-coordinate geometry problem only; no checked Lean artifact is recorded yet.",
-    "A completed vector is not a finite native circuit. Group density, exact finite-word realization, physical ancillary or port availability and probability interpretation are not consequences of this geometric target.",
+    "This is supplied-coordinate mathematical geometry only. The budget is a sufficient criterion; no converse or characterization of all completions is asserted.",
+    "A completed vector is not a finite native circuit. Group density, exact circuit realization and physical ancillary or port availability do not follow from this result.",
+    "The zero-coordinate input embedding has no asserted physical vacuum interpretation or probability law.",
     "No actual outcome generator, physical calibration, Born-rule closure or full-QM closure is established."] }
+
+def nativeMixerInfiniteOrder : ResearchTask := {
+  id := "native_mixer_infinite_order"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing supplied complex scalar mixer in the native circuit grammar on three wires; A and B are its explicit pair-gate matrices for wires 01 and 12.",
+    "The fixed chronological native word is (12,12,12,01), with matrix K=A*B^3. The universal nonidentity theorem assumes only a positive natural exponent."]
+  conclusions := [
+    "The pair-gate action and the action of the exact existing native circuit word equal their explicit matrix actions, so the result is linked to the circuit grammar.",
+    "The zero-sum plane embedding W(x,y)=(x,y,-x-y) has an explicit left inverse and satisfies K*W=W*M for the explicit two-coordinate matrix M.",
+    "C=2*M satisfies C^2=C-4*I. Its power traces equal the integer sequence s_0=2, s_1=1, s_(n+2)=s_(n+1)-4*s_n, which is odd at every positive index.",
+    "M^n=I would force the odd trace to equal the even integer 2^(n+1); the intertwining and left inverse give K^n!=I for every positive n.",
+    "This is a universal exact algebraic theorem about the matrix of one fixed native word; it uses no eigenvalue, algebraic-integer, unitarity or topological hypothesis for the obstruction."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeMixerInfiniteOrder.lean"
+      declarations := [
+        "IDT.QMClosure.NativeMixerInfiniteOrder.gate01_action",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.gate12_action",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.native_word_action",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.left_inverse",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.intertwines",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.C_eq_two_smul",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.C_quadratic",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.traceSequence_odd",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.C_pow_recurrence",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.trace_C_pow",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.C_pow_scale",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.M_pow_ne_one",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.K_pow_intertwines",
+        "IDT.QMClosure.NativeMixerInfiniteOrder.native_word_infinite_order"] }]
+  plannedArtifacts := []
+  dependencies := ["normalized_mixer_generated_process_wall"]
+  limits := [
+    "The matrix action link is checked for the stated coordinate circuit, not a physical-wire encoding bridge.",
+    "Infinite order alone does not formalize a circle subgroup, full Lie-group closure, density, circuit universality, physical continuity or probability interpretation.",
+    "The group-classification route remains analytic and unchecked despite this separate checked ingredient.",
+    "No physical availability, actual-event generator, Born-rule closure or full-QM closure is established."] }
+
+def nativeWireEffectSpan : ResearchTask := {
+  id := "native_wire_effect_span"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A supplied rational coordinate space for n-wire Hermitian effects uses n diagonal coordinates and real and imaginary off-diagonal coordinates for i<j.",
+    "Native coordinate events include the identity-port P_i, the single pair-mixer selected effect H_ij with diagonal entries 1/2,1/2 and imaginary off-diagonal entry -1/2, and the two-three-gate half-mixture effect F_ij with diagonal entries 1/8,5/8 and real off-diagonal entry -1/4.",
+    "Membership of those event coordinates in a proposed domain D is supplied; midpoint probability accounting is a separate premise when composing with the linearization theorem."]
+  conclusions := [
+    "Analytic adapter target: on Fin n plus one vacuum coordinate, each pair experiment has the stated selected weight for every complex input, with all other data wires unaffected.",
+    "Analytic span target: signed rational recovery Y_ij=P_i+P_j-2*H_ij and X_ij=(1/2)*P_i+(5/2)*P_j-4*F_ij recovers the off-diagonal coordinate basis; conditional membership of the displayed events implies full rational span.",
+    "The target supplies the spanning premise of midpoint linearization without using Lie-group density. The n^2 coordinate count is a planned check, not a checked informational-completeness result.",
+    "Analytic negative-control target at n=2: rho=[[1,1/8],[1/8,0]] has determinant -1/64, yet its linear readout takes values 1,0 on the two P_i, 1/2 on H_ij and 1/16 on F_ij, and is positive on these generators, their complements and their generated cone.",
+    "The negative-control target separates finite full span, linear accounting and matched calibration from positivity on the full positive-effect interval; it does not close Born actualization."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "PLANNED, not checked: Proofs/QMClosure/NativeWireEffectSpan.lean."]
+  dependencies := ["normalized_mixer_generated_process_wall", "native_mixer_event_cone_exclusion", "dyadic_mixture_linearization"]
+  limits := [
+    "The generic adapter and basis recovery are not yet checked; each pair test is a separate experiment with a fresh vacuum coordinate, not one simultaneous n^2-outcome measurement.",
+    "Signed rational basis recovery is mathematical linear algebra, not physical subtraction or availability of every positive effect.",
+    "Finite-basis positivity, even with linear accounting and calibration, does not establish a positive-semidefinite state or a density-matrix theorem.",
+    "No full positive-domain closure, physical event availability, actual outcome generator, Born-rule closure or full-QM closure is established."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -1054,7 +1141,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization; dyadic-mixture linearization and two-ancilla geometric completion are unchecked plans, not established physical availability or probability-limit bridges.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The finite native wire-effect span and nonpositive-state control remain unchecked plans; midpoint linearization and finite informational span do not provide positivity, a density-matrix theorem or a physically generated full event domain. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
@@ -1078,7 +1165,8 @@ def researchTasks : List ResearchTask := [
   dyadicEffectDomainActualization, contextualActualizationControl,
   generatedEventConeControl, conditionalRecordProbabilities,
   nativeMixerEventConeExclusion, nativeMixerGroupPortGeometry,
-  dyadicMixtureLinearization, vacuumPortEffectCompletion]
+  dyadicMixtureLinearization, vacuumPortEffectCompletion, nativeMixerInfiniteOrder,
+  nativeWireEffectSpan]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
