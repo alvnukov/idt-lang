@@ -109,6 +109,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.DenseExchangeReadoutSelection,
     `Proofs.QMClosure.FiniteMixerReadoutSelection,
     `Proofs.QMClosure.NativeGaussianReadoutSelection,
+    `Proofs.QMClosure.SequentialUndoCancellationBoundary,
     `Proofs.QMClosure.DenseExchangeCountermodels,
     `Proofs.QMClosure.FixedReferenceBalanceBridge,
     `Proofs.QMClosure.ReferenceNormalizationCountermodels,
