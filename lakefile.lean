@@ -284,6 +284,14 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeStableAmplitudeOrbitWall,
     `Proofs.QMClosure.NativeVacuumProbabilityFamily,
     `Proofs.QMClosure.NativeBinaryRefinement,
+    `Proofs.QMClosure.NativeZeroPortSplitting,
+    `Proofs.QMClosure.NativeCoherentBranchDilation,
+    `Proofs.QMClosure.NativeScalarAmplitudeSufficiency,
+    `Proofs.QMClosure.GaussianIntegerQuadraticSelection,
+    `Proofs.QMClosure.NativeGaussianDyadicClosure,
+    `Proofs.QMClosure.NativeGaussianResponse,
+    `Proofs.QMClosure.NativeProbabilityUniqueness,
+    `Proofs.QMClosure.NativeHyperrealProbabilityWall,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
