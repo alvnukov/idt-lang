@@ -29,6 +29,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.CompositeProductKernel,
     `Proofs.QMClosure.CompositeProductControls,
     `Proofs.QMClosure.CanonicalQuadraticHilbert,
+    `Proofs.QMClosure.QuadraticReadoutEffects,
+    `Proofs.QMClosure.QuadraticReadoutEffectControls,
     `Proofs.QMClosure.CanonicalHilbertUniqueness,
     `Proofs.QMClosure.RawOperationalHilbert,
     `Proofs.QMClosure.RawOperationalSeparation,

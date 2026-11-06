@@ -540,20 +540,92 @@ def operationalContextControls : ResearchTask := {
 
 def recordEffects : ResearchTask := {
   id := "record_effects_after_completion"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Native additive group with globally positive real quadratic Q and additive quarter-turn J preserving Q.",
+    "A single branch is globally positive quadratic, invariant under the same J and dominated by Q.",
+    "For a finite resolution, each q_r is globally positive quadratic, invariant under the same J, and sum_r q_r(x)=Q(x) for every x; domination then follows from the resolution."]
+  conclusions := [
+    "The residual Q-q is positive quadratic; the kernel and finite complex-coefficient synthesis squared norms decompose into branch and residual parts.",
+    "A unique bounded contraction maps total features to branch features and has norm at most one.",
+    "The branch effect is contraction-adjoint composed with contraction, has the branch kernel and diagonal readout, is positive, has norm at most one and is at most identity.",
+    "Finite resolution implies branch domination, kernel summation and effects summing to identity: a mathematical finite POVM.",
+    "Bounded-operator equality follows from all generating-feature matrix elements using dense complex span in both arguments."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/QuadraticReadoutEffects.lean"
+      declarations := [
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.residual_positive",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.synthesis_norm_sq",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.contraction_feature",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.contraction_norm_le",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.contraction_unique",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.effect_kernel",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.effect_diagonal",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.effect_positive",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.effect_norm_le",
+        "IDT.QMClosure.QuadraticReadoutEffects.Branch.effect_le_one",
+        "IDT.QMClosure.QuadraticReadoutEffects.Resolution.dominated",
+        "IDT.QMClosure.QuadraticReadoutEffects.Resolution.kernel_sum",
+        "IDT.QMClosure.QuadraticReadoutEffects.Resolution.sum_effect_eq_one",
+        "IDT.QMClosure.QuadraticReadoutEffects.Resolution.finite_povm",
+        "IDT.QMClosure.QuadraticReadoutEffects.operator_ext"] }]
+  plannedArtifacts := []
+  dependencies := ["canonical_hilbert_completion", "positive_quadratic_polarization"]
+  limits := [
+    "No native half, scalar action, topology, definiteness or finite-dimension premise is required.",
+    "Dense-span matrix-element arguments do not use a diagonal-only shortcut.",
+    "This constructs mathematical effects only; actualization, projectivity, state update, repeatability, physical instruments and physical availability of completed states remain open.",
+    "Natural-channel adaptation is recorded separately as unfinished work."] }
+
+def readoutEffectControls : ResearchTask := {
+  id := "quadratic_readout_effect_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Explicit mathematical coordinate controls on the supplied complex plane."]
+  conclusions := [
+    "Squared real and imaginary coordinates are positive quadratic dominated readouts resolving squared norm, but lack the required common phase invariance; the real-coordinate readout has no complex-linear expectation representation.",
+    "Duplicated identity branches each satisfy the individual branch contract but fail total resolution; the duplicated effects do not sum to identity.",
+    "Two half-identity effects satisfy the full positive, phase-invariant, bounded finite-resolution contract but are not projective."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/QuadraticReadoutEffectControls.lean"
+      declarations := [
+        "IDT.QMClosure.QuadraticReadoutEffectControls.coordinateBranch_positiveQuadratic",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.coordinateBranch_bounds",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.coordinateBranch_resolution",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.qRe_not_phase_invariant",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.qRe_has_no_complex_linear_effect",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.duplicatedBranch_individual_contract",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.duplicatedBranch_resolution_fails",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.duplicated_effects_finite_resolution_fails",
+        "IDT.QMClosure.QuadraticReadoutEffectControls.resolved_nonprojective_control"] }]
+  plannedArtifacts := []
+  dependencies := ["record_effects_after_completion"]
+  limits := [
+    "These are supplied-coordinate mathematical models, not a canonical-space or raw-channel adapter.",
+    "The controls do not supply actualization, physical instruments or state update."] }
+
+def normalizedRecordEffects : ResearchTask := {
+  id := "normalized_record_effects"
   stage := .inFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "Canonical completion plus finite dominated positive quadratic phase-invariant branch forms resolving the total readout Q, with sum_r q_r(x)=Q(x) for every x, or a natural channel resolution."]
+    "Raw source data and a finite dependent family of raw target data.",
+    "Supplied exact normalized-channel Intertwines laws and universal sum of target weights W_r(L_r(x)) equal to source W(x).",
+    "Raw quadratic forms, phases and halves are outputs of RawOperationalHilbert.Data; standalone branch positive-quadratic or phase-invariance premises are not supplied."]
   conclusions := [
-    "Analytic target: bounded complex effects summing to identity.",
-    "Analytic target: natural affine channels descend to contractions after null quotient under the resolution contract."]
+    "Analytic target: finite resolution and positivity give observed branch vacuum W_r(L_r(0))=0 without strict L_r(0)=0.",
+    "Analytic target: normalized naturality and raw reconstruction yield positive quadratic branch pullbacks invariant under the common source phase, packaged as QuadraticReadoutEffects.Resolution.",
+    "Analytic target: natural affine target-feature channels extend to contractions after the null quotient."]
   checkedEvidence := []
   plannedArtifacts := [
-    "UNCHECKED in-progress artifact: Proofs/QMClosure/QuadraticReadoutEffects.lean."]
-  dependencies := ["canonical_hilbert_completion", "mixer_record_naturality", "positive_quadratic_polarization"]
+    "UNCHECKED in-progress artifact: Proofs/QMClosure/NormalizedRecordEffects.lean."]
+  dependencies := ["raw_operational_hilbert_facade", "mixer_record_naturality", "record_effects_after_completion"]
   limits := [
-    "No checked effects artifact is recorded yet.",
-    "No actualization, projectivity, repeatability or state update is established."] }
+    "No checked normalized-record adapter is recorded yet.",
+    "Channel naturality and universal resolution remain supplied bridge laws.",
+    "No actualization, physical instrument, projectivity, state update or repeatability is established."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -589,7 +661,8 @@ def researchTasks : List ResearchTask := [
   rawMedialAddition, diagonalNormalization, canonicalHilbertCompletion,
   rawOperationalHilbertFacade, normalizedMixerGeneratedProcessWall,
   canonicalHilbertUniqueness, compositeProductKernel, compositeProductControls,
-  operationalContextQuotient, operationalContextControls, recordEffects]
+  operationalContextQuotient, operationalContextControls, recordEffects,
+  readoutEffectControls, normalizedRecordEffects]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
