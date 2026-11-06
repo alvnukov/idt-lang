@@ -22,6 +22,8 @@ lean_lib Proofs where
     `Proofs.IDTCore,
     `Proofs.QMClosure.PreparationRecordObstruction,
     `Proofs.QMClosure.PreparationDisturbanceTradeoff,
+    `Proofs.QMClosure.QuadraticRecordRefinement,
+    `Proofs.QMClosure.QuadraticRecordRefinementCountermodels,
     `Proofs.QMClosure.NativePreparationParityWitness,
     `Proofs.MetaLang.V8VerificationLanguage,
     `Proofs.MetaLang.V8ContextFirstPrimitiveBase,
