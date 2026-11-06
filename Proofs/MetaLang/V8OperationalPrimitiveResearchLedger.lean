@@ -394,6 +394,96 @@ def canonicalHilbertUniqueness : ResearchTask := {
     "Uniqueness is among feature-preserving complex linear isometries, relative to Q and J.",
     "Uniqueness of mathematical realizations does not establish physically available states or processes."] }
 
+def compositeProductKernel : ResearchTask := {
+  id := "composite_product_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Core: three additive groups with compatible quarter-turn phases, separate additivity and phase alignment of p, and universal QC(p(x,y))=QA(x)*QB(y).",
+    "The core uses positive quadratic QB and QC; a positive-quadratic QA premise is not needed there.",
+    "Mixer adapter: positive quadratic QA, QB and QC; normalized additive transparent square-swap mixers in all three carriers with explicit alignment to the kernel phases.",
+    "The adapter supplies separate exact full-carrier Intertwines laws in the two slots and the universal weight factorization law."]
+  conclusions := [
+    "The core forces K_C(p(x,y),p(x',y'))=K_A(x,x')*K_B(y,y').",
+    "Separate mixer naturality gives affine slot maps; double centering removes the readout-null offsets p(x,0), p(0,y) and p(0,0).",
+    "The normalized map is separately additive and phase-compatible while preserving the original readout and kernel.",
+    "The original uncentered p has the product kernel; its two additive defects and two phase defects are QC-null."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CompositeProductKernel.lean"
+      declarations := [
+        "IDT.QMClosure.CompositeProductKernel.product_kernel",
+        "IDT.QMClosure.CompositeProductKernel.MixerBridge",
+        "IDT.QMClosure.CompositeProductKernel.MixerBridge.normalized_add_phase",
+        "IDT.QMClosure.CompositeProductKernel.normalized_readout",
+        "IDT.QMClosure.CompositeProductKernel.normalized_kernel",
+        "IDT.QMClosure.CompositeProductKernel.mixer_product_kernel",
+        "IDT.QMClosure.CompositeProductKernel.observable_defects_null"] }]
+  plannedArtifacts := []
+  dependencies := ["mixer_record_naturality", "positive_quadratic_gram_and_hermitian_kernel"]
+  limits := [
+    "No strict native zero-offset equations p(x,0)=0 or p(0,y)=0 are assumed.",
+    "There is no native half premise; the mixers provide their halves.",
+    "Tensor completion, tensor exhaustion, physical product availability, monoidal coherence, Bell and actualization remain open."] }
+
+def compositeProductControls : ResearchTask := {
+  id := "composite_product_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Explicit mathematical controls on supplied complex coordinate spaces, not reconstructed physical product primitives."]
+  conclusions := [
+    "Conjugating one product slot preserves separate additivity and multiplicative norm but reverses that slot's phase; the actual reconstructed-kernel comparison gives -i versus +i.",
+    "A universally complex-bilinear product has all four basis product norms and both full reference-slice readout laws, yet its off-axis readout is 26/5 rather than the factor value 4.",
+    "The raw signs N and -N have the same diagonal-normalized mixer; separate normalized naturality holds while the corresponding raw second-slot naturality fails."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CompositeProductControls.lean"
+      declarations := [
+        "IDT.QMClosure.CompositeProductControls.ConjugateSlot.reconstructed_kernel_eq",
+        "IDT.QMClosure.CompositeProductControls.ConjugateSlot.phase_right_reversed",
+        "IDT.QMClosure.CompositeProductControls.ConjugateSlot.output_kernel_value",
+        "IDT.QMClosure.CompositeProductControls.ConjugateSlot.factor_kernel_value",
+        "IDT.QMClosure.CompositeProductControls.ConjugateSlot.reconstructed_kernel_factorization_fails",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.scalar_left",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.scalar_right",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.basis_product_norms",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.full_left_reference_slice",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.full_right_reference_slice",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.off_axis_value",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.off_axis_factor_value",
+        "IDT.QMClosure.CompositeProductControls.ReferenceSlices.full_factorization_fails",
+        "IDT.QMClosure.CompositeProductControls.RawSign.normalized_rawB",
+        "IDT.QMClosure.CompositeProductControls.RawSign.normalized_naturality_left",
+        "IDT.QMClosure.CompositeProductControls.RawSign.normalized_rawB_naturality_right",
+        "IDT.QMClosure.CompositeProductControls.RawSign.raw_naturality_fails"] }]
+  plannedArtifacts := []
+  dependencies := ["composite_product_kernel"]
+  limits := [
+    "ReferenceSlices refutes full readout factorization despite bilinearity and the reference-slice checks.",
+    "RawSign separates normalized and raw naturality only; no separately checked kernel-equality result is recorded for that control.",
+    "These controls do not establish physical products, tensor completion or exhaustion, monoidal coherence, Bell or actualization."] }
+
+def operationalContextQuotient : ResearchTask := {
+  id := "operational_context_quotient"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Planned operational contexts are one-hole compositions selecting either first or second output, with the hole in either input slot and all native reference preparations.",
+    "Planned ObsEq means equality of readout for all such future contexts; square-swap and medial laws are supplied observationally.",
+    "The remaining raw-data hypotheses are retained: chosen zero, real readout, zero vacuum weight, global nonnegativity and conservation on all input pairs."]
+  conclusions := [
+    "Analytic target: ObsEq is a congruence and observational square-swap and mediality become exact laws on the quotient.",
+    "Analytic target: the quotient supplies exact RawOperationalHilbert.Data and hence a Hilbert realization.",
+    "Analytic target: eventual feature equality is exactly equality of all future context tests, with a separate single-output coherent-reference separation result."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "UNCHECKED planned artifact: Proofs/QMClosure/OperationalContextQuotient.lean.",
+    "UNCHECKED planned artifact: Proofs/QMClosure/RawOperationalSeparation.lean."]
+  dependencies := ["raw_operational_hilbert_facade"]
+  limits := [
+    "No checked quotient or operational separation result is recorded yet.",
+    "Physical justification of the original laws and coverage of the reference/context family remain open.",
+    "No copying of unknown inputs or manufacture of an unknown-input phase process is established."] }
+
 def recordEffects : ResearchTask := {
   id := "record_effects_after_completion"
   stage := .analyticAwaitingFormalization
@@ -441,7 +531,8 @@ def researchTasks : List ResearchTask := [
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
   rawMedialAddition, diagonalNormalization, canonicalHilbertCompletion,
   rawOperationalHilbertFacade, normalizedMixerGeneratedProcessWall,
-  canonicalHilbertUniqueness, recordEffects]
+  canonicalHilbertUniqueness, compositeProductKernel, compositeProductControls,
+  operationalContextQuotient, recordEffects]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 

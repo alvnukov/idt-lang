@@ -26,6 +26,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.PositiveQuadraticPolarization,
     `Proofs.QMClosure.PositiveQuadraticGram,
     `Proofs.QMClosure.QuadraticHermitianKernel,
+    `Proofs.QMClosure.CompositeProductKernel,
+    `Proofs.QMClosure.CompositeProductControls,
     `Proofs.QMClosure.CanonicalQuadraticHilbert,
     `Proofs.QMClosure.CanonicalHilbertUniqueness,
     `Proofs.QMClosure.RawOperationalHilbert,
