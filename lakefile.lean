@@ -38,6 +38,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.ConditionalRecordProbabilities,
     `Proofs.QMClosure.ContextualActualizationControl,
     `Proofs.QMClosure.GeneratedEventConeControl,
+    `Proofs.QMClosure.NativeMixerEventConeExclusion,
     `Proofs.QMClosure.QuadraticReadoutEffectControls,
     `Proofs.QMClosure.CanonicalHilbertUniqueness,
     `Proofs.QMClosure.RawOperationalHilbert,
