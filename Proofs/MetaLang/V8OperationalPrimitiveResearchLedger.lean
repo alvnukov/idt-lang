@@ -1138,6 +1138,61 @@ def nativeWireEffectSpan : ResearchTask := {
     "A unique rational-linear readout and the displayed finite calibration do not establish a globally positive state, positive-semidefinite density matrix or physical probability law.",
     "No full positive-domain closure, physical event availability, actual outcome generator, Born-rule closure or full-QM closure is established."] }
 
+def nativeAttenuationCalibratedSelection : ResearchTask := {
+  id := "native_attenuation_calibrated_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Selection uses the supplied rational Coord(n+1) space with distinguished wire 0 and one coordinate-noncontextual domain readout p, zero in D with p(0)=0, midpoint closure/accounting on D, and every P_i in D.",
+    "The identity coordinate I=sum_i P_i lies in D with p(I)=1, p is nonnegative on D, and matched basis calibration supplies p(P_0)=1.",
+    "For every upper pair i<j and every natural m, D contains each of E_0,E_2,E_4,E_6 below. Separate H_ij or F_ij availability is unnecessary.",
+    "The circuit adapter uses the existing supplied complex mixer on Fin n plus Fin k, with every ancillary input zero and all ancillary outputs retained. Physical availability of separate finite tests at arbitrarily large fresh-wire widths remains supplied."]
+  conclusions := [
+    "For t=(1/16)^m, the rational families are E_0=(t^2/2)*P_i+(1/2)*P_j+(t/2)*Y_ij, E_2=(t^2/8)*P_i+(1/2)*P_j+(t/4)*X_ij, E_4=(t^2/32)*P_i+(1/2)*P_j-(t/8)*Y_ij, and E_6=(t^2/128)*P_i+(1/2)*P_j-(t/16)*X_ij.",
+    "At m=0, Y_ij=2*E_0-P_i-P_j and X_ij=4*E_2-(1/2)*P_i-2*P_j. Thus P_i,E_0(0),E_2(0) supply full rational span; zero and midpoint laws give a unique rational-linear extension agreeing with p on D.",
+    "For a rational-linear ell with ell(P_j)=0, nonnegativity on all four families for every m forces ell(X_ij)=ell(Y_ij)=0 by scalar geometric convergence. Normalization, nonnegative diagonals and ell(P_0)=1 then give ell(v)=v_00 for every rational coordinate v on Fin(n+1).",
+    "The domain theorem concludes p(v)=v_00 for every v in D under the stated membership, positivity, midpoint and calibration hypotheses.",
+    "Literal finite circuit words attenuate wire i using k fresh ancillary wires and then mix i,j selecting j, with selected amplitude b*a^k*x_i+a*x_j, a=(1+i)/2 and b=(1-i)/2. The complete prefix state retains ancillary leakage b*a^l*x_i on wire l, and all-port squared-norm readout is conserved.",
+    "For every complex input and natural m, the four E_r quadratic forms equal exact selected-port squared norms at the finite attenuation lengths 8m+r for r=0,2,4,6.",
+    "For every finite cutoff M, the explicit rational-linear counter-readout has values 1,0 on P_0,P_1, identity value 1, Y value 0 and strictly positive X value t_M/16. All four family values lie in [0,1] for m<=M, yet its E_6(M+1) value is exactly -7*t_M^2/32768<0."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAttenuationReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAttenuationReadout.recover_Y",
+        "IDT.QMClosure.NativeAttenuationReadout.recover_X",
+        "IDT.QMClosure.NativeAttenuationReadout.native_attenuation_span_eq_top",
+        "IDT.QMClosure.NativeAttenuationReadout.t_tendsto_zero",
+        "IDT.QMClosure.NativeAttenuationReadout.pair_vanish",
+        "IDT.QMClosure.NativeAttenuationReadout.basis_calibrated_selection",
+        "IDT.QMClosure.NativeAttenuationReadout.domain_basis_calibrated_selection"] },
+    { sourcePath := "Proofs/QMClosure/NativeAttenuationCircuit.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAttenuationCircuit.prefix_eval",
+        "IDT.QMClosure.NativeAttenuationCircuit.prefix_leak",
+        "IDT.QMClosure.NativeAttenuationCircuit.selected_action",
+        "IDT.QMClosure.NativeAttenuationCircuit.all_port_resolution",
+        "IDT.QMClosure.NativeAttenuationCircuit.selected_E0",
+        "IDT.QMClosure.NativeAttenuationCircuit.selected_E2",
+        "IDT.QMClosure.NativeAttenuationCircuit.selected_E4",
+        "IDT.QMClosure.NativeAttenuationCircuit.selected_E6"] },
+    { sourcePath := "Proofs/QMClosure/NativeAttenuationCutoffControl.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAttenuationCutoffControl.calibration",
+        "IDT.QMClosure.NativeAttenuationCutoffControl.cross_coordinate_positive",
+        "IDT.QMClosure.NativeAttenuationCutoffControl.readout_Y",
+        "IDT.QMClosure.NativeAttenuationCutoffControl.cutoff_bounds",
+        "IDT.QMClosure.NativeAttenuationCutoffControl.next_depth_value",
+        "IDT.QMClosure.NativeAttenuationCutoffControl.finite_cutoff_countermodel"] }]
+  plannedArtifacts := []
+  dependencies := ["native_wire_effect_span", "dyadic_mixture_linearization", "normalized_mixer_generated_process_wall"]
+  limits := [
+    "The all-depth positivity premise quantifies over every natural m. The universal finite-cutoff countermodel shows why finitely many depth checks cannot replace it.",
+    "The finite circuit syntax keeps every ancillary output; it uses no discard, reset, postselection or infinite physical circuit. Physical availability of arbitrarily many fresh wires across separate tests remains a bridge.",
+    "Only scalar geometric convergence is used for selection, with no continuity premise for p or ell, arbitrary real mixing, Lie-group classification or circuit-density premise.",
+    "Selection identifies the mathematical pure coordinate extension at distinguished basis wire 0, not arbitrary vector preparations or a general mixed-state positive-semidefinite representation. The domain theorem asserts agreement of p only on D.",
+    "Physical native-event availability, coordinate noncontextuality, midpoint event/accounting laws and matched calibration remain supplied premises.",
+    "No physical actual-event generator, Born-rule closure or full-QM closure is established."] }
+
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
   stage := .openPhysicalBridge
@@ -1156,7 +1211,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. These results establish neither all-circuit positivity, global state positivity, a density-matrix theorem nor a physically generated full event domain. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. Those finite-span and eight-event results alone do not establish all-circuit positivity, global state positivity, a density-matrix theorem or a physically generated full event domain. The checked conditional attenuation route now supplies exact finite native circuit adapters with retained ancillary leakage, family-based rational span and basis-calibrated selection: all-depth family positivity plus normalization, nonnegative diagonals and calibration select ell(v)=v_00 on all rational coordinates, with p agreeing on its supplied domain D. This selected pure extension is mathematically positive; general mixed-state reconstruction and agreement of p outside D do not follow. The checked universal finite-cutoff countermodel passes all four family bounds through any chosen M yet fails at E_6(M+1), separating finite testing from the universal all-depth hypothesis. Physical native availability at arbitrarily large fresh-wire widths, coordinate noncontextuality, classical midpoint event/accounting laws and calibration remain supplied. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
@@ -1181,7 +1236,7 @@ def researchTasks : List ResearchTask := [
   generatedEventConeControl, conditionalRecordProbabilities,
   nativeMixerEventConeExclusion, nativeMixerGroupPortGeometry,
   dyadicMixtureLinearization, vacuumPortEffectCompletion, nativeMixerInfiniteOrder,
-  nativeWireEffectSpan]
+  nativeWireEffectSpan, nativeAttenuationCalibratedSelection]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 

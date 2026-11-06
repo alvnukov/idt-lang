@@ -265,6 +265,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.OrientationCovarianceWall,
     `Proofs.QMClosure.DyadicMixtureLinearization,
     `Proofs.QMClosure.NativeWireEffectSpan,
+    `Proofs.QMClosure.NativeAttenuationReadout,
+    `Proofs.QMClosure.NativeAttenuationCircuit,
+    `Proofs.QMClosure.NativeAttenuationCutoffControl,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
