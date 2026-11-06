@@ -121,6 +121,86 @@ class AiTheoryGraphTests(unittest.TestCase):
                 edges,
             )
 
+    def test_unicode_lean_names_keep_distinct_nodes_anchors_and_refs(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            manifest_path = write_sample_manifest(root)
+            proof_dir = root / "Proofs" / "MetaLang"
+            proof_dir.mkdir(parents=True)
+            declarations = {
+                "numerator₁": (2, "def numerator₁ := 1"),
+                "numerator₂": (3, "def numerator₂ := 2"),
+                "output₁": (4, "def output₁ := Mixer.numerator₁"),
+                "output₂": (5, "def output₂ := Mixer.numerator₂"),
+                "numerator_twice₁": (6, "theorem numerator_twice₁ : output₁ = numerator₁ := rfl"),
+                "numerator_twice₂": (7, "theorem numerator_twice₂ : output₂ = numerator₂ := rfl"),
+            }
+            (proof_dir / "Mixer.lean").write_text(
+                "namespace Mixer\n"
+                + "\n".join(line for _, line in declarations.values())
+                + "\nend Mixer\n",
+                encoding="utf-8",
+            )
+
+            graph = build_v8_ai_theory_graph(repo_root=root, manifest_path=manifest_path)
+
+            prefix = "decl:Proofs.MetaLang.Mixer."
+            nodes = rows_by_id(graph["nodes"])
+            self.assertEqual(
+                {prefix + name for name in declarations},
+                {node_id for node_id in nodes if node_id.startswith(prefix)},
+            )
+            edges = {tuple(edge) for edge in require_rows(graph["edges"])}
+            for name, (line_number, _) in declarations.items():
+                with self.subTest(name=name):
+                    self.assertEqual(name, nodes[prefix + name][3])
+                    self.assertEqual(
+                        f"Proofs/MetaLang/Mixer.lean:{line_number}", nodes[prefix + name][4]
+                    )
+                    self.assertIn(
+                        ("src:Proofs/MetaLang/Mixer.lean", "declares", prefix + name, f"line:{line_number}"),
+                        edges,
+                    )
+            for suffix, line_number in (("₁", 4), ("₂", 5)):
+                self.assertEqual(
+                    {(prefix + "output" + suffix, "refs", prefix + "numerator" + suffix,
+                      f"line:{line_number}")},
+                    {edge for edge in edges
+                     if edge[0] == prefix + "output" + suffix and edge[1] == "refs"},
+                )
+                self.assertIn(
+                    (prefix + "numerator_twice" + suffix, "refs", prefix + "numerator" + suffix,
+                     f"line:{line_number + 2}"),
+                    edges,
+                )
+
+    def test_lean_identifier_characters_do_not_absorb_operators(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            manifest_path = write_sample_manifest(root)
+            proof_dir = root / "Proofs" / "MetaLang"
+            proof_dir.mkdir(parents=True)
+            names = ["ascii", "ascii'", "ascii!", "ascii?", "α₁", "ℝ₁", "𝒜₁",
+                     "café", "subsₐ", "subsᵢ", "subsⱼ"]
+            lines = [f"def {name} := 1" for name in names]
+            lines.extend(["def total := " + "+".join(names), "def × := 1", "def λ := 1"])
+            (proof_dir / "Names.lean").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+            graph = build_v8_ai_theory_graph(repo_root=root, manifest_path=manifest_path)
+
+            prefix = "decl:Proofs.MetaLang.Names."
+            nodes = rows_by_id(graph["nodes"])
+            self.assertEqual(
+                {prefix + name for name in [*names, "total"]},
+                {node_id for node_id in nodes if node_id.startswith(prefix)},
+            )
+            edges = {tuple(edge) for edge in require_rows(graph["edges"])}
+            self.assertEqual(
+                {(prefix + "total", "refs", prefix + name, f"line:{len(names) + 1}")
+                 for name in names},
+                {edge for edge in edges if edge[0] == prefix + "total" and edge[1] == "refs"},
+            )
+
     def test_cli_writes_compact_json(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
             root = Path(raw_dir)

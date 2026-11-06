@@ -85,9 +85,24 @@ RELATION_FIELDS: dict[str, str] = {
     "verifier": "verified_by",
 }
 
+# Lean 4's unescaped identifier characters (Init/Meta/Defs.lean), not Python
+# \w: the latter omits some Lean letters and admits unrelated Unicode digits.
+LEAN_LETTER_LIKE = (
+    r"\u03b1-\u03ba\u03bc-\u03c9\u0391-\u039f\u03a1-\u03a2\u03a4-\u03a9"
+    r"\u03ca-\u03fb\u1f00-\u1ffe\u2100-\u214f\U0001d49c-\U0001d59f"
+    r"\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u017f"
+)
+LEAN_IDENTIFIER_FIRST = rf"[A-Za-z_{LEAN_LETTER_LIKE}]"
+LEAN_IDENTIFIER_REST = (
+    rf"[A-Za-z0-9_'!?{LEAN_LETTER_LIKE}\u2080-\u2089\u2090-\u209c\u1d62-\u1d6a\u2c7c]"
+)
+LEAN_IDENTIFIER = rf"{LEAN_IDENTIFIER_FIRST}{LEAN_IDENTIFIER_REST}*"
+LEAN_IDENTIFIER_TOKEN_RE = re.compile(
+    rf"(?<!{LEAN_IDENTIFIER_REST}){LEAN_IDENTIFIER}(?!{LEAN_IDENTIFIER_REST})"
+)
 DECLARATION_RE = re.compile(
     r"^(?:private\s+|partial\s+|noncomputable\s+)?"
-    r"(theorem|def|structure|inductive|abbrev)\s+([A-Za-z_][A-Za-z0-9_']*)"
+    rf"(theorem|def|structure|inductive|abbrev)\s+({LEAN_IDENTIFIER})"
 )
 IMPORT_RE = re.compile(r"^import\s+([A-Za-z0-9_.'/-]+)$")
 
@@ -575,7 +590,7 @@ def declaration_ranges(
 
 def lean_identifier_tokens(line: str) -> set[str]:
     code = line.split("--", maxsplit=1)[0]
-    return set(re.findall(r"\b[A-Za-z_][A-Za-z0-9_']*\b", code))
+    return set(LEAN_IDENTIFIER_TOKEN_RE.findall(code))
 
 
 def lean_import_edges(source: SourceFile, module_index: Mapping[str, str]) -> list[Edge]:
