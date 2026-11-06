@@ -273,6 +273,12 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeEventProbabilityBridge,
     `Proofs.QMClosure.NativeThreeWireStabilizer,
     `Proofs.QMClosure.NativeThreeWireLocality,
+    `Proofs.QMClosure.NativeDyadicGaussianArithmetic,
+    `Proofs.QMClosure.NativeDyadicThreeVectorSynthesis,
+    `Proofs.QMClosure.NativeDyadicSixWireObstruction,
+    `Proofs.QMClosure.NativeThreeWireResidueProbability,
+    `Proofs.QMClosure.NativeDyadicThreeMatrixSynthesis,
+    `Proofs.QMClosure.NativeThreeWireProbabilityExtensionWall,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
