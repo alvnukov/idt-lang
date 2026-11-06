@@ -20,6 +20,9 @@ lean_exe idt_v8_experiment_protocols where
 lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
+    `Proofs.QMClosure.PreparationRecordObstruction,
+    `Proofs.QMClosure.PreparationDisturbanceTradeoff,
+    `Proofs.QMClosure.NativePreparationParityWitness,
     `Proofs.MetaLang.V8VerificationLanguage,
     `Proofs.MetaLang.V8ContextFirstPrimitiveBase,
     `Proofs.MetaLang.V8PrimitiveScreenBoundary,
@@ -103,6 +106,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.PositiveMixerReadoutCountermodels,
     `Proofs.QMClosure.TransparentSwapRoot,
     `Proofs.QMClosure.OperationalQuadraticReconstruction,
+    `Proofs.QMClosure.IntensityActualizationBoundary,
     `Proofs.QMClosure.OperationalPhaseMixerReconstruction,
     `Proofs.QMClosure.OperationalPhaseMixerWitness,
     `Proofs.QMClosure.RelationalPassivityWall,
