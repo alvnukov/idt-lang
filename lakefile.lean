@@ -103,6 +103,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.InfinitesimalPairReadoutSelection,
     `Proofs.QMClosure.AttenuationTangentReadoutSelection,
     `Proofs.QMClosure.AttenuationTangentCountermodels,
+    `Proofs.QMClosure.DenseExchangeReadoutSelection,
+    `Proofs.QMClosure.DenseExchangeCountermodels,
     `Proofs.QMClosure.FixedReferenceBalanceBridge,
     `Proofs.QMClosure.ReferenceNormalizationCountermodels,
     `Proofs.QMClosure.CoherentReferencePositivity,
