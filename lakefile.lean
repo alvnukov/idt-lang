@@ -279,6 +279,11 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeThreeWireResidueProbability,
     `Proofs.QMClosure.NativeDyadicThreeMatrixSynthesis,
     `Proofs.QMClosure.NativeThreeWireProbabilityExtensionWall,
+    `Proofs.QMClosure.NativeBinaryPhaseCounting,
+    `Proofs.QMClosure.NativeBinaryLeaves,
+    `Proofs.QMClosure.NativeStableAmplitudeOrbitWall,
+    `Proofs.QMClosure.NativeVacuumProbabilityFamily,
+    `Proofs.QMClosure.NativeBinaryRefinement,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]

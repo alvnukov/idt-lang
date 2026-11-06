@@ -1547,45 +1547,147 @@ def nativeThreeWireProbabilityExtensionWall : ResearchTask := {
 
 def nativeStableAmplitudeOrbitWall : ResearchTask := {
   id := "native_stable_amplitude_orbit_wall"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Actual three-wire words (01,02,12,02,12) and (02,12,02,01,12), source basis zero.",
-    "Spectator processes use only native pair gates and permutations avoiding selected port zero, with arbitrary fresh zero padding."]
+    "Spectator processes use native pairs and permutations avoiding selected port zero, with any finite number of fresh zero spectators."]
   conclusions := [
-    "Exact independently checked arithmetic gives u=(-1/4,(7+i)/8,(3-i)/8) and v=(-1/4,(7-i)/8,(3+i)/8). Both have sum one, norm one and the same selected amplitude.",
-    "Reduction modulo five with i mapped to three gives spectator residues (0,0) for u and (3,2) for v. Native spectator operations and zero padding preserve zero spectator residue, so no such stabilized spectator word connects these preparations.",
-    "This excludes unrestricted stable spectator-orbit connectivity as a route to selected-amplitude probability sufficiency."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Actual finite-word state identities and the zero-residue spectator obstruction, including arbitrary vacuum stabilization."]
+    "The words prepare u=(-1/4,(7+i)/8,(3-i)/8) and v=(-1/4,(7-i)/8,(3+i)/8). Both have sum one, squared norm one and the same selected amplitude.",
+    "Functional Gaussian dyadic reduction modulo five sends i to three. All spectators of u have zero residue, whereas the first spectator of v has residue three.",
+    "Actual native spectator circuits preserve all-zero residue. Neither direction of connection exists after any fixed finite zero padding.",
+    "This excludes unrestricted stable spectator-orbit connectivity as a proof of selected-amplitude probability sufficiency."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeStableAmplitudeOrbitWall.lean"
+      declarations := [
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.related_functional",
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.prepareU_eval",
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.prepareV_eval",
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.circuit_preserves_zero",
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.no_stable_spectator_connection",
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.no_reverse_stable_spectator_connection",
+        "IDT.QMClosure.NativeStableAmplitudeOrbitWall.stable_amplitude_orbit_wall"] }]
+  plannedArtifacts := []
   dependencies := ["native_dyadic_six_wire_obstruction"]
   limits := [
-    "This is an analytic route exclusion, not a checked artifact or probability countermodel.",
-    "Extra normalization relations may still force equal probabilities across different spectator orbits. No impossibility of probability factorization is asserted."] }
+    "This is a circuit-orbit obstruction, not a probability countermodel. No law is shown to distinguish the preparations.",
+    "The selected output is untouched throughout the obstruction. Splitting that output or comparing coherent copies is not excluded.",
+    "Extra normalization and embedding relations may force equality across distinct spectator orbits. No impossibility of scalar probability factorization is asserted."] }
+
+def nativeBinaryPhaseCountMass : ResearchTask := {
+  id := "native_binary_phase_count_mass"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Binary leaves are actual recursive finite products; phase is the number of B choices modulo four.",
+    "At each required depth 4*k+1, nonnegative real phase weights have total counted mass p and first-A-subtree mass r. Weights may vary freely with depth."]
+  conclusions := [
+    "Actual leaf-fibre cardinalities satisfy the phaseCount recurrence, including its exceptional depth-zero base.",
+    "Exact four-step formulas bound |r-p/2| by p/[2*(4^k-1)] for k >= 1.",
+    "Archimedean order forces r=p/2 when those counted identities hold at every required depth, without continuity or cross-depth identification of weights."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeBinaryPhaseCounting.lean"
+      declarations := [
+        "IDT.QMClosure.NativeBinaryPhaseCounting.phaseCount_unique",
+        "IDT.QMClosure.NativeBinaryPhaseCounting.phaseCount_four",
+        "IDT.QMClosure.NativeBinaryPhaseCounting.phaseCount_four_add_one",
+        "IDT.QMClosure.NativeBinaryPhaseCounting.mass_deviation_bound",
+        "IDT.QMClosure.NativeBinaryPhaseCounting.phase_count_mass_halving"] },
+    { sourcePath := "Proofs/QMClosure/NativeBinaryLeaves.lean"
+      declarations := [
+        "IDT.QMClosure.NativeBinaryLeaves.rootA_phase",
+        "IDT.QMClosure.NativeBinaryLeaves.leafCount_eq",
+        "IDT.QMClosure.NativeBinaryLeaves.sum_by_phase"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "This is a counted-mass theorem. Actual probability identities come from the separate checked native adapter.",
+    "An isolated finite depth gives a bound, not exact halving. No physical resource availability follows."] }
+
+def nativeVacuumProbabilityFamily : ResearchTask := {
+  id := "native_vacuum_probability_family"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Law assigns real probabilities to actual native circuits, a marked source basis port and an output, for each finite wire type.",
+    "Supplied fields: nonnegativity, normalization, prepared-state equality, output-permutation covariance, spectator-pair locality and preservation of old probabilities under constructorwise fresh-zero embeddings."]
+  conclusions := [
+    "Every native constructor has an explicit vacuum embedding; its prepared state is the old state followed by zeros.",
+    "Fresh ports have zero probability; a pair conserves the sum of its two probabilities; equal prepared coordinates in one state have equal probabilities.",
+    "Comparison with a fresh vacuum port proves zero probability for every zero-amplitude output. Calibration follows for all actual basis-state preparations.",
+    "The separate squared-amplitude canonicalLaw witnesses mathematical nonemptiness. It is not a premise of probability selection."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeVacuumProbabilityFamily.lean"
+      declarations := [
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.pad_prepared",
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.vacuum_probability_zero",
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.pair_probability_sum",
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.equal_coordinate_probabilities",
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.zero_amplitude_probability_zero",
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.basis_calibration",
+        "IDT.QMClosure.NativeVacuumProbabilityFamily.canonicalLaw"] }]
+  plannedArtifacts := []
+  dependencies := ["native_three_wire_probability_extension_wall"]
+  limits := [
+    "Law is an explicit conditional contract, not a physically justified probability assignment.",
+    "There is no arbitrary cross-type relabel axiom, input-source covariance, scalar-amplitude sufficiency, mixture law, continuity or independent calibration field.",
+    "The native representation and arbitrary finite vacuum availability remain mathematical premises."] }
 
 def nativeBinaryRefinementSelection : ResearchTask := {
   id := "native_binary_refinement_selection"
-  stage := .analyticAwaitingFormalization
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The checked nativeVacuumProbabilityFamily.Law contract over all finite wire types and constructorwise fresh-zero embeddings.",
+    "Every finite binary refinement uses actual native pair gates with all wires retained.",
+    "Real Archimedean probabilities; no probability continuity, scalar sufficiency or mixture-profile sufficiency premise."]
+  conclusions := [
+    "Each level pads the previous actual circuit and folds disjoint native pairs in a literal finite list order.",
+    "Pair conservation proves total descendant mass and first-A-subtree mass in the same root-first tree. Depth one is exactly the literal vacuum split.",
+    "A depth-m leaf has amplitude a^m times its fourth-root phase times the root amplitude. Equal phase gives equal coordinate probabilities within that prepared state.",
+    "Phase weights are chosen from actual output fibres, with no extra resource premise. Checked leaf cardinalities supply both counted-mass identities.",
+    "For every source, native circuit and selected output, both outputs of the literal vacuum split have half its original probability.",
+    "The finite-depth adapter proves |r-p/2| <= p/[2*(4^k-1)] from depth 4*k+1. Its stated Law contract remains global; it is not a finite experimental validation theorem."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeBinaryRefinement.lean"
+      declarations := [
+        "IDT.QMClosure.NativeBinaryRefinement.appendPairs_child_sum",
+        "IDT.QMClosure.NativeBinaryRefinement.total_leaf_probability",
+        "IDT.QMClosure.NativeBinaryRefinement.rootA_probability",
+        "IDT.QMClosure.NativeBinaryRefinement.tree_one_eq_split",
+        "IDT.QMClosure.NativeBinaryRefinement.leaf_amplitude",
+        "IDT.QMClosure.NativeBinaryRefinement.counted_native_masses",
+        "IDT.QMClosure.NativeBinaryRefinement.native_finite_refinement_bound",
+        "IDT.QMClosure.NativeBinaryRefinement.native_vacuum_split_halves",
+        "IDT.QMClosure.NativeBinaryRefinement.native_vacuum_split_fresh_halves"] }]
+  plannedArtifacts := []
+  dependencies := ["native_binary_phase_count_mass", "native_vacuum_probability_family"]
+  limits := [
+    "This is conditional exact native split halving, not general Born uniqueness.",
+    "It uses unbounded finite-width compatibility, which the checked fixed-three-wire countermodel lacks.",
+    "Physical vacuum availability, actual-event generation and general probability-preserving coarse-profile descent remain open."] }
+
+def nativeCoherentScalarSufficiency : ResearchTask := {
+  id := "native_coherent_scalar_sufficiency"
+  stage := .inFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "A compatible family of actual native finite-width probability laws: nonnegative normalized outputs, prepared-state equality, output-permutation covariance, spectator-pair locality and preservation under fresh zero padding.",
-    "Every finite binary refinement can use the required number of fresh vacuum wires, all retained.",
-    "Real Archimedean probabilities; no probability continuity or mixture-profile sufficiency premise."]
+    "The checked native probability-family contract and its vacuum-split halving theorem.",
+    "Actual block copies, internal-zero splitting and equality of explicitly evaluated prepared states; no extra probability or relabel axiom."]
   conclusions := [
-    "Candidate analytic argument under independent review: refining one selected branch into a full binary tree preserves its total descendant probability by normalization, spectator locality and zero padding.",
-    "At depth m, the amplitude of each leaf is a^(m-k)*b^k times the root amplitude. Since a/b=i, equal k modulo four gives equal amplitudes; prepared-state equality and output covariance identify the corresponding leaf probabilities.",
-    "For a fixed prefix of length d with k0 right branches, descendant counts are C(m-d,r-k0), while the whole branch has C(m,r), with C binomial counts modulo four. Positivity bounds the prefix probability by the minimum and maximum count ratios times the root probability.",
-    "Those ratios approach 2^(-d). If the native refinement and counting contracts are established, Archimedean squeezing forces probability halving for every vacuum split, including splits of arbitrary existing circuit outputs.",
-    "This would supply branch accounting for native coherent dilations without assuming scalar-amplitude orbit connectivity or classical mixture accounting."]
+    "Analytic candidate: four coherent copies have coefficients (a^2,ab,ba,b^2)=(i/2,1/2,1/2,-i/2).",
+    "Running the same circuit in every copy equals running it first and then splitting each output twice. Internal-zero halving would give one quarter of each original output probability.",
+    "Literal disjoint-block commutation and spectator locality permit different circuits in disjoint blocks. Two equal selected source amplitudes can be placed in the two real-half copies and compared within one prepared state.",
+    "If the actual block adapter checks, equality of those amplitudes forces equality of the original probabilities for the same source and wire type, without stable spectator-orbit connectivity."]
   checkedEvidence := []
   plannedArtifacts := [
-    "Independent proof audit, exact phase-count convergence or explicit bounds, and native variable-width tree/refinement probability adapters."]
-  dependencies := ["native_three_wire_probability_extension_wall"]
+    "Proofs/QMClosure/NativeZeroPortSplitting.lean",
+    "Proofs/QMClosure/NativeCoherentBranchDilation.lean",
+    "Proofs/QMClosure/NativeScalarAmplitudeSufficiency.lean"]
+  dependencies := ["native_binary_refinement_selection", "native_stable_amplitude_orbit_wall"]
   limits := [
-    "The refinement selection is an analytic candidate, not a checked probability-halving theorem.",
-    "It uses unbounded finite-width compatibility, which the checked three-wire countermodel lacks.",
-    "Even after branch accounting, relating equal coarse-event profiles by available native operations remains a separate open bridge. No general Born rule or physical actualization follows."] }
+    "The coherent-copy argument is under formalization and is not checked evidence.",
+    "Even if scalar sufficiency is established, full squared-amplitude selection needs its own actual-circuit argument. No continuity, arbitrary preparation availability or Born/QM closure is asserted."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -1605,7 +1707,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. Those finite-span and eight-event results alone do not establish all-circuit positivity, global state positivity, a density-matrix theorem or a physically generated full event domain. The checked conditional attenuation route now supplies exact finite native circuit adapters with retained ancillary leakage, family-based rational span and basis-calibrated selection: all-depth family positivity plus normalization, nonnegative diagonals and calibration select ell(v)=v_00 on all rational coordinates, with p agreeing on its supplied domain D. This selected pure extension is mathematically positive; general mixed-state reconstruction and agreement of p outside D do not follow. The checked universal finite-cutoff countermodel passes all four family bounds through any chosen M yet fails at E_6(M+1), separating finite testing from the universal all-depth hypothesis. Physical native availability at arbitrarily large fresh-wire widths, coordinate noncontextuality, classical midpoint event/accounting laws and calibration remain supplied. The checked contextual-probability control leaves native dynamics unchanged: its normalized squared-structural-weight assignment obeys calibration, output permutations, inert vacuum padding, full-process equivalence and syntactic fair mixtures, yet the exact three-port witness has identical all-input selected amplitudes and probabilities 1/2 versus 2/3. No function of the deterministic selected-weight profile reproduces this assignment on all native circuits. It does not descend to the coordinate-domain event law. Spectator-output locality, deterministic all-input profile sufficiency and mixture-event profile sufficiency remain distinct, and probability-preserving profile descent is still a supplied bridge. The checked raw normalized-operation/scalar circuit adapter uses only the Hilbert output constructed from RawOperationalHilbert.Data: the same finite syntax preserves a supplied common-reference feature relation, and a raw basis input has selected weight normSq(scalar output)*W(reference), including null references. Relative weights require W(reference)>0. Physical normalization control, copying, arbitrary raw preparation availability and probability laws remain separate open bridges. The checked conditional native event-probability adapter supplies image factorization, the explicit zero/total/basis/attenuation/fair-mixture grammar, independent all-input structural profiles and transfer to the basis formula under supplied ProbabilityLaw. Its checked downstream canonicalProbabilityLaw at basis input establishes mathematical nonemptiness; probability functions are extensionally unique on the certified grammar and every law has [0,1] bounds. The witness is not a premise of selection and asserts no law existence on arbitrary physical event domains. The contextual control, raw scalar adapter and event-probability adapter are checked conditional results; physical justification of full-profile probability sufficiency, event availability, fair-mixture accounting and matched calibration remains open. The checked three-wire matrix classification and actual-circuit adapter transfer supplied post-T_12 spectator locality and complete evaluated-map invariance to deterministic full-input selected-profile sufficiency. The checked compressed-input real-readout control separates that conclusion from compressed-profile sufficiency for generic readouts. This result is restricted to three wires and does not replace the attenuation premise across unbounded widths, vacuum compression or classical mixtures. The checked Gaussian denominator descent now supplies actual native reduction and synthesis for every legal three-vector. The checked matrix adapter realizes a three-by-three matrix under explicit unitary, uniform-vector and fourth-root determinant invariants with a dyadic first column. Its width-four locality consequence remains a separate pending step. A checked six-wire circuit countermodel shows that sum and norm alone do not imply unrestricted vector synthesis; the wider through-five synthesis analysis remains unchecked. The checked scalar-residue three-wire law is nonnegative, normalized, basis calibrated and invariant under equal prepared states, equal selected source amplitudes, spectator outputs and source-fixing prefixes. Its actual Gaussian dyadic adapter makes it a countermodel on every finite native three-wire circuit. It differs from squared-amplitude readout and assigns fair-mixture probabilities three quarters and zero to an explicit equal all-input profile pair. This separates deterministic profile sufficiency from mixture-profile sufficiency at fixed width three. The checked finite four-wire extension contradiction excludes any extension matching three concrete padding values while retaining prepared-state equality, spectator locality, normalization and nonnegativity. Independently of residue calibration, adding output covariance bounds one explicit attenuation probability by one third; it does not select one quarter. A new analytic stable-spectator orbit obstruction blocks a naive scalar-amplitude connectivity route. A separate analytic binary-refinement route uses all-width compatibility, phase-class leaf symmetry and Archimedean count-ratio bounds to seek probability halving without probability continuity or mixture-profile sufficiency. Neither new analytic route is checked evidence. These results do not establish Born uniqueness or a physical probability law. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. Those finite-span and eight-event results alone do not establish all-circuit positivity, global state positivity, a density-matrix theorem or a physically generated full event domain. The checked conditional attenuation route now supplies exact finite native circuit adapters with retained ancillary leakage, family-based rational span and basis-calibrated selection: all-depth family positivity plus normalization, nonnegative diagonals and calibration select ell(v)=v_00 on all rational coordinates, with p agreeing on its supplied domain D. This selected pure extension is mathematically positive; general mixed-state reconstruction and agreement of p outside D do not follow. The checked universal finite-cutoff countermodel passes all four family bounds through any chosen M yet fails at E_6(M+1), separating finite testing from the universal all-depth hypothesis. Physical native availability at arbitrarily large fresh-wire widths, coordinate noncontextuality, classical midpoint event/accounting laws and calibration remain supplied. The checked contextual-probability control leaves native dynamics unchanged: its normalized squared-structural-weight assignment obeys calibration, output permutations, inert vacuum padding, full-process equivalence and syntactic fair mixtures, yet the exact three-port witness has identical all-input selected amplitudes and probabilities 1/2 versus 2/3. No function of the deterministic selected-weight profile reproduces this assignment on all native circuits. It does not descend to the coordinate-domain event law. Spectator-output locality, deterministic all-input profile sufficiency and mixture-event profile sufficiency remain distinct, and probability-preserving profile descent is still a supplied bridge. The checked raw normalized-operation/scalar circuit adapter uses only the Hilbert output constructed from RawOperationalHilbert.Data: the same finite syntax preserves a supplied common-reference feature relation, and a raw basis input has selected weight normSq(scalar output)*W(reference), including null references. Relative weights require W(reference)>0. Physical normalization control, copying, arbitrary raw preparation availability and probability laws remain separate open bridges. The checked conditional native event-probability adapter supplies image factorization, the explicit zero/total/basis/attenuation/fair-mixture grammar, independent all-input structural profiles and transfer to the basis formula under supplied ProbabilityLaw. Its checked downstream canonicalProbabilityLaw at basis input establishes mathematical nonemptiness; probability functions are extensionally unique on the certified grammar and every law has [0,1] bounds. The witness is not a premise of selection and asserts no law existence on arbitrary physical event domains. The contextual control, raw scalar adapter and event-probability adapter are checked conditional results; physical justification of full-profile probability sufficiency, event availability, fair-mixture accounting and matched calibration remains open. The checked three-wire matrix classification and actual-circuit adapter transfer supplied post-T_12 spectator locality and complete evaluated-map invariance to deterministic full-input selected-profile sufficiency. The checked compressed-input real-readout control separates that conclusion from compressed-profile sufficiency for generic readouts. This result is restricted to three wires and does not replace the attenuation premise across unbounded widths, vacuum compression or classical mixtures. The checked Gaussian denominator descent now supplies actual native reduction and synthesis for every legal three-vector. The checked matrix adapter realizes a three-by-three matrix under explicit unitary, uniform-vector and fourth-root determinant invariants with a dyadic first column. Its width-four locality consequence remains a separate pending step. A checked six-wire circuit countermodel shows that sum and norm alone do not imply unrestricted vector synthesis; the wider through-five synthesis analysis remains unchecked. The checked scalar-residue three-wire law is nonnegative, normalized, basis calibrated and invariant under equal prepared states, equal selected source amplitudes, spectator outputs and source-fixing prefixes. Its actual Gaussian dyadic adapter makes it a countermodel on every finite native three-wire circuit. It differs from squared-amplitude readout and assigns fair-mixture probabilities three quarters and zero to an explicit equal all-input profile pair. This separates deterministic profile sufficiency from mixture-profile sufficiency at fixed width three. The checked finite four-wire extension contradiction excludes any extension matching three concrete padding values while retaining prepared-state equality, spectator locality, normalization and nonnegativity. Independently of residue calibration, adding output covariance bounds one explicit attenuation probability by one third; it does not select one quarter. The checked stable-spectator orbit obstruction excludes connecting two explicit equal-amplitude preparations while leaving the selected output untouched, even with arbitrary finite zero padding. It is not a probability countermodel. The checked all-width probability-family contract implies zero probability for zero amplitude and basis-state calibration. Actual binary native circuits, phase-fibre counting and an Archimedean bound now establish exact probability halving for every literal vacuum split, without probability continuity, scalar sufficiency or mixture-profile sufficiency. Finite depth alone supplies an explicit deviation bound; the theorem retains the global family contract. A new coherent-copy route to same-source scalar-amplitude sufficiency is under formalization, not checked evidence. Its four branches would compare two equal amplitudes at the same real-half coefficient through spectator locality and within-state symmetry. These results do not establish Born uniqueness or a physical probability law. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
@@ -1635,7 +1737,8 @@ def researchTasks : List ResearchTask := [
   nativeEventProbabilityBridge, nativeThreeWireSpectatorLocality, nativeDyadicSynthesis,
   nativeDyadicThreeMatrixSynthesis, nativeDyadicWiderFrontier, nativeDyadicSixWireObstruction,
   nativeThreeWireResidueProbability, nativeThreeWireProbabilityExtensionWall,
-  nativeStableAmplitudeOrbitWall, nativeBinaryRefinementSelection]
+  nativeStableAmplitudeOrbitWall, nativeBinaryPhaseCountMass, nativeVacuumProbabilityFamily,
+  nativeBinaryRefinementSelection, nativeCoherentScalarSufficiency]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
