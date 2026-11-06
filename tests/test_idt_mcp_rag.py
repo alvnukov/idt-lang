@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import io
 import hashlib
+import io
 import json
 import shutil
 import subprocess
@@ -25,6 +25,7 @@ from theory_verifier.idt_rag import (
     IdtRagIndex,
     failure_diagnostics,
     graph_json_load_for_tests,
+    guarded_edit_issues,
     lock_path_for,
     write_locked_graph_for_tests,
 )
@@ -749,6 +750,105 @@ class IdtMcpRagTests(unittest.TestCase):
                     "changed",
                     dry_run=True,
                 )
+
+    def test_guarded_edit_allows_status_substrings_in_identifier_components(self) -> None:
+        for identifier in (
+            "RawOperationalHilbert.Data.derivedGroup",
+            "Namespace.provedLemma",
+            "Namespace.formal_proofCard",
+            "underived",
+            "derived2",
+            "derivedÉvidence",
+            "éderived",
+        ):
+            with self.subTest(identifier=identifier):
+                self.assertEqual((), guarded_edit_issues("pending", f'"{identifier}"'))
+
+    def test_guarded_edit_blocks_status_components(self) -> None:
+        for status in ("formal_proof", "derived", "proved"):
+            for value in (status, f"{status}_extra", f"status_{status}", f"Namespace.{status}"):
+                with self.subTest(status=status, value=value):
+                    self.assertIn(
+                        f"forbidden status upgrade token introduced: {status}",
+                        guarded_edit_issues("pending", json.dumps({"status": value})),
+                    )
+        self.assertIn(
+            "forbidden status upgrade token introduced: derived",
+            guarded_edit_issues("pending", '"derived_conditional"'),
+        )
+
+    def test_guarded_edit_counts_components_instead_of_identifier_substrings(self) -> None:
+        self.assertIn(
+            "forbidden status upgrade token introduced: derived",
+            guarded_edit_issues("RawOperationalHilbert.Data.derivedGroup", "derived"),
+        )
+        self.assertEqual((), guarded_edit_issues('"derived"', 'status := "derived"'))
+        self.assertIn(
+            "forbidden status upgrade token introduced: derived",
+            guarded_edit_issues('"derived"', '"derived" "derived"'),
+        )
+        self.assertEqual((), guarded_edit_issues("pending", '"DERIVED"'))
+
+    def test_guarded_edit_preserves_overclaim_phrase_guard(self) -> None:
+        for claim in ("QM is proved", "Born is proved", "Hilbert is proved", "hbar is derived"):
+            with self.subTest(claim=claim):
+                self.assertIn(
+                    f"forbidden overclaim introduced: {claim}",
+                    guarded_edit_issues("pending", claim),
+                )
+                self.assertEqual((), guarded_edit_issues(claim, claim + "."))
+
+    def test_guarded_replace_accepts_symbol_evidence_in_dry_run_and_apply(self) -> None:
+        for dry_run in (True, False):
+            with self.subTest(dry_run=dry_run), tempfile.TemporaryDirectory() as raw_dir:
+                root = write_fixture_repo(Path(raw_dir))
+                source_path = root / "Proofs" / "QMClosure" / "A.lean"
+                original_text = source_path.read_text(encoding="utf-8")
+                expected_sha16 = file_sha16(source_path)
+                index = load_fixture_index(root)
+                old_text = "def localTomography := True"
+                new_text = 'def evidence := "RawOperationalHilbert.Data.derivedGroup"'
+
+                result = index.guarded_replace(
+                    Path("Proofs/QMClosure/A.lean"),
+                    expected_sha16,
+                    old_text,
+                    new_text,
+                    dry_run=dry_run,
+                )
+
+                self.assertEqual(True, result["ok"])
+                self.assertEqual("dry_run" if dry_run else "applied", result["status"])
+                self.assertEqual(expected_sha16, result["old_sha16"])
+                updated_text = original_text.replace(old_text, new_text, 1)
+                self.assertEqual(
+                    hashlib.sha256(updated_text.encode("utf-8")).hexdigest()[:16],
+                    result["new_sha16"],
+                )
+                self.assertEqual(
+                    original_text if dry_run else updated_text,
+                    source_path.read_text(encoding="utf-8"),
+                )
+
+    def test_guarded_replace_rejects_nonunique_old_text(self) -> None:
+        for old_text, count in (("absent", 0), ("repeated", 2)):
+            with self.subTest(count=count), tempfile.TemporaryDirectory() as raw_dir:
+                root = write_fixture_repo(Path(raw_dir))
+                index = load_fixture_index(root)
+                source_path = root / "Proofs" / "QMClosure" / "A.lean"
+                original_text = "-- repeated repeated\n"
+                source_path.write_text(original_text, encoding="utf-8")
+
+                with self.assertRaisesRegex(IdtRagError, f"old_text must occur exactly once, got {count}"):
+                    index.guarded_replace(
+                        Path("Proofs/QMClosure/A.lean"),
+                        file_sha16(source_path),
+                        old_text,
+                        "RawOperationalHilbert.Data.derivedGroup",
+                        dry_run=False,
+                    )
+
+                self.assertEqual(original_text, source_path.read_text(encoding="utf-8"))
 
     def test_parallel_refreshes_do_not_leave_partial_graph(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:

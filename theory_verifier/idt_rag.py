@@ -616,10 +616,13 @@ def is_sha16(value: str) -> bool:
 
 
 def guarded_edit_issues(original_text: str, updated_text: str) -> tuple[str, ...]:
+    """Scan statuses as underscore-separated components, not identifier substrings."""
     issues: list[str] = []
     forbidden_statuses = ("formal_proof", "derived", "proved")
     for status in forbidden_statuses:
-        if updated_text.count(status) > original_text.count(status):
+        # Unicode alphanumeric neighbors belong to the same identifier component.
+        pattern = re.compile(rf"(?<![^\W_]){re.escape(status)}(?![^\W_])")
+        if len(pattern.findall(updated_text)) > len(pattern.findall(original_text)):
             issues.append(f"forbidden status upgrade token introduced: {status}")
     forbidden_claims = ("QM is proved", "Born is proved", "Hilbert is proved", "hbar is derived")
     for claim in forbidden_claims:
