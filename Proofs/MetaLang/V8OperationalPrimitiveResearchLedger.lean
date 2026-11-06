@@ -1101,26 +1101,41 @@ def nativeMixerInfiniteOrder : ResearchTask := {
 
 def nativeWireEffectSpan : ResearchTask := {
   id := "native_wire_effect_span"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "A supplied rational coordinate space for n-wire Hermitian effects uses n diagonal coordinates and real and imaginary off-diagonal coordinates for i<j.",
-    "Native coordinate events include the identity-port P_i, the single pair-mixer selected effect H_ij with diagonal entries 1/2,1/2 and imaginary off-diagonal entry -1/2, and the two-three-gate half-mixture effect F_ij with diagonal entries 1/8,5/8 and real off-diagonal entry -1/4.",
-    "Membership of those event coordinates in a proposed domain D is supplied; midpoint probability accounting is a separate premise when composing with the linearization theorem."]
+    "A supplied rational coordinate space for n-wire Hermitian effects uses n diagonal coordinates and real and imaginary off-diagonal coordinates for i<j; complex scalar wires and the existing native mixer remain supplied.",
+    "Each pair experiment uses Fin n plus one fresh zero-input vacuum coordinate; selected-port events and classical half mixing remain supplied availability and accounting assumptions.",
+    "The event coordinates are P_i, the single pair-mixer effect H_ij with diagonal entries 1/2,1/2 and imaginary off-diagonal entry -1/2, and the half mixture F_ij of two three-gate words with diagonal entries 1/8,5/8 and real off-diagonal entry -1/4.",
+    "The unique-readout theorem assumes a domain D containing zero and every P_i, H_ij and F_ij, closure of D under rational half sums, one coordinate-noncontextual readout p with p(0)=0, and midpoint accounting on every pair in D."]
   conclusions := [
-    "Analytic adapter target: on Fin n plus one vacuum coordinate, each pair experiment has the stated selected weight for every complex input, with all other data wires unaffected.",
-    "Analytic span target: signed rational recovery Y_ij=P_i+P_j-2*H_ij and X_ij=(1/2)*P_i+(5/2)*P_j-4*F_ij recovers the off-diagonal coordinate basis; conditional membership of the displayed events implies full rational span.",
-    "The target supplies the spanning premise of midpoint linearization without using Lie-group density. The n^2 coordinate count is a planned check, not a checked informational-completeness result.",
-    "Analytic negative-control target at n=2: rho=[[1,1/8],[1/8,0]] has determinant -1/64, yet its linear readout takes values 1,0 on the two P_i, 1/2 on H_ij and 1/16 on F_ij, and is positive on these generators, their complements and their generated cone.",
-    "The negative-control target separates finite full span, linear accounting and matched calibration from positivity on the full positive-effect interval; it does not close Born actualization."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "PLANNED, not checked: Proofs/QMClosure/NativeWireEffectSpan.lean."]
+    "For every n, pair i<j and complex input, the generic native adapters give exactly the H_ij selected-port weight and the F_ij half-mixture weight. Every native circuit preserves total squared-norm readout on the supplied zero-input extension.",
+    "Signed rational recovery Y_ij=P_i+P_j-2*H_ij and X_ij=(1/2)*P_i+(5/2)*P_j-4*F_ij recovers every coordinate basis vector; membership of the displayed events in D implies its rational span is the whole coordinate space.",
+    "Under the supplied zero, midpoint and membership laws, there exists a unique rational-linear functional on the whole coordinate space agreeing with p on D. No Lie-group density premise is used.",
+    "At n=2 the explicit rational-linear control has values 1,0 on P_0,P_1, 1/2 on H_01 and 1/16 on F_01. Each of these four events and its identity complement has control value in [0,1]; every nonnegative finite rational combination of these eight supplied events has nonnegative value.",
+    "The explicit N=(1/128)*P_0+(64/128)*P_1-(8/128)*X_01 is a positive contraction for every complex input, yet its control readout equals -1/128. Thus this finite calibration and cone positivity do not establish positivity on the full positive-effect interval."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeWireEffectSpan.lean"
+      declarations := [
+        "IDT.QMClosure.NativeWireEffectSpan.recover_Y",
+        "IDT.QMClosure.NativeWireEffectSpan.recover_X",
+        "IDT.QMClosure.NativeWireEffectSpan.native_span_eq_top",
+        "IDT.QMClosure.NativeWireEffectSpan.native_H_weight",
+        "IDT.QMClosure.NativeWireEffectSpan.native_F_weight",
+        "IDT.QMClosure.NativeWireEffectSpan.all_port_resolution",
+        "IDT.QMClosure.NativeWireEffectSpan.unique_rational_readout",
+        "IDT.QMClosure.NativeWireEffectSpan.control_values",
+        "IDT.QMClosure.NativeWireEffectSpan.control_calibration",
+        "IDT.QMClosure.NativeWireEffectSpan.control_nonnegative_combinations",
+        "IDT.QMClosure.NativeWireEffectSpan.negativeControl_positive_contraction",
+        "IDT.QMClosure.NativeWireEffectSpan.control_negative"] }]
+  plannedArtifacts := []
   dependencies := ["normalized_mixer_generated_process_wall", "native_mixer_event_cone_exclusion", "dyadic_mixture_linearization"]
   limits := [
-    "The generic adapter and basis recovery are not yet checked; each pair test is a separate experiment with a fresh vacuum coordinate, not one simultaneous n^2-outcome measurement.",
+    "Each pair test is a separate experiment with a fresh vacuum coordinate; no simultaneous measurement of the spanning family, basis independence or coordinate cardinality theorem is asserted.",
     "Signed rational basis recovery is mathematical linear algebra, not physical subtraction or availability of every positive effect.",
-    "Finite-basis positivity, even with linear accounting and calibration, does not establish a positive-semidefinite state or a density-matrix theorem.",
+    "The control is nonnegative only on nonnegative finite rational combinations of the eight displayed generator/complement events; no positivity theorem for all native circuit words is asserted.",
+    "A unique rational-linear readout and the displayed finite calibration do not establish a globally positive state, positive-semidefinite density matrix or physical probability law.",
     "No full positive-domain closure, physical event availability, actual outcome generator, Born-rule closure or full-QM closure is established."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
@@ -1141,7 +1156,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The finite native wire-effect span and nonpositive-state control remain unchecked plans; midpoint linearization and finite informational span do not provide positivity, a density-matrix theorem or a physically generated full event domain. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator. The checked native-mixer finite exclusion additionally rejects the old cone assignment under its explicit real-mixture extension assumptions. The independently reviewed group/port route awaits formalization. Two-ancilla coordinate completion, abstract dyadic-midpoint linearization and nonidentity of every positive power of one exact native word are checked mathematical results. They do not close the analytic group-classification route. The native wire-effect adapters, rational span and unique rational readout under supplied zero/midpoint/domain-membership laws are checked. The checked eight-event control is nonnegative on their nonnegative finite rational combinations but assigns -1/128 to an explicit positive contraction. These results establish neither all-circuit positivity, global state positivity, a density-matrix theorem nor a physically generated full event domain. These ingredients supply no physical availability, actual probability law, universal circuit realization or probability-limit bridge.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
