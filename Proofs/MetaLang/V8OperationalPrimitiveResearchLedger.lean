@@ -682,42 +682,253 @@ def coherentPortRayBoundary : ResearchTask := {
 
 def scalarActualizationRefinement : ResearchTask := {
   id := "scalar_actualization_refinement"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "A shared universal scalar actualization map F from the real unit interval to itself, respecting complement and half refinement for every interval value.",
-    "The rich real weight domain, shared use across preparations and actual-record refinement laws remain supplied event bridges."]
+    "A supplied shared scalar response F on all real weights in [0,1], with 0 <= F(t) <= 1, complement accounting F(1-t)=1-F(t), and balanced event-label refinement F(t/2)=F(t)/2 for every interval value.",
+    "The finite-event adapter additionally supplies nonnegative branch weights with positive total, actual event probabilities p, and the assignment p(r)=F(q(r)/sum(q)).",
+    "The restricted control supplies rational two-coordinate events in [0,1]^2, componentwise-compatible finite sums, rational attenuations and scalar events, preparation weight w_t(a,b)=a*t+b*(1-t), and alternative probability p(a,b)=(a+b)/2.",
+    "The restricted disagreement and injectivity use one fixed irrational preparation t; the concrete bounded preparation is sqrt(2)/2."]
   conclusions := [
-    "Analytic target: complement and half refinement force F to be identity without a continuity or additivity premise.",
-    "Analytic control target: at one fixed preparation, rational diagonal coordinates with irrational parameter t give injective weights w_t.",
-    "Analytic control target: an alternative p_s is normalized, positive, compatible with all available merges and calibrated rational weights, yet differs from w_t on that restricted domain."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "UNCHECKED in-progress artifact: Proofs/QMClosure/ScalarActualizationRefinement.lean.",
-    "UNCHECKED planned artifact: Proofs/QMClosure/RestrictedActualizationControls.lean."]
+    "A bounded real error with complement antisymmetry and exact halving vanishes on [0,1]; consequently the supplied probability response F is identity without continuity, additivity, multiplicativity or measurability assumptions.",
+    "Under its supplied assignment, the finite-event adapter gives p(r)=q(r)/sum(q); it does not generate event probabilities.",
+    "The normalized squared response obeys probability bounds and complement accounting but violates balanced splitting; squaring and renormalizing records changes the coarse probability from 1/2 to 1/3 after the specified refinement.",
+    "The restricted alternative assignment is positive, normalized, additive for every available finite compatible merge, and respects every rational refinement and rational scalar calibration.",
+    "At fixed irrational t, w_t is injective, so the alternative assignment respects equality of weights at that preparation while disagreeing with w_t on the first port.",
+    "Although forward rational refinements exist, this event image has no event of weight 2*t and no event of weight 2*(1-t); the two inverse-halving branches at the first port and its complement are absent."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ScalarActualizationRefinement.lean"
+      declarations := [
+        "IDT.QMClosure.ScalarActualizationRefinement.bounded_error_eq_zero",
+        "IDT.QMClosure.ScalarActualizationRefinement.probability_response_eq_weight",
+        "IDT.QMClosure.ScalarActualizationRefinement.supplied_finite_event_probability",
+        "IDT.QMClosure.ScalarActualizationRefinement.squared_response_probability",
+        "IDT.QMClosure.ScalarActualizationRefinement.squared_response_complement",
+        "IDT.QMClosure.ScalarActualizationRefinement.squared_response_fails_balanced_split",
+        "IDT.QMClosure.ScalarActualizationRefinement.squared_weight_refinement_counterexample"] },
+    { sourcePath := "Proofs/QMClosure/RestrictedActualizationControls.lean"
+      declarations := [
+        "IDT.QMClosure.RestrictedActualizationControls.probability_bounds",
+        "IDT.QMClosure.RestrictedActualizationControls.probability_accounting",
+        "IDT.QMClosure.RestrictedActualizationControls.probability_finite_accounting",
+        "IDT.QMClosure.RestrictedActualizationControls.complete_refinement_normalization",
+        "IDT.QMClosure.RestrictedActualizationControls.probability_rational_refinement",
+        "IDT.QMClosure.RestrictedActualizationControls.rational_scalar_calibration",
+        "IDT.QMClosure.RestrictedActualizationControls.irrational_weight_injective",
+        "IDT.QMClosure.RestrictedActualizationControls.fixed_preparation_weight_noncontextual",
+        "IDT.QMClosure.RestrictedActualizationControls.alternative_disagrees",
+        "IDT.QMClosure.RestrictedActualizationControls.no_event_weight_twice_preparation",
+        "IDT.QMClosure.RestrictedActualizationControls.no_event_weight_twice_complement",
+        "IDT.QMClosure.RestrictedActualizationControls.fixed_preparation_countermodel"] }]
+  plannedArtifacts := []
   dependencies := ["record_effects_after_completion"]
   limits := [
-    "The restricted fixed-preparation control is not a counterexample to a shared universal F across preparations.",
-    "No checked scalar-actualization theorem or restricted-domain control is recorded yet.",
-    "Actual record laws and richness of available weights are not consequences of quadratic readout alone."] }
+    "The shared scalar response, actual event probabilities, event-label accounting laws and richness of available weights remain supplied bridges, not consequences of quadratic readout or reconstructed effects.",
+    "The restricted fixed-preparation control is not a counterexample to one universal scalar response shared across preparations.",
+    "The specific missing inverse branches do not show that every restricted domain fails or that the full real domain is necessary; suitable restricted domains with inverse-branch closure may still support rigidity.",
+    "No physical event adapter, actual-event generator, general no-signalling result, Born-rule closure or full-QM closure is established."] }
 
 def calibratedEffectActualization : ResearchTask := {
   id := "calibrated_effect_actualization"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "On a rich positive-effect domain of a Hilbert output, supply actual probabilities p with p(I)=1, nonnegativity, partial additivity and effect noncontextuality.",
-    "For a supplied unit vector psi and its matched rank-one effect P_psi, supply calibration p(P_psi)=1."]
+    "A supplied complete complex Hilbert space H, with the full effect interval of bounded complex-linear operators 0 <= E <= I.",
+    "A single context-independent EventLaw p on effects supplies p(I)=1, nonnegative probabilities and additivity for every positive operator pair whose sum is at most I; values outside the effect interval are unrestricted and unused.",
+    "A supplied unit vector psi and its matched rank-one effect P_psi satisfy the supplied calibration p(P_psi)=1."]
   conclusions := [
-    "Analytic target: an elementary block bound and order squeeze force p(E) to equal the vector expectation of E in psi."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Formalize the calibrated effect-domain order-squeeze argument; artifact name not assigned."]
-  dependencies := ["record_effects_after_completion", "coherent_port_ray_boundary"]
+    "Partial additivity and positivity derive monotonicity, probability bounds and complement accounting on effects.",
+    "Real homogeneity p(tE)=t*p(E) for t in [0,1] follows from EventLaw rather than being assumed.",
+    "An arbitrary-dimensional operator block bound and order squeeze give p(E) <= Re<psi,E psi>; applying the same bound to I-E gives equality for every effect.",
+    "The conditional theorem uses no Gleason theorem, normality, continuity or supplied probability homogeneity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CalibratedEffectActualization.lean"
+      declarations := [
+        "IDT.QMClosure.CalibratedEffectActualization.EventLaw",
+        "IDT.QMClosure.CalibratedEffectActualization.probability_mono",
+        "IDT.QMClosure.CalibratedEffectActualization.probability_scale",
+        "IDT.QMClosure.CalibratedEffectActualization.effect_block_bound",
+        "IDT.QMClosure.CalibratedEffectActualization.probability_le_expectation",
+        "IDT.QMClosure.CalibratedEffectActualization.calibrated_probability_eq_expectation"] }]
+  plannedArtifacts := []
+  dependencies := ["record_effects_after_completion", "coherent_port_ray_boundary", "scalar_actualization_refinement"]
   limits := [
-    "All effects, or an adequate domain of order witnesses, must be available; that physical domain richness is not established.",
-    "The analytic route uses no Gleason invocation or normality premise, but is not yet encoded as a checked theorem.",
-    "Actual probability assignment, noncontextuality, additivity and matched-state calibration remain supplied event bridges."] }
+    "The complete complex Hilbert space and full effect domain are supplied mathematical structures; physical availability of the effects is not established.",
+    "Actual probability assignment, effect noncontextuality, partial additivity and matched-state calibration remain supplied event bridges.",
+    "No actual-event generator, physical instrument, state update, Born-rule closure or full-QM closure is established."] }
+
+def dyadicEffectDomainActualization : ResearchTask := {
+  id := "dyadic_effect_domain_actualization"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A supplied subset D of effects on a complete complex Hilbert space contains I and the projector P of a supplied unit vector psi.",
+    "DomainLaw supplies closure under complement, halving and every operator-admissible partial sum E+F <= I, including sums of effects from different contexts.",
+    "A single context-independent probability assignment on D is nonnegative, normalized at I and additive on every such partial sum, with calibration p(P)=1."]
+  conclusions := [
+    "The domain laws imply order monotonicity, probability halving, iterated halving, bounded repeated sums, and dyadic scaling closure with probability homogeneity.",
+    "Dyadic density and operator block comparisons, scaled by a sufficiently small power of one half, bound p(E) by every dyadic coefficient above Re<psi,E psi>.",
+    "The resulting upper bound and complement accounting give p(E)=Re<psi,E psi> for every E in D.",
+    "No all-real or all-rational scaling closure, supplied probability homogeneity, normality, continuity or dimension restriction is assumed."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DyadicEffectDomainActualization.lean"
+      declarations := [
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.effects",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.one_mem",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.complement_mem",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.half_mem",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.sum_mem",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.normalized",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.nonnegative",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.additive",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.probability_mono",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.probability_half",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.iterated_half",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.repeated_sum",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.dyadic_scale",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.exists_dyadic_between",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.probability_le_dyadic",
+        "IDT.QMClosure.DyadicEffectDomainActualization.DomainLaw.calibrated_probability_eq_expectation"] }]
+  plannedArtifacts := []
+  dependencies := ["calibrated_effect_actualization"]
+  limits := [
+    "The domain, physical availability, closure under all cross-context operator-admissible partial sums, probability assignment and calibration remain supplied event bridges.",
+    "The sum-closure and additive fields are distinct assumptions: neither same-context accounting nor mixing alone establishes availability of every positive-order comparison event.",
+    "No actual-event generator, physical instrument, state update, Born-rule closure or full-QM closure is established."] }
+
+def contextualActualizationControl : ResearchTask := {
+  id := "contextual_actualization_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A supplied real symmetric two-by-two matrix representation SymmetricCoordinates has three tagged contexts i in {0,plus,minus} and events (i,a,b), for all real a,b in [0,1], embedded as b*I+(a-b)*P_i.",
+    "The projectors are P_0=diag(1,0) and P_plus/minus=[[3/4,+/-sqrt(3)/4],[+/-sqrt(3)/4,1/4]]; supplied probabilities are p=a*c_i+b*(1-c_i), with c_0=1 and c_plus=c_minus=9/16."]
+  conclusions := [
+    "Every embedded event has positive-contraction quadratic bounds on all real vectors; the explicit complexExpectation expression is real and has the corresponding bounds on all complex vectors.",
+    "Equality of embedded coordinate effects implies equality of probabilities, including distinct context tags, so the assignment descends to the supplied effect image.",
+    "The assignment is bounded in [0,1], normalized, calibrated at P_0 and every real scalar effect, and respects complement and all real attenuations.",
+    "Every finite coefficient-compatible same-context family has its embedded sum and additive probability.",
+    "E_plus=P_plus/2 and E_minus=P_minus/2 have an admitted pair sum diag(3/4,1/4), but its probability 3/4 differs from the branch sum 9/16.",
+    "Adding F=diag(1/4,3/4) gives I in coordinates, while the three assigned probabilities 9/32,9/32,1/4 sum to 13/16; cross-context accounting fails even when the pair sum and total are admitted."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ContextualActualizationControl.lean"
+      declarations := [
+        "IDT.QMClosure.ContextualActualizationControl.embedding_quadratic",
+        "IDT.QMClosure.ContextualActualizationControl.embedding_positive_contraction",
+        "IDT.QMClosure.ContextualActualizationControl.complexExpectation_real",
+        "IDT.QMClosure.ContextualActualizationControl.complexExpectation_imaginary",
+        "IDT.QMClosure.ContextualActualizationControl.embedding_complex_positive_contraction",
+        "IDT.QMClosure.ContextualActualizationControl.probability_bounds",
+        "IDT.QMClosure.ContextualActualizationControl.probability_of_embedding_eq",
+        "IDT.QMClosure.ContextualActualizationControl.scalar_embedding",
+        "IDT.QMClosure.ContextualActualizationControl.scalar_probability",
+        "IDT.QMClosure.ContextualActualizationControl.normalized",
+        "IDT.QMClosure.ContextualActualizationControl.complement_embedding",
+        "IDT.QMClosure.ContextualActualizationControl.complement_probability",
+        "IDT.QMClosure.ContextualActualizationControl.attenuation_embedding",
+        "IDT.QMClosure.ContextualActualizationControl.attenuation_probability",
+        "IDT.QMClosure.ContextualActualizationControl.halves",
+        "IDT.QMClosure.ContextualActualizationControl.finite_same_context_embedding",
+        "IDT.QMClosure.ContextualActualizationControl.finite_same_context_probability",
+        "IDT.QMClosure.ContextualActualizationControl.preparation_certain",
+        "IDT.QMClosure.ContextualActualizationControl.cross_context_pair_is_admitted",
+        "IDT.QMClosure.ContextualActualizationControl.cross_context_pair_failure",
+        "IDT.QMClosure.ContextualActualizationControl.cross_context_sum_identity",
+        "IDT.QMClosure.ContextualActualizationControl.cross_context_normalization_failure"] }]
+  plannedArtifacts := []
+  dependencies := ["dyadic_effect_domain_actualization"]
+  limits := [
+    "This is a supplied symmetric-coordinate effect model with explicit real and complex quadratic verification, not a reconstructed carrier or continuous-operator Effect adapter.",
+    "The assignment is operator/effect-noncontextual, not fixed-preparation numerical-weight-noncontextual. With rich scalar calibration, that additional numerical-weight noncontextuality would force the vector expectation.",
+    "The result isolates missing cross-context joint accounting rather than absence of the displayed sum effects; it concerns only the supplied three-context image.",
+    "No general contextuality classification, no-signalling result, physical event adapter, actual-event generator or full-QM closure is established."] }
+
+def generatedEventConeControl : ResearchTask := {
+  id := "generated_event_cone_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A supplied real symmetric two-by-two matrix coordinate model uses P_0=diag(1,0), P_plus/minus=[[3/4,+/-sqrt(3)/4],[+/-sqrt(3)/4,1/4]], and Q_i=I-P_i.",
+    "C is the finite nonnegative real conic span of the six P_i,Q_i, with no topological closure or positive-semidefinite saturation; D={E in C | I-E in C}.",
+    "A new coordinate-linear law L(E)=E00+E01/sqrt(3) is supplied; it is distinct from the three-context control's probability constants 1,9/16,9/16."]
+  conclusions := [
+    "L takes values 1,0 on P_0,Q_0; 1,0 on P_plus,Q_plus; and 1/2,1/2 on P_minus,Q_minus. It is nonnegative on C, normalized at I and bounded in [0,1] on D.",
+    "Every supplied finite normalized cone-valued family has outcomes in D and total assigned value one; global coordinate linearity gives additivity for all admitted sums, real attenuation accounting and finite arbitrary-real convex mixing.",
+    "Every admitted coordinate effect has positive-contraction quadratic bounds on all real and complex vectors; L respects coordinate equality.",
+    "Calibration L(P_0)=1 holds, but L(P_plus)=1 differs from the first-basis-vector expectation 3/4.",
+    "A=I/16 and B=(P_0+P_plus)/2 lie in D. S=A+B is in C and has positive-contraction bounds on every real and complex vector, but T=I-S is outside C and S is outside D.",
+    "The exact witness has T's quadratic form ((x-2*sqrt(3)*y)^2+y^2)/16 >= 0, L(T)=-1/16 and L(S)=17/16. The latter is a value on an excluded mathematical sum, never an admitted outcome probability.",
+    "Thus complete accounting on this admitted cone interval, even with real mixing, does not imply saturation under every positive-semidefinite operator-admissible sum."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/GeneratedEventConeControl.lean"
+      declarations := [
+        "IDT.QMClosure.GeneratedEventConeControl.L_add",
+        "IDT.QMClosure.GeneratedEventConeControl.L_scale",
+        "IDT.QMClosure.GeneratedEventConeControl.L_identity",
+        "IDT.QMClosure.GeneratedEventConeControl.L_complement",
+        "IDT.QMClosure.GeneratedEventConeControl.L_projector",
+        "IDT.QMClosure.GeneratedEventConeControl.cone_L_nonnegative",
+        "IDT.QMClosure.GeneratedEventConeControl.context_event_inDomain",
+        "IDT.QMClosure.GeneratedEventConeControl.domain_bounds",
+        "IDT.QMClosure.GeneratedEventConeControl.domain_positive_contraction",
+        "IDT.QMClosure.GeneratedEventConeControl.domain_complex_positive_contraction",
+        "IDT.QMClosure.GeneratedEventConeControl.domain_attenuation",
+        "IDT.QMClosure.GeneratedEventConeControl.L_sum",
+        "IDT.QMClosure.GeneratedEventConeControl.domain_convex_mixture",
+        "IDT.QMClosure.GeneratedEventConeControl.normalized_family_inDomain",
+        "IDT.QMClosure.GeneratedEventConeControl.normalized_family_accounting",
+        "IDT.QMClosure.GeneratedEventConeControl.effect_noncontextual",
+        "IDT.QMClosure.GeneratedEventConeControl.admitted_sum_additive",
+        "IDT.QMClosure.GeneratedEventConeControl.calibration",
+        "IDT.QMClosure.GeneratedEventConeControl.disagreement_with_first_basis_vector_expectation",
+        "IDT.QMClosure.GeneratedEventConeControl.A_inDomain",
+        "IDT.QMClosure.GeneratedEventConeControl.B_inDomain",
+        "IDT.QMClosure.GeneratedEventConeControl.T_quadratic",
+        "IDT.QMClosure.GeneratedEventConeControl.S_positive_contraction",
+        "IDT.QMClosure.GeneratedEventConeControl.S_complex_positive_contraction",
+        "IDT.QMClosure.GeneratedEventConeControl.L_S",
+        "IDT.QMClosure.GeneratedEventConeControl.L_T",
+        "IDT.QMClosure.GeneratedEventConeControl.T_not_inCone",
+        "IDT.QMClosure.GeneratedEventConeControl.S_not_inDomain",
+        "IDT.QMClosure.GeneratedEventConeControl.absent_sum_control"] }]
+  plannedArtifacts := []
+  dependencies := ["contextual_actualization_control", "dyadic_effect_domain_actualization"]
+  limits := [
+    "All normalized C-event families constitute a supplied larger domain; original randomized test histories sit inside it, but realizability of every such family from randomized original tests is not asserted.",
+    "L is effect/operator-noncontextual and globally coordinate-additive, but not fixed-preparation numerical-weight-noncontextual or a non-Born state on the full quantum effect interval.",
+    "Existing-sum accounting and real mixing do not establish physical availability or positive-order saturation; the witness shows failure of the closure required by DomainLaw.sum_mem.",
+    "The coordinate model has no continuous-operator Effect adapter or physical event generator.",
+    "No general no-signalling result, physical instrument, Born-rule closure or full-QM closure is established."] }
+
+def conditionalRecordProbabilities : ResearchTask := {
+  id := "conditional_record_probabilities"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Raw source Data V and dependent raw targets supply a finite NormalizedRecordEffects.Family f, including full-carrier normalized mixer naturality and total target-weight resolution.",
+    "A supplied raw preparation x has source.weight(x)>0; normalizedFeature is inverse-norm complex scalar multiplication of source.feature(x) in the reconstructed source.Hilbert, with no independent Hilbert-space input.",
+    "Supply DyadicEffectDomainActualization.DomainLaw D p on this reconstructed Hilbert space, membership of the matched projector of normalizedFeature in D, calibration of that projector to one, and membership of every f.effect(r) in D."]
+  conclusions := [
+    "Positive source weight makes normalizedFeature a mathematical unit vector; the unnormalized Family.effect_expectation identity and norm_feature_sq give its normalized expectation as target_r.weight(f.channel(r,x))/source.weight(x).",
+    "The accepted conditional dyadic theorem therefore gives p(f.effect(r))=target_r.weight(f.channel(r,x))/source.weight(x) for every record r.",
+    "The finite record probabilities lie in [0,1] and sum to one; the combined theorem packages the ratio formula, finite normalization and probability bounds.",
+    "The individual bounds require only the supplied domain law and branch membership; positive source weight and matched calibration are additionally used for the ratio and normalized total."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ConditionalRecordProbabilities.lean"
+      declarations := [
+        "IDT.QMClosure.ConditionalRecordProbabilities.normalizedFeature_unit",
+        "IDT.QMClosure.ConditionalRecordProbabilities.normalized_effect_expectation",
+        "IDT.QMClosure.ConditionalRecordProbabilities.record_probability",
+        "IDT.QMClosure.ConditionalRecordProbabilities.record_probabilities_sum",
+        "IDT.QMClosure.ConditionalRecordProbabilities.record_probability_bounds",
+        "IDT.QMClosure.ConditionalRecordProbabilities.conditional_record_probabilities"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_operational_hilbert_facade", "normalized_record_effects", "dyadic_effect_domain_actualization"]
+  limits := [
+    "The domain, effect membership, all DomainLaw closure/accounting laws and matched-state calibration remain supplied event bridges.",
+    "Mathematical feature normalization supplies no native normalization operation or physically available preparation, and does not establish physical effect or event availability.",
+    "No actual outcome generator, physical instrument, state update, original-IDT bridge, Born-rule closure or full-QM closure is established."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -737,7 +948,7 @@ def globalBridges : List ResearchTask := [
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
-    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The scalar-refinement and calibrated-effect routes are conditional research tasks, not established physical event laws.",
+    "Actualization remains open: justify or explicitly supply actual-event complement/refinement laws on a rich shared real-weight domain, or noncontextual partially additive probabilities on an adequately rich effect domain with matched-state calibration. The accepted conditional scalar, full-effect, dyadic-domain and reconstructed-record probability theorems do not establish physical event laws, availability or calibration. Distinct bridges remain: joint accounting/additivity for physically admitted cross-context sums, and availability/order saturation supplying every operator-admissible sum and required comparison event. The checked three-context control isolates failure of joint accounting even for admitted sums. The checked generated-cone control isolates missing positive-order saturation despite global coordinate additivity, real mixing and normalization of every supplied normalized cone-valued family; its 17/16 value belongs to an excluded mathematical sum. Neither control establishes physical event availability or an actual outcome generator.",
   openBridge "physical_state_process_completeness"
     "Justify physically available completion states and processes.",
   openBridge "continuous_dynamics"
@@ -757,7 +968,9 @@ def researchTasks : List ResearchTask := [
   canonicalHilbertUniqueness, compositeProductKernel, compositeProductControls,
   operationalContextQuotient, operationalContextControls, recordEffects,
   readoutEffectControls, normalizedRecordEffects, coherentPortRayBoundary,
-  scalarActualizationRefinement, calibratedEffectActualization]
+  scalarActualizationRefinement, calibratedEffectActualization,
+  dyadicEffectDomainActualization, contextualActualizationControl,
+  generatedEventConeControl, conditionalRecordProbabilities]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
