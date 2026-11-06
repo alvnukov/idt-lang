@@ -25,7 +25,9 @@ from theory_verifier.idt_rag import (
     IdtRagIndex,
     failure_diagnostics,
     graph_json_load_for_tests,
+    guarded_edit_diagnostics,
     guarded_edit_issues,
+    guarded_edit_text,
     lock_path_for,
     write_locked_graph_for_tests,
 )
@@ -734,6 +736,150 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertEqual(False, result["ok"])
             self.assertEqual("blocked_by_guard", result["status"])
             self.assertNotIn("formal_proof", source_path.read_text(encoding="utf-8"))
+
+    def test_guarded_replace_explains_negated_and_caveated_prose_without_writing(self) -> None:
+        cases = (
+            ("Physical availability remains supplied, not derived.", "derived"),
+            ("Any proved equivalence would be conditional on the supplied event laws.", "proved"),
+        )
+        for new_text, token in cases:
+            for dry_run in (True, False):
+                with self.subTest(text=new_text, dry_run=dry_run), tempfile.TemporaryDirectory() as raw_dir:
+                    root = write_fixture_repo(Path(raw_dir))
+                    source_path = root / "Proofs" / "QMClosure" / "A.lean"
+                    original_bytes = source_path.read_bytes()
+                    expected_sha16 = file_sha16(source_path)
+                    server = IdtMcpServer(load_fixture_index(root))
+
+                    response = server.handle_payload(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": "lexical-caveat",
+                            "method": "tools/call",
+                            "params": {
+                                "name": "idt_guarded_replace",
+                                "arguments": {
+                                    "file_path": "Proofs/QMClosure/A.lean",
+                                    "expected_sha16": expected_sha16,
+                                    "old_text": "def localTomography := True",
+                                    "new_text": new_text,
+                                    "dry_run": dry_run,
+                                },
+                            },
+                        }
+                    )
+
+                    if response is None:
+                        raise AssertionError("expected response")
+                    tool_result = require_mapping(response["result"])
+                    result = require_mapping(tool_result["structuredContent"])
+                    self.assertEqual(False, result["ok"])
+                    self.assertEqual("blocked_by_guard", result["status"])
+                    self.assertEqual([f"forbidden status upgrade token introduced: {token}"], result["issues"])
+                    self.assertEqual(expected_sha16, result["old_sha16"])
+                    self.assertEqual(expected_sha16, result["new_sha16"])
+                    self.assertEqual(original_bytes, source_path.read_bytes())
+                    self.assertEqual(expected_sha16, file_sha16(source_path))
+                    diagnostics = require_list(result["diagnostics"])
+                    self.assertEqual(1, len(diagnostics))
+                    diagnostic = require_mapping(diagnostics[0])
+                    self.assertEqual("lexical_token_count_increase", diagnostic["kind"])
+                    self.assertEqual(token, diagnostic["token"])
+                    self.assertEqual(0, diagnostic["original_count"])
+                    self.assertEqual(1, diagnostic["updated_count"])
+                    self.assertEqual(1, diagnostic["introduced_count"])
+                    self.assertEqual(False, diagnostic["semantic_status_promotion_inferred"])
+                    self.assertEqual("updated_file_occurrences_not_attributed", diagnostic["occurrences_scope"])
+                    self.assertEqual(False, diagnostic["locations_truncated"])
+                    location = require_mapping(require_list(diagnostic["locations"])[0])
+                    self.assertEqual(4, location["line"])
+                    self.assertEqual(new_text.index(token) + 1, location["column"])
+                    self.assertEqual(new_text, location["context"])
+                    self.assertEqual(1, location["context_column"])
+                    self.assertEqual(False, location["context_truncated"])
+                    content = require_mapping(require_list(tool_result["content"])[0])
+                    text = require_string(content["text"])
+                    self.assertIn("Conservative lexical guard; semantic status promotion not inferred.", text)
+                    self.assertIn(f"token={token}; introduced_count=1; counts=0->1", text)
+                    self.assertIn(f"updated file line 4, column {new_text.index(token) + 1}", text)
+                    self.assertIn(new_text, text)
+
+    def test_guarded_replace_keeps_real_promotions_and_overclaims_blocked(self) -> None:
+        cases = (
+            ("formal_proof", ["forbidden status upgrade token introduced: formal_proof"]),
+            ("derived", ["forbidden status upgrade token introduced: derived"]),
+            ("proved", ["forbidden status upgrade token introduced: proved"]),
+            (
+                "QM is proved",
+                [
+                    "forbidden status upgrade token introduced: proved",
+                    "forbidden overclaim introduced: QM is proved",
+                ],
+            ),
+        )
+        for new_text, expected_issues in cases:
+            for dry_run in (True, False):
+                with self.subTest(text=new_text, dry_run=dry_run), tempfile.TemporaryDirectory() as raw_dir:
+                    root = write_fixture_repo(Path(raw_dir))
+                    source_path = root / "Proofs" / "QMClosure" / "A.lean"
+                    original_bytes = source_path.read_bytes()
+                    expected_sha16 = file_sha16(source_path)
+                    index = load_fixture_index(root)
+
+                    result = index.guarded_replace(
+                        Path("Proofs/QMClosure/A.lean"),
+                        expected_sha16,
+                        "def localTomography := True",
+                        new_text,
+                        dry_run=dry_run,
+                    )
+
+                    self.assertEqual(False, result["ok"])
+                    self.assertEqual("blocked_by_guard", result["status"])
+                    self.assertEqual(expected_issues, result["issues"])
+                    self.assertEqual(expected_sha16, result["old_sha16"])
+                    self.assertEqual(expected_sha16, result["new_sha16"])
+                    self.assertEqual(original_bytes, source_path.read_bytes())
+                    self.assertEqual(expected_sha16, file_sha16(source_path))
+                    diagnostics = require_list(result["diagnostics"])
+                    self.assertEqual(len(expected_issues), len(diagnostics))
+                    if new_text == "QM is proved":
+                        phrase = require_mapping(diagnostics[1])
+                        self.assertEqual("forbidden_phrase_introduced", phrase["kind"])
+                        self.assertEqual(new_text, phrase["token"])
+
+    def test_guarded_edit_diagnostics_bound_context_without_attributing_moved_tokens(self) -> None:
+        original = "derived\n"
+        updated = "derivedGroup\n" + "x" * 1000 + " derived " + "y" * 1000 + "\n" + "derived\n" * 9
+        issues = guarded_edit_issues(original, updated)
+
+        diagnostics = guarded_edit_diagnostics(original, updated, issues)
+
+        self.assertEqual(diagnostics, guarded_edit_diagnostics(original, updated, issues))
+        self.assertEqual(1, len(diagnostics))
+        diagnostic = diagnostics[0]
+        self.assertEqual(1, diagnostic["original_count"])
+        self.assertEqual(10, diagnostic["updated_count"])
+        self.assertEqual(9, diagnostic["introduced_count"])
+        self.assertEqual("updated_file_occurrences_not_attributed", diagnostic["occurrences_scope"])
+        locations = require_list(diagnostic["locations"])
+        self.assertEqual(3, len(locations))
+        self.assertEqual(True, diagnostic["locations_truncated"])
+        first = require_mapping(locations[0])
+        self.assertEqual(2, first["line"])
+        self.assertEqual(1002, first["column"])
+        self.assertEqual(942, first["context_column"])
+        self.assertEqual(True, first["context_truncated"])
+        for item in locations:
+            location = require_mapping(item)
+            context = require_string(location["context"])
+            self.assertLessEqual(len(context), 160)
+            self.assertNotIn("\n", context)
+            offset = require_int(location["column"]) - require_int(location["context_column"])
+            self.assertEqual("derived", context[offset : offset + len("derived")])
+        self.assertLess(len(json.dumps(diagnostics)), 2000)
+        formatted = guarded_edit_text({"diagnostics": diagnostics})
+        self.assertIn("updated file line 2, column 1002: [context column 942, clipped=True]", formatted)
 
     def test_guarded_replace_rejects_generated_path(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:

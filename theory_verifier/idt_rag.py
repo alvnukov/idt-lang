@@ -354,6 +354,7 @@ class IdtRagIndex:
                     False,
                     guard_issues,
                     "blocked_by_guard",
+                    guarded_edit_diagnostics(original_text, updated_text, guard_issues),
                 )
             updated_sha16 = hashlib.sha256(updated_text.encode("utf-8")).hexdigest()[:16]
             if not dry_run:
@@ -631,6 +632,58 @@ def guarded_edit_issues(original_text: str, updated_text: str) -> tuple[str, ...
     return tuple(issues)
 
 
+def guarded_edit_diagnostics(
+    original_text: str, updated_text: str, issues: Sequence[str]
+) -> list[JsonObject]:
+    """Explain lexical rejections without attributing individual token insertions."""
+    diagnostics: list[JsonObject] = []
+    for issue in issues:
+        if issue.startswith("forbidden status upgrade token introduced: "):
+            token = issue.removeprefix("forbidden status upgrade token introduced: ")
+            pattern = re.compile(rf"(?<![^\W_]){re.escape(token)}(?![^\W_])")
+            kind = "lexical_token_count_increase"
+        else:
+            token = issue.removeprefix("forbidden overclaim introduced: ")
+            pattern = re.compile(re.escape(token))
+            kind = "forbidden_phrase_introduced"
+        original_count = sum(1 for _ in pattern.finditer(original_text))
+        updated_count = 0
+        locations: list[JsonObject] = []
+        for match in pattern.finditer(updated_text):
+            updated_count += 1
+            if len(locations) == 3:
+                continue
+            line_start = updated_text.rfind("\n", 0, match.start()) + 1
+            line_end = updated_text.find("\n", match.end())
+            if line_end == -1:
+                line_end = len(updated_text)
+            context_start = max(line_start, match.start() - 60)
+            context_end = min(line_end, context_start + 160)
+            locations.append(
+                {
+                    "line": updated_text.count("\n", 0, match.start()) + 1,
+                    "column": match.start() - line_start + 1,
+                    "context": updated_text[context_start:context_end],
+                    "context_column": context_start - line_start + 1,
+                    "context_truncated": context_start > line_start or context_end < line_end,
+                }
+            )
+        diagnostics.append(
+            {
+                "kind": kind,
+                "token": token,
+                "original_count": original_count,
+                "updated_count": updated_count,
+                "introduced_count": updated_count - original_count,
+                "semantic_status_promotion_inferred": False,
+                "occurrences_scope": "updated_file_occurrences_not_attributed",
+                "locations": locations,
+                "locations_truncated": updated_count > len(locations),
+            }
+        )
+    return diagnostics
+
+
 def guarded_edit_result(
     repo_root: Path,
     path: Path,
@@ -640,6 +693,7 @@ def guarded_edit_result(
     ok: bool,
     issues: Sequence[str],
     status: str,
+    diagnostics: Sequence[JsonObject] = (),
 ) -> JsonObject:
     return {
         "schema": "idt-v8-guarded-edit/1",
@@ -650,6 +704,7 @@ def guarded_edit_result(
         "old_sha16": old_sha16,
         "new_sha16": new_sha16,
         "issues": list(issues),
+        "diagnostics": list(diagnostics),
         "safety": {
             "hash_guard": True,
             "exclusive_lock": True,
@@ -1117,8 +1172,33 @@ def graph_diff_text(result: Mapping[str, object]) -> str:
 
 
 def guarded_edit_text(result: Mapping[str, object]) -> str:
-    return (
-        f"IDT guarded edit: path={result.get('path', '')}; ok={result.get('ok', False)}; "
-        f"status={result.get('status', '')}; dry_run={result.get('dry_run', True)}; "
-        f"old_sha16={result.get('old_sha16', '')}; new_sha16={result.get('new_sha16', '')}"
-    )
+    lines = [
+        (
+            f"IDT guarded edit: path={result.get('path', '')}; ok={result.get('ok', False)}; "
+            f"status={result.get('status', '')}; dry_run={result.get('dry_run', True)}; "
+            f"old_sha16={result.get('old_sha16', '')}; new_sha16={result.get('new_sha16', '')}"
+        )
+    ]
+    diagnostics = result.get("diagnostics", [])
+    if isinstance(diagnostics, list) and diagnostics:
+        lines.append("Conservative lexical guard; semantic status promotion not inferred.")
+        for item in diagnostics:
+            diagnostic = require_json_object(item, "diagnostic")
+            lines.append(
+                f"{diagnostic.get('kind', '')}: token={diagnostic.get('token', '')}; "
+                f"introduced_count={diagnostic.get('introduced_count', 0)}; "
+                f"counts={diagnostic.get('original_count', 0)}->{diagnostic.get('updated_count', 0)}; "
+                f"occurrences_scope={diagnostic.get('occurrences_scope', '')}"
+            )
+            locations = diagnostic.get("locations", [])
+            if isinstance(locations, list):
+                for location in locations:
+                    row = require_json_object(location, "location")
+                    lines.append(
+                        f"updated file line {row.get('line', '')}, column {row.get('column', '')}: "
+                        f"[context column {row.get('context_column', '')}, "
+                        f"clipped={row.get('context_truncated', False)}] {row.get('context', '')}"
+                    )
+            if diagnostic.get("locations_truncated"):
+                lines.append("Updated-file occurrence locations truncated.")
+    return "\n".join(lines)
