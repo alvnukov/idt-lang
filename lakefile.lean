@@ -97,6 +97,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.InternalDetectorReadoutSeparation,
     `Proofs.QMClosure.LocalHistoryReadoutOrderWall,
     `Proofs.QMClosure.DyadicResponseExtension,
+    `Proofs.QMClosure.NativeDyadicMixerSelection,
+    `Proofs.QMClosure.PhaseMixerCancellation,
     `Proofs.QMClosure.RelationalPassivityWall,
     `Proofs.QMClosure.GramPositivityReadoutWall,
     `Proofs.QMClosure.NativeAttenuationBoundary,
