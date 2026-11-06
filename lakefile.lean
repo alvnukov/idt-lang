@@ -271,6 +271,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeContextualProbabilityControl,
     `Proofs.QMClosure.RawNativeScalarCircuitBridge,
     `Proofs.QMClosure.NativeEventProbabilityBridge,
+    `Proofs.QMClosure.NativeThreeWireStabilizer,
+    `Proofs.QMClosure.NativeThreeWireLocality,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
