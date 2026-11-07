@@ -312,6 +312,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.ResponseContextQuotient,
     `Proofs.QMClosure.ResponseNativeProbabilitySelection,
     `Proofs.QMClosure.ResponseSignatureControls,
+    `Proofs.QMClosure.CompositionExchangeScope,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]

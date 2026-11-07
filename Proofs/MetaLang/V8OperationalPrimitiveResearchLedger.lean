@@ -2324,11 +2324,11 @@ def equivariantOutcomeSelectionWall : ResearchTask := {
   review := .notYetKernelChecked
   assumptions := [
     "A deterministic single-label selector whose complete input is a supplied profile, and covariance under the stated outcome relabelings.",
-    "For the dynamics extension, symmetry acts on the full process state, the initial state is fixed and both the update and outcome extraction are equivariant."]
+    "For the dynamics extension, symmetry acts on the full process state, the initial state is fixed, both the update and extraction are equivariant, and extraction takes values in Option outcomes with a symmetry-fixed pending value."]
   conclusions := [
     "Independently accepted algebraic obstruction: the profile stabilizer must fix the selected label. A uniform binary profile with the swapping symmetry has no such single-label selector.",
     "The general stabilizer obstruction needs no probability normalization; ties alone need not exclude a fixed label.",
-    "Equivariant updates preserve a symmetric initial full state at every finite iterate, so an equivariant unique-label readout cannot break a symmetry with no fixed outcome.",
+    "Equivariant updates preserve a symmetric initial full state at every finite iterate. If no outcome is fixed, an equivariant Option-valued extraction remains pending; this avoids the vacuity of requiring an already total single-label extraction at the symmetric initial state.",
     "A separately supplied distinguished label, transformed jointly with the profile, permits an equivariant deterministic selector."]
   checkedEvidence := []
   plannedArtifacts := ["ANALYTIC ONLY: a bounded stabilizer/profile-selector obstruction and explicit asymmetry control."]
@@ -2457,28 +2457,83 @@ def recordMarginalActualizationWall : ResearchTask := {
 
 def compositionExchangeScope : ResearchTask := {
   id := "composition_exchange_scope"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "For the alternating wall: one source weight in both slots, an output zero of zero weight, universal product-weight factorization and zero output when both inputs coincide.",
     "For the symmetric wall: the actual separate-additivity, separate-phase, positive-quadratic and product-weight premises of CompositeProductKernel.product_kernel with the same source readout and phase in both slots.",
     "Commutation is either literal equality of the two ordered products or an explicitly supplied zero-weight difference in the output carrier."]
   conclusions := [
-    "Independently accepted analytic wall: alternating diagonal cancellation and universal product-weight factorization force every source weight to vanish; no additivity or Hilbert premise is needed for that diagonal argument.",
+    "Checked diagonal wall: alternating diagonal cancellation and universal product-weight factorization force every source weight to vanish; no additivity or Hilbert premise is needed for that diagonal argument.",
     "Under the full product-kernel contract, commutation forces normSq(K(x,y)) = Q(x)*Q(y). A positive-weight orthogonal pair therefore excludes commutation.",
     "The same pairwise identity follows from commutation modulo an output null difference through existing null-kernel lemmas.",
     "Complex scalar multiplication supplies a nontrivial commutative factorizing control; the obstruction needs an orthogonal positive pair, not symmetry alone."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/CompositionExchangeScope.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CompositionExchangeScope.lean"
+      declarations := [
+        "IDT.QMClosure.CompositionExchangeScope.source_zero_of_diagonal_zero",
+        "IDT.QMClosure.CompositionExchangeScope.all_source_zero_of_diagonal_zero",
+        "IDT.QMClosure.CompositionExchangeScope.positive_source_excludes_universal_diagonal_zero",
+        "IDT.QMClosure.CompositionExchangeScope.normSq_kernel_eq_of_null_exchange_difference",
+        "IDT.QMClosure.CompositionExchangeScope.normSq_kernel_eq_of_exchange_eq",
+        "IDT.QMClosure.CompositionExchangeScope.positive_orthogonal_excludes_null_exchange_difference",
+        "IDT.QMClosure.CompositionExchangeScope.positive_orthogonal_excludes_exchange_eq",
+        "IDT.QMClosure.CompositionExchangeScope.ComplexMultiplicationControl.nontrivial_symmetric_factorizing_control"] }]
+  plannedArtifacts := []
   dependencies := ["composite_product_kernel", "standing_matter_regime_constraint"]
   limits := [
-    "Analytic only: the new scope theorems and control await kernel checking; no dimension or rank classification is asserted.",
+    "These are conditional scope theorems for the supplied product contract; no dimension or rank classification is asserted.",
     "The existing product theorem remains a correct sufficient bridge. This task bounds treating its factorization as a primitive for every kind of composition.",
     "Universal factorization with the full additive and phase contract is essential here; restricted factorization on orthogonal inputs or nonlinear normalized products is not excluded.",
     "Output null-difference commutation is not arbitrary physical observational equivalence without a matching bridge.",
     "Single-reference native circuits are not already a particle sector. Tensor-factor exchange, mode permutations and particle exchange require distinct interpretations.",
     "Symmetric and exterior pair preparations are different supplied embeddings; a later tensor illustration would not be different predictions for an identical fully specified input.",
     "Physical indistinguishability, particle statistics, spin-statistics and every standing matter-regime obligation remain unassessed."] }
+
+def pairExchangeCombinations : ResearchTask := {
+  id := "pair_exchange_combinations"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The same-source ordered product bridge from CompositeProductKernel: additive source and target groups, positive quadratic readouts, compatible quarter-turn phases, separate additivity, both phase compatibilities and universal product readout for the supplied ordered map p.",
+    "The new maps are mathematical target-group expressions Splus(x,y)=p(x,y)+p(y,x) and Sminus(x,y)=p(x,y)-p(y,x)."]
+  conclusions := [
+    "Independently accepted analytic construction: both pair maps retain separate additivity and phase compatibility; the plus map is symmetric and the minus map is alternating.",
+    "Their same-sign kernels are twice the sum or difference of the direct and exchanged product kernels. The mixed plus/minus kernel vanishes.",
+    "Their readouts are 2*Q(x)*Q(y) plus or minus 2*normSq(K(x,y)); positivity is inherited from the target readout.",
+    "The minus diagonal is zero, the plus diagonal has weight 4*Q(x)^2, and the two readouts sum to 4*Q(x)*Q(y). An orthogonal positive-weight pair has positive minus readout."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/PairExchangeCombinations.lean"]
+  dependencies := ["composition_exchange_scope", "composite_product_kernel"]
+  limits := [
+    "Analytic only: these new identities await kernel checking. No tensor carrier, scalar multiplication or square-root normalization is an input to the proposed pair construction.",
+    "The original ordered map retains universal product factorization; the new pair combinations generally do not.",
+    "Argument-swap identities do not by themselves supply a global raw-target exchange operator. Pair-map images need not be additive subgroups, and no direct sum or target exhaustion is asserted.",
+    "Without halving, only Splus+Sminus equals twice the ordered product follows at the raw level. Semidefinite weights permit nonzero null intersections.",
+    "Alternating nontriviality is conditional; complex scalar multiplication gives an identically zero minus map.",
+    "Physical availability of products and sums, coherent repeated inputs, exchange-sign selection, species, spin-statistics, probabilities of pair creation and every standing matter regime remain open."] }
+
+def recordWindowStability : ResearchTask := {
+  id := "record_window_stability"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "Standing within-world apparatus requirement: record creation, retention and retrieval must ultimately use the same process rules, including controller and environment."]
+  conclusions := []
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Specify acquisition, a finite operational retention window, allowed disturbances, retrieval operations and failure criteria with complete apparatus/controller/environment accounting.",
+    "Use an explicit pending state when testing a dynamical outcome selector, rather than assuming a total single-label extraction before a record exists."]
+  dependencies := ["particle_as_process_result_hypothesis", "standing_matter_regime_constraint",
+    "record_marginal_actualization_wall", "equivariant_outcome_selection_wall"]
+  limits := [
+    "Analytic scope clarification only: on a periodic orbit of one autonomous update, an eventually constant readout was constant throughout that orbit. Finite full-state injective dynamics supplies periodicity; if the initial label differs, a consecutive window of the new label has length at most period minus one.",
+    "No standalone recurrence formalization is prioritized: the accepted response law already requires an infinite contextual preparation quotient, and existing finite detector controls already leave physical stability open.",
+    "Finite noninjective reset and infinite bijective integer shift separate irreversibility from carrier finiteness. A finite swap followed by identities also creates a permanent readout, showing that autonomous dynamics or explicit controller/clock inclusion is essential.",
+    "Finite detector labels, finite configurations with arbitrary amplitude assignments and finite Hilbert dimension are not finite complete state spaces. An observable-quotient recurrence claim needs its own autonomous injective quotient dynamics.",
+    "Exact eternal absorption is not the same as finite-window physical stability; neither duplication of record amplitudes nor a designated read-only query supplies retention.",
+    "A reversible integer clock with a separately supplied distinguished label can produce and retain a label while respecting relabeling covariance; that control supplies asymmetry and does not select an outcome from a symmetric probability profile.",
+    "No actual chosen history, physical persistence times, thermodynamic theorem, energy accounting or matter-regime applicability is established."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -2561,7 +2616,8 @@ def researchTasks : List ResearchTask := [
   observedRawProbabilitySelection, responseContextProbability,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
-  recordMarginalActualizationWall, compositionExchangeScope]
+  recordMarginalActualizationWall, compositionExchangeScope,
+  pairExchangeCombinations, recordWindowStability]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
