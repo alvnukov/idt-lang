@@ -3659,7 +3659,103 @@ def nativeUnboundedEndpointRobustWindow : ResearchTask := {
   limits := [
     "Delta is existential and unspecified; no numerical gap, physical state-count bound, finite-precision guarantee or statistical protocol is supplied. With no common state-count bound, finite-prefix clock controls still apply.",
     "Preparation depth is not trial count; P and endpoints are fixed across depths. No physical memory bound, probability origin or actualization, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged.",
-    "The next primitive-origin obligation remains a supplied raw operation/signature contract, both contextual DiagonalFixed premises, available references and a noncollapse observation. An already-selected p_n does not establish these premises noncircularly."] }
+    "The uncoded original-source route retains its raw operation/signature contract and both contextual DiagonalFixed premises. The separate raw_fixed_reference_preparation task constructs fixed changed references; their noncollapse and physical availability remain separate obligations. An already-selected p_n does not establish these premises noncircularly."] }
+
+def rawFixedReferencePreparation : ResearchTask := {
+  id := "raw_fixed_reference_preparation"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For the abstract core supply a raw operation f satisfying DiagonalNormalization.Laws: mediality and bookend. Define g(x)=f(x,x) and P(x)=f(x,f(x,f(x,x))). The core fixedness proof has no axioms beyond its explicit hypotheses.",
+    "For the raw resource compiler supply arbitrary T and three known copies of each input source tag or vacuum port. No square/medial law on T or DecidableEq on source labels is required for this compiler.",
+    "For observed fixedness supply response Data d and its quotient contracts. Probability conclusions additionally supply the complete six-field Law on rebased data and processed source, or the stated scalar-field and rebased RawNoCommonPositivePeriod premises."]
+  conclusions := [
+    "Checked minimal medial/bookend core: g(P(x))=P(x); if g(x)=x then P(x)=x; hence P(P(x))=P(x). The original square-swap three-copy word uses three gates and retains all three outputs, selecting port two. Known-source budget is three; all-vacuum tagged-source budget is zero while three vacuum ports and three gates remain.",
+    "Checked negative control: the explicit nonzero pure-minus source (0,1) is sent to (0,0) by the raw retraction. This checked source collapse suffices to exclude a general noncollapse or source-preservation guarantee.",
+    "Checked generic compilation: expand wires to iota+(iota+iota), triple source tags and vacuum inputs, prepare each original port with the three-gate word, then pad the original circuit on active wires. The actual selected preparation value defines the transformed zero and stock. compile_eval and full active-array equality hold for arbitrary T, and final garbage is exactly the retained preparation-midpoint garbage.",
+    "Checked resources: width and each source-occurrence budget are exactly tripled; preparation uses three paired gates per original wire and total paired-gate count is three times original width plus the original paired-gate count. No unknown-input cloning or optimality is asserted.",
+    "Checked observed adapter: actual original-circuit preparedReference is identified with the abstract retraction only through quotient-class equality and ResponseEq under observed laws. Actual prepared zero and processed source are fully contextually DiagonalFixed after rebasing; literal equality to the abstract raw term is not required.",
+    "Checked response/compiler integration identifies the actual preparedValue with preparedReference and gives literal raw-value and reference-step equalities, plus CompiledNoCommonPositivePeriod equivalence, on the compiler image. These equalities do not quantify over every original program.",
+    "Checked conditional probability adapters preserve all six fields on the rebased data and processed source: normSq representation, equality of probability fields and Law existence iff the processed quotient reference has infinite order. A supplied scalar-field adapter with rebased RawNoCommonPositivePeriod constructs a Law; neither an old Law nor an old noncollapse observation transfers automatically."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawFixedReferencePreparation.lean"
+      declarations := [
+        "IDT.QMClosure.RawFixedReferencePreparation.diagonal_retract_fixed",
+        "IDT.QMClosure.RawFixedReferencePreparation.retract_eq_self_of_fixed",
+        "IDT.QMClosure.RawFixedReferencePreparation.retract_idempotent",
+        "IDT.QMClosure.RawFixedReferencePreparation.evalRaw_fixedReferenceWord",
+        "IDT.QMClosure.RawFixedReferencePreparation.evalRaw_fixedReferenceWord_selected",
+        "IDT.QMClosure.RawFixedReferencePreparation.eval_knownSourceProgram",
+        "IDT.QMClosure.RawFixedReferencePreparation.budget_knownSourceProgram",
+        "IDT.QMClosure.RawFixedReferencePreparation.eval_vacuumProgram",
+        "IDT.QMClosure.RawFixedReferencePreparation.budget_vacuumProgram",
+        "IDT.QMClosure.RawFixedReferencePreparation.Controls.collapsingSource_ne_zero",
+        "IDT.QMClosure.RawFixedReferencePreparation.Controls.rawRetract_collapses"] },
+    { sourcePath := "Proofs/QMClosure/FixedReferenceProgramCompilation.lean"
+      declarations := [
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_eval",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_active",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_outputs",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_garbage",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_width",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_budget",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.pairedGateCount_preparationWord",
+        "IDT.QMClosure.FixedReferenceProgramCompilation.compile_pairedGateCount"] },
+    { sourcePath := "Proofs/QMClosure/ResponseFixedReferencePreparation.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseFixedReferencePreparation.rawCircuitOutputs_class",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.class_preparedReference",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.preparedReference_responseEq",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.preparedReference_diagonalFixed",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.rebased_zero_diagonalFixed",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.processedSource_diagonalFixed",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.rebased_source_local",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.probability_eq_normSq",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.probability_fields_equal",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.law_nonempty_iff_reference_infiniteOrder",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.lawOfScalarOfRawNoCommonPositivePeriod",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.lawOfScalarOfRawNoCommonPositivePeriod_probability",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.compiler_preparedValue_eq",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.compile_eval_rebased",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.compile_rawValue",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.rawReferenceStep_rebased",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.CompiledNoCommonPositivePeriod",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.compiledNoCommonPositivePeriod_iff",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.lawOfScalarOfCompiledNoCommonPositivePeriod",
+        "IDT.QMClosure.ResponseFixedReferencePreparation.lawOfScalarOfCompiledNoCommonPositivePeriod_probability"] }]
+  plannedArtifacts := []
+  dependencies := ["source_local_original_semantics", "response_source_local_probability",
+    "allocated_preparation_contexts"]
+  limits := [
+    "The raw compiler does not transport probabilities from a rebased single-basis Law to the whole original three-copy experiment: enlarged inputs may be multisource and retained garbage may be nonvacuum. The compiled nonperiodicity adapter preserves scalar probability fields only in the rebased Law. No erasure, conditioning or joint Law is introduced; joint availability of known sources remains supplied.",
+    "Fixedness does not transfer old Laws or noncollapse to the prepared source. No useful Law, physical source/reference availability, outcome actualization, Born derivation or full QM closure follows without the stated additional premises. Manifest and public QM statuses remain unchanged."] }
+
+def rawDoubledNormalizationCompiler : ResearchTask := {
+  id := "raw_doubled_normalization_compiler"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply arbitrary raw T and g with T(z,z)=(g(z),g(z)); define N=Prod.map g g composed with T. Supply two known copies of every initial source or vacuum input, without requiring either original reference to be diagonally fixed.",
+    "The existing square-swap law suffices for diagonal synchronization and the existing normalizer N. Mediality is unnecessary for this compiler but remains required for the normalized algebra; no normalized square law is asserted without it."]
+  conclusions := [
+    "Parent-accepted analytic plan: four raw gates on (inl i,inl j), (inr i,inr j), (inl i,inr i), (inl j,inr j) send duplicate(x,y) to duplicate(N(x,y)). The encoding is restored after each macro, requiring no fresh input copies at subsequent steps.",
+    "Compile native circuits homomorphically for identity and sequence, and use sumCongr e e for wire permutations. Prove whole-array equality evalRaw(T,compile(c),duplicate(x))=duplicate(evalRaw(N,c,x)) for every circuit c.",
+    "Planned resource contract: two initial known copies per original input, unchanged raw source and zero, doubled width and source-occurrence budgets, and four times the original paired-gate count. Inputs are not replaced by the retraction P; the intended conclusion is whole normalized-array simulation, not a new source-noncollapse theorem.",
+    "For observed Data, transfer through evalRaw_class to equality of complete quotient output arrays. Actual raw rails need only be ResponseEq; literal raw equality under observed laws is not required.",
+    "Accepted analytic logical readout extension: define a new six-field CompiledLaw d v indexed by logical Native circuits on iota and logical outcomes in iota. Its prepared_eq field uses coordinatewise full ResponseEq of actual doubled compiled output arrays initialized from duplicate(oldBasis). Compiler class equality and injectivity of duplication should identify this relation exactly with equality of normalized quotient prepared arrays.",
+    "Within ResponseDoubledNormalizationCompiler.lean, construct a proposed equivalence CompiledLaw d v with WeightFreeRawProbability.Law on d.quotientData at classOf(v), copying the other five fields and preserving the entire probability field. Proposed conditional corollaries are normSq representation, probability-field uniqueness and existence iff the original quotient reference has infinite order, without DiagonalFixed, rebasing or source projection.",
+    "The proposed logical contract normalizes over iota, not physical rails iota+iota. Its spectator field uses complete four-gate macros; permutations act on both rails, and each logical vacuum extension introduces two original-zero inputs. This is a new encoded readout contract awaiting kernel artifacts."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/RawDoubledNormalizationCompiler.lean",
+    "Proofs/QMClosure/ResponseDoubledNormalizationCompiler.lean"]
+  dependencies := ["diagonal_normalization", "source_local_original_semantics",
+    "allocated_preparation_contexts"]
+  limits := [
+    "This is an analytic next step awaiting kernel artifacts and parent acceptance of their exact contracts. It supplies no unknown-input cloning, and physical joint availability of the known copies remains a premise.",
+    "The doubled input has two source occurrences. CompiledLaw is not a probability on one rail, a sum over rails, a marginal, a postselection rule or a statement about actual outcomes. The proposed logical equivalence does not transport the existing original single-basis Law or supply a physical joint Law, conditioning rule or enlarged-experiment probability transport.",
+    "The encoded contract covers complete compiled macros and both-rail permutations only. It supplies no intermediate partial-macro readout, arbitrary single-rail gates or mixed-control grammar. ExistingMixedControlProbabilityWall remains unaffected; no physical readout bridge or outcome actualization is closed.",
+    "The new logical Law equivalence and its conditional corollaries remain analytic, with empty checked evidence; no physical preparation/readout implementation, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4455,6 +4551,7 @@ def researchTasks : List ResearchTask := [
   rawUniformPeriodProbabilityBridge, fixedThreeWireFiniteMemoryFrequencyWall,
   nativeFiniteStochasticPreparationWall, nativeFixedStateFiniteWindow,
   nativeFixedStateRobustWindow, nativeUnboundedEndpointRobustWindow,
+  rawFixedReferencePreparation, rawDoubledNormalizationCompiler,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
