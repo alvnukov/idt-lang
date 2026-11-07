@@ -2918,7 +2918,7 @@ def nativeAllocatedStableObservation : ResearchTask := {
   dependencies := ["native_allocated_signature_law", "native_allocated_ball_observation",
     "native_allocated_source_arithmetic", "allocated_generated_contexts"]
   limits := [
-    "The dense-fiber/open-patch route and finite-residue countermodel are checked under the supplied concrete scalar G and topology assumptions. The separate contextual-ideal, native-settling and raw stable-bridge tasks retain their own pending status and are not promoted by this entry.",
+    "The dense-fiber/open-patch route and finite-residue countermodel are checked under the supplied concrete scalar G and topology assumptions. Separate contextual-ideal, native-settling and raw stable-bridge tasks carry their own evidence and assumptions; this entry does not establish their conclusions.",
     "Ordinary scalar topology and a relatively open constant response region are supplied mathematical structure. They supply no physical detector construction, topology on response labels, probability provenance, robustness or precision guarantee.",
     "All references are generated known preparation values in one-hole tests. No physical source/reference availability or common-frame condition is inferred, and no unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actualization or full QM closure is established."] }
 
@@ -2948,48 +2948,143 @@ def nativeAllocatedContextIdeals : ResearchTask := {
 
 def nativeReferenceSettling : ResearchTask := {
   id := "native_reference_settling"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use concrete generated scalar G, arbitrary signature sigma:G to Omega, a fixed generated reference z, and F_z(x)=(operationG(x,z)).1. The core assumes no topology on G or Omega.",
     "Supply the exact all-input settling contract: for every x in G there exists N such that for every n>=N, sigma((F_z iterated n)(x))=sigma(z). Nonconstancy of sigma is an additional premise for the separation and Law conclusions.",
     "Repeated use of the same known reference value requires a fresh charged allocated preparation at every occurrence. No unknown-token duplication or uniform preparation budget is supplied."]
   conclusions := [
-    "Accepted analytic sufficient condition awaiting formalization: the exact settling contract and nonconstant sigma imply full G-contextual separation and hence existence of the existing single-basis six-field response Law through the generic signature-law criterion. Transport of any supplied scalar Law preserves its entire probability field; canonical scalar consistency remains separate.",
-    "Pending topology-free proof: a nonzero contextual period gives a positive integer period N; two powers of 16 collide modulo N; integer scaling and existing halving yield period 16^ell-1 with ell>0. The identity a^8=1/16 for a=(1+I)/2 gives a uniform native return modulo full contextual equivalence; eventual exact settling then forces global signature constancy. This route requires no finite quotient, odd-part extraction or new Ring instance.",
-    "Optional analytic open-region route: with separately supplied usual topology, a relatively open constant-signature neighborhood of z and norm(a)<1 imply the settling contract by convergence of F_z iterates to z. This topological implication is not an assumption of the topology-free settling criterion and still needs its own artifact.",
-    "The contract is sufficient, not necessary, and quantifies over every generated input and all sufficiently late iterates. No finite probe validates or replaces that infinite contract. A finite F9 axes control concerns halving only; it does not establish a native F_z control, whose corresponding a-orbit has order 8 in that example.",
-    "Pending native finite-probe countercontrol: use an odd M and a union of a-orbits in the finite residue model. The identity a^4=-1/4 gives an orbit-size bound at most 4*M versus M squared residue classes; choosing M>max(1,4*numberOfProbes) is the intended control route. It requires an explicit artifact before any finite-control claim is checked."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedStableObservation.lean"]
+    "Checked topology-free ReferenceSettles contract: under exact eventual settling toward one generated reference, full G-contextual separation, signature nonconstancy and existence of the existing single-basis six-field response Law are equivalent. Transport of any supplied scalar Law preserves its entire probability field; canonical scalar consistency remains separate.",
+    "The checked common contextual-return theorem gives one positive native iteration length returning every input toward every reference modulo full response equivalence when a distinct equivalent pair exists. Combining that return with exact eventual settling forces global signature constancy. The proof uses positive integer periods, powers-of-16 collisions and a^8=1/16 without a finite quotient, odd-part extraction or new Ring instance.",
+    "The identity signature on G is a checked arbitrary-codomain nonnecessity control: it separates full contextual classes and admits a Law while ReferenceSettles fails. Settling is sufficient, not necessary; no finite-alphabet necessity classification is asserted.",
+    "The all-input eventual-tail contract is not replaced by finite probes. The optional open-patch-to-settling contraction theorem and universal finite-probe countercontrol are preserved as unchecked obligations in native_reference_settling_scope_extensions."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedStableObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedStableObservation.ReferenceSettles",
+        "IDT.QMClosure.NativeAllocatedStableObservation.referenceStep_iterate_coe",
+        "IDT.QMClosure.NativeAllocatedStableObservation.common_contextual_return_of_distinct_responseEq",
+        "IDT.QMClosure.NativeAllocatedStableObservation.constant_of_settling_and_distinct_responseEq",
+        "IDT.QMClosure.NativeAllocatedStableObservation.separates_iff_nonconstant_of_reference_settles",
+        "IDT.QMClosure.NativeAllocatedStableObservation.law_nonempty_iff_nonconstant_of_reference_settles",
+        "IDT.QMClosure.NativeAllocatedStableObservation.lawOfScalarOfReferenceSettles",
+        "IDT.QMClosure.NativeAllocatedStableObservation.lawOfScalarOfReferenceSettles_probability"] },
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedResidueObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedResidueObservation.identity_signature_separates",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.identity_signature_not_referenceSettles",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.identity_signature_law_without_settling"] }]
+  plannedArtifacts := []
   dependencies := ["native_allocated_stable_observation", "native_allocated_signature_law",
     "native_allocated_source_arithmetic"]
   limits := [
-    "This task is an analytic, unassigned settling extension of NativeAllocatedStableObservation with no checked settling evidence. The positive integer period, finite powers-of-16 collision and uniform native return argument remain proof obligations; the optional open-patch contraction implication and finite-probe countercontrol remain separate pending artifacts.",
+    "The topology-free eventual-settling core, same-field Law adapter and identity-signature nonnecessity control are checked. The separate analytic scope-extension task retains optional contraction and finite-probe gaps with no checked evidence.",
     "Settling is an exact supplied response contract, not physical damping, a detector-noise model, a finite validation rule, probability provenance or outcome actualization. The Law retains the existing single-basis contract rather than extending probabilities to joint allocated inputs.",
     "Known reference occurrences remain separately charged under supplied preparation and common-frame conditions. No uniform source budget, physical resource availability, unknown-token cloning, tensor or independence interpretation, actualization or full QM closure is inferred."] }
 
 def responseAllocatedStableBridge : ResearchTask := {
   id := "response_allocated_stable_bridge"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use existing d:ResponseContextQuotient.Data V Omega and source v, retaining the observed square-swap and mediality assumptions and full contextual DiagonalFixed at d.chosenZero and v. These are supplied premises, not bare signature equalities.",
-    "For every generated scalar value choose an actual Program Unit witness and define its induced signature by the signature of that program evaluated under the original raw d.operation with stock v and chosen zero. Law-free well-definedness is to use scalar_eq_implies_responseEq, not an assumed response Law.",
-    "For the sufficient existence result supply nonconstancy of the induced signature and either a nonempty relatively open constant region under the supplied scalar-coordinate topology, or the accepted exact native-reference settling condition once formalized. No topology on raw V or on response labels is supplied by this bridge."]
+    "For every generated scalar value choose an actual Program Unit witness and define its induced signature by the signature of that program evaluated under the original raw d.operation with stock v and chosen zero. Law-free well-definedness uses scalar_eq_implies_responseEq, not an assumed response Law.",
+    "For the core sufficient existence result supply Separates for the induced signature. The open-patch corollary uses induced-signature nonconstancy and a nonempty relatively open constant region under the supplied scalar-coordinate topology. The native-settling corollary uses two actual programs witnessing raw signature nonconstancy and a reference program r with exact raw settling: for every input program p there exists N such that for all n>=N, the signature of n original first-output iterations toward rawValue(r), starting at rawValue(p), equals the signature of rawValue(r). No topology on raw V or on response labels is supplied by this bridge."]
   conclusions := [
-    "Accepted analytic bridge awaiting artifacts: for original allocated outputs, scalar equality implies full ambient raw ResponseEq, which implies raw response equivalence restricted to generated program references. The pending actual-program context compiler identifies that restricted raw relation exactly with full contextual equivalence of the induced scalar signature on G.",
-    "Under the induced-signature nonconstancy and open-region or exact-settling condition, contextual separation closes this chain back to scalar equality. Prove existence of the original ambient single-basis response Law without assuming one, and preserve the entire supplied scalar probability field and transport the unchanged six-field contract; canonical scalar consistency is a separate witness.",
-    "Do not reverse this sufficient condition for ambient law existence. The ambient scalar point signature at q=1/3 admits an ambient Law while its signature induced on the Gaussian-dyadic generated sector is constantly false. Any law-existence if-and-only-if belongs to a separately specified restricted generated Data and Law and requires its own exact artifacts.",
-    "All context references in the bridge are actual known allocated program values. The result concerns selected raw quotient classes and their contextual equivalence, not literal raw equality, equality of histories or a freely available physical transformation."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ResponseAllocatedStableBridge.lean"]
+    "Checked law-free domain bridge: scalar equality implies full ambient raw ResponseEq, which implies raw equivalence restricted to actual generated program references. Compiled tests identify the restricted raw relation exactly with induced scalar contextual equivalence; under Separates these relations close back to scalar equality. The statement concerns selected raw classes, not literal raw equality.",
+    "preparedProgram uses complete native wire arrays and gives exact original raw and scalar selected-output identities. These adapters supply the original ambient single-basis response Law under Separates, and the open-patch corollary supplies that premise from induced-signature nonconstancy and an open constant region. Every adapter transports the unchanged six-field contract and preserves the entire supplied scalar probability field; canonical scalar consistency is separate.",
+    "The checked q=1/3 countercontrol has an ambient Law but constantly false induced signature on G. The sufficient bridge result is not an ambient Law-existence if-and-only-if; any restricted generated Law criterion has its own domain and artifacts.",
+    "Explicit compiled one-hole contexts give signature correspondence for every reference program r, input program p and iteration n, yielding RawReferenceSettles if and only if induced ReferenceSettles and raw program nonconstancy if and only if induced nonconstancy. Raw settling and raw nonconstancy then suffice for an ambient Law and arbitrary supplied scalar-field transport, without an assumed ambient Law or literal raw convergence/fixedness.",
+    "The exact allocated referenceContext source count is Bp+n*Br. This counts tagged source occurrences, not gates, wires, a uniform budget or a physical resource bound; repeated known reference preparations remain separately charged.",
+    "The observational premises use original raw evaluation and discrete allocated programs; the existing Native-indexed syntax and scalar proof backend are retained. No scalar coordinates or topology are added as observation data."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseAllocatedStableBridge.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseAllocatedStableBridge.inducedSignature_ofProgram",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.compiled_tests_iff_scalar_responseEq",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.generated_responseEq_iff_scalar_responseEq",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.ambient_responseEq_iff_scalar_eq_of_separates",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.rawValue_preparedProgram",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.scalarValue_preparedProgram",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.lawOfScalarOfSeparates",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.lawOfScalarOfSeparates_probability",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.lawOfScalarOfPatchNonconstant",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.lawOfScalarOfPatchNonconstant_probability",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.third_ambient_law_generated_signature_control",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.RawReferenceSettles",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.RawProgramNonconstant",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.rawValue_referenceContext",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.referenceContext_budget",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.signature_reference_iterate",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.rawReferenceSettles_iff_induced_referenceSettles",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.rawProgramNonconstant_iff_induced_nonconstant",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.lawOfScalarOfRawReferenceSettles",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.lawOfScalarOfRawReferenceSettles_probability",
+        "IDT.QMClosure.ResponseAllocatedStableBridge.law_nonempty_of_rawReferenceSettles"] }]
+  plannedArtifacts := []
   dependencies := ["response_allocated_faithfulness", "allocated_generated_contexts",
     "native_allocated_stable_observation", "native_reference_settling"]
   limits := [
-    "This task is analytic only with no assigned source author or checked evidence. Induced-signature well-definedness, the generated-reference context bridge, original ambient Law existence and identical-field adapters remain pending artifacts.",
+    "The checked core, open-patch and raw-settling corollaries retain their explicit supplied premises and generated-versus-ambient domains. The existing scalar proof backend is not claimed to be Complex-free. The ambient Law conclusion remains sufficient only, never an ambient law-existence if-and-only-if.",
     "Full observed raw laws and both contextual fixedness premises remain supplied. Scalar-coordinate topology is used only by the open-region route; the alternative exact settling condition is not a physical relaxation or readout principle.",
     "Joint-input resources, source/frame alignment and raw coherent preparation scope remain supplied. No physical source/reference availability, detector or probability provenance, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actualization or full QM closure is inferred."] }
+
+def nativeReferenceRecurrenceWall : ResearchTask := {
+  id := "native_reference_recurrence_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use concrete scalar generated G, the checked modulo-5 residue, and the native referenceStep toward zeroG. Define the supplied Boolean hitSignature(x)=decide(residue(x)=0 or residue(x)=1); no topology on G or response labels is required for these added predicates.",
+    "References are actual known generated values, with fresh charged preparations for repeated occurrences. Use the checked residue uniqueness and operation laws to transport finite residue calculations to arbitrary generated inputs."]
+  conclusions := [
+    "The checked Boolean hit signature is nonconstant at generated values 0 and 2. The residue of native referenceStep toward zeroG propagates by multiplication by 2, and the iteration theorem transports that finite residue law to every generated input.",
+    "Distinct generated values 0 and 5 are fully response-equivalent after Boolean postcomposition of the residue signature. Full contextual separation therefore fails, no unchanged single-basis six-field Law exists, and no ReferenceSettles witness exists at any reference.",
+    "The checked universal hit theorem gives, for every generated x, an iterate n<=3 with the same response as zeroG. The recurrence theorem gives, for every threshold N, an n with N<=n<=N+3 with that response. These are all-input transported theorems, not finite-input experiments.",
+    "The residue-level five-state decision calculation is explicitly transported through native iteration. This entry asserts the actual universal bounds, not an extra exact-cycle theorem, minimal hitting times or optimality of the bound 3.",
+    "The countercontrol excludes weakening an eventual constant tail to one hit or arbitrarily late recurrent hits. It does not claim that finite-input testing validates universal settling or that recurrence implements physical relaxation."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedResidueObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_nonconstant",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_referenceStep_zeroG",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_referenceStep_zeroG_iterate",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_zero_reference_hit_within_three",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_zero_reference_recurrence",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.zeroG_hitSignature_responseEq_fiveG",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_not_separates",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_no_reference_settles",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_no_settling_reference",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_no_law",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.hitSignature_no_same_probability_law"] }]
+  plannedArtifacts := []
+  dependencies := ["native_allocated_stable_observation", "native_reference_settling",
+    "native_allocated_signature_law"]
+  limits := [
+    "The generated-input hit and recurrence bounds, Boolean contextual countercontrols, no-law statements and no-settling statements are checked under the supplied concrete residue/signature model. No separate exact-cycle or minimality claim is registered.",
+    "Exact Boolean recurrence is a supplied mathematical response control, not a detector readout, relaxation mechanism, noise model or probability provenance. Its universal transport obligation remains distinct from a finite probe experiment.",
+    "No physical source/reference availability, common-frame condition, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actual outcomes, actualization or full QM closure is inferred."] }
+
+def nativeReferenceSettlingScopeExtensions : ResearchTask := {
+  id := "native_reference_settling_scope_extensions"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use concrete generated scalar G, the native mixer, arbitrary signature sigma:G to Omega and separately charged known reference preparations. No author is assigned to these optional extensions.",
+    "Only the open-patch contraction route supplies the usual scalar/subspace topology, a relatively open constant-signature neighborhood of the chosen reference z, and norm(a)<1 for a=(1+I)/2. The finite-probe control is a separate algebraic residue construction."]
+  conclusions := [
+    "Pending analytic optional theorem: convergence of native F_z iterates to z from the contraction formula should imply ReferenceSettles when sigma is constant on a relatively open neighborhood of z. The checked topology-free settling core does not itself formalize this topological implication.",
+    "Pending universal finite-input-probe countercontrol: for any finite probe family, choose an odd M>max(1,4*probeCount) and use a union of native a-orbits in the residue model. The identity a^4=-1/4 gives the intended orbit-size bound at most 4*M versus M squared residue classes; every universal control and transport step requires an explicit artifact.",
+    "The finite F9 axes control applies to halving only and must not be asserted as a native F_z control, whose a-orbit has order 8 in that example. This distinction remains part of the pending algebraic countercontrol.",
+    "Finite probes do not replace the all-input eventual-tail predicate. The contraction implication and finite-probe countercontrol are separate accepted analytic obligations, not checked conclusions or necessity theorems for every response codomain."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedStableObservation.lean",
+    "Proofs/QMClosure/NativeAllocatedResidueObservation.lean"]
+  dependencies := ["native_reference_settling", "native_allocated_source_arithmetic"]
+  limits := [
+    "This task preserves optional gaps with analytic status, no checked evidence and no assigned source author. Existing checked declarations in the prospective extension files do not discharge these obligations.",
+    "Known reference occurrences stay separately charged. No uniform source budget, physical damping, detector-noise model, reference availability, unknown-token cloning, probability provenance, multi-source Law extension, actualization or QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -3773,6 +3868,8 @@ def researchTasks : List ResearchTask := [
   nativeAllocatedStableObservation,
   nativeAllocatedContextIdeals,
   nativeReferenceSettling, responseAllocatedStableBridge,
+  nativeReferenceRecurrenceWall,
+  nativeReferenceSettlingScopeExtensions,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,

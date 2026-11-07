@@ -190,5 +190,184 @@ theorem residue_no_same_probability_law (L : NativeVacuumProbabilityFamily.Law) 
   rintro ⟨M, _⟩
   exact residue_no_law ⟨M⟩
 
+/-!
+## Uniform recurrent hits do not supply a settled tail
+
+This Boolean observation retains residue zero or one. Repeated first-output
+interactions with the generated zero reference multiply residues by two.
+Every generated input therefore hits the zero-reference signature within
+three steps, and does so again within three steps after every threshold.
+Nevertheless this observation is nonconstant and fails contextual separation,
+so it admits neither the unchanged six-field response law nor any reference
+with eventual constant agreement for every generated input.
+
+The finite residue calculation is transported through the actual native gate
+on every generated scalar; the carrier and its response quotient are not
+assumed finite. References are known generated values, with repeated source
+occurrences separately allocated and charged. These results supply no physical
+relaxation, finite precision/noise premise, probability provenance, multi-source
+probability extension, actualization, unknown cloning, or QM closure.
+-/
+
+open NativeAllocatedStableObservation
+
+/-- A supplied observation with two accepted residues, not a new native gate. -/
+def hitSignature (x : NativeAllocatedObservationBoundary.G) : Bool :=
+  decide (residue x = 0 ∨ residue x = 1)
+
+@[simp] theorem hitSignature_zeroG : hitSignature zeroG = true := by
+  simp [hitSignature]
+
+/-- A false-signature control supplied by an actual allocated 0/1 program. -/
+def twoG : NativeAllocatedObservationBoundary.G := ofProgram (naturalProgram 2)
+
+@[simp] theorem val_twoG : twoG.val = 2 := by
+  exact value_naturalProgram 2
+
+@[simp] theorem residue_twoG : residue twoG = 2 := by
+  apply residue_eq_of_related
+  refine ⟨0, 2, ?_, ?_⟩
+  · rw [val_twoG]
+    norm_num [GaussianInt.toComplex_def]
+  · decide
+
+@[simp] theorem hitSignature_twoG : hitSignature twoG = false := by
+  rw [hitSignature, residue_twoG]
+  decide
+
+theorem hitSignature_nonconstant : ∃ x y, hitSignature x ≠ hitSignature y := by
+  exact ⟨zeroG, twoG, by simp⟩
+
+theorem residue_referenceStep_zeroG (x : NativeAllocatedObservationBoundary.G) :
+    residue (referenceStep zeroG x) = 2 * residue x := by
+  rw [referenceStep, (residue_operationG x zeroG).1, residue_zeroG]
+  ring
+
+/-- Residue propagation for the actual native reference iteration on all G. -/
+theorem residue_referenceStep_zeroG_iterate
+    (x : NativeAllocatedObservationBoundary.G) (n : ℕ) :
+    residue ((referenceStep zeroG)^[n] x) = (2 : ZMod 5)^n * residue x := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', residue_referenceStep_zeroG, ih, pow_succ]
+    ring
+
+/-- Exhaustive arithmetic on five residues, used only after propagation. -/
+theorem residue_hit_within_three :
+    ∀ r : ZMod 5, ∃ n : Fin 4,
+      (2 : ZMod 5)^n.val * r = 0 ∨ (2 : ZMod 5)^n.val * r = 1 := by
+  decide
+
+/-- Uniformly bounded successful hits for every actual generated input. -/
+theorem hitSignature_zero_reference_hit_within_three
+    (x : NativeAllocatedObservationBoundary.G) :
+    ∃ n : ℕ, n ≤ 3 ∧
+      hitSignature ((referenceStep zeroG)^[n] x) = hitSignature zeroG := by
+  obtain ⟨n, hn⟩ := residue_hit_within_three (residue x)
+  refine ⟨n.val, by omega, ?_⟩
+  rw [hitSignature_zeroG]
+  change decide (residue ((referenceStep zeroG)^[n.val] x) = 0 ∨
+    residue ((referenceStep zeroG)^[n.val] x) = 1) = true
+  have hhit : residue ((referenceStep zeroG)^[n.val] x) = 0 ∨
+      residue ((referenceStep zeroG)^[n.val] x) = 1 := by
+    rw [residue_referenceStep_zeroG_iterate]
+    exact hn
+  simp only [hhit, decide_true]
+
+/-- A successful hit recurs within three steps after every threshold. -/
+theorem hitSignature_zero_reference_recurrence
+    (x : NativeAllocatedObservationBoundary.G) (N : ℕ) :
+    ∃ n : ℕ, N ≤ n ∧ n ≤ N + 3 ∧
+      hitSignature ((referenceStep zeroG)^[n] x) = hitSignature zeroG := by
+  obtain ⟨k, hk, hhit⟩ :=
+    hitSignature_zero_reference_hit_within_three ((referenceStep zeroG)^[N] x)
+  refine ⟨k + N, by omega, by omega, ?_⟩
+  rw [Function.iterate_add_apply]
+  exact hhit
+
+/-- Postcomposition preserves an existing contextual indistinguishable pair. -/
+theorem zeroG_hitSignature_responseEq_fiveG :
+    ResponseEq operationG hitSignature zeroG fiveG := by
+  intro C
+  simp only [hitSignature, zeroG_responseEq_fiveG C]
+
+theorem hitSignature_not_separates : ¬ Separates hitSignature := by
+  intro hsep
+  exact zeroG_ne_fiveG (hsep zeroG fiveG zeroG_hitSignature_responseEq_fiveG)
+
+/-- Infinitely recurring bounded hits do not imply a settled tail at any reference. -/
+theorem hitSignature_no_reference_settles : ¬ ReferenceSettles hitSignature := by
+  intro hsettles
+  exact hitSignature_not_separates
+    ((separates_iff_nonconstant_of_reference_settles hitSignature hsettles).mpr
+      hitSignature_nonconstant)
+
+theorem hitSignature_no_settling_reference
+    (z : NativeAllocatedObservationBoundary.G) :
+    ¬ (∀ x : NativeAllocatedObservationBoundary.G, ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+      hitSignature ((referenceStep z)^[n] x) = hitSignature z) := by
+  intro h
+  exact hitSignature_no_reference_settles ⟨z, h⟩
+
+/-- The original six-field single-basis contract still has no inhabitant. -/
+theorem hitSignature_no_law :
+    ¬ Nonempty (ResponseNativeProbabilitySelection.Law
+      (signatureData hitSignature) unitG) := by
+  intro h
+  exact hitSignature_not_separates ((law_nonempty_iff_separates hitSignature).mp h)
+
+theorem hitSignature_no_same_probability_law (L : NativeVacuumProbabilityFamily.Law) :
+    ¬ (∃ M : ResponseNativeProbabilitySelection.Law (signatureData hitSignature) unitG,
+      @ResponseNativeProbabilitySelection.Law.prob
+          NativeAllocatedObservationBoundary.G Bool (signatureData hitSignature) unitG M =
+        @NativeVacuumProbabilityFamily.Law.prob L) := by
+  rintro ⟨M, _⟩
+  exact hitSignature_no_law ⟨M⟩
+
+/-!
+## Settling is sufficient and need not be necessary
+
+The identity signature separates literal generated values and therefore admits
+the existing response-law contract, while no generated reference settles this
+signature. This control uses no topology. Its codomain is G itself; it makes
+no necessity claim for finite-alphabet signatures or physical detectors.
+-/
+
+theorem identity_signature_separates :
+    Separates (id : NativeAllocatedObservationBoundary.G →
+      NativeAllocatedObservationBoundary.G) := by
+  intro x y h
+  exact signature_eq h
+
+theorem identity_signature_not_referenceSettles :
+    ¬ ReferenceSettles (id : NativeAllocatedObservationBoundary.G →
+      NativeAllocatedObservationBoundary.G) := by
+  rintro ⟨z, hz⟩
+  have hall : ∀ x : NativeAllocatedObservationBoundary.G, x = z := by
+    intro x
+    obtain ⟨N, hN⟩ := hz x
+    have heq : (referenceStep z)^[N] x = z := hN N (le_refl N)
+    have hv := congrArg Subtype.val heq
+    rw [referenceStep_iterate_coe] at hv
+    have hmul : NativeAttenuationCircuit.a^N * (x.val - z.val) = 0 := by
+      have hsub := congrArg (fun w : ℂ => w - z.val) hv
+      simpa only [add_sub_cancel_left, sub_self] using hsub
+    apply Subtype.ext
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hmul).resolve_left
+      (pow_ne_zero N ResponseSignatureControls.native_a_ne_zero))
+  have hunit : unitG = zeroG := (hall unitG).trans (hall zeroG).symm
+  have hv := congrArg Subtype.val hunit
+  norm_num at hv
+
+theorem identity_signature_law_without_settling :
+    Nonempty (ResponseNativeProbabilitySelection.Law
+      (signatureData (id : NativeAllocatedObservationBoundary.G →
+        NativeAllocatedObservationBoundary.G)) unitG) ∧
+      ¬ ReferenceSettles (id : NativeAllocatedObservationBoundary.G →
+        NativeAllocatedObservationBoundary.G) := by
+  exact ⟨(law_nonempty_iff_separates _).mpr identity_signature_separates,
+    identity_signature_not_referenceSettles⟩
+
 end
 end IDT.QMClosure.NativeAllocatedResidueObservation
