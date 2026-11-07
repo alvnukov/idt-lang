@@ -2131,6 +2131,153 @@ def rawNetworkMedialWall : ResearchTask := {
     "Commutation of disjoint local gates does not supply the overlapping-network interchange law.",
     "The result does not select a physical primitive or refute norm-squared readout for arbitrary quantum dynamics."] }
 
+def continuousBalancedNonmedialWall : ResearchTask := {
+  id := "continuous_balanced_nonmedial_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "An explicit nonlinear operation on complex pairs with supplied norm-squared readout, used only as a mathematical countermodel.",
+    "For s=x+y and d=x-y, let R=normSq(s)+normSq(d), k=1+normSq(s)/R, A=(k+1/k)/2, B=(1/k-k)/2 and q=s/conj(s).",
+    "The frozen-coefficient real-linear turn is M=i*(A*d+B*q*conj(d)); normalize it to the radius of d and recover the two outputs from their sum s and normalized difference."]
+  conclusions := [
+    "The frozen turn squares to minus identity, while radius normalization preserves k at the next step; the complete gate therefore squares to swap.",
+    "The gate is diagonal-transparent, conserves coherent sum and the sum of squared norms, and agrees exactly with the standard native gate on every vacuum input.",
+    "The full gate is continuous and jointly complex-homogeneous, including its zero cases.",
+    "For medial inputs (1,1,i,1), the sides are (1+i)/2 and 1+i/2-(52+17i)/(2*sqrt(2993)), which differ. The same exact witness also rejects flexibility and the quadratical identity.",
+    "With unit reference at source wire 0, the actual three-gate word 01;02;12 gives selected squared norm and raw probability 3/8+121/(8*sqrt(2993)) at wire 1, instead of standard native 5/8.",
+    "The supplied norm-squared readout constructs all six raw-semantic probability fields at every finite width."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/BalancedNonmedialMixerCore.lean"
+      declarations := [
+        "IDT.QMClosure.BalancedNonmedialMixerCore.k_one_le",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.k_le_two",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.frozenTurn_square_actual",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.rotated_normSq",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.rotated_square",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.gate_square",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.gate_transparent",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.gate_sum",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.gate_conserves",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.native_vacuum_right",
+        "IDT.QMClosure.BalancedNonmedialMixerCore.native_vacuum_left"] },
+    { sourcePath := "Proofs/QMClosure/BalancedNonmedialMixerRegularity.lean"
+      declarations := [
+        "IDT.QMClosure.BalancedNonmedialMixerRegularity.turn_regular_form",
+        "IDT.QMClosure.BalancedNonmedialMixerRegularity.continuous_rotated",
+        "IDT.QMClosure.BalancedNonmedialMixerRegularity.continuous_gate",
+        "IDT.QMClosure.BalancedNonmedialMixerRegularity.gate_joint_complex_homogeneity"] },
+    { sourcePath := "Proofs/QMClosure/BalancedNonmedialMixerWitness.lean"
+      declarations := [
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.gate_not_medial",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.gate_not_flexible",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.gate_not_quadratical",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.gate_not_rowColumnCommutes",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.rawLaw",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.raw_probability_eq_own_normSq",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.word_selected",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.word_probability",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.native_word_normSq",
+        "IDT.QMClosure.BalancedNonmedialMixerWitness.raw_word_differs_from_native"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_network_medial_wall"]
+  limits := [
+    "These checked statements concern one explicit mathematical countermodel, not a classification or physical realization of nonlinear dynamics.",
+    "Only the frozen-coefficient turn squares to minus identity. Recomputing k after the unnormalized turn does not have that property.",
+    "Homogeneity is joint scalar homogeneity, not additivity. Differentiability is not claimed.",
+    "This is a nonlinear process/mediality wall, not a violation of norm-squared readout for the operation's own outputs.",
+    "A separate four-wire marginal discrepancy has numerical evidence only. Any independent-party interpretation, causal conclusion or implication from no-signalling to mediality remains open."] }
+
+def rawObservableMedialWall : ResearchTask := {
+  id := "raw_observable_medial_wall"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "An explicit product of the native complex mixer and the checked nonmedial four-state gate, with zero (0,0) and reference (1,3).",
+    "The declared readout sees only the complex coordinate; observations use the existing arbitrary-reference one-hole context grammar."]
+  conclusions := [
+    "Accepted analytic construction: square-swap, transparency, all-input vacuum balance for the declared readout, conservation and a six-field literal-raw probability law coexist with failure of literal mediality.",
+    "Projection to the complex coordinate commutes with every named circuit. Existing observational equivalence is exactly equality of that coordinate.",
+    "The product inhabits the existing ObservedData contract; its observed quotient remains native and medial.",
+    "The checked finite gate's five-wire single-source words lift to unequal raw arrays with common visible readouts (1/8,1/8,1/8,1/8,1/2), indistinguishable by subsequent declared readouts.",
+    "A second conserved readout of the finite coordinate gives another six-field raw law, with probabilities 1/2 and zero on those observed-equivalent preparations. Literal prepared equality alone therefore does not imply observational probability descent.",
+    "Immediate row-readout invariance follows from conservation; invariance after the other layer's analyzer is a separate equation."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/RawObservableMedialWall.lean"]
+  dependencies := ["raw_network_medial_wall"]
+  limits := [
+    "These conclusions await the new kernel artifact; the private draft is not evidence.",
+    "Readout indistinguishability is relative to the supplied readout and named contexts, not all physical observations or all probability assignments.",
+    "The result does not reject quotient mediality or assert topology or scalar homogeneity of the product carrier.",
+    "Interpreting the overlapping row and column layers as independent physical subsystems remains a separate bridge."] }
+
+def observedRawProbabilitySelection : ResearchTask := {
+  id := "observed_raw_probability_selection"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Existing ObservedData: supplied nonnegative conserved readout, zero-weight vacuum, observational square-swap and observational mediality in the declared context grammar.",
+    "Observed first-output diagonal transparency; quotient square-swap supplies the other diagonal output.",
+    "A six-field all-width probability law whose prepared-equality field respects pointwise observational equivalence of actual raw prepared arrays."]
+  conclusions := [
+    "Independently accepted analytic route: the quotient is diagonally transparent and its normalized circuit semantics equals the quotient of literal raw circuit semantics.",
+    "Transport retains the supplied probability field exactly and allows existing native selection, absolute weight agreement and uniqueness without a positive-reference premise.",
+    "The proposed existence criterion is exactly positive reference weight: normalized readout gives a separate witness, while a null reference collapses to the quotient vacuum and cannot support the transported law."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ObservedRawProbabilitySelection.lean"]
+  dependencies := ["raw_observable_medial_wall", "weight_free_raw_probability"]
+  limits := [
+    "This transfer and existence criterion await Lean formalization; no new probability selection is marked checked here.",
+    "Observational prepared equality is an explicit additional probability premise, not a consequence of literal prepared equality.",
+    "Existence witnesses must remain downstream of conditional selection. Ratio formulas still require positive reference weight.",
+    "Positive-weight necessity concerns this observational law, not arbitrary unquotiented RawLaw, whose reference condition is infinite additive order.",
+    "No physical availability, exhaustive observation grammar, actual outcome generator, Born actualization or full QM closure follows."] }
+
+def primitivePresentationAlternatives : ResearchTask := {
+  id := "primitive_presentation_alternatives"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For the algebraic comparison, a binary operation with idempotency and the quadratical identity (x*y)*x=(z*x)*(y*z).",
+    "For the analytic comparison, an exactly homogeneous map between real normed vector spaces and differentiability at the origin."]
+  conclusions := [
+    "Source-supported algebraic route: idempotency plus the quadratical identity is equivalent to idempotency, bookend and mediality; no separately supplied quasigroup or division premise is needed.",
+    "The three variable symbols do not by themselves specify a three-wire experiment: inputs recur and first-channel expressions omit companion outputs.",
+    "Independently reviewed analytic boundary: exact homogeneity and a common linear derivative at zero force global linearity. Mere existence of directional derivatives does not.",
+    "On complex pairs, joint complex homogeneity then gives complex linearity; transparency and square-swap leave the native mixer and its inverse, with exact vacuum output selecting the orientation."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "ANALYTIC ONLY: a possible Lean equivalence between the quadratical and existing transparent medial primitive presentations.",
+    "ANALYTIC ONLY: a possible generic homogeneous-map derivative equivalence; existing tangent countermodels already record the directional-versus-Frechet boundary."]
+  dependencies := ["continuous_balanced_nonmedial_wall", "raw_medial_addition"]
+  limits := [
+    "The quadratical comparison is supported by Drapal, Griggs and Kozlik, Quadratical quasigroups and Mendelsohn designs, Theorems 2.8, 2.10 and 2.11: https://oro.open.ac.uk/82222/1/quadra.pdf; its universal equivalence is not kernel checked here.",
+    "These are equivalent mathematical presentations or explicit additional regularity premises, not a derivation of physical inevitability.",
+    "Differentiation at the origin presupposes ambient linear and topological structure; it cannot be inferred from regularity only on normalized states or away from zero.",
+    "No implication from physical no-signalling to mediality has been established."] }
+
+def particleAsProcessResultHypothesis : ResearchTask := {
+  id := "particle_as_process_result_hypothesis"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "User-proposed research hypothesis, not an adopted ontology: a particle may be a result of processes and interactions rather than a supplied object with completed properties."]
+  conclusions := []
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Separate a local registration event from a stable reproducible type of manifestations, and test candidate bridges between them.",
+    "Probe same-probability extensions with no registration, incompatible double records and overwritten archival records; separate per-completed-run record laws from realization or liveness of a run.",
+    "Compare IDT-native process/context mechanisms for producing one actual recorded fact without presupposing deterministic or fundamentally stochastic outcome selection.",
+    "Specify candidate invariants by which repeated events could share charge, mass and spin, with exact conservation and correlation obligations."]
+  dependencies := [
+    "probability_actualization", "physical_state_process_completeness",
+    "tensor_local_tomography_bell", "physical_scales"]
+  limits := [
+    "A registration event does not establish the absence of a persisting carrier.",
+    "A probability law, including a selected Born-form law, does not by itself actualize one outcome.",
+    "Any candidate must account for localization and discreteness of registrations, stable charge/mass/spin, interference, correlations and conservation laws.",
+    "Neither an event-selection symbol nor a particle-type label counts as a derivation of the phenomenon it names.",
+    "No particle ontology, event actualization, particle spectrum, physical mass scale or full QM/QFT result has been established."] }
+
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
   stage := .openPhysicalBridge
@@ -2145,7 +2292,7 @@ def openBridge (id : String) (obligation : String) : ResearchTask := {
 /-- Global obligations remain live independently of the conditional theorems. -/
 def globalBridges : List ResearchTask := [
   openBridge "physical_raw_root_medial_all_input_closure"
-    "Physically justify the raw root, exact medial law and closure over all inputs. The checked network equivalence identifies mediality with full row/column layer commutation under square-swap. The checked four-state control satisfies square-swap, diagonal transparency, declared-reference balance and all six raw probability kinds, yet violates that network law in an actual five-wire preparation. Mere disjoint-support locality or one balanced reference splitter cannot replace overlapping-network interchange.",
+    "Physically justify the raw root, exact medial law and closure over all inputs. The checked network equivalence identifies mediality with full row/column layer commutation under square-swap. The checked four-state control satisfies square-swap, diagonal transparency, declared-reference balance and all six raw probability kinds, yet violates that network law in an actual five-wire preparation. Mere disjoint-support locality or one balanced reference splitter cannot replace overlapping-network interchange. The checked continuous nonlinear complex mixer also retains exact native vacuum outputs, joint complex homogeneity, transparency, square-swap and squared-norm conservation while violating mediality and yielding a different probability from the native interpretation of the same actual word. These regularity and balance conditions therefore do not supply the missing interchange law.",
   openBridge "real_archimedean_readout_codomain"
     "Justify the real Archimedean readout codomain rather than silently treating it as derived.",
   openBridge "probability_actualization"
@@ -2186,7 +2333,10 @@ def researchTasks : List ResearchTask := [
   nativeArchimedeanProbability, rawNativeDyadicSemantics, rawNativeProbabilitySelection,
   rawNativeProbabilityExistence, originalGateProbabilityWall,
   weightFreeRawProbability, mixedControlProbabilityWall, rawDiagonalDecomposition,
-  nativeProbabilityPremiseIndependence, rawNetworkMedialWall]
+  nativeProbabilityPremiseIndependence, rawNetworkMedialWall,
+  continuousBalancedNonmedialWall, rawObservableMedialWall,
+  observedRawProbabilitySelection, primitivePresentationAlternatives,
+  particleAsProcessResultHypothesis]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges
 
