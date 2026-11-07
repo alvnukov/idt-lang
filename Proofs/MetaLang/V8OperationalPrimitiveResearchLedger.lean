@@ -3779,9 +3779,117 @@ def rawDoubledNormalizationCompiler : ResearchTask := {
   limits := [
     "The initial known-copy preparations and their physical joint availability remain supplied. The compiler is not an unknown-input cloning operation or a new source-noncollapse theorem. Normalized algebra still requires its own laws, including mediality where stated.",
     "CompiledLaw normalizes over logical iota, not physical rails iota+iota. Its locality field concerns complete four-gate macros, its permutations act on both rails, and each added logical vacuum position supplies two old-zero inputs. The vacuum-layout correspondence is not a raw-padding identity. Coordinatewise full contextual preparedEq is not a joint-detector premise.",
-    "The equivalence does not identify the logical probability field with one rail, rail sums, a marginal, conditioning, postselection, a physical joint Law or actual outcomes. It does not transport the existing uncoded original single-basis Law; a separate physical readout bridge remains open.",
+    "The equivalence does not identify the logical probability field with one rail, rail sums, a marginal, conditioning, postselection, a physical joint Law or actual outcomes. It does not transport the existing uncoded original single-basis Law. The checked raw_rail_readout_bridge supplies a conditional rail-contract-to-logical map, while raw_rail_vacuum_extension_wall shows extension is not automatic; physical actualization remains open.",
     "The contract covers complete compiled macros and both-rail permutations only, without intermediate partial-macro readouts, arbitrary single-rail gates or mixed-control grammar. ExistingMixedControlProbabilityWall remains unchanged.",
     "No physical preparation/readout implementation, outcome actualization, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged."] }
+
+def rawRailVacuumExtensionWall : ResearchTask := {
+  id := "raw_rail_vacuum_extension_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply TwoSourceLaw for arbitrary raw T, chosen zero z and source v, indexed by two distinct source positions and all raw Native words. Its four fields are normalization over physical outputs, same-seed literal complete prepared-state consistency, covariance under all physical output permutations and literal raw zero-padding preservation on old rails.",
+    "The generic wall uses no nonnegativity, spectator or calibration premise. Source positions, complete raw states and padding layouts are explicit contract data."]
+  conclusions := [
+    "Checked arbitrary-finite-width obstruction: no such TwoSourceLaw can coexist with a circuit whose complete prepared output is all chosen zero. Output permutations and prepared-state consistency force uniform probabilities; padding by two zeros contradicts normalized values at the two widths.",
+    "Checked affine control over complex scalars: R(x,y)=(1-M1(x,y),1-M2(x,y)), zero 0 and source 1, satisfies square swap and mediality, has diagonal g(x)=1-x and normalizes to M. Its source pair maps to (0,0), giving the width-two versus width-four 1/2 versus 1/4 conflict and excluding TwoSourceLaw.",
+    "Checked identity-response affine comparison: a canonical scalar Law and normalized evaluator equality give CompiledLaw nonemptiness and original quotient reference infinite order through the existing iff, without identifying the reconstructed group with standard complex addition. The same data has no actual RawRailReadoutBridge.RailLaw; both exclusions and logical Law existence are recorded together."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawRailVacuumExtensionWall.lean"
+      declarations := [
+        "IDT.QMClosure.RawRailVacuumExtensionWall.TwoSourceLaw",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.prepared_pad",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.constant_probability",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.no_law_of_zero_prepared",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.no_law_of_source_pair_zero"] },
+    { sourcePath := "Proofs/QMClosure/AffineRawRailExtensionControl.lean"
+      declarations := [
+        "IDT.QMClosure.AffineRawRailExtensionControl.operation_square",
+        "IDT.QMClosure.AffineRawRailExtensionControl.operation_medial",
+        "IDT.QMClosure.AffineRawRailExtensionControl.operation_diagonal",
+        "IDT.QMClosure.AffineRawRailExtensionControl.normalizedOperation_eq_mixer",
+        "IDT.QMClosure.AffineRawRailExtensionControl.source_pair_zero",
+        "IDT.QMClosure.AffineRawRailExtensionControl.no_twoSourceLaw",
+        "IDT.QMClosure.AffineRawRailExtensionControl.encodedPrepared_eq_duplicate",
+        "IDT.QMClosure.AffineRawRailExtensionControl.compiledLaw_nonempty",
+        "IDT.QMClosure.AffineRawRailExtensionControl.original_quotient_reference_infiniteOrder",
+        "IDT.QMClosure.AffineRawRailExtensionControl.no_railLaw",
+        "IDT.QMClosure.AffineRawRailExtensionControl.compiled_law_and_no_railLaw"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_doubled_normalization_compiler", "source_local_original_semantics",
+    "weight_free_raw_probability", "raw_rail_readout_bridge"]
+  limits := [
+    "No original single-source Law or raw conserved squared norm is asserted. TwoSourceLaw and the relayout-aware RailLaw are distinct contracts; their exclusions here have separate adapters.",
+    "A nonfixed zero alone is insufficient for this obstruction; readout-null sectors may exist. The wall concerns the stated complete-state, permutation and vacuum-extension contracts.",
+    "The conditional raw_rail_readout_bridge requires supplied source, state and layout naturality. Categorical probability contracts do not supply physical outcome actualization, physical preparation availability, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
+
+def rawRailReadoutBridge : ResearchTask := {
+  id := "raw_rail_readout_bridge"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For each finite logical iota and logical source s, supply RailLaw on every raw Native word over rails iota+iota, initialized from duplicate(originalBasis zero source s). Its fields are nonnegative probabilities normalized over physical output rails, same-seed complete coordinatewise contextual ResponseEq consistency, covariance under every physical output permutation and spectator locality for every raw pair.",
+    "Supply the explicit relayout-aware vacuum field: each logical vacuum adds two original-zero rails, with railInl(inl i)=inl(inl i) and railInl(inr i)=inr(inl i). railPad relabels literal padding through ((iota+iota)+(kappa+kappa)) equivalently ((iota+kappa)+(iota+kappa)). This is an additional premise, not a consequence of an older literal-padding field."]
+  conclusions := [
+    "Checked six-field transfer: pair-summing corresponding rail probabilities on compileWord images gives the existing CompiledLaw, without diagonal fixedness of zero or source.",
+    "Checked compiled-boundary readout: physical swap covariance and prepared consistency equate the two encoded rail probabilities, each equal to one half of the selected logical normSq probability. All RailLaws have equal probability fields on compiled words and imply infinite order of the original quotient reference; no converse existence or global raw uniqueness follows.",
+    "Checked RailLaw erasure obstruction: at logical Fin 1, an original circuit ending with both rails equal to chosen zero excludes RailLaw using its own relayout-aware width-two to width-four padding. The source-pair-zero corollary applies to arbitrary Data and reference whenever d.operation(v,v) is the zero pair.",
+    "Checked fixed positive control: the existing plus/minus-sector construction on complex pairs, zero 0, source (1,1) and identity signature admits RailLaw with Q=quadratic(1/2) and rail probability Q/2, equivalently total normSq/4. Conservation and the total weight of two supplied source copies verify the contract. The source is nonfixed, and CompiledLaw also exists; this is one fixed witness from an existing family."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawRailReadoutBridge.lean"
+      declarations := [
+        "IDT.QMClosure.RawRailReadoutBridge.RailLaw",
+        "IDT.QMClosure.RawRailReadoutBridge.rawPrepared_railPad",
+        "IDT.QMClosure.RawRailReadoutBridge.railPad_compileWord",
+        "IDT.QMClosure.RawRailReadoutBridge.toCompiledLaw",
+        "IDT.QMClosure.RawRailReadoutBridge.compiled_rails_responseEq",
+        "IDT.QMClosure.RawRailReadoutBridge.compiled_left_probability",
+        "IDT.QMClosure.RawRailReadoutBridge.compiled_right_probability",
+        "IDT.QMClosure.RawRailReadoutBridge.compiled_probability_fields_equal",
+        "IDT.QMClosure.RawRailReadoutBridge.law_nonempty_implies_reference_infiniteOrder",
+        "IDT.QMClosure.RawRailReadoutBridge.no_law_of_zero_prepared",
+        "IDT.QMClosure.RawRailReadoutBridge.no_law_of_source_pair_zero"] },
+    { sourcePath := "Proofs/QMClosure/RawRailReadoutPositiveControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawRailReadoutPositiveControl.Q_reference",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.Q_nonnegative",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.Q_conserved",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.duplicated_source_total",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.law",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.railLaw_nonempty",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.source_not_diagonal_fixed",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.zero_diagonal_fixed",
+        "IDT.QMClosure.RawRailReadoutPositiveControl.compiledLaw_nonempty"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_doubled_normalization_compiler",
+    "original_gate_probability_wall", "weight_free_raw_probability"]
+  limits := [
+    "The rail law assigns one categorical outcome label from the complete rail set. Two source occurrences specify supplied preparation resources; they do not specify particle number, independent trials, or a joint click-pattern distribution.",
+    "Coarse grouping and the complete raw-word contract are supplied categorical readout premises. The positive control is not a general physical existence theorem or a newly identified continuum; no actualization, unknown-input cloning or physical source/readout availability follows.",
+    "The affine control has CompiledLaw but no actual RailLaw, so extension is not automatic. The bridge transports no existing original single-source Law, provides no converse for arbitrary data and proves uniqueness only on the compiled boundary.",
+    "Relayout-aware vacuum naturality remains an additional premise. The theorem is a conditional rail-contract-to-logical map, without physical outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
+
+def sourceRichnessVacuumFixed : ResearchTask := {
+  id := "source_richness_vacuum_fixed"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply arbitrary raw T with exact square-swap at chosen zero z. The richness implication additionally supplies Nonempty(TwoSourceLaw T z v) separately for every v distinct from z."]
+  conclusions := [
+    "Checked square-only obstruction: for a=(T(z,z)).1, square-swap yields T(z,z)=(a,a) and T(a,a)=(z,z), excluding TwoSourceLaw T z a through pair erasure.",
+    "Checked richness implication: the additional all-v!=z source-Law premise forces a=z and T(z,z)=(z,z). No mediality, positivity or spectator premise is required; no other source fixedness is concluded."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawRailVacuumExtensionWall.lean"
+      declarations := [
+        "IDT.QMClosure.RawRailVacuumExtensionWall.diagonal_source_pair_zero_of_square",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.no_law_at_diagonal_zero_source_of_square",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.diagonal_zero_fixed_of_source_richness",
+        "IDT.QMClosure.RawRailVacuumExtensionWall.operation_zero_fixed_of_source_richness"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_rail_vacuum_extension_wall", "raw_doubled_normalization_compiler"]
+  limits := [
+    "Source richness is independently supplied across every nonzero raw source, not a consequence of a Law at one source, physical availability, faithfulness alone or distinctions invisible to readout. Square-swap alone supplies the excluded diagonal-image source, not chosen-zero fixedness.",
+    "The conclusion concerns chosen zero only, without fixedness of other sources, physical preparation availability, outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4577,7 +4685,8 @@ def researchTasks : List ResearchTask := [
   rawUniformPeriodProbabilityBridge, fixedThreeWireFiniteMemoryFrequencyWall,
   nativeFiniteStochasticPreparationWall, nativeFixedStateFiniteWindow,
   nativeFixedStateRobustWindow, nativeUnboundedEndpointRobustWindow,
-  rawFixedReferencePreparation, rawDoubledNormalizationCompiler,
+  rawFixedReferencePreparation, rawDoubledNormalizationCompiler, rawRailVacuumExtensionWall,
+  rawRailReadoutBridge, sourceRichnessVacuumFixed,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
