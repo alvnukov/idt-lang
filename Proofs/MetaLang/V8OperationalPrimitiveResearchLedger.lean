@@ -2743,22 +2743,29 @@ def allocatedGeneratedContexts : ResearchTask := {
 
 def denseReferenceContextEquivalence : ResearchTask := {
   id := "dense_reference_context_equivalence"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Supply a topological raw carrier V, a map A to V with dense range, a two-output operation T whose selected outputs are separately continuous in each input slot, and a continuous signature from V to a Hausdorff response space Omega. No closure of the image of A under T is assumed.",
     "Use the existing finite one-hole context grammar. Restricted contexts have reference values from the supplied dense map; the hole inputs x and y remain arbitrary ambient elements of V, not necessarily generated or in the image.",
     "Density and the stated topology and continuity properties are independent premises. The core concerns an arbitrary dense map; any eventual application to an allocated generated carrier needs a separate density proof and does not add a generated-closure premise to the core."]
   conclusions := [
-    "Accepted analytic route awaiting formalization: equality of signatures in every finite dense-reference context is equivalent to ambient full ResponseEq for arbitrary ambient x and y. Transfer reference occurrences one at a time using separate continuity and the Hausdorff equality condition; no simultaneous-net convergence assertion is used.",
+    "Checked dense-reference equivalence: equality of signatures in every finite dense-reference context is equivalent to ambient full ResponseEq for arbitrary ambient x and y. Transfer reference occurrences one at a time using separate continuity and the Hausdorff equality condition; no simultaneous-net convergence assertion is used.",
     "Whenever an ambient finite context separates x and y, some finite context using references from the dense map also separates them. This is an existence statement, not exact replacement of any individual ambient reference or preservation of a particular numerical response value.",
     "The theorem needs no closure of the dense reference image under T, numerical weight, probability meaning or probability Law. The generated-carrier task is an eventual application boundary, not a hypothesis that identifies all ambient references with generated values.",
-    "For the standard topology on the connected complex carrier and a Hausdorff Boolean response space, every continuous Boolean signature is constant. Thus this continuity route excludes zeroTest and all nonconstant pointTest signatures; it is not a universal repair for arbitrary coarse or discontinuous response maps."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/DenseReferenceContextEquivalence.lean"]
+    "Analytic scope note: the standard topology observation that every continuous Boolean signature on the connected complex carrier is constant for a Hausdorff Boolean response space is not separately formalized in this module. This observation excludes zeroTest and all nonconstant pointTest signatures from the continuity route; it is not a universal repair for arbitrary coarse or discontinuous response maps."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DenseReferenceContextEquivalence.lean"
+      declarations := [
+        "IDT.QMClosure.DenseReferenceContextEquivalence.continuous_eval_mapRefs",
+        "IDT.QMClosure.DenseReferenceContextEquivalence.left_stable",
+        "IDT.QMClosure.DenseReferenceContextEquivalence.right_stable",
+        "IDT.QMClosure.DenseReferenceContextEquivalence.restrictedEq_iff_responseEq",
+        "IDT.QMClosure.DenseReferenceContextEquivalence.exists_restricted_separator"] }]
+  plannedArtifacts := []
   dependencies := ["response_context_probability", "allocated_generated_contexts"]
   limits := [
-    "This task records an accepted analytic contract only; no kernel artifact or checked evidence is registered. Separate continuity, signature continuity, Hausdorff separation and density must all remain explicit.",
+    "The checked theorem retains separate continuity of both selected T outputs in both input slots, signature continuity, Hausdorff separation and dense reference range as explicit assumptions. No topology on the reference-label type A or closure of its image is required.",
     "The finite separating-context existence statement supplies no source budget, constructive search procedure, efficiency bound, noise tolerance, error modulus or finite-resolution guarantee. It does not replace an arbitrary ambient reference by an exactly equal generated value.",
     "Topology and continuity are supplied mathematical structure, not physical detector dynamics or probability semantics. No physical source/reference availability, outcome actualization or full QM closure is inferred."] }
 
@@ -2793,26 +2800,80 @@ def responseAllocatedFaithfulness : ResearchTask := {
 
 def nativeAllocatedBallObservation : ResearchTask := {
   id := "native_allocated_ball_observation"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use the concrete complex scalar generated carrier G with its actual finite unit-stock allocated preparations. Supply exact closed-ball signatures sigma(q,r,z)=decide(norm(z-q)<=r) for arbitrary ambient complex q and finite real radius r; response Data is intended for every q and r.",
-    "For the positive-radius route, establish a separate kernel artifact proving density of Gaussian-dyadic G in the standard complex metric. Use the scalar metric and strict separation margins, not continuity of the Boolean-valued threshold signature.",
+    "For the positive-radius route, use the separately checked density of Gaussian-dyadic G in the standard complex metric. The ball route uses the scalar metric and strict separation margins, not continuity of the Boolean-valued threshold signature.",
     "The radius is a supplied ideal mathematical tolerance, not a physical detector-noise model. Probability laws retain the earlier supplied single-basis six-field contract over G, not joint allocated-input probabilities."]
   conclusions := [
-    "Parent-accepted analytic classification awaiting kernel artifacts: if r>0, density of G and a strict margin give a finite G-reference context separating any distinct generated values, so full generated-context response equivalence is literal equality. No exact replacement of a particular ambient reference or numerical response value is asserted.",
+    "Checked ball-signature classification: if r>0, density of G and a strict margin give a finite G-reference context separating any distinct generated values, so full generated-context response equivalence is literal equality. No exact replacement of a particular ambient reference or numerical response value is asserted.",
     "At r=0 the closed-ball signature is the existing point signature: a reachable center q gives literal response equivalence, while an unreachable center gives a constant-false signature. For r<0 the signature is constant false on every input.",
-    "The intended law-existence classification is Nonempty(ResponseLaw(q,r)) if and only if 0<r or (r=0 and Reachable(q)). Faithful branches require exact law adapters preserving the supplied scalar probability field; any canonical scalar law is a separate consistency witness. Constant-false branches require an explicit no-law artifact.",
-    "The separate Gaussian-dyadic density proof and all positive-radius separation and probability-law adapter artifacts remain planned. The current five-module allocated-resource milestone is to close before implementation of this next task."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeGaussianDyadicDensity.lean",
-    "Proofs/QMClosure/NativeAllocatedBallObservation.lean"]
+    "The checked law-existence classification is Nonempty(ResponseLaw(q,r)) if and only if 0<r or (r=0 and Reachable(q)), equivalently using GaussianDyadic(q). The law adapter preserves the entire supplied scalar probability field; canonical scalar consistency is a separate witness. Explicit no-law theorems cover negative radius and zero radius with unreachable center.",
+    "The checked density component gives floorGaussian_error strictly below 2/2^k, Gaussian-dyadic density and allocated-program approximation at every positive tolerance. The checked positive-radius witness uses an actual allocated reference p with norm(first(x,value(p))-q)<r<norm(first(y,value(p))-q), supplying a strict margin for each pair of distinct generated values. The radius trichotomy and law classification use the checked generic signature-law criterion."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeGaussianDyadicDensity.lean"
+      declarations := [
+        "IDT.QMClosure.NativeGaussianDyadicDensity.floorGaussian_error",
+        "IDT.QMClosure.NativeGaussianDyadicDensity.exists_gaussian_dyadic_approx",
+        "IDT.QMClosure.NativeGaussianDyadicDensity.gaussian_dyadic_dense",
+        "IDT.QMClosure.NativeGaussianDyadicDensity.generated_coe_denseRange",
+        "IDT.QMClosure.NativeGaussianDyadicDensity.exists_program_approx"] },
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedBallObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedBallObservation.ballData",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ballSignature_negative",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_responseEq_negative",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ballSignature_zero",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_responseEq_zero",
+        "IDT.QMClosure.NativeAllocatedBallObservation.exists_strict_translate_separation",
+        "IDT.QMClosure.NativeAllocatedBallObservation.exists_program_strict_ball_separation",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_responseEq_iff_eq_of_positive",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_separates_iff",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_law_nonempty_iff_gaussian_dyadic",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ballLawOfScalar_probability",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_no_law_negative",
+        "IDT.QMClosure.NativeAllocatedBallObservation.ball_no_law_zero_unreachable"] }]
+  plannedArtifacts := []
   dependencies := ["allocated_generated_contexts", "native_allocated_source_arithmetic",
-    "response_context_probability"]
+    "native_allocated_signature_law", "response_context_probability"]
   limits := [
-    "This task has an accepted analytic contract only, no kernel evidence or checked status. Gaussian-dyadic density, ball separation, the radius trichotomy and law adapters must each receive their exact proof artifacts before promotion.",
-    "Finite separating-context existence supplies no source budget, constructive search bound, error modulus, numerical precision, efficiency or physical-noise guarantee. Exact Boolean threshold signatures are supplied mathematical choices.",
+    "The density, strict ball-separation, radius-trichotomy and law-adapter components are checked in the supplied exact scalar metric/signature model. The positive radius is an ideal mathematical tolerance, not a physical detector-noise model.",
+    "The checked numerical floor-grid bound is a mathematical approximation estimate. It supplies no uniform allocated-source budget, efficiency guarantee or physical detector-noise or precision guarantee. Exact Boolean threshold signatures remain supplied mathematical choices.",
     "No Boolean-continuity premise, physical topology or detector implementation, reference/source availability, tensor or independence interpretation, unknown-token cloning, multi-source probability-law extension, outcome actualization or full QM closure is inferred."] }
+
+def nativeAllocatedSignatureLaw : ResearchTask := {
+  id := "native_allocated_signature_law"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the concrete scalar generated carrier G from finite 0/1 allocated native programs, with its coherent raw preparation domain, supplied joint input arrays and common frame. For arbitrary Omega and supplied signature sigma:G to Omega, the scalar structural laws give ResponseContextQuotient.Data for every sigma.",
+    "Supply no topology, numerical interpretation, positivity or decidable equality on Omega. The relevant separation property is that full G-reference contextual equivalence for sigma separates literal G values, not injectivity of sigma on the bare hole context.",
+    "For probability-field transport, supply an arbitrary scalar native Law L and retain the unchanged six-field single-basis response-law contract. The general law-existence criterion has no supplied scalar-Law argument; its sufficient direction has a separate canonical scalar consistency witness. No joint multi-source probability normalization is assumed."]
+  conclusions := [
+    "Checked full-array coercion for arbitrary tagged-input allocated programs and for the single-basis prepared arrays. The checked identity identifies ResponseAllocatedFaithfulness.rawValue for signature sigma, unit reference and program p with ofProgram(p), without a Law premise.",
+    "For any supplied scalar Law L, a response Law with the entire identical probability field exists if and only if sigma's full G-reference contextual equivalence separates literal G values. Necessity uses the checked ResponseAllocatedFaithfulness theorem and surjectivity of generated program values; sufficiency transports the same six fields with the probability field unchanged.",
+    "The separate checked law_nonempty_iff_separates states Nonempty(ResponseLaw(sigma)) if and only if full G-contextual separation, without a supplied scalar-Law argument. A canonical scalar Law supplies only the independent consistency witness for the sufficient direction; it does not infer a response signature, probability meaning or physical response provenance.",
+    "The full-array coercion and raw-value identity are algebraic facts about coherent allocated preparations. The single-basis Law criterion concerns response compatibility, not a probability-law extension to arbitrary joint multi-source preparations or isolated physical rays."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedSignatureLaw.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.signatureData",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.signatureData_observedTransparent",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.rawValue_eq_ofProgram",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.signature_prepared_coe",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.lawOfScalar",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.lawOfScalar_probability",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.responseEq_eq_of_law",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.law_nonempty_iff_separates",
+        "IDT.QMClosure.NativeAllocatedSignatureLaw.same_probability_law_exists_iff_separates"] }]
+  plannedArtifacts := []
+  dependencies := ["response_allocated_faithfulness", "allocated_generated_contexts",
+    "native_allocated_source_arithmetic"]
+  limits := [
+    "The arbitrary-signature Data, coercion identities, identical-field adapters and both directions of the law criterion are checked in the supplied concrete scalar G model. For an arbitrary scalar Law L, same_probability_law_exists_iff_separates explicitly characterizes existence of a response Law with the entire identical probability field.",
+    "The criterion is full contextual separation on G, not bare signature injectivity and not equality with the older ambient complex ResponseEq. Its supplied-Law compatibility result supplies no probability or measurement provenance.",
+    "All inputs describe raw coherent preparation programs under supplied common-frame and joint-input conditions. No topology, physical source/reference availability, tensor or independence interpretation, unknown-token cloning, multi-source probability-law extension, actualization or full QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -3592,7 +3653,7 @@ def researchTasks : List ResearchTask := [
   responseRecipeComparison, nativeTwoPointObservationControl,
   allocatedPreparationContexts, nativeAllocatedSourceArithmetic, allocatedGeneratedContexts,
   denseReferenceContextEquivalence, responseAllocatedFaithfulness,
-  nativeAllocatedBallObservation,
+  nativeAllocatedBallObservation, nativeAllocatedSignatureLaw,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
