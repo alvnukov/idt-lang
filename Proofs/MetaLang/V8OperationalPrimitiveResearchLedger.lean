@@ -3554,46 +3554,112 @@ def nativeFiniteStochasticPreparationWall : ResearchTask := {
 
 def nativeFixedStateFiniteWindow : ResearchTask := {
   id := "native_fixed_state_finite_window"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Use the same native fixed-three-wire selectedWeight sequence p_n and supplied complex backend. Fix a nonempty finite carrier S with known M=card S, a real row-stochastic matrix P and arbitrary fixed complex endpoint vectors mu and r across preparation depths n.",
-    "Use the checked native forced fourth-order recurrence Q4(E)*p=21/8, where Q4=(E^2-E/2+1)*(E^2+7*E/4+1), and the checked no_exact_representation obstruction. The sequence-level Cayley-Hamilton bridge is a new proof obligation, not existing checked evidence for this task."]
+    "Use the same native fixed-three-wire selectedWeight sequence p_n and supplied complex backend. Fix any finite carrier S, a real row-stochastic matrix P and arbitrary fixed complex endpoint vectors mu and r across preparation depths n. Empty S is allowed; n counts preparation-word repetitions, not detector trials.",
+    "Use the checked native forced fourth-order recurrence and all-depth no_exact_representation obstruction under their existing mathematical contracts. A state-count upper bound card S <= M, when used, is externally supplied."]
   conclusions := [
-    "Parent-accepted analytic plan only: Cayley-Hamilton should give chi_Pc(E)*a=0 for prediction a_n, where Pc=complexify P. Row stochasticity fixes the all-ones vector; nonemptiness makes it nonzero, so chi_Pc(1)=0.",
-    "The monic product chi_Pc(E)*Q4(E), of degree M+4, should annihilate both model prediction a and native p. It annihilates p because Q4(E)*p is constant and chi_Pc(1)=0. Hence it annihilates the error a-p.",
-    "For a monic order-(M+4) recurrence, errors zero at n=0 through M+3 force errors zero at all later depths. The checked all-depth no_exact_representation theorem then gives a mismatch at some n<M+4 for every model on this fixed nonempty carrier.",
-    "A simpler alternative for all carriers uses Q5=(E-1)*Q4 and the monic product chi_Pc*Q5, of degree M+5. The zero-state case can instead be separated directly by its n=0 prediction zero versus p_0=1.",
-    "The sequence-level Cayley-Hamilton bridge, constant-mode cancellation, monic recurrence uniqueness and exact finite-window exclusion remain unchecked. No finite-window theorem is registered as kernel checked."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeFixedStateFiniteWindow.lean"]
+    "Checked sequence-level Cayley-Hamilton: the characteristic polynomial of complexify P annihilates every fixed complex matrix readout. Checked monic initial-value uniqueness extends zero errors on the first d terms of an order-d monic recurrence to zero errors at every depth.",
+    "For nonempty S, row stochasticity gives chi_Pc(1)=0. The checked monic product chi_Pc*Q4 of degree card S+4 annihilates both prediction and native target, hence their error. The empty-carrier case is checked separately at n=0, where prediction is zero and p_0=1.",
+    "For every finite S, including empty S, every fixed real row-stochastic P and arbitrary fixed complex mu/r have a mismatch at some preparation depth n<card S+4. If card S<=M, a mismatch occurs at some n<M+4.",
+    "If one such fixed model matches all N initial depths n<N exactly, then N<=card S+3, equivalently the natural-number lower bound N-3<=card S. Subtraction is truncated for short prefixes. Both corollaries allow arbitrary fixed complex endpoints and empty S.",
+    "These are exact finite-window exclusions under supplied fixed-model and state-count contracts; no positive numerical error margin is inferred from this task alone."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteReadoutRecurrence.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteReadoutRecurrence.applyPolynomial_mul",
+        "IDT.QMClosure.FiniteReadoutRecurrence.eq_zero_of_initial",
+        "IDT.QMClosure.FiniteReadoutRecurrence.applyPolynomial_matrix_powers",
+        "IDT.QMClosure.FiniteReadoutRecurrence.charpoly_annihilates"] },
+    { sourcePath := "Proofs/QMClosure/NativeFixedStateFiniteWindow.lean"
+      declarations := [
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.charpoly_prediction",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.charpoly_eval_one",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.nativePolynomial_monic",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.nativePolynomial_natDegree",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.nativePolynomial_forcing",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.common_annihilator",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.exists_mismatch_before_card_add_four",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.exists_mismatch_before_bound_add_four",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.match_prefix_requires_states",
+        "IDT.QMClosure.NativeFixedStateFiniteWindow.prefix_state_lower_bound"] }]
+  plannedArtifacts := []
   dependencies := ["native_finite_stochastic_preparation_wall"]
   limits := [
-    "This is an analytic next-step plan for a fixed known finite state carrier and fixed P, mu and r. The M+4 claim uses nonemptiness; the M+5 alternative and separate zero-state argument are also only analytic plans.",
-    "No finite-precision error margin, statistical confidence, effective parameter estimation or physical state-count bound is supplied.",
-    "Without a fixed state-count bound, the checked absorbing-clock construction still matches any supplied finite probability prefix. The proposed exact witness does not contradict that finite-prefix control.",
-    "No physical justification of the uniform preparation contract, experimental confirmation, probability actualization or QM closure is inferred."] }
+    "The model uses one fixed finite carrier, P, mu and r across preparation depths. No physical finite-memory or state-count bound, finite-precision error margin, statistical confidence or parameter-estimation protocol is supplied.",
+    "Without a common state-count bound, the checked absorbing-clock construction still matches any supplied finite probability prefix. The exact witness does not contradict that finite-prefix control.",
+    "No physical justification of the uniform preparation contract, experimental confirmation, probability origin or actualization, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged."] }
 
 def nativeFixedStateRobustWindow : ResearchTask := {
   id := "native_fixed_state_robust_window"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Fix a nonempty finite state carrier S with M=card S and the same native target p_n. Restrict to one fixed real row-stochastic P, a fixed real initial distribution mu with nonnegative entries summing to one, and a fixed real readout r with every entry in [0,1].",
-    "Supply the proposed exact M+4 finite-window exclusion from native_fixed_state_finite_window once formalized. The bounded real endpoint contract is essential for the compactness route; arbitrary unbounded complex endpoints are not covered by this argument."]
+    "Fix a finite state carrier S and the same native target p_n. The supplied parameterFamily consists of one fixed real row-stochastic P, a fixed nonnegative real initial distribution mu summing to one, and a fixed real readout r with every entry in [0,1], across all preparation depths.",
+    "The bounded endpoint contract is a hypothesis of this parameter-compactness proof. The checked exact finite-window exclusion and uniform-all-depth error lower bound retain their existing mathematical contracts."]
   conclusions := [
-    "Parent-accepted analytic plan only: the fixed-S parameter class is a closed subset of a finite-dimensional [0,1] cube, hence compact. Every finite-prefix prediction is polynomial in the entries of P, mu and r and therefore continuous.",
-    "Given the exact finite-window exclusion, the target vector (p_0,...,p_(M+3)) lies outside the compact image of this parameter class. A positive image gap should give some delta>0 such that every model has at least one n<M+4 with norm(prediction_n-p_n) >= delta.",
-    "Delta may depend on S, the window and the target. No value is specified or computed; this is not the checked 2/9 uniform-all-depth bound, an effective bound or a statistical confidence statement.",
-    "Kernel proofs of parameter compactness, polynomial continuity, compact-image separation and the adapter to the actual native exact-window result remain pending. No robust finite-window exclusion is registered as checked evidence."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeFixedStateRobustWindow.lean"]
+    "Checked compactness and continuity: row-stochastic kernels and the honest probability parameter family are compact; model predictions and finite prediction vectors depend continuously on those parameters.",
+    "There exists an unspecified delta>0, uniform over this fixed-S family, such that every model has some preparation depth n<card S+4 with norm(prediction_n-p_n)>=delta.",
+    "Separately, for every epsilon<2/9 there exists some finite N, uniform over the same family, such that every model has some n<N with norm(prediction_n-p_n)>epsilon. No effective N or identification of the exact-window delta with 2/9 is supplied.",
+    "Both statements allow empty S; in that case the normalized initial-distribution family is empty and their model quantification is vacuous."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteStochasticCompact.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteStochasticCompact.isCompact_rowStochastic",
+        "IDT.QMClosure.FiniteStochasticCompact.isCompact_parameterFamily",
+        "IDT.QMClosure.FiniteStochasticCompact.continuous_modelPrediction",
+        "IDT.QMClosure.FiniteStochasticCompact.continuous_finitePredictions",
+        "IDT.QMClosure.FiniteStochasticCompact.exists_positive_window_gap",
+        "IDT.QMClosure.FiniteStochasticCompact.exists_finite_threshold_window"] },
+    { sourcePath := "Proofs/QMClosure/NativeFixedStateRobustWindow.lean"
+      declarations := [
+        "IDT.QMClosure.NativeFixedStateRobustWindow.exists_positive_gap_before_card_add_four",
+        "IDT.QMClosure.NativeFixedStateRobustWindow.exists_finite_window_above_threshold"] }]
+  plannedArtifacts := []
   dependencies := ["native_fixed_state_finite_window", "native_finite_stochastic_preparation_wall"]
   limits := [
-    "The compactness argument requires both the fixed finite state bound and bounded honest real probability endpoints. It supplies no robust conclusion for arbitrary unbounded complex initial or readout vectors.",
-    "No numerical value or effective computation of the proposed positive gap has been supplied by this proof plan. Experimental confidence, finite-precision calibration and parameter estimation remain separate obligations.",
-    "State count remains fixed in this argument. With no common finite state-count bound, the checked prefix-clock controls still match any supplied finite probability window exactly.",
-    "No physical finite-memory bound or justification of the uniform preparation contract, experimental confirmation, probability actualization or QM closure is inferred."] }
+    "Bounded honest endpoints are the scope of this parameter-compactness proof. The separate native_unbounded_endpoint_robust_window task removes endpoint bounds for an existential positive gap; the finite unspecified threshold window for each epsilon<2/9 is established here only for the bounded probability family.",
+    "Neither a numerical delta nor an effective threshold-window length is computed. No finite-precision calibration, statistical confidence or parameter-estimation protocol is supplied.",
+    "State count remains fixed. With no common state-count bound, checked prefix-clock controls still match any supplied finite probability window exactly. Preparation depth is not detector trial count.",
+    "No physical finite-memory bound or justification of the uniform preparation contract, experimental confirmation, probability origin or actualization, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged."] }
+
+def nativeUnboundedEndpointRobustWindow : ResearchTask := {
+  id := "native_unbounded_endpoint_robust_window"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Fix any finite carrier S, the same native target p_n and supplied complex backend. Use one fixed real row-stochastic P and arbitrary fixed complex endpoint vectors mu/r across preparation depths. No endpoint bound, normalization, probability interpretation or nonempty-carrier premise is required.",
+    "Use the checked exact five-mode spectral decomposition, infinite order of lambda and finite stochastic peripheral eigenvalue obstruction under their existing mathematical contracts. The polynomial filter requires no new Cesaro limit or general Markov asymptotics."]
+  conclusions := [
+    "Checked finite polynomial filter: applying a polynomial to the actual native sequence multiplies each geometric mode by its polynomial value. For the stochastic characteristic-polynomial filter, vanishing of its first four residual terms extends to all depths through the native fourth-order recurrence and would force the polynomial value at lambda to vanish. A row-stochastic characteristic polynomial cannot vanish at lambda, so some residual (chi_Pc(E)*p)_k is nonzero for k<4, including for empty S.",
+    "Checked continuity and normalization: characteristic-polynomial coefficients and the residual maximum depend continuously on P; the sum of coefficient norms is at least one, and the residual maximum is positive for row-stochastic P. The normalized residual is continuous and bounded above by the maximum prediction error on the first card S+4 depths via Cayley-Hamilton and the triangle inequality, independently of endpoint size.",
+    "For each finite S there exists an unspecified delta_S>0 such that, for every real row-stochastic P and arbitrary fixed complex mu/r, some preparation depth n<card S+4 has norm(prediction_n-p_n)>=delta_S. Compactness is used only for stochastic P; endpoints need not lie in a compact or bounded set.",
+    "The existential gap is not identified with 2/9 and no value is computed. The separate finite unspecified threshold-window theorem for each epsilon<2/9 remains established only for the bounded probability parameter family."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeReadoutPolynomialObstruction.lean"
+      declarations := [
+        "IDT.QMClosure.NativeReadoutPolynomialObstruction.applyPolynomial_geometric",
+        "IDT.QMClosure.NativeReadoutPolynomialObstruction.applyPolynomial_selectedWeight",
+        "IDT.QMClosure.NativeReadoutPolynomialObstruction.annihilator_eval_lambda_zero",
+        "IDT.QMClosure.NativeReadoutPolynomialObstruction.charpoly_eval_lambda_ne_zero",
+        "IDT.QMClosure.NativeReadoutPolynomialObstruction.exists_charpoly_residual_before_four"] },
+    { sourcePath := "Proofs/QMClosure/NativeUnboundedEndpointRobustWindow.lean"
+      declarations := [
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.continuous_charpoly_coeff",
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.continuous_complexify_charpoly_coeff",
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.one_le_coefficientNormSum",
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.residualMax_pos",
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.continuous_normalizedResidual",
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.normalizedResidual_le_windowError",
+        "IDT.QMClosure.NativeUnboundedEndpointRobustWindow.exists_positive_gap_before_card_add_four"] }]
+  plannedArtifacts := []
+  dependencies := ["native_fixed_state_finite_window", "native_finite_stochastic_preparation_wall",
+    "native_fixed_state_robust_window"]
+  limits := [
+    "Delta is existential and unspecified; no numerical gap, physical state-count bound, finite-precision guarantee or statistical protocol is supplied. With no common state-count bound, finite-prefix clock controls still apply.",
+    "Preparation depth is not trial count; P and endpoints are fixed across depths. No physical memory bound, probability origin or actualization, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged.",
+    "The next primitive-origin obligation remains a supplied raw operation/signature contract, both contextual DiagonalFixed premises, available references and a noncollapse observation. An already-selected p_n does not establish these premises noncircularly."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4388,7 +4454,7 @@ def researchTasks : List ResearchTask := [
   nativePointwisePeriodicSeparatingReadout, nativeUniformPeriodProbabilityCriterion,
   rawUniformPeriodProbabilityBridge, fixedThreeWireFiniteMemoryFrequencyWall,
   nativeFiniteStochasticPreparationWall, nativeFixedStateFiniteWindow,
-  nativeFixedStateRobustWindow,
+  nativeFixedStateRobustWindow, nativeUnboundedEndpointRobustWindow,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
