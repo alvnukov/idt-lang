@@ -365,6 +365,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.RawFixedReferencePreparation,
     `Proofs.QMClosure.ResponseFixedReferencePreparation,
     `Proofs.QMClosure.FixedReferenceProgramCompilation,
+    `Proofs.QMClosure.RawDoubledNormalizationCompiler,
+    `Proofs.QMClosure.ResponseDoubledNormalizationCompiler,
     `Proofs.QMClosure.AllocatedGeneratedContexts,
     `Proofs.QMClosure.CompositionExchangeScope,
     `Proofs.QMClosure.PairExchangeCombinations,

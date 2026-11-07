@@ -253,7 +253,7 @@ def diagonalNormalization : ResearchTask := {
   limits := [
     "The group and readout conclusions concern the normalized operation; original T is not asserted additive.",
     "The original diagonal need not fix the chosen zero.",
-    "D and n are mathematical normal forms; physical unary implementation and copying an unknown state are not established."] }
+    "D and n are mathematical normal forms; the checked raw_doubled_normalization_compiler implements the normal form on supplied doubled preparations. Physical unary control on one unknown input and joint source availability remain open; copying an unknown state is not established."] }
 
 def canonicalHilbertCompletion : ResearchTask := {
   id := "canonical_hilbert_completion"
@@ -3732,30 +3732,56 @@ def rawFixedReferencePreparation : ResearchTask := {
 
 def rawDoubledNormalizationCompiler : ResearchTask := {
   id := "raw_doubled_normalization_compiler"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Supply arbitrary raw T and g with T(z,z)=(g(z),g(z)); define N=Prod.map g g composed with T. Supply two known copies of every initial source or vacuum input, without requiring either original reference to be diagonally fixed.",
-    "The existing square-swap law suffices for diagonal synchronization and the existing normalizer N. Mediality is unnecessary for this compiler but remains required for the normalized algebra; no normalized square law is asserted without it."]
+    "For the generic compiler supply arbitrary raw T and g with T(z,z)=(g(z),g(z)); define normalizedWith=Prod.map g g composed with T. Supply two known copies of every initial source or vacuum input.",
+    "The square-only corollary supplies diagonal synchronization and the existing normalizer, without mediality, fixed references or a chosen zero. The RawData adapter supplies its existing target normalizer; mediality remains a separate premise of the normalized algebra.",
+    "The observed adapter supplies response Data and quotient contracts. CompiledLaw is a new six-field logical readout contract, whose probabilities are indexed by logical circuits and outcomes, with prepared_eq tested through coordinatewise full contextual ResponseEq of actual doubled compiled arrays."]
   conclusions := [
-    "Parent-accepted analytic plan: four raw gates on (inl i,inl j), (inr i,inr j), (inl i,inr i), (inl j,inr j) send duplicate(x,y) to duplicate(N(x,y)). The encoding is restored after each macro, requiring no fresh input copies at subsequent steps.",
-    "Compile native circuits homomorphically for identity and sequence, and use sumCongr e e for wire permutations. Prove whole-array equality evalRaw(T,compile(c),duplicate(x))=duplicate(evalRaw(N,c,x)) for every circuit c.",
-    "Planned resource contract: two initial known copies per original input, unchanged raw source and zero, doubled width and source-occurrence budgets, and four times the original paired-gate count. Inputs are not replaced by the retraction P; the intended conclusion is whole normalized-array simulation, not a new source-noncollapse theorem.",
-    "For observed Data, transfer through evalRaw_class to equality of complete quotient output arrays. Actual raw rails need only be ResponseEq; literal raw equality under observed laws is not required.",
-    "Accepted analytic logical readout extension: define a new six-field CompiledLaw d v indexed by logical Native circuits on iota and logical outcomes in iota. Its prepared_eq field uses coordinatewise full ResponseEq of actual doubled compiled output arrays initialized from duplicate(oldBasis). Compiler class equality and injectivity of duplication should identify this relation exactly with equality of normalized quotient prepared arrays.",
-    "Within ResponseDoubledNormalizationCompiler.lean, construct a proposed equivalence CompiledLaw d v with WeightFreeRawProbability.Law on d.quotientData at classOf(v), copying the other five fields and preserving the entire probability field. Proposed conditional corollaries are normSq representation, probability-field uniqueness and existence iff the original quotient reference has infinite order, without DiagonalFixed, rebasing or source projection.",
-    "The proposed logical contract normalizes over iota, not physical rails iota+iota. Its spectator field uses complete four-gate macros; permutations act on both rails, and each logical vacuum extension introduces two original-zero inputs. This is a new encoded readout contract awaiting kernel artifacts."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/RawDoubledNormalizationCompiler.lean",
-    "Proofs/QMClosure/ResponseDoubledNormalizationCompiler.lean"]
+    "Checked generic macro: four raw gates on (inl i,inl j), (inr i,inr j), (inl i,inr i), (inl j,inr j) send a duplicated pair to the duplicated normalizedWith output. Homomorphic compilation of identity, sequence and both-rail permutations gives whole-array simulation for every circuit. The encoding is restored after each macro, using the initial copies once rather than supplying fresh copies at each step.",
+    "Checked allocated program compiler: source and zero remain unchanged, input tags are duplicated, width and each source-occurrence budget double, and paired-gate count is four times the original. Complete raw output arrays and selected program evaluations simulate the normalized target. No source projection or selected-output nonzero guarantee is asserted.",
+    "Checked observed simulation: the actual compiled raw output has the duplicated normalized quotient output as its full quotient array. Actual rails need only satisfy ResponseEq; literal equality of raw arrays under observed-only laws is not claimed. Injectivity of duplication makes coordinatewise full contextual output equivalence exactly equivalent to equality of normalized quotient prepared arrays.",
+    "Checked logical Law equivalence: CompiledLaw d v is equivalent to WeightFreeRawProbability.Law on d.quotientData at the original classOf(v). The other five fields transfer and the entire probability field is preserved. Conditional normSq representation, probability-field uniqueness and Law nonemptiness iff the original quotient reference has infinite order require no DiagonalFixed premises, rebasing or source projection."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawDoubledNormalizationCompiler.lean"
+      declarations := [
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.evalRaw_pairMacro",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.evalRaw_compileWord",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.diagonal_synchronization_of_square",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.evalRaw_compileWord_of_square",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.normalizedWith_rawData",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.evalRaw_compileWord_rawData",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileProgram_outputs",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileProgram_eval",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileProgram_eval_rawData",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileProgram_width",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileProgram_budget",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileWord_pairedGateCount",
+        "IDT.QMClosure.RawDoubledNormalizationCompiler.compileProgram_pairedGateCount"] },
+    { sourcePath := "Proofs/QMClosure/ResponseDoubledNormalizationCompiler.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.evalRaw_compileWord_class",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.encodedPrepared_class",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.responseEq_iff_prepared_eq",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.CompiledLaw",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.toQuotientLaw",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.fromQuotientLaw",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.toQuotientLaw_probability",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.fromQuotientLaw_probability",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.quotientLawEquiv",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.probability_eq_normSq",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.probability_fields_equal",
+        "IDT.QMClosure.ResponseDoubledNormalizationCompiler.law_nonempty_iff_reference_infiniteOrder"] }]
+  plannedArtifacts := []
   dependencies := ["diagonal_normalization", "source_local_original_semantics",
-    "allocated_preparation_contexts"]
+    "allocated_preparation_contexts", "weight_free_raw_probability"]
   limits := [
-    "This is an analytic next step awaiting kernel artifacts and parent acceptance of their exact contracts. It supplies no unknown-input cloning, and physical joint availability of the known copies remains a premise.",
-    "The doubled input has two source occurrences. CompiledLaw is not a probability on one rail, a sum over rails, a marginal, a postselection rule or a statement about actual outcomes. The proposed logical equivalence does not transport the existing original single-basis Law or supply a physical joint Law, conditioning rule or enlarged-experiment probability transport.",
-    "The encoded contract covers complete compiled macros and both-rail permutations only. It supplies no intermediate partial-macro readout, arbitrary single-rail gates or mixed-control grammar. ExistingMixedControlProbabilityWall remains unaffected; no physical readout bridge or outcome actualization is closed.",
-    "The new logical Law equivalence and its conditional corollaries remain analytic, with empty checked evidence; no physical preparation/readout implementation, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged."] }
+    "The initial known-copy preparations and their physical joint availability remain supplied. The compiler is not an unknown-input cloning operation or a new source-noncollapse theorem. Normalized algebra still requires its own laws, including mediality where stated.",
+    "CompiledLaw normalizes over logical iota, not physical rails iota+iota. Its locality field concerns complete four-gate macros, its permutations act on both rails, and each added logical vacuum position supplies two old-zero inputs. The vacuum-layout correspondence is not a raw-padding identity. Coordinatewise full contextual preparedEq is not a joint-detector premise.",
+    "The equivalence does not identify the logical probability field with one rail, rail sums, a marginal, conditioning, postselection, a physical joint Law or actual outcomes. It does not transport the existing uncoded original single-basis Law; a separate physical readout bridge remains open.",
+    "The contract covers complete compiled macros and both-rail permutations only, without intermediate partial-macro readouts, arbitrary single-rail gates or mixed-control grammar. ExistingMixedControlProbabilityWall remains unchanged.",
+    "No physical preparation/readout implementation, outcome actualization, Born derivation or full QM closure is inferred. Manifest and public QM statuses remain unchanged."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
