@@ -4138,6 +4138,119 @@ def crossScalePrimitiveComparison : ResearchTask := {
     "External context only, not Lean evidence: Planck, https://arxiv.org/abs/1807.06209; DESI DR2 distances, https://arxiv.org/abs/2503.14738v3; DES Y3 joint three-by-two-point analysis, https://arxiv.org/abs/2105.13549v3.",
     "No checked physics evidence or planned theorem is registered for this comparison. Physical availability, parameter provenance and joint observational consistency require separate evidence. No completed QM or GR derivation, dark-sector explanation or public claim upgrade is asserted."] }
 
+def homogeneousProductInterchange : ResearchTask := {
+  id := "homogeneous_product_interchange"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply two jointly homogeneous two-port maps F and G over commutative scalars, including the complex instance, and an array with entries a_i*b_j."]
+  conclusions := [
+    "Over any CommMonoid K, all-scalar JointHomogeneous maps F and G act on scalar product arrays by changing the first factor under columns F and the second factor under rows G. Both orders equal productArray (F a) (G b), even for distinct F and G.",
+    "The checked interchange theorem needs no additivity, square-swap, conservation or continuity. Its domain is product arrays only; it supplies no interchange theorem for arbitrary arrays."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/HomogeneousProductInterchange.lean"
+      declarations := [
+        "IDT.QMClosure.HomogeneousProductInterchange.rows_productArray",
+        "IDT.QMClosure.HomogeneousProductInterchange.columns_productArray",
+        "IDT.QMClosure.HomogeneousProductInterchange.columns_rows_productArray",
+        "IDT.QMClosure.HomogeneousProductInterchange.rows_columns_productArray",
+        "IDT.QMClosure.HomogeneousProductInterchange.interchange_productArray"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "Product notation describes a scalar-array factorization, not a physical tensor-product structure or independent subsystem availability.",
+    "These are checked conditional algebraic statements. No physical preparation availability, outcome actualization, Born derivation or full QM closure is inferred. Public and manifest statuses remain unchanged."] }
+
+def vacuumRecordUncomputeControl : ResearchTask := {
+  id := "vacuum_record_uncompute_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply arbitrary F from complex pairs to complex pairs with square-swap, agreeing with the native gate on both kinds of one-zero input. Use four retained ports labelled 00, 01, 10 and 11, with actual basis source at port zero."]
+  conclusions := [
+    "For generic F over concrete complex scalars, the checked literal circuits are S=pair02, C=the permutation swapping ports two and three, and R=three repetitions of pair02 followed by three repetitions of pair13. With the native coefficients a,b, S prepares (a,0,b,0), C after S prepares (a,0,0,b), and R after C after S prepares (1/2,1/2,i/2,-i/2). R after S and R after C after C after S both return (1,0,0,0). C is an involution on every retained array.",
+    "The amplitude identities require square-swap and native agreement on the indicated one-zero inputs, with no mediality, linearity, homogeneity, tensor, purity or probability premise. With the SAME supplied BalancedNonmedialMixerWitness.rawLaw of BalancedNonmedialMixerCore.gate, the marked output has four probabilities 1/4; the unmarked and uncomputed outputs are point distributions. The unmarked, marked and uncomputed row {0,1} weights are respectively 1, 1/2 and 1. The checked protocol is compatible with this gate's failure of FirstChannelMedial."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/VacuumRecordUncomputeControl.lean"
+      declarations := [
+        "IDT.QMClosure.VacuumRecordUncomputeControl.C_involution",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.split_output",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.recorded_output",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.marked_output",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.unmarked_output",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.uncomputed_output"] },
+    { sourcePath := "Proofs/QMClosure/VacuumRecordUncomputeControl.lean"
+      declarations := [
+        "IDT.QMClosure.VacuumRecordUncomputeControl.balanced_marked_probability",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.balanced_unmarked_probability",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.balanced_uncomputed_probability",
+        "IDT.QMClosure.VacuumRecordUncomputeControl.protocol_passes_without_mediality"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "continuous_balanced_nonmedial_wall"]
+  limits := [
+    "All four ports remain retained. Recording and uncomputing name mathematical circuit operations; physical records, actualization and independently available subsystems are not conclusions.",
+    "These are checked conditional circuit identities and a supplied-law control. No physical preparation availability, outcome actualization, Born derivation or full QM closure is inferred. Public and manifest statuses remain unchanged."] }
+
+def generatedNonmedialAxisProbe : ResearchTask := {
+  id := "generated_nonmedial_axis_probe"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing BalancedNonmedial gate and its own complete six-field rawLaw, without introducing a new model. All eight outputs remain retained.",
+    "Use the actual unit-reference basis input at port zero and the preparation pair04; pair02; pair46; pair01; pair23; pair45; pair67, each initially meeting vacuum. The intended tested rows are {3,5,0,4} and {1,6,2,7}."]
+  conclusions := [
+    "The checked eight-wire preparation has exact leaf array [(-1+i)/4,(1+i)/4,(1+i)/4,(1-i)/4,(1+i)/4,(1-i)/4,(1-i)/4,(-1-i)/4]. Its selected block at ports (3,5,1,6) is q*(1,1,i,1), where q=(1-i)/4; the selected minor is nonzero, excluding a scalar product array in the tested grouping.",
+    "Let A be pair31; pair56; pair02; pair47 and B be pair35; pair16. In the SAME BalancedNonmedialMixerWitness.rawLaw, the complete row {3,5,0,4} weights are: preparation then A gives 1/2; preparation then B then A gives 3/8+121/(16*sqrt(2993))>1/2; preparation then A then B gives 1/2. The two displayed rows partition all eight retained outputs, and the law normalizes the sum over all eight outputs for every circuit.",
+    "The checked same-model continuation sensitivity compares these specified componentwise row and column lifts of BalancedNonmedialMixerCore.gate. The same gate also satisfies all-scalar JointHomogeneous and product-input interchange. The existing three-gate raw-versus-native distinction is prior work; this is not the first generated nonlinear distinction."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/GeneratedNonmedialAxisProbe.lean"
+      declarations := [
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.prep_output",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.prep_output_explicit",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.selected_block_minor_ne_zero",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.rows_partition",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.all_outputs_normalized"] },
+    { sourcePath := "Proofs/QMClosure/GeneratedNonmedialAxisProbe.lean"
+      declarations := [
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.row0_afterA",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.row0_afterBA",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.row0_afterBA_gt_half",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.row0_afterAB",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.same_model_axis_continuation_sensitivity",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.gate_jointHomogeneous",
+        "IDT.QMClosure.GeneratedNonmedialAxisProbe.product_input_interchange"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "continuous_balanced_nonmedial_wall",
+    "raw_observable_medial_wall",
+    "homogeneous_product_interchange",
+    "vacuum_record_uncompute_control"]
+  limits := [
+    "A physical factorization into independently controllable parties remains an explicit open bridge. Serial overlapping-gate order dependence is not physical signalling.",
+    "The test concerns the specified componentwise row and column lifts, not every possible composite realization of the nonlinear gate. These are checked same-model mathematical statements. No physical preparation availability, outcome actualization, Born derivation or full QM closure is inferred. Public and manifest statuses remain unchanged."] }
+
+def sparseMarginalMedialCriterion : ResearchTask := {
+  id := "sparse_marginal_medial_criterion"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Supply F from complex pairs to complex pairs, writing F(x,z)=(g(x,z),h(x,z)), with square-swap, diagonal transparency, normSq-sum conservation, joint complex homogeneity and native right-vacuum action F(z,0)=(a*z,b*z), where a=(1+i)/2 and b=(1-i)/2. Plan to infer left-vacuum action."]
+  conclusions := [
+    "Accepted analytic plan, pending kernel check: with f(x,z)=normSq(g(x,z)), define universal sparse-three marginal condition S by f(g(x,y),a*z)+f(h(x,y),b*z)=f(x,z)+normSq(y)/2 for every complex x,y,z. Under the supplied base, prove S iff literal FirstChannelMedial iff RowColumnCommutes.",
+    "Plan auxiliary K(x,z)=f(x,z)-(normSq(x)+normSq(z))/2 and H(x,z)=K(x,i*z)+i*K(x,z). Derive the required separation of H from square-swap and vacuum action; do not assume that separation. With coherent-sum conservation added, plan to prove F(x,y)=(a*x+b*y,b*x+a*y), with no continuity premise.",
+    "Plan to show that the SAME BalancedNonmedialMixerCore.gate fails S at (x,y,z)=(1,1,1+i), using its existing selectedPlus values. This is an analytic target, not checked evidence for the criterion or its equivalences."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/SparseMarginalMedialCriterion.lean"]
+  dependencies := [
+    "continuous_balanced_nonmedial_wall",
+    "generated_nonmedial_axis_probe",
+    "raw_network_medial_wall"]
+  limits := [
+    "Universal sparse joint-preparation coverage is not supplied; the generated finite probe does not establish all complex triples. A common fixed interface, compiler, spectator and scaling bridge remains open.",
+    "The complex carrier, normSq readout and native vacuum action are imported hypotheses. These are tests of an existing source hypothesis, not a selection of nature or a physical Born, QM or no-signalling derivation. All conclusions remain analytic pending kernel check; public and manifest statuses remain unchanged."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -4937,6 +5050,8 @@ def researchTasks : List ResearchTask := [
   responseClassPreparationCompiler, signedRawRailVariationSelection,
   signedRawRailBoundedNegativeControl, globalDirectionReversibilityBoundary,
   reversibleResetEnvironmentCapacity, crossScalePrimitiveComparison,
+  homogeneousProductInterchange, vacuumRecordUncomputeControl, generatedNonmedialAxisProbe,
+  sparseMarginalMedialCriterion,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
