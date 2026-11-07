@@ -3381,44 +3381,134 @@ def nativePointwisePeriodicSeparatingReadout : ResearchTask := {
 
 def nativeUniformPeriodProbabilityCriterion : ResearchTask := {
   id := "native_uniform_period_probability_criterion"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use concrete generated G, arbitrary signature sigma:G to Omega, native referenceStep F_z and the existing complex scalar arithmetic backend. No topology on response labels or finite-codomain assumption is supplied.",
     "Define UniversalPeriod(sigma,L) by: for every z,x in G, sigma(F_z iterated L at x)=sigma(x). Absence of a common positive period means every L>0 has some generated z,x where this equality fails; it is not absence of all individually periodic traces."]
   conclusions := [
-    "Accepted analytic equivalence awaiting artifacts: full G-contextual separation is equivalent to absence of a common positive UniversalPeriod, that is, for every L>0 there exist z,x with different responses at time L and time zero. The checked common contextual-return theorem gives a common positive period whenever a distinct pair collapses.",
+    "Checked equivalence: full G-contextual separation is equivalent to absence of a common positive UniversalPeriod, that is, for every L>0 there exist z,x with different responses at time L and time zero. The checked common contextual-return theorem gives a common positive period whenever a distinct pair collapses.",
     "For the converse, one-hole affine semantics gives selected scalar equality C(F_z iterated L at x)=F_(C(z)) iterated L at C(x). A global bare-signature period therefore lifts to full ResponseEq between x and F_z iterated L at x for every context C.",
-    "Choose x=0,z=1. The Lth output is 1-a^L, which differs from 0 for L>0 because normSq(a^L)=(1/2)^L<1. Thus a global positive period gives a distinct collapsed pair, completing the intended equivalence without a topology premise.",
+    "Choose x=0,z=1. The Lth output is 1-a^L, which differs from 0 for L>0 because normSq(a^L)=(1/2)^L<1. Thus a global positive period gives a distinct collapsed pair, completing the checked equivalence without a topology premise.",
     "The checked generic signature criterion then gives the same if-and-only-if for existence of the existing generated single-basis six-field Law, and an adapter preserving the entire probability field of any supplied scalar Law under the no-common-period condition. Canonical scalar consistency remains separate."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedUniversalPeriodLaw.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedUniversalPeriodLaw.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.UniversalPeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.NoCommonPositivePeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.universalPeriod_zero",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.context_reference_iterate",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.responseEq_reference_iterate_of_universalPeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.reference_iterate_unit_zero_ne_zero",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.separates_iff_noCommonPositivePeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.nonconstant_of_noCommonPositivePeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.law_nonempty_iff_noCommonPositivePeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.lawOfScalarOfNoCommonPositivePeriod",
+        "IDT.QMClosure.NativeAllocatedUniversalPeriodLaw.lawOfScalarOfNoCommonPositivePeriod_probability"] }]
+  plannedArtifacts := []
   dependencies := ["native_reference_settling", "native_context_attenuation_record_boundary",
     "native_allocated_signature_law"]
   limits := [
-    "This task is analytic only with no checked evidence. The universal-period predicate, affine context intertwining, distinct collapsed witness, equivalence and identical-field Law adapter remain proof obligations.",
+    "The universal-period predicate, affine context intertwining, distinct collapsed witness, separation and existing generated single-basis Law-existence equivalences, and identical-field Law adapter are kernel checked under the supplied complex scalar backend. Individual traces may be periodic with different periods; no individually nonperiodic-trace necessity is asserted.",
     "C(z) is a generated known reference that must be separately prepared. The intertwining equality is equality of selected scalar values, not equality of full retained arrays, histories or resource costs. The existing complex arithmetic backend is retained.",
     "Infinite reference/input/time quantification supplies no finite empirical certificate, physical detector or probability provenance, source availability, multi-source Law extension, actualization or QM closure."] }
 
 def rawUniformPeriodProbabilityBridge : ResearchTask := {
   id := "raw_uniform_period_probability_bridge"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use the existing original raw Data d, source v, structural laws and both full contextual DiagonalFixed premises at chosenZero and v from the checked raw stable bridge.",
     "Supply the original observation predicate: for every L>0 there exist actual reference and input programs r,p whose rawReferenceStep_r iterated L from rawValue(p) has signature different from signature(rawValue(p)). Program references are separately charged; no scalar coordinates or topology are observation data."]
   conclusions := [
-    "Accepted analytic raw no-common-period bridge awaiting artifacts: per-index compiled signature correspondence and initial-signature equality transport the raw predicate to the native no-common-period condition for inducedSignature on G. The proof preserves actual program/context witnesses rather than inducting on bare signature equality.",
+    "Checked raw no-common-period bridge: per-index compiled signature correspondence and initial-signature equality transport the raw predicate to the native no-common-period condition for inducedSignature on G. The proof preserves actual program/context witnesses rather than inducting on bare signature equality.",
     "The native criterion gives induced contextual separation and hence a sufficient original ambient single-basis Law, with the entire probability field of any supplied scalar Law preserved and the unchanged six-field contract transported. Canonical scalar consistency remains separate.",
     "No ambient Law-existence if-and-only-if or full raw-carrier literal-state separation is asserted. The checked q=1/3 ambient-law/constant-induced-signature countercontrol remains compatible with this sufficient criterion.",
-    "The infinite time/family predicate is not a finite empirical certificate. Existing reference allocation counts remain charged at each occurrence and do not become a uniform physical resource bound."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ResponseAllocatedUniversalPeriodBridge.lean"]
+    "The infinite time/family predicate is not a finite empirical certificate. The exact time-L allocation Bp+L*Br counts tagged-source occurrences, not general resources, gates or wires; each occurrence remains charged and supplies no uniform physical resource bound."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseAllocatedUniversalPeriodBridge.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseAllocatedUniversalPeriodBridge.RawNoCommonPositivePeriod",
+        "IDT.QMClosure.ResponseAllocatedUniversalPeriodBridge.induced_noCommonPositivePeriod_of_raw",
+        "IDT.QMClosure.ResponseAllocatedUniversalPeriodBridge.separates_of_rawNoCommonPositivePeriod",
+        "IDT.QMClosure.ResponseAllocatedUniversalPeriodBridge.lawOfScalarOfRawNoCommonPositivePeriod",
+        "IDT.QMClosure.ResponseAllocatedUniversalPeriodBridge.lawOfScalarOfRawNoCommonPositivePeriod_probability",
+        "IDT.QMClosure.ResponseAllocatedUniversalPeriodBridge.law_nonempty_of_rawNoCommonPositivePeriod"] }]
+  plannedArtifacts := []
   dependencies := ["response_allocated_stable_bridge", "native_uniform_period_probability_criterion"]
   limits := [
-    "This task is analytic only with no checked evidence. Raw predicate definition, all-index transport, induced separation and sufficient ambient Law/whole-field adapters remain proof obligations.",
+    "Raw predicate definition, all-index transport, induced separation and sufficient ambient Law/whole-field adapters are kernel checked with both full contextual DiagonalFixed premises retained at chosenZero and v. Only the induced signature is separated; no ambient Law-existence equivalence or literal-state separation is asserted.",
     "Original raw evaluations and signatures of actual allocated programs are the observational premises. The Native-indexed complex backend is retained; it is not claimed Complex-free, and no scalar/topological observation datum is added.",
     "No physical source/frame availability, detector or probability provenance, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actualization or QM closure is inferred."] }
+
+def fixedThreeWireFiniteMemoryFrequencyWall : ResearchTask := {
+  id := "fixed_three_wire_finite_memory_frequency_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing native fixed-three-wire word K=A*B^3 and the first selected output x_n=(K^n e0)_0. The target readout is the existing selected squared-norm probability; no Born provenance is assumed.",
+    "The detector class is a finite closed deterministic time-homogeneous complete-state system S, under repeated identical preparation, with a Boolean record and the exact limiting empirical frequency along one trajectory. The update rule and initial state may depend on the preparation."]
+  conclusions := [
+    "Checked native recurrence and denominator result: the scaled output w_n=2^n*x_n has integer real and imaginary components satisfying w_(n+2)=w_(n+1)-4*w_n+2^(n+1), with w_0=1 and w_1=1+i. Both components are odd for n>0, so the selected squared norm has reduced denominator 2^(2*n-1).",
+    "For this finite complete-state deterministic detector class, every trajectory is eventually periodic with a positive period ell at most card S. Its exact limiting Boolean empirical frequency is k/ell for the number k of true records in one eventual period.",
+    "If that exact limiting frequency equals the selected squared-norm target at n>0, the target's reduced denominator divides ell and card S is at least 2^(2*n-1). The three ports stay fixed while this conditional state-count lower bound grows. With binary encoding, at least 2*n-1 memory bits are required; the exponential lower bound counts states, not memory bits.",
+    "The universal recurrence/parity/denominator theorem, finite deterministic eventual-period/frequency theorem and state-count integration are kernel checked. No fixed finite state carrier can fit all positive n, even when its rule, record and initial state depend on n. The original raw Law bridge retains both contextual DiagonalFixed premises and gives the same state-count bound. The earlier exact rational probe for n=1 through 12 remains finite evidence only."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeThreeWireProbabilityDenominator.lean"
+      declarations := [
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.orbit_eq_matrix_power",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.selectedAmplitude_recurrence",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.realNumerator_odd",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.imagNumerator_odd",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.selectedAmplitude_gaussian",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.selectedWeight_reduced",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.selectedWeight_positive_odd_fraction",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.denominator_dvd",
+        "IDT.QMClosure.NativeThreeWireProbabilityDenominator.repeatedWord_selectedWeight"] },
+    { sourcePath := "Proofs/QMClosure/FiniteDeterministicRecordFrequency.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteDeterministicRecordFrequency.exists_periodic_tail",
+        "IDT.QMClosure.FiniteDeterministicRecordFrequency.exists_eventually_periodic_orbit",
+        "IDT.QMClosure.FiniteDeterministicRecordFrequency.exists_recordFrequency_limit",
+        "IDT.QMClosure.FiniteDeterministicRecordFrequency.fraction_of_recordFrequency_tendsto"] },
+    { sourcePath := "Proofs/QMClosure/NativeFiniteMemoryReadoutWall.lean"
+      declarations := [
+        "IDT.QMClosure.NativeFiniteMemoryReadoutWall.selectedWeight_requires_states",
+        "IDT.QMClosure.NativeFiniteMemoryReadoutWall.no_fixed_finite_carrier_matches_all",
+        "IDT.QMClosure.NativeFiniteMemoryReadoutWall.rawLaw_repeatedWord_probability",
+        "IDT.QMClosure.NativeFiniteMemoryReadoutWall.rawLaw_probability_requires_states"] }]
+  plannedArtifacts := []
+  dependencies := ["native_mixer_infinite_order", "native_vacuum_probability_family"]
+  limits := [
+    "The cited universal native, finite deterministic frequency and integrated state-count results are kernel checked under their supplied contracts. The raw Law result retains the existing six-field Law and both full contextual DiagonalFixed premises at chosenZero and v; the state-count theorem supplies no detector or probability Law.",
+    "The conclusion concerns only the exact limiting single-history frequency in the stated finite closed deterministic time-homogeneous complete-state detector class. It does not exclude stochastic detectors, external streams, ensembles, continuous or unbounded memory, or approximate empirical matching.",
+    "No uniform detector across all preparations is required: the rule and initial state may depend on preparation, but any matching detector in this class must meet the corresponding state-count bound.",
+    "Fixed three ports do not imply physically finite complete-state memory. No physical finite-memory assumption, detector realization, probability provenance, Born derivation, outcome actualization or QM closure is inferred."] }
+
+def nativeFiniteStochasticPreparationWall : ResearchTask := {
+  id := "native_finite_stochastic_preparation_wall"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the same native fixed-three-wire selectedWeight p_n at preparation repetition depth n. Here n counts applications of the preparation word cK, not detector trials in the finite deterministic frequency theorem.",
+    "Supply an additional uniform compositional hidden-preparation contract: one finite state carrier S, one fixed row-stochastic kernel P for cK across all n, one fixed initial row distribution mu, and one fixed readout r in [0,1]^S. The prediction is mu*P^n*r. This uniform model is an extra assumption, not a physical consequence of the existing probability Law."]
+  conclusions := [
+    "Parent-accepted analytic result only: the native selected amplitude has x_n=1/3+(2/3)*cos(n*theta)+(2*i/sqrt(15))*sin(n*theta), where theta=arccos(1/4) in (0,pi), and p_n=7/15+(4/9)*cos(n*theta)+(4/45)*cos(2*n*theta). These exact harmonic identities are not yet kernel checked.",
+    "Analytic infinite-order argument awaiting proof: lambda=exp(i*theta) cannot be a root of unity, since lambda+lambda^(-1)=1/2 would then be an algebraic integer. For every q>0, the nonzero first harmonic prevents p_(n+q)-p_n from tending to zero: a lambda-weighted Cesaro average detects (2/9)*(lambda^q-1).",
+    "Analytic finite stochastic wall awaiting proof: a fixed finite row-stochastic P with fixed mu and r gives an asymptotically periodic prediction mu*P^n*r for some positive period q. It therefore cannot equal p_n for all n or approximate p_n with error tending to zero.",
+    "A trig-free native strategy is accepted analytically: 8*p_(n+4)+10*p_(n+3)+9*p_(n+2)+10*p_(n+1)+8*p_n=21. Differences d_n=p_(n+q)-p_n satisfy the homogeneous product (E^2-E/2+1)*(E^2+7*E/4+1). For either second-order factor, the positive invariant u_n^2+u_(n+1)^2-c*u_n*u_(n+1), with |c|<2, forbids a nonzero sequence tending to zero. Filter d through the second factor, apply this twice, then use the checked denominator theorem to exclude p_q=p_0=1. The forced recurrence, energy lemmas and composition remain unchecked.",
+    "Native harmonic identities, infinite-order and non-asymptotic-periodicity arguments, finite Markov asymptotic periodicity and the uniform-model exclusion all remain unchecked. The checked denominator theorem is not a proof of this stochastic preparation wall."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/NativeThreeWireNondecay.lean",
+    "ANALYTIC ONLY: finite stochastic peripheral-spectrum or asymptotic-periodicity proof.",
+    "ANALYTIC ONLY: exact uniform-model exclusion."]
+  dependencies := ["native_mixer_infinite_order", "fixed_three_wire_finite_memory_frequency_wall"]
+  limits := [
+    "No general finite Markov asymptotic-periodicity theorem or integrated stochastic exclusion is registered as checked evidence. This entry is analytic only and does not upgrade the deterministic theorem to a stochastic result.",
+    "Preparation depth n and trial count are distinct. The exclusion requires the same kernel, initial distribution and readout across preparation depths; that compositional uniformity is an additional supplied contract.",
+    "This does not exclude n-dependent kernels, initial distributions or readouts: a two-state Bernoulli model can match any chosen p_n. It also does not exclude finite-prefix models, external drive, unbounded or continuous memory.",
+    "No physical justification of the uniform hidden-preparation contract, detector realization, Born or probability provenance, outcome actualization or QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4211,7 +4301,8 @@ def researchTasks : List ResearchTask := [
   nativeSingleTraceProbabilityCriterion, rawSingleTraceProbabilityBridge,
   nativeOpenPatchSingleTrace,
   nativePointwisePeriodicSeparatingReadout, nativeUniformPeriodProbabilityCriterion,
-  rawUniformPeriodProbabilityBridge,
+  rawUniformPeriodProbabilityBridge, fixedThreeWireFiniteMemoryFrequencyWall,
+  nativeFiniteStochasticPreparationWall,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
