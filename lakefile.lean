@@ -314,6 +314,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.ResponseNativeProbabilitySelection,
     `Proofs.QMClosure.ResponseSourceLocalProbability,
     `Proofs.QMClosure.ResponseRecipeContextReflection,
+    `Proofs.QMClosure.ResponseRecipeComparison,
+    `Proofs.QMClosure.NativeTwoPointObservationControl,
     `Proofs.QMClosure.ResponseDiagonalSignatureWall,
     `Proofs.QMClosure.ResponseSignatureControls,
     `Proofs.QMClosure.NativePreparationNaturality,

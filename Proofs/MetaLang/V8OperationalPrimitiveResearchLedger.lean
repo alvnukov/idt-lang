@@ -2558,6 +2558,75 @@ def nativeRecipeObservationBoundary : ResearchTask := {
     "The negative point-test signature and positive zero-test comparator family are distinct supplied response choices. No universal response separation, signature provenance, independent measurement realization, or finite detector robustness is inferred.",
     "All compared inputs are known recipe preparations, with complete circuits and ancillary outputs retained. No unknown-token cloning, unattenuated copying, physical reference or controller availability, actual outcomes, actualization, or full QM closure is established."] }
 
+def responseRecipeComparison : ResearchTask := {
+  id := "response_recipe_comparison"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use d:ResponseContextQuotient.Data V Omega with arbitrary signature, globally observed square-swap and first-channel mediality, and full contextual diagonal fixedness at d.chosenZero and the chosen source v. Full ResponseEq continues to quantify over arbitrary fixed raw references.",
+    "Use actual same-source Native Event recipes and the actual PairedSetting difference comparisonEvent, with its complete retained circuit and ancillary outputs. The actual vacuumEvent is the identity circuit at tower level 1 with the unused vacuum port, whose original raw value is d.chosenZero.",
+    "The algebraic comparison core supplies no probability Law, weight, infinite-order reference, scalar recovery, global observed transparency, or detector soundness. ComparatorVacuumSound is a separate optional premise restricted to actual comparison outputs: signature(Ucomparison)=signature(chosenZero) implies full ResponseEq of that comparison output and chosenZero."]
+  conclusions := [
+    "Checked quotient algebra: the class of an actual original comparison output equals J(H([U(e)]-[U(f)])), with J and H the existing reconstructed quotient operations. Hence full ResponseEq of Ucomparison and chosenZero is equivalent to full ResponseEq of U(e) and U(f), without any Law, weight, infinite-order reference or scalar recovery premise.",
+    "Under the additional ComparatorVacuumSound premise, each individual comparison signature agrees with the vacuum signature if and only if the two input recipe outputs are fully response-equivalent. The reverse implication uses the checked algebra and the hole context; the premise is not inferred from the raw operational laws.",
+    "Under the same additional premise, equality of the entire responseProfile over all actual reference recipes is equivalent to full ResponseEq of the compared recipe outputs. These are known recipe-indexed comparison circuits, not a fixed universal finite observation battery.",
+    "After establishing the algebraic comparison equivalence, ComparatorVacuumSound is equivalent to correctness of every individual vacuum-baseline test. This is not a minimality theorem and does not claim ComparatorVacuumSound is necessary for completeness of the whole profile."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseRecipeComparison.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseRecipeComparison.rawEvent_comparison",
+        "IDT.QMClosure.ResponseRecipeComparison.comparisonEvent_class",
+        "IDT.QMClosure.ResponseRecipeComparison.vacuumEvent_original",
+        "IDT.QMClosure.ResponseRecipeComparison.comparison_responseEq_zero_iff",
+        "IDT.QMClosure.ResponseRecipeComparison.comparison_signature_eq_zero_iff",
+        "IDT.QMClosure.ResponseRecipeComparison.comparatorVacuumSound_iff_comparison_correct",
+        "IDT.QMClosure.ResponseRecipeComparison.responseProfile_eq_of_responseEq",
+        "IDT.QMClosure.ResponseRecipeComparison.responseProfile_eq_iff"] }]
+  plannedArtifacts := []
+  dependencies := ["response_recipe_context_reflection", "native_reference_separation",
+    "raw_native_dyadic_semantics"]
+  limits := [
+    "The quotient difference identity, actual vacuum recipe and comparison equivalence use the supplied global observed laws and local fixed-zero/source premises. The signature-baseline and profile theorems additionally retain ComparatorVacuumSound; the algebraic comparison equivalence does not require it.",
+    "ComparatorVacuumSound is an explicit additional response assumption on comparison outputs only. Its physical provenance remains open; it is neither an inevitable new primitive nor a consequence of contextual fixedness or a supplied probability law.",
+    "The entire raw contextual relation remains supplied over arbitrary fixed references. A conditional recipe profile theorem does not replace it universally by reachable observations, a bare signature, scalar amplitudes or an unattenuated transformation.",
+    "Every comparator concerns known preparations and retains its full native circuit. No unknown-token processing, free copying, physical reference or detector availability, finite-precision robustness, actualization, or full QM closure is established."] }
+
+def nativeTwoPointObservationControl : ResearchTask := {
+  id := "native_two_point_observation_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the concrete complex native scalar mixer, chosen zero 0, source 1, nonzero t, and exact Boolean signature sigma_t(z)=decide(z=0 or z=t). Full response contexts allow arbitrary fixed complex references; all compared recipe preparations and comparator circuits are actual same-source Native events.",
+    "Use the existing pointReference q x from NativeRecipeObservationBoundary and the actual comparisonEvent of response_recipe_comparison. The scalar model supplies global square-swap, mediality and transparency, while physical response provenance and context availability are not supplied."]
+  conclusions := [
+    "Checked literal-equality control: full arbitrary-reference ResponseEq for sigma_t equals scalar equality. For x different from y, pointReference first with q=0 distinguishes unless the resulting nonzero difference equals t; then q=t gives t versus 2*t, which sigma_t distinguishes because t is nonzero.",
+    "The checked equality of entire actual recipe-indexed comparison responseProfiles is equivalent to equality of recipe amplitudes, and hence full contextual classes. Evaluating the two profiles at reference e and reference f forces both signs of the comparator-scaled difference delta=I*(amplitude(e)-amplitude(f))/2 to lie in {0,t}; nonzero delta would force t=-t, contrary to t nonzero.",
+    "At t=I/8, the actual half/quarter comparison output is t. Its signature equals the vacuum signature although its full contextual class differs from vacuum, so ComparatorVacuumSound fails while the entire recipe comparison profile remains complete.",
+    "This is a nonminimality countercontrol: soundness of each individual vacuum-baseline test is sufficient in the preceding task but is not necessary for completeness of the whole actual recipe-indexed profile. It does not assert that all signatures have complete profiles or select a universal detector principle.",
+    "The packaged probability-law adapter transports any supplied scalar native Law with its entire probability field and all six structural fields preserved. A canonicalLaw supplies only a separate consistency witness; neither profile completeness nor ComparatorVacuumSound follows from that witness."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeTwoPointObservationControl.lean"
+      declarations := [
+        "IDT.QMClosure.NativeTwoPointObservationControl.twoPoint_responseEq_iff_eq",
+        "IDT.QMClosure.NativeTwoPointObservationControl.observedTransparent",
+        "IDT.QMClosure.NativeTwoPointObservationControl.lawOfScalar_probability",
+        "IDT.QMClosure.NativeTwoPointObservationControl.law_nonempty",
+        "IDT.QMClosure.NativeTwoPointObservationControl.profile_value",
+        "IDT.QMClosure.NativeTwoPointObservationControl.signed_membership_forces_zero",
+        "IDT.QMClosure.NativeTwoPointObservationControl.profile_eq_iff_amplitude_eq",
+        "IDT.QMClosure.NativeTwoPointObservationControl.profile_eq_iff_responseEq",
+        "IDT.QMClosure.NativeTwoPointObservationControl.half_quarter_comparison_amplitude",
+        "IDT.QMClosure.NativeTwoPointObservationControl.controlPoint_not_responseEq_vacuum",
+        "IDT.QMClosure.NativeTwoPointObservationControl.not_comparatorVacuumSound",
+        "IDT.QMClosure.NativeTwoPointObservationControl.separating_profiles_without_comparatorSoundness"] }]
+  plannedArtifacts := []
+  dependencies := ["response_recipe_comparison", "native_recipe_observation_boundary",
+    "native_reference_separation"]
+  limits := [
+    "The checked model explicitly supplies complex coordinates, the native mixer, exact two-point tests and mathematical arbitrary references. The nonzero t premise remains explicit in the stated full-equivalence and profile theorems; this is a conditional mathematical control.",
+    "The profile ranges over all actual reference recipes and known preparation-dependent comparison circuits; this is no fixed universal finite test-count, capacity or efficiency claim. The full arbitrary-reference quotient and the reachable recipe family remain distinct constructions.",
+    "Failure of individual baseline soundness together with full-profile completeness is a mathematical control, not a proof of physical detector behavior, physical availability of arbitrary references, unknown-token cloning, free copying, finite-precision or noise robustness, actual outcomes, actualization or full QM closure."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -3210,6 +3279,8 @@ def referenceProvenanceAndSubstitution : ResearchTask := {
     "Use checked response_source_local_probability for response-law/original-quotient-law equivalence without transparency and conditional normalized-law transfer under full contextual diagonal fixedness of both the chosen-zero and source classes, preserving the complete probability field. Arbitrary fixed-reference ResponseEq remains supplied; physical response provenance and availability stay open. The checked response_diagonal_signature_wall shows that bare signature invariance cannot replace these full contextual premises, with a concrete response-law nonuniqueness control.",
     "Use checked response_recipe_context_reflection to compare selected full response classes of actual original recipe-context realizations and ideal original recipe contexts at a common attenuation scale. Both full contextual fixed-class premises and the outer arbitrary-reference ResponseEq remain supplied; this does not establish bare-signature separation or physical reference availability.",
     "Use checked native_recipe_observation_boundary to distinguish reachable recipe observations from arbitrary-reference contextual equivalence: an exact Boolean point-test countermodel agrees on every reachable recipe/compiler output despite distinct full contextual classes, while a separate recipe-dependent exact-zero comparator family separates known recipe amplitudes. Supplied-law transport and canonical consistency remain distinct. No fixed finite observation battery, physical detector, arbitrary-reference availability or unknown-token processing follows.",
+    "Use checked response_recipe_comparison as a structural actual-recipe zero-comparison bridge: the quotient algebraic comparison equivalence requires no Law, weight or infinite-order premise, while the individual signature-baseline correctness and sufficient whole-profile theorem retain the additional ComparatorVacuumSound condition. The physical response provenance of that soundness remains open; it is not an inevitable new primitive or a necessary condition for whole-profile completeness.",
+    "Use checked native_two_point_observation_control as a nonminimality wall: a concrete exact two-point scalar signature makes the entire recipe comparison profile complete even when individual vacuum-baseline soundness fails. The packaged supplied-law transport preserves all six structural fields and the entire probability field; canonical consistency remains separate. Keep arbitrary-reference contextual equivalence, reachable comparison families and physical detector availability distinct.",
     "Distinguish fixed-context equivalence, common-transformation covariance and ray redundancy; state sector-preservation requirements separately from channel covariance."]
   dependencies := ["port_frame_alignment", "native_single_source_reference_wall",
     "reference_occurrence_compilation", "native_recipe_context_realization",
@@ -3218,6 +3289,7 @@ def referenceProvenanceAndSubstitution : ResearchTask := {
     "native_preparation_naturality", "source_local_original_semantics",
     "response_source_local_probability", "response_diagonal_signature_wall",
     "response_recipe_context_reflection", "native_recipe_observation_boundary",
+    "response_recipe_comparison", "native_two_point_observation_control",
     "response_phase_quotient_wall", "coherent_port_ray_boundary", "product_feature_exchange",
     "standing_matter_regime_constraint"]
   limits := [
@@ -3330,6 +3402,7 @@ def researchTasks : List ResearchTask := [
   observedRawProbabilitySelection, responseContextProbability, responseSourceLocalProbability,
   responseDiagonalSignatureWall,
   responseRecipeContextReflection, nativeRecipeObservationBoundary,
+  responseRecipeComparison, nativeTwoPointObservationControl,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
