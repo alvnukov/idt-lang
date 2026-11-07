@@ -9,7 +9,7 @@ amplitudes in one prepared state. When those amplitudes agree, output-swap
 invariance equates the branch probabilities. The derived quarter accounting
 then equates the original probabilities.
 
-This proves a same-wire-type, same-marked-source theorem under `Law`. No law
+This proves a same-wire-type, same-marked-source theorem under `SignedHalvingLaw`. No law
 relating arbitrary source relabelings or different wire types is assumed.
 No spectator-orbit transitivity or coarse-effect descent is used or asserted.
 -/
@@ -20,6 +20,7 @@ noncomputable section
 set_option maxRecDepth 8192
 set_option maxHeartbeats 2000000
 
+open NativeSignedAccounting
 open MixerGeneratedProcessWall NativeVacuumProbabilityFamily NativeCoherentBranchDilation
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
@@ -37,11 +38,11 @@ theorem comparison_middle_amplitudes (s : ι) (c d : Native ι) (i j : ι)
 
 /-- Exact scalar equality suffices for any two actual events with the same
 original marked source and wire type. All comparisons are inside literal sums. -/
-theorem same_source_amplitude_sufficiency (L : Law) (s : ι)
+theorem same_source_amplitude_sufficiency (L : SignedHalvingLaw) (s : ι)
     (c d : Native ι) (i j : ι)
     (h : c.eval (source s) i = d.eval (source s) j) :
     L.prob s c i = L.prob s d j := by
-  have hp := equal_coordinate_probabilities L (.inl (.inl s)) (comparison c d)
+  have hp := NativeSignedAccounting.equal_coordinate_probabilities L.toSignedLaw (.inl (.inl s)) (comparison c d)
     (.inl (.inr i)) (.inr (.inl j)) (comparison_middle_amplitudes s c d i j h)
   simp only [comparison, dilation_probability_left, dilation_probability_right] at hp
   linarith

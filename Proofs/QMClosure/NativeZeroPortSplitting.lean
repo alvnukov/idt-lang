@@ -1,12 +1,12 @@
-import Proofs.QMClosure.NativeBinaryRefinement
+import Proofs.QMClosure.NativeSignedAccounting
 
 /-!
 # Halving at an internal zero-amplitude partner
 
 The new-port halving theorem transfers to any existing zero-amplitude partner
 using one literal vacuum embedding and one output swap. Every comparison uses
-the same marked source and the existing probability-family contract. No wire
-relabel law, probability continuity, scalar-probability primitive, or physical
+the same marked source and the signed accounting and selected-halving contract.
+No wire relabel law, probability continuity, scalar-probability primitive, or physical
 availability conclusion is added.
 -/
 
@@ -16,6 +16,7 @@ noncomputable section
 set_option maxRecDepth 4096
 set_option maxHeartbeats 2000000
 open MixerGeneratedProcessWall NativeMixerEventConeExclusion
+open NativeSignedAccounting
 open NativeVacuumProbabilityFamily NativeBinaryRefinement
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
@@ -54,7 +55,7 @@ theorem internal_zero_partner_prepared (s : ι) (c : Native ι) (i j : ι)
         pairGate, pairReplace, padState, Equiv.swap_apply_def, hij.symm, hz]
 
 /-- Both actual pair outputs receive half the original selected probability. -/
-theorem internal_zero_partner_halves (L : Law) (s : ι) (c : Native ι) (i j : ι)
+theorem internal_zero_partner_halves (L : SignedHalvingLaw) (s : ι) (c : Native ι) (i j : ι)
     (hij : i ≠ j) (hz : c.eval (source s) j = 0) :
     L.prob s (.seq c (.pair i j hij)) i = L.prob s c i / 2 ∧
       L.prob s (.seq c (.pair i j hij)) j = L.prob s c i / 2 := by
@@ -68,10 +69,11 @@ theorem internal_zero_partner_halves (L : Law) (s : ι) (c : Native ι) (i j : �
   change L.prob (.inl s) (padCircuit PUnit (.seq c (.pair i j hij))) (.inl i) =
     L.prob (.inl s) (.seq (split c i) (.permute (partnerSwap j))) (.inl i) at hp
   rw [L.vacuum, L.output_perm, partnerSwap_retained i j hij,
-    native_vacuum_split_halves] at hp
+    L.split_halves] at hp
   refine ⟨hp, ?_⟩
-  have hsum := pair_probability_sum L s c i j hij
-  rw [hp, zero_amplitude_probability_zero L s c j hz] at hsum
+  have hsum := NativeSignedAccounting.pair_probability_sum L.toSignedLaw s c i j hij
+  rw [hp,
+    NativeSignedAccounting.zero_amplitude_probability_zero L.toSignedLaw s c j hz] at hsum
   linarith
 
 end

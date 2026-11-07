@@ -227,7 +227,8 @@ theorem realization_probability (L : NativeVacuumProbabilityFamily.Law)
     (s : ι) (C : Context (Event ι)) (e E : Event ι) (h : Realizes s C e E) :
     probability L s E =
       Complex.normSq (idealAmplitude s C e) / (4 : ℝ)^referenceCount C := by
-  rw [probability, NativeProbabilityUniqueness.native_probability_eq_normSq]
+  change L.prob (NativeGaussianResponse.sourceAt s E.level) E.circuit E.port = _
+  rw [NativeProbabilityUniqueness.native_probability_eq_normSq]
   exact realization_normSq s C e E h
 
 section Raw

@@ -3891,6 +3891,81 @@ def sourceRichnessVacuumFixed : ResearchTask := {
     "Source richness is independently supplied across every nonzero raw source, not a consequence of a Law at one source, physical availability, faithfulness alone or distinctions invisible to readout. Square-swap alone supplies the excluded diagonal-image source, not chosen-zero fixedness.",
     "The conclusion concerns chosen zero only, without fixedness of other sources, physical preparation availability, outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
 
+def nativeSignedVariationSelection : ResearchTask := {
+  id := "native_signed_variation_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply a real-valued SignedLaw with the five native fields other than nonnegative: normalization, literal prepared-state equality, output permutations, spectator locality and vacuum preservation. Signed values are not interpreted as physical probabilities before positivity is established.",
+    "Supply EventwiseBoundedVariation: for EVERY finite native basis event (iota,s,c,i), choose a real bound C after that event and before all k>=1, bounding the selected-leaf absolute variation V_k of the actual tree(c,i,4*k+1). The bound may depend on the event but must control all its refinement depths."]
+  conclusions := [
+    "Checked exact finite bound: with p the parent signed readout and r the literal vacuum-split left readout, every k>=1 satisfies 2*(4^k-1)*abs(r-p/2)<=V_k. The proof uses actual tree phase counts and signed accounting; zero-padding values vanish through state consistency, permutations and their zero sum, without positivity.",
+    "Checked eventwise selection: EventwiseBoundedVariation gives actual split halving at every finite event, hence a SignedHalvingLaw. Its explicitly supplied halving field is an intermediate interface, not a consequence of the five SignedLaw fields alone.",
+    "Checked generalized Gaussian route: SignedHalvingLaw gives normSq readout on actual finite native basis events. Applied after bounded variation supplies halving, this proves nonnegativity and only then constructs the old six-field Law. The adapter preserves the ENTIRE polymorphic readout field; no positive Law is instantiated circularly before positivity.",
+    "Checked reverse direction: every old six-field Law, mapped to SignedLaw, satisfies EventwiseBoundedVariation. The original Law and premise-irredundance result remain unchanged; old public positive-Law normSq wrappers and the old response_nonnegative specialization are preserved.",
+    "Checked sharp realPart control at pair01, source index zero and output index zero: p=1/2, r=0 and halving defect 1/4. For k>=1 the selected variation is V_k=4^k/2, leaf count N_k=2*16^k and 8*V_k^2=N_k. Direct unboundedness shows this signed control does not satisfy EventwiseBoundedVariation. Per-port or fixed-width boundedness does not replace the all-depth premise."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeSignedAccounting.lean"
+      declarations := [
+        "IDT.QMClosure.NativeSignedAccounting.SignedLaw",
+        "IDT.QMClosure.NativeSignedAccounting.SignedHalvingLaw",
+        "IDT.QMClosure.NativeSignedAccounting.ofLaw",
+        "IDT.QMClosure.NativeSignedAccounting.ofLaw_prob",
+        "IDT.QMClosure.NativeSignedAccounting.vacuum_probability_zero",
+        "IDT.QMClosure.NativeSignedAccounting.split_probability_sum"] },
+    { sourcePath := "Proofs/QMClosure/NativeSignedPhaseVariation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeSignedPhaseVariation.mass_deviation_mul_bound",
+        "IDT.QMClosure.NativeSignedPhaseVariation.phase_count_mass_halving_of_bounded_variation"] },
+    { sourcePath := "Proofs/QMClosure/NativeZeroPortSplitting.lean"
+      declarations := [
+        "IDT.QMClosure.NativeZeroPortSplitting.internal_zero_partner_halves"] },
+    { sourcePath := "Proofs/QMClosure/NativeCoherentBranchDilation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeCoherentBranchDilation.dilation_probability_left",
+        "IDT.QMClosure.NativeCoherentBranchDilation.dilation_probability_right"] },
+    { sourcePath := "Proofs/QMClosure/NativeScalarAmplitudeSufficiency.lean"
+      declarations := [
+        "IDT.QMClosure.NativeScalarAmplitudeSufficiency.same_source_amplitude_sufficiency"] },
+    { sourcePath := "Proofs/QMClosure/NativeGaussianResponse.lean"
+      declarations := [
+        "IDT.QMClosure.NativeGaussianResponse.response_parallelogram",
+        "IDT.QMClosure.NativeGaussianResponse.response_nonnegative"] },
+    { sourcePath := "Proofs/QMClosure/NativeProbabilityUniqueness.lean"
+      declarations := [
+        "IDT.QMClosure.NativeProbabilityUniqueness.signedHalving_response_eq_gaussian_norm",
+        "IDT.QMClosure.NativeProbabilityUniqueness.signedHalving_probability_eq_normSq",
+        "IDT.QMClosure.NativeProbabilityUniqueness.native_probability_eq_normSq"] },
+    { sourcePath := "Proofs/QMClosure/NativeSignedVariationSelection.lean"
+      declarations := [
+        "IDT.QMClosure.NativeSignedVariationSelection.EventwiseBoundedVariation",
+        "IDT.QMClosure.NativeSignedVariationSelection.native_finite_refinement_variation_bound",
+        "IDT.QMClosure.NativeSignedVariationSelection.native_vacuum_split_halves_of_bounded_variation",
+        "IDT.QMClosure.NativeSignedVariationSelection.boundedVariation_toSignedHalvingLaw",
+        "IDT.QMClosure.NativeSignedVariationSelection.probability_eq_normSq_of_bounded_variation",
+        "IDT.QMClosure.NativeSignedVariationSelection.nonnegative_of_bounded_variation",
+        "IDT.QMClosure.NativeSignedVariationSelection.boundedVariation_toLaw",
+        "IDT.QMClosure.NativeSignedVariationSelection.boundedVariation_toLaw_entire_prob",
+        "IDT.QMClosure.NativeSignedVariationSelection.ofLaw_eventwiseBoundedVariation"] },
+    { sourcePath := "Proofs/QMClosure/NativeSignedVariationControl.lean"
+      declarations := [
+        "IDT.QMClosure.NativeSignedVariationControl.witness_parent_value",
+        "IDT.QMClosure.NativeSignedVariationControl.witness_split_value",
+        "IDT.QMClosure.NativeSignedVariationControl.witness_halving_defect",
+        "IDT.QMClosure.NativeSignedVariationControl.witness_selectedVariation",
+        "IDT.QMClosure.NativeSignedVariationControl.witness_leaf_count",
+        "IDT.QMClosure.NativeSignedVariationControl.witness_variation_squared",
+        "IDT.QMClosure.NativeSignedVariationControl.witness_variation_unbounded",
+        "IDT.QMClosure.NativeSignedVariationControl.realPart_not_eventwiseBoundedVariation"] } ]
+  plannedArtifacts := []
+  dependencies := ["native_binary_phase_count_mass", "native_vacuum_probability_family",
+    "native_binary_refinement_selection", "native_coherent_scalar_sufficiency",
+    "native_gaussian_probability_selection"]
+  limits := [
+    "The eventwise variation condition is a new all-depth readout regularity assumption across unbounded finite refinement widths. It is not a bound for each individual apparatus or a physical detector-budget derivation. Boundedness at one event does not select the entire Law.",
+    "Formal little-o, subcritical or liminf selection variants, full-output variation formulas, pointwise bounds and global all-output variation corollaries are outside this checked milestone. Such rate extensions remain analytic possibilities without checked evidence here.",
+    "This alternative mathematical presentation applies only to actual finite native basis preparations. It supplies no arbitrary complex-preparation probability, physical probability interpretation, outcome actualization or full physical QM closure. Manifest and public QM statuses remain unchanged."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -4686,7 +4761,7 @@ def researchTasks : List ResearchTask := [
   nativeFiniteStochasticPreparationWall, nativeFixedStateFiniteWindow,
   nativeFixedStateRobustWindow, nativeUnboundedEndpointRobustWindow,
   rawFixedReferencePreparation, rawDoubledNormalizationCompiler, rawRailVacuumExtensionWall,
-  rawRailReadoutBridge, sourceRichnessVacuumFixed,
+  rawRailReadoutBridge, sourceRichnessVacuumFixed, nativeSignedVariationSelection,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,

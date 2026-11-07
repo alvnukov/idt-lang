@@ -20,6 +20,7 @@ noncomputable section
 set_option maxRecDepth 8192
 set_option maxHeartbeats 10000000
 
+open NativeSignedAccounting
 open MixerGeneratedProcessWall NativeVacuumProbabilityFamily
 open NativeCoherentBranchDilation NativeScalarAmplitudeSufficiency
 open scoped BigOperators
@@ -55,7 +56,7 @@ structure Event (ι : Type) where
 def amplitude (s : ι) (e : Event ι) : ℂ :=
   e.circuit.eval (source (sourceAt s e.level)) e.port
 
-def probability (L : Law) (s : ι) (e : Event ι) : ℝ :=
+def probability (L : SignedHalvingLaw) (s : ι) (e : Event ι) : ℝ :=
   L.prob (sourceAt s e.level) e.circuit e.port
 
 def baseEvent (c : Native ι) (i : ι) : Event ι := ⟨0, c, i⟩
@@ -64,7 +65,7 @@ omit [Fintype ι] in
 theorem baseEvent_amplitude (s : ι) (c : Native ι) (i : ι) :
     amplitude s (baseEvent c i) = c.eval (source s) i := rfl
 
-theorem baseEvent_probability (L : Law) (s : ι) (c : Native ι) (i : ι) :
+theorem baseEvent_probability (L : SignedHalvingLaw) (s : ι) (c : Native ι) (i : ι) :
     probability L s (baseEvent c i) = L.prob s c i := rfl
 
 def padEvent (e : Event ι) : Event ι :=
@@ -75,7 +76,7 @@ theorem padEvent_amplitude (s : ι) (e : Event ι) :
   rcases e with ⟨n, c, i⟩
   exact congrFun (pad_prepared (κ := Tower ι n) (sourceAt s n) c) (Sum.inl i)
 
-theorem padEvent_probability (L : Law) (s : ι) (e : Event ι) :
+theorem padEvent_probability (L : SignedHalvingLaw) (s : ι) (e : Event ι) :
     probability L s (padEvent e) = probability L s e := by
   rcases e with ⟨n, c, i⟩
   exact L.vacuum (sourceAt s n) c i
@@ -83,7 +84,7 @@ theorem padEvent_probability (L : Law) (s : ι) (e : Event ι) :
 /-- Padding witnesses are independent of any choice of probability law. -/
 theorem exists_padding (s : ι) (e : Event ι) (n : ℕ) (h : e.level ≤ n) :
     ∃ f : Event ι, f.level = n ∧ amplitude s f = amplitude s e ∧
-      ∀ L : Law, probability L s f = probability L s e := by
+      ∀ L : SignedHalvingLaw, probability L s f = probability L s e := by
   induction n, h using Nat.le_induction with
   | base => exact ⟨e, rfl, rfl, fun _ => rfl⟩
   | succ n hn ih =>
@@ -97,8 +98,8 @@ theorem exists_common_level (s : ι) (e f : Event ι) :
     ∃ n : ℕ, ∃ c d : Native (Tower ι n), ∃ i j : Tower ι n,
       c.eval (source (sourceAt s n)) i = amplitude s e ∧
       d.eval (source (sourceAt s n)) j = amplitude s f ∧
-      (∀ L : Law, L.prob (sourceAt s n) c i = probability L s e) ∧
-      (∀ L : Law, L.prob (sourceAt s n) d j = probability L s f) := by
+      (∀ L : SignedHalvingLaw, L.prob (sourceAt s n) c i = probability L s e) ∧
+      (∀ L : SignedHalvingLaw, L.prob (sourceAt s n) d j = probability L s f) := by
   let n := max e.level f.level
   obtain ⟨e', he, hea, hep⟩ := exists_padding s e n (Nat.le_max_left _ _)
   obtain ⟨f', hf, hfa, hfp⟩ := exists_padding s f n (Nat.le_max_right _ _)
@@ -111,7 +112,7 @@ theorem exists_common_level (s : ι) (e f : Event ι) :
   exact ⟨n, ec, fc, ei, fi, hea, hfa, hep, hfp⟩
 
 /-- Cross-level comparison uses actual padding followed by the same-source theorem. -/
-theorem event_amplitude_sufficiency (L : Law) (s : ι) (e f : Event ι)
+theorem event_amplitude_sufficiency (L : SignedHalvingLaw) (s : ι) (e f : Event ι)
     (h : amplitude s e = amplitude s f) : probability L s e = probability L s f := by
   obtain ⟨n, c, d, i, j, hc, hd, hpc, hpd⟩ := exists_common_level s e f
   calc
@@ -141,7 +142,7 @@ theorem halfEvent_amplitude (s : ι) (e : Event ι) :
   dsimp [amplitude]
   ring
 
-theorem halfEvent_probability (L : Law) (s : ι) (e : Event ι) :
+theorem halfEvent_probability (L : SignedHalvingLaw) (s : ι) (e : Event ι) :
     probability L s (halfEvent e) = probability L s e / 4 := by
   rcases e with ⟨n, c, i⟩
   change L.prob (.inl (.inl (sourceAt s n))) (duplicate (duplicate c))
@@ -162,7 +163,7 @@ theorem rotateHalfEvent_amplitude (s : ι) (e : Event ι) :
   dsimp [amplitude]
   ring
 
-theorem rotateHalfEvent_probability (L : Law) (s : ι) (e : Event ι) :
+theorem rotateHalfEvent_probability (L : SignedHalvingLaw) (s : ι) (e : Event ι) :
     probability L s (rotateHalfEvent e) = probability L s e / 4 := by
   rcases e with ⟨n, c, i⟩
   change L.prob (.inl (.inl (sourceAt s n))) (duplicate (duplicate c))
@@ -174,7 +175,7 @@ theorem rotateHalfEvent_probability (L : Law) (s : ι) (e : Event ι) :
 
 theorem exists_damping (s : ι) (e : Event ι) (k : ℕ) :
     ∃ f : Event ι, amplitude s f = amplitude s e / (2 : ℂ)^k ∧
-      ∀ L : Law, probability L s f = probability L s e / (4 : ℝ)^k := by
+      ∀ L : SignedHalvingLaw, probability L s f = probability L s e / (4 : ℝ)^k := by
   induction k with
   | zero => exact ⟨e, by simp, fun _ => by simp⟩
   | succ k ih =>
@@ -204,11 +205,11 @@ theorem sumDifference_amplitudes {α : Type} [Fintype α] [DecidableEq α]
         Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im] <;> ring
 
 theorem sumDifference_probabilities {α : Type} [Fintype α] [DecidableEq α]
-    (L : Law) (s : α) (c d : Native α) (i j : α) :
+    (L : SignedHalvingLaw) (s : α) (c d : Native α) (i j : α) :
     L.prob (.inl s) (sumDifferenceCircuit c d i j) (.inl i) +
       L.prob (.inl s) (sumDifferenceCircuit c d i j) (.inr j) =
       (L.prob s c i + L.prob s d j) / 2 := by
-  rw [sumDifferenceCircuit, pair_probability_sum,
+  rw [sumDifferenceCircuit, NativeSignedAccounting.pair_probability_sum L.toSignedLaw,
     dilation_probability_left, dilation_probability_right]
   ring
 
@@ -217,7 +218,7 @@ theorem exists_sum_difference (s : ι) (e f : Event ι) :
     ∃ u v : Event ι,
       amplitude s u = (amplitude s e + amplitude s f) / 2 ∧
       amplitude s v = Complex.I * (amplitude s e - amplitude s f) / 2 ∧
-      ∀ L : Law, probability L s u + probability L s v =
+      ∀ L : SignedHalvingLaw, probability L s u + probability L s v =
         (probability L s e + probability L s f) / 2 := by
   obtain ⟨n, c, d, i, j, hc, hd, hpc, hpd⟩ := exists_common_level s e f
   let t := sumDifferenceCircuit c d i j
@@ -237,10 +238,10 @@ structure Witness (s : ι) (g : G) where
   exponent : ℕ
   representation : amplitude s event = (g : ℂ) / (2 : ℂ)^exponent
 
-def weighted (L : Law) {s : ι} {g : G} (w : Witness s g) : ℝ :=
+def weighted (L : SignedHalvingLaw) {s : ι} {g : G} (w : Witness s g) : ℝ :=
   (4 : ℝ)^w.exponent * probability L s w.event
 
-theorem weighted_independent (L : Law) (s : ι) (g : G) (u v : Witness s g) :
+theorem weighted_independent (L : SignedHalvingLaw) (s : ι) (g : G) (u v : Witness s g) :
     weighted L u = weighted L v := by
   obtain ⟨f, hfa, hfp⟩ := exists_damping s u.event v.exponent
   obtain ⟨h, hha, hhp⟩ := exists_damping s v.event u.exponent
@@ -278,7 +279,7 @@ def rotateWitness {s : ι} {g : G} (w : Witness s g) : Witness s (ii * g) where
     simp only [map_mul, cast_ii, pow_succ]
     field_simp
 
-theorem weighted_rotate (L : Law) {s : ι} {g : G} (w : Witness s g) :
+theorem weighted_rotate (L : SignedHalvingLaw) {s : ι} {g : G} (w : Witness s g) :
     weighted L (rotateWitness w) = weighted L w := by
   change (4 : ℝ)^(w.exponent + 1) * probability L s (rotateHalfEvent w.event) = _
   rw [rotateHalfEvent_probability, pow_succ]
@@ -290,7 +291,7 @@ Their existence and the universal probability certificate do not choose a law. -
 theorem exists_witness_sum_difference (s : ι) (g h : G)
     (u : Witness s g) (v : Witness s h) :
     ∃ wsum : Witness s (g + h), ∃ wdiff : Witness s (ii * (g - h)),
-      ∀ L : Law, weighted L wsum + weighted L wdiff =
+      ∀ L : SignedHalvingLaw, weighted L wsum + weighted L wdiff =
         2 * (weighted L u + weighted L v) := by
   obtain ⟨f, hfa, hfp⟩ := exists_damping s u.event v.exponent
   obtain ⟨t, hta, htp⟩ := exists_damping s v.event u.exponent
@@ -361,13 +362,13 @@ theorem all_numerators_realizable (s : ι) (g : G) : Nonempty (Witness s g) := b
 def chosenWitness (s : ι) (g : G) : Witness s g :=
   Classical.choice (all_numerators_realizable s g)
 
-def response (L : Law) (s : ι) (g : G) : ℝ := weighted L (chosenWitness s g)
+def response (L : SignedHalvingLaw) (s : ι) (g : G) : ℝ := weighted L (chosenWitness s g)
 
-theorem response_eq_witness (L : Law) (s : ι) (g : G) (w : Witness s g) :
+theorem response_eq_witness (L : SignedHalvingLaw) (s : ι) (g : G) (w : Witness s g) :
     response L s g = weighted L w := weighted_independent L s g (chosenWitness s g) w
 
 /-- A direct interface for a Gaussian dyadic witness of an original native output. -/
-theorem response_native_output (L : Law) (s : ι) (c : Native ι) (i : ι)
+theorem response_native_output (L : SignedHalvingLaw) (s : ι) (c : Native ι) (i : ι)
     (g : G) (k : ℕ) (h : c.eval (source s) i = (g : ℂ) / (2 : ℂ)^k) :
     response L s g = (4 : ℝ)^k * L.prob s c i := by
   let w : Witness s g := ⟨baseEvent c i, k, (baseEvent_amplitude s c i).trans h⟩
@@ -377,26 +378,27 @@ theorem response_nonnegative (L : Law) (s : ι) (g : G) : 0 ≤ response L s g :
   unfold response weighted probability
   exact mul_nonneg (by positivity) (L.nonnegative _ _ _)
 
-theorem response_zero (L : Law) (s : ι) : response L s 0 = 0 := by
+theorem response_zero (L : SignedHalvingLaw) (s : ι) : response L s 0 = 0 := by
   rw [response_eq_witness L s 0 (zeroWitness s)]
   have ha : amplitude s (zeroWitness s).event = 0 := by
     simpa [zeroWitness] using (zeroWitness s).representation
-  have hp := zero_amplitude_probability_zero L
+  have hp := NativeSignedAccounting.zero_amplitude_probability_zero L.toSignedLaw
     (sourceAt s (zeroWitness s).event.level) (zeroWitness s).event.circuit
     (zeroWitness s).event.port ha
   simpa [weighted, probability, zeroWitness] using hp
 
-theorem response_one (L : Law) (s : ι) : response L s 1 = 1 := by
+theorem response_one (L : SignedHalvingLaw) (s : ι) : response L s 1 = 1 := by
   rw [response_eq_witness L s 1 (oneWitness s)]
-  have hp := basis_calibration L s (.identity : Native ι) s (by rfl) s
+  have hp := NativeSignedAccounting.basis_calibration L.toSignedLaw
+    s (.identity : Native ι) s (by rfl) s
   simpa [weighted, probability, oneWitness, sourceAt] using hp
 
-theorem response_rotate (L : Law) (s : ι) (g : G) :
+theorem response_rotate (L : SignedHalvingLaw) (s : ι) (g : G) :
     response L s (ii * g) = response L s g := by
   rw [response_eq_witness L s (ii * g) (rotateWitness (chosenWitness s g)), weighted_rotate]
   rfl
 
-theorem response_parallelogram (L : Law) (s : ι) :
+theorem response_parallelogram (L : SignedHalvingLaw) (s : ι) :
     GaussianIntegerQuadraticSelection.Parallelogram (response L s) := by
   intro g h
   obtain ⟨ws, wd, hp⟩ := exists_witness_sum_difference s g h

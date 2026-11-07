@@ -6,7 +6,7 @@ import Proofs.QMClosure.NativeZeroPortSplitting
 All copying below means native vacuum splitting, not a copying primitive.
 The wire types are literal sums, the source stays in the left summand, and
 each block operation is built constructor by constructor from the original
-circuit. The only cross-type probability premise is `Law.vacuum`.
+circuit. The only cross-type probability premise is `SignedLaw.vacuum`.
 
 The two branch probabilities are derived from native zero-partner halving,
 complete prepared-state equality, and spectator locality. No classical random
@@ -19,6 +19,7 @@ noncomputable section
 set_option maxRecDepth 8192
 set_option maxHeartbeats 10000000
 
+open NativeSignedAccounting
 open MixerGeneratedProcessWall NativeVacuumProbabilityFamily NativeBinaryRefinement
 open NativeZeroPortSplitting
 open scoped BigOperators
@@ -85,11 +86,11 @@ theorem eval_scale (c : Native ι) (z : ℂ) (x : ι → ℂ) :
       rw [hc, hd]
       rfl
 
-theorem probability_seq_assoc (L : Law) (s : ι) (p c d : Native ι) (i : ι) :
+theorem probability_seq_assoc (L : SignedHalvingLaw) (s : ι) (p c d : Native ι) (i : ι) :
     L.prob s (.seq p (.seq c d)) i = L.prob s (.seq (.seq p c) d) i :=
   congrFun (L.prepared_eq s _ _ (by rfl)) i
 
-theorem padCircuit_probability_right (L : Law) (s : ι ⊕ κ)
+theorem padCircuit_probability_right (L : SignedHalvingLaw) (s : ι ⊕ κ)
     (p : Native (ι ⊕ κ)) (c : Native ι) (j : κ) :
     L.prob s (.seq p (padCircuit κ c)) (.inr j) = L.prob s p (.inr j) := by
   induction c generalizing p with
@@ -103,7 +104,7 @@ theorem padCircuit_probability_right (L : Law) (s : ι ⊕ κ)
   | seq c d hc hd =>
       rw [padCircuit, probability_seq_assoc, hd, hc]
 
-theorem rightCircuit_probability_left (L : Law) (s : κ ⊕ ι)
+theorem rightCircuit_probability_left (L : SignedHalvingLaw) (s : κ ⊕ ι)
     (p : Native (κ ⊕ ι)) (c : Native ι) (j : κ) :
     L.prob s (.seq p (rightCircuit κ c)) (.inl j) = L.prob s p (.inl j) := by
   induction c generalizing p with
@@ -135,13 +136,13 @@ theorem blocks_reverse_order (c d : Native ι) (x : ι ⊕ ι → ℂ) :
   rw [blocks_eval, rightCircuit_eval, padCircuit_eval_general]
   rfl
 
-theorem blocks_probability_left (L : Law) (s : ι ⊕ ι)
+theorem blocks_probability_left (L : SignedHalvingLaw) (s : ι ⊕ ι)
     (p : Native (ι ⊕ ι)) (c d : Native ι) (i : ι) :
     L.prob s (.seq p (blocks c d)) (.inl i) =
       L.prob s (.seq p (padCircuit ι c)) (.inl i) := by
   rw [blocks, probability_seq_assoc, rightCircuit_probability_left]
 
-theorem blocks_probability_right (L : Law) (s : ι ⊕ ι)
+theorem blocks_probability_right (L : SignedHalvingLaw) (s : ι ⊕ ι)
     (p : Native (ι ⊕ ι)) (c d : Native ι) (i : ι) :
     L.prob s (.seq p (blocks c d)) (.inr i) =
       L.prob s (.seq p (rightCircuit ι d)) (.inr i) := by
@@ -153,7 +154,7 @@ theorem blocks_probability_right (L : Law) (s : ι ⊕ ι)
 
 /-! ## Each original wire is split against its own fresh vacuum wire -/
 
-theorem appendPairs_child_halves (L : Law) (s : ι ⊕ κ) (f : κ → ι)
+theorem appendPairs_child_halves (L : SignedHalvingLaw) (s : ι ⊕ κ) (f : κ → ι)
     (hf : Function.Injective f) (c : Native (ι ⊕ κ)) (ts : List κ)
     (hn : ts.Nodup) (t : κ) (ht : t ∈ ts)
     (hz : c.eval (source s) (.inr t) = 0) :
@@ -181,8 +182,8 @@ theorem appendPairs_child_halves (L : Law) (s : ι ⊕ κ) (f : κ → ι)
           · intro he
             exact hnu ((Sum.inr.inj he).symm ▸ hv)
         simp only [appendPairs,
-          appendPairs_probability_untouched L s f _ us _ hleft,
-          appendPairs_probability_untouched L s f _ us _ hright]
+          NativeSignedAccounting.appendPairs_probability_untouched L.toSignedLaw s f _ us _ hleft,
+          NativeSignedAccounting.appendPairs_probability_untouched L.toSignedLaw s f _ us _ hright]
         exact internal_zero_partner_halves L s c (.inl (f t)) (.inr t) (by simp) hz
       · have htu : t ≠ u := Ne.symm hut
         have hmem : t ∈ us := (List.mem_cons.mp ht).resolve_left htu
@@ -216,7 +217,7 @@ theorem duplicate_prepared (s : ι) (c : Native ι) :
   | inl i => exact (duplicate_amplitudes s c i).1
   | inr i => exact (duplicate_amplitudes s c i).2
 
-theorem duplicate_probabilities (L : Law) (s : ι) (c : Native ι) (i : ι) :
+theorem duplicate_probabilities (L : SignedHalvingLaw) (s : ι) (c : Native ι) (i : ι) :
     L.prob (.inl s) (duplicate c) (.inl i) = L.prob s c i / 2 ∧
     L.prob (.inl s) (duplicate c) (.inr i) = L.prob s c i / 2 := by
   have hz : (padCircuit ι c).eval (source (Sum.inl s)) (.inr i) = 0 := by
@@ -260,7 +261,7 @@ theorem same_dilation_prepared (s : ι) (c : Native ι) :
       (duplicate c).eval (source (.inl s)) := by
   rw [dilation_prepared, duplicate_prepared]
 
-theorem dilation_probability_left (L : Law) (s : ι) (c d : Native ι) (i : ι) :
+theorem dilation_probability_left (L : SignedHalvingLaw) (s : ι) (c d : Native ι) (i : ι) :
     L.prob (.inl s) (dilation c d) (.inl i) = L.prob s c i / 2 := by
   have hd := blocks_probability_left L (.inl s) (duplicate (.identity : Native ι)) c d i
   have hc := blocks_probability_left L (.inl s) (duplicate (.identity : Native ι)) c c i
@@ -272,7 +273,7 @@ theorem dilation_probability_left (L : Law) (s : ι) (c d : Native ι) (i : ι) 
         (same_dilation_prepared s c)) (Sum.inl i)
     _ = L.prob s c i / 2 := (duplicate_probabilities L s c i).1
 
-theorem dilation_probability_right (L : Law) (s : ι) (c d : Native ι) (i : ι) :
+theorem dilation_probability_right (L : SignedHalvingLaw) (s : ι) (c d : Native ι) (i : ι) :
     L.prob (.inl s) (dilation c d) (.inr i) = L.prob s d i / 2 := by
   have hc := blocks_probability_right L (.inl s) (duplicate (.identity : Native ι)) c d i
   have hd := blocks_probability_right L (.inl s) (duplicate (.identity : Native ι)) d d i
@@ -284,7 +285,7 @@ theorem dilation_probability_right (L : Law) (s : ι) (c d : Native ι) (i : ι)
         (same_dilation_prepared s d)) (Sum.inr i)
     _ = L.prob s d i / 2 := (duplicate_probabilities L s d i).2
 
-theorem dilation_probabilities (L : Law) (s : ι) (c d : Native ι) (i j : ι) :
+theorem dilation_probabilities (L : SignedHalvingLaw) (s : ι) (c d : Native ι) (i j : ι) :
     L.prob (.inl s) (dilation c d) (.inl i) = L.prob s c i / 2 ∧
     L.prob (.inl s) (dilation c d) (.inr j) = L.prob s d j / 2 :=
   ⟨dilation_probability_left L s c d i, dilation_probability_right L s c d j⟩

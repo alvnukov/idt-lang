@@ -163,7 +163,8 @@ theorem corrected_substitution_probability (L : NativeVacuumProbabilityFamily.La
     probability L s
         (realize s (mapRefs (dampEvent (referenceCount D)) C) (realize s D e)) =
       probability L s (realize s (C.plug D) e) := by
-  simp only [probability, NativeProbabilityUniqueness.native_probability_eq_normSq]
+  simp only [probability, NativeSignedAccounting.ofLaw,
+    NativeProbabilityUniqueness.native_probability_eq_normSq]
   exact congrArg Complex.normSq (corrected_substitution_amplitude s C D e)
 
 /-! ## Actual positive-count countercontrol to naive recipe substitution -/
