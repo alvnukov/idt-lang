@@ -3075,7 +3075,7 @@ def nativeReferenceSettlingScopeExtensions : ResearchTask := {
     "Only the open-patch contraction route supplies the usual scalar/subspace topology, a relatively open constant-signature neighborhood of the chosen reference z, and norm(a)<1 for a=(1+I)/2. The finite-probe control is a separate algebraic residue construction."]
   conclusions := [
     "Pending analytic optional theorem: convergence of native F_z iterates to z from the contraction formula should imply ReferenceSettles when sigma is constant on a relatively open neighborhood of z. The checked topology-free settling core does not itself formalize this topological implication.",
-    "Pending universal finite-input-probe countercontrol: for any finite probe family, choose an odd M>max(1,4*probeCount) and use a union of native a-orbits in the residue model. The identity a^4=-1/4 gives the intended orbit-size bound at most 4*M versus M squared residue classes; every universal control and transport step requires an explicit artifact.",
+    "Pending universal finite-input-probe countercontrol: for any finite probe family, choose an odd M>max(1,4*probeCount) and use a union of native a-orbits in the residue model. Each selected probe initially has the reference label and retains that label along its whole selected orbit. This equal-label control does not refute changed-response tails or eventual avoidance of the initial label. The identity a^4=-1/4 gives the intended orbit-size bound at most 4*M versus M squared residue classes; every universal control and transport step requires an explicit artifact.",
     "The finite F9 axes control applies to halving only and must not be asserted as a native F_z control, whose a-orbit has order 8 in that example. This distinction remains part of the pending algebraic countercontrol.",
     "Finite probes do not replace the all-input eventual-tail predicate. The contraction implication and finite-probe countercontrol are separate accepted analytic obligations, not checked conclusions or necessity theorems for every response codomain."]
   checkedEvidence := []
@@ -3210,26 +3210,80 @@ def nativeReferenceSettlingRegularityScope : ResearchTask := {
 
 def nativeContextAttenuationRecordBoundary : ResearchTask := {
   id := "native_context_attenuation_record_boundary"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use the existing one-hole Context grammar over concrete generated G and the native scalar mixer. All reference values are fixed independently of the unknown hole input; each constructor selects one output with slope a=(1+I)/2 or b=(1-I)/2.",
     "Supply the existing complex scalar backend and usual complex metric. Context depth counts constructors on the selected one-hole path, not the total depth of a retained-wire circuit whose companion outputs may later re-enter.",
     "For a sequence C_n, use the same input-independent context sequence for all compared inputs; known reference values may vary with n. A premise that one selected-output sequence converges is separate from depth tending to infinity."]
   conclusions := [
-    "Accepted analytic affine-context contract awaiting artifacts: each finite C evaluates as C(x)=c_C*x+d_C, with norm(c_C)=(1/sqrt(2))^depth(C). Therefore output distance is exactly that factor times input distance, and every finite one-hole context remains injective.",
+    "Checked affine-context contract: each finite C evaluates as C(x)=c_C*x+d_C, with normSq(c_C)=(1/2)^depth(C). The exact exported distance law is normSq(C(x)-C(y))=(1/2)^depth(C)*normSq(x-y), and every finite one-hole context remains injective. No separate literal 1/sqrt(2) norm theorem is registered.",
     "For any one common input-independent sequence C_n with selected-path depth tending to infinity, the output differences for each fixed pair of inputs tend to zero, even when the known references vary. If outputs converge for one input, they converge for every input to that same scalar limit. No existence of convergence is asserted from attenuation alone.",
-    "Broader affine-sequence boundary: if c_n*x+d_n converges at inputs 0 and 1 to l0 and l1, respectively, it converges pointwise on G to (l1-l0)*x+l0. A finite image of this literal limiting affine function on infinite G forces it to be constant.",
+    "Broader affine-sequence boundary: if c_n*x+d_n converges at inputs 0 and 1 to l0 and l1, respectively, it converges pointwise on G to (l1-l0)*x+l0. The literal limiting affine function has finite image on infinite G if and only if its slope l1-l0 is zero, in which case it is constant.",
     "These results concern literal scalar limiting values on the selected one-hole path. Selected-wire attenuation alone supplies neither distinct limiting records nor discrete readout or outcome actualization."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedContextAttenuation.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedContextAttenuation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.depth",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.eval_affine",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.slope_normSq",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.eval_sub",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.eval_sub_normSq",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.slope_ne_zero",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.eval_injective",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.eval_sub_tendsto_zero",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.eval_tendsto_of_one",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.affine_tendsto_of_zero_unit",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.affine_finite_range_iff",
+        "IDT.QMClosure.NativeAllocatedContextAttenuation.affine_limit_finite_range_iff"] }]
+  plannedArtifacts := []
   dependencies := ["native_reference_settling", "native_allocated_source_arithmetic",
     "allocated_preparation_contexts"]
   limits := [
-    "This task is analytic only with no checked evidence. Affine normalization, exact slope/distance laws, injectivity, conditional convergence and the finite-image limiting boundary all remain proof obligations.",
+    "Affine semantics, exact squared-norm attenuation, finite injectivity, shared-sequence conditional convergence, two-point affine convergence and the finite literal-image criterion are checked. Attenuation alone supplies no existence of a limit, and the registered exact metric formula is squared norm.",
     "All companion and ancillary wires remain retained. Square-swap already permits recoverability when companion outputs re-enter, so the selected-path theorem is no claim of global information erasure, thermodynamic irreversibility or a no-go theorem for detectors.",
     "Input-dependent feedback, stopping, decoding and richer retained-wire observables are outside this proof scope. The same-context-sequence condition cannot be dropped or replaced by a total-circuit-depth statement.",
     "The usual metric and scalar backend are supplied mathematical structure. No probabilities, physical detector implementation, source/reference availability, probability provenance, actualization or full QM closure are inferred."] }
+
+def nativeSingleTraceProbabilityCriterion : ResearchTask := {
+  id := "native_single_trace_probability_criterion"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use concrete generated G, native referenceStep F_z and arbitrary signature sigma:G to Omega. No topology or finite response-range assumption is supplied. Witnesses use one generated input x and one generated reference z.",
+    "The strongest proposed sufficient witness is absence of a period from time zero: there exist z and x such that for every L>0 there exists n>=0 with sigma(F_z iterated (n+L) at x) different from sigma(F_z iterated n at x). This includes indispensable quantification over infinitely many times, not a finite transcript."]
+  conclusions := [
+    "Accepted analytic single-trace criterion awaiting artifacts: failure of contextual separation supplies one common positive contextual return L for every reference and input. Apply that return at F_z iterated n at x to force exact period L at every n, contradicting the witness. Hence the witness implies full G-contextual separation.",
+    "A simpler sufficient witness is eventual avoidance of the initial label: there exist z,x,N such that every n>=N has sigma(F_z iterated n at x) different from sigma(x). A changed constant tail with label c different from sigma(x) is a special case; c need not equal sigma(z). These witnesses imply the time-zero nonperiodicity criterion and make nonconstancy automatic.",
+    "Every stated sufficient witness gives the existing single-basis six-field Law through the checked generic signature criterion and an adapter preserving the entire probability field of any supplied scalar Law. Canonical scalar consistency remains separate. No necessity claim is asserted.",
+    "One changed response, or arbitrarily late changed responses, is not the stated eventual-avoidance or time-zero nonperiodicity witness. The modulo-5 hitSignature at initial residue 2 supplies an analytic countercontrol: the initial false label returns while true responses also recur. Its specific sharp rejection corollary remains pending unless separately exported and checked.",
+    "The one-input/reference witness is compatible with finite-transcript underdetermination because its infinite time quantifiers are essential. A finite observation or finite input family without the required full-time contract does not establish it."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedSingleTraceLaw.lean"]
+  dependencies := ["native_reference_settling", "native_allocated_signature_law",
+    "native_reference_recurrence_wall"]
+  limits := [
+    "This task is analytic only with no checked evidence. The time-zero nonperiodicity theorem, eventual-avoidance and changed-tail implications, field-preserving adapters and sharp recurrence countercontrol remain proof obligations.",
+    "Known references are separately charged at each occurrence. No topology, finite alphabet, uniform source budget, physical detector/probability provenance, unknown-token cloning, multi-source Law extension, outcome selection, actualization or QM closure is inferred."] }
+
+def rawSingleTraceProbabilityBridge : ResearchTask := {
+  id := "raw_single_trace_probability_bridge"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the existing Data d and source v with observed square-swap and mediality and full contextual DiagonalFixed at chosenZero and v, as in the checked raw stable bridge. All trace witnesses use original rawReferenceStep toward rawValue of an actual reference program r, starting from rawValue of an actual input program p.",
+    "Supply a raw eventual-avoidance, changed-tail or time-zero nonperiodicity witness with the same exact infinite time quantifiers as the scalar criterion. No scalar coordinates or topology are added as observation data; the Native-indexed complex scalar proof backend is retained."]
+  conclusions := [
+    "Accepted analytic raw-trace bridge awaiting artifacts: signature_reference_iterate and inducedSignature_ofProgram transport every trace time exactly to the induced scalar signature. Preserve actual compiled context witnesses; do not induct on bare signature equality.",
+    "Each raw trace witness then suffices for induced contextual separation and existence of the original ambient single-basis response Law, with the entire probability field of any supplied scalar Law preserved and the unchanged six-field contract transported. Canonical scalar consistency is a separate witness.",
+    "This is sufficient only, not an ambient Law-existence if-and-only-if. The checked ambient point-signature countercontrol remains compatible with failure of a proposed induced trace witness.",
+    "The existing exact reference allocation is Bp+n*Br at time n. It counts separate known reference preparations, not a uniform physical resource bound, gate/wire count, physical cloning operation or detector implementation."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ResponseAllocatedSingleTraceBridge.lean"]
+  dependencies := ["response_allocated_stable_bridge", "native_single_trace_probability_criterion"]
+  limits := [
+    "This task is analytically accepted with no checked evidence. Raw predicate definitions, all-time signature transport, sufficient existence and identical-field adapters require exact artifacts before promotion.",
+    "Observed raw laws, contextual fixedness, actual program resources and common-frame conditions remain supplied. No Complex-free backend, scalar/topological observation datum, physical detector or probability provenance, multi-source Law extension, outcome actualization or QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4019,6 +4073,7 @@ def researchTasks : List ResearchTask := [
   nativeBinaryValuationDensity,
   nativeFiniteObservationUnderdetermination, nativeReferenceSettlingRegularityScope,
   nativeContextAttenuationRecordBoundary,
+  nativeSingleTraceProbabilityCriterion, rawSingleTraceProbabilityBridge,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
