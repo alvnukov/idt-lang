@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import re
+import signal
 import subprocess
 import tempfile
 import time
@@ -747,14 +748,28 @@ def allowed_checks() -> dict[str, CheckCommand]:
 def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
     started = time.monotonic()
     try:
-        completed = subprocess.run(
+        process = subprocess.Popen(
             check.command,
             cwd=repo_root,
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=check.timeout_seconds,
-            check=False,
+            errors="replace",
+            start_new_session=os.name == "posix",
         )
+        try:
+            stdout, stderr = process.communicate(timeout=check.timeout_seconds)
+        except subprocess.TimeoutExpired as error:
+            drained_stdout, drained_stderr = stop_command(process)
+            # A second communicate returns the entire capture, including the prefix.
+            raise subprocess.TimeoutExpired(
+                error.cmd, error.timeout, output=drained_stdout, stderr=drained_stderr or error.stderr,
+            ) from error
+        except BaseException:
+            with contextlib.suppress(Exception):
+                stop_command(process)
+            raise
+        completed = subprocess.CompletedProcess(check.command, process.returncode, stdout, stderr)
         duration = time.monotonic() - started
         return {
             "schema": "idt-v8-check-evidence/1",
@@ -793,6 +808,32 @@ def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
             **failure_diagnostics(stdout, stderr),
             "proof_boundary": "check_result_is_not_formal_proof",
         }
+
+
+def stop_command(process: subprocess.Popen[str]) -> tuple[str | bytes | None, str | bytes | None]:
+    """Kill the owned process group and bound output draining and parent reaping."""
+    if os.name == "posix":
+        with contextlib.suppress(ProcessLookupError):
+            os.killpg(process.pid, signal.SIGKILL)
+    else:
+        process.kill()
+    try:
+        return process.communicate(timeout=1)
+    except subprocess.TimeoutExpired as error:
+        # A descendant that escaped the group can keep an inherited pipe open.
+        process.kill()
+        try:
+            process.wait(timeout=1)
+        except subprocess.TimeoutExpired as cleanup_error:
+            raise IdtRagError("command process did not exit after forced cleanup") from cleanup_error
+        finally:
+            # Non-POSIX reader threads own their streams and may hold close locks.
+            # Immediate-child cleanup cannot guarantee descendant termination there.
+            if os.name == "posix":
+                for stream in (process.stdout, process.stderr):
+                    if stream is not None:
+                        stream.close()
+        return error.stdout, error.stderr
 
 
 def failure_diagnostics(stdout: str, stderr: str) -> JsonObject:

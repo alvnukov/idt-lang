@@ -1,16 +1,20 @@
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import io
 import json
+import os
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import scripts.build_ai_theory_graph as graph_builder
 from scripts.build_ai_theory_graph import DEFAULT_SOURCE_GLOBS, build_v8_ai_theory_graph
@@ -21,6 +25,7 @@ from theory_verifier.ai_theory_graph import (
 )
 from theory_verifier.idt_mcp_server import IdtMcpServer, handle_line, serve
 from theory_verifier.idt_rag import (
+    CheckCommand,
     IdtRagError,
     IdtRagIndex,
     failure_diagnostics,
@@ -29,8 +34,20 @@ from theory_verifier.idt_rag import (
     guarded_edit_issues,
     guarded_edit_text,
     lock_path_for,
+    run_command_evidence,
+    stop_command,
     write_locked_graph_for_tests,
 )
+
+
+def completed_command(returncode: int, stdout: str, stderr: str) -> Mock:
+    process = Mock(spec=subprocess.Popen)
+    process.returncode = returncode
+    process.pid = 4321
+    process.communicate.return_value = (stdout, stderr)
+    process.stdout = Mock()
+    process.stderr = Mock()
+    return process
 
 
 class IdtMcpRagTests(unittest.TestCase):
@@ -433,8 +450,8 @@ class IdtMcpRagTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as raw_dir:
             server = IdtMcpServer(load_fixture_index(write_fixture_repo(Path(raw_dir))))
             with patch(
-                "theory_verifier.idt_rag.subprocess.run",
-                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 1, stdout, stderr),
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(1, stdout, stderr),
             ):
                 response = server.handle_payload({
                     "jsonrpc": "2.0",
@@ -467,8 +484,8 @@ class IdtMcpRagTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as raw_dir:
             index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
             with patch(
-                "theory_verifier.idt_rag.subprocess.run",
-                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 1, output, output),
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(1, output, output),
             ):
                 evidence = index.lean_build_target("Fixture")
 
@@ -484,8 +501,8 @@ class IdtMcpRagTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as raw_dir:
             index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
             with patch(
-                "theory_verifier.idt_rag.subprocess.run",
-                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 0, output, ""),
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(0, output, ""),
             ):
                 evidence = index.lean_build_target("Fixture")
 
@@ -505,8 +522,8 @@ class IdtMcpRagTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as raw_dir:
             index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
             with patch(
-                "theory_verifier.idt_rag.subprocess.run",
-                return_value=subprocess.CompletedProcess(("lake", "build", "Fixture"), 1, output, ""),
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(1, output, ""),
             ):
                 evidence = index.lean_build_target("Fixture")
 
@@ -562,10 +579,14 @@ class IdtMcpRagTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as raw_dir:
             index = load_fixture_index(write_fixture_repo(Path(raw_dir)))
             for captured_output in (output, output.encode("utf-8")):
+                process = completed_command(-9, "", "")
+                process.communicate.side_effect = [
+                    subprocess.TimeoutExpired(("lake", "build", "Fixture"), 60, output=captured_output),
+                    (captured_output, ""),
+                ]
                 with self.subTest(output_type=type(captured_output).__name__), patch(
-                    "theory_verifier.idt_rag.subprocess.run",
-                    side_effect=subprocess.TimeoutExpired(("lake", "build", "Fixture"), 60, output=captured_output),
-                ):
+                    "theory_verifier.idt_rag.subprocess.Popen", return_value=process,
+                ), patch("theory_verifier.idt_rag.os.killpg"):
                     evidence = index.lean_build_target("Fixture")
 
                 self.assertEqual(False, evidence["ok"])
@@ -574,6 +595,149 @@ class IdtMcpRagTests(unittest.TestCase):
                 diagnostics = require_list(evidence["diagnostics"])
                 self.assertEqual(1, len(diagnostics))
                 self.assertIn("tactic failed", require_string(require_mapping(diagnostics[0])["excerpt"]))
+
+    @unittest.skipUnless(os.name == "posix", "requires POSIX process groups")
+    def test_command_timeout_kills_inherited_child_and_retains_output(self) -> None:
+        child_script = (
+            "import os, sys, time; from pathlib import Path; "
+            "Path(sys.argv[1]).write_text(str(os.getpid())); time.sleep(30)"
+        )
+        parent_script = (
+            "import os, subprocess, sys, time\n"
+            "from pathlib import Path\n"
+            "Path(sys.argv[1]).write_text(str(os.getpid()))\n"
+            "subprocess.Popen([sys.executable, '-c', sys.argv[3], sys.argv[2]])\n"
+            "while not Path(sys.argv[2]).exists(): time.sleep(0.01)\n"
+            "print('error: Fixture.lean:1:1: flushed stdout', flush=True)\n"
+            "print('error: Fixture.lean:2:1: flushed stderr', file=sys.stderr, flush=True)\n"
+            "time.sleep(30)\n"
+        )
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            parent_path = root / "parent.pid"
+            child_path = root / "child.pid"
+            command = CheckCommand(
+                "synthetic_timeout",
+                (sys.executable, "-c", parent_script, str(parent_path), str(child_path), child_script),
+                2,
+                "Python parent and inherited-pipe child",
+            )
+            started = time.monotonic()
+            try:
+                evidence = run_command_evidence(root, command)
+                self.assertLess(time.monotonic() - started, 6)
+                self.assertEqual(False, evidence["ok"])
+                self.assertEqual(-1, evidence["exit_code"])
+                self.assertIn("flushed stdout", require_string(evidence["stdout_tail"]))
+                self.assertIn("flushed stderr", require_string(evidence["stderr_tail"]))
+                self.assertEqual(2, evidence["diagnostic_count"])
+                child_pid = int(child_path.read_text())
+                for _ in range(50):
+                    status = subprocess.run(
+                        ("ps", "-p", str(child_pid), "-o", "stat="),
+                        capture_output=True, text=True, check=False, timeout=1,
+                    ).stdout.strip()
+                    if not status or status.startswith("Z"):
+                        break
+                    time.sleep(0.02)
+                else:
+                    self.fail("synthetic child is still running after timeout")
+            finally:
+                for pid_path in (child_path, parent_path):
+                    if pid_path.exists():
+                        with contextlib.suppress(ProcessLookupError):
+                            os.kill(int(pid_path.read_text()), signal.SIGKILL)
+
+    def test_timeout_preserves_incomplete_utf8_diagnostic(self) -> None:
+        script = (
+            r"import sys, time; sys.stdout.buffer.write(b'error: interrupted UTF-8 \xe2'); "
+            "sys.stdout.buffer.flush(); time.sleep(30)"
+        )
+        command = CheckCommand("incomplete_utf8", (sys.executable, "-c", script), 1, "partial UTF-8 timeout")
+        evidence = run_command_evidence(Path.cwd(), command)
+        self.assertEqual(False, evidence["ok"])
+        self.assertEqual(-1, evidence["exit_code"])
+        self.assertIn("error: interrupted UTF-8 \ufffd", require_string(evidence["stdout_tail"]))
+        self.assertEqual(1, evidence["diagnostic_count"])
+
+    def test_non_posix_drain_timeout_leaves_reader_owned_streams_open(self) -> None:
+        root = Path.cwd()
+        command = CheckCommand("synthetic", ("unused",), 1, "mock command")
+        process = completed_command(-9, "", "")
+        output = b"error: inherited pipe remains open"
+        process.communicate.side_effect = [
+            subprocess.TimeoutExpired(command.command, 1, output=output),
+            subprocess.TimeoutExpired(command.command, 1, output=output),
+        ]
+        for stream in (process.stdout, process.stderr):
+            stream.close.side_effect = AssertionError("reader-owned close may block")
+        with patch("theory_verifier.idt_rag.os.name", "nt"), patch(
+            "theory_verifier.idt_rag.subprocess.Popen", return_value=process,
+        ):
+            evidence = run_command_evidence(root, command)
+        self.assertEqual(-1, evidence["exit_code"])
+        self.assertEqual(1, evidence["diagnostic_count"])
+        self.assertEqual(2, process.kill.call_count)
+        process.wait.assert_called_once_with(timeout=1)
+        self.assertEqual([1, 1], [call.kwargs["timeout"] for call in process.communicate.call_args_list])
+        process.stdout.close.assert_not_called()
+        process.stderr.close.assert_not_called()
+
+    def test_command_exception_preserves_original_during_cleanup(self) -> None:
+        command = CheckCommand("synthetic", ("unused",), 1, "mock command")
+        for error in (KeyboardInterrupt(), RuntimeError("execution failed")):
+            for cleanup_error in (None, RuntimeError("cleanup failed")):
+                process = completed_command(-9, "", "")
+                process.communicate.side_effect = [error, cleanup_error if cleanup_error else ("", "")]
+                with self.subTest(error=type(error).__name__, cleanup_error=cleanup_error), patch(
+                    "theory_verifier.idt_rag.subprocess.Popen", return_value=process,
+                ), patch("theory_verifier.idt_rag.os.killpg") as kill_group, self.assertRaises(type(error)) as caught:
+                    run_command_evidence(Path.cwd(), command)
+                self.assertIs(error, caught.exception)
+                kill_group.assert_called_once_with(process.pid, signal.SIGKILL)
+                self.assertEqual(1, process.communicate.call_args.kwargs["timeout"])
+
+    def test_timeout_drain_remains_bounded_when_pipe_stays_open(self) -> None:
+        command = CheckCommand("synthetic", ("unused",), 1, "mock command")
+        process = completed_command(-9, "", "")
+        output = b"error: Fixture.lean:1:1: retained output"
+        process.communicate.side_effect = [
+            subprocess.TimeoutExpired(command.command, 1, output=output),
+            subprocess.TimeoutExpired(command.command, 1, output=output),
+        ]
+        with patch("theory_verifier.idt_rag.subprocess.Popen", return_value=process), patch(
+            "theory_verifier.idt_rag.os.killpg",
+        ):
+            evidence = run_command_evidence(Path.cwd(), command)
+        self.assertEqual(-1, evidence["exit_code"])
+        self.assertEqual(1, evidence["diagnostic_count"])
+        self.assertIn("retained output", require_string(evidence["stdout_tail"]))
+        process.kill.assert_called_once_with()
+        process.wait.assert_called_once_with(timeout=1)
+        process.stdout.close.assert_called_once_with()
+        process.stderr.close.assert_called_once_with()
+
+    def test_cleanup_reports_bounded_parent_reap_failure(self) -> None:
+        process = completed_command(-9, "", "")
+        process.communicate.side_effect = subprocess.TimeoutExpired(("unused",), 1)
+        process.wait.side_effect = subprocess.TimeoutExpired(("unused",), 1)
+        with patch("theory_verifier.idt_rag.os.killpg"), self.assertRaisesRegex(
+            IdtRagError, "did not exit after forced cleanup",
+        ):
+            stop_command(process)
+        process.wait.assert_called_once_with(timeout=1)
+        process.stdout.close.assert_called_once_with()
+        process.stderr.close.assert_called_once_with()
+
+    def test_non_posix_cleanup_kills_immediate_child(self) -> None:
+        process = completed_command(-9, "", "")
+        with patch("theory_verifier.idt_rag.os.name", "nt"), patch(
+            "theory_verifier.idt_rag.os.killpg",
+        ) as kill_group:
+            self.assertEqual(("", ""), stop_command(process))
+        kill_group.assert_not_called()
+        process.kill.assert_called_once_with()
+        process.communicate.assert_called_once_with(timeout=1)
 
     def test_leandojo_status_is_optional_and_boundary_limited(self) -> None:
         with tempfile.TemporaryDirectory() as raw_dir:
