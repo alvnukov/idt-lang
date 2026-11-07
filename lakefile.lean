@@ -305,6 +305,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.GeneratedNonmedialAxisProbe,
     `Proofs.QMClosure.RawSparseMarginalReconstruction,
     `Proofs.QMClosure.RawSparseConservationSelection,
+    `Proofs.QMClosure.RawSparseConservationTests,
+    `Proofs.QMClosure.RawSparsePhaseTwistControl,
     `Proofs.QMClosure.RawSparseQuarticControl,
     `Proofs.QMClosure.RawSparseSignedControl,
     `Proofs.QMClosure.NativeHyperrealProbabilityWall,

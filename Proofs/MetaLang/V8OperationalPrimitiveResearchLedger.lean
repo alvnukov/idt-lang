@@ -4363,12 +4363,15 @@ def rawSparseInsertionOrigin : ResearchTask := {
     "The proposed operational requirement is invariance of that selected-row readout when the row layer is inserted before the column analyzer. Its availability and physical justification remain open."]
   conclusions := [
     "This proposed insertion-invariance requirement is operationally the actual sparse law S itself. Giving it a circuit interpretation supplies no independent derivation of S.",
-    "Analytic dependency plan only, pending kernel check: the six universally quantified families S(0,t,t), S(x,y,0), S(t,t,z), S(A(t),B(t),z), S(B(t),A(t),z) and S(t,0,z) appear sufficient for pair conservation.",
-    "The additional generic families S(x,y,A(z)) and S(x,y,B(z)) are the analytic dependency target for reconstruction. Neither the six-family sufficiency claim nor this reconstruction reduction is a checked theorem or checked equivalence."]
+    "The checked raw_sparse_conservation_tests result proves that the six universally quantified families S(0,t,t), S(x,y,0), S(t,t,z), S(A(t),B(t),z), S(B(t),A(t),z) and S(t,0,z) imply pair conservation under the supplied raw base and global nonnegativity.",
+    "The additional generic families S(x,y,A(z)) and S(x,y,B(z)) remain an analytic dependency target for reconstruction. This proposed reduction to the two generic families is not a checked theorem or checked equivalence."]
   checkedEvidence := [
     { sourcePath := "Proofs/QMClosure/RawSparseQuarticControl.lean"
       declarations := [
-        "IDT.QMClosure.RawSparseQuarticControl.observed_medial_nonnegative_does_not_imply_sparse"] }]
+        "IDT.QMClosure.RawSparseQuarticControl.observed_medial_nonnegative_does_not_imply_sparse"] },
+    { sourcePath := "Proofs/QMClosure/RawSparseConservationTests.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseConservationTests.pair_conserved_of_tests"] }]
   plannedArtifacts := []
   dependencies := [
     "raw_sparse_conservation_selection",
@@ -4377,6 +4380,85 @@ def rawSparseInsertionOrigin : ResearchTask := {
     "The checked quartic countercontrol shows that ObservedMedial with nonnegativity alone does not imply S. Its evidence supports this mathematical limit only and supplies no physical insertion principle.",
     "Causal independence, record aggregation and exposure normalization require separate bridges. Overlapping row and column ports are not disjoint spectators, so disjoint-spectator locality does not supply the insertion law.",
     "Coverage of all sparse raw preparations and generated arbitrary-reference contexts remains open. No available physical interface, nontrivial positive physical realization, actualization, composite, dynamics, physical-scale or primitive-closure conclusion is supplied; public and manifest statuses remain unchanged."] }
+
+def rawSparseConservationTests : ResearchTask := {
+  id := "raw_sparse_conservation_tests"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the raw Contract of raw_sparse_conservation_selection with square-swap, diagonal transparency, W(0)=0 and global W>=0. Pair conservation is not an input. Retain its definitions of m, A, B and actual sparse equality S.",
+    "Replace universal S by the six universally quantified families S(0,t,t), S(x,y,0), S(t,t,z), S(A(t),B(t),z), S(B(t),A(t),z) and S(t,0,z).",
+    "For the separate mathematical countercontrol, use the native complex mixer N with a=(1+i)/2 and b=(1-i)/2, and W=normSq. Put T=W(x)+W(y), d=W(x)-W(y), j=Im(x*conj(y)), h=d*j/T^2 with real zero division at the origin, lambda=(1+i*h)/(1-i*h), and F=lambda*N on both outputs."]
+  conclusions := [
+    "The checked six universally quantified sparse families imply pair conservation of W and both vacuum half-weight identities under global nonnegativity. Tests has six fields, and every universal sparse law supplies Tests.",
+    "Under the stated raw base and global nonnegativity, the checked equivalence is full SparseMarginalLaw iff Tests AND ObservedMedial. No minimality of the six families is claimed.",
+    "The checked complex normSq phase-twist control squares to swap, is transparent, has native individual output weights and vacuum action, and satisfies all six tests and pair conservation.",
+    "The control is jointly complex-homogeneous and globally continuous, and its row and column layers obey exact interchange on scalar-productArray inputs. Nevertheless its sparse witness at (1,1+i,i) has left side 122/41 and right side 3, so full S and ObservedMedial both fail.",
+    "Thus the six families are strictly weaker than full S even with continuity, joint complex homogeneity and the stated restricted product-input interchange. The native complex geometry is supplied for this countercontrol."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawSparseConservationTests.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseConservationTests.Tests",
+        "IDT.QMClosure.RawSparseConservationTests.of_sparse",
+        "IDT.QMClosure.RawSparseConservationTests.kernel_at",
+        "IDT.QMClosure.RawSparseConservationTests.scaled_weight_iterate",
+        "IDT.QMClosure.RawSparseConservationTests.r_eq_zero",
+        "IDT.QMClosure.RawSparseConservationTests.weight_A_of_tests",
+        "IDT.QMClosure.RawSparseConservationTests.weight_B_of_tests",
+        "IDT.QMClosure.RawSparseConservationTests.pair_conserved_of_tests",
+        "IDT.QMClosure.RawSparseConservationTests.sparse_iff_tests_and_observed_medial" ] },
+    { sourcePath := "Proofs/QMClosure/RawSparsePhaseTwistControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparsePhaseTwistControl.phase_normSq",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.h_native",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.h_gate",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.gate_square",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.gate_transparent",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.port_weight_fst",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.port_weight_snd",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.pair_conserved",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.native_vacuum_A",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.native_vacuum_B",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.gate_joint_complex_homogeneity",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.tests",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.sparse_witness",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.not_sparse_law",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.not_observed_medial",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.continuous_gate",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.interchange_product_inputs",
+        "IDT.QMClosure.RawSparsePhaseTwistControl.continuous_homogeneous_countercontrol" ] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_sparse_conservation_selection",
+    "raw_sparse_insertion_origin"]
+  limits := [
+    "Global nonnegativity is a hypothesis, not strict positivity. The six-family result establishes conservation, and reconstruction requires the additional ObservedMedial condition in the checked equivalence.",
+    "The complex countercontrol is a supplied mathematical model. Its exact restricted product-input interchange supplies no physical independence principle, general raw geometry, generated preparation availability or arbitrary-reference availability.",
+    "Full S remains an open physical bridge. Actualization, independence, composites, dynamics and physical scales remain unresolved; no full QM or primitive-closure claim follows, and public and manifest statuses remain unchanged."] }
+
+def rawSparseSelfReferenceSelector : ResearchTask := {
+  id := "raw_sparse_self_reference_selector"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Supply the complex carrier, W=normSq and native mixer N(x,y)=(a*x+b*y,b*x+a*y), with a=(1+i)/2 and b=(1-i)/2. Let F be an arbitrary total operation on complex pairs.",
+    "Assume F squared equals swap, the native vacuum action F(x,0)=(a*x,b*x) and F(0,x)=(b*x,a*x), and equality of each individual output weight with the corresponding output weight of N on every input.",
+    "Write A(x)=a*x and Delta(x,y,z) for the actual sparse left side minus right side. For p=(x,y), write F(p)=(r,s) and N(p)=(u1,u2)."]
+  conclusions := [
+    "Accepted analytic identity, pending kernel check: Delta(x,y,A(x))+Delta(y,x,A(y))+Delta(r,s,A(r))+Delta(s,r,A(s))=-(normSq(r-u1)+normSq(s-u2))/2.",
+    "Analytically, universal self-reference equality S(x,y,A(x)), or the weaker universal inequality Delta(x,y,A(x))>=0, selects F=N within this supplied complex native-port-weight class.",
+    "One uniform bound Delta(x,y,A(x))>=-epsilon for every actual pair gives normSq(r-u1)+normSq(s-u2)<=8*epsilon. Apply that same bound at the four actual pairs (x,y), (y,x), (r,s) and (s,r).",
+    "Planned proof: set T=N inverse composed with F, Z=T(p).1*conj(x)+T(p).2*conj(y), and R=normSq(x)+normSq(y). The first two defects sum to (Re(Z)-R-Im(Z))/2. Square-swap and native unitarity make the next two involve conjugate Z, giving the negative squared-deviation identity. Only square-swap, native vacuum action and the individual output weight equalities enter this proposed identity.",
+    "For the continuous phase-twist control at p=(1,1+i), the analytic four-defect values are [-5/41,-10/41,10/41,2/41], with sum -3/41 and squared output deviation 6/41. These rationally checked values supply an analytic diagnostic and await Lean evidence for the new identity."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/RawSparseSelfReferenceSelector.lean"]
+  dependencies := [
+    "raw_sparse_conservation_tests"]
+  limits := [
+    "All new selector assertions remain analytic pending kernel check. Positive-definite native complex geometry and individual native output weights are supplied hypotheses.",
+    "The general arbitrary-raw implication from the six tests plus a self-reference family to full S remains open. Transferring this selector into raw reconstruction requires a separate geometry bridge.",
+    "Simultaneous physical availability of x, y and A(x) is an open resource bridge. The bounded mathematical selection supplies no physical insertion origin, generated preparation availability, actualization, full QM or primitive-closure claim; public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
@@ -5209,7 +5291,8 @@ def researchTasks : List ResearchTask := [
   reversibleResetEnvironmentCapacity, crossScalePrimitiveComparison,
   homogeneousProductInterchange, vacuumRecordUncomputeControl, generatedNonmedialAxisProbe,
   sparseMarginalMedialCriterion, rawSparseMarginalReconstruction, rawSparseSignedControl,
-  rawSparseConservationSelection, rawSparseInsertionOrigin,
+  rawSparseConservationSelection, rawSparseInsertionOrigin, rawSparseConservationTests,
+  rawSparseSelfReferenceSelector,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
