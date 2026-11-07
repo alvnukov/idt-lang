@@ -2875,6 +2875,122 @@ def nativeAllocatedSignatureLaw : ResearchTask := {
     "The criterion is full contextual separation on G, not bare signature injectivity and not equality with the older ambient complex ResponseEq. Its supplied-Law compatibility result supplies no probability or measurement provenance.",
     "All inputs describe raw coherent preparation programs under supplied common-frame and joint-input conditions. No topology, physical source/reference availability, tensor or independence interpretation, unknown-token cloning, multi-source probability-law extension, actualization or full QM closure is inferred."] }
 
+def nativeAllocatedStableObservation : ResearchTask := {
+  id := "native_allocated_stable_observation"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the concrete complex scalar generated carrier G of exact finite 0/1 allocated native programs and the existing native mixer. Supply the usual complex topology and its subspace topology on G. A signature sigma:G to Omega is arbitrary; no topology or numerical meaning on Omega is assumed.",
+    "Full response equivalence uses the existing finite one-hole contexts with arbitrary generated reference values, represented by known allocated preparations. Common-frame and joint-input resource conditions remain supplied, and no unknown-input duplication or physical availability is inferred.",
+    "For the positive local-stability result, supply a nonempty relatively open subset of G on which sigma is constant. This is an exact mathematical response-region assumption, not a detector derivation or a finite-precision noise model."]
+  conclusions := [
+    "Checked dense-fiber theorem: if two distinct generated values are fully contextually response-equivalent, every nonempty sigma-fiber is dense in G under the supplied subspace topology. Empty fibers are outside this density statement.",
+    "Under the supplied nonempty relatively open constant-region assumption, full G-contextual separation is equivalent to sigma being nonconstant, and hence to Nonempty of the existing single-basis six-field response Law. The generic signature-law theorem supplies the unchanged entire probability-field adapter for any supplied scalar Law; a canonical scalar law remains a separate consistency witness.",
+    "The canonical scalar pseudometric is supplied by generatedPseudoMetricSpace. The checked constant_of_patch_and_distinct_responseEq theorem turns an open constant patch and a distinct contextually equivalent pair into global signature constancy, with no topology on response labels. The conditional patch law adapter transports the unchanged six-field contract and preserves the entire supplied probability field.",
+    "The checked countermodel defines a unique Gaussian-dyadic residue modulo 5 sending I to 3. The two native outputs have residues (2*u+4*v,4*u+2*v). Full G-contextual response equivalence is exactly residue equality, with distinct responses at 0 and 1 but distinct equivalent values 0 and 5, so no response Law exists despite nonconstancy.",
+    "The checked residue countermodel has dense nonempty fibers and no nonempty relatively open constant region, separating nonconstancy alone from the supplied local-stability hypothesis. Explicit no-law and no-same-probability-law theorems preserve the full single-basis six-field contract rather than weakening it."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedStableObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedStableObservation.generatedPseudoMetricSpace",
+        "IDT.QMClosure.NativeAllocatedStableObservation.dense_fiber_of_distinct_responseEq",
+        "IDT.QMClosure.NativeAllocatedStableObservation.HasOpenConstantPatch",
+        "IDT.QMClosure.NativeAllocatedStableObservation.constant_of_patch_and_distinct_responseEq",
+        "IDT.QMClosure.NativeAllocatedStableObservation.separates_iff_nonconstant_of_open_constant_patch",
+        "IDT.QMClosure.NativeAllocatedStableObservation.law_nonempty_iff_nonconstant_of_open_constant_patch",
+        "IDT.QMClosure.NativeAllocatedStableObservation.lawOfScalarOfPatchNonconstant",
+        "IDT.QMClosure.NativeAllocatedStableObservation.lawOfScalarOfPatchNonconstant_probability"] },
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedResidueObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedResidueObservation.related_unique",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.gaussian_dyadic_existsUnique_related",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_operationG",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.responseEq_iff_residue_eq",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.zeroG_ne_fiveG",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_nonconstant",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.zeroG_responseEq_fiveG",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_not_separates",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_dense_fiber",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_no_open_constant_patch",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_no_law",
+        "IDT.QMClosure.NativeAllocatedResidueObservation.residue_no_same_probability_law"] }]
+  plannedArtifacts := []
+  dependencies := ["native_allocated_signature_law", "native_allocated_ball_observation",
+    "native_allocated_source_arithmetic", "allocated_generated_contexts"]
+  limits := [
+    "The dense-fiber/open-patch route and finite-residue countermodel are checked under the supplied concrete scalar G and topology assumptions. The separate contextual-ideal, native-settling and raw stable-bridge tasks retain their own pending status and are not promoted by this entry.",
+    "Ordinary scalar topology and a relatively open constant response region are supplied mathematical structure. They supply no physical detector construction, topology on response labels, probability provenance, robustness or precision guarantee.",
+    "All references are generated known preparation values in one-hole tests. No physical source/reference availability or common-frame condition is inferred, and no unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actualization or full QM closure is established."] }
+
+def nativeAllocatedContextIdeals : ResearchTask := {
+  id := "native_allocated_context_ideals"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the concrete Gaussian-dyadic scalar generated ring G and the existing native mixer with full G-reference one-hole contexts. Supply arbitrary signature sigma:G to Omega and let R be its full contextual response equivalence. No topology or numerical structure on Omega, nor topology on G, is required for the algebraic route.",
+    "Define contextual periods P={d | for every z in G, R z (z+d)}. Distinguish P from the ordinary signature-period subgroup {d | for every z in G, sigma(z+d)=sigma(z)}, which need not be an ideal.",
+    "Only the density consequence additionally uses the supplied usual complex/subspace topology. Compatible laws retain the checked generic signature-law theorem's existing single-basis six-field contract and supplied scalar probability field, without joint multi-source normalization."]
+  conclusions := [
+    "Parent-accepted analytic contract awaiting formalization: R is a difference congruence, with R x y if and only if y-x belongs to P. Prove P is an ideal of the Gaussian-dyadic ring, and characterize it as the largest ideal contained in the ordinary signature-period subgroup, equivalently the largest ideal on every coset of which sigma is constant.",
+    "Explicit algebraic proof obligations are the additive subgroup laws, stability under a=(1+I)/2 and b=(1-I)/2 using generated fixed references, recovery of d from a*d using 2*a*b=1, and closure under I=2*a-1 and 1/2=a*b. The ordinary signature-period subgroup is not silently promoted to an ideal.",
+    "Under the separately supplied usual topology, a nonzero contextual ideal forces every contextual class and every nonempty signature fiber to be dense. This is a further topological consequence, not an assumption of the ideal characterization.",
+    "Topology-free finite-quotient route: a nonzero ideal contains the positive integer norm of a nonzero Gaussian numerator; removal of factors of 2 gives an odd integer N0>0 in the ideal. Prove the quotient has a finite representative family of at most N0 squared residue pairs, so sigma has finite range whenever full contextual separation fails.",
+    "Consequently infinite signature range implies full G-contextual separation and hence existence of a compatible single-basis response Law via the checked generic criterion. Infinite range is sufficient, not necessary: generated point tests can have finite response range and still separate full contextual classes.",
+    "Odd quotient cardinality does not force odd signature-range cardinality. The quotient-to-response map can identify classes; record no parity claim about the number of supplied response labels."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedContextIdeals.lean"]
+  dependencies := ["native_allocated_stable_observation", "native_allocated_signature_law",
+    "native_allocated_source_arithmetic"]
+  limits := [
+    "This task records an independently reviewed analytic contract only. No source author is assigned, kernel artifact or checked evidence is registered, and every ideal, finite-quotient and range implication remains a proof obligation before promotion.",
+    "The algebraic and finite-range criteria are topology-free; the dense-class and dense-fiber conclusion uses ordinary topology as an explicit separate mathematical premise. Neither supplies a physical topology, readout interpretation or probability provenance.",
+    "All references are known generated values in one-hole tests under supplied preparation resources and common-frame conditions. No physical source/reference availability, unknown-token cloning, tensor or independence structure, multi-source probability-law extension, actualization or full QM closure is inferred."] }
+
+def nativeReferenceSettling : ResearchTask := {
+  id := "native_reference_settling"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use concrete generated scalar G, arbitrary signature sigma:G to Omega, a fixed generated reference z, and F_z(x)=(operationG(x,z)).1. The core assumes no topology on G or Omega.",
+    "Supply the exact all-input settling contract: for every x in G there exists N such that for every n>=N, sigma((F_z iterated n)(x))=sigma(z). Nonconstancy of sigma is an additional premise for the separation and Law conclusions.",
+    "Repeated use of the same known reference value requires a fresh charged allocated preparation at every occurrence. No unknown-token duplication or uniform preparation budget is supplied."]
+  conclusions := [
+    "Accepted analytic sufficient condition awaiting formalization: the exact settling contract and nonconstant sigma imply full G-contextual separation and hence existence of the existing single-basis six-field response Law through the generic signature-law criterion. Transport of any supplied scalar Law preserves its entire probability field; canonical scalar consistency remains separate.",
+    "Pending topology-free proof: a nonzero contextual period gives a positive integer period N; two powers of 16 collide modulo N; integer scaling and existing halving yield period 16^ell-1 with ell>0. The identity a^8=1/16 for a=(1+I)/2 gives a uniform native return modulo full contextual equivalence; eventual exact settling then forces global signature constancy. This route requires no finite quotient, odd-part extraction or new Ring instance.",
+    "Optional analytic open-region route: with separately supplied usual topology, a relatively open constant-signature neighborhood of z and norm(a)<1 imply the settling contract by convergence of F_z iterates to z. This topological implication is not an assumption of the topology-free settling criterion and still needs its own artifact.",
+    "The contract is sufficient, not necessary, and quantifies over every generated input and all sufficiently late iterates. No finite probe validates or replaces that infinite contract. A finite F9 axes control concerns halving only; it does not establish a native F_z control, whose corresponding a-orbit has order 8 in that example.",
+    "Pending native finite-probe countercontrol: use an odd M and a union of a-orbits in the finite residue model. The identity a^4=-1/4 gives an orbit-size bound at most 4*M versus M squared residue classes; choosing M>max(1,4*numberOfProbes) is the intended control route. It requires an explicit artifact before any finite-control claim is checked."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedStableObservation.lean"]
+  dependencies := ["native_allocated_stable_observation", "native_allocated_signature_law",
+    "native_allocated_source_arithmetic"]
+  limits := [
+    "This task is an analytic, unassigned settling extension of NativeAllocatedStableObservation with no checked settling evidence. The positive integer period, finite powers-of-16 collision and uniform native return argument remain proof obligations; the optional open-patch contraction implication and finite-probe countercontrol remain separate pending artifacts.",
+    "Settling is an exact supplied response contract, not physical damping, a detector-noise model, a finite validation rule, probability provenance or outcome actualization. The Law retains the existing single-basis contract rather than extending probabilities to joint allocated inputs.",
+    "Known reference occurrences remain separately charged under supplied preparation and common-frame conditions. No uniform source budget, physical resource availability, unknown-token cloning, tensor or independence interpretation, actualization or full QM closure is inferred."] }
+
+def responseAllocatedStableBridge : ResearchTask := {
+  id := "response_allocated_stable_bridge"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use existing d:ResponseContextQuotient.Data V Omega and source v, retaining the observed square-swap and mediality assumptions and full contextual DiagonalFixed at d.chosenZero and v. These are supplied premises, not bare signature equalities.",
+    "For every generated scalar value choose an actual Program Unit witness and define its induced signature by the signature of that program evaluated under the original raw d.operation with stock v and chosen zero. Law-free well-definedness is to use scalar_eq_implies_responseEq, not an assumed response Law.",
+    "For the sufficient existence result supply nonconstancy of the induced signature and either a nonempty relatively open constant region under the supplied scalar-coordinate topology, or the accepted exact native-reference settling condition once formalized. No topology on raw V or on response labels is supplied by this bridge."]
+  conclusions := [
+    "Accepted analytic bridge awaiting artifacts: for original allocated outputs, scalar equality implies full ambient raw ResponseEq, which implies raw response equivalence restricted to generated program references. The pending actual-program context compiler identifies that restricted raw relation exactly with full contextual equivalence of the induced scalar signature on G.",
+    "Under the induced-signature nonconstancy and open-region or exact-settling condition, contextual separation closes this chain back to scalar equality. Prove existence of the original ambient single-basis response Law without assuming one, and preserve the entire supplied scalar probability field and transport the unchanged six-field contract; canonical scalar consistency is a separate witness.",
+    "Do not reverse this sufficient condition for ambient law existence. The ambient scalar point signature at q=1/3 admits an ambient Law while its signature induced on the Gaussian-dyadic generated sector is constantly false. Any law-existence if-and-only-if belongs to a separately specified restricted generated Data and Law and requires its own exact artifacts.",
+    "All context references in the bridge are actual known allocated program values. The result concerns selected raw quotient classes and their contextual equivalence, not literal raw equality, equality of histories or a freely available physical transformation."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ResponseAllocatedStableBridge.lean"]
+  dependencies := ["response_allocated_faithfulness", "allocated_generated_contexts",
+    "native_allocated_stable_observation", "native_reference_settling"]
+  limits := [
+    "This task is analytic only with no assigned source author or checked evidence. Induced-signature well-definedness, the generated-reference context bridge, original ambient Law existence and identical-field adapters remain pending artifacts.",
+    "Full observed raw laws and both contextual fixedness premises remain supplied. Scalar-coordinate topology is used only by the open-region route; the alternative exact settling condition is not a physical relaxation or readout principle.",
+    "Joint-input resources, source/frame alignment and raw coherent preparation scope remain supplied. No physical source/reference availability, detector or probability provenance, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actualization or full QM closure is inferred."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -3654,6 +3770,9 @@ def researchTasks : List ResearchTask := [
   allocatedPreparationContexts, nativeAllocatedSourceArithmetic, allocatedGeneratedContexts,
   denseReferenceContextEquivalence, responseAllocatedFaithfulness,
   nativeAllocatedBallObservation, nativeAllocatedSignatureLaw,
+  nativeAllocatedStableObservation,
+  nativeAllocatedContextIdeals,
+  nativeReferenceSettling, responseAllocatedStableBridge,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
