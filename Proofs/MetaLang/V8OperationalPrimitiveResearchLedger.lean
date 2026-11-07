@@ -2446,28 +2446,117 @@ def responseSourceLocalProbability : ResearchTask := {
 
 def responseDiagonalSignatureWall : ResearchTask := {
   id := "response_diagonal_signature_wall"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use exactly OriginalGateProbabilityWall.operation T on V=Complex x Complex, chosen zero (0,0), mixed reference v=(1,1), and signature W=OriginalGateProbabilityWall.weight=normSq(x.1)+normSq(x.2). The term-defined diagonal is g(x.1,x.2)=(x.1,-x.2).",
     "Use the existing full finite one-hole context grammar with arbitrary fixed raw references. W is a supplied mathematical signature, not asserted to be a probability readout or a physically available measurement.",
     "Retain the existing Native syntax and unchanged six-field OriginalGateProbabilityWall.OriginalLaw; no source availability, physical context implementation or free-copy premise is added."]
   conclusions := [
-    "Prospective countermodel obligation: W((T(x,x)).1)=W(x) globally, while this bare signature invariance does not imply full contextual diagonal fixedness at the mixed reference.",
-    "Prove a cancellation-reference theorem using a fixed raw reference tailored to x, and use it to show full ResponseEq T W x y if and only if x=y. These arbitrary raw references are mathematical context parameters, not physically certified preparations.",
-    "Prove the explicit context C(x)=(T(x,(0,I))).1 separates v=(1,1) and g(v)=(1,-1): both initial signatures are 2, while W(C(v))=5/2 and W(C(g(v)))=1/2. Hence the mixed source is not contextually diagonal-fixed despite global bare W diagonal invariance.",
-    "Build a structural Native-to-Original circuit adapter preserving full original prepared arrays and padding, and transport the existing six-field OriginalLaw to the response-law contract without altering its probability field.",
-    "Transport quarterLaw and threeQuarterLaw to response laws. On source 0, the Native word pair 0 1; pair 0 2; pair 1 2 over Fin 3 gives port-1 probabilities 1/4 and 1/2, respectively.",
-    "This planned wall refutes replacement of full contextual fixedness by bare signature invariance in the stated transfer route. It does not claim that source-local full contextual fixedness is necessary for general probability-law uniqueness or existence."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ResponseDiagonalSignatureWall.lean"]
+    "Checked countermodel: W((T(x,x)).1)=W(x) globally, while this bare signature invariance does not imply full contextual diagonal fixedness at the mixed reference.",
+    "A checked cancellation-reference theorem uses a fixed raw reference tailored to x and shows full ResponseEq T W x y if and only if x=y. These arbitrary raw references are mathematical context parameters, not physically certified preparations.",
+    "The checked explicit context C(x)=(T(x,(0,I))).1 separates v=(1,1) and g(v)=(1,-1): both initial signatures are 2, while W(C(v))=5/2 and W(C(g(v)))=1/2. Hence the mixed source is not contextually diagonal-fixed despite global bare W diagonal invariance.",
+    "A checked structural Native-to-Original circuit adapter preserves full original prepared arrays and padding and transports the existing six-field OriginalLaw to the response-law contract without altering its probability field.",
+    "Checked transport of quarterLaw and threeQuarterLaw supplies response laws. On source 0, the Native word pair 0 1; pair 0 2; pair 1 2 over Fin 3 gives port-1 probabilities 1/4 and 1/2, respectively.",
+    "This checked wall refutes replacement of full contextual fixedness by bare signature invariance in the stated transfer route. It does not claim that source-local full contextual fixedness is necessary for general probability-law uniqueness or existence."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseDiagonalSignatureWall.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.responseData",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.diagonal_signature",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.responseEq_iff_eq",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.witness_context_diagonal",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.witness_context_source",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.source_not_responseEq_diagonal",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.toOriginal_eval",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.toOriginal_padCircuit",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.transportLaw",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.transportLaw_probability",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.quarter_probability",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.three_quarter_probability",
+        "IDT.QMClosure.ResponseDiagonalSignatureWall.bare_diagonal_invariance_does_not_select"] }]
+  plannedArtifacts := []
   dependencies := ["response_context_probability", "source_local_original_semantics",
     "original_gate_probability_wall"]
   limits := [
-    "This task is prospective and has no checked artifact or status upgrade. The earlier original-gate nonuniqueness theorem is a dependency, not proof that this response-context adapter has been implemented.",
     "The signature W is not asserted to equal a probability law. Its diagonal invariance is a bare response identity, distinct from full contextual equivalence.",
     "The mathematical model supplies complex coordinates, T, W and arbitrary fixed raw references. No independent physical provenance, available cancellation reference, finite-resolution detector or physical gate implementation follows.",
     "This is a countermodel to a weakened sufficient-premise route, not a general necessity theorem for uniqueness, existence or every response model. No outcome actualization, unknown-token processing or full QM closure is established."] }
+
+def responseRecipeContextReflection : ResearchTask := {
+  id := "response_recipe_context_reflection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use d:ResponseContextQuotient.Data V Omega with arbitrary signature and globally observed square-swap and first-channel mediality modulo full ResponseEq. Assume full contextual diagonal fixedness at d.chosenZero and the chosen source v, as in ResponseSourceLocalProbability.DiagonalFixed.",
+    "Use actual same-source Native Event recipes, a single recipe-reference context C, and scalar realizations E and F of that same C on recipes e and f. Define originalEvent using the actual original raw operation and all retained circuit outputs; define idealOriginalContext using that original T and the recipe-defined raw references.",
+    "No probability Law, weight, infinite-order reference, global observed transparency, or bare-signature completeness is supplied. The fixed-class hypotheses concern full contextual equivalence, not only the hole signature."]
+  conclusions := [
+    "Checked quotient-class bridge: classOf of each original recipe event equals the normalized quotient rawEvent. The quotient zero and source are g-fixed, every retained source-generated intermediate quotient term stays g-fixed, and original and normalized evaluations agree as full quotient arrays.",
+    "The checked quotient-class identity identifies classOf of idealOriginalContext with the existing normalized quotient rawIdealContext. Reference recipes and intermediates are all in the same fixed source sector; arbitrary raw source availability is not inferred.",
+    "For the same recipe context C and its two scalar realizations E and F, the checked theorem equates full ResponseEq of their actual original recipe outputs U(E) and U(F) with full ResponseEq of I_C(e) and I_C(f). The equivalence transfers through quotient classes and the existing injective quotient halfPower at the common context attenuation order.",
+    "This is reflection of equality of selected contextual classes at a common attenuation scale, not equality of complete unattenuated arrays, equality of circuit histories, a response-signature separation theorem, or an amplification operation."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseRecipeContextReflection.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseRecipeContextReflection.context_eval_class",
+        "IDT.QMClosure.ResponseRecipeContextReflection.originalEvent_class",
+        "IDT.QMClosure.ResponseRecipeContextReflection.rawEvent_fixed",
+        "IDT.QMClosure.ResponseRecipeContextReflection.context_eval_eq_normalized",
+        "IDT.QMClosure.ResponseRecipeContextReflection.idealOriginalContext_class",
+        "IDT.QMClosure.ResponseRecipeContextReflection.original_realization_class",
+        "IDT.QMClosure.ResponseRecipeContextReflection.realization_responseEq_iff",
+        "IDT.QMClosure.ResponseRecipeContextReflection.realize_responseEq_iff"] }]
+  plannedArtifacts := []
+  dependencies := ["response_context_probability", "response_source_local_probability",
+    "source_local_original_semantics", "native_recipe_context_realization"]
+  limits := [
+    "The checked reflection remains conditional on both full contextual source-sector fixedness premises and the existing scalar realization relation; it supplies no probability Law, weight, or infinite-order reference.",
+    "The outer full ResponseEq still quantifies over arbitrary fixed raw references at every finite context nesting. Recipe-reference compilation does not replace that supplied contextual relation by a reachable-only or bare-signature relation.",
+    "Only selected output classes are compared after retaining all circuits and ancillary outputs. No unknown-token copying, physical reference availability, apparatus implementation, detector robustness, actualization, or full QM closure follows."] }
+
+def nativeRecipeObservationBoundary : ResearchTask := {
+  id := "native_recipe_observation_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the concrete complex scalar native mixer, chosen zero 0, source 1 and the exact Boolean signature pointTest q z=decide(z=q), for arbitrary q. Full response contexts retain arbitrary fixed complex references.",
+    "For the reachable-observation wall assume normSq(q)>1. Every native output at every finite width is from the same unit source and raw vacua; all recipe, compiler and ancillary outputs obey the existing output_normSq_le_one bound.",
+    "For the positive companion, use known actual Event recipes e and t and the actual PairedSetting.differenceEvent circuit with selected amplitude I*(z-t)/2. The comparator retains its entire native circuit and all other outputs."]
+  conclusions := [
+    "Checked full-context control: Rq(x)=(1+I)*q-I*x gives mixer.first(y,Rq(x))=q+((1+I)/2)*(y-x). Therefore full ResponseEq for pointTest q is literal scalar equality for every q; the exact square-swap, mediality and transparency laws hold, and the full contextual quotient is infinite despite a Boolean signature alphabet.",
+    "Checked transport preserves the entire probability field of any supplied scalar native Law in the response-law contract; canonicalLaw supplies only a separate consistency witness. This does not derive a law from the point-test signature.",
+    "When normSq(q)>1, the signature is false on every native output at every width, including every reachable recipe-context compiler output and every ancillary output. Thus the complete family of these reachable observations does not separate even the distinct actual half/quarter recipe amplitudes, although their full ResponseEq classes differ.",
+    "This concrete model refutes replacing arbitrary-reference full contextual equivalence by equality of the complete reachable-recipe observation family in general. It supplies a countermodel, not a claim that every Boolean signature or every recipe family fails separation.",
+    "Checked positive companion: exact zeroTest on the actual recipe-dependent difference comparator is true if and only if the two recipe amplitudes are equal. Equality of all such reference-recipe tests is equivalent to amplitude equality, choosing an actual comparison recipe from the same known source sector when needed.",
+    "The positive companion uses a family of actual recipe-dependent circuits with full retained outputs. It does not claim that one fixed finite Boolean battery gives tomography, nor does it identify a bare zero signature with every contextual test."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeRecipeObservationBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.NativeRecipeObservationBoundary.first_point_reference",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.point_responseEq_iff_eq",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.point_observedTransparent",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.point_quotient_infinite",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.pointLawOfScalar_probability",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.point_law_nonempty",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.native_output_pointTest_false",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.pairedSetting_all_outputs_false",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.outside_point_all_recipe_observations_equal",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.half_quarter_not_responseEq",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.arbitrary_signature_recipe_completeness_fails",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.point_two_unit_reference_not_reachable",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.zeroComparison_true_iff",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.all_zeroComparisons_eq_iff",
+        "IDT.QMClosure.NativeRecipeObservationBoundary.zeroComparison_retained_circuit"] }]
+  plannedArtifacts := []
+  dependencies := ["response_context_probability", "native_single_source_reference_wall",
+    "native_reference_separation", "native_recipe_context_realization",
+    "native_vacuum_probability_family"]
+  limits := [
+    "The model explicitly supplies complex coordinates, the native mixer, exact point tests and mathematical arbitrary references; the checked countermodel is conditional on this mathematical setup.",
+    "The full-context cancellation reference Rq(x) need not be reachable from the one-unit-source recipe sector; the failure to observe q in that sector supplies no physical availability of Rq(x).",
+    "The negative point-test signature and positive zero-test comparator family are distinct supplied response choices. No universal response separation, signature provenance, independent measurement realization, or finite detector robustness is inferred.",
+    "All compared inputs are known recipe preparations, with complete circuits and ancillary outputs retained. No unknown-token cloning, unattenuated copying, physical reference or controller availability, actual outcomes, actualization, or full QM closure is established."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -3118,14 +3207,17 @@ def referenceProvenanceAndSubstitution : ResearchTask := {
     "Generate admitted references from native input resources and retained outputs, tracking common frame, alignment and legal history composition without free copying.",
     "Use checked native_recipe_substitution for corrected attenuation-accounted composition of selected scalar and normalized raw results from actual same-source recipes, with its explicit failure of naive unit-reference composition. This is not equality of complete arrays or histories; legal physical continuation composition and native probability-law conditions with apparatus/controller/environment accounting remain open.",
     "Use checked source_local_original_semantics for full-array agreement of original and normalized source-sector evaluation under both diagonal-fixed source and chosen-zero premises, with its exact one-pair/full-array equivalence and unchanged six-field law transport. The global raw square-swap and first-channel mediality laws remain premises; no physical reference availability is supplied.",
-    "Use checked response_source_local_probability for response-law/original-quotient-law equivalence without transparency and conditional normalized-law transfer under full contextual diagonal fixedness of both the chosen-zero and source classes, preserving the complete probability field. Arbitrary fixed-reference ResponseEq remains supplied; physical response provenance and availability stay open. The prospective response_diagonal_signature_wall tests why bare signature invariance cannot replace these full contextual premises.",
+    "Use checked response_source_local_probability for response-law/original-quotient-law equivalence without transparency and conditional normalized-law transfer under full contextual diagonal fixedness of both the chosen-zero and source classes, preserving the complete probability field. Arbitrary fixed-reference ResponseEq remains supplied; physical response provenance and availability stay open. The checked response_diagonal_signature_wall shows that bare signature invariance cannot replace these full contextual premises, with a concrete response-law nonuniqueness control.",
+    "Use checked response_recipe_context_reflection to compare selected full response classes of actual original recipe-context realizations and ideal original recipe contexts at a common attenuation scale. Both full contextual fixed-class premises and the outer arbitrary-reference ResponseEq remain supplied; this does not establish bare-signature separation or physical reference availability.",
+    "Use checked native_recipe_observation_boundary to distinguish reachable recipe observations from arbitrary-reference contextual equivalence: an exact Boolean point-test countermodel agrees on every reachable recipe/compiler output despite distinct full contextual classes, while a separate recipe-dependent exact-zero comparator family separates known recipe amplitudes. Supplied-law transport and canonical consistency remain distinct. No fixed finite observation battery, physical detector, arbitrary-reference availability or unknown-token processing follows.",
     "Distinguish fixed-context equivalence, common-transformation covariance and ray redundancy; state sector-preservation requirements separately from channel covariance."]
   dependencies := ["port_frame_alignment", "native_single_source_reference_wall",
     "reference_occurrence_compilation", "native_recipe_context_realization",
     "native_reference_separation", "native_recipe_substitution",
     "product_exchange_observation_boundary",
     "native_preparation_naturality", "source_local_original_semantics",
-    "response_source_local_probability",
+    "response_source_local_probability", "response_diagonal_signature_wall",
+    "response_recipe_context_reflection", "native_recipe_observation_boundary",
     "response_phase_quotient_wall", "coherent_port_ray_boundary", "product_feature_exchange",
     "standing_matter_regime_constraint"]
   limits := [
@@ -3237,6 +3329,7 @@ def researchTasks : List ResearchTask := [
   continuousBalancedNonmedialWall, rawObservableMedialWall,
   observedRawProbabilitySelection, responseContextProbability, responseSourceLocalProbability,
   responseDiagonalSignatureWall,
+  responseRecipeContextReflection, nativeRecipeObservationBoundary,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
