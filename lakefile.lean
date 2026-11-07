@@ -297,6 +297,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.RawNativeProbabilitySelection,
     `Proofs.QMClosure.RawNativeProbabilityExistence,
     `Proofs.QMClosure.OriginalGateProbabilityWall,
+    `Proofs.QMClosure.WeightFreeRawProbability,
+    `Proofs.QMClosure.MixedControlProbabilityWall,
+    `Proofs.QMClosure.RawDiagonalDecomposition,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
