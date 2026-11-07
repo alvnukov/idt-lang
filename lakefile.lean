@@ -305,6 +305,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.BalancedNonmedialMixerCore,
     `Proofs.QMClosure.BalancedNonmedialMixerRegularity,
     `Proofs.QMClosure.BalancedNonmedialMixerWitness,
+    `Proofs.QMClosure.RawObservableMedialWall,
+    `Proofs.QMClosure.ObservedRawProbabilitySelection,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]

@@ -2189,48 +2189,128 @@ def continuousBalancedNonmedialWall : ResearchTask := {
 
 def rawObservableMedialWall : ResearchTask := {
   id := "raw_observable_medial_wall"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "An explicit product of the native complex mixer and the checked nonmedial four-state gate, with zero (0,0) and reference (1,3).",
     "The declared readout sees only the complex coordinate; observations use the existing arbitrary-reference one-hole context grammar."]
   conclusions := [
-    "Accepted analytic construction: square-swap, transparency, all-input vacuum balance for the declared readout, conservation and a six-field literal-raw probability law coexist with failure of literal mediality.",
+    "Checked construction: square-swap, transparency, all-input vacuum balance for the declared readout, conservation and a six-field literal-raw probability law coexist with failure of literal mediality.",
     "Projection to the complex coordinate commutes with every named circuit. Existing observational equivalence is exactly equality of that coordinate.",
     "The product inhabits the existing ObservedData contract; its observed quotient remains native and medial.",
     "The checked finite gate's five-wire single-source words lift to unequal raw arrays with common visible readouts (1/8,1/8,1/8,1/8,1/2), indistinguishable by subsequent declared readouts.",
     "A second conserved readout of the finite coordinate gives another six-field raw law, with probabilities 1/2 and zero on those observed-equivalent preparations. Literal prepared equality alone therefore does not imply observational probability descent.",
     "Immediate row-readout invariance follows from conservation; invariance after the other layer's analyzer is a separate equation."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/RawObservableMedialWall.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawObservableMedialWall.lean"
+      declarations := [
+        "IDT.QMClosure.RawObservableMedialWall.gate_square",
+        "IDT.QMClosure.RawObservableMedialWall.gate_transparent",
+        "IDT.QMClosure.RawObservableMedialWall.all_vacuum_readouts_balanced",
+        "IDT.QMClosure.RawObservableMedialWall.rawLaw",
+        "IDT.QMClosure.RawObservableMedialWall.hiddenLaw",
+        "IDT.QMClosure.RawObservableMedialWall.gate_not_medial",
+        "IDT.QMClosure.RawObservableMedialWall.observationalEq_iff_visible_eq",
+        "IDT.QMClosure.RawObservableMedialWall.observedData",
+        "IDT.QMClosure.RawObservableMedialWall.prepared_raw_ne",
+        "IDT.QMClosure.RawObservableMedialWall.prepared_readouts",
+        "IDT.QMClosure.RawObservableMedialWall.padded_downstream_observationalEq",
+        "IDT.QMClosure.RawObservableMedialWall.hiddenLaw_not_observationally_extensional",
+        "IDT.QMClosure.RawObservableMedialWall.rowReadout_rows",
+        "IDT.QMClosure.RawObservableMedialWall.row_order_eq_iff_after_analyzer"] }]
+  plannedArtifacts := []
   dependencies := ["raw_network_medial_wall"]
   limits := [
-    "These conclusions await the new kernel artifact; the private draft is not evidence.",
+    "The quotient is characterized by equivalence and projection theorems; no separate quotient-isomorphism object is packaged.",
     "Readout indistinguishability is relative to the supplied readout and named contexts, not all physical observations or all probability assignments.",
     "The result does not reject quotient mediality or assert topology or scalar homogeneity of the product carrier.",
     "Interpreting the overlapping row and column layers as independent physical subsystems remains a separate bridge."] }
 
 def observedRawProbabilitySelection : ResearchTask := {
   id := "observed_raw_probability_selection"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Existing ObservedData: supplied nonnegative conserved readout, zero-weight vacuum, observational square-swap and observational mediality in the declared context grammar.",
-    "Observed first-output diagonal transparency; quotient square-swap supplies the other diagonal output.",
+    "Observed first-output diagonal transparency for selection and uniqueness; quotient square-swap supplies the other diagonal output. The checked existence criterion does not need this transparency premise.",
     "A six-field all-width probability law whose prepared-equality field respects pointwise observational equivalence of actual raw prepared arrays."]
   conclusions := [
-    "Independently accepted analytic route: the quotient is diagonally transparent and its normalized circuit semantics equals the quotient of literal raw circuit semantics.",
+    "Checked conditional route: the quotient is diagonally transparent and its normalized circuit semantics equals the quotient of literal raw circuit semantics.",
     "Transport retains the supplied probability field exactly and allows existing native selection, absolute weight agreement and uniqueness without a positive-reference premise.",
-    "The proposed existence criterion is exactly positive reference weight: normalized readout gives a separate witness, while a null reference collapses to the quotient vacuum and cannot support the transported law."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ObservedRawProbabilitySelection.lean"]
+    "The checked existence criterion is exactly positive reference weight even without transparency: normalized readout gives a separate witness, while observational equivalence of the reference to vacuum contradicts observational prepared consistency, singleton/two-wire normalization, permutation covariance and vacuum padding."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ObservedRawProbabilitySelection.lean"
+      declarations := [
+        "IDT.QMClosure.ObservedRawProbabilitySelection.quotient_transparent",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.rawPrepared_eq_class",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.Law.toQuotientLaw_probability",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.probability_eq_normSq",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.probability_weight_identity",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.probability_eq_weight_ratio",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.probability_fields_equal",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.normalizedReadoutLaw",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.no_law_of_reference_observational_zero",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.reference_positive",
+        "IDT.QMClosure.ObservedRawProbabilitySelection.law_nonempty_iff_positive_weight"] }]
+  plannedArtifacts := []
   dependencies := ["raw_observable_medial_wall", "weight_free_raw_probability"]
   limits := [
-    "This transfer and existence criterion await Lean formalization; no new probability selection is marked checked here.",
+    "The null-reference contradiction uses only selected Law fields, but theorem signatures retain the bundled ObservedData contract; no separately generalized minimal-package theorem is asserted.",
     "Observational prepared equality is an explicit additional probability premise, not a consequence of literal prepared equality.",
     "Existence witnesses must remain downstream of conditional selection. Ratio formulas still require positive reference weight.",
     "Positive-weight necessity concerns this observational law, not arbitrary unquotiented RawLaw, whose reference condition is infinite additive order.",
     "No physical availability, exhaustive observation grammar, actual outcome generator, Born actualization or full QM closure follows."] }
+
+def responseContextProbability : ResearchTask := {
+  id := "response_context_probability"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A raw zero and two-output operation with a supplied response/signature map into an arbitrary type; contexts are the existing finite one-hole grammar with arbitrary raw references.",
+    "Square-swap, first-channel mediality and first-output diagonal transparency hold modulo equality of signatures in every stated context.",
+    "A real-valued six-field all-width probability law respects pointwise contextual equivalence of actual original-gate prepared arrays."]
+  conclusions := [
+    "Independently accepted analytic route: context plugging derives congruence without a numerical weight, positivity, conservation or a supplied Hilbert feature map.",
+    "The quotient supplies WeightFreeRawProbability.RawOperationalData. Transparency identifies original and normalized quotient semantics, transferring the identical probability field to existing selection and uniqueness.",
+    "Probability-preserving adapters in both directions should transfer the exact existence criterion: infinite additive order of the quotient reference.",
+    "A finite total contextual quotient would therefore forbid the law. A finite response alphabet alone does not: exact Boolean zero-testing of the native complex gate separates all inputs via a first-output context with reference minus i times the tested input.",
+    "Constant signatures yield a singleton quotient and no law; identity signatures recover the literal transparent route."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/ResponseContextQuotient.lean",
+    "Proofs/QMClosure/ResponseNativeProbabilitySelection.lean",
+    "Proofs/QMClosure/ResponseSignatureControls.lean"]
+  dependencies := ["weight_free_raw_probability", "observed_raw_probability_selection"]
+  limits := [
+    "Analytic only: none of these new transfers or controls is kernel checked yet.",
+    "The signature is supplied independently of the desired conclusion; encoding the target probability or representation into it is not a derivation. It is not automatically an individual deterministic measurement outcome.",
+    "Observed mediality, probability consistency, real Archimedean values and the all-width contract remain premises; observation and detector availability remain open.",
+    "The Boolean control supplies complex coordinates and the native gate as a mathematical model. Exact zero tests and arbitrary references do not establish finite-precision physical controls.",
+    "A finite battery yields a finite full contextual quotient only with finite responses and a proof that its equality is the full contextual congruence; bounded depth alone is neither finite nor automatically congruent.",
+    "This transparent route does not subsume the weighted existence theorem without transparency.",
+    "Outcome actualization and every standing matter-regime obligation remain open."] }
+
+def equivariantOutcomeSelectionWall : ResearchTask := {
+  id := "equivariant_outcome_selection_wall"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A deterministic single-label selector whose complete input is a supplied profile, and covariance under the stated outcome relabelings.",
+    "For the dynamics extension, symmetry acts on the full process state, the initial state is fixed and both the update and outcome extraction are equivariant."]
+  conclusions := [
+    "Independently accepted algebraic obstruction: the profile stabilizer must fix the selected label. A uniform binary profile with the swapping symmetry has no such single-label selector.",
+    "The general stabilizer obstruction needs no probability normalization; ties alone need not exclude a fixed label.",
+    "Equivariant updates preserve a symmetric initial full state at every finite iterate, so an equivariant unique-label readout cannot break a symmetry with no fixed outcome.",
+    "A separately supplied distinguished label, transformed jointly with the profile, permits an equivariant deterministic selector."]
+  checkedEvidence := []
+  plannedArtifacts := ["ANALYTIC ONLY: a bounded stabilizer/profile-selector obstruction and explicit asymmetry control."]
+  dependencies := ["particle_as_process_result_hypothesis", "standing_matter_regime_constraint"]
+  limits := [
+    "No new theorem is kernel checked. Equal probabilities do not imply symmetry of the complete physical process, apparatus, environment or realization datum.",
+    "This is not an impossibility theorem for deterministic physics and does not choose a stochastic ontology.",
+    "A covariant probability kernel or set of admissible labels is not a realized single outcome.",
+    "An unrestricted equivariant-selector existence criterion using orbit representatives requires classical choice; no choice-free global sufficiency is claimed.",
+    "Archival transition laws, physical detectors and matter-regime applicability remain open."] }
 
 def primitivePresentationAlternatives : ResearchTask := {
   id := "primitive_presentation_alternatives"
@@ -2265,7 +2345,7 @@ def particleAsProcessResultHypothesis : ResearchTask := {
   checkedEvidence := []
   plannedArtifacts := [
     "Separate a local registration event from a stable reproducible type of manifestations, and test candidate bridges between them.",
-    "Probe same-probability extensions with no registration, incompatible double records and overwritten archival records; separate per-completed-run record laws from realization or liveness of a run.",
+    "Probe extensions sharing probability values and calibrated presence marginals while distinguishing joint registration and archival laws; keep per-run realization and liveness separate.",
     "Compare IDT-native process/context mechanisms for producing one actual recorded fact without presupposing deterministic or fundamentally stochastic outcome selection.",
     "Specify candidate invariants by which repeated events could share charge, mass and spin, with exact conservation and correlation obligations."]
   dependencies := [
@@ -2277,6 +2357,59 @@ def particleAsProcessResultHypothesis : ResearchTask := {
     "Any candidate must account for localization and discreteness of registrations, stable charge/mass/spin, interference, correlations and conservation laws.",
     "Neither an event-selection symbol nor a particle-type label counts as a derivation of the phenomenon it names.",
     "No particle ontology, event actualization, particle spectrum, physical mass scale or full QM/QFT result has been established."] }
+
+def standingMatterRegimeConstraint : ResearchTask := {
+  id := "standing_matter_regime_constraint"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "Standing user direction: primitive selection must admit different organizations of matter and inspect whether definitions exclude known effects before any derivation begins.",
+    "Independent objects with predetermined individual properties are not a mandatory starting ontology; using an ordinary carrier in a mathematical countermodel does not impose that ontology."]
+  conclusions := []
+  checkedEvidence := []
+  plannedArtifacts := [
+    "For each proposed or rejected primitive route, explicitly record regime applicability, identified conflicts and unassessed regions against matterRegimeObligations.",
+    "Keep analogy, compatibility, finite models, conditional derivations and full physical derivations as distinct evidence levels with named assumptions.",
+    "Ultimately include detectors, memory and observers within the same process rules used for the measured world."]
+  dependencies := ["particle_as_process_result_hypothesis", "probability_actualization",
+    "tensor_local_tomography_bell", "physical_state_process_completeness"]
+  limits := [
+    "No entry in the regime checklist is passed by default; the present entries are unassessed physical obligations.",
+    "Bose-Einstein condensation and superfluidity are distinct properties and must not be identified.",
+    "Decoherence and stable records do not by themselves establish a unique actual outcome.",
+    "Effective quasiparticles give a concrete example of emergent particle-like behavior, not a proof of that ontology for all elementary particles.",
+    "Defining charge through interactions does not prove that charge originates only during measurement.",
+    "Do not tune primitives to a preferred ontology or upgrade compatibility to derivation; completed QM is not claimed."] }
+
+def recordMarginalActualizationWall : ResearchTask := {
+  id := "record_marginal_actualization_wall"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A finite nonnegative normalized probability vector in one declared acquisition context, with two distinct positive labels for the nontrivial perturbation.",
+    "Registration sets count distinct labels; their calibrated presence marginals are supplied. An exclusive categorical-outcome interpretation is not assumed.",
+    "For the IDT adapter, the existing normalized record Family and positive source weight; any supplied event probability is linked only through the existing conditional record-probability theorem with its full domain and calibration hypotheses."]
+  conclusions := [
+    "Accepted extension of the existing binary IntensityActualizationBoundary control: for an arbitrary finite label type, reducing two singleton masses by epsilon and adding epsilon to both empty and two-label registrations preserves every calibrated presence marginal and total probability.",
+    "Normalized presence marginals fix expected distinct-label count at one; silent mass equals expected excess count. Silent and multiple-label defects are coupled, not independent omission witnesses.",
+    "A zero-mass silent sample separates zero defect probability from a claim about every sample; a designated realized run requires an explicit support or realization premise.",
+    "Diagonal and product archival couplings retain identical one-time marginals, but disagree with masses zero and 1-sum(p_r^2), respectively; the latter is positive for two distinct positive labels.",
+    "The proposed adapter leaves the original channels, effects and probability values intact while varying joint registration and archival laws."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/RecordMarginalActualizationWall.lean",
+    "Proofs/QMClosure/RecordMarginalActualizationAdapter.lean"]
+  dependencies := [
+    "conditional_record_probabilities", "particle_as_process_result_hypothesis",
+    "standing_matter_regime_constraint"]
+  limits := [
+    "These analytic controls await Lean formalization; no actualization theorem is marked checked.",
+    "The shared values are probability numbers and label-presence marginals, not an already supplied mutually exclusive categorical-event interpretation. The adapter does not preserve the entire effect-domain event interpretation: identifying operator sums with unions of these presence events is an additional bridge.",
+    "Distinct-label sets do not count repeated same-label clicks. The single-record question is scoped to eligible exclusive acquisition slots, not every interaction or the entire world.",
+    "Empty registration, indefinite pending and an explicit terminal noClick or failure record are different; extra outcomes require a new normalized family or explicit conditioning.",
+    "Archival agreement must follow from an independently specified transition/frame law; defining read-only as preservation supplies that fact rather than explaining it.",
+    "Probability measures over possible histories do not select a realized history or settle deterministic versus fundamentally stochastic ontology.",
+    "All standing matter-regime obligations remain unassessed; no particle type, stable charge/mass/spin, physical detector realization, or full QM conclusion follows."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -2308,6 +2441,27 @@ def globalBridges : List ResearchTask := [
   openBridge "coherent_preparation_ray_interface"
     "Native coherent preparations retain relative phase and unnormalized weight relative to the declared grammar; they are not identified with isolated physical rays. Physical port pairing requires a coherent-preparation lift carrying relative amplitude and phase beyond two independently unknown rays. Specify physical states, admissible references, context transitions and which processes/readouts descend; ray separation by available effects remains open. A named frame, independent tensor ancilla or algebraic J is not a proof of availability."]
 
+/-- Standing regime checks. Every entry is unassessed; this is not a results list. -/
+def matterRegimeObligations : List ResearchTask := [
+  openBridge "matter_regime_bose_einstein_condensation"
+    "UNASSESSED: test whether primitive definitions permit collective occupation and coherence; do not identify condensation with superfluidity.",
+  openBridge "matter_regime_superfluidity"
+    "UNASSESSED: retain a separate collective-flow obligation; a condensate analogy or finite mixer is not a derivation of superfluidity.",
+  openBridge "matter_regime_superconductivity"
+    "UNASSESSED: test collective coherent matter and electromagnetic response without importing a fixed independent-particle ontology or claiming superconductivity from phase arithmetic alone.",
+  openBridge "matter_regime_quasiparticles"
+    "UNASSESSED: permit particle-like excitations whose effective properties depend on their host system; this does not settle elementary-particle ontology.",
+  openBridge "matter_regime_entanglement"
+    "UNASSESSED: retain composite states and correlations that are not exhausted by separate descriptions of their parts; existing finite gates do not alone close physical composite structure.",
+  openBridge "matter_regime_quantum_indistinguishability"
+    "UNASSESSED: test whether labels are representational devices or physically individuating properties; do not assume distinguishable independent objects as a compulsory primitive.",
+  openBridge "matter_regime_topological_phases"
+    "UNASSESSED: permit physically relevant organization of the whole beyond a catalogue of individually assigned local properties; naming a global invariant does not establish a topological phase.",
+  openBridge "matter_regime_decoherence"
+    "UNASSESSED: model process-environment correlations and their observational effect without treating decoherence alone as a unique-outcome mechanism.",
+  openBridge "matter_regime_stable_records"
+    "UNASSESSED: account for durable physical records and the apparatus using the same rules; distinguish archival stability, measurement repeatability and realization of one run."]
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -2335,9 +2489,11 @@ def researchTasks : List ResearchTask := [
   weightFreeRawProbability, mixedControlProbabilityWall, rawDiagonalDecomposition,
   nativeProbabilityPremiseIndependence, rawNetworkMedialWall,
   continuousBalancedNonmedialWall, rawObservableMedialWall,
-  observedRawProbabilitySelection, primitivePresentationAlternatives,
-  particleAsProcessResultHypothesis]
+  observedRawProbabilitySelection, responseContextProbability,
+  equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
+  particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
+  recordMarginalActualizationWall]
 
-def ledger : List ResearchTask := researchTasks ++ globalBridges
+def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
 end IDT.MetaLang.V8OperationalPrimitiveResearchLedger
