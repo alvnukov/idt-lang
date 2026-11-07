@@ -3966,6 +3966,92 @@ def nativeSignedVariationSelection : ResearchTask := {
     "Formal little-o, subcritical or liminf selection variants, full-output variation formulas, pointwise bounds and global all-output variation corollaries are outside this checked milestone. Such rate extensions remain analytic possibilities without checked evidence here.",
     "This alternative mathematical presentation applies only to actual finite native basis preparations. It supplies no arbitrary complex-preparation probability, physical probability interpretation, outcome actualization or full physical QM closure. Manifest and public QM statuses remain unchanged."] }
 
+def responseClassPreparationCompiler : ResearchTask := {
+  id := "response_class_preparation_compiler"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply response Data d, any finite logical quotient array q:iota to d.Space and an actual raw array y:iota+iota to V whose coordinatewise class array equals duplicate(q). No existence of such an available preparation is asserted."]
+  conclusions := [
+    "Checked raw-word congruence and compiler class identity: for arbitrary supplied logical quotient array q and representative array y with class array duplicate(q), the complete compiled output class array equals the duplicated normalized quotient output. The paired raw outputs are contextually ResponseEq."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseClassPreparationCompiler.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseClassPreparationCompiler.evalRaw_class_congr",
+        "IDT.QMClosure.ResponseClassPreparationCompiler.evalRaw_compileWord_class_of_input",
+        "IDT.QMClosure.ResponseClassPreparationCompiler.paired_output_responseEq"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_doubled_normalization_compiler"]
+  limits := [
+    "No preparation existence, independent-source availability, unknown-input cloning, resource reduction or reduction of the supplied number of representatives will follow from this compiler identity.",
+    "Categorical readout contracts supply no physical preparation availability, outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
+
+def signedRawRailVariationSelection : ResearchTask := {
+  id := "signed_raw_rail_variation_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use SignedRailLaw as exactly RailLaw without nonnegative, retaining real signed readouts and the other five fields. Supply the new all-depth eventwise bounded-variation premise; signed values are not treated as physical probabilities before positivity is established on the stated domain."]
+  conclusions := [
+    "Checked five-field transfer: SignedRailLaw is exactly RailLaw without nonnegative. Pair-summing compiled rail readouts gives native SignedLaw, using full contextual prepared-state equality rather than a positive raw Law.",
+    "Checked compiled accounting: corresponding compiled rails are equal; physical selected variation equals the logical selected-leaf variation exactly. Eventwise bounded variation transfers to the native law; a global all-output absolute bound is sufficient for this eventwise condition.",
+    "Checked conditional selection: supplied eventwise bounded variation makes each compiled rail value half the logical normSq readout and constructs a positive logical CompiledLaw preserving the entire logical pair-summed field. This proves no positivity of the entire raw SignedRailLaw."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SignedRawRailReadoutBridge.lean"
+      declarations := [
+        "IDT.QMClosure.SignedRawRailReadoutBridge.SignedRailLaw",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.toNativeSignedLaw",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.toNativeSignedLaw_prob",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.compiled_rails_equal",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.compiled_pair_probability",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.selectedVariation_eq_native",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.selectedVariation_le_global_bound",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.toNativeSignedLaw_eventwiseBoundedVariation",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.compiled_left_probability",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.compiled_right_probability",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.toCompiledLaw",
+        "IDT.QMClosure.SignedRawRailReadoutBridge.toCompiledLaw_entire_prob"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_signed_variation_selection",
+    "raw_rail_readout_bridge",
+    "raw_doubled_normalization_compiler"]
+  limits := [
+    "The all-depth regularity condition remains supplied and eventwise; no physical detector-budget bound is inferred. Complete raw words outside the compiled boundary need not have nonnegative signed values.",
+    "The contract assigns a categorical output label, without a joint click-pattern interpretation, physical rail-to-event identification or transport of an old original single-source Law.",
+    "Categorical readout contracts supply no physical preparation availability, outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
+
+def signedRawRailBoundedNegativeControl : ResearchTask := {
+  id := "signed_raw_rail_bounded_negative_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing plus/minus sector at fixed t=-1 with Q=-A+2B and per-rail signed readout Q/2, on doubled known-source preparations. The five SignedRailLaw fields hold without using any positivity-restricted witness theorem at t=-1."]
+  conclusions := [
+    "Checked fixed t=-1 signed control: Q=-A+2B and per-rail Q/2 satisfy all five SignedRailLaw fields. Separate sector totals equal two, so the absolute readout sum is at most three uniformly across all finite widths and all raw words.",
+    "Checked exact witness bridge: the old Original Fin 3 witness equals the left-only raw Native word on Fin 3 plus Fin 3 with chronological pairs 01, then 02, then 12. Its selected rail readout is -3/16, computed directly without a positivity-constrained witness_probability theorem at t=-1.",
+    "Checked joint control: global absolute bound three and EventwiseBoundedVariation coexist with a negative raw rail. Thus the positive compiled-boundary result does not extend to positivity on arbitrary raw words."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SignedRawRailNegativeControl.lean"
+      declarations := [
+        "IDT.QMClosure.SignedRawRailNegativeControl.sector_totals",
+        "IDT.QMClosure.SignedRawRailNegativeControl.Q_conserved",
+        "IDT.QMClosure.SignedRawRailNegativeControl.law",
+        "IDT.QMClosure.SignedRawRailNegativeControl.total_absolute_rail_weight_le_three",
+        "IDT.QMClosure.SignedRawRailNegativeControl.eventwiseBoundedVariation",
+        "IDT.QMClosure.SignedRawRailNegativeControl.evalRaw_originalNative",
+        "IDT.QMClosure.SignedRawRailNegativeControl.leftWitness_literal",
+        "IDT.QMClosure.SignedRawRailNegativeControl.leftWitness_negative_value",
+        "IDT.QMClosure.SignedRawRailNegativeControl.globally_bounded_with_negative_rail"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "signed_raw_rail_variation_selection",
+    "original_gate_probability_wall"]
+  limits := [
+    "The t=-1 construction is a signed categorical control, without a physical probability interpretation. Its uniform absolute bound does not establish nonnegativity away from the compiled boundary.",
+    "Categorical readout contracts supply no physical preparation availability, outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -4762,6 +4848,8 @@ def researchTasks : List ResearchTask := [
   nativeFixedStateRobustWindow, nativeUnboundedEndpointRobustWindow,
   rawFixedReferencePreparation, rawDoubledNormalizationCompiler, rawRailVacuumExtensionWall,
   rawRailReadoutBridge, sourceRichnessVacuumFixed, nativeSignedVariationSelection,
+  responseClassPreparationCompiler, signedRawRailVariationSelection,
+  signedRawRailBoundedNegativeControl,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
