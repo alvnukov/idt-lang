@@ -1999,6 +1999,78 @@ def weightFreeRawProbability : ResearchTask := {
     "No positive norm on the full carrier, physical observability, physical actualization, or justification of the six fields is asserted.",
     "Diagonal transparency is an extra condition for the original-gate case; the original-gate countermodel excludes removing it without replacement."] }
 
+def sourceLocalOriginalSemantics : ResearchTask := {
+  id := "source_local_original_semantics"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Retain r:WeightFreeRawProbability.RawOperationalData V with global square-swap and global first-channel mediality on all raw inputs. Write T=r.operation, m=MedialSwapRoot.firstChannel T, g=DiagonalNormalization.diagonal m, N=r.normalizedOperation and G=Prod.map g g.",
+    "Source-local semantic transfer additionally assumes g(r.chosenZero)=r.chosenZero and g(v)=v for the one chosen source reference v. No weight, Hilbert structure, infinite reference order, probability Law or physically available unary g is supplied to the core.",
+    "GenericOriginalLaw uses the same Native syntax and unchanged six-field all-width structural contract as WeightFreeRawProbability.Law; only prepared_eq is formulated with the existing WeightFreeRawProbability.originalPrepared."]
+  conclusions := [
+    "Parent-accepted kernel-checked source-local contract: the retained raw laws imply g composed with g is identity, g(m(x,y))=m(g(x),g(y)), and N=G composed with T=T composed with G. These identities do not require any chosen-zero fixed-point premise.",
+    "Square-swap implies T is injective. Consequently N(x,y)=T(x,y) if and only if g(x)=x and g(y)=y.",
+    "Pointwise g-fixed input arrays remain g-fixed under the original raw evaluator, and original and normalized evaluators agree as complete arrays on every such input and native word. The two fixed-point assumptions therefore give equality of all full source-generated prepared arrays.",
+    "Exact structural characterization: both the chosen zero and source reference are g-fixed if and only if originalPrepared and prepared agree as full arrays for source 0 and the single pair 0 1 word on Fin 2, if and only if they agree for every finite wire type, source index and native word.",
+    "Under the two fixed-point premises, GenericOriginalLaw and WeightFreeRawProbability.Law convert in both directions and form an equivalence preserving the entire identical probability field. Conditional selection and extensional field uniqueness transfer through the existing probability_eq_normSq theorem without a canonicalLaw premise.",
+    "Under these same premises, Nonempty (GenericOriginalLaw r v) is equivalent to ReferenceInfiniteOrder r v through the existing weight-free existence criterion. The fixed-point assumptions alone do not construct a law.",
+    "Strictness control: reuse OriginalGateProbabilityWall.operation on complex pairs, whose g(zPlus,zMinus)=(zPlus,-zMinus). Zero (0,0) and source (1,0) are fixed although global diagonal transparency fails at (0,1). The existing mixed source (1,1) is not fixed, leaving its original-gate probability nonuniqueness wall intact.",
+    "Chosen-zero independence control: with the same square-swap and medial operation, choose zero (0,1) and source (1,0). The source is fixed but the chosen zero is not, and the one-pair original and normalized prepared arrays differ."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SourceLocalOriginalSemantics.lean"
+      declarations := [
+        "IDT.QMClosure.SourceLocalOriginalSemantics.rawLaws",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.g",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.G",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.g_involutive",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.g_map",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.operation_injective",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.normalized_eq_after",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.operation_G",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.normalized_eq_before",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.gate_eq_iff",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.evalRaw_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.evalRaw_eq_on_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.basisInput_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.originalPrepared_eq_prepared",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.twoPortWord",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.OnePairAgreement",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.FullAgreement",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.fixed_iff_onePairAgreement",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.fixed_iff_fullAgreement",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.onePairAgreement_iff_fullAgreement",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.GenericOriginalLaw",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.toNormalizedLaw",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.toOriginalLaw",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.lawEquiv",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.toNormalizedLaw_probability",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.toOriginalLaw_probability",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.probability_eq_normSq",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.probability_fields_equal",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.law_nonempty_iff_reference_infiniteOrder",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.PairCarrier",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.fixedData",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.vacuumMovedData",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.fixedSource",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.g_fixedData",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.g_vacuumMovedData",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.fixedData_zero_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.fixedData_source_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.fixedData_fullAgreement",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.fixedData_not_globally_transparent",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.mixed_source_not_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.vacuumMovedData_source_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.vacuumMovedData_zero_not_fixed",
+        "IDT.QMClosure.SourceLocalOriginalSemantics.Controls.vacuumMovedData_onePair_disagrees"] }]
+  plannedArtifacts := []
+  dependencies := ["weight_free_raw_probability", "diagonal_normalization",
+    "native_preparation_naturality", "original_gate_probability_wall"]
+  limits := [
+    "This source-local kernel result weakens global diagonal transparency only. It retains the global square-swap and first-channel mediality assumptions of RawOperationalData on every raw input.",
+    "The necessary-and-sufficient fixed-point characterization concerns equality of complete original and normalized prepared arrays. It does not claim these premises are necessary for original-law uniqueness or existence in general.",
+    "The diagonal g is a term-defined mathematical normalizer, not an available unary native gate. Checking g(v) by the expression T(v,v) does not grant free preparation of two copies of v.",
+    "Agreement is restricted to the chosen fixed source and vacuum sector, with every retained array coordinate included. No all-carrier transparency, arbitrary raw-reference availability, original-gate physical interpretation, actualization or full QM closure is established."] }
+
 def mixedControlProbabilityWall : ResearchTask := {
   id := "mixed_control_probability_wall"
   stage := .conditionalKernelTheorem
@@ -2317,6 +2389,85 @@ def responseContextProbability : ResearchTask := {
     "A finite battery yields a finite full contextual quotient only with finite responses and a proof that its equality is the full contextual congruence; bounded depth alone is neither finite nor automatically congruent.",
     "This transparent route does not subsume the weighted existence theorem without transparency.",
     "Outcome actualization and every standing matter-regime obligation remain open."] }
+
+def responseSourceLocalProbability : ResearchTask := {
+  id := "response_source_local_probability"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Retain d:ResponseContextQuotient.Data V Omega, a chosen source v, globally observed square-swap and first-channel mediality modulo full ResponseEq over the existing finite contexts with arbitrary fixed raw references. A response signature takes values in an arbitrary type; no weight or probability meaning is supplied.",
+    "The initial response-law/original-quotient-law equivalence requires no diagonal transparency. The later source-local transfer assumes ResponseEq d.operation d.signature (d.operation (z,z)).1 z for z=d.chosenZero, and the same condition at v.",
+    "Use the checked SourceLocalOriginalSemantics.GenericOriginalLaw on d.quotientData and d.classOf v, preserving its same six supplied fields and source-local boundary."]
+  conclusions := [
+    "Parent-accepted kernel-checked source-local response contract: originalPrepared d.quotientData (d.classOf v) s c is exactly the array fun i => d.classOf (ResponseNativeProbabilitySelection.prepared d v s c i), using evalRaw_class and the basis-input array. No local or global diagonal transparency is needed for this original-quotient evaluation identity.",
+    "Pointwise full ResponseEq of two response-prepared arrays is equivalent to equality of their original-quotient prepared arrays through classOf_eq_iff_responseEq. ResponseNativeProbabilitySelection.Law d v and GenericOriginalLaw d.quotientData (d.classOf v) therefore form an equivalence preserving the entire identical probability field; the other five supplied law fields copy unchanged.",
+    "The two source-local full ResponseEq premises imply that the reconstructed quotient diagonal fixes the quotient chosen zero and quotient source. SourceLocalOriginalSemantics then transports the original-quotient law to the normalized weight-free law without any global ObservedTransparent premise.",
+    "Under both source-local premises, transfer conditional native normSq selection and extensional probability-field uniqueness. Separately, Nonempty (ResponseNativeProbabilitySelection.Law d v) is equivalent to ReferenceInfiniteOrder d.quotientData (d.classOf v). The fixed-class premises alone do not construct a law, and a zero-class source can preclude a law.",
+    "Global ObservedTransparent implies both local premises, providing compatibility with the existing transparent theorem. Literal raw fixedness is not required. The theorem retains full contextual equality at both points; no replacement by bare signature equality is asserted.",
+    "Strictness control: use an identity signature on the existing two-component original-gate operation, chosen zero (0,0), source (1,0). Full ResponseEq is literal equality already by the hole context; globally observed square-swap and mediality hold, both selected classes are diagonal-fixed, but global ObservedTransparent fails at (0,1). This separates the strength of sufficient hypotheses, not a necessary condition for probability-law uniqueness."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseSourceLocalProbability.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseSourceLocalProbability.originalPrepared_eq_class",
+        "IDT.QMClosure.ResponseSourceLocalProbability.responseEq_iff_originalPrepared_eq",
+        "IDT.QMClosure.ResponseSourceLocalProbability.OriginalLaw",
+        "IDT.QMClosure.ResponseSourceLocalProbability.toOriginalLaw",
+        "IDT.QMClosure.ResponseSourceLocalProbability.fromOriginalLaw",
+        "IDT.QMClosure.ResponseSourceLocalProbability.originalLawEquiv",
+        "IDT.QMClosure.ResponseSourceLocalProbability.toOriginalLaw_probability",
+        "IDT.QMClosure.ResponseSourceLocalProbability.fromOriginalLaw_probability",
+        "IDT.QMClosure.ResponseSourceLocalProbability.DiagonalFixed",
+        "IDT.QMClosure.ResponseSourceLocalProbability.diagonalFixed_iff_quotient_fixed",
+        "IDT.QMClosure.ResponseSourceLocalProbability.observedTransparent_diagonalFixed",
+        "IDT.QMClosure.ResponseSourceLocalProbability.observedTransparent_source_local",
+        "IDT.QMClosure.ResponseSourceLocalProbability.normalizedLawEquiv",
+        "IDT.QMClosure.ResponseSourceLocalProbability.normalizedLawEquiv_probability",
+        "IDT.QMClosure.ResponseSourceLocalProbability.normalizedLawEquiv_symm_probability",
+        "IDT.QMClosure.ResponseSourceLocalProbability.probability_eq_normSq",
+        "IDT.QMClosure.ResponseSourceLocalProbability.probability_fields_equal",
+        "IDT.QMClosure.ResponseSourceLocalProbability.law_nonempty_iff_reference_infiniteOrder",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.PairCarrier",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.identity_responseEq_iff",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.data",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.fixedSource",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.zero_fixed",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.source_fixed",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.not_globally_transparent",
+        "IDT.QMClosure.ResponseSourceLocalProbability.Controls.source_local_without_global"] }]
+  plannedArtifacts := []
+  dependencies := ["response_context_probability", "source_local_original_semantics",
+    "weight_free_raw_probability"]
+  limits := [
+    "Full contextual ResponseEq over arbitrary fixed raw references remains supplied. Recipe-only reference tests are not substituted, and arbitrary signatures need not reflect attenuation.",
+    "This task weakens global observed transparency to two source-sector quotient conditions while retaining globally observed square-swap and first-channel mediality. The unconditional law equivalence still refers to original quotient semantics.",
+    "The source-local fixed-class premises are sufficient for the stated transfer; they are not claimed necessary for response-law uniqueness or existence. Conditional selection and a separate law-existence criterion are distinct results.",
+    "The signature is not supplied as a numerical weight or probability readout. A term such as T(v,v) supplies no physical test control or availability of two copies of v.",
+    "Quotient semantics, source-sector algebra and structural probability consistency establish no physical reference availability, unknown-token processing, outcome actualization, detector dynamics, Hilbert premise or full QM closure."] }
+
+def responseDiagonalSignatureWall : ResearchTask := {
+  id := "response_diagonal_signature_wall"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use exactly OriginalGateProbabilityWall.operation T on V=Complex x Complex, chosen zero (0,0), mixed reference v=(1,1), and signature W=OriginalGateProbabilityWall.weight=normSq(x.1)+normSq(x.2). The term-defined diagonal is g(x.1,x.2)=(x.1,-x.2).",
+    "Use the existing full finite one-hole context grammar with arbitrary fixed raw references. W is a supplied mathematical signature, not asserted to be a probability readout or a physically available measurement.",
+    "Retain the existing Native syntax and unchanged six-field OriginalGateProbabilityWall.OriginalLaw; no source availability, physical context implementation or free-copy premise is added."]
+  conclusions := [
+    "Prospective countermodel obligation: W((T(x,x)).1)=W(x) globally, while this bare signature invariance does not imply full contextual diagonal fixedness at the mixed reference.",
+    "Prove a cancellation-reference theorem using a fixed raw reference tailored to x, and use it to show full ResponseEq T W x y if and only if x=y. These arbitrary raw references are mathematical context parameters, not physically certified preparations.",
+    "Prove the explicit context C(x)=(T(x,(0,I))).1 separates v=(1,1) and g(v)=(1,-1): both initial signatures are 2, while W(C(v))=5/2 and W(C(g(v)))=1/2. Hence the mixed source is not contextually diagonal-fixed despite global bare W diagonal invariance.",
+    "Build a structural Native-to-Original circuit adapter preserving full original prepared arrays and padding, and transport the existing six-field OriginalLaw to the response-law contract without altering its probability field.",
+    "Transport quarterLaw and threeQuarterLaw to response laws. On source 0, the Native word pair 0 1; pair 0 2; pair 1 2 over Fin 3 gives port-1 probabilities 1/4 and 1/2, respectively.",
+    "This planned wall refutes replacement of full contextual fixedness by bare signature invariance in the stated transfer route. It does not claim that source-local full contextual fixedness is necessary for general probability-law uniqueness or existence."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ResponseDiagonalSignatureWall.lean"]
+  dependencies := ["response_context_probability", "source_local_original_semantics",
+    "original_gate_probability_wall"]
+  limits := [
+    "This task is prospective and has no checked artifact or status upgrade. The earlier original-gate nonuniqueness theorem is a dependency, not proof that this response-context adapter has been implemented.",
+    "The signature W is not asserted to equal a probability law. Its diagonal invariance is a bare response identity, distinct from full contextual equivalence.",
+    "The mathematical model supplies complex coordinates, T, W and arbitrary fixed raw references. No independent physical provenance, available cancellation reference, finite-resolution detector or physical gate implementation follows.",
+    "This is a countermodel to a weakened sufficient-premise route, not a general necessity theorem for uniqueness, existence or every response model. No outcome actualization, unknown-token processing or full QM closure is established."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -2838,21 +2989,38 @@ def referenceOccurrenceCompilation : ResearchTask := {
 
 def nativeRecipeContextRealization : ResearchTask := {
   id := "native_recipe_context_realization"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Fix a finite native wire type, one marked source s and NativeGaussianResponse.Event recipes in its literal vacuum-doubling tower. Every reference occurrence of a finite one-hole Context is an actual recipe in that same tower; the hole is an event e.",
     "A structural mapRefs replaces each reference recipe by amplitude s of that recipe. Use the native scalar mixer, existing real-half event damping, common-level padding and the existing full-recipe comparison circuit; no probability Law is assumed by the amplitude core.",
     "For the separate raw transfer, fix r:WeightFreeRawProbability.RawOperationalData V and arbitrary v:r.Carrier, including null and finite-order references. Define rawEvent by prepared normalized raw evaluation at the recipe sourceAt. Map every context reference recipe by that same rawEvent; complex scalars serve only as existing coefficient certificates, not as new raw carrier structure."]
   conclusions := [
-    "Parent-accepted analytic contract awaiting a kernel artifact: construct an actual event E with amplitude s E = Context.eval mixer (mapRefs (amplitude s) C) (amplitude s e) / 2^referenceCount C.",
+    "Checked law-free finite recipe-context realization constructs an actual event E with amplitude s E = Context.eval mixer (mapRefs (amplitude s) C) (amplitude s e) / 2^referenceCount C.",
     "Induction retains recipe provenance: if the child has k reference occurrences, damp the next reference recipe by 2^k using repeated halfEvent, pad the two full recipes to a common level, use existing comparison middle branches to place both selected amplitudes at scale 1/2 on distinct ports, then append one pair in the required operand order and select the specified output.",
-    "The intended normSq readout is the ideal selected-result normSq divided by 4^referenceCount C. For one fixed context, the nonzero common attenuation factor reflects both amplitude equality/inequality and normSq equality/inequality of the corresponding ideal selected results.",
-    "The intended raw transfer uses native_output_related, related_mixer context induction and iterated related_half; compiled scalar equality and related_raw_unique yield rawEvent E = halfPower (referenceCount C) (Context.eval r.normalizedOperation (mapRefs rawEvent C) (rawEvent e)). No infinite reference order, positive raw weight, Hilbert premise or probability Law is required.",
+    "The checked normSq readout is the ideal selected-result normSq divided by 4^referenceCount C. For one fixed context, the nonzero common attenuation factor reflects both amplitude equality/inequality and normSq equality/inequality of the corresponding ideal selected results.",
+    "The checked raw transfer uses native_output_related, related_mixer context induction and iterated related_half; compiled scalar equality and related_raw_unique yield rawEvent E = halfPower (referenceCount C) (Context.eval r.normalizedOperation (mapRefs rawEvent C) (rawEvent e)). No infinite reference order, positive raw weight, Hilbert premise or probability Law is required.",
     "halfPower is injective by additive map_nsmul and halfPower_two_pow, so the same fixed context reflects raw ideal-target equality and inequality despite its accounted dyadic attenuation.",
-    "Any probability corollary must separately retain the existing native Law and use NativeProbabilityUniqueness.native_probability_eq_normSq. Existing comparison and damping theorems are prerequisites, not new results of this task."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeRecipeContextRealization.lean"]
+    "The separate checked probability corollary retains the existing native Law and uses NativeProbabilityUniqueness.native_probability_eq_normSq. Existing comparison and damping theorems are prerequisites, not new results of this task."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeRecipeContextRealization.lean"
+      declarations := [
+        "IDT.QMClosure.NativeRecipeContextRealization.mapRefs",
+        "IDT.QMClosure.NativeRecipeContextRealization.comparison_blocks",
+        "IDT.QMClosure.NativeRecipeContextRealization.exists_halved_mixer",
+        "IDT.QMClosure.NativeRecipeContextRealization.exists_realization",
+        "IDT.QMClosure.NativeRecipeContextRealization.realization_normSq",
+        "IDT.QMClosure.NativeRecipeContextRealization.realization_amplitude_eq_iff",
+        "IDT.QMClosure.NativeRecipeContextRealization.realization_amplitude_ne_iff",
+        "IDT.QMClosure.NativeRecipeContextRealization.realization_normSq_eq_iff",
+        "IDT.QMClosure.NativeRecipeContextRealization.realization_normSq_ne_iff",
+        "IDT.QMClosure.NativeRecipeContextRealization.raw_realization_of_scalar",
+        "IDT.QMClosure.NativeRecipeContextRealization.exists_correlated_realization",
+        "IDT.QMClosure.NativeRecipeContextRealization.halfPower_injective",
+        "IDT.QMClosure.NativeRecipeContextRealization.raw_realization_eq_iff",
+        "IDT.QMClosure.NativeRecipeContextRealization.raw_realization_ne_iff",
+        "IDT.QMClosure.NativeRecipeContextRealization.realization_probability"] }]
+  plannedArtifacts := []
   dependencies := ["reference_occurrence_compilation", "native_single_source_reference_wall",
     "native_coherent_scalar_sufficiency", "native_gaussian_probability_selection",
     "raw_native_dyadic_semantics", "weight_free_raw_probability"]
@@ -2862,29 +3030,78 @@ def nativeRecipeContextRealization : ResearchTask := {
     "Raw transfer covers only the normalized operation and source-generated reference recipes. The original raw operation requires its separate evaluator bridge; arbitrary raw-T realization and all raw-reference availability are not established.",
     "Scalar recovery from raw equality is not established: a null reference can collapse distinct coefficient certificates. Algebraic halfPower injectivity supplies neither native amplification nor physical removal of attenuation, and arbitrary response signatures need not reflect raw or scalar distinctions.",
     "Every circuit is finite, but the theorem permits arbitrary finite vacuum extensions. It gives no physical capacity or efficiency bound.",
-    "Nonzero dyadic attenuation reflects exact amplitude and normSq equality/inequality only; no uniform finite-resolution or noise robustness, probability sampling, actual outcomes, physical reference availability or QM closure follows."] }
+    "The amplitude, normalized raw-value and normSq equality/inequality reflections are exact; no uniform finite-resolution or noise robustness, probability sampling, actual outcomes, physical reference availability or QM closure follows."] }
 
 def nativeReferenceSeparation : ResearchTask := {
   id := "native_reference_separation"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Fix one marked source and actual native Event recipes in its literal vacuum tower. Existing unit and i/2 preparations supply two fixed reference recipes; the core concerns scalar amplitudes and normSq, with no probability Law.",
     "For each reference amplitude t, aligned_sum_difference retains one actual same-source circuit with distinct selected outputs (z+t)/2 and i*(z-t)/2, together with every ancillary output. Define its contrast as the unrenormalized difference of the two output normSq weights."]
   conclusions := [
-    "Parent-accepted analytic contract awaiting a kernel artifact: each paired-setting contrast equals Re(z*conj t). The fixed references t=1 and t=i/2 recover Re z and Im z/2, respectively; equality of both contrasts is equivalent to equality of the scalar amplitudes.",
+    "Checked scalar paired-setting separation: each paired-setting contrast equals Re(z*conj t). The fixed references t=1 and t=i/2 recover Re z and Im z/2, respectively; equality of both contrasts is equivalent to equality of the scalar amplitudes.",
     "The realization uses two settings with four selected weights in total. Each setting retains one circuit and distinct output ports; it does not assume unattenuated joint-array availability or reuse one shared history across the settings.",
     "Negative control: the unit-reference paired setting gives (5/8,1/8) for both a=(1+i)/2 and b=(1-i)/2. The quadrature-reference setting gives (5/16,1/16) for a and (1/16,5/16) for b.",
     "Exact-zero Boolean signatures do not inherit separation: all four test outputs are nonzero for each of the distinct actual amplitudes 1/2 and 1/4.",
-    "A separate probability-contrast corollary must retain a supplied native Law and invoke NativeProbabilityUniqueness.native_probability_eq_normSq on the actual selected outputs. A signed contrast is a difference of event probabilities, not a negative event probability."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeReferenceSeparation.lean"]
+    "The separate checked probability-profile corollary retains a supplied native Law and invokes NativeProbabilityUniqueness.native_probability_eq_normSq on the actual selected outputs. A signed contrast is a difference of event probabilities, not a negative event probability."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeReferenceSeparation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeReferenceSeparation.contrast_identity",
+        "IDT.QMClosure.NativeReferenceSeparation.profile_eq_iff",
+        "IDT.QMClosure.NativeReferenceSeparation.profile_injective",
+        "IDT.QMClosure.NativeReferenceSeparation.pairedSetting_exists",
+        "IDT.QMClosure.NativeReferenceSeparation.experiment_weights_eq_iff",
+        "IDT.QMClosure.NativeReferenceSeparation.experiment_probabilityProfile_eq_iff",
+        "IDT.QMClosure.NativeReferenceSeparation.actual_unit_setting_not_separating",
+        "IDT.QMClosure.NativeReferenceSeparation.control_weight_profiles",
+        "IDT.QMClosure.NativeReferenceSeparation.actual_zero_profile_not_separating"] }]
+  plannedArtifacts := []
   dependencies := ["native_single_source_reference_wall", "native_vacuum_probability_family"]
   limits := [
     "The selected pair is not renormalized: its total need not be 1, and conditioning on that pair would change the contrast identity. No minimality claim for the number of settings or weights is made.",
     "Separation concerns exact scalar normSq profiles of actual same-source recipes. Arbitrary coarse response signatures, physical reference availability and arbitrary-carrier tomography are not established.",
     "The construction lives in concrete scalar native semantics and permits arbitrary finite vacuum extensions. It supplies neither all raw-reference availability nor physical capacity or efficiency bounds.",
     "The recipe-context compiler is independent. Exact equality/inequality is not uniform finite-resolution or noise robustness; probability sampling, actual outcomes, actualization, full contextual completeness and QM upgrades remain outside scope."] }
+
+def nativeRecipeSubstitution : ResearchTask := {
+  id := "native_recipe_substitution"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Fix one marked source s and actual native Event recipes in its literal vacuum tower. Let C and D be finite one-hole recipe contexts, e the hole recipe, nC=referenceCount C and nD=referenceCount D; realize denotes the attenuation-accounted construction of native_recipe_context_realization.",
+    "Define dampEvent k by k iterations of NativeGaussianResponse.halfEvent, retaining actual same-source circuits with amplitude divided by 2^k. The corrected outer context mapRefs (dampEvent nD) C damps every outer reference occurrence, not only the hole or a selected subset.",
+    "For raw transfer use the same normalized r:WeightFreeRawProbability.RawOperationalData V, arbitrary reference v and rawEvent interpretation of all recipes; v may be null or finite order. No infinite reference order, positive weight or probability Law is supplied to the core."]
+  conclusions := [
+    "Checked attenuation-accounted substitution: the selected amplitudes of realize s (mapRefs (dampEvent nD) C) (realize s D e) and realize s (C.plug D) e are equal. Both equal the ideal nested context result scaled by 2^-(nC+nD).",
+    "Checked supporting lemmas establish referenceCount_plug additivity, the needed mapRefs composition and plug identities, and joint context homogeneity when every reference and the hole are scaled together, using concrete mixer homogeneity.",
+    "For the same arbitrary r and v, rawEvent_related for both actual recipes and related_raw_unique transfer their selected scalar equality to selected raw equality. This inference needs neither scalar recovery from raw equality nor infinite reference order.",
+    "Exact negative control with an actual unit recipe: take C=D=left first hole unit and e=unit. Naive realize s C (realize s D e) has amplitude (3-i)/8 and normSq 5/32; direct plug has amplitude 1/4 and normSq 1/16. Damping the outer reference by nD gives the corrected amplitude 1/4. Both context reference counts are positive in this control; no assertion says every C and D fail.",
+    "The separate checked supplied-Law corollary equates selected event probabilities through NativeProbabilityUniqueness.native_probability_eq_normSq. It uses scalar probability selection and does not assert equality of complete prepared arrays."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeRecipeSubstitution.lean"
+      declarations := [
+        "IDT.QMClosure.NativeRecipeSubstitution.referenceCount_plug",
+        "IDT.QMClosure.NativeRecipeSubstitution.context_eval_div",
+        "IDT.QMClosure.NativeRecipeSubstitution.corrected_substitution_amplitude",
+        "IDT.QMClosure.NativeRecipeSubstitution.corrected_realization_amplitude",
+        "IDT.QMClosure.NativeRecipeSubstitution.plugged_realization_amplitude",
+        "IDT.QMClosure.NativeRecipeSubstitution.corrected_substitution_raw",
+        "IDT.QMClosure.NativeRecipeSubstitution.corrected_substitution_probability",
+        "IDT.QMClosure.NativeRecipeSubstitution.naive_unit_substitution_amplitude",
+        "IDT.QMClosure.NativeRecipeSubstitution.naive_unit_substitution_normSq",
+        "IDT.QMClosure.NativeRecipeSubstitution.plugged_unit_substitution_amplitude",
+        "IDT.QMClosure.NativeRecipeSubstitution.plugged_unit_substitution_normSq",
+        "IDT.QMClosure.NativeRecipeSubstitution.naive_unit_substitution_fails"] }]
+  plannedArtifacts := []
+  dependencies := ["native_recipe_context_realization", "reference_occurrence_compilation",
+    "raw_native_dyadic_semantics", "native_gaussian_probability_selection"]
+  limits := [
+    "This task accounts actual recipe attenuation and differs from the existing arbitrary-array compile_plug_selected semantics. Only selected results are equated; levels, circuits, complete retained arrays and histories may differ.",
+    "Scalar inequality does not imply raw inequality for all references, since a null reference can collapse distinct scalar coefficients. Arbitrary raw response signatures need not reflect attenuation or the selected scalar distinction.",
+    "All recipes use the concrete native mixer and the same source-generated reference sector. Normalized raw semantics requires its separate bridge for interpretation as the original raw operation; arbitrary raw-T realization is not supplied.",
+    "No native amplification, unattenuated copying, unknown-token processing, physical reference availability, legal physical-history composition, actualization or QM closure is established. Finite circuits with arbitrary finite vacuum extensions provide no capacity, efficiency, finite-resolution or noise-robustness claim."] }
 
 def referenceProvenanceAndSubstitution : ResearchTask := {
   id := "reference_provenance_and_substitution"
@@ -2897,14 +3114,18 @@ def referenceProvenanceAndSubstitution : ResearchTask := {
   plannedArtifacts := [
     "Distinguish individually reachable port values from jointly preparable arrays; retain source provenance and alignments on legal composition.",
     "Use the checked reference_occurrence_compilation syntax theorem, which retains reference occurrences and unused outputs; physical availability and shared-history source certificates remain obligations.",
-    "Formalize the separately recorded native_recipe_context_realization and native_reference_separation contracts without treating their attenuation-accounted same-source recipes as unattenuated reference availability.",
+    "Use the checked native_recipe_context_realization and native_reference_separation results for attenuation-accounted finite same-source recipes and exact scalar normSq profiles. Their full retained circuits and ancillary outputs supply no unattenuated reference availability, arbitrary-signature separation or physical controls.",
     "Generate admitted references from native input resources and retained outputs, tracking common frame, alignment and legal history composition without free copying.",
-    "Prove substitution closure for admitted continuations and the native probability-law conditions with explicit apparatus/controller/environment accounting.",
+    "Use checked native_recipe_substitution for corrected attenuation-accounted composition of selected scalar and normalized raw results from actual same-source recipes, with its explicit failure of naive unit-reference composition. This is not equality of complete arrays or histories; legal physical continuation composition and native probability-law conditions with apparatus/controller/environment accounting remain open.",
+    "Use checked source_local_original_semantics for full-array agreement of original and normalized source-sector evaluation under both diagonal-fixed source and chosen-zero premises, with its exact one-pair/full-array equivalence and unchanged six-field law transport. The global raw square-swap and first-channel mediality laws remain premises; no physical reference availability is supplied.",
+    "Use checked response_source_local_probability for response-law/original-quotient-law equivalence without transparency and conditional normalized-law transfer under full contextual diagonal fixedness of both the chosen-zero and source classes, preserving the complete probability field. Arbitrary fixed-reference ResponseEq remains supplied; physical response provenance and availability stay open. The prospective response_diagonal_signature_wall tests why bare signature invariance cannot replace these full contextual premises.",
     "Distinguish fixed-context equivalence, common-transformation covariance and ray redundancy; state sector-preservation requirements separately from channel covariance."]
   dependencies := ["port_frame_alignment", "native_single_source_reference_wall",
     "reference_occurrence_compilation", "native_recipe_context_realization",
-    "native_reference_separation", "product_exchange_observation_boundary",
-    "native_preparation_naturality",
+    "native_reference_separation", "native_recipe_substitution",
+    "product_exchange_observation_boundary",
+    "native_preparation_naturality", "source_local_original_semantics",
+    "response_source_local_probability",
     "response_phase_quotient_wall", "coherent_port_ray_boundary", "product_feature_exchange",
     "standing_matter_regime_constraint"]
   limits := [
@@ -3010,17 +3231,19 @@ def researchTasks : List ResearchTask := [
   nativeGaussianProbabilitySelection, nativeHyperrealProbabilityWall,
   nativeArchimedeanProbability, rawNativeDyadicSemantics, rawNativeProbabilitySelection,
   rawNativeProbabilityExistence, originalGateProbabilityWall,
-  weightFreeRawProbability, mixedControlProbabilityWall, rawDiagonalDecomposition,
+  weightFreeRawProbability, sourceLocalOriginalSemantics,
+  mixedControlProbabilityWall, rawDiagonalDecomposition,
   nativeProbabilityPremiseIndependence, rawNetworkMedialWall,
   continuousBalancedNonmedialWall, rawObservableMedialWall,
-  observedRawProbabilitySelection, responseContextProbability,
+  observedRawProbabilitySelection, responseContextProbability, responseSourceLocalProbability,
+  responseDiagonalSignatureWall,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
   pairExchangeCombinations, productFeatureExchange, productExchangeObservationBoundary,
   nativePreparationNaturality, responsePhaseQuotientWall,
   portFrameAlignment, nativeSingleSourceReferenceWall, referenceOccurrenceCompilation,
-  nativeRecipeContextRealization, nativeReferenceSeparation,
+  nativeRecipeContextRealization, nativeReferenceSeparation, nativeRecipeSubstitution,
   referenceProvenanceAndSubstitution, recordWindowStability]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
