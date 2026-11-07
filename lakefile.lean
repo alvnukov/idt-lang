@@ -300,6 +300,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.WeightFreeRawProbability,
     `Proofs.QMClosure.MixedControlProbabilityWall,
     `Proofs.QMClosure.RawDiagonalDecomposition,
+    `Proofs.QMClosure.RawNetworkMedialWall,
+    `Proofs.QMClosure.NativeProbabilityPremiseIndependence,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
