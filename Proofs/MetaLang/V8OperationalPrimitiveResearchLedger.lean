@@ -2530,31 +2530,249 @@ def pairExchangeCombinations : ResearchTask := {
 
 def productFeatureExchange : ResearchTask := {
   id := "product_feature_exchange"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "The same-source weighted ordered-product bridge used by pairExchangeCombinations, with every additive, phase, positive-quadratic and universal factorization premise retained.",
-    "The target Hilbert space is the existing CanonicalQuadraticHilbert output constructed from the target quadratic readout and phase; it is not a new physical Hilbert primitive.",
-    "The mathematical domain is only the closed complex span Hp of target features of the ordered products p(x,y)."]
+    "The same-source weighted ordered-product Bridge retains exactly QA, QC, their positive quadratic contracts, compatible phases jA and jC, p, separate additivity, both phase compatibilities and universal product readout factorization.",
+    "The target H is the existing CanonicalQuadraticHilbert output constructed from QC and jC; the exchange domain Hp is only the closed complex span of features of the supplied ordered products p(x,y).",
+    "The generic equal-Gram utility compares supplied complete complex inner-product spaces. Its product instantiation uses only the already constructed H and Hp."]
   conclusions := [
-    "Independently accepted analytic route: equal-Gram indexed families admit a unique complex linear isometry equivalence between their generated closed spans. Empty families and degenerate Gram data require no nontriviality premise.",
-    "For the ordered product family, swapping the two same-source indices preserves every Gram matrix. The equal-Gram extension supplies a unique involutive unitary on Hp with the stated generator action.",
-    "Within Hp the operators (I+S)/2 and (I-S)/2 are complementary orthogonal projections; their ranges are the closed spans of the corresponding plus and minus pair features.",
-    "Projected generator squared norms are (Q(x)*Q(y) +/- normSq(K(x,y)))/2; the minus range is nonzero exactly when some pair has strict overlap inequality."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/EqualGramSpanEquivalence.lean",
-    "Proofs/QMClosure/UnitaryInvolutionProjections.lean",
-    "Proofs/QMClosure/ProductFeatureExchange.lean"]
+    "Checked equal-Gram extension: arbitrary indexed families with equal Gram entries determine a unique complex linear isometry equivalence of their generated closed spans, including empty or degenerate families without coefficient-map injectivity or a nontriviality premise.",
+    "Swapping the same-source product indices preserves all generator inner products and constructs the unique exchange isometry on Hp with that generator action; the exchange is involutive and self-adjoint.",
+    "Within Hp, (I+S)/2 and (I-S)/2 are self-adjoint idempotents with complementary orthogonal ranges equal to the closed spans of the plus and minus pair features.",
+    "Projected generator squared norms are (QA(x)*QA(y) plus or minus normSq(K(x,y)))/2; the minus range is nonzero exactly when some pair has strict overlap inequality.",
+    "The standard Hp completeness and adjoint Star instances are constructed from existing mathematical outputs and add no supplied assumptions or Bridge fields."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/EqualGramSpanEquivalence.lean"
+      declarations := [
+        "IDT.QMClosure.EqualGramSpanEquivalence.dense_spanGenerator",
+        "IDT.QMClosure.EqualGramSpanEquivalence.inner_linearCombination",
+        "IDT.QMClosure.EqualGramSpanEquivalence.denseEquivalence",
+        "IDT.QMClosure.EqualGramSpanEquivalence.denseEquivalence_apply",
+        "IDT.QMClosure.EqualGramSpanEquivalence.dense_generator_ext",
+        "IDT.QMClosure.EqualGramSpanEquivalence.denseEquivalence_unique",
+        "IDT.QMClosure.EqualGramSpanEquivalence.closedSpanEquivalence",
+        "IDT.QMClosure.EqualGramSpanEquivalence.closedSpanEquivalence_apply",
+        "IDT.QMClosure.EqualGramSpanEquivalence.closedSpanEquivalence_unique"] },
+    { sourcePath := "Proofs/QMClosure/UnitaryInvolutionProjections.lean"
+      declarations := [
+        "IDT.QMClosure.UnitaryInvolutionProjections.plus_idempotent",
+        "IDT.QMClosure.UnitaryInvolutionProjections.minus_idempotent",
+        "IDT.QMClosure.UnitaryInvolutionProjections.plus_add_minus",
+        "IDT.QMClosure.UnitaryInvolutionProjections.plus_comp_minus",
+        "IDT.QMClosure.UnitaryInvolutionProjections.minus_comp_plus",
+        "IDT.QMClosure.UnitaryInvolutionProjections.op_selfAdjoint",
+        "IDT.QMClosure.UnitaryInvolutionProjections.plus_selfAdjoint",
+        "IDT.QMClosure.UnitaryInvolutionProjections.minus_selfAdjoint",
+        "IDT.QMClosure.UnitaryInvolutionProjections.plus_norm_sq",
+        "IDT.QMClosure.UnitaryInvolutionProjections.minus_norm_sq",
+        "IDT.QMClosure.UnitaryInvolutionProjections.mixed_inner",
+        "IDT.QMClosure.UnitaryInvolutionProjections.range_eq_closedSpan",
+        "IDT.QMClosure.UnitaryInvolutionProjections.range_ne_bot_iff"] },
+    { sourcePath := "Proofs/QMClosure/ProductFeatureExchange.lean"
+      declarations := [
+        "IDT.QMClosure.ProductFeatureExchange.Bridge",
+        "IDT.QMClosure.ProductFeatureExchange.hp_completeSpace",
+        "IDT.QMClosure.ProductFeatureExchange.hp_clmStar",
+        "IDT.QMClosure.ProductFeatureExchange.inner_generator",
+        "IDT.QMClosure.ProductFeatureExchange.equalGram",
+        "IDT.QMClosure.ProductFeatureExchange.exchange",
+        "IDT.QMClosure.ProductFeatureExchange.exchange_generator",
+        "IDT.QMClosure.ProductFeatureExchange.exchange_unique",
+        "IDT.QMClosure.ProductFeatureExchange.exchange_involutive",
+        "IDT.QMClosure.ProductFeatureExchange.exchange_selfAdjoint",
+        "IDT.QMClosure.ProductFeatureExchange.plus_selfAdjoint",
+        "IDT.QMClosure.ProductFeatureExchange.minus_selfAdjoint",
+        "IDT.QMClosure.ProductFeatureExchange.plus_idempotent",
+        "IDT.QMClosure.ProductFeatureExchange.minus_idempotent",
+        "IDT.QMClosure.ProductFeatureExchange.coe_plus_generator",
+        "IDT.QMClosure.ProductFeatureExchange.coe_minus_generator",
+        "IDT.QMClosure.ProductFeatureExchange.plus_generator_norm_sq",
+        "IDT.QMClosure.ProductFeatureExchange.minus_generator_norm_sq",
+        "IDT.QMClosure.ProductFeatureExchange.plus_range_eq_closedSpan",
+        "IDT.QMClosure.ProductFeatureExchange.minus_range_eq_closedSpan",
+        "IDT.QMClosure.ProductFeatureExchange.orthogonal_decomposition",
+        "IDT.QMClosure.ProductFeatureExchange.minus_range_ne_bot_iff"] }]
+  plannedArtifacts := []
   dependencies := ["pair_exchange_combinations", "composite_product_kernel",
     "canonical_hilbert_completion", "canonical_hilbert_uniqueness"]
   limits := [
-    "Analytic only: the general extension, projections and product adapter await new kernel artifacts.",
-    "Installed LinearEquiv.extendOfIsometry on the identity of the free complex coefficient module supplies the intended extension seam; no norm or injectivity of the coefficient maps is presumed.",
-    "The generic utility assumes mathematical Hilbert comparison spaces; the product adapter must explicitly instantiate the existing constructed target. Do not apply quadratic completion to Q(x)*Q(y) with componentwise addition, which is generally quartic.",
     "This is the weighted ordered-product route, not an end-to-end weight-free composite reconstruction from the response-probability theorem.",
+    "The generic utility assumes mathematical comparison spaces; the product adapter explicitly instantiates the constructed target. Q(x)*Q(y) with componentwise addition is generally quartic and is not supplied to quadratic completion.",
     "Division by two occurs only in the constructed Hilbert output. No raw halving, raw exchange operator, raw direct sum, whole-target exhaustion or physical exchange/projection availability is asserted.",
     "Argument exchange, mode permutations and physical particle exchange remain distinct. Exchange-sign selection, species, spin-statistics, pair-preparation availability, outcome actualization and every matter-regime obligation remain open."] }
+
+def productExchangeObservationBoundary : ResearchTask := {
+  id := "product_exchange_observation_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For generic invariance, a supplied complex linear isometry equivalence U and bounded complex-linear E commute pointwise; no involution, positivity, nonzero-vector or completeness premise is required.",
+    "The product adapter retains the exact weighted ProductFeatureExchange.Bridge D and constructed Hp; g=generator(x,y), q=QA(x)*QA(y), r=normSq(K(x,y)) and S=exchange D."]
+  conclusions := [
+    "Commuting E and U give identical complex expectations and normalized expectations on u and U(u), including zero under the numerical division convention.",
+    "The full complex overlap inner(g,S(g)) equals (r:Complex). The strict inequality r<q implies q>0 and nonzero g, plus(g) and minus(g) for the same generator.",
+    "The actual singleton starProjection E_g onto the complex span of g in constructed Hp is positive, at most identity in the standard Loewner order, and has operator norm at most one.",
+    "The exact normalized response on S(g) is (r/q)^2 without a strictness premise, using the division convention. Under r<q the response on g is 1, the response on S(g) is strictly below 1, and S(g) is not any complex scalar multiple of g.",
+    "The assembled strict-pair theorem retains both nonzero components, every commuting-operator equality and the specified mathematical discriminator for one generator. Nonzero minus range supplies such a strict pair and the same witness."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ProductExchangeObservationBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.ProductExchangeObservationBoundary.inner_invariant",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.normalizedExpectation_invariant",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.inner_exchange_generator",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.strict_pair_facts",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_positive",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_le_one",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_norm_le",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_self",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_expectation_self",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_expectation_exchange",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.generatorProjector_expectation_exchange_lt_one",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.exchange_not_scalar",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.strict_pair_observation_boundary",
+        "IDT.QMClosure.ProductExchangeObservationBoundary.minus_range_observation_witness"] }]
+  plannedArtifacts := []
+  dependencies := ["product_feature_exchange", "coherent_port_ray_boundary"]
+  limits := [
+    "Every weighted ordered-product Bridge assumption remains supplied. The construction acts only in the product-generated closed span Hp, not a raw/global exchange or a whole-target exhaustion.",
+    "The singleton projector is a mathematical positive contraction, not an established native or physically available discriminator. No probability-law or Born premise is used for these numerical quantities.",
+    "Response equality concerns g and S(g); it neither identifies arbitrary states nor makes sector weights invisible. Restriction to S-commuting operators does not select exchange eigenstates.",
+    "Physical ordered-product and discriminator availability, exchange sector, species, spin-statistics, actualization and every matter-regime obligation remain open. No QM or manifest claim is upgraded."] }
+
+def nativePreparationNaturality : ResearchTask := {
+  id := "native_preparation_naturality"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Function-only covariance of both outputs of supplied raw operations, with arbitrary raw arrays and native finite circuit words.",
+    "For prepared arrays, r:RawOperationalData V and s:RawOperationalData W, preservation of chosen zero and covariance of the term-defined normalized operations.",
+    "To transport a source Law forward with its identical complete probability field, reflection of equality of prepared arrays at the same reference, source and width; injectivity of the map is sufficient."]
+  conclusions := [
+    "Accepted analytic scope awaiting a kernel artifact: both-output operation covariance gives evalRaw covariance, and raw operation covariance implies covariance of the term-defined normalized operations.",
+    "Zero preservation and normalized covariance give basis-prepared covariance. Pulling a target Law back requires only preservation; the forward adapter uses prepared-equality reflection.",
+    "The two adapters form a Law equivalence retaining the same complete probability field and all six fields; the constructions use neither normSq selection nor a canonical probability witness.",
+    "Reconstructed additive negation gives normalized common-array and common-reference sign transport."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativePreparationNaturality.lean"]
+  dependencies := ["weight_free_raw_probability"]
+  limits := [
+    "Original-gate semantics requires transparency or a separate original-operation covariance proof.",
+    "Prepared-equality reflection is sufficient for this adapter construction; it is not asserted necessary for probability-law existence.",
+    "Raw injectivity alone does not transport response-context Law. No gauge interpretation, physical process availability, U(1) symmetry or independent per-wire quotient is established."] }
+
+def responsePhaseQuotientWall : ResearchTask := {
+  id := "response_phase_quotient_wall"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Ambient d:ResponseContextQuotient.Data retains its supplied structural fields. The zero-reference contradiction proof uses only normalized, prepared_eq, output_perm and vacuum probability fields with identity/permutation semantics and the Unit-plus-Unit vacuum embedding.",
+    "The separate structural negative-fixed-point statement uses the reconstructed additive half, public PhaseMixerCancellation.doubling_injective and reconstruction.halves; it requires neither observed transparency nor a Law."]
+  conclusions := [
+    "Accepted analytic scope awaiting a kernel artifact: a response probability Law forbids a reference contextually equivalent to chosenZero without an observed-transparency premise.",
+    "In the reconstructed response quotient, x=-x iff x=0. Consequently any supplied response Law has [v] distinct from -[v], without observed transparency.",
+    "A raw representative w of -[v] is contextually distinguishable from v; signature blindness by itself does not identify contextual classes."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ResponsePhaseQuotientWall.lean"]
+  dependencies := ["response_context_probability", "raw_native_probability_existence",
+    "coherent_port_ray_boundary"]
+  limits := [
+    "The weighted ObservedRawProbabilitySelection.no_law_of_reference_observational_zero is a proof prototype, not checked evidence for this planned response theorem.",
+    "Existing response uniqueness and infinite-order theorems retain their observed-transparency premises.",
+    "This wall does not exclude ordinary rays or a common sign transformation on complete prepared arrays. No independent per-wire phase quotient, physical reference availability or outcome interpretation follows."] }
+
+def portFrameAlignment : ResearchTask := {
+  id := "port_frame_alignment"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Pure function contract: chosen alignments kappa:A equiv B and lambda:C equiv E define swap_kappa(a,b)=(kappa.inverse(b),kappa(a)) and the analogous target swap_lambda.",
+    "Separate maps f:A to C and g:B to E intertwine the full two-output gates: S composed with (f times g) equals (f times g) composed with T; T squared is swap_kappa and S squared is swap_lambda."]
+  conclusions := [
+    "Accepted analytic scope awaiting a kernel artifact: squaring full both-output intertwining forces g composed with kappa equals lambda composed with f. Literal common-carrier swaps force f=g.",
+    "Alignment compatibility is exactly equivalent to swap_lambda composed with (f times g) equals (f times g) composed with swap_kappa. A common map is necessary, not sufficient, for gate intertwining.",
+    "Independent bijective frame changes conjugate the gate and transform alignment to lambda=g composed with kappa composed with f.inverse. In the same-carrier case the transformed alignment is the literal swap exactly when the two frame maps coincide.",
+    "On a restricted joint domain, compatibility follows only on projections of pairs p for which covariance at p and T(p), and the needed square identities, hold. Individual reachability does not supply fullness of the joint domain.",
+    "Dropping the root-square premise permits unequal maps in the countercontrol T=S=identity. Existing MixerRecordNaturality.first_output_iff already assumes one common map and cannot infer it from first-output covariance alone."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/PortFrameAlignment.lean"]
+  dependencies := ["mixer_record_naturality", "response_context_probability"]
+  limits := [
+    "The pure alignment theorem requires no transparency, mediality, algebra, chosen zero, injectivity, readout, probability Law or nonemptiness premise.",
+    "Further first-output or coarse-readout countercontrols remain optional bounded formalization work; none is checked by this entry.",
+    "The root-square law contains a port identification; it does not physically create reference alignment. Physical gates, references, QM closure and matter applicability remain open."] }
+
+def nativeSingleSourceReferenceWall : ResearchTask := {
+  id := "native_single_source_reference_wall"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Weight-free r:WeightFreeRawProbability.RawOperationalData V, v:r.Carrier and ReferenceInfiniteOrder r v; every admitted finite native preparation starts from one basis source v and otherwise chosen-zero ports.",
+    "Set u=(r.normalizedOperation(v,zero)).first and w=(r.normalizedOperation(v,u)).first. The direct proof uses normalized native semantics; no probability Law, supplied positive raw weight, feature/Hilbert premise or selected-probability theorem is supplied."]
+  conclusions := [
+    "Accepted analytic scope awaiting a kernel artifact: v and u are individually one-source native-accessible, but w is never any output of any one-source native circuit at any finite width.",
+    "For d=r.zeroWeightData, Related at one, zero and two mixer steps represents w by scalar coefficient a+b*a=1+i/2, where a=(1+i)/2 and b=(1-i)/2. gaussianAction_injective_iff_referenceInfiniteOrder and related_scalar_unique reflect an alleged raw prepared equality to scalar equality.",
+    "Native Circuit.preserves_readout, mixer conservation and nonnegative finite sums bound every scalar output coordinate normSq by 1. The forbidden coefficient has normSq 5/4, yielding the weight-free wall without extracting information from the facade's identically zero weight.",
+    "Keep the explicit scalar countercontrol and the checked coherent attenuated joins from NativeCoherentBranchDilation.dilation_prepared and NativeGaussianResponse.sumDifference_amplitudes as separate controls: two individually accessible coefficients z and t yield (z+t)/2 and i*(z-t)/2 through retained branches without a probability Law.",
+    "A positive-weight adapter is only a separate optional sufficient route with its exact premises. A separate optional Law-implies-infinite-order corollary may feed the weight-free core; neither is a premise or proof input of that core."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/NativeSingleSourceReferenceWall.lean",
+    "Record the explicit scalar countercontrol and positive accessibility closure under existing coherent attenuated sums and differences separately from the direct weight-free unattenuated wall."]
+  dependencies := ["weight_free_raw_probability", "raw_native_probability_existence",
+    "native_vacuum_probability_family", "raw_native_scalar_circuit_bridge"]
+  limits := [
+    "Infinite reference order matters: the zero carrier defeats an unrestricted statement. The auxiliary zero weight contains no information and supplies no positivity premise.",
+    "Normalized operations are not automatically the original physical gate; that interpretation still needs transparency or a separate evaluator bridge.",
+    "The wall separates individual reachability from joint-array availability. It preserves the existing coherent attenuated joins; additional sources or independently prepared references change the source budget.",
+    "Native readout and source accounting are not physical energy, particle count, a cloning no-go theorem or a physical availability theorem. Port labels do not identify particles; matter regimes and actualization remain open."] }
+
+def referenceOccurrenceCompilation : ResearchTask := {
+  id := "reference_occurrence_compilation"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "An arbitrary raw two-output function T on V and the existing finite one-hole Context grammar; no chosen zero, algebraic mixer law, readout or probability premise is required.",
+    "Recursive input ports are Ports(hole)=Unit and Ports(node)=Ports(child) sum Unit. The hole receives x and every syntactic reference occurrence receives its own fresh port with its stated constant."]
+  conclusions := [
+    "Accepted analytic scope awaiting a kernel artifact: compile the child on a padded array, pair its selected cursor with the fresh reference port in the required operand order, select the stated output, and retain the full unused array.",
+    "Prove arbitrary-input padCircuit semantics, including arbitrary retained filler values. RawNetworkMedialWall.evalRaw_padCircuit already supplies the constant-filler case despite naming its filler zero; it is an antecedent, not checked evidence for this new compiler.",
+    "For every T, context c and hole value x, the compiled selected output equals Context.eval T c x. Prove one hole, distinct occurrence ports and input-port cardinality equal to reference occurrences plus one; equality of pair count and reference count is optional.",
+    "Context.eval_plug gives substitution only at the selected-output semantics, not equality of complete retained arrays or physical joinability."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ReferenceOccurrenceCompilation.lean"]
+  dependencies := ["weight_free_raw_probability", "response_context_probability",
+    "native_single_source_reference_wall"]
+  limits := [
+    "The compiler requires no DecidableEq V, inhabited V, structural mixer laws or probability assumptions. Finite syntactic port indices can supply their own decidable equality.",
+    "Port count is neither source count nor statistical independence. An arbitrary T may duplicate values, so distinct syntactic ports establish no semantic no-cloning claim.",
+    "Shared correlated references require a jointly retained input array or explicit source certificates; overwritten inputs are not silently reused. Compilation alone supplies no input-array availability.",
+    "No recipe, token or particle ontology is chosen. Legal reference generation, physical composition, actualization and matter applicability remain open."] }
+
+def referenceProvenanceAndSubstitution : ResearchTask := {
+  id := "reference_provenance_and_substitution"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "References, apparatus, controllers and environment must ultimately obey the same native resource and history rules as the systems being modeled."]
+  conclusions := []
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Distinguish individually reachable port values from jointly preparable arrays; retain source provenance and alignments on legal composition.",
+    "Complete the separate reference_occurrence_compilation task: its selected-output syntax theorem retains every reference occurrence and unused output, while physical availability and shared-history source certificates remain obligations.",
+    "Generate admitted references from native input resources and retained outputs, tracking common frame, alignment and legal history composition without free copying.",
+    "Prove substitution closure for admitted continuations and the native probability-law conditions with explicit apparatus/controller/environment accounting.",
+    "Distinguish fixed-context equivalence, common-transformation covariance and ray redundancy; state sector-preservation requirements separately from channel covariance."]
+  dependencies := ["port_frame_alignment", "native_single_source_reference_wall",
+    "reference_occurrence_compilation", "product_exchange_observation_boundary",
+    "native_preparation_naturality",
+    "response_phase_quotient_wall", "coherent_port_ray_boundary", "product_feature_exchange",
+    "standing_matter_regime_constraint"]
+  limits := [
+    "These are analytic physical-boundary requirements, not checked physical claims. Reference generation, alignment and admitted substitution laws remain obligations.",
+    "Native wire and port labels track preparation interfaces and origin information, not particle identities or an independently owned object ontology; the single-reference amplitude-port grammar and weighted product composition remain distinct.",
+    "Restriction to S-commuting effects does not select eigenstates; sector stability requires preservation and does not follow from mere channel covariance.",
+    "Higher-dimensional permutation sectors for N>=3 are not excluded. All matter regimes, physical process availability, sector selection and actualization remain open."] }
 
 def recordWindowStability : ResearchTask := {
   id := "record_window_stability"
@@ -2660,7 +2878,10 @@ def researchTasks : List ResearchTask := [
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
-  pairExchangeCombinations, productFeatureExchange, recordWindowStability]
+  pairExchangeCombinations, productFeatureExchange, productExchangeObservationBoundary,
+  nativePreparationNaturality, responsePhaseQuotientWall,
+  portFrameAlignment, nativeSingleSourceReferenceWall, referenceOccurrenceCompilation,
+  referenceProvenanceAndSubstitution, recordWindowStability]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

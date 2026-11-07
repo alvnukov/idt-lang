@@ -314,6 +314,10 @@ lean_lib Proofs where
     `Proofs.QMClosure.ResponseSignatureControls,
     `Proofs.QMClosure.CompositionExchangeScope,
     `Proofs.QMClosure.PairExchangeCombinations,
+    `Proofs.QMClosure.EqualGramSpanEquivalence,
+    `Proofs.QMClosure.UnitaryInvolutionProjections,
+    `Proofs.QMClosure.ProductFeatureExchange,
+    `Proofs.QMClosure.ProductExchangeObservationBoundary,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
