@@ -3247,42 +3247,86 @@ def nativeContextAttenuationRecordBoundary : ResearchTask := {
 
 def nativeSingleTraceProbabilityCriterion : ResearchTask := {
   id := "native_single_trace_probability_criterion"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use concrete generated G, native referenceStep F_z and arbitrary signature sigma:G to Omega. No topology or finite response-range assumption is supplied. Witnesses use one generated input x and one generated reference z.",
-    "The strongest proposed sufficient witness is absence of a period from time zero: there exist z and x such that for every L>0 there exists n>=0 with sigma(F_z iterated (n+L) at x) different from sigma(F_z iterated n at x). This includes indispensable quantification over infinitely many times, not a finite transcript."]
+    "HasNonperiodicReferenceTrace is absence of a positive period from time zero: there exist z and x such that for every L>0 there exists n>=0 with sigma(F_z iterated (n+L) at x) different from sigma(F_z iterated n at x). This includes indispensable quantification over infinitely many times, not a finite transcript."]
   conclusions := [
-    "Accepted analytic single-trace criterion awaiting artifacts: failure of contextual separation supplies one common positive contextual return L for every reference and input. Apply that return at F_z iterated n at x to force exact period L at every n, contradicting the witness. Hence the witness implies full G-contextual separation.",
-    "A simpler sufficient witness is eventual avoidance of the initial label: there exist z,x,N such that every n>=N has sigma(F_z iterated n at x) different from sigma(x). A changed constant tail with label c different from sigma(x) is a special case; c need not equal sigma(z). These witnesses imply the time-zero nonperiodicity criterion and make nonconstancy automatic.",
-    "Every stated sufficient witness gives the existing single-basis six-field Law through the checked generic signature criterion and an adapter preserving the entire probability field of any supplied scalar Law. Canonical scalar consistency remains separate. No necessity claim is asserted.",
-    "One changed response, or arbitrarily late changed responses, is not the stated eventual-avoidance or time-zero nonperiodicity witness. The modulo-5 hitSignature at initial residue 2 supplies an analytic countercontrol: the initial false label returns while true responses also recur. Its specific sharp rejection corollary remains pending unless separately exported and checked.",
+    "Checked single-trace criterion: failure of contextual separation supplies one common positive contextual return L for every reference and input. Apply that return at F_z iterated n at x to force exact period L at every n, contradicting the witness. Hence the witness implies full G-contextual separation.",
+    "HasEventuallyAvoidingReferenceTrace is the simpler sufficient witness of eventual avoidance of the initial label: there exist z,x,N such that every n>=N has sigma(F_z iterated n at x) different from sigma(x). HasChangedConstantReferenceTail is the changed constant-tail special case with label c different from sigma(x); c need not equal sigma(z). These witnesses imply the time-zero nonperiodicity criterion and make nonconstancy automatic.",
+    "For each of the three predicates, the checked artifact supplies a separation theorem, automatic nonconstancy, a Law constructor, an entire-probability-field equality for every supplied scalar Law and a separate nonempty wrapper. The changed-tail-to-avoidance-to-time-zero-nonperiodicity chain is checked. Canonical scalar consistency remains separate, and no necessity claim is asserted.",
+    "The checked arbitrarily_late_change_without_law and one_change_without_law controls use the modulo-5 hitSignature to give arbitrarily late changes or a single change while a compatible Law still fails. They reject those weaker criteria, not the exact eventual-avoidance or time-zero-nonperiodicity witnesses.",
     "The one-input/reference witness is compatible with finite-transcript underdetermination because its infinite time quantifiers are essential. A finite observation or finite input family without the required full-time contract does not establish it."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedSingleTraceLaw.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedSingleTraceLaw.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.HasNonperiodicReferenceTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.HasEventuallyAvoidingReferenceTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.HasChangedConstantReferenceTail",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.eventuallyAvoiding_of_changedConstantTail",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.nonperiodic_of_eventuallyAvoiding",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.separates_of_nonperiodicReferenceTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.separates_of_eventuallyAvoidingReferenceTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.separates_of_changedConstantTail",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.nonconstant_of_nonperiodicReferenceTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.nonconstant_of_eventuallyAvoidingReferenceTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.nonconstant_of_changedConstantTail",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.lawOfScalarOfNonperiodicTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.lawOfScalarOfNonperiodicTrace_probability",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.law_nonempty_of_nonperiodicTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.lawOfScalarOfEventuallyAvoidingTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.lawOfScalarOfEventuallyAvoidingTrace_probability",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.law_nonempty_of_eventuallyAvoidingTrace",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.lawOfScalarOfChangedConstantTail",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.lawOfScalarOfChangedConstantTail_probability",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.law_nonempty_of_changedConstantTail",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.arbitrarily_late_change_without_law",
+        "IDT.QMClosure.NativeAllocatedSingleTraceLaw.one_change_without_law"] }]
+  plannedArtifacts := []
   dependencies := ["native_reference_settling", "native_allocated_signature_law",
     "native_reference_recurrence_wall"]
   limits := [
-    "This task is analytic only with no checked evidence. The time-zero nonperiodicity theorem, eventual-avoidance and changed-tail implications, field-preserving adapters and sharp recurrence countercontrol remain proof obligations.",
+    "All three exact infinite-time sufficient predicates, their implication chain, automatic nonconstancy, field-preserving Law adapters and both sharp weaker-criterion controls are checked. This is neither a necessity theorem nor a finite observational verification rule.",
     "Known references are separately charged at each occurrence. No topology, finite alphabet, uniform source budget, physical detector/probability provenance, unknown-token cloning, multi-source Law extension, outcome selection, actualization or QM closure is inferred."] }
 
 def rawSingleTraceProbabilityBridge : ResearchTask := {
   id := "raw_single_trace_probability_bridge"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use the existing Data d and source v with observed square-swap and mediality and full contextual DiagonalFixed at chosenZero and v, as in the checked raw stable bridge. All trace witnesses use original rawReferenceStep toward rawValue of an actual reference program r, starting from rawValue of an actual input program p.",
-    "Supply a raw eventual-avoidance, changed-tail or time-zero nonperiodicity witness with the same exact infinite time quantifiers as the scalar criterion. No scalar coordinates or topology are added as observation data; the Native-indexed complex scalar proof backend is retained."]
+    "Use RawEventuallyAvoidingReferenceTrace, RawChangedConstantReferenceTail or RawNonperiodicReferenceTrace with the same exact infinite time quantifiers as the scalar criterion. No scalar coordinates or topology are added as observation data; the Native-indexed complex scalar proof backend is retained."]
   conclusions := [
-    "Accepted analytic raw-trace bridge awaiting artifacts: signature_reference_iterate and inducedSignature_ofProgram transport every trace time exactly to the induced scalar signature. Preserve actual compiled context witnesses; do not induct on bare signature equality.",
-    "Each raw trace witness then suffices for induced contextual separation and existence of the original ambient single-basis response Law, with the entire probability field of any supplied scalar Law preserved and the unchanged six-field contract transported. Canonical scalar consistency is a separate witness.",
+    "Checked raw-trace bridge: signature_reference_iterate and inducedSignature_ofProgram transport every trace time exactly to the induced scalar signature. Preserve actual compiled context witnesses; do not induct on bare signature equality.",
+    "Each raw predicate has a checked induced scalar predicate transport and separation theorem targeting inducedSignature on G, not ambient literal-state separation. Each then supplies an original ambient single-basis Law constructor, equality of the entire probability field for any supplied scalar Law, and a nonempty wrapper. The unchanged six-field contract is transported, and canonical scalar consistency is a separate witness.",
     "This is sufficient only, not an ambient Law-existence if-and-only-if. The checked ambient point-signature countercontrol remains compatible with failure of a proposed induced trace witness.",
     "The existing exact reference allocation is Bp+n*Br at time n. It counts separate known reference preparations, not a uniform physical resource bound, gate/wire count, physical cloning operation or detector implementation."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ResponseAllocatedSingleTraceBridge.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseAllocatedSingleTraceBridge.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.RawNonperiodicReferenceTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.RawEventuallyAvoidingReferenceTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.RawChangedConstantReferenceTail",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.induced_nonperiodic_of_rawNonperiodic",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.induced_eventuallyAvoiding_of_rawEventuallyAvoiding",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.induced_changedConstantTail_of_rawChangedConstantTail",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.separates_of_rawNonperiodicTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.separates_of_rawEventuallyAvoidingTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.separates_of_rawChangedConstantTail",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.lawOfScalarOfRawNonperiodicTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.lawOfScalarOfRawNonperiodicTrace_probability",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.law_nonempty_of_rawNonperiodicTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.lawOfScalarOfRawEventuallyAvoidingTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.lawOfScalarOfRawEventuallyAvoidingTrace_probability",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.law_nonempty_of_rawEventuallyAvoidingTrace",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.lawOfScalarOfRawChangedConstantTail",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.lawOfScalarOfRawChangedConstantTail_probability",
+        "IDT.QMClosure.ResponseAllocatedSingleTraceBridge.law_nonempty_of_rawChangedConstantTail"] }]
+  plannedArtifacts := []
   dependencies := ["response_allocated_stable_bridge", "native_single_trace_probability_criterion"]
   limits := [
-    "This task is analytically accepted with no checked evidence. Raw predicate definitions, all-time signature transport, sufficient existence and identical-field adapters require exact artifacts before promotion.",
+    "The raw predicates, all-time induced-signature transports, sufficient ambient Law constructors and identical-field equalities are checked with Data and both full contextual DiagonalFixed premises retained. The separation target is inducedSignature only; no ambient literal-state or necessity theorem is asserted.",
     "Observed raw laws, contextual fixedness, actual program resources and common-frame conditions remain supplied. No Complex-free backend, scalar/topological observation datum, physical detector or probability provenance, multi-source Law extension, outcome actualization or QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {

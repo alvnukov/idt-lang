@@ -342,6 +342,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeAllocatedContextAttenuation,
     `Proofs.QMClosure.ResponseAllocatedFaithfulness,
     `Proofs.QMClosure.ResponseAllocatedStableBridge,
+    `Proofs.QMClosure.NativeAllocatedSingleTraceLaw,
+    `Proofs.QMClosure.ResponseAllocatedSingleTraceBridge,
     `Proofs.QMClosure.AllocatedGeneratedContexts,
     `Proofs.QMClosure.CompositionExchangeScope,
     `Proofs.QMClosure.PairExchangeCombinations,
