@@ -304,6 +304,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.VacuumRecordUncomputeControl,
     `Proofs.QMClosure.GeneratedNonmedialAxisProbe,
     `Proofs.QMClosure.RawSparseMarginalReconstruction,
+    `Proofs.QMClosure.RawSparseConservationSelection,
+    `Proofs.QMClosure.RawSparseQuarticControl,
     `Proofs.QMClosure.RawSparseSignedControl,
     `Proofs.QMClosure.NativeHyperrealProbabilityWall,
     `Proofs.QMClosure.NativeArchimedeanProbability,

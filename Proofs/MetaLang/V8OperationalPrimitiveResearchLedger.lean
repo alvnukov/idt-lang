@@ -4301,6 +4301,83 @@ def rawSparseMarginalReconstruction : ResearchTask := {
     "Faithfulness is not assumed and literal raw mediality is not concluded. W identically zero is allowed; nontriviality needs a positive-weight witness.",
     "Mathematical Hilbert completion does not supply physical exhaustion, scalar availability, actualization, composites, QM or GR. These are checked conditional mathematical statements; public and manifest statuses remain unchanged."] }
 
+def rawSparseConservationSelection : ResearchTask := {
+  id := "raw_sparse_conservation_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply a pointed raw set V with chosenZero and a total pair operation F satisfying F squared equals swap and diagonal transparency F(x,x)=(x,x). Supply real W with W(chosenZero)=0 and W>=0 on all raw states, including every iterate.",
+    "Write 0 for chosenZero, m(x,y)=fst(F(x,y)), A(x)=m(x,0), B(x)=m(0,x), u=W composed with A and v=W composed with B. Assume the universal actual sparse law S: W(m(m(x,y),A(z)))+W(m(m(y,x),B(z)))=W(m(x,z))+W(A(y)) for every raw triple x,y,z. Pair-weight conservation is a target conclusion and is not an input field."]
+  conclusions := [
+    "The checked actual sparse law gives W=u+v from S(0,x,x), pair conservation of u from S(x,y,0), and v(A(z))+v(B(z))=v(z). The K zero identities follow directly before any use of skew symmetry.",
+    "For K(x,z)=W(m(x,z))-u(x)-v(z), the checked kernel and residual chain gives the scaled weight-iterate identity. Nonnegativity on all iterates forces the residual r to vanish, so W(A(x))=W(x)/2. Conservation of u then yields pair-weight conservation of W without a conservation input field.",
+    "The checked toConservedContract constructs the existing conserved Contract and reuses RawSparseMarginalReconstruction without changing its source. Under the stated positivity and base laws, the actual sparse law is equivalent to pair-weight conservation AND ObservedMedial.",
+    "The checked observedData construction supplies the existing reconstruction: feature norm-square equals W, and feature equality is equivalent to the one-hole arbitrary-reference ObservationalEq.",
+    "The checked native complex mixer control with quartic readout W(z)=|z|^4 is nonnegative and first-channel medial, hence ObservedMedial, but fails pair conservation. Its actual sparse law at (0,1,1) has left side 1 and right side 1/2. Thus ObservedMedial with nonnegativity alone does not imply the actual sparse law."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawSparseConservationSelection.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseConservationSelection.u_add_v",
+        "IDT.QMClosure.RawSparseConservationSelection.u_conserved",
+        "IDT.QMClosure.RawSparseConservationSelection.v_vacuum_conserved",
+        "IDT.QMClosure.RawSparseConservationSelection.K_left_zero",
+        "IDT.QMClosure.RawSparseConservationSelection.sparse_implies_kernel",
+        "IDT.QMClosure.RawSparseConservationSelection.scaled_weight_iterate",
+        "IDT.QMClosure.RawSparseConservationSelection.r_eq_zero",
+        "IDT.QMClosure.RawSparseConservationSelection.weight_A",
+        "IDT.QMClosure.RawSparseConservationSelection.pair_conserved",
+        "IDT.QMClosure.RawSparseConservationSelection.toConservedContract",
+        "IDT.QMClosure.RawSparseConservationSelection.sparse_iff_conserved_and_observed_medial",
+        "IDT.QMClosure.RawSparseConservationSelection.observedData",
+        "IDT.QMClosure.RawSparseConservationSelection.norm_feature_sq",
+        "IDT.QMClosure.RawSparseConservationSelection.feature_eq_iff_observationalEq" ] },
+    { sourcePath := "Proofs/QMClosure/RawSparseQuarticControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseQuarticControl.nonnegative",
+        "IDT.QMClosure.RawSparseQuarticControl.first_channel_medial",
+        "IDT.QMClosure.RawSparseQuarticControl.observed_medial",
+        "IDT.QMClosure.RawSparseQuarticControl.vacuum_first_weight",
+        "IDT.QMClosure.RawSparseQuarticControl.vacuum_second_weight",
+        "IDT.QMClosure.RawSparseQuarticControl.pair_output_at_10",
+        "IDT.QMClosure.RawSparseQuarticControl.pair_input_at_10",
+        "IDT.QMClosure.RawSparseQuarticControl.not_pair_conserved",
+        "IDT.QMClosure.RawSparseQuarticControl.sparse_lhs_at_011",
+        "IDT.QMClosure.RawSparseQuarticControl.sparse_rhs_at_011",
+        "IDT.QMClosure.RawSparseQuarticControl.not_sparse_law",
+        "IDT.QMClosure.RawSparseQuarticControl.observed_medial_nonnegative_does_not_imply_sparse" ] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_sparse_marginal_reconstruction",
+    "raw_sparse_signed_control"]
+  limits := [
+    "The universal actual sparse law remains a supplied hypothesis whose physical justification and availability are open. Source-generated preparations do not yet supply all raw triples or arbitrary-reference contexts.",
+    "The hypotheses permit W identically zero and do not supply a positive-weight witness. A nontrivial physical realization and physical exhaustion remain open.",
+    "Actualization, independence, composites, dynamics and physical scales remain unresolved obligations. These are checked conditional mathematical statements; no QM, GR or primitive-closure claim follows, and public and manifest statuses remain unchanged."] }
+
+def rawSparseInsertionOrigin : ResearchTask := {
+  id := "raw_sparse_insertion_origin"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "Investigate physically available sparse preparations ((x,y),(z,0)) with one common fixed-exposure unnormalized selected-row readout W(output1)+W(output2).",
+    "The proposed operational requirement is invariance of that selected-row readout when the row layer is inserted before the column analyzer. Its availability and physical justification remain open."]
+  conclusions := [
+    "This proposed insertion-invariance requirement is operationally the actual sparse law S itself. Giving it a circuit interpretation supplies no independent derivation of S.",
+    "Analytic dependency plan only, pending kernel check: the six universally quantified families S(0,t,t), S(x,y,0), S(t,t,z), S(A(t),B(t),z), S(B(t),A(t),z) and S(t,0,z) appear sufficient for pair conservation.",
+    "The additional generic families S(x,y,A(z)) and S(x,y,B(z)) are the analytic dependency target for reconstruction. Neither the six-family sufficiency claim nor this reconstruction reduction is a checked theorem or checked equivalence."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawSparseQuarticControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseQuarticControl.observed_medial_nonnegative_does_not_imply_sparse"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_sparse_conservation_selection",
+    "raw_network_medial_wall"]
+  limits := [
+    "The checked quartic countercontrol shows that ObservedMedial with nonnegativity alone does not imply S. Its evidence supports this mathematical limit only and supplies no physical insertion principle.",
+    "Causal independence, record aggregation and exposure normalization require separate bridges. Overlapping row and column ports are not disjoint spectators, so disjoint-spectator locality does not supply the insertion law.",
+    "Coverage of all sparse raw preparations and generated arbitrary-reference contexts remains open. No available physical interface, nontrivial positive physical realization, actualization, composite, dynamics, physical-scale or primitive-closure conclusion is supplied; public and manifest statuses remain unchanged."] }
+
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
   stage := .conditionalKernelTheorem
@@ -5132,6 +5209,7 @@ def researchTasks : List ResearchTask := [
   reversibleResetEnvironmentCapacity, crossScalePrimitiveComparison,
   homogeneousProductInterchange, vacuumRecordUncomputeControl, generatedNonmedialAxisProbe,
   sparseMarginalMedialCriterion, rawSparseMarginalReconstruction, rawSparseSignedControl,
+  rawSparseConservationSelection, rawSparseInsertionOrigin,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
