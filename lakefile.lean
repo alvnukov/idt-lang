@@ -303,6 +303,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.HomogeneousProductInterchange,
     `Proofs.QMClosure.VacuumRecordUncomputeControl,
     `Proofs.QMClosure.GeneratedNonmedialAxisProbe,
+    `Proofs.QMClosure.RawSparseMarginalReconstruction,
+    `Proofs.QMClosure.RawSparseSignedControl,
     `Proofs.QMClosure.NativeHyperrealProbabilityWall,
     `Proofs.QMClosure.NativeArchimedeanProbability,
     `Proofs.QMClosure.RawNativeDyadicSemantics,

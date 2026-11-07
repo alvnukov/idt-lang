@@ -4251,6 +4251,86 @@ def sparseMarginalMedialCriterion : ResearchTask := {
     "Universal sparse joint-preparation coverage is not supplied; the generated finite probe does not establish all complex triples. A common fixed interface, compiler, spectator and scaling bridge remains open.",
     "The complex carrier, normSq readout and native vacuum action are imported hypotheses. These are tests of an existing source hypothesis, not a selection of nature or a physical Born, QM or no-signalling derivation. All conclusions remain analytic pending kernel check; public and manifest statuses remain unchanged."] }
 
+def rawSparseMarginalReconstruction : ResearchTask := {
+  id := "raw_sparse_marginal_reconstruction"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply a pointed raw carrier V with zero and a total F : V*V -> V*V satisfying square-swap and diagonal transparency. Supply real-valued W with W(0)=0 and pair-weight conservation. Write m(x,z)=fst(F(x,z)), h(x,z)=snd(F(x,z)), A(x)=m(x,0), B(x)=m(0,x), u(x)=W(A(x)) and v(x)=W(B(x)).",
+    "Assume the universal actual sparse row-marginal condition on [[x,y],[z,0]]: W(m(m(x,y),A(z)))+W(m(h(x,y),B(z)))=W(m(x,z))+W(A(y)) for every raw triple x,y,z. Add W>=0 on all raw states, including every iterate, for weight descent, observational equivalence and the Hilbert reconstruction. No vacuum half-balance, complex raw carrier, raw addition, homogeneity, phase, split bijections, faithfulness or topology is assumed."]
+  conclusions := [
+    "With K(x,z)=W(m(x,z))-u(x)-v(z), the checked actual sparse law implies pair conservation of u and the kernel marginal law. In the signed-weight stage this gives split adjoints, commuting kernel actions, K(m(x,y),z)=K(x,B(z))+K(y,A(z)), congruence of K-profile equality and mediality modulo K-profile equality. No signed-weight descent of W or equivalence with ObservationalEq is claimed.",
+    "For q(x)=2*K(x,A(A(x))) and r(x)=W(x)-q(x), the checked identities give q(A(x))=q(x)/2 and r(A^4(x))=-r(x)/4. For every natural k, 16^k*W((A^4)^k(x))=q(x)+(-4)^k*r(x). With W>=0 on all raw states and iterates, the scaled right side is nonnegative for every k; the real Archimedean argument forces r=0. Consequently W=q and both W(A(x))=W(x)/2 and W(B(x))=W(x)/2 hold, without a vacuum half-balance input.",
+    "Under the explicit nonnegativity hypothesis, W descends through KernelEq, KernelEq is equivalent to the existing one-hole arbitrary-reference ObservationalEq, and the actual sparse law is equivalent to ObservedMedial. The checked construction supplies existing ObservedData, quotientData, Hilbert and feature, with feature norm-square equal to W and feature equality equivalent to ObservationalEq. A supplied positive-weight witness has nonzero feature; no positive witness is supplied by the contract."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawSparseMarginalReconstruction.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseMarginalReconstruction.u_conserved",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.sparse_implies_kernel",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.K_A_adjoint",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.K_B_adjoint",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.K_AB_commute",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.K_m",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.kernelEq_m_congr",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.kernel_medial",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.q_A",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.r_fourthVacuum",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.scaled_weight_iterate",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.scaled_weight_iterate_nonnegative",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.r_eq_zero",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.weight_eq_q",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.weight_A",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.weight_B",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.kernelEq_weight_eq",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.kernelEq_iff_observationalEq",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.sparse_marginal_iff_observed_medial",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.observedData",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.quotientData",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.Hilbert",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.feature",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.norm_feature_sq",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.feature_eq_iff_observationalEq",
+        "IDT.QMClosure.RawSparseMarginalReconstruction.feature_ne_zero_of_positive_weight"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "operational_context_quotient",
+    "raw_network_medial_wall",
+    "generated_nonmedial_axis_probe"]
+  limits := [
+    "Universal actual sparse compatibility remains an imported primitive. Coverage of all joint triples and arbitrary fixed references is not supplied by source-generated preparations; independent physical interfaces remain open. Vacuum half-balance is a checked conclusion under nonnegativity, not an input hypothesis.",
+    "Faithfulness is not assumed and literal raw mediality is not concluded. W identically zero is allowed; nontriviality needs a positive-weight witness.",
+    "Mathematical Hilbert completion does not supply physical exhaustion, scalar availability, actualization, composites, QM or GR. These are checked conditional mathematical statements; public and manifest statuses remain unchanged."] }
+
+def rawSparseSignedControl : ResearchTask := {
+  id := "raw_sparse_signed_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the native complex mixer and real-part readout W as a mathematical omission control. Retain zero weight, square-swap, diagonal transparency, pair-weight conservation and the actual sparse row-marginal condition; omit nonnegativity."]
+  conclusions := [
+    "The checked native-complex-mixer real-part control satisfies the actual sparse law, has K identically zero and KernelEq for every pair, but W(-1)=-1. Thus this signed example satisfies the sparse and kernel laws without nonnegativity.",
+    "The checked vacuum value is W(A(i))=-1/2, different from W(i)/2=0. KernelEq(0,1) holds while W(0) differs from W(1), and the universal weight-descent implication fails. This is an omission countercontrol for extending half-balance or weight descent to signed weights.",
+    "Universal KernelEq in this signed control does not authorize the nonnegative-stage equivalence with ObservationalEq. In particular, the weight-distinct pair 0,1 is not asserted to be observationally equivalent."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawSparseSignedControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseSignedControl.contract",
+        "IDT.QMClosure.RawSparseSignedControl.sparse_law",
+        "IDT.QMClosure.RawSparseSignedControl.kernel_zero",
+        "IDT.QMClosure.RawSparseSignedControl.kernelEq_all",
+        "IDT.QMClosure.RawSparseSignedControl.imaginary_vacuum_weight",
+        "IDT.QMClosure.RawSparseSignedControl.vacuum_half_failure",
+        "IDT.QMClosure.RawSparseSignedControl.negative_weight",
+        "IDT.QMClosure.RawSparseSignedControl.not_nonnegative",
+        "IDT.QMClosure.RawSparseSignedControl.kernel_equiv_weight_distinction",
+        "IDT.QMClosure.RawSparseSignedControl.kernel_equiv_does_not_force_weight_descent"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_sparse_marginal_reconstruction"]
+  limits := [
+    "The complex carrier, native mixer and signed real-part readout define only a mathematical omission control. Signed weights are not physical probabilities; no physical availability, actualization or QM conclusion is inferred.",
+    "These are checked conditional mathematical statements; public and manifest statuses remain unchanged."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -5051,7 +5131,7 @@ def researchTasks : List ResearchTask := [
   signedRawRailBoundedNegativeControl, globalDirectionReversibilityBoundary,
   reversibleResetEnvironmentCapacity, crossScalePrimitiveComparison,
   homogeneousProductInterchange, vacuumRecordUncomputeControl, generatedNonmedialAxisProbe,
-  sparseMarginalMedialCriterion,
+  sparseMarginalMedialCriterion, rawSparseMarginalReconstruction, rawSparseSignedControl,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
