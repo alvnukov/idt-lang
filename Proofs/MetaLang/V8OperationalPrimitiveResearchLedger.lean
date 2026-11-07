@@ -2263,29 +2263,57 @@ def observedRawProbabilitySelection : ResearchTask := {
 
 def responseContextProbability : ResearchTask := {
   id := "response_context_probability"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "A raw zero and two-output operation with a supplied response/signature map into an arbitrary type; contexts are the existing finite one-hole grammar with arbitrary raw references.",
     "Square-swap, first-channel mediality and first-output diagonal transparency hold modulo equality of signatures in every stated context.",
     "A real-valued six-field all-width probability law respects pointwise contextual equivalence of actual original-gate prepared arrays."]
   conclusions := [
-    "Independently accepted analytic route: context plugging derives congruence without a numerical weight, positivity, conservation or a supplied Hilbert feature map.",
-    "The quotient supplies WeightFreeRawProbability.RawOperationalData. Transparency identifies original and normalized quotient semantics, transferring the identical probability field to existing selection and uniqueness.",
-    "Probability-preserving adapters in both directions should transfer the exact existence criterion: infinite additive order of the quotient reference.",
-    "A finite total contextual quotient would therefore forbid the law. A finite response alphabet alone does not: exact Boolean zero-testing of the native complex gate separates all inputs via a first-output context with reference minus i times the tested input.",
-    "Constant signatures yield a singleton quotient and no law; identity signatures recover the literal transparent route."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/ResponseContextQuotient.lean",
-    "Proofs/QMClosure/ResponseNativeProbabilitySelection.lean",
-    "Proofs/QMClosure/ResponseSignatureControls.lean"]
+    "Context plugging supplies congruence without a numerical weight, positivity, conservation or a supplied Hilbert feature map.",
+    "The quotient supplies WeightFreeRawProbability.RawOperationalData. Transparency identifies original and normalized quotient semantics; both law adapters retain the identical probability field and form an equivalence of contracts.",
+    "Conditional native selection and field uniqueness use the supplied law without an existence witness or reference-order premise. Under the same transparency premise, law existence is exactly infinite additive order of the quotient reference.",
+    "A finite total contextual quotient forbids the law. A finite response alphabet alone does not: the native complex model with Boolean exact-zero signature has contextual equivalence exactly literal equality and an infinite quotient.",
+    "The Boolean model transports any supplied native scalar law with its field unchanged; the canonical scalar law supplies a separate consistency witness at reference one.",
+    "Constant signatures yield a singleton quotient and no law for any raw operation. An identity signature separates raw values already in the hole context; no separate identity-signature law-equivalence wrapper is packaged."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseContextQuotient.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseContextQuotient.output_congr",
+        "IDT.QMClosure.ResponseContextQuotient.relation_le_responseEq",
+        "IDT.QMClosure.ResponseContextQuotient.Data.quotientData",
+        "IDT.QMClosure.ResponseContextQuotient.quotient_transparent",
+        "IDT.QMClosure.ResponseContextQuotient.evalRaw_class",
+        "IDT.QMClosure.ResponseContextQuotient.normalized_evalRaw_class"] },
+    { sourcePath := "Proofs/QMClosure/ResponseNativeProbabilitySelection.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.prepared_eq_class",
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.quotientLawEquiv",
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.Law.toQuotientLaw_probability",
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.fromQuotientLaw_probability",
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.probability_eq_normSq",
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.probability_fields_equal",
+        "IDT.QMClosure.ResponseNativeProbabilitySelection.law_nonempty_iff_reference_infiniteOrder"] },
+    { sourcePath := "Proofs/QMClosure/ResponseSignatureControls.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseSignatureControls.finite_quotient_no_law",
+        "IDT.QMClosure.ResponseSignatureControls.law_implies_infinite_quotient",
+        "IDT.QMClosure.ResponseSignatureControls.identity_responseEq_iff_eq",
+        "IDT.QMClosure.ResponseSignatureControls.constant_no_law",
+        "IDT.QMClosure.ResponseSignatureControls.native_first_cancel_reference",
+        "IDT.QMClosure.ResponseSignatureControls.native_responseEq_iff_eq",
+        "IDT.QMClosure.ResponseSignatureControls.native_quotient_infinite",
+        "IDT.QMClosure.ResponseSignatureControls.nativeLawOfScalar_probability",
+        "IDT.QMClosure.ResponseSignatureControls.native_law_nonempty"] }]
+  plannedArtifacts := []
   dependencies := ["weight_free_raw_probability", "observed_raw_probability_selection"]
   limits := [
-    "Analytic only: none of these new transfers or controls is kernel checked yet.",
-    "The signature is supplied independently of the desired conclusion; encoding the target probability or representation into it is not a derivation. It is not automatically an individual deterministic measurement outcome.",
-    "Observed mediality, probability consistency, real Archimedean values and the all-width contract remain premises; observation and detector availability remain open.",
+    "Signature provenance independent of the desired conclusion is a scientific requirement, not a property enforced by Data. Encoding the target probability or representation into it is not a derivation.",
+    "The signature is not automatically an individual deterministic measurement outcome; structural or statistical response data do not assign actual outcomes to every incompatible measurement.",
+    "Observed mediality, transparency, probability consistency, real Archimedean values and the all-width contract remain premises; physical availability and detector dynamics remain open.",
+    "Native words describe coherent preparations from one reference and raw vacua, not arbitrary physical states, transformations or independently unknown rays.",
     "The Boolean control supplies complex coordinates and the native gate as a mathematical model. Exact zero tests and arbitrary references do not establish finite-precision physical controls.",
+    "Finite contextual quotient means finitely many response-equivalence classes of raw coherent preparations; it is not finite Hilbert dimension, finite output alphabet or a no-go theorem for arbitrary finite-state stochastic models.",
     "A finite battery yields a finite full contextual quotient only with finite responses and a proof that its equality is the full contextual congruence; bounded depth alone is neither finite nor automatically congruent.",
     "This transparent route does not subsume the weighted existence theorem without transparency.",
     "Outcome actualization and every standing matter-regime obligation remain open."] }
@@ -2446,6 +2474,7 @@ def compositionExchangeScope : ResearchTask := {
   limits := [
     "Analytic only: the new scope theorems and control await kernel checking; no dimension or rank classification is asserted.",
     "The existing product theorem remains a correct sufficient bridge. This task bounds treating its factorization as a primitive for every kind of composition.",
+    "Universal factorization with the full additive and phase contract is essential here; restricted factorization on orthogonal inputs or nonlinear normalized products is not excluded.",
     "Output null-difference commutation is not arbitrary physical observational equivalence without a matching bridge.",
     "Single-reference native circuits are not already a particle sector. Tensor-factor exchange, mode permutations and particle exchange require distinct interpretations.",
     "Symmetric and exterior pair preparations are different supplied embeddings; a later tensor illustration would not be different predictions for an identical fully specified input.",

@@ -309,6 +309,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.ObservedRawProbabilitySelection,
     `Proofs.QMClosure.RecordMarginalActualizationWall,
     `Proofs.QMClosure.RecordMarginalActualizationAdapter,
+    `Proofs.QMClosure.ResponseContextQuotient,
+    `Proofs.QMClosure.ResponseNativeProbabilitySelection,
+    `Proofs.QMClosure.ResponseSignatureControls,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
