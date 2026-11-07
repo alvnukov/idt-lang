@@ -292,6 +292,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeGaussianResponse,
     `Proofs.QMClosure.NativeProbabilityUniqueness,
     `Proofs.QMClosure.NativeHyperrealProbabilityWall,
+    `Proofs.QMClosure.NativeArchimedeanProbability,
+    `Proofs.QMClosure.RawNativeDyadicSemantics,
+    `Proofs.QMClosure.RawNativeProbabilitySelection,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
