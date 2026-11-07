@@ -2492,26 +2492,69 @@ def compositionExchangeScope : ResearchTask := {
 
 def pairExchangeCombinations : ResearchTask := {
   id := "pair_exchange_combinations"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "The same-source ordered product bridge from CompositeProductKernel: additive source and target groups, positive quadratic readouts, compatible quarter-turn phases, separate additivity, both phase compatibilities and universal product readout for the supplied ordered map p.",
     "The new maps are mathematical target-group expressions Splus(x,y)=p(x,y)+p(y,x) and Sminus(x,y)=p(x,y)-p(y,x)."]
   conclusions := [
-    "Independently accepted analytic construction: both pair maps retain separate additivity and phase compatibility; the plus map is symmetric and the minus map is alternating.",
+    "Checked conditional construction: both pair maps retain separate additivity and phase compatibility; the plus map is symmetric and the minus map is alternating.",
     "Their same-sign kernels are twice the sum or difference of the direct and exchanged product kernels. The mixed plus/minus kernel vanishes.",
     "Their readouts are 2*Q(x)*Q(y) plus or minus 2*normSq(K(x,y)); positivity is inherited from the target readout.",
     "The minus diagonal is zero, the plus diagonal has weight 4*Q(x)^2, and the two readouts sum to 4*Q(x)*Q(y). An orthogonal positive-weight pair has positive minus readout."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/PairExchangeCombinations.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PairExchangeCombinations.lean"
+      declarations := [
+        "IDT.QMClosure.PairExchangeCombinations.plus_exchange",
+        "IDT.QMClosure.PairExchangeCombinations.minus_exchange",
+        "IDT.QMClosure.PairExchangeCombinations.minus_diagonal",
+        "IDT.QMClosure.PairExchangeCombinations.plus_add_minus",
+        "IDT.QMClosure.PairExchangeCombinations.plus_kernel",
+        "IDT.QMClosure.PairExchangeCombinations.minus_kernel",
+        "IDT.QMClosure.PairExchangeCombinations.mixed_kernel",
+        "IDT.QMClosure.PairExchangeCombinations.plus_readout",
+        "IDT.QMClosure.PairExchangeCombinations.minus_readout",
+        "IDT.QMClosure.PairExchangeCombinations.plus_diagonal_readout",
+        "IDT.QMClosure.PairExchangeCombinations.sum_readouts",
+        "IDT.QMClosure.PairExchangeCombinations.minus_positive_of_orthogonal",
+        "IDT.QMClosure.PairExchangeCombinations.scalar_control_minus_zero"] }]
+  plannedArtifacts := []
   dependencies := ["composition_exchange_scope", "composite_product_kernel"]
   limits := [
-    "Analytic only: these new identities await kernel checking. No tensor carrier, scalar multiplication or square-root normalization is an input to the proposed pair construction.",
+    "No tensor carrier, scalar multiplication or square-root normalization is an input to these raw pair constructions.",
     "The original ordered map retains universal product factorization; the new pair combinations generally do not.",
     "Argument-swap identities do not by themselves supply a global raw-target exchange operator. Pair-map images need not be additive subgroups, and no direct sum or target exhaustion is asserted.",
     "Without halving, only Splus+Sminus equals twice the ordered product follows at the raw level. Semidefinite weights permit nonzero null intersections.",
     "Alternating nontriviality is conditional; complex scalar multiplication gives an identically zero minus map.",
     "Physical availability of products and sums, coherent repeated inputs, exchange-sign selection, species, spin-statistics, probabilities of pair creation and every standing matter regime remain open."] }
+
+def productFeatureExchange : ResearchTask := {
+  id := "product_feature_exchange"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The same-source weighted ordered-product bridge used by pairExchangeCombinations, with every additive, phase, positive-quadratic and universal factorization premise retained.",
+    "The target Hilbert space is the existing CanonicalQuadraticHilbert output constructed from the target quadratic readout and phase; it is not a new physical Hilbert primitive.",
+    "The mathematical domain is only the closed complex span Hp of target features of the ordered products p(x,y)."]
+  conclusions := [
+    "Independently accepted analytic route: equal-Gram indexed families admit a unique complex linear isometry equivalence between their generated closed spans. Empty families and degenerate Gram data require no nontriviality premise.",
+    "For the ordered product family, swapping the two same-source indices preserves every Gram matrix. The equal-Gram extension supplies a unique involutive unitary on Hp with the stated generator action.",
+    "Within Hp the operators (I+S)/2 and (I-S)/2 are complementary orthogonal projections; their ranges are the closed spans of the corresponding plus and minus pair features.",
+    "Projected generator squared norms are (Q(x)*Q(y) +/- normSq(K(x,y)))/2; the minus range is nonzero exactly when some pair has strict overlap inequality."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/EqualGramSpanEquivalence.lean",
+    "Proofs/QMClosure/UnitaryInvolutionProjections.lean",
+    "Proofs/QMClosure/ProductFeatureExchange.lean"]
+  dependencies := ["pair_exchange_combinations", "composite_product_kernel",
+    "canonical_hilbert_completion", "canonical_hilbert_uniqueness"]
+  limits := [
+    "Analytic only: the general extension, projections and product adapter await new kernel artifacts.",
+    "Installed LinearEquiv.extendOfIsometry on the identity of the free complex coefficient module supplies the intended extension seam; no norm or injectivity of the coefficient maps is presumed.",
+    "The generic utility assumes mathematical Hilbert comparison spaces; the product adapter must explicitly instantiate the existing constructed target. Do not apply quadratic completion to Q(x)*Q(y) with componentwise addition, which is generally quartic.",
+    "This is the weighted ordered-product route, not an end-to-end weight-free composite reconstruction from the response-probability theorem.",
+    "Division by two occurs only in the constructed Hilbert output. No raw halving, raw exchange operator, raw direct sum, whole-target exhaustion or physical exchange/projection availability is asserted.",
+    "Argument exchange, mode permutations and physical particle exchange remain distinct. Exchange-sign selection, species, spin-statistics, pair-preparation availability, outcome actualization and every matter-regime obligation remain open."] }
 
 def recordWindowStability : ResearchTask := {
   id := "record_window_stability"
@@ -2617,7 +2660,7 @@ def researchTasks : List ResearchTask := [
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
-  pairExchangeCombinations, recordWindowStability]
+  pairExchangeCombinations, productFeatureExchange, recordWindowStability]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
