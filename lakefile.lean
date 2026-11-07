@@ -295,6 +295,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeArchimedeanProbability,
     `Proofs.QMClosure.RawNativeDyadicSemantics,
     `Proofs.QMClosure.RawNativeProbabilitySelection,
+    `Proofs.QMClosure.RawNativeProbabilityExistence,
+    `Proofs.QMClosure.OriginalGateProbabilityWall,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
     `Proofs.QMClosure.NativeMixerInfiniteOrder
   ]
