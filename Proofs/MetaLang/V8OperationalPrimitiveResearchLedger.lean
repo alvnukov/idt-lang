@@ -3145,23 +3145,43 @@ def nativeBinaryValuationDensity : ResearchTask := {
 
 def nativeFiniteObservationUnderdetermination : ResearchTask := {
   id := "native_finite_observation_underdetermination"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Use concrete generated Gaussian-dyadic G, any finite set S of generated values and any Boolean labeling f on S. These are individual signature observations, including the finitely many generated context outputs recorded in a fixed finite adaptive transcript.",
+    "Use concrete generated Gaussian-dyadic G, any finite set S of generated values and any Boolean labeling f on S. The exact checked top statement is: for every S:Finset G and f:G to Bool, Nonempty(ExtensionPair S f), with no additional premises.",
     "Supply the checked native mixer and generated arithmetic. Ordinary scalar topology is used only to exhibit a nonempty false open patch for the finite-support positive extension; no physical readout model or probability provenance is supplied."]
   conclusions := [
-    "Accepted analytic construction awaiting artifacts: extend S by two fresh generated values with opposite labels to obtain S'. Choose one common denominator 2^h for their integer real/imaginary coordinates (r_s,t_s), let B be the largest pairwise coordinate-difference magnitude, and put M=2*B+3.",
-    "Use the full Gaussian residue ring (Z/MZ)[I], with I squared equal to -1 and 2 invertible because M is odd. Reduction is injective on S' since distinct coordinate differences have magnitude below M. No primality of M or chosen square root of -1 is required.",
-    "Let T be the true-labeled subset of S'. The positive signature sigmaPlus is the indicator of the finite set T: it matches f, is nonconstant, and has a nonempty false relatively open patch. The checked stable-observation and generic signature criteria then supply contextual separation and existence of the unchanged single-basis six-field Law.",
-    "The negative signature sigmaMinus is the indicator of the residue image of T. It also matches f and is nonconstant, but generated 0 and M are distinct and fully contextually equivalent through native residue preservation. Consequently separation, compatible single-basis Law existence and ReferenceSettles all fail.",
-    "The two extensions match any finite individual, contextual or adaptive signature transcript after collecting its finitely many evaluated generated values. This does not cover finite symbolic proofs, separately restricted model classes, or a finite family of inputs supplied together with its entire infinite response tails."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedFiniteObservationBoundary.lean"]
+    "Checked finite-observation boundary: for every finite S and Boolean labeling f, ExtensionPair supplies two signatures agreeing with f on S, both nonconstant. The positive signature separates full contextual classes and admits the existing single-basis six-field Law; the negative signature fails separation, admits no such Law and has no ReferenceSettles witness.",
+    "The construction adds two fresh generated points with opposite labels. The residue helper gives a common Gaussian-dyadic denominator and an odd M>1 whose full pair residue is injective on any prescribed finite set; the implementation chooses M=2*B+3 from a coordinate-difference bound B.",
+    "For arbitrary odd M, the representation-independent Related relation gives a unique residue in ZMod(M) x ZMod(M). Invertibility of 2 gives native compatibility and contextual preservation without a prime-modulus premise or a chosen square root of -1. The zero and natural-modulus controls yield distinct generated values with identical residues.",
+    "The positive finite-support indicator has a false open patch and is nonconstant; no positive exact-settling assertion is packaged. The negative residue-image indicator matches the same finite labels while identifying 0 and M contextually, so its no-law and no-settling conclusions retain the unchanged six-field contract.",
+    "Finitely many generated context-output observations can be collected into S. The artifact contains no separate adaptive-executor syntax or checked adaptive-execution theorem, and makes no claim about a finite input family supplied with all its infinite response tails. Finite symbolic proofs and inference in separately restricted model classes are outside the underdetermination statement."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedGaussianResidue.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.Related",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.related_unique",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.related_of_presentation",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.generated_exists_related",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.residue",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.residue_presentation",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.two_isUnit",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.residue_operationG",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.responseEq_of_residue_eq",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.naturalG_injective",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.residue_zeroG",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.residue_natural_modulus",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.common_denominator",
+        "IDT.QMClosure.NativeAllocatedGaussianResidue.exists_finite_injective_residue"] },
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedFiniteObservationBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedFiniteObservationBoundary.ExtensionPair",
+        "IDT.QMClosure.NativeAllocatedFiniteObservationBoundary.finite_observation_boundary"] }]
+  plannedArtifacts := []
   dependencies := ["native_allocated_stable_observation", "native_reference_settling",
     "native_allocated_signature_law", "native_allocated_source_arithmetic"]
   limits := [
-    "This task is analytic only with no checked evidence. Fresh-point selection, composite-modulus Gaussian reduction, finite-set injectivity, transcript matching and both law/separation controls remain proof obligations.",
+    "The two checked modules establish representation-independent odd-modulus residue compatibility, finite-set injectivity and the unconditional ExtensionPair theorem. Its positive branch has no exact-settling field, and adaptive transcript interpretation is not a separate formal executor result.",
     "The claim is finite observational underdetermination within the stated unrestricted mathematical signature class, not a rejection of finite machine-checked proofs or of inference under an explicitly restricted model class.",
     "Known generated references remain separately allocated under supplied source/frame conditions. No uniform source budget, physical availability, detector interpretation, probability provenance, unknown-token cloning, multi-source Law extension, actualization or QM closure is inferred."] }
 
@@ -3187,6 +3207,29 @@ def nativeReferenceSettlingRegularityScope : ResearchTask := {
     "Every assertion in this entry is analytic only, with no checked evidence. The local-uniform equivalence, dense-transversal construction, regularity and extension distinctions, global-uniform collapse and optional cofinite criterion all require separate exact artifacts.",
     "Ordinary topology and regularity are supplied mathematical structure. Local response stability is not physical robustness, detector dynamics, a noise model, probability provenance or outcome actualization.",
     "Known references remain separately charged under supplied preparation and common-frame conditions. No physical reference availability, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension or QM closure is inferred."] }
+
+def nativeContextAttenuationRecordBoundary : ResearchTask := {
+  id := "native_context_attenuation_record_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the existing one-hole Context grammar over concrete generated G and the native scalar mixer. All reference values are fixed independently of the unknown hole input; each constructor selects one output with slope a=(1+I)/2 or b=(1-I)/2.",
+    "Supply the existing complex scalar backend and usual complex metric. Context depth counts constructors on the selected one-hole path, not the total depth of a retained-wire circuit whose companion outputs may later re-enter.",
+    "For a sequence C_n, use the same input-independent context sequence for all compared inputs; known reference values may vary with n. A premise that one selected-output sequence converges is separate from depth tending to infinity."]
+  conclusions := [
+    "Accepted analytic affine-context contract awaiting artifacts: each finite C evaluates as C(x)=c_C*x+d_C, with norm(c_C)=(1/sqrt(2))^depth(C). Therefore output distance is exactly that factor times input distance, and every finite one-hole context remains injective.",
+    "For any one common input-independent sequence C_n with selected-path depth tending to infinity, the output differences for each fixed pair of inputs tend to zero, even when the known references vary. If outputs converge for one input, they converge for every input to that same scalar limit. No existence of convergence is asserted from attenuation alone.",
+    "Broader affine-sequence boundary: if c_n*x+d_n converges at inputs 0 and 1 to l0 and l1, respectively, it converges pointwise on G to (l1-l0)*x+l0. A finite image of this literal limiting affine function on infinite G forces it to be constant.",
+    "These results concern literal scalar limiting values on the selected one-hole path. Selected-wire attenuation alone supplies neither distinct limiting records nor discrete readout or outcome actualization."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedContextAttenuation.lean"]
+  dependencies := ["native_reference_settling", "native_allocated_source_arithmetic",
+    "allocated_preparation_contexts"]
+  limits := [
+    "This task is analytic only with no checked evidence. Affine normalization, exact slope/distance laws, injectivity, conditional convergence and the finite-image limiting boundary all remain proof obligations.",
+    "All companion and ancillary wires remain retained. Square-swap already permits recoverability when companion outputs re-enter, so the selected-path theorem is no claim of global information erasure, thermodynamic irreversibility or a no-go theorem for detectors.",
+    "Input-dependent feedback, stopping, decoding and richer retained-wire observables are outside this proof scope. The same-context-sequence condition cannot be dropped or replaced by a total-circuit-depth statement.",
+    "The usual metric and scalar backend are supplied mathematical structure. No probabilities, physical detector implementation, source/reference availability, probability provenance, actualization or full QM closure are inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -3975,6 +4018,7 @@ def researchTasks : List ResearchTask := [
   nativeBinaryValuationNonsettling,
   nativeBinaryValuationDensity,
   nativeFiniteObservationUnderdetermination, nativeReferenceSettlingRegularityScope,
+  nativeContextAttenuationRecordBoundary,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
