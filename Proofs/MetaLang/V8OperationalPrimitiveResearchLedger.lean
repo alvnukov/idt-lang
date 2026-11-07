@@ -3487,28 +3487,113 @@ def fixedThreeWireFiniteMemoryFrequencyWall : ResearchTask := {
 
 def nativeFiniteStochasticPreparationWall : ResearchTask := {
   id := "native_finite_stochastic_preparation_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing native fixed-three-wire preparation word K=A*B^3, source e0 and selected squared-norm readout p_n=selectedWeight n under the supplied complex backend. Preparation depth n counts repetitions of the word, not repeated detector trials.",
+    "Supply one uniform compositional hidden-preparation model across all depths: one finite state carrier S, one fixed real row-stochastic matrix P and fixed complex vectors mu and r, with prediction sum_i mu_i*((complexify P)^n*r)_i. Arbitrary fixed complex endpoints include real probability initial distributions and event readouts as a special case.",
+    "The original raw Law corollary additionally supplies Data d, source v, its six-field probability Law and both full contextual DiagonalFixed premises at chosenZero and v. The existence and physical applicability of these premises are not conclusions of this wall."]
+  conclusions := [
+    "Checked native nondecay: the actual selectedWeight sequence satisfies 8*p_(n+4)+10*p_(n+3)+9*p_(n+2)+10*p_(n+1)+8*p_n=21. The factored homogeneous recurrence and positive second-order energy invariants, together with the checked denominator result, show that p_(n+q)-p_n does not tend to zero for any positive q.",
+    "Checked algebraic spectral coefficient: lambda=(1+i*sqrt(15))/4 has normSq 1 and infinite order, with the latter established through the odd trace sequence. The actual native readout satisfies p_n=7/15+(2/9)*(lambda^n+conj(lambda)^n)+(2/45)*(lambda^(2*n)+conj(lambda)^(2*n)) in complex coordinates. Its lambda-twisted Cesaro mean tends to 2/9.",
+    "Checked finite stochastic peripheral theorem: every unit-modulus eigenvalue with a nonzero eigenvector for complexify P has a positive root-of-unity exponent q at most card S. Alignment along positive edges follows from row stochasticity and the eigenvector equation; no irreducibility or rational-entry premise is required.",
+    "Checked finite stochastic twisted-readout theorem: for any unit-modulus infinite-order phase, every fixed complex readout of a finite row-stochastic orbit has twisted Cesaro mean tending to zero. The proof uses the resolvent, a telescoping identity and a checked orbit bound. A standalone general Markov asymptotic-periodicity theorem is neither established nor required by this route.",
+    "Checked integration: no such fixed finite model represents p_n at all depths or has prediction error tending to zero. The quantitative corollary is exactly: if every n satisfies norm(prediction_n-p_n) <= epsilon, then 2/9 <= epsilon. This is a nonsharp uniform-all-depth bound, with no pointwise-strict, eventual-bound or 4/9-optimum claim. The original raw Law no-vanishing-error bridge retains both DiagonalFixed premises and the supplied six-field Law.",
+    "Checked finite-prefix control: for every supplied finite probability table g through horizon N, an explicit Fin(N+1) absorbing clock has a row-stochastic matrix, a normalized nonnegative point initial distribution and readout g at each clock state. The same prediction equals g(min n N) at every n, hence equals g(n) for n <= N and is constant after N.",
+    "The native finite-prefix specialization has checked readout bounds using an explicit canonical Law as a mathematical consistency witness. The supplied table is encoded into the readout, not obtained as an independent prediction or probability origin; the model depends on N. Therefore finite-prefix agreement alone does not exclude the class of finite models with no common state-count bound."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeThreeWireNondecay.lean"
+      declarations := [
+        "IDT.QMClosure.NativeThreeWireNondecay.recurrenceEnergy_constant",
+        "IDT.QMClosure.NativeThreeWireNondecay.recurrence_tendsto_zero",
+        "IDT.QMClosure.NativeThreeWireNondecay.selectedWeight_recurrence",
+        "IDT.QMClosure.NativeThreeWireNondecay.fourth_recurrence_tendsto_zero",
+        "IDT.QMClosure.NativeThreeWireNondecay.selectedWeight_no_asymptotic_period"] },
+    { sourcePath := "Proofs/QMClosure/FiniteStochasticPeripheral.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteStochasticPeripheral.aligned_of_positive_edge",
+        "IDT.QMClosure.FiniteStochasticPeripheral.exists_bounded_pow_eq_one"] },
+    { sourcePath := "Proofs/QMClosure/NativeThreeWireSpectralCoefficient.lean"
+      declarations := [
+        "IDT.QMClosure.NativeThreeWireSpectralCoefficient.traceSequence_spectral",
+        "IDT.QMClosure.NativeThreeWireSpectralCoefficient.lambda_normSq",
+        "IDT.QMClosure.NativeThreeWireSpectralCoefficient.lambda_pow_ne_one",
+        "IDT.QMClosure.NativeThreeWireSpectralCoefficient.selectedWeight_spectral",
+        "IDT.QMClosure.NativeThreeWireSpectralCoefficient.selectedWeight_twistedCesaro_limit"] },
+    { sourcePath := "Proofs/QMClosure/FiniteStochasticTwistedReadout.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteStochasticTwistedReadout.shifted_det_ne_zero",
+        "IDT.QMClosure.FiniteStochasticTwistedReadout.tendsto_coordinateMean_zero",
+        "IDT.QMClosure.FiniteStochasticTwistedReadout.tendsto_twistedCesaroMean_zero"] },
+    { sourcePath := "Proofs/QMClosure/NativeFiniteStochasticReadoutWall.lean"
+      declarations := [
+        "IDT.QMClosure.NativeFiniteStochasticReadoutWall.twisted_error_tendsto",
+        "IDT.QMClosure.NativeFiniteStochasticReadoutWall.no_vanishing_error",
+        "IDT.QMClosure.NativeFiniteStochasticReadoutWall.no_exact_representation",
+        "IDT.QMClosure.NativeFiniteStochasticReadoutWall.uniform_error_lower_bound",
+        "IDT.QMClosure.NativeFiniteStochasticReadoutWall.rawLaw_no_vanishing_error"] },
+    { sourcePath := "Proofs/QMClosure/FiniteStochasticPrefix.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteStochasticPrefix.clock_card",
+        "IDT.QMClosure.FiniteStochasticPrefix.clockMatrix_rowStochastic",
+        "IDT.QMClosure.FiniteStochasticPrefix.initial_nonnegative",
+        "IDT.QMClosure.FiniteStochasticPrefix.initial_normalized",
+        "IDT.QMClosure.FiniteStochasticPrefix.readout_bounds",
+        "IDT.QMClosure.FiniteStochasticPrefix.prediction_eq_terminal_extension",
+        "IDT.QMClosure.FiniteStochasticPrefix.prediction_eq_prefix",
+        "IDT.QMClosure.FiniteStochasticPrefix.native_selectedWeight_bounds",
+        "IDT.QMClosure.FiniteStochasticPrefix.native_readout_bounds",
+        "IDT.QMClosure.FiniteStochasticPrefix.native_prediction_eq_prefix"] }]
+  plannedArtifacts := []
+  dependencies := ["native_mixer_infinite_order", "fixed_three_wire_finite_memory_frequency_wall"]
+  limits := [
+    "The finite-memory and uniform compositional hidden-preparation assumptions remain supplied mathematical contracts, without a physical justification. Preparation depth and detector trial count remain distinct.",
+    "The exclusion concerns one fixed finite model across all preparation depths. It does not exclude n-dependent kernels, initial distributions or readouts, external drive, or unbounded or continuous memory. Finite-prefix models are explicitly possible and may depend on the chosen horizon.",
+    "Within the stated fixed-model class, uniform error below 2/9 across every preparation depth is excluded. The bound is not asserted sharp and supplies no pointwise-strict or eventual-bound result.",
+    "The native backend, original Law and both contextual fixedness premises retain their existing scope. No empirical confirmation, probability origin or actualization, physical detector construction, Born derivation or full QM closure is inferred. Manifest kernel-proof statuses remain unchanged."] }
+
+def nativeFixedStateFiniteWindow : ResearchTask := {
+  id := "native_fixed_state_finite_window"
   stage := .analyticAwaitingFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "Use the same native fixed-three-wire selectedWeight p_n at preparation repetition depth n. Here n counts applications of the preparation word cK, not detector trials in the finite deterministic frequency theorem.",
-    "Supply an additional uniform compositional hidden-preparation contract: one finite state carrier S, one fixed row-stochastic kernel P for cK across all n, one fixed initial row distribution mu, and one fixed readout r in [0,1]^S. The prediction is mu*P^n*r. This uniform model is an extra assumption, not a physical consequence of the existing probability Law."]
+    "Use the same native fixed-three-wire selectedWeight sequence p_n and supplied complex backend. Fix a nonempty finite carrier S with known M=card S, a real row-stochastic matrix P and arbitrary fixed complex endpoint vectors mu and r across preparation depths n.",
+    "Use the checked native forced fourth-order recurrence Q4(E)*p=21/8, where Q4=(E^2-E/2+1)*(E^2+7*E/4+1), and the checked no_exact_representation obstruction. The sequence-level Cayley-Hamilton bridge is a new proof obligation, not existing checked evidence for this task."]
   conclusions := [
-    "Parent-accepted analytic result only: the native selected amplitude has x_n=1/3+(2/3)*cos(n*theta)+(2*i/sqrt(15))*sin(n*theta), where theta=arccos(1/4) in (0,pi), and p_n=7/15+(4/9)*cos(n*theta)+(4/45)*cos(2*n*theta). These exact harmonic identities are not yet kernel checked.",
-    "Analytic infinite-order argument awaiting proof: lambda=exp(i*theta) cannot be a root of unity, since lambda+lambda^(-1)=1/2 would then be an algebraic integer. For every q>0, the nonzero first harmonic prevents p_(n+q)-p_n from tending to zero: a lambda-weighted Cesaro average detects (2/9)*(lambda^q-1).",
-    "Analytic finite stochastic wall awaiting proof: a fixed finite row-stochastic P with fixed mu and r gives an asymptotically periodic prediction mu*P^n*r for some positive period q. It therefore cannot equal p_n for all n or approximate p_n with error tending to zero.",
-    "A trig-free native strategy is accepted analytically: 8*p_(n+4)+10*p_(n+3)+9*p_(n+2)+10*p_(n+1)+8*p_n=21. Differences d_n=p_(n+q)-p_n satisfy the homogeneous product (E^2-E/2+1)*(E^2+7*E/4+1). For either second-order factor, the positive invariant u_n^2+u_(n+1)^2-c*u_n*u_(n+1), with |c|<2, forbids a nonzero sequence tending to zero. Filter d through the second factor, apply this twice, then use the checked denominator theorem to exclude p_q=p_0=1. The forced recurrence, energy lemmas and composition remain unchecked.",
-    "Native harmonic identities, infinite-order and non-asymptotic-periodicity arguments, finite Markov asymptotic periodicity and the uniform-model exclusion all remain unchecked. The checked denominator theorem is not a proof of this stochastic preparation wall."]
+    "Parent-accepted analytic plan only: Cayley-Hamilton should give chi_Pc(E)*a=0 for prediction a_n, where Pc=complexify P. Row stochasticity fixes the all-ones vector; nonemptiness makes it nonzero, so chi_Pc(1)=0.",
+    "The monic product chi_Pc(E)*Q4(E), of degree M+4, should annihilate both model prediction a and native p. It annihilates p because Q4(E)*p is constant and chi_Pc(1)=0. Hence it annihilates the error a-p.",
+    "For a monic order-(M+4) recurrence, errors zero at n=0 through M+3 force errors zero at all later depths. The checked all-depth no_exact_representation theorem then gives a mismatch at some n<M+4 for every model on this fixed nonempty carrier.",
+    "A simpler alternative for all carriers uses Q5=(E-1)*Q4 and the monic product chi_Pc*Q5, of degree M+5. The zero-state case can instead be separated directly by its n=0 prediction zero versus p_0=1.",
+    "The sequence-level Cayley-Hamilton bridge, constant-mode cancellation, monic recurrence uniqueness and exact finite-window exclusion remain unchecked. No finite-window theorem is registered as kernel checked."]
   checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/NativeThreeWireNondecay.lean",
-    "ANALYTIC ONLY: finite stochastic peripheral-spectrum or asymptotic-periodicity proof.",
-    "ANALYTIC ONLY: exact uniform-model exclusion."]
-  dependencies := ["native_mixer_infinite_order", "fixed_three_wire_finite_memory_frequency_wall"]
+  plannedArtifacts := ["Proofs/QMClosure/NativeFixedStateFiniteWindow.lean"]
+  dependencies := ["native_finite_stochastic_preparation_wall"]
   limits := [
-    "No general finite Markov asymptotic-periodicity theorem or integrated stochastic exclusion is registered as checked evidence. This entry is analytic only and does not upgrade the deterministic theorem to a stochastic result.",
-    "Preparation depth n and trial count are distinct. The exclusion requires the same kernel, initial distribution and readout across preparation depths; that compositional uniformity is an additional supplied contract.",
-    "This does not exclude n-dependent kernels, initial distributions or readouts: a two-state Bernoulli model can match any chosen p_n. It also does not exclude finite-prefix models, external drive, unbounded or continuous memory.",
-    "No physical justification of the uniform hidden-preparation contract, detector realization, Born or probability provenance, outcome actualization or QM closure is inferred."] }
+    "This is an analytic next-step plan for a fixed known finite state carrier and fixed P, mu and r. The M+4 claim uses nonemptiness; the M+5 alternative and separate zero-state argument are also only analytic plans.",
+    "No finite-precision error margin, statistical confidence, effective parameter estimation or physical state-count bound is supplied.",
+    "Without a fixed state-count bound, the checked absorbing-clock construction still matches any supplied finite probability prefix. The proposed exact witness does not contradict that finite-prefix control.",
+    "No physical justification of the uniform preparation contract, experimental confirmation, probability actualization or QM closure is inferred."] }
+
+def nativeFixedStateRobustWindow : ResearchTask := {
+  id := "native_fixed_state_robust_window"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Fix a nonempty finite state carrier S with M=card S and the same native target p_n. Restrict to one fixed real row-stochastic P, a fixed real initial distribution mu with nonnegative entries summing to one, and a fixed real readout r with every entry in [0,1].",
+    "Supply the proposed exact M+4 finite-window exclusion from native_fixed_state_finite_window once formalized. The bounded real endpoint contract is essential for the compactness route; arbitrary unbounded complex endpoints are not covered by this argument."]
+  conclusions := [
+    "Parent-accepted analytic plan only: the fixed-S parameter class is a closed subset of a finite-dimensional [0,1] cube, hence compact. Every finite-prefix prediction is polynomial in the entries of P, mu and r and therefore continuous.",
+    "Given the exact finite-window exclusion, the target vector (p_0,...,p_(M+3)) lies outside the compact image of this parameter class. A positive image gap should give some delta>0 such that every model has at least one n<M+4 with norm(prediction_n-p_n) >= delta.",
+    "Delta may depend on S, the window and the target. No value is specified or computed; this is not the checked 2/9 uniform-all-depth bound, an effective bound or a statistical confidence statement.",
+    "Kernel proofs of parameter compactness, polynomial continuity, compact-image separation and the adapter to the actual native exact-window result remain pending. No robust finite-window exclusion is registered as checked evidence."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeFixedStateRobustWindow.lean"]
+  dependencies := ["native_fixed_state_finite_window", "native_finite_stochastic_preparation_wall"]
+  limits := [
+    "The compactness argument requires both the fixed finite state bound and bounded honest real probability endpoints. It supplies no robust conclusion for arbitrary unbounded complex initial or readout vectors.",
+    "No numerical value or effective computation of the proposed positive gap has been supplied by this proof plan. Experimental confidence, finite-precision calibration and parameter estimation remain separate obligations.",
+    "State count remains fixed in this argument. With no common finite state-count bound, the checked prefix-clock controls still match any supplied finite probability window exactly.",
+    "No physical finite-memory bound or justification of the uniform preparation contract, experimental confirmation, probability actualization or QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4302,7 +4387,8 @@ def researchTasks : List ResearchTask := [
   nativeOpenPatchSingleTrace,
   nativePointwisePeriodicSeparatingReadout, nativeUniformPeriodProbabilityCriterion,
   rawUniformPeriodProbabilityBridge, fixedThreeWireFiniteMemoryFrequencyWall,
-  nativeFiniteStochasticPreparationWall,
+  nativeFiniteStochasticPreparationWall, nativeFixedStateFiniteWindow,
+  nativeFixedStateRobustWindow,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
