@@ -2263,7 +2263,7 @@ def observedRawProbabilitySelection : ResearchTask := {
 
 def responseContextProbability : ResearchTask := {
   id := "response_context_probability"
-  stage := .analyticAwaitingFormalization
+  stage := .inFormalization
   review := .notYetKernelChecked
   assumptions := [
     "A raw zero and two-output operation with a supplied response/signature map into an arbitrary type; contexts are the existing finite one-hole grammar with arbitrary raw references.",
@@ -2383,33 +2383,73 @@ def standingMatterRegimeConstraint : ResearchTask := {
 
 def recordMarginalActualizationWall : ResearchTask := {
   id := "record_marginal_actualization_wall"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "A finite nonnegative normalized probability vector in one declared acquisition context, with two distinct positive labels for the nontrivial perturbation.",
     "Registration sets count distinct labels; their calibrated presence marginals are supplied. An exclusive categorical-outcome interpretation is not assumed.",
     "For the IDT adapter, the existing normalized record Family and positive source weight; any supplied event probability is linked only through the existing conditional record-probability theorem with its full domain and calibration hypotheses."]
   conclusions := [
-    "Accepted extension of the existing binary IntensityActualizationBoundary control: for an arbitrary finite label type, reducing two singleton masses by epsilon and adding epsilon to both empty and two-label registrations preserves every calibrated presence marginal and total probability.",
+    "Checked universal finite-label extension of the existing binary IntensityActualizationBoundary control: for an arbitrary finite label type, reducing two singleton masses by epsilon and adding epsilon to both empty and two-label registrations preserves every calibrated presence marginal and total probability.",
     "Normalized presence marginals fix expected distinct-label count at one; silent mass equals expected excess count. Silent and multiple-label defects are coupled, not independent omission witnesses.",
     "A zero-mass silent sample separates zero defect probability from a claim about every sample; a designated realized run requires an explicit support or realization premise.",
     "Diagonal and product archival couplings retain identical one-time marginals, but disagree with masses zero and 1-sum(p_r^2), respectively; the latter is positive for two distinct positive labels.",
-    "The proposed adapter leaves the original channels, effects and probability values intact while varying joint registration and archival laws."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/RecordMarginalActualizationWall.lean",
-    "Proofs/QMClosure/RecordMarginalActualizationAdapter.lean"]
+    "The checked adapter leaves the original channels, effects and probability values intact while varying joint registration and archival laws."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RecordMarginalActualizationWall.lean"
+      declarations := [
+        "IDT.QMClosure.RecordMarginalActualizationWall.RecordModel.card_silent_excess_balance",
+        "IDT.QMClosure.RecordMarginalActualizationWall.RecordModel.silent_eq_expectedExcess",
+        "IDT.QMClosure.RecordMarginalActualizationWall.RecordModel.silent_zero_iff_multiple_zero",
+        "IDT.QMClosure.RecordMarginalActualizationWall.RecordModel.one_on_positive_support",
+        "IDT.QMClosure.RecordMarginalActualizationWall.calibrated_registration_wall",
+        "IDT.QMClosure.RecordMarginalActualizationWall.balancedRecords_values",
+        "IDT.QMClosure.RecordMarginalActualizationWall.zeroSilentRecords_boundary",
+        "IDT.QMClosure.RecordMarginalActualizationWall.calibrated_archive_wall"] },
+    { sourcePath := "Proofs/QMClosure/RecordMarginalActualizationAdapter.lean"
+      declarations := [
+        "IDT.QMClosure.RecordMarginalActualizationAdapter.ratioLaw",
+        "IDT.QMClosure.RecordMarginalActualizationAdapter.ratio_registration_wall",
+        "IDT.QMClosure.RecordMarginalActualizationAdapter.ratio_archive_wall",
+        "IDT.QMClosure.RecordMarginalActualizationAdapter.conditionalLaw_eq_ratioLaw_mass",
+        "IDT.QMClosure.RecordMarginalActualizationAdapter.conditional_registration_wall",
+        "IDT.QMClosure.RecordMarginalActualizationAdapter.conditional_archive_wall"] }]
+  plannedArtifacts := []
   dependencies := [
     "conditional_record_probabilities", "particle_as_process_result_hypothesis",
     "standing_matter_regime_constraint"]
   limits := [
-    "These analytic controls await Lean formalization; no actualization theorem is marked checked.",
+    "The generic finite control is inhabited. Application to a particular supplied Family and DomainLaw remains conditional; no new physical family, detector or chosen sample is furnished.",
     "The shared values are probability numbers and label-presence marginals, not an already supplied mutually exclusive categorical-event interpretation. The adapter does not preserve the entire effect-domain event interpretation: identifying operator sums with unions of these presence events is an additional bridge.",
     "Distinct-label sets do not count repeated same-label clicks. The single-record question is scoped to eligible exclusive acquisition slots, not every interaction or the entire world.",
     "Empty registration, indefinite pending and an explicit terminal noClick or failure record are different; extra outcomes require a new normalized family or explicit conditioning.",
     "Archival agreement must follow from an independently specified transition/frame law; defining read-only as preservation supplies that fact rather than explaining it.",
     "Probability measures over possible histories do not select a realized history or settle deterministic versus fundamentally stochastic ontology.",
     "All standing matter-regime obligations remain unassessed; no particle type, stable charge/mass/spin, physical detector realization, or full QM conclusion follows."] }
+
+def compositionExchangeScope : ResearchTask := {
+  id := "composition_exchange_scope"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For the alternating wall: one source weight in both slots, an output zero of zero weight, universal product-weight factorization and zero output when both inputs coincide.",
+    "For the symmetric wall: the actual separate-additivity, separate-phase, positive-quadratic and product-weight premises of CompositeProductKernel.product_kernel with the same source readout and phase in both slots.",
+    "Commutation is either literal equality of the two ordered products or an explicitly supplied zero-weight difference in the output carrier."]
+  conclusions := [
+    "Independently accepted analytic wall: alternating diagonal cancellation and universal product-weight factorization force every source weight to vanish; no additivity or Hilbert premise is needed for that diagonal argument.",
+    "Under the full product-kernel contract, commutation forces normSq(K(x,y)) = Q(x)*Q(y). A positive-weight orthogonal pair therefore excludes commutation.",
+    "The same pairwise identity follows from commutation modulo an output null difference through existing null-kernel lemmas.",
+    "Complex scalar multiplication supplies a nontrivial commutative factorizing control; the obstruction needs an orthogonal positive pair, not symmetry alone."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/CompositionExchangeScope.lean"]
+  dependencies := ["composite_product_kernel", "standing_matter_regime_constraint"]
+  limits := [
+    "Analytic only: the new scope theorems and control await kernel checking; no dimension or rank classification is asserted.",
+    "The existing product theorem remains a correct sufficient bridge. This task bounds treating its factorization as a primitive for every kind of composition.",
+    "Output null-difference commutation is not arbitrary physical observational equivalence without a matching bridge.",
+    "Single-reference native circuits are not already a particle sector. Tensor-factor exchange, mode permutations and particle exchange require distinct interpretations.",
+    "Symmetric and exterior pair preparations are different supplied embeddings; a later tensor illustration would not be different predictions for an identical fully specified input.",
+    "Physical indistinguishability, particle statistics, spin-statistics and every standing matter-regime obligation remain unassessed."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
@@ -2492,7 +2532,7 @@ def researchTasks : List ResearchTask := [
   observedRawProbabilitySelection, responseContextProbability,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
-  recordMarginalActualizationWall]
+  recordMarginalActualizationWall, compositionExchangeScope]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
