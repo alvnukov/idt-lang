@@ -3086,6 +3086,108 @@ def nativeReferenceSettlingScopeExtensions : ResearchTask := {
     "This task preserves optional gaps with analytic status, no checked evidence and no assigned source author. Existing checked declarations in the prospective extension files do not discharge these obligations.",
     "Known reference occurrences stay separately charged. No uniform source budget, physical damping, detector-noise model, reference availability, unknown-token cloning, probability provenance, multi-source Law extension, actualization or QM closure is inferred."] }
 
+def nativeBinaryValuationNonsettling : ResearchTask := {
+  id := "native_binary_valuation_nonsettling"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use concrete Gaussian-dyadic generated G and the existing native mixer. Supply the Boolean readout that is true exactly when the rational 2-adic valuation of Re(x) is odd, with valuation(0)=0. The readout depends on the exact rational coordinate value, independently of its chosen Gaussian-dyadic numerator/exponent representation.",
+    "The valuation is supplied arithmetic, not a new 2-adic topology. The existing Native-indexed complex scalar backend is retained; no scalar-coordinate-free backend or physical detector interpretation is asserted.",
+    "Probability compatibility uses the existing single-basis six-field Law and generic signature criterion, not probabilities on joint allocated input arrays."]
+  conclusions := [
+    "Checked separation route: a distinct contextually equivalent pair gives a common return length L>0 by the checked common_contextual_return theorem. Repeating that return eight times at x=2 and z=1 compares 2 with 1+16^(-L); their rational valuations are 1 and -4*L, respectively, so their Boolean readouts differ. This forces full G-contextual separation without an additional separation hypothesis.",
+    "Checked universal nonsettling proof: for each generated reference z take q=realCoord(z) and x=z+1. For nonzero q choose arbitrarily late k with -(4*k)<padicValRat 2 q; the checked valuation-dominance lemma handles q=0 separately and gives valuations -(4*k) and -(4*k+1) after 8*k and 8*k+1 native iterations, hence opposite labels. The plusUnit input has no eventual constant tail at all, so ReferenceSettles fails at every generated reference.",
+    "The checked contextual separation and generic signature-law criterion give existence of the unchanged six-field single-basis Law and an adapter preserving the entire probability field of any supplied scalar Law. A canonical scalar Law remains a separate consistency witness, not probability provenance.",
+    "No fiber-density theorem is established by this checked core entry. The optional usual-topology density construction and exact generated witnesses remain a separate unchecked analytic task, native_binary_valuation_density."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedValuationObservation.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedValuationObservation.realCoord",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.realCoord_cast",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.realCoord_eq_of_cast",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.valuationSignature",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.val_plusUnit",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.realCoord_reference_eighth",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.realCoord_reference_eighth_next",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.late_adjacent_opposite_signatures",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.plusUnit_no_eventual_constant",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.valuationSignature_no_reference_settles",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.valuationSignature_no_settling_reference",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.valuationSignature_nonconstant",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.valuationSignature_separates",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.valuationSignature_law_without_settling",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.lawOfScalar",
+        "IDT.QMClosure.NativeAllocatedValuationObservation.lawOfScalar_probability"] }]
+  plannedArtifacts := []
+  dependencies := ["native_reference_settling", "native_allocated_signature_law",
+    "native_allocated_source_arithmetic"]
+  limits := [
+    "Representation-independent coordinates, rational-valuation identities, unconditional contextual separation and all-reference nonsettling are checked in the supplied concrete G model. The adapter preserves the entire probability field of any supplied scalar Law. Optional fiber density is not part of this checked result.",
+    "This is a supplied exact arithmetic negative control; no continuity or topology premise is used by the core theorem. Neither the rational valuation nor its Boolean readout supplies a physical detector, topology derivation, reference availability or probability provenance.",
+    "Known references remain actual allocated preparations under supplied source/frame conditions. No unknown-token cloning, tensor or independence interpretation, multi-input probability-law extension, actualization or full QM closure is inferred."] }
+
+def nativeBinaryValuationDensity : ResearchTask := {
+  id := "native_binary_valuation_density"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the checked binary rational-valuation signature on generated Gaussian-dyadic G, and separately supply the usual complex/subspace topology. Rational real coordinates are representation-independent; valuation(0)=0 remains the fixed convention.",
+    "Generated perturbations are actual finite allocated programs under supplied source/frame conditions. The numerical perturbation is ordinary 2^(-n), not a new 2-adic topology or a physical detector tolerance."]
+  conclusions := [
+    "Accepted analytic density obligation, not yet formalized: both Boolean signature fibers are dense in G. For an arbitrary z with Re(z)=m/2^h, use z+2^(-n) for arbitrarily large n>h of the desired parity; the rational valuation of its real coordinate is -n.",
+    "Prove exact generated witnesses for the perturbations and ordinary convergence to z, then obtain membership in every prescribed nonempty relative open neighborhood. The existing checked valuation-core artifact does not establish this density statement."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedValuationObservation.lean"]
+  dependencies := ["native_binary_valuation_nonsettling", "native_allocated_source_arithmetic"]
+  limits := [
+    "This optional topology consequence is analytic only with empty checked evidence. Its perturbation, parity and dense-fiber assertions remain proof obligations even though the prospective extension file already contains checked core declarations.",
+    "Usual scalar topology is supplied, not a physical topology or robustness derivation. No uniform source budget, detector interpretation, physical references, probability provenance, unknown-token cloning, multi-source Law extension, actualization or QM closure is inferred."] }
+
+def nativeFiniteObservationUnderdetermination : ResearchTask := {
+  id := "native_finite_observation_underdetermination"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use concrete generated Gaussian-dyadic G, any finite set S of generated values and any Boolean labeling f on S. These are individual signature observations, including the finitely many generated context outputs recorded in a fixed finite adaptive transcript.",
+    "Supply the checked native mixer and generated arithmetic. Ordinary scalar topology is used only to exhibit a nonempty false open patch for the finite-support positive extension; no physical readout model or probability provenance is supplied."]
+  conclusions := [
+    "Accepted analytic construction awaiting artifacts: extend S by two fresh generated values with opposite labels to obtain S'. Choose one common denominator 2^h for their integer real/imaginary coordinates (r_s,t_s), let B be the largest pairwise coordinate-difference magnitude, and put M=2*B+3.",
+    "Use the full Gaussian residue ring (Z/MZ)[I], with I squared equal to -1 and 2 invertible because M is odd. Reduction is injective on S' since distinct coordinate differences have magnitude below M. No primality of M or chosen square root of -1 is required.",
+    "Let T be the true-labeled subset of S'. The positive signature sigmaPlus is the indicator of the finite set T: it matches f, is nonconstant, and has a nonempty false relatively open patch. The checked stable-observation and generic signature criteria then supply contextual separation and existence of the unchanged single-basis six-field Law.",
+    "The negative signature sigmaMinus is the indicator of the residue image of T. It also matches f and is nonconstant, but generated 0 and M are distinct and fully contextually equivalent through native residue preservation. Consequently separation, compatible single-basis Law existence and ReferenceSettles all fail.",
+    "The two extensions match any finite individual, contextual or adaptive signature transcript after collecting its finitely many evaluated generated values. This does not cover finite symbolic proofs, separately restricted model classes, or a finite family of inputs supplied together with its entire infinite response tails."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedFiniteObservationBoundary.lean"]
+  dependencies := ["native_allocated_stable_observation", "native_reference_settling",
+    "native_allocated_signature_law", "native_allocated_source_arithmetic"]
+  limits := [
+    "This task is analytic only with no checked evidence. Fresh-point selection, composite-modulus Gaussian reduction, finite-set injectivity, transcript matching and both law/separation controls remain proof obligations.",
+    "The claim is finite observational underdetermination within the stated unrestricted mathematical signature class, not a rejection of finite machine-checked proofs or of inference under an explicitly restricted model class.",
+    "Known generated references remain separately allocated under supplied source/frame conditions. No uniform source budget, physical availability, detector interpretation, probability provenance, unknown-token cloning, multi-source Law extension, actualization or QM closure is inferred."] }
+
+def nativeReferenceSettlingRegularityScope : ResearchTask := {
+  id := "native_reference_settling_regularity_scope"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply the usual inherited topology on concrete generated G and its native referenceStep F_z. For arbitrary sigma:G to Omega, local uniform settling at z means an open U containing z and one N such that for all x in U and all n>=N, sigma((F_z iterated n)(x))=sigma(z). No topology on Omega is needed for this equality-only definition.",
+    "Boolean descriptive-regularity controls additionally use the usual discrete topology on Bool. Distinguish regularity on countable G from extensions to ambient complex space, and distinguish ambient real-valued from ambient Boolean-valued Baire-class-one extensions."]
+  conclusions := [
+    "Accepted analytic local-uniform criterion awaiting artifacts: local uniform settling at z is equivalent to sigma being constant on a neighborhood of z. Forward, F_z iterated N is a homeomorphism because a=(1+I)/2 is a unit; reverse, choose an invariant sufficiently small ball and take N=0.",
+    "Pointwise all-input ReferenceSettles does not imply any constant open patch. Construct a dense partial transversal T in G excluding 0, with at most one representative of each two-sided a-orbit. Its Boolean indicator settles toward 0 because each forward orbit visits T at most once, while both fibers are dense.",
+    "The transversal proof is to enumerate a countable base and choose fresh orbits, using that finite unions of two-sided orbit closures are nowhere dense. The complement is dense because a nonempty open U contained in T would make a*U open and disjoint from dense T.",
+    "Countability of G makes every Boolean signature Borel and Baire-property, and the intended clopen-box interpolation on the first n enumerated points makes every such signature Bool-valued Baire class one on G. An ambient complex Borel/Baire-property extension also imposes no restriction: extend the countable true fiber by its indicator.",
+    "An ambient real-valued Baire-class-one extension on complex space is a substantive different assumption: a continuity point forces a nonempty constant patch on dense binary G, and the pending open-patch contraction route then gives settling. A Bool-valued Baire-class-one extension on connected complex space would instead be constant; it is not the same assumption.",
+    "Global all-input uniform finite-time settling forces sigma constant by surjectivity of the native iterate. Local uniform response stability is therefore distinct from both that global condition and pointwise eventual settling.",
+    "Optional equality-only cofinite relaxation: for every input, eventual exclusion of each wrong label separately should suffice, with nonconstancy, for separation by common contextual return. Finite response range makes this equivalent to exact settling; the identity signature exhibits its infinite-range weakness. Nonunique equality-only limits supply no outcome selection."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedSettlingRegularity.lean"]
+  dependencies := ["native_allocated_stable_observation", "native_reference_settling"]
+  limits := [
+    "Every assertion in this entry is analytic only, with no checked evidence. The local-uniform equivalence, dense-transversal construction, regularity and extension distinctions, global-uniform collapse and optional cofinite criterion all require separate exact artifacts.",
+    "Ordinary topology and regularity are supplied mathematical structure. Local response stability is not physical robustness, detector dynamics, a noise model, probability provenance or outcome actualization.",
+    "Known references remain separately charged under supplied preparation and common-frame conditions. No physical reference availability, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension or QM closure is inferred."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -3870,6 +3972,9 @@ def researchTasks : List ResearchTask := [
   nativeReferenceSettling, responseAllocatedStableBridge,
   nativeReferenceRecurrenceWall,
   nativeReferenceSettlingScopeExtensions,
+  nativeBinaryValuationNonsettling,
+  nativeBinaryValuationDensity,
+  nativeFiniteObservationUnderdetermination, nativeReferenceSettlingRegularityScope,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,

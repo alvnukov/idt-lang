@@ -336,6 +336,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeAllocatedBallObservation,
     `Proofs.QMClosure.NativeAllocatedStableObservation,
     `Proofs.QMClosure.NativeAllocatedResidueObservation,
+    `Proofs.QMClosure.NativeAllocatedValuationObservation,
     `Proofs.QMClosure.ResponseAllocatedFaithfulness,
     `Proofs.QMClosure.ResponseAllocatedStableBridge,
     `Proofs.QMClosure.AllocatedGeneratedContexts,
