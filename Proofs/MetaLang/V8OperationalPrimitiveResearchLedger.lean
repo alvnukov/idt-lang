@@ -2642,112 +2642,249 @@ def productExchangeObservationBoundary : ResearchTask := {
 
 def nativePreparationNaturality : ResearchTask := {
   id := "native_preparation_naturality"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Function-only covariance of both outputs of supplied raw operations, with arbitrary raw arrays and native finite circuit words.",
-    "For prepared arrays, r:RawOperationalData V and s:RawOperationalData W, preservation of chosen zero and covariance of the term-defined normalized operations.",
-    "To transport a source Law forward with its identical complete probability field, reflection of equality of prepared arrays at the same reference, source and width; injectivity of the map is sufficient."]
+    "Function-only covariance of both outputs of supplied raw operations gives evaluator covariance on arbitrary arrays and finite native words; no raw algebra or Fintype premise is supplied.",
+    "The r:RawOperationalData V and s:RawOperationalData W adapters retain their structural contracts. Prepared covariance and law pullback preserve chosen zero and intertwine the normalized operations; normalization covariance itself needs no zero-preservation premise.",
+    "Forward mapLaw needs only reflection of equal prepared arrays at the same reference, source and width. Injectivity together with prepared covariance suffices for this reflection; lawEquiv also retains zero preservation and normalized covariance for the reverse direction."]
   conclusions := [
-    "Accepted analytic scope awaiting a kernel artifact: both-output operation covariance gives evalRaw covariance, and raw operation covariance implies covariance of the term-defined normalized operations.",
-    "Zero preservation and normalized covariance give basis-prepared covariance. Pulling a target Law back requires only preservation; the forward adapter uses prepared-equality reflection.",
-    "The two adapters form a Law equivalence retaining the same complete probability field and all six fields; the constructions use neither normSq selection nor a canonical probability witness.",
-    "Reconstructed additive negation gives normalized common-array and common-reference sign transport."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativePreparationNaturality.lean"]
+    "Checked both-output covariance transports the raw evaluator and is preserved by term-defined diagonal normalization without original-gate transparency.",
+    "Zero preservation and normalized covariance transport basis-prepared arrays. pullLaw uses this equality preservation; mapLaw uses only the stated prepared-equality reflection.",
+    "The two adapters form a Law equivalence retaining the entire identical probability field and all six conditions. Their construction uses neither normSq selection nor a canonical probability witness.",
+    "Negation in the reconstructed group gives normalized common-array and common-reference sign covariance, injective prepared-equality reflection and the same-field negLawEquiv."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativePreparationNaturality.lean"
+      declarations := [
+        "IDT.QMClosure.NativePreparationNaturality.MapsOperation",
+        "IDT.QMClosure.NativePreparationNaturality.evalRaw_covariance",
+        "IDT.QMClosure.NativePreparationNaturality.normalizedOperation_covariance",
+        "IDT.QMClosure.NativePreparationNaturality.basisInput_covariance",
+        "IDT.QMClosure.NativePreparationNaturality.prepared_covariance",
+        "IDT.QMClosure.NativePreparationNaturality.prepared_equality_preserved",
+        "IDT.QMClosure.NativePreparationNaturality.PreparedEqualityReflecting",
+        "IDT.QMClosure.NativePreparationNaturality.preparedEqualityReflecting_of_injective",
+        "IDT.QMClosure.NativePreparationNaturality.pullLaw",
+        "IDT.QMClosure.NativePreparationNaturality.mapLaw",
+        "IDT.QMClosure.NativePreparationNaturality.lawEquiv",
+        "IDT.QMClosure.NativePreparationNaturality.pullLaw_probability",
+        "IDT.QMClosure.NativePreparationNaturality.mapLaw_probability",
+        "IDT.QMClosure.NativePreparationNaturality.negMap_zero",
+        "IDT.QMClosure.NativePreparationNaturality.negMap_injective",
+        "IDT.QMClosure.NativePreparationNaturality.negMap_normalized_covariance",
+        "IDT.QMClosure.NativePreparationNaturality.prepared_neg",
+        "IDT.QMClosure.NativePreparationNaturality.negLawEquiv",
+        "IDT.QMClosure.NativePreparationNaturality.negLawEquiv_probability"] }]
+  plannedArtifacts := []
   dependencies := ["weight_free_raw_probability"]
   limits := [
     "Original-gate semantics requires transparency or a separate original-operation covariance proof.",
-    "Prepared-equality reflection is sufficient for this adapter construction; it is not asserted necessary for probability-law existence.",
-    "Raw injectivity alone does not transport response-context Law. No gauge interpretation, physical process availability, U(1) symmetry or independent per-wire quotient is established."] }
+    "Prepared-equality reflection is sufficient for this adapter construction; it is not asserted necessary for probability-law existence, whose existing criterion is infinite additive reference order.",
+    "The adapters concern literal raw arrays. Raw injectivity alone does not transport response-context Law.",
+    "A compatible map need not be executable, native, physically available, unitary or a gauge map. No U(1) symmetry, independent per-wire quotient, actualization or full QM is established."] }
 
 def responsePhaseQuotientWall : ResearchTask := {
   id := "response_phase_quotient_wall"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Ambient d:ResponseContextQuotient.Data retains its supplied structural fields. The zero-reference contradiction proof uses only normalized, prepared_eq, output_perm and vacuum probability fields with identity/permutation semantics and the Unit-plus-Unit vacuum embedding.",
     "The separate structural negative-fixed-point statement uses the reconstructed additive half, public PhaseMixerCancellation.doubling_injective and reconstruction.halves; it requires neither observed transparency nor a Law."]
   conclusions := [
-    "Accepted analytic scope awaiting a kernel artifact: a response probability Law forbids a reference contextually equivalent to chosenZero without an observed-transparency premise.",
-    "In the reconstructed response quotient, x=-x iff x=0. Consequently any supplied response Law has [v] distinct from -[v], without observed transparency.",
+    "Checked conditional theorem: a supplied response Law forbids a reference contextually equivalent to chosenZero without an observed-transparency premise.",
+    "In the reconstructed response quotient, x=-x iff x=0. Consequently any supplied response Law has a nonzero reference class [v] distinct from -[v], without observed transparency.",
     "A raw representative w of -[v] is contextually distinguishable from v; signature blindness by itself does not identify contextual classes."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ResponsePhaseQuotientWall.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponsePhaseQuotientWall.lean"
+      declarations := [
+        "IDT.QMClosure.ResponsePhaseQuotientWall.response_equal_coordinate_probabilities",
+        "IDT.QMClosure.ResponsePhaseQuotientWall.no_law_of_reference_response_zero",
+        "IDT.QMClosure.ResponsePhaseQuotientWall.neg_fixed_iff_zero",
+        "IDT.QMClosure.ResponsePhaseQuotientWall.classOf_eq_zero_iff_response_zero",
+        "IDT.QMClosure.ResponsePhaseQuotientWall.reference_class_ne_zero",
+        "IDT.QMClosure.ResponsePhaseQuotientWall.reference_class_ne_neg",
+        "IDT.QMClosure.ResponsePhaseQuotientWall.negative_representative_distinguishable"] }]
+  plannedArtifacts := []
   dependencies := ["response_context_probability", "raw_native_probability_existence",
     "coherent_port_ray_boundary"]
   limits := [
-    "The weighted ObservedRawProbabilitySelection.no_law_of_reference_observational_zero is a proof prototype, not checked evidence for this planned response theorem.",
     "Existing response uniqueness and infinite-order theorems retain their observed-transparency premises.",
     "This wall does not exclude ordinary rays or a common sign transformation on complete prepared arrays. No independent per-wire phase quotient, physical reference availability or outcome interpretation follows."] }
 
 def portFrameAlignment : ResearchTask := {
   id := "port_frame_alignment"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Pure function contract: chosen alignments kappa:A equiv B and lambda:C equiv E define swap_kappa(a,b)=(kappa.inverse(b),kappa(a)) and the analogous target swap_lambda.",
-    "Separate maps f:A to C and g:B to E intertwine the full two-output gates: S composed with (f times g) equals (f times g) composed with T; T squared is swap_kappa and S squared is swap_lambda."]
+    "Separate maps f:A to C and g:B to E intertwine the full two-output gates: S composed with (f times g) equals (f times g) composed with T; T squared is swap_kappa and S squared is swap_lambda.",
+    "An alternative constructive formulation supplies only raw T:A times B to A times B and crossmaps u:B to A and v:A to B with T(T(a,b))=(u(b),v(a)); a chosen equivalence is then constructed from four-use return."]
   conclusions := [
-    "Accepted analytic scope awaiting a kernel artifact: squaring full both-output intertwining forces g composed with kappa equals lambda composed with f. Literal common-carrier swaps force f=g.",
+    "Checked conditional theorem: squaring full both-output intertwining forces g composed with kappa equals lambda composed with f. Literal common-carrier swaps force f=g.",
     "Alignment compatibility is exactly equivalent to swap_lambda composed with (f times g) equals (f times g) composed with swap_kappa. A common map is necessary, not sufficient, for gate intertwining.",
     "Independent bijective frame changes conjugate the gate and transform alignment to lambda=g composed with kappa composed with f.inverse. In the same-carrier case the transformed alignment is the literal swap exactly when the two frame maps coincide.",
     "On a restricted joint domain, compatibility follows only on projections of pairs p for which covariance at p and T(p), and the needed square identities, hold. Individual reachability does not supply fullness of the joint domain.",
-    "Dropping the root-square premise permits unequal maps in the countercontrol T=S=identity. Existing MixerRecordNaturality.first_output_iff already assumes one common map and cannot infer it from first-output covariance alone."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/PortFrameAlignment.lean"]
+    "Dropping the root-square premise permits unequal maps in the countercontrol T=S=identity. Existing MixerRecordNaturality.first_output_iff already assumes one common map and cannot infer it from first-output covariance alone.",
+    "Checked constructive alternative: under cross-local double routing, T applied four times is identity iff u(v(a))=a for every a and v(u(b))=b for every b. Evaluating at (a,v(a)) and (u(b),b) supplies both inverse laws without choice or nonemptiness and constructs kappa with exact forward map v and inverse u.",
+    "Crossmaps are unique under equal double-routing factorizations even without four-use return, by evaluations at (u(b),b) and (a,v(a)). This is an exact reformulation of the aligned-root contract, not a weaker physical premise."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PortFrameAlignment.lean"
+      declarations := [
+        "IDT.QMClosure.PortFrameAlignment.root_alignment_compatible",
+        "IDT.QMClosure.PortFrameAlignment.literal_root_forces_common_map",
+        "IDT.QMClosure.PortFrameAlignment.alignedSwap_map_iff",
+        "IDT.QMClosure.PortFrameAlignment.conjugate_alignedSwap",
+        "IDT.QMClosure.PortFrameAlignment.conjugateGate_square",
+        "IDT.QMClosure.PortFrameAlignment.conjugated_root_square",
+        "IDT.QMClosure.PortFrameAlignment.twistedSwap_eq_swap_iff",
+        "IDT.QMClosure.PortFrameAlignment.partial_swap_intertwining",
+        "IDT.QMClosure.PortFrameAlignment.partial_pair_agreement",
+        "IDT.QMClosure.PortFrameAlignment.cross_square_fourfold",
+        "IDT.QMClosure.PortFrameAlignment.fourfold_iff_cross_return",
+        "IDT.QMClosure.PortFrameAlignment.alignmentOfCrossReturn",
+        "IDT.QMClosure.PortFrameAlignment.alignmentOfCrossReturn_apply",
+        "IDT.QMClosure.PortFrameAlignment.alignmentOfCrossReturn_symm_apply",
+        "IDT.QMClosure.PortFrameAlignment.square_eq_alignmentOfCrossReturn",
+        "IDT.QMClosure.PortFrameAlignment.crossmaps_unique",
+        "IDT.QMClosure.PortFrameAlignment.WithoutSquareControl.full_covariance",
+        "IDT.QMClosure.PortFrameAlignment.WithoutSquareControl.maps_differ",
+        "IDT.QMClosure.PortFrameAlignment.WithoutSquareControl.square_is_not_swap",
+        "IDT.QMClosure.PortFrameAlignment.FirstOutputControl.first_output_covariance",
+        "IDT.QMClosure.PortFrameAlignment.FirstOutputControl.gate_square",
+        "IDT.QMClosure.PortFrameAlignment.FirstOutputControl.maps_differ",
+        "IDT.QMClosure.PortFrameAlignment.FirstOutputControl.not_full_covariance",
+        "IDT.QMClosure.PortFrameAlignment.WithoutFourthControl.gate_square",
+        "IDT.QMClosure.PortFrameAlignment.WithoutFourthControl.gate_bijective",
+        "IDT.QMClosure.PortFrameAlignment.WithoutFourthControl.not_fourfold_identity",
+        "IDT.QMClosure.PortFrameAlignment.WithoutFourthControl.transferForward_comp_transferBack_ne_id",
+        "IDT.QMClosure.PortFrameAlignment.WithoutFourthControl.transferBack_comp_transferForward_ne_id"] }]
+  plannedArtifacts := []
   dependencies := ["mixer_record_naturality", "response_context_probability"]
   limits := [
     "The pure alignment theorem requires no transparency, mediality, algebra, chosen zero, injectivity, readout, probability Law or nonemptiness premise.",
-    "Further first-output or coarse-readout countercontrols remain optional bounded formalization work; none is checked by this entry.",
+    "The checked FirstOutputControl has root-square routing and first-output covariance with unequal maps, while full both-output covariance fails. First-output covariance does not force the alignment conclusion.",
+    "The checked WithoutFourthControl is bijective and cross-local under double routing, yet four-use return and both crossmap inverse laws fail. Four-use return is independent; no physical synchronization follows.",
     "The root-square law contains a port identification; it does not physically create reference alignment. Physical gates, references, QM closure and matter applicability remain open."] }
 
 def nativeSingleSourceReferenceWall : ResearchTask := {
   id := "native_single_source_reference_wall"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Weight-free r:WeightFreeRawProbability.RawOperationalData V, v:r.Carrier and ReferenceInfiniteOrder r v; every admitted finite native preparation starts from one basis source v and otherwise chosen-zero ports.",
-    "Set u=(r.normalizedOperation(v,zero)).first and w=(r.normalizedOperation(v,u)).first. The direct proof uses normalized native semantics; no probability Law, supplied positive raw weight, feature/Hilbert premise or selected-probability theorem is supplied."]
+    "Weight-free r:WeightFreeRawProbability.RawOperationalData V, v:r.Carrier and ReferenceInfiniteOrder r v; each finite native preparation starts from one basis source v and otherwise chosen-zero ports.",
+    "Set u=firstMix r v=(r.normalizedOperation(v,zero)).first and w=secondMix r v=(r.normalizedOperation(v,u)).first. The direct core assumes no probability Law, positive raw weight, feature or Hilbert premise."]
   conclusions := [
-    "Accepted analytic scope awaiting a kernel artifact: v and u are individually one-source native-accessible, but w is never any output of any one-source native circuit at any finite width.",
-    "For d=r.zeroWeightData, Related at one, zero and two mixer steps represents w by scalar coefficient a+b*a=1+i/2, where a=(1+i)/2 and b=(1-i)/2. gaussianAction_injective_iff_referenceInfiniteOrder and related_scalar_unique reflect an alleged raw prepared equality to scalar equality.",
-    "Native Circuit.preserves_readout, mixer conservation and nonnegative finite sums bound every scalar output coordinate normSq by 1. The forbidden coefficient has normSq 5/4, yielding the weight-free wall without extracting information from the facade's identically zero weight.",
-    "Keep the explicit scalar countercontrol and the checked coherent attenuated joins from NativeCoherentBranchDilation.dilation_prepared and NativeGaussianResponse.sumDifference_amplitudes as separate controls: two individually accessible coefficients z and t yield (z+t)/2 and i*(z-t)/2 through retained branches without a probability Law.",
-    "A positive-weight adapter is only a separate optional sufficient route with its exact premises. A separate optional Law-implies-infinite-order corollary may feed the weight-free core; neither is a premise or proof input of that core."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/NativeSingleSourceReferenceWall.lean",
-    "Record the explicit scalar countercontrol and positive accessibility closure under existing coherent attenuated sums and differences separately from the direct weight-free unattenuated wall."]
+    "Checked conditional theorem: v and u are individually one-source native-accessible, but w is not any output of any one-source finite native circuit, at any finite width.",
+    "For r.zeroWeightData, secondMix_related represents w by the scalar coefficient 1+i/2. Infinite reference order and raw/scalar semantic reflection exclude an alleged raw prepared equality.",
+    "source_readout and output_normSq_le_one derive the scalar normSq bound 1 from native circuit conservation. The forbidden scalar coefficient has normSq 5/4; the auxiliary identically zero raw weight is not a positivity or probability input.",
+    "counterexample_accounting separately records the scalar two-input budget 3/2 and output norms 5/4 and 1/4; one_a_not_jointly_prepared separates individual accessibility from joint preparation.",
+    "aligned_sum_difference retains the same source and actual event recipes: a common finite circuit has distinct outputs (z+t)/2 and i*(z-t)/2. These coherent attenuated joins require no probability Law and remain available despite the unattenuated wall."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeSingleSourceReferenceWall.lean"
+      declarations := [
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.reference_raw_reachable",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.firstMix_raw_reachable",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.secondMix_related",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.secondMix_not_prepared",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.secondMix_not_raw_reachable",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.raw_reachable_not_closed",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.source_readout",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.output_normSq_le_one",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.mixer_one_a_normSq",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.counterexample_accounting",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.one_a_not_jointly_prepared",
+        "IDT.QMClosure.NativeSingleSourceReferenceWall.aligned_sum_difference"] }]
+  plannedArtifacts := []
   dependencies := ["weight_free_raw_probability", "raw_native_probability_existence",
-    "native_vacuum_probability_family", "raw_native_scalar_circuit_bridge"]
+    "native_vacuum_probability_family", "raw_native_scalar_circuit_bridge",
+    "native_gaussian_probability_selection"]
   limits := [
-    "Infinite reference order matters: the zero carrier defeats an unrestricted statement. The auxiliary zero weight contains no information and supplies no positivity premise.",
-    "Normalized operations are not automatically the original physical gate; that interpretation still needs transparency or a separate evaluator bridge.",
-    "The wall separates individual reachability from joint-array availability. It preserves the existing coherent attenuated joins; additional sources or independently prepared references change the source budget.",
-    "Native readout and source accounting are not physical energy, particle count, a cloning no-go theorem or a physical availability theorem. Port labels do not identify particles; matter regimes and actualization remain open."] }
+    "Infinite reference order is essential to the raw wall; the zero carrier defeats an unrestricted claim. No Law is an input to the weight-free core.",
+    "Normalized operations are not automatically the original physical gate; that interpretation needs transparency or a separate evaluator bridge.",
+    "The wall does not forbid coherent attenuated joins. Additional sources or independently prepared references change the source budget.",
+    "Native readout and source accounting are not physical energy, particle count, no-cloning, physical availability, matter applicability or actualization theorems."] }
 
 def referenceOccurrenceCompilation : ResearchTask := {
   id := "reference_occurrence_compilation"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "An arbitrary raw two-output function T on V and the existing finite one-hole Context grammar; no chosen zero, algebraic mixer law, readout or probability premise is required.",
-    "Recursive input ports are Ports(hole)=Unit and Ports(node)=Ports(child) sum Unit. The hole receives x and every syntactic reference occurrence receives its own fresh port with its stated constant."]
+    "An arbitrary raw two-output function T on V and the finite one-hole Context grammar; no chosen zero, algebraic mixer law, readout or probability premise is required.",
+    "Recursive input ports are Ports(hole)=Unit and Ports(node)=Ports(child) sum Unit. The hole receives x and every syntactic reference occurrence receives a distinct fresh input port with its stated value."]
   conclusions := [
-    "Accepted analytic scope awaiting a kernel artifact: compile the child on a padded array, pair its selected cursor with the fresh reference port in the required operand order, select the stated output, and retain the full unused array.",
-    "Prove arbitrary-input padCircuit semantics, including arbitrary retained filler values. RawNetworkMedialWall.evalRaw_padCircuit already supplies the constant-filler case despite naming its filler zero; it is an antecedent, not checked evidence for this new compiler.",
-    "For every T, context c and hole value x, the compiled selected output equals Context.eval T c x. Prove one hole, distinct occurrence ports and input-port cardinality equal to reference occurrences plus one; equality of pair count and reference count is optional.",
-    "Context.eval_plug gives substitution only at the selected-output semantics, not equality of complete retained arrays or physical joinability."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/ReferenceOccurrenceCompilation.lean"]
+    "Checked arbitrary-input padding semantics retains all supplied filler values. Compilation pads the child circuit and pairs its selected cursor with the fresh reference port in the specified operand order, retaining the complete output array.",
+    "compile_correct identifies the compiled selected result with Context.eval T c x for every raw T. Injective occurrence ports are disjoint from the hole, inputs preserve the hole and reference values, and card_ports counts reference occurrences plus one.",
+    "compile_plug_selected establishes substitution at the selected semantic result. The two compiled sides have different resource types; no equality of complete arrays or physical composition theorem is asserted."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ReferenceOccurrenceCompilation.lean"
+      declarations := [
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.evalRaw_padCircuit",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.evalRaw_pair_select",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.occurrencePort_injective",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.holePort_not_occurrence",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.inputs_hole",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.inputs_reference",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.card_ports",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.compile_correct",
+        "IDT.QMClosure.ReferenceOccurrenceCompilation.compile_plug_selected"] }]
+  plannedArtifacts := []
   dependencies := ["weight_free_raw_probability", "response_context_probability",
     "native_single_source_reference_wall"]
   limits := [
-    "The compiler requires no DecidableEq V, inhabited V, structural mixer laws or probability assumptions. Finite syntactic port indices can supply their own decidable equality.",
-    "Port count is neither source count nor statistical independence. An arbitrary T may duplicate values, so distinct syntactic ports establish no semantic no-cloning claim.",
-    "Shared correlated references require a jointly retained input array or explicit source certificates; overwritten inputs are not silently reused. Compilation alone supplies no input-array availability.",
-    "No recipe, token or particle ontology is chosen. Legal reference generation, physical composition, actualization and matter applicability remain open."] }
+    "The compiler needs no DecidableEq V, inhabited V, structural mixer law or probability Law. Its finite port indices supply their own decidable equality.",
+    "Port count is neither source count nor statistical independence. Arbitrary T may duplicate values; distinct occurrences establish no physical no-cloning claim.",
+    "Shared histories require jointly retained arrays or source certificates. Overwritten inputs are not silently reused, and the compiler supplies no input-array availability.",
+    "Legal reference generation, physical composition, actualization, particle ontology and matter applicability remain open."] }
+
+def nativeRecipeContextRealization : ResearchTask := {
+  id := "native_recipe_context_realization"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Fix a finite native wire type, one marked source s and NativeGaussianResponse.Event recipes in its literal vacuum-doubling tower. Every reference occurrence of a finite one-hole Context is an actual recipe in that same tower; the hole is an event e.",
+    "A structural mapRefs replaces each reference recipe by amplitude s of that recipe. Use the native scalar mixer, existing real-half event damping, common-level padding and the existing full-recipe comparison circuit; no probability Law is assumed by the amplitude core.",
+    "For the separate raw transfer, fix r:WeightFreeRawProbability.RawOperationalData V and arbitrary v:r.Carrier, including null and finite-order references. Define rawEvent by prepared normalized raw evaluation at the recipe sourceAt. Map every context reference recipe by that same rawEvent; complex scalars serve only as existing coefficient certificates, not as new raw carrier structure."]
+  conclusions := [
+    "Parent-accepted analytic contract awaiting a kernel artifact: construct an actual event E with amplitude s E = Context.eval mixer (mapRefs (amplitude s) C) (amplitude s e) / 2^referenceCount C.",
+    "Induction retains recipe provenance: if the child has k reference occurrences, damp the next reference recipe by 2^k using repeated halfEvent, pad the two full recipes to a common level, use existing comparison middle branches to place both selected amplitudes at scale 1/2 on distinct ports, then append one pair in the required operand order and select the specified output.",
+    "The intended normSq readout is the ideal selected-result normSq divided by 4^referenceCount C. For one fixed context, the nonzero common attenuation factor reflects both amplitude equality/inequality and normSq equality/inequality of the corresponding ideal selected results.",
+    "The intended raw transfer uses native_output_related, related_mixer context induction and iterated related_half; compiled scalar equality and related_raw_unique yield rawEvent E = halfPower (referenceCount C) (Context.eval r.normalizedOperation (mapRefs rawEvent C) (rawEvent e)). No infinite reference order, positive raw weight, Hilbert premise or probability Law is required.",
+    "halfPower is injective by additive map_nsmul and halfPower_two_pow, so the same fixed context reflects raw ideal-target equality and inequality despite its accounted dyadic attenuation.",
+    "Any probability corollary must separately retain the existing native Law and use NativeProbabilityUniqueness.native_probability_eq_normSq. Existing comparison and damping theorems are prerequisites, not new results of this task."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeRecipeContextRealization.lean"]
+  dependencies := ["reference_occurrence_compilation", "native_single_source_reference_wall",
+    "native_coherent_scalar_sufficiency", "native_gaussian_probability_selection",
+    "raw_native_dyadic_semantics", "weight_free_raw_probability"]
+  limits := [
+    "The realization is specific to the native scalar mixer and actual same-source recipes. It is not an arbitrary-T lift, amplitude-based witness search, unknown-token processor or supply of fresh unattenuated copies.",
+    "Every composition retains full native circuit recipes and ancillary outputs. Syntactic port counting is distinct from the source and history budget.",
+    "Raw transfer covers only the normalized operation and source-generated reference recipes. The original raw operation requires its separate evaluator bridge; arbitrary raw-T realization and all raw-reference availability are not established.",
+    "Scalar recovery from raw equality is not established: a null reference can collapse distinct coefficient certificates. Algebraic halfPower injectivity supplies neither native amplification nor physical removal of attenuation, and arbitrary response signatures need not reflect raw or scalar distinctions.",
+    "Every circuit is finite, but the theorem permits arbitrary finite vacuum extensions. It gives no physical capacity or efficiency bound.",
+    "Nonzero dyadic attenuation reflects exact amplitude and normSq equality/inequality only; no uniform finite-resolution or noise robustness, probability sampling, actual outcomes, physical reference availability or QM closure follows."] }
+
+def nativeReferenceSeparation : ResearchTask := {
+  id := "native_reference_separation"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Fix one marked source and actual native Event recipes in its literal vacuum tower. Existing unit and i/2 preparations supply two fixed reference recipes; the core concerns scalar amplitudes and normSq, with no probability Law.",
+    "For each reference amplitude t, aligned_sum_difference retains one actual same-source circuit with distinct selected outputs (z+t)/2 and i*(z-t)/2, together with every ancillary output. Define its contrast as the unrenormalized difference of the two output normSq weights."]
+  conclusions := [
+    "Parent-accepted analytic contract awaiting a kernel artifact: each paired-setting contrast equals Re(z*conj t). The fixed references t=1 and t=i/2 recover Re z and Im z/2, respectively; equality of both contrasts is equivalent to equality of the scalar amplitudes.",
+    "The realization uses two settings with four selected weights in total. Each setting retains one circuit and distinct output ports; it does not assume unattenuated joint-array availability or reuse one shared history across the settings.",
+    "Negative control: the unit-reference paired setting gives (5/8,1/8) for both a=(1+i)/2 and b=(1-i)/2. The quadrature-reference setting gives (5/16,1/16) for a and (1/16,5/16) for b.",
+    "Exact-zero Boolean signatures do not inherit separation: all four test outputs are nonzero for each of the distinct actual amplitudes 1/2 and 1/4.",
+    "A separate probability-contrast corollary must retain a supplied native Law and invoke NativeProbabilityUniqueness.native_probability_eq_normSq on the actual selected outputs. A signed contrast is a difference of event probabilities, not a negative event probability."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeReferenceSeparation.lean"]
+  dependencies := ["native_single_source_reference_wall", "native_vacuum_probability_family"]
+  limits := [
+    "The selected pair is not renormalized: its total need not be 1, and conditioning on that pair would change the contrast identity. No minimality claim for the number of settings or weights is made.",
+    "Separation concerns exact scalar normSq profiles of actual same-source recipes. Arbitrary coarse response signatures, physical reference availability and arbitrary-carrier tomography are not established.",
+    "The construction lives in concrete scalar native semantics and permits arbitrary finite vacuum extensions. It supplies neither all raw-reference availability nor physical capacity or efficiency bounds.",
+    "The recipe-context compiler is independent. Exact equality/inequality is not uniform finite-resolution or noise robustness; probability sampling, actual outcomes, actualization, full contextual completeness and QM upgrades remain outside scope."] }
 
 def referenceProvenanceAndSubstitution : ResearchTask := {
   id := "reference_provenance_and_substitution"
@@ -2759,12 +2896,14 @@ def referenceProvenanceAndSubstitution : ResearchTask := {
   checkedEvidence := []
   plannedArtifacts := [
     "Distinguish individually reachable port values from jointly preparable arrays; retain source provenance and alignments on legal composition.",
-    "Complete the separate reference_occurrence_compilation task: its selected-output syntax theorem retains every reference occurrence and unused output, while physical availability and shared-history source certificates remain obligations.",
+    "Use the checked reference_occurrence_compilation syntax theorem, which retains reference occurrences and unused outputs; physical availability and shared-history source certificates remain obligations.",
+    "Formalize the separately recorded native_recipe_context_realization and native_reference_separation contracts without treating their attenuation-accounted same-source recipes as unattenuated reference availability.",
     "Generate admitted references from native input resources and retained outputs, tracking common frame, alignment and legal history composition without free copying.",
     "Prove substitution closure for admitted continuations and the native probability-law conditions with explicit apparatus/controller/environment accounting.",
     "Distinguish fixed-context equivalence, common-transformation covariance and ray redundancy; state sector-preservation requirements separately from channel covariance."]
   dependencies := ["port_frame_alignment", "native_single_source_reference_wall",
-    "reference_occurrence_compilation", "product_exchange_observation_boundary",
+    "reference_occurrence_compilation", "native_recipe_context_realization",
+    "native_reference_separation", "product_exchange_observation_boundary",
     "native_preparation_naturality",
     "response_phase_quotient_wall", "coherent_port_ray_boundary", "product_feature_exchange",
     "standing_matter_regime_constraint"]
@@ -2881,6 +3020,7 @@ def researchTasks : List ResearchTask := [
   pairExchangeCombinations, productFeatureExchange, productExchangeObservationBoundary,
   nativePreparationNaturality, responsePhaseQuotientWall,
   portFrameAlignment, nativeSingleSourceReferenceWall, referenceOccurrenceCompilation,
+  nativeRecipeContextRealization, nativeReferenceSeparation,
   referenceProvenanceAndSubstitution, recordWindowStability]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
