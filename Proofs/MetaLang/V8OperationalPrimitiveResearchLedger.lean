@@ -3071,19 +3071,19 @@ def nativeReferenceSettlingScopeExtensions : ResearchTask := {
   stage := .analyticAwaitingFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "Use concrete generated scalar G, the native mixer, arbitrary signature sigma:G to Omega and separately charged known reference preparations. No author is assigned to these optional extensions.",
-    "Only the open-patch contraction route supplies the usual scalar/subspace topology, a relatively open constant-signature neighborhood of the chosen reference z, and norm(a)<1 for a=(1+I)/2. The finite-probe control is a separate algebraic residue construction."]
+    "Use concrete generated scalar G, the native mixer, arbitrary signature sigma:G to Omega and separately charged known reference preparations. No author is assigned to the remaining equal-label finite-probe tail control.",
+    "The open-patch contraction route is separately checked under the canonical scalar/subspace topology in native_open_patch_single_trace. The remaining equal-label finite-probe control is an algebraic residue construction and adds no topology premise."]
   conclusions := [
-    "Pending analytic optional theorem: convergence of native F_z iterates to z from the contraction formula should imply ReferenceSettles when sigma is constant on a relatively open neighborhood of z. The checked topology-free settling core does not itself formalize this topological implication.",
+    "The open-patch-to-settling contraction implication is checked in the separate native_open_patch_single_trace task, with canonical topology and arbitrary response labels. This entry points to that evidence without adding evidence or promoting its remaining equal-label finite-probe obligation.",
     "Pending universal finite-input-probe countercontrol: for any finite probe family, choose an odd M>max(1,4*probeCount) and use a union of native a-orbits in the residue model. Each selected probe initially has the reference label and retains that label along its whole selected orbit. This equal-label control does not refute changed-response tails or eventual avoidance of the initial label. The identity a^4=-1/4 gives the intended orbit-size bound at most 4*M versus M squared residue classes; every universal control and transport step requires an explicit artifact.",
     "The finite F9 axes control applies to halving only and must not be asserted as a native F_z control, whose a-orbit has order 8 in that example. This distinction remains part of the pending algebraic countercontrol.",
-    "Finite probes do not replace the all-input eventual-tail predicate. The contraction implication and finite-probe countercontrol are separate accepted analytic obligations, not checked conclusions or necessity theorems for every response codomain."]
+    "Finite probes do not replace the all-input eventual-tail predicate. The remaining equal-label finite-probe countercontrol is analytic and is not a checked conclusion or a necessity theorem for every response codomain; the contraction implication has separate checked evidence."]
   checkedEvidence := []
   plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedStableObservation.lean",
     "Proofs/QMClosure/NativeAllocatedResidueObservation.lean"]
   dependencies := ["native_reference_settling", "native_allocated_source_arithmetic"]
   limits := [
-    "This task preserves optional gaps with analytic status, no checked evidence and no assigned source author. Existing checked declarations in the prospective extension files do not discharge these obligations.",
+    "This task retains the equal-label finite-probe tail control with analytic status, no checked evidence and no assigned source author. Existing checked declarations in the prospective extension files do not discharge that remaining obligation.",
     "Known reference occurrences stay separately charged. No uniform source budget, physical damping, detector-noise model, reference availability, unknown-token cloning, probability provenance, multi-source Law extension, actualization or QM closure is inferred."] }
 
 def nativeBinaryValuationNonsettling : ResearchTask := {
@@ -3197,7 +3197,7 @@ def nativeReferenceSettlingRegularityScope : ResearchTask := {
     "Pointwise all-input ReferenceSettles does not imply any constant open patch. Construct a dense partial transversal T in G excluding 0, with at most one representative of each two-sided a-orbit. Its Boolean indicator settles toward 0 because each forward orbit visits T at most once, while both fibers are dense.",
     "The transversal proof is to enumerate a countable base and choose fresh orbits, using that finite unions of two-sided orbit closures are nowhere dense. The complement is dense because a nonempty open U contained in T would make a*U open and disjoint from dense T.",
     "Countability of G makes every Boolean signature Borel and Baire-property, and the intended clopen-box interpolation on the first n enumerated points makes every such signature Bool-valued Baire class one on G. An ambient complex Borel/Baire-property extension also imposes no restriction: extend the countable true fiber by its indicator.",
-    "An ambient real-valued Baire-class-one extension on complex space is a substantive different assumption: a continuity point forces a nonempty constant patch on dense binary G, and the pending open-patch contraction route then gives settling. A Bool-valued Baire-class-one extension on connected complex space would instead be constant; it is not the same assumption.",
+    "An ambient real-valued Baire-class-one extension on complex space is a substantive different assumption: a continuity point forces a nonempty constant patch on dense binary G, and the separately checked native_open_patch_single_trace bridge then gives settling. A Bool-valued Baire-class-one extension on connected complex space would instead be constant; it is not the same assumption.",
     "Global all-input uniform finite-time settling forces sigma constant by surjectivity of the native iterate. Local uniform response stability is therefore distinct from both that global condition and pointwise eventual settling.",
     "Optional equality-only cofinite relaxation: for every input, eventual exclusion of each wrong label separately should suffice, with nonconstancy, for separation by common contextual return. Finite response range makes this equivalent to exact settling; the identity signature exhibits its infinite-range weakness. Nonunique equality-only limits supply no outcome selection."]
   checkedEvidence := []
@@ -3328,6 +3328,97 @@ def rawSingleTraceProbabilityBridge : ResearchTask := {
   limits := [
     "The raw predicates, all-time induced-signature transports, sufficient ambient Law constructors and identical-field equalities are checked with Data and both full contextual DiagonalFixed premises retained. The separation target is inducedSignature only; no ambient literal-state or necessity theorem is asserted.",
     "Observed raw laws, contextual fixedness, actual program resources and common-frame conditions remain supplied. No Complex-free backend, scalar/topological observation datum, physical detector or probability provenance, multi-source Law extension, outcome actualization or QM closure is inferred."] }
+
+def nativeOpenPatchSingleTrace : ResearchTask := {
+  id := "native_open_patch_single_trace"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply the canonical inherited topology on generated G and the existing ordinary complex scalar backend. The signature sigma:G to Omega is arbitrary; no topology on Omega or global continuity of sigma is assumed.",
+    "Use actual repeated left-first one-hole contexts of depth n with a fixed generated reference z, separately allocating every repeated known reference occurrence. The native iterate fixes z as a selected scalar output; no physical availability or unknown-input copying is supplied."]
+  conclusions := [
+    "Checked contraction result: for every generated z and x, native fixed-reference iterates converge to z, first in literal complex coordinates and then in the canonical G topology. The proof uses the committed shared-context attenuation theorem on the actual depth-n repeated contexts, with the reference output fixed.",
+    "HasOpenConstantPatch sigma supplies a generated z inside the relatively open constant region. Convergence gives an input-dependent eventual time N(x) at which all later iterates have response sigma(z), hence ReferenceSettles sigma. No nonconstancy premise is required for patch-to-settling.",
+    "With nonconstancy additionally supplied, choose an input whose label differs from sigma(z). Its settled tail has the changed constant label sigma(z), giving HasChangedConstantReferenceTail sigma. This checked witness composes with the existing single-trace Law adapter and its entire-field equality; no Law constructor was duplicated in this artifact.",
+    "Patch-to-settling, nonconstant settling-to-changed-tail and nonconstant patch-to-changed-tail are checked in this isolated artifact. Local-uniform equivalence, dense-transversal/Baire results and universal finite-input infinite-tail countercontrols remain separate analytic tasks and are not discharged by this entry."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedSettlingRegularity.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedSettlingRegularity.referenceStep_iterate_coe_tendsto",
+        "IDT.QMClosure.NativeAllocatedSettlingRegularity.referenceStep_iterate_tendsto",
+        "IDT.QMClosure.NativeAllocatedSettlingRegularity.referenceSettles_of_openConstantPatch",
+        "IDT.QMClosure.NativeAllocatedSettlingRegularity.changedConstantTail_of_referenceSettles_nonconstant",
+        "IDT.QMClosure.NativeAllocatedSettlingRegularity.changedConstantTail_of_openConstantPatch_nonconstant"] }]
+  plannedArtifacts := []
+  dependencies := ["native_context_attenuation_record_boundary", "native_reference_settling",
+    "native_single_trace_probability_criterion"]
+  limits := [
+    "The five registered theorems establish literal and canonical G-topological convergence, patch-to-settling and both nonconstant changed-tail corollaries. No new Law adapter is defined here, and the shared file does not establish the separate local-uniform, Baire or dense-transversal obligations.",
+    "Eventual time may depend on the input; no global uniform time or source budget is asserted. Ordinary scalar topology is supplied, not a topology or continuity principle on response labels.",
+    "Known references remain separately allocated under supplied source/frame conditions. No physical detector, topology or robustness derivation, reference availability, probability provenance, unknown-token cloning, multi-source Law extension, outcome actualization or QM closure is inferred."] }
+
+def nativePointwisePeriodicSeparatingReadout : ResearchTask := {
+  id := "native_pointwise_periodic_separating_readout"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use countable Gaussian-dyadic generated G and native unit a=(1+I)/2. The nontrivial two-sided orbit O(z,x) consists of z+a^n*(x-z) for integer n and x different from z. Ordinary complex/subspace topology is used as an existence proof device, not as a regularity premise on the Boolean readout.",
+    "Enumerate all nontrivial reference orbits and all distinct generated pairs. References are known generated values with actual allocated preparations; no computability or practical context-selection procedure is assumed."]
+  conclusions := [
+    "Accepted analytic nonnecessity construction awaiting artifacts: same-center nontrivial orbits coincide or are disjoint, while different-center intersections are finite. A bounded infinite intersection would force equal centers; for an unbounded intersection exponent differences are bounded and a repeated difference forces equal centers. Each orbit closure is its orbit plus center and is nowhere dense.",
+    "Interleave orbit and pair stages. At each finite stage the colored domain is a finite union of processed full orbits plus finite witness points. A fresh orbit has finitely many constrained exponent positions; choose a positive period greater than all absolute differences of constrained positions, and extend periodically without overwriting. Skip duplicate orbits; singleton fixed orbits have period 1.",
+    "At a pair stage for distinct x,y choose u and u+a*(y-x) outside the colored domain by avoiding finitely many translated nowhere-dense closures, and assign opposite Boolean values. The actual generated reference r=(1+I)*(u-a*x) realizes these two values as selected first outputs, proving the intended contextual separation.",
+    "Every point is eventually covered and every installed orbit period persists. The final signature is intended to separate, yet for every z,x there is an orbit-dependent P>0 such that every n has equal responses at times n+P and n. The existing single-basis Law then exists, while ReferenceSettles fails by nonconstancy and periodicity.",
+    "This would show the single-orbit time-zero nonperiodicity witness is not necessary even for Bool. Orbit-dependent periods do not provide a uniform common period; no necessity or finite verification claim for the single-trace criterion follows."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedPointwisePeriodicObservation.lean"]
+  dependencies := ["native_single_trace_probability_criterion", "native_context_attenuation_record_boundary",
+    "native_allocated_signature_law"]
+  limits := [
+    "This task is analytic only with no checked evidence. Orbit intersection/closure facts, consistent periodic extensions, fresh pair witnesses, coverage and all separation/periodicity/no-settling conclusions remain proof obligations.",
+    "The construction is an exact mathematical existence argument, not a computable or practical detector, context-selection method, physical reference availability or probability provenance. Known references remain separately allocated.",
+    "No unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, outcome actualization or QM closure is inferred."] }
+
+def nativeUniformPeriodProbabilityCriterion : ResearchTask := {
+  id := "native_uniform_period_probability_criterion"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use concrete generated G, arbitrary signature sigma:G to Omega, native referenceStep F_z and the existing complex scalar arithmetic backend. No topology on response labels or finite-codomain assumption is supplied.",
+    "Define UniversalPeriod(sigma,L) by: for every z,x in G, sigma(F_z iterated L at x)=sigma(x). Absence of a common positive period means every L>0 has some generated z,x where this equality fails; it is not absence of all individually periodic traces."]
+  conclusions := [
+    "Accepted analytic equivalence awaiting artifacts: full G-contextual separation is equivalent to absence of a common positive UniversalPeriod, that is, for every L>0 there exist z,x with different responses at time L and time zero. The checked common contextual-return theorem gives a common positive period whenever a distinct pair collapses.",
+    "For the converse, one-hole affine semantics gives selected scalar equality C(F_z iterated L at x)=F_(C(z)) iterated L at C(x). A global bare-signature period therefore lifts to full ResponseEq between x and F_z iterated L at x for every context C.",
+    "Choose x=0,z=1. The Lth output is 1-a^L, which differs from 0 for L>0 because normSq(a^L)=(1/2)^L<1. Thus a global positive period gives a distinct collapsed pair, completing the intended equivalence without a topology premise.",
+    "The checked generic signature criterion then gives the same if-and-only-if for existence of the existing generated single-basis six-field Law, and an adapter preserving the entire probability field of any supplied scalar Law under the no-common-period condition. Canonical scalar consistency remains separate."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeAllocatedUniversalPeriodLaw.lean"]
+  dependencies := ["native_reference_settling", "native_context_attenuation_record_boundary",
+    "native_allocated_signature_law"]
+  limits := [
+    "This task is analytic only with no checked evidence. The universal-period predicate, affine context intertwining, distinct collapsed witness, equivalence and identical-field Law adapter remain proof obligations.",
+    "C(z) is a generated known reference that must be separately prepared. The intertwining equality is equality of selected scalar values, not equality of full retained arrays, histories or resource costs. The existing complex arithmetic backend is retained.",
+    "Infinite reference/input/time quantification supplies no finite empirical certificate, physical detector or probability provenance, source availability, multi-source Law extension, actualization or QM closure."] }
+
+def rawUniformPeriodProbabilityBridge : ResearchTask := {
+  id := "raw_uniform_period_probability_bridge"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the existing original raw Data d, source v, structural laws and both full contextual DiagonalFixed premises at chosenZero and v from the checked raw stable bridge.",
+    "Supply the original observation predicate: for every L>0 there exist actual reference and input programs r,p whose rawReferenceStep_r iterated L from rawValue(p) has signature different from signature(rawValue(p)). Program references are separately charged; no scalar coordinates or topology are observation data."]
+  conclusions := [
+    "Accepted analytic raw no-common-period bridge awaiting artifacts: per-index compiled signature correspondence and initial-signature equality transport the raw predicate to the native no-common-period condition for inducedSignature on G. The proof preserves actual program/context witnesses rather than inducting on bare signature equality.",
+    "The native criterion gives induced contextual separation and hence a sufficient original ambient single-basis Law, with the entire probability field of any supplied scalar Law preserved and the unchanged six-field contract transported. Canonical scalar consistency remains separate.",
+    "No ambient Law-existence if-and-only-if or full raw-carrier literal-state separation is asserted. The checked q=1/3 ambient-law/constant-induced-signature countercontrol remains compatible with this sufficient criterion.",
+    "The infinite time/family predicate is not a finite empirical certificate. Existing reference allocation counts remain charged at each occurrence and do not become a uniform physical resource bound."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/ResponseAllocatedUniversalPeriodBridge.lean"]
+  dependencies := ["response_allocated_stable_bridge", "native_uniform_period_probability_criterion"]
+  limits := [
+    "This task is analytic only with no checked evidence. Raw predicate definition, all-index transport, induced separation and sufficient ambient Law/whole-field adapters remain proof obligations.",
+    "Original raw evaluations and signatures of actual allocated programs are the observational premises. The Native-indexed complex backend is retained; it is not claimed Complex-free, and no scalar/topological observation datum is added.",
+    "No physical source/frame availability, detector or probability provenance, unknown-token cloning, tensor or independence interpretation, multi-source probability-law extension, actualization or QM closure is inferred."] }
 
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
@@ -4118,6 +4209,9 @@ def researchTasks : List ResearchTask := [
   nativeFiniteObservationUnderdetermination, nativeReferenceSettlingRegularityScope,
   nativeContextAttenuationRecordBoundary,
   nativeSingleTraceProbabilityCriterion, rawSingleTraceProbabilityBridge,
+  nativeOpenPatchSingleTrace,
+  nativePointwisePeriodicSeparatingReadout, nativeUniformPeriodProbabilityCriterion,
+  rawUniformPeriodProbabilityBridge,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
