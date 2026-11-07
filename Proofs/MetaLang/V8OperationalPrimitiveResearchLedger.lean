@@ -4052,6 +4052,92 @@ def signedRawRailBoundedNegativeControl : ResearchTask := {
     "The t=-1 construction is a signed categorical control, without a physical probability interpretation. Its uniform absolute bound does not establish nonnegativity away from the compiled boundary.",
     "Categorical readout contracts supply no physical preparation availability, outcome actualization, Born derivation or full QM closure. Manifest and public QM statuses remain unchanged."] }
 
+def globalDirectionReversibilityBoundary : ResearchTask := {
+  id := "global_direction_reversibility_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Fix one autonomous update T on the complete state and a score F valued in a partial order. The first route assumes nonincrease at every state and a positive return period separately at every state.",
+    "The reversal route retains all-state score nonincrease and replaces the return-period premise by supplied R with T composed with R composed with T equal to R and F composed with R equal to F. An involutive interpretation of R is an additional premise, unnecessary for the algebraic identity."]
+  conclusions := [
+    "Checked partial-order boundary: all-state score nonincrease and a positive complete-state return imply score invariance; pointwise positive periods and finite permutations give the corresponding corollaries. The reversal theorem also retains all-state nonincrease and uses the supplied reversal identity and reversal-invariant score.",
+    "Checked integer control: the involutions n maps to -n and n maps to 1-n compose to translation with a strictly decreasing score -n. This score is not globally nonincreasing under either constituent involution, so the control does not meet that premise for both maps.",
+    "Checked universal clock extension: for arbitrary local f, L(x,n)=(f(x),n+1) has L^k(x,n)=(f^k(x),n+k), preserves the selected projected readout r composed with fst along its trajectory, has a strictly descending score -n and no positive full-state return. Bijectivity transfers from f. A local four-cycle supplies an explicit local-return control despite full-state descent.",
+    "The existing NativeMixerInfiniteOrder.native_word_infinite_order artifact is reused through the dependency, not duplicated. Infinite order of a map does not assert that every orbit is nonperiodic."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/GlobalDirectionAndLocalReversibility.lean"
+      declarations := [
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.score_eq_of_positive_return",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.score_eq_of_pointwise_periodic",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.finite_perm_score_invariant",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.score_eq_of_reversal",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.integerA_involutive",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.integerB_involutive",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.integerTranslation_strict_descent",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.integerA_not_globally_descending",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.integerB_not_globally_descending",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.clockLift_iterate",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.clockLift_readout_iterate",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.clockLift_strict_descent",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.clockLift_no_positive_return",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.clockLift_bijective",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.fourCycle_return",
+        "IDT.QMClosure.GlobalDirectionAndLocalReversibility.local_return_with_full_descent"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_mixer_infinite_order"]
+  limits := [
+    "Complete-state autonomy and all-state score monotonicity must remain explicit; a local projection is not the complete state. The appended clock is compatible with readouts that ignore it, without indistinguishability for global observations.",
+    "No physical availability, time reversal symmetry, energy, entropy, temporal arrow explanation or definition of physical time follows. No additional bounded-score or universal nonreturn claim for arbitrary dynamics is asserted. These are algebraic hypothesis boundaries, not a claim about nature or a Born/full QM status upgrade."] }
+
+def reversibleResetEnvironmentCapacity : ResearchTask := {
+  id := "reversible_reset_environment_capacity"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply an injective complete update, a fixed initial environment and an admissible set of input labels. Require identical outputs on ALL retained subsystem coordinates for those inputs."]
+  conclusions := [
+    "Checked injective erasure boundary: an injective complete update with fixed initial environment and identical ALL retained subsystem outputs forces an injective environment encoding of admissible input labels. The prepared-input adapter retains the required injectivity contract.",
+    "Checked finite capacity: admissible-label cardinality is at most environment cardinality. For the complete word language Fin n to A this gives |A|^n<=|E|; restricted languages use their own cardinality. Independent variation is combinatorial, without a probabilistic independence premise.",
+    "Checked SWAP control: an injective update resets the subsystem and leaves the environment output equal to the input label, with a bijective environment map. It saturates the label-capacity bound without supplying refreshed environment resources."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ReversibleErasureEnvironment.lean"
+      declarations := [
+        "IDT.QMClosure.ReversibleErasureEnvironment.environment_injective_of_constant_subsystem",
+        "IDT.QMClosure.ReversibleErasureEnvironment.environment_injective_of_update",
+        "IDT.QMClosure.ReversibleErasureEnvironment.environment_injective_of_prepared_update",
+        "IDT.QMClosure.ReversibleErasureEnvironment.capacity_of_constant_subsystem",
+        "IDT.QMClosure.ReversibleErasureEnvironment.capacity_of_update",
+        "IDT.QMClosure.ReversibleErasureEnvironment.full_block_capacity",
+        "IDT.QMClosure.ReversibleErasureEnvironment.restricted_block_capacity",
+        "IDT.QMClosure.ReversibleErasureEnvironment.swapUpdate_injective",
+        "IDT.QMClosure.ReversibleErasureEnvironment.swapUpdate_reset",
+        "IDT.QMClosure.ReversibleErasureEnvironment.swapUpdate_environment_identity",
+        "IDT.QMClosure.ReversibleErasureEnvironment.swapUpdate_environment_bijective"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "Injectivity concerns the complete retained outputs, not a selected subsystem projection. The finite bounds do not assert a further all-n impossibility theorem or quantum capacity statement.",
+    "No environment-refresh mechanism, ongoing reset availability, heat, entropy or energy identification is supplied. No physical preparation availability, outcome actualization, cosmological claim or full QM closure follows."] }
+
+def crossScalePrimitiveComparison : ResearchTask := {
+  id := "cross_scale_primitive_comparison"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "Compare closed finite bijective dynamics, irreversible rewrite or order-growth dynamics, locally reversible dynamics with an evolving environment, and contextual or probabilistic process families. No family is selected as a winner.",
+    "Keep quantum interference and macroscopic entanglement; stable matter, memory and thermal fluctuations; causality and gravity; and expansion, acceleration, CMB, lensing and growth as separate obligations. V8PrimitiveEmpiricalConstraintLedger inventories 46 families. The overall candidate is unassessed; QM has partial executable coverage, while the other sectors remain unassessed. This comparison changes none of their statuses.",
+    "A shared cosmic forward model must connect rulers, distances, perturbations and light deflection using declared anchors rather than independently tuned functions. Treat observations motivating dark matter, including dynamics, lensing and growth, and observations of accelerated expansion motivating dark energy, without choosing an ontology in advance."]
+  conclusions := [
+    "The comparison remains an open physical bridge. Current algebra supplies hypotheses to test, not a complete account of observations or a selection of the laws of nature."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "External context only, not Lean evidence: Kotler mechanical entanglement, https://arxiv.org/abs/2004.05515; Berut thermal erasure and fluctuations, https://www.cpt.univ-mrs.fr/~verga/pdfs/Berut-2012yq.pdf; conditional GW170817 timing constraints, https://arxiv.org/abs/1710.05834.",
+    "External context only, not Lean evidence: Planck, https://arxiv.org/abs/1807.06209; DESI DR2 distances, https://arxiv.org/abs/2503.14738v3; DES Y3 joint three-by-two-point analysis, https://arxiv.org/abs/2105.13549v3.",
+    "No checked physics evidence or planned theorem is registered for this comparison. Physical availability, parameter provenance and joint observational consistency require separate evidence. No completed QM or GR derivation, dark-sector explanation or public claim upgrade is asserted."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -4849,7 +4935,8 @@ def researchTasks : List ResearchTask := [
   rawFixedReferencePreparation, rawDoubledNormalizationCompiler, rawRailVacuumExtensionWall,
   rawRailReadoutBridge, sourceRichnessVacuumFixed, nativeSignedVariationSelection,
   responseClassPreparationCompiler, signedRawRailVariationSelection,
-  signedRawRailBoundedNegativeControl,
+  signedRawRailBoundedNegativeControl, globalDirectionReversibilityBoundary,
+  reversibleResetEnvironmentCapacity, crossScalePrimitiveComparison,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,

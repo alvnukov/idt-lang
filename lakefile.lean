@@ -298,6 +298,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.ResponseClassPreparationCompiler,
     `Proofs.QMClosure.SignedRawRailReadoutBridge,
     `Proofs.QMClosure.SignedRawRailNegativeControl,
+    `Proofs.QMClosure.GlobalDirectionAndLocalReversibility,
+    `Proofs.QMClosure.ReversibleErasureEnvironment,
     `Proofs.QMClosure.NativeHyperrealProbabilityWall,
     `Proofs.QMClosure.NativeArchimedeanProbability,
     `Proofs.QMClosure.RawNativeDyadicSemantics,
