@@ -2627,6 +2627,193 @@ def nativeTwoPointObservationControl : ResearchTask := {
     "The profile ranges over all actual reference recipes and known preparation-dependent comparison circuits; this is no fixed universal finite test-count, capacity or efficiency claim. The full arbitrary-reference quotient and the reachable recipe family remain distinct constructions.",
     "Failure of individual baseline soundness together with full-profile completeness is a mathematical control, not a proof of physical detector behavior, physical availability of arbitrary references, unknown-token cloning, free copying, finite-precision or noise robustness, actual outcomes, actualization or full QM closure."] }
 
+def allocatedPreparationContexts : ResearchTask := {
+  id := "allocated_preparation_contexts"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Fix an arbitrary two-output raw operation T and the existing finite one-hole context syntax. At every reference occurrence supply a separate allocated known preparation with its input block, circuit, selected reference output and charged resources; repeated descriptions of one known preparation still require separate allocations.",
+    "The complete joint initial array, disjoint wire allocations, common frame and legal simultaneous placement of the hole input and preparation resources are externally supplied. No scalar linearity, chosen-zero behavior, zero-preservation law, tensor product or independence premise is inferred."]
+  conclusions := [
+    "Checked arbitrary-T compiler: eval_realize equates the selected output of an allocated context program with exact ideal raw context evaluation using the separately prepared reference at each occurrence. evalRaw_blocks and eval_pair retain disjoint preparation blocks and the selected two-output gate semantics without scalar or zero-preservation laws.",
+    "All preparation wires remain in the complete final array, including companion-output and ancillary wires. Later gates may change earlier cursor values; no separate record of past cursor values or histories is asserted. Exactness concerns the designated final context output, not identification of the complete final array with a one-hole expression.",
+    "Checked budget accounting is additive for pair programs; repeating a known preparation charges its budget twice. budget_realize is the hole-program budget plus the sum of all reference-occurrence budgets. The Event adapter preserves actual raw evaluation and has budget one; compiling an Event-reference context with an Event hole therefore charges referenceCount(C)+1. These are allocation counts, not physical source certificates or optimality claims."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/AllocatedPreparation.lean"
+      declarations := [
+        "IDT.QMClosure.AllocatedPreparation.evalRaw_blocks",
+        "IDT.QMClosure.AllocatedPreparation.eval_pair",
+        "IDT.QMClosure.AllocatedPreparation.budget_pair",
+        "IDT.QMClosure.AllocatedPreparation.budget_repeated",
+        "IDT.QMClosure.AllocatedPreparation.eval_ofEvent",
+        "IDT.QMClosure.AllocatedPreparation.budget_ofEvent",
+        "IDT.QMClosure.AllocatedPreparation.eval_realize",
+        "IDT.QMClosure.AllocatedPreparation.budget_realize",
+        "IDT.QMClosure.AllocatedPreparation.budget_realize_ofEvent"] }]
+  plannedArtifacts := []
+  dependencies := ["reference_occurrence_compilation", "native_recipe_context_realization"]
+  limits := [
+    "Joint initial arrays, common-frame alignment and preparation resources remain supplied conditions, not an implementation of physical simultaneous availability.",
+    "Separate allocations of known preparation descriptions are not cloning or reuse of an independently unknown input. No tensor or independence interpretation, uncharged reference availability or physical history-composition law is established.",
+    "No multi-source probability-law extension, physical detector or controller availability, outcome actualization, or full QM closure is established."] }
+
+def nativeAllocatedSourceArithmetic : ResearchTask := {
+  id := "native_allocated_source_arithmetic"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the concrete native complex scalar mixer and finitely allocated unit-source inputs with explicitly supplied zero inputs, joint initial arrays and a common frame. Every macro records its finite source budget and retains all outputs.",
+    "Allocate separate known preparations whenever a construction needs two occurrences of a prepared value. These charged mathematical inputs do not certify physical simultaneous availability, tensor structure, independence or unknown-token cloning."]
+  conclusions := [
+    "Checked constructive arithmetic supplies actual source-budgeted native macros for multiplication by I and -I, halving, negation and addition, with exact selected-output identities, explicit additive source counts, and the complete final arrays retained.",
+    "The existing arbitrary-array closure proves that the selected output of every allocated native program with its arbitrary finite 0/1 input array lies in the Gaussian-dyadic carrier. The checked exclusion shows the scalar 1/3 is not reachable in this generated sector.",
+    "Explicit Gaussian-integer and dyadic constructors give every Gaussian-dyadic scalar with a finite charged source budget. Combined with arbitrary-array closure, reachable_iff_gaussian_dyadic proves exact reachability if and only if Gaussian-dyadic over all finite allocated budgets; value_dyadicProgram and budget_dyadicProgram record exact value and source count.",
+    "The concrete targetTwo program has selected output 2 and charged source count 10. This is a source-budget witness, not a gate count, wire count, minimum source count, optimal circuit, efficiency, bounded-capacity or general optimality assertion."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedSourceArithmetic.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_phasePlus",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_phaseMinus",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.budget_phasePlus",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.budget_phaseMinus",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_half",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.budget_half",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_negate",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.budget_negate",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_add",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.budget_add",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_dyadicProgram",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.budget_dyadicProgram",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.value_gaussian_dyadic",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.reachable_iff_gaussian_dyadic",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.third_not_reachable",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.targetTwo_value",
+        "IDT.QMClosure.NativeAllocatedSourceArithmetic.targetTwo_budget"] }]
+  plannedArtifacts := []
+  dependencies := ["allocated_preparation_contexts", "native_single_source_reference_wall",
+    "raw_native_dyadic_semantics"]
+  limits := [
+    "Explicitly increasing a finite source budget changes the supplied preparation resources; it is not amplification or free copying from a single unknown token.",
+    "Gaussian-dyadic closure, constructive reachability and the finite 2 witness concern concrete scalar native semantics, not arbitrary raw carriers or arbitrary physical state preparation.",
+    "All joint-input availability and common-frame requirements remain supplied. No tensor or independence claim, physical availability, multi-source probability-law extension, detector robustness, outcome actualization or full QM closure is established."] }
+
+def allocatedGeneratedContexts : ResearchTask := {
+  id := "allocated_generated_contexts"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For arbitrary raw V, two-output operation T, chosen zero and admitted stock S to V, define G={x | there exists p:Program S with eval(p)=x}. Restrict operations and reference contexts to this generated carrier, retaining program witnesses and charging every allocated reference occurrence. The concrete scalar unit-stock model is a separate specialization.",
+    "Use the allocated-preparation compiler with externally supplied joint initial arrays and common frame. Any proposed Gaussian-dyadic characterization in the scalar unit-stock specialization must cite the completed constructive arithmetic proof rather than serve as an unproved identification.",
+    "Response signatures are supplied independently on the generated carrier. Any six-field probability law from the earlier ambient complex route remains an additional contract whose consistency with a new generated-context quotient must be checked, not presumed."]
+  conclusions := [
+    "Checked generic generated-context adequacy: value is surjective onto G, every finite G-reference context lifts to a context of allocated program witnesses, and eval_coe identifies its evaluation with ambient raw evaluation under inclusion. The compiled circuit has exact selected-output semantics and retains the complete final array, with every reference occurrence charged.",
+    "compiled_tests_iff_responseEq equates equality of every allocated program-reference test with full contextual equivalence on G and its own G-reference grammar. Ambient ResponseEq restricts to this relation by ambient_responseEq_restrict; the converse is not asserted in general. compiled_budget is the hole-program budget plus referenceBudget(C).",
+    "The checked scalar point-signature classification determines exactly when the unchanged single-basis six-field Law exists on the generated carrier: Nonempty pointGeneratedLaw(q) if and only if q is Gaussian-dyadic, equivalently reachable. It supplies a field-preserving adapter for each reachable q, and excludes a response Law for each unreachable q; no law field is relaxed.",
+    "Checked scalar point-signature classification: define response Data on the scalar generated carrier G for every ambient complex q, using pointTest q restricted to G. If q lies in G, full G-reference response equivalence is literal equality and any supplied scalar Law transports with its probability field unchanged. If q lies outside G, the signature is constantly false on G and its G-reference contexts, and no response Law exists.",
+    "The classification Law retains the existing single-basis six-field contract over G; it does not assign probabilities to joint allocated multi-source inputs. The supplied-law adapter preserves the entire probability field; canonical scalar consistency is a separate witness. The checked pointTest(1/3) boundary has literal ambient response equivalence and an ambient Law, but universal generated-context equivalence and no generated response Law. The point centers 2 and 0 separately admit generated response Laws."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/AllocatedGeneratedContexts.lean"
+      declarations := [
+        "IDT.QMClosure.AllocatedGeneratedContexts.value_surjective",
+        "IDT.QMClosure.AllocatedGeneratedContexts.context_lift",
+        "IDT.QMClosure.AllocatedGeneratedContexts.eval_coe",
+        "IDT.QMClosure.AllocatedGeneratedContexts.compiled_tests_iff_responseEq",
+        "IDT.QMClosure.AllocatedGeneratedContexts.ambient_responseEq_restrict",
+        "IDT.QMClosure.AllocatedGeneratedContexts.compiled_budget"] },
+    { sourcePath := "Proofs/QMClosure/NativeAllocatedObservationBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGeneratedData",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.value_pointReferenceProgram",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.budget_pointReferenceProgram",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGenerated_responseEq_classification",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGenerated_prepared_coe",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGeneratedLawOfScalar",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGeneratedLawOfScalar_probability",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGenerated_law_nonempty_iff_gaussian_dyadic",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.third_ambient_generated_boundary",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGenerated_law_two",
+        "IDT.QMClosure.NativeAllocatedObservationBoundary.pointGenerated_law_zero"] }]
+  plannedArtifacts := []
+  dependencies := ["allocated_preparation_contexts", "native_allocated_source_arithmetic",
+    "response_context_probability", "native_recipe_observation_boundary"]
+  limits := [
+    "The generic generated-carrier and scalar point-signature components are checked under their supplied mathematical assumptions. Generated-context adequacy does not establish adequacy for arbitrary ambient complex references or transfer every ambient probability law.",
+    "A generated-context quotient is a new mathematical scope. Existing ambient probability laws, class distinctions and representation conclusions are not transferred without a separate proof that their exact contracts survive.",
+    "Joint-input and common-frame availability remain externally supplied. No physical reference availability, tensor or independence structure, unknown-token cloning, multi-source probability-law extension, physical detector implementation, outcome actualization or full QM closure is established."] }
+
+def denseReferenceContextEquivalence : ResearchTask := {
+  id := "dense_reference_context_equivalence"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply a topological raw carrier V, a map A to V with dense range, a two-output operation T whose selected outputs are separately continuous in each input slot, and a continuous signature from V to a Hausdorff response space Omega. No closure of the image of A under T is assumed.",
+    "Use the existing finite one-hole context grammar. Restricted contexts have reference values from the supplied dense map; the hole inputs x and y remain arbitrary ambient elements of V, not necessarily generated or in the image.",
+    "Density and the stated topology and continuity properties are independent premises. The core concerns an arbitrary dense map; any eventual application to an allocated generated carrier needs a separate density proof and does not add a generated-closure premise to the core."]
+  conclusions := [
+    "Accepted analytic route awaiting formalization: equality of signatures in every finite dense-reference context is equivalent to ambient full ResponseEq for arbitrary ambient x and y. Transfer reference occurrences one at a time using separate continuity and the Hausdorff equality condition; no simultaneous-net convergence assertion is used.",
+    "Whenever an ambient finite context separates x and y, some finite context using references from the dense map also separates them. This is an existence statement, not exact replacement of any individual ambient reference or preservation of a particular numerical response value.",
+    "The theorem needs no closure of the dense reference image under T, numerical weight, probability meaning or probability Law. The generated-carrier task is an eventual application boundary, not a hypothesis that identifies all ambient references with generated values.",
+    "For the standard topology on the connected complex carrier and a Hausdorff Boolean response space, every continuous Boolean signature is constant. Thus this continuity route excludes zeroTest and all nonconstant pointTest signatures; it is not a universal repair for arbitrary coarse or discontinuous response maps."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/DenseReferenceContextEquivalence.lean"]
+  dependencies := ["response_context_probability", "allocated_generated_contexts"]
+  limits := [
+    "This task records an accepted analytic contract only; no kernel artifact or checked evidence is registered. Separate continuity, signature continuity, Hausdorff separation and density must all remain explicit.",
+    "The finite separating-context existence statement supplies no source budget, constructive search procedure, efficiency bound, noise tolerance, error modulus or finite-resolution guarantee. It does not replace an arbitrary ambient reference by an exactly equal generated value.",
+    "Topology and continuity are supplied mathematical structure, not physical detector dynamics or probability semantics. No physical source/reference availability, outcome actualization or full QM closure is inferred."] }
+
+def responseAllocatedFaithfulness : ResearchTask := {
+  id := "response_allocated_faithfulness"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use arbitrary d:ResponseContextQuotient.Data V Omega and chosen reference v, retaining globally observed square-swap and first-channel mediality. Supply full ResponseSourceLocalProbability.DiagonalFixed at d.chosenZero and v, not bare signature equality.",
+    "Evaluate allocated Program Unit with stock v and zero d.chosenZero by the original d.operation. Compare its quotient output class with the concrete native scalar value of the same program using unit stock and scalar zero.",
+    "The forward scalar-equality implication supplies no probability Law. For the converse only, retain a supplied six-field ResponseNativeProbabilitySelection.Law d v; no multi-source probability normalization or probability law on the joint allocated input array is assumed."]
+  conclusions := [
+    "Checked allocated-output relation: correlate the quotient class of every original allocated output with the concrete native scalar unit-stock value, using arbitrary-array circuit_related and source-local normalization. Both quotient zero and source fixedness conditions remain explicit.",
+    "Without a Law, equality of the scalar values of two allocated programs implies full ResponseEq of their original raw outputs. This concerns quotient classes, not literal equality of the original raw values.",
+    "With a supplied six-field response Law, use normalizedLawEquiv, the faithful Gaussian action and related_scalar_unique to obtain the converse. Equality of scalar unit-stock values is then equivalent to full contextual response equivalence of the allocated original outputs.",
+    "The proof route requires no global observed transparency, topology, ComparatorVacuumSound, Gaussian-dyadic reachability converse, or multi-source probability-law extension. The supplied Law remains a conditional premise rather than an outcome of allocated-program compilation.",
+    "The checked null-reference control takes v=chosenZero: the source and vacuum programs have the same full contextual class although their scalar values differ, and no supplied response Law exists at that reference. It demonstrates why the Law-free forward implication cannot be reversed in general."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ResponseAllocatedFaithfulness.lean"
+      declarations := [
+        "IDT.QMClosure.ResponseAllocatedFaithfulness.allocated_class_related",
+        "IDT.QMClosure.ResponseAllocatedFaithfulness.scalar_eq_implies_responseEq",
+        "IDT.QMClosure.ResponseAllocatedFaithfulness.responseEq_iff_scalar_eq",
+        "IDT.QMClosure.ResponseAllocatedFaithfulness.null_reference_control"] }]
+  plannedArtifacts := []
+  dependencies := ["allocated_preparation_contexts", "response_source_local_probability",
+    "raw_native_dyadic_semantics", "raw_native_probability_existence"]
+  limits := [
+    "The checked output comparison is full quotient-class ResponseEq over arbitrary ambient fixed raw references, not literal raw equality or a replacement of contextual equivalence by a bare signature.",
+    "The Law used for faithfulness is the existing single-basis six-field response contract; the theorem does not normalize or interpret probabilities of arbitrary joint allocated multi-source preparations.",
+    "Joint initial arrays, stock resources and common-frame alignment remain supplied mathematical inputs. No physical resource availability, tensor or independence structure, unknown-token cloning, actualization, or Born/QM closure is established."] }
+
+def nativeAllocatedBallObservation : ResearchTask := {
+  id := "native_allocated_ball_observation"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the concrete complex scalar generated carrier G with its actual finite unit-stock allocated preparations. Supply exact closed-ball signatures sigma(q,r,z)=decide(norm(z-q)<=r) for arbitrary ambient complex q and finite real radius r; response Data is intended for every q and r.",
+    "For the positive-radius route, establish a separate kernel artifact proving density of Gaussian-dyadic G in the standard complex metric. Use the scalar metric and strict separation margins, not continuity of the Boolean-valued threshold signature.",
+    "The radius is a supplied ideal mathematical tolerance, not a physical detector-noise model. Probability laws retain the earlier supplied single-basis six-field contract over G, not joint allocated-input probabilities."]
+  conclusions := [
+    "Parent-accepted analytic classification awaiting kernel artifacts: if r>0, density of G and a strict margin give a finite G-reference context separating any distinct generated values, so full generated-context response equivalence is literal equality. No exact replacement of a particular ambient reference or numerical response value is asserted.",
+    "At r=0 the closed-ball signature is the existing point signature: a reachable center q gives literal response equivalence, while an unreachable center gives a constant-false signature. For r<0 the signature is constant false on every input.",
+    "The intended law-existence classification is Nonempty(ResponseLaw(q,r)) if and only if 0<r or (r=0 and Reachable(q)). Faithful branches require exact law adapters preserving the supplied scalar probability field; any canonical scalar law is a separate consistency witness. Constant-false branches require an explicit no-law artifact.",
+    "The separate Gaussian-dyadic density proof and all positive-radius separation and probability-law adapter artifacts remain planned. The current five-module allocated-resource milestone is to close before implementation of this next task."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeGaussianDyadicDensity.lean",
+    "Proofs/QMClosure/NativeAllocatedBallObservation.lean"]
+  dependencies := ["allocated_generated_contexts", "native_allocated_source_arithmetic",
+    "response_context_probability"]
+  limits := [
+    "This task has an accepted analytic contract only, no kernel evidence or checked status. Gaussian-dyadic density, ball separation, the radius trichotomy and law adapters must each receive their exact proof artifacts before promotion.",
+    "Finite separating-context existence supplies no source budget, constructive search bound, error modulus, numerical precision, efficiency or physical-noise guarantee. Exact Boolean threshold signatures are supplied mathematical choices.",
+    "No Boolean-continuity premise, physical topology or detector implementation, reference/source availability, tensor or independence interpretation, unknown-token cloning, multi-source probability-law extension, outcome actualization or full QM closure is inferred."] }
+
 def equivariantOutcomeSelectionWall : ResearchTask := {
   id := "equivariant_outcome_selection_wall"
   stage := .analyticAwaitingFormalization
@@ -3403,6 +3590,9 @@ def researchTasks : List ResearchTask := [
   responseDiagonalSignatureWall,
   responseRecipeContextReflection, nativeRecipeObservationBoundary,
   responseRecipeComparison, nativeTwoPointObservationControl,
+  allocatedPreparationContexts, nativeAllocatedSourceArithmetic, allocatedGeneratedContexts,
+  denseReferenceContextEquivalence, responseAllocatedFaithfulness,
+  nativeAllocatedBallObservation,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
