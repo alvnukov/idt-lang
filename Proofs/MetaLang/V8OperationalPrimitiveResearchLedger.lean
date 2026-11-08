@@ -5620,6 +5620,132 @@ def finiteOutcomeChannelWall : ResearchTask := {
     "The Dirac omission control has zero totalized-log comparison even between its distinct laws. Its zero affinities receive no statistical-distance interpretation through the totalized logarithm.",
     "No physical channel availability, original-response calibration, actual detector events, Born interpretation, QM closure or physical-scale derivation follows."] }
 
+def nativeStationaryNoiseClassification : ResearchTask := {
+  id := "native_stationary_noise_classification"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For the scalar theorem supply a Borel probability measure mu on the reals satisfying charFun(mu,t)=charFun(mu,t/2)^3*conj(charFun(mu,t/2)) for every real t. No moment, density or nondegeneracy premise is supplied.",
+    "For the native theorem supply the exact real two-coordinate Sample carrier and specified native real-linear mixer G. Two independently re-prepared identical probability inputs define S(mu)=(mu product mu).map(firstOutput). Require exact two-step stationarity S(S(mu))=mu; first-marginal stationarity S(mu)=mu is sufficient.",
+    "For the countable-concentration corollary additionally supply a countable set S in this same real sample carrier with mu(S)=1."]
+  conclusions := [
+    "The scalar signed-smoothing equation implies a finite second moment and equality with gaussianReal at the law's actual mean and variance, including the zero-variance case.",
+    "Native two-step stationarity implies a product of two real Gaussian laws with their actual coordinate means and one shared coordinate variance. Gaussianity, moments and coordinate independence are conclusions.",
+    "A countably concentrated two-step stationary law on this explicit native carrier is the Dirac law at its actual coordinate means."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/GaussianSignedSmoothingMoments.lean"
+      declarations := [
+        "IDT.QMClosure.GaussianSignedSmoothingMoments.integrable_sq_of_fixedPoint",
+        "IDT.QMClosure.GaussianSignedSmoothingMoments.memLp_two_of_fixedPoint"] },
+    { sourcePath := "Proofs/QMClosure/GaussianSignedSmoothingCharacterization.lean"
+      declarations := [
+        "IDT.QMClosure.GaussianSignedSmoothingCharacterization.eq_gaussianReal_of_fixedPoint"] },
+    { sourcePath := "Proofs/QMClosure/NativeStationaryNoiseCharacterization.lean"
+      declarations := [
+        "IDT.QMClosure.NativeStationaryNoiseCharacterization.TwoStepStationary",
+        "IDT.QMClosure.NativeStationaryNoiseCharacterization.twoStepStationary_of_stationary",
+        "IDT.QMClosure.NativeStationaryNoiseCharacterization.eq_product_gaussian_of_twoStepStationary",
+        "IDT.QMClosure.NativeStationaryNoiseCharacterization.eq_dirac_of_twoStepStationary_countable_concentration",
+        "IDT.QMClosure.NativeStationaryNoiseCharacterization.eq_product_gaussian_of_stationary"] }]
+  plannedArtifacts := []
+  dependencies := ["unit_variance_gaussian_statistical_witness"]
+  limits := [
+    "The real sample carrier, native mixer, independent input re-preparation and exact stationarity remain supplied. The theorem selects no physical coordinates, variance, noise source or primitive origin.",
+    "The countable-concentration corollary concerns this supplied native real carrier and exact stationarity, not arbitrary discrete outcome models, approximate laws or all finite detectors.",
+    "The weaker raw-family bridge, common family variance and its entropy bridge remain a separate analytic frontier. No physical preparation origin, Qraw identification, calibration, detector selection, actualization, Born rule or QM closure follows."] }
+
+def nativeMarginalStationarityNoiseOrigin : ResearchTask := {
+  id := "native_marginal_stationarity_noise_origin"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For the weaker family extension supply an arbitrary raw carrier V, probability preparations K(x) on the supplied R squared, a raw operation F with F squared equal to swap, and only exact first-marginal covariance for every ordered raw pair under the specified native G. Independently re-prepare the two input samples. Neither second-marginal covariance, raw diagonal transparency nor full-product covariance is a premise."]
+  conclusions := [
+    "For the weaker family, F commutes with swap and the native sample mixer commutes with sample swap, so first-marginal covariance for ordered pairs gives second-marginal covariance. Raw square-swap sends (x,x) to (z,z) and (z,z) back to (x,x). For S(mu)=(mu product mu).map(firstOutput), this gives S squared(K(x))=K(x). Two-step stationarity yields the same signed-four-copy characteristic-function identity, so the moment-free scalar classification gives isotropic Gaussian preparations. Applying the marginal variance identities twice gives one shared variance and an intertwining mean map. Full output product covariance, output independence and diagonal transparency of preparation measures follow. One non-Dirac preparation gives positive shared variance and finite KL for every ordered pair.",
+    "Omission controls remain analytic or exact finite probes, without Lean evidence. Without square-swap, labels (m,v) can evolve by native means and averaged variances: both marginals hold but unequal input variances and correlated outputs persist. Diagonal stationarity alone permits varying variance. Nonlinear outcome conjugation preserves the abstract law while changing the external Gaussian shape.",
+    "A separate analytic omission control uses labels (z,h) with h in Fin 5, K(z,h) the unit-variance Gaussian at z, and raw operation given by the native mean mixer and a hidden root-swap. The hidden operation swaps diagonal pairs 00 and 11, fixes the other diagonal pairs and retains the original off-diagonal four-cycles (01,02,10,20), (03,04,30,40), (12,13,21,31), (14,23,41,32), (24,34,42,43). This nontrivial finite-KL family has exact covariance and raw square-swap while raw diagonal transparency fails; observed law transparency holds."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/NativeMarginalProcessBridge.lean",
+    "Proofs/QMClosure/NativeMarginalProcessControls.lean",
+    "A planned GaussianVarianceEntropy.lean or NativeIsotropicGaussianFamily.lean helper under Proofs/QMClosure if needed for the shared-variance entropy bridge; its existence is not asserted."]
+  dependencies := ["native_stationary_noise_classification",
+    "classical_statistical_process_bridge",
+    "unit_variance_gaussian_statistical_witness"]
+  limits := [
+    "This raw-family extension and its omission controls remain analytic and await formalization. The separately checked scalar and native two-step classifiers do not supply the family covariance, shared-variance, full-product or entropy bridge proofs.",
+    "Real outcome coordinates, the native linear mixer, independent input re-preparation and exact covariance remain supplied. The mean-label map need not be identity, injective or surjective, and no physical variance is selected. Raw label diagonal transparency does not follow: use the observed carrier or quotient by equality of preparation measures for the generic bridge, unless injectivity is separately supplied.",
+    "At shared variance zero, distinct Dirac preparations can still have infinite KL. The non-Dirac guard is essential to the finite ordered-KL conclusion.",
+    "No physical preparation origin, independently given Qraw, calibration, detector selection, actualization, Born rule or QM closure follows."] }
+
+def detectorConservationClosureWall : ResearchTask := {
+  id := "detector_conservation_closure_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For the universal wall supply an arbitrary measurable probability family K, a raw operation F with F squared equal to swap, and one common transport respecting equality of full product laws. At even one fixed input pair require acceptance-product conservation for every measurable effect g with values in [0,1].",
+    "For the separate complementary-effect wall retain the existing ClassicalStatisticalProcessBridge.Contract, including finite ordered latent KL and common full-product Markov covariance. For one selected measurable effect g require conservation of both acceptance products for g and for 1-g at every raw input pair; equivalently require g and (1+g)/2."]
+  conclusions := [
+    "The universal wall forces the two input preparation measures at the selected pair to agree. The sure effect, averaging and mixed-effect orientation identify the output measure pair as the input pair or its swap; common transport around the square-swap four-cycle then collapses the pair. No finite-KL, diagonal-transparency or Gaussian premise is needed for this universal wall.",
+    "The complementary-effect wall forces q(x)=integral g dK(x) to be constant. Conservation preserves the unordered response pair. Both output maps contract the reconstructed squared comparison by a factor of one half when the other input is fixed; choose a branch retaining q. A positive actual binary KL between differing responses would be bounded by DPI by geometrically vanishing latent comparison. The argument uses no Pinsker inequality, detector completeness or common record-channel premise.",
+    "The no-common-transport control uses five labels and diagonal-fixed four-cycles (01,02,10,20), (03,04,30,40), (12,13,21,31), (14,23,41,32), (24,34,42,43). With K(0)=mu and K(1)=K(2)=K(3)=K(4)=nu for distinct positive Bool laws, all effect products are conserved and F squared is swap, but no common full-product transport exists.",
+    "A separate finite-KL omission control uses Dirac K(x), the actual deterministic F channel, and g(0)=1/3 with g=2/3 at the other labels. Both g and its complement conserve products and both observed events have positive probabilities, while distinct latent Dirac laws have infinite KL."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DetectorEffectOperations.lean"
+      declarations := ["IDT.QMClosure.DetectorEffectOperations.measure_ext_of_acceptance_eq"] },
+    { sourcePath := "Proofs/QMClosure/UniversalDetectorConservationWall.lean"
+      declarations := [
+        "IDT.QMClosure.UniversalDetectorConservationWall.preparations_equal_of_universal_products",
+        "IDT.QMClosure.UniversalDetectorConservationWall.preparations_equal_of_common_kernel"] },
+    { sourcePath := "Proofs/QMClosure/ComplementaryDetectorConservationWall.lean"
+      declarations := [
+        "IDT.QMClosure.ComplementaryDetectorConservationWall.acceptance_eq_of_complement",
+        "IDT.QMClosure.ComplementaryDetectorConservationWall.complement_iff_average_sure",
+        "IDT.QMClosure.ComplementaryDetectorConservationWall.acceptance_eq_reference_of_average_sure"] },
+    { sourcePath := "Proofs/QMClosure/DetectorConservationOmissionControls.lean"
+      declarations := [
+        "IDT.QMClosure.DetectorConservationOmissionControls.operation_square",
+        "IDT.QMClosure.DetectorConservationOmissionControls.operation_diagonal",
+        "IDT.QMClosure.DetectorConservationOmissionControls.positivePreparation_kl_ne_top",
+        "IDT.QMClosure.DetectorConservationOmissionControls.positivePreparation_all_products",
+        "IDT.QMClosure.DetectorConservationOmissionControls.positivePreparation_no_common_transport",
+        "IDT.QMClosure.DetectorConservationOmissionControls.diracPreparation_covariance",
+        "IDT.QMClosure.DetectorConservationOmissionControls.selectedEffect_nonconstant",
+        "IDT.QMClosure.DetectorConservationOmissionControls.selectedEffect_product",
+        "IDT.QMClosure.DetectorConservationOmissionControls.selectedComplement_product",
+        "IDT.QMClosure.DetectorConservationOmissionControls.diracPreparation_kl_top"] }]
+  plannedArtifacts := []
+  dependencies := ["classical_statistical_process_bridge",
+    "invariant_effect_readout_bridge", "finite_outcome_channel_wall"]
+  limits := [
+    "The complementary-effect wall uses the full existing finite-KL contract; the universal wall has its separately stated weaker hypotheses. Checked omission controls isolate the common-transport and finite-KL premises.",
+    "The selected pair universal conclusion does not assert equality of all family laws unless universal conservation is required at all pairs. No detector availability, physical interpretation, Qraw identity, actualization, Born rule or QM closure follows."] }
+
+def gaussianDetectorRandomizationFront : ResearchTask := {
+  id := "gaussian_detector_randomization_front"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the same actual unit-variance Gaussian translation family and native sample channel as the checked witness. Independently at each detector, fairly randomize between the centered effects exp(-norm(u)^2/2) and exp(-norm(u)^2). Write t=norm(mean)^2.",
+    "For a separate conditional selection candidate supply measurable f, detector-coordinate factorization g(u,v)=f(u)*f(v), f(0)=1 and 0<f<=1, together with invariance under one supplied 45-degree rotation. These are additional detector assumptions.",
+    "For the separate analytic response-versus-microscopic-invariance equivalence use the complete Gaussian translation family and bounded measurable effects under the native channel."]
+  conclusions := [
+    "Each component conserves its acceptance product, but independent fair detector randomization gives q(t)=exp(-t/4)/4+exp(-t/3)/6, whose product is not conserved. For raw input means (1,0) and native output means (A,B), input product minus output product is exactly (exp(-1/8)-exp(-1/6))^2/24>0.",
+    "The randomized effect remains smooth, positive, phase-isotropic and localized with a unique centered maximum. A shared pair-level detector choice instead creates correlated settings and does not factor as the randomized effect tensor itself.",
+    "Under the separate measurable factorization and supplied 45-degree rotation premises, h(x)=-log(f(x)) obeys the parallelogram equation. Measurable quadratic classification gives h(x)=c*x^2 and hence g(u,v)=exp(-c*(u^2+v^2)), c>=0. Quarter-turn invariance alone fails to select this family, as exp(-u^4-v^4) shows. Without strict positivity, f=1_{0} gives a degenerate zero-acceptance control for the actual Gaussian preparations.",
+    "For complete Gaussian translations, response-product conservation is analytically equivalent to microscopic effect-product invariance almost everywhere by injectivity of Gaussian convolution. Pointwise invariance additionally needs continuity; null-set edits can preserve every response."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/GaussianParameterizedDetector.lean",
+    "Proofs/QMClosure/GaussianDetectorRandomizationControls.lean",
+    "Proofs/QMClosure/DetectorCoordinateModularitySelection.lean",
+    "An explicit Lean obligation for Gaussian-convolution injectivity and the almost-everywhere versus continuous pointwise product-invariance equivalence."]
+  dependencies := ["gaussian_soft_detector_boundary", "invariant_effect_readout_bridge"]
+  limits := [
+    "These randomization, conditional selection and convolution claims await formalization. The checked chosen soft detector does not provide Lean evidence for these broader results.",
+    "Microscopic product invariance is not independently established from weaker detector properties. The 45-degree symmetry, its associated geometry and coordinate modularity are supplied candidate premises; the existing native quarter-turn does not select them. Physical detector selection and all supplied parameters remain open.",
+    "No independently specified Qraw, physical calibration, event actualization, Born rule or QM closure follows."] }
+
 def nativeGaussianIndependenceCharacterization : ResearchTask := {
   id := "native_gaussian_independence_characterization"
   stage := .analyticAwaitingFormalization
@@ -6962,7 +7088,9 @@ def researchTasks : List ResearchTask := [
   pairComparisonReconstruction, classicalAffinityLogWall,
   finiteOutcomeAffinityRigidity, relativeEntropyDataProcessing,
   classicalStatisticalProcessBridge, finiteOutcomeChannelWall,
-  nativeGaussianIndependenceCharacterization,
+  nativeGaussianIndependenceCharacterization, nativeStationaryNoiseClassification,
+  nativeMarginalStationarityNoiseOrigin,
+  detectorConservationClosureWall, gaussianDetectorRandomizationFront,
   gaussianStatisticalRealizationAndDetectorBoundary,
   unitVarianceGaussianStatisticalWitness, invariantEffectReadoutBridge,
   gaussianSoftDetectorBoundary,

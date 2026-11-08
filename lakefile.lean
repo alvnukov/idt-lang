@@ -20,6 +20,8 @@ lean_exe idt_v8_experiment_protocols where
 lean_lib Proofs where
   roots := #[
     `Proofs.IDTCore,
+    `Proofs.QMClosure.GaussianSignedSmoothingCharacterization,
+    `Proofs.QMClosure.GaussianSignedSmoothingMoments,
     `Proofs.QMClosure.PreparationRecordObstruction,
     `Proofs.QMClosure.PreparationDisturbanceTradeoff,
     `Proofs.QMClosure.QuadraticRecordRefinement,
@@ -340,9 +342,14 @@ lean_lib Proofs where
     `Proofs.QMClosure.RelativeEntropyDataProcessing,
     `Proofs.QMClosure.GaussianLocationEntropy,
     `Proofs.QMClosure.NativeGaussianStatisticalProcess,
+    `Proofs.QMClosure.NativeStationaryNoiseCharacterization,
     `Proofs.QMClosure.InvariantEffectReadoutBridge,
+    `Proofs.QMClosure.DetectorEffectOperations,
+    `Proofs.QMClosure.UniversalDetectorConservationWall,
+    `Proofs.QMClosure.DetectorConservationOmissionControls,
     `Proofs.QMClosure.GaussianSoftDetectorBoundary,
     `Proofs.QMClosure.ClassicalStatisticalProcessBridge,
+    `Proofs.QMClosure.ComplementaryDetectorConservationWall,
     `Proofs.QMClosure.ClassicalAffinityLogWall,
     `Proofs.QMClosure.RawPlanePhaseProcessComparisonControl,
     `Proofs.QMClosure.RationalFiniteDistribution,
