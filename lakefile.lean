@@ -309,6 +309,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.RawSparsePhaseTwistControl,
     `Proofs.QMClosure.RawSparseQuarticControl,
     `Proofs.QMClosure.RawSparseSignedControl,
+    `Proofs.QMClosure.RawSparseSelfReferenceSelector,
+    `Proofs.QMClosure.RawSparseSelfReferenceControl,
     `Proofs.QMClosure.NativeHyperrealProbabilityWall,
     `Proofs.QMClosure.NativeArchimedeanProbability,
     `Proofs.QMClosure.RawNativeDyadicSemantics,

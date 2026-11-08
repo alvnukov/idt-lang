@@ -4438,27 +4438,86 @@ def rawSparseConservationTests : ResearchTask := {
 
 def rawSparseSelfReferenceSelector : ResearchTask := {
   id := "raw_sparse_self_reference_selector"
-  stage := .analyticAwaitingFormalization
+  stage := .conditionalKernelTheorem
   review := .parentAccepted
   assumptions := [
     "Supply the complex carrier, W=normSq and native mixer N(x,y)=(a*x+b*y,b*x+a*y), with a=(1+i)/2 and b=(1-i)/2. Let F be an arbitrary total operation on complex pairs.",
     "Assume F squared equals swap, the native vacuum action F(x,0)=(a*x,b*x) and F(0,x)=(b*x,a*x), and equality of each individual output weight with the corresponding output weight of N on every input.",
     "Write A(x)=a*x and Delta(x,y,z) for the actual sparse left side minus right side. For p=(x,y), write F(p)=(r,s) and N(p)=(u1,u2)."]
   conclusions := [
-    "Accepted analytic identity, pending kernel check: Delta(x,y,A(x))+Delta(y,x,A(y))+Delta(r,s,A(r))+Delta(s,r,A(s))=-(normSq(r-u1)+normSq(s-u2))/2.",
-    "Analytically, universal self-reference equality S(x,y,A(x)), or the weaker universal inequality Delta(x,y,A(x))>=0, selects F=N within this supplied complex native-port-weight class.",
-    "One uniform bound Delta(x,y,A(x))>=-epsilon for every actual pair gives normSq(r-u1)+normSq(s-u2)<=8*epsilon. Apply that same bound at the four actual pairs (x,y), (y,x), (r,s) and (s,r).",
-    "Planned proof: set T=N inverse composed with F, Z=T(p).1*conj(x)+T(p).2*conj(y), and R=normSq(x)+normSq(y). The first two defects sum to (Re(Z)-R-Im(Z))/2. Square-swap and native unitarity make the next two involve conjugate Z, giving the negative squared-deviation identity. Only square-swap, native vacuum action and the individual output weight equalities enter this proposed identity.",
-    "For the continuous phase-twist control at p=(1,1+i), the analytic four-defect values are [-5/41,-10/41,10/41,2/41], with sum -3/41 and squared output deviation 6/41. These rationally checked values supply an analytic diagnostic and await Lean evidence for the new identity."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/RawSparseSelfReferenceSelector.lean"]
+    "The checked four-defect identity is Delta(x,y,A(x))+Delta(y,x,A(y))+Delta(r,s,A(r))+Delta(s,r,A(s))=-(normSq(r-u1)+normSq(s-u2))/2. The squared output error is nonnegative and vanishes exactly when F agrees with N at that input.",
+    "Four supplied local defect lower bounds -epsilon1, -epsilon2, -epsilon3, -epsilon4 give squared output error <=2*(epsilon1+epsilon2+epsilon3+epsilon4). One uniform bound Delta(x,y,A(x))>=-epsilon over every actual pair gives squared output error <=8*epsilon at every pair.",
+    "Universal nonnegative self-defect or universal zero self-defect implies F=N within the supplied native complex port-profile Contract. Full SparseLaw, SelfLaw and F=N are checked equivalent under that Contract.",
+    "The nativeContract is a checked inhabitant and satisfies full SparseLaw. These conclusions concern the stated supplied contract, with no minimality claim.",
+    "For the phase-twist control at p=(1,1+i), the checked four defects are [-5/41,-10/41,10/41,2/41], their sum is -3/41 and squared output error is 6/41. The control violates both universal self-nondecrease and self-equality and has positive output error."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawSparseSelfReferenceSelector.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.Contract",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.defect_native_formula",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.four_defect_identity",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.outputError_nonnegative",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.error_zero_iff_operation_eq_at",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.outputError_le_of_four_bounds",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.outputError_le_of_uniform_self_bound",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.operation_eq_native_of_self_nonnegative",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.operation_eq_native_of_self_zero",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.negative_selfDefect_of_positive_error",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.sparseLaw_iff_selfLaw",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.selfLaw_iff_operation_eq_native",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.sparseLaw_iff_operation_eq_native",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.nativeContract",
+        "IDT.QMClosure.RawSparseSelfReferenceSelector.native_sparseLaw" ] },
+    { sourcePath := "Proofs/QMClosure/RawSparseSelfReferenceControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawSparseSelfReferenceControl.contract",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.selfDefect_witness",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.selfDefect_swap_witness",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.selfDefect_gate_witness",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.selfDefect_swap_gate_witness",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.outputError_witness",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.four_defect_sum",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.four_defect_identity_at_witness",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.violates_self_nondecrease",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.violates_self_equality",
+        "IDT.QMClosure.RawSparseSelfReferenceControl.positive_output_error" ] }]
+  plannedArtifacts := []
   dependencies := [
     "raw_sparse_conservation_tests"]
   limits := [
-    "All new selector assertions remain analytic pending kernel check. Positive-definite native complex geometry and individual native output weights are supplied hypotheses.",
-    "The general arbitrary-raw implication from the six tests plus a self-reference family to full S remains open. Transferring this selector into raw reconstruction requires a separate geometry bridge.",
+    "Positive-definite native complex geometry and individual native output weights are supplied hypotheses. The checked selection is bounded by this exact Contract.",
+    "The raw_pair_plane_amalgam_wall records an accepted analytic obstruction to transferring the six tests plus self-reference selection to arbitrary raw carriers. Its atlas existence and raw countermodel await Lean artifacts; transferring this selector into raw reconstruction requires a separate global compatibility or geometry bridge.",
     "Simultaneous physical availability of x, y and A(x) is an open resource bridge. The bounded mathematical selection supplies no physical insertion origin, generated preparation availability, actualization, full QM or primitive-closure claim; public and manifest statuses remain unchanged."] }
+
+def rawPairPlaneAmalgamWall : ResearchTask := {
+  id := "raw_pair_plane_amalgam_wall"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Accepted analytic construction plan, pending Lean existence proof: use normed complex ray fibers L_r and two seed complex two-planes P(x,e) and Q(x,y), glued only along C*x, with x,e orthonormal in P and x,y orthonormal in Q.",
+    "At each finite stage of an omega-stage construction, for every unordered pair of existing rays not already together in a plane, attach the orthogonal Hilbert sum L_r direct-sum L_s. Identify its axes isometrically with the two existing fibers, and give every other projective ray a fresh fiber.",
+    "Preserve the invariant that distinct planes share at most one ray, with no identifications of old rays. Every ray pair is then covered by a unique plane after the finite birth stage of both rays plus one."]
+  conclusions := [
+    "The planned carrier has one common zero and nonzero vectors in ray fibers, W equal to the ray norm-square and raywise complex scalar action. Define m(s,t)=a*s+b*t inside the unique pair-plane, with a=(1+i)/2 and b=(1-i)/2; collinear and zero inputs use the intrinsic line formula.",
+    "Accepted analytic target: the resulting pair operation F(s,t)=(m(s,t),m(t,s)) squares to swap, is transparent, has W strictly positive off zero, conserves W, satisfies the six Tests and self-reference S(s,t,A(s)), and is jointly complex-homogeneous.",
+    "Every subalgebra generated by two preparations stays inside one native complex two-plane. The precise analytic transfer target is universal closure of quantifier-free raw-term formulas with at most two preparation variables, zero, m, W and raywise complex scalar action; scalar variables are allowed.",
+    "The planned sparse witness uses z=i*x+e in P, u=a*x+b*y and v=b*x+a*y in Q. The first completion makes (u,z) and (v,z) orthogonal. W(x)=W(y)=W(u)=W(v)=1, W(z)=2 and W(A(z))=W(B(z))=1. Full S then has left side 1+1=2 and right side 5/2+1/2=3.",
+    "Accepted analytic topological obstruction: for t_epsilon=x+epsilon*e in P and q=i*x+y in Q, every nonzero real epsilon gives W(m(t_epsilon,q))=3/2+epsilon^2/2, while W(m(x,q))=5/2. Thus the proposed atlas cannot carry globally continuous m and W together with continuous native-plane inclusions.",
+    "Formal work is separated into local transfer, a conditional atlas-to-Contract/Tests/self-reference/sparse-failure bridge, and actual atlas existence. The first two stages alone do not establish a checked countermodel."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/RawPairPlaneAtlas.lean",
+    "Proofs/QMClosure/RawPairPlaneSparseWall.lean",
+    "Proofs/QMClosure/RawPairPlaneCompletion.lean"]
+  dependencies := [
+    "raw_sparse_conservation_tests",
+    "raw_sparse_self_reference_selector"]
+  limits := [
+    "All new atlas, countermodel, arity-transfer and topological assertions remain analytic pending kernel artifacts. The global mathematical nonimplication awaits an actual verified atlas construction.",
+    "The arity-transfer scope excludes arbitrary named preparation constants, nested preparation quantifiers, arbitrary-reference ObservationalEq and topology. Only raywise complex action is supplied; global associative addition and a global vector-space structure are outside the construction.",
+    "Continuity or another global compatibility principle remains a possible escape from this analytic wall. An additional principle need not literally use three preparation variables.",
+    "A countable Gaussian-rational weighted-fiber construction could suffice for a weaker raw countermodel, but it would not establish the full complex-scalar-action target recorded here.",
+    "The construction supplies no physical geometry origin, preparation availability, actualization, full QM or primitive-closure claim; public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
@@ -5292,7 +5351,7 @@ def researchTasks : List ResearchTask := [
   homogeneousProductInterchange, vacuumRecordUncomputeControl, generatedNonmedialAxisProbe,
   sparseMarginalMedialCriterion, rawSparseMarginalReconstruction, rawSparseSignedControl,
   rawSparseConservationSelection, rawSparseInsertionOrigin, rawSparseConservationTests,
-  rawSparseSelfReferenceSelector,
+  rawSparseSelfReferenceSelector, rawPairPlaneAmalgamWall,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
