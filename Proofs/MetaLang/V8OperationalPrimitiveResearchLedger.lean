@@ -5652,31 +5652,128 @@ def nativeStationaryNoiseClassification : ResearchTask := {
   limits := [
     "The real sample carrier, native mixer, independent input re-preparation and exact stationarity remain supplied. The theorem selects no physical coordinates, variance, noise source or primitive origin.",
     "The countable-concentration corollary concerns this supplied native real carrier and exact stationarity, not arbitrary discrete outcome models, approximate laws or all finite detectors.",
-    "The weaker raw-family bridge, common family variance and its entropy bridge remain a separate analytic frontier. No physical preparation origin, Qraw identification, calibration, detector selection, actualization, Born rule or QM closure follows."] }
+    "The separate native_marginal_stationarity_noise_origin task supplies the weaker raw-family bridge, shared family variance and its precisely conditioned finite-entropy bridge. No physical preparation origin, Qraw identification, calibration, detector selection, actualization, Born rule or QM closure follows."] }
 
 def nativeMarginalStationarityNoiseOrigin : ResearchTask := {
   id := "native_marginal_stationarity_noise_origin"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "For the weaker family extension supply an arbitrary raw carrier V, probability preparations K(x) on the supplied R squared, a raw operation F with F squared equal to swap, and only exact first-marginal covariance for every ordered raw pair under the specified native G. Independently re-prepare the two input samples. Neither second-marginal covariance, raw diagonal transparency nor full-product covariance is a premise."]
+    "Supply NativeMarginalProcessBridge.Contract D on an arbitrary raw carrier V: probability preparations on the specified real two-coordinate sample carrier, the specified native real-linear mixer G, raw operation squared equal to swap, and exact first-marginal covariance for every ordered raw pair using independent input preparations. Raw diagonal transparency, second-marginal covariance, full-product covariance, moments and finite entropy are absent from this contract.",
+    "To instantiate the observed classical statistical bridge, supply a reference and finite ordered KL; equivalent family-specific conditions are positive shared variance or constant preparation measures. A non-Dirac member or absolute continuity of every preparation with respect to one reference preparation suffices."]
   conclusions := [
-    "For the weaker family, F commutes with swap and the native sample mixer commutes with sample swap, so first-marginal covariance for ordered pairs gives second-marginal covariance. Raw square-swap sends (x,x) to (z,z) and (z,z) back to (x,x). For S(mu)=(mu product mu).map(firstOutput), this gives S squared(K(x))=K(x). Two-step stationarity yields the same signed-four-copy characteristic-function identity, so the moment-free scalar classification gives isotropic Gaussian preparations. Applying the marginal variance identities twice gives one shared variance and an intertwining mean map. Full output product covariance, output independence and diagonal transparency of preparation measures follow. One non-Dirac preparation gives positive shared variance and finite KL for every ordered pair.",
-    "Omission controls remain analytic or exact finite probes, without Lean evidence. Without square-swap, labels (m,v) can evolve by native means and averaged variances: both marginals hold but unequal input variances and correlated outputs persist. Diagonal stationarity alone permits varying variance. Nonlinear outcome conjugation preserves the abstract law while changing the external Gaussian shape.",
-    "A separate analytic omission control uses labels (z,h) with h in Fin 5, K(z,h) the unit-variance Gaussian at z, and raw operation given by the native mean mixer and a hidden root-swap. The hidden operation swaps diagonal pairs 00 and 11, fixes the other diagonal pairs and retains the original off-diagonal four-cycles (01,02,10,20), (03,04,30,40), (12,13,21,31), (14,23,41,32), (24,34,42,43). This nontrivial finite-KL family has exact covariance and raw square-swap while raw diagonal transparency fails; observed law transparency holds."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/NativeMarginalProcessBridge.lean",
-    "Proofs/QMClosure/NativeMarginalProcessControls.lean",
-    "A planned GaussianVarianceEntropy.lean or NativeIsotropicGaussianFamily.lean helper under Proofs/QMClosure if needed for the shared-variance entropy bridge; its existence is not asserted."]
+    "Raw square-swap and first-marginal covariance give two-step stationarity of each preparation and second-marginal covariance. Each preparation is an isotropic Gaussian at its actual coordinate mean, and all preparations have one shared coordinate variance.",
+    "The actual mean map intertwines the raw operation and native mixer. Two raw labels have equal means exactly when their preparation measures agree. Full independent-output product covariance and preparation-measure diagonal transparency follow.",
+    "The observed carrier is the range of actual preparation measures. Its induced operation satisfies square-swap and diagonal transparency; finite entropy gives an actual ClassicalStatisticalProcessBridge.Contract on this carrier.",
+    "For each ordered pair, KL is finite exactly when shared variance is positive or the two preparation measures agree. All ordered KL divergences are finite exactly when shared variance is positive or the family is constant. Non-Dirac membership is sufficient, while a constant Dirac family is also admitted. Reference absolute continuity supplies the bridge through this family's classification.",
+    "The hidden Sample times Fin 5 control has nonconstant unit-variance Gaussian preparations, finite KL and full covariance while raw diagonal transparency fails.",
+    "The varying-variance control has positive input variances 1 and 3, both exact marginal laws and fixed raw diagonals, but raw square-swap and full-product covariance fail. A selected joint characteristic function is exp(-3), while the independent target gives exp(-2)."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeIsotropicGaussianFamily.lean"
+      declarations := [
+        "IDT.QMClosure.NativeIsotropicGaussianFamily.preparation_ext_iff",
+        "IDT.QMClosure.NativeIsotropicGaussianFamily.klDiv_preparation_ne_top",
+        "IDT.QMClosure.NativeIsotropicGaussianFamily.map_first_preparation_prod",
+        "IDT.QMClosure.NativeIsotropicGaussianFamily.map_second_preparation_prod",
+        "IDT.QMClosure.NativeIsotropicGaussianFamily.map_preparation_prod"] },
+    { sourcePath := "Proofs/QMClosure/NativeMarginalProcessBridge.lean"
+      declarations := [
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.twoStepStationary",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.preparation_eq_gaussian",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.secondMarginal",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.coordinateVariance_eq",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.mean_compatibility",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.mean_eq_iff_preparation_eq",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.map_preparation_prod",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.preparation_diagonal",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.observedOperation_square",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.observedOperation_transparent",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.klDiv_ne_top_iff",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.finiteEntropy_iff",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.observedContractOfFiniteEntropy",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.observedContractOfReferenceAC",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.observedContract",
+        "IDT.QMClosure.NativeMarginalProcessBridge.Contract.observedContractOfConstant"] },
+    { sourcePath := "Proofs/QMClosure/NativeMarginalProcessControls.lean"
+      declarations := [
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenMixer_square",
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenPreparation_firstMarginal",
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenPreparation_fullCovariance",
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenPreparation_finiteKL",
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenPreparation_not_dirac",
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenPreparation_nonconstant",
+        "IDT.QMClosure.NativeMarginalProcessControls.hiddenMixer_diagonal_moves",
+        "IDT.QMClosure.NativeMarginalProcessControls.variablePreparation_firstMarginal",
+        "IDT.QMClosure.NativeMarginalProcessControls.variablePreparation_secondMarginal",
+        "IDT.QMClosure.NativeMarginalProcessControls.variableMixer_diagonal",
+        "IDT.QMClosure.NativeMarginalProcessControls.unequalInputs_positive_variances",
+        "IDT.QMClosure.NativeMarginalProcessControls.variableMixer_square_fails",
+        "IDT.QMClosure.NativeMarginalProcessControls.variablePreparation_variance_differs",
+        "IDT.QMClosure.NativeMarginalProcessControls.actual_joint_characteristic",
+        "IDT.QMClosure.NativeMarginalProcessControls.independent_target_characteristic",
+        "IDT.QMClosure.NativeMarginalProcessControls.variablePreparation_fullCovariance_fails"] }]
+  plannedArtifacts := []
   dependencies := ["native_stationary_noise_classification",
-    "classical_statistical_process_bridge",
-    "unit_variance_gaussian_statistical_witness"]
+    "classical_statistical_process_bridge", "unit_variance_gaussian_statistical_witness"]
   limits := [
-    "This raw-family extension and its omission controls remain analytic and await formalization. The separately checked scalar and native two-step classifiers do not supply the family covariance, shared-variance, full-product or entropy bridge proofs.",
-    "Real outcome coordinates, the native linear mixer, independent input re-preparation and exact covariance remain supplied. The mean-label map need not be identity, injective or surjective, and no physical variance is selected. Raw label diagonal transparency does not follow: use the observed carrier or quotient by equality of preparation measures for the generic bridge, unless injectivity is separately supplied.",
-    "At shared variance zero, distinct Dirac preparations can still have infinite KL. The non-Dirac guard is essential to the finite ordered-KL conclusion.",
-    "No physical preparation origin, independently given Qraw, calibration, detector selection, actualization, Born rule or QM closure follows."] }
+    "Real sample coordinates, the native linear mixer, independent input preparations and exact all-pair first-marginal covariance remain supplied. Raw label diagonal transparency requires a separate condition such as preparation-map injectivity; the checked generic bridge uses the observed carrier.",
+    "Distinct zero-variance Dirac preparations have infinite KL. Reference absolute continuity is sufficient here through the shared-Gaussian-family classification; this is not a general implication from absolute continuity to finite KL.",
+    "Unequal-variance all-pair entropy finiteness is outside the checked control scope. Nonlinear outcome conjugation remains in the separate analytic gaussian_statistical_realization_detector_boundary frontier.",
+    "No physical preparation origin, variance selection, independently given Qraw, calibration, detector selection, event actualization, Born rule or QM closure follows."] }
+
+
+def nativeMarginalMeanDensity : ResearchTask := {
+  id := "native_marginal_mean_density"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply NativeMarginalProcessBridge.Contract D on an arbitrary raw carrier: probability preparations on the specified real two-coordinate sample carrier, the specified native real-linear mixer G, raw operation squared equal to swap, and exact first-marginal covariance for every ordered pair using independent input preparations.",
+    "Require two distinct preparation measures in the family. For the optional exact-coverage corollary additionally require the actual complex mean range to be closed in the supplied ordinary complex topology."]
+  conclusions := [
+    "The checked result gives a dense range of actual complex preparation means. Distinct preparations give two distinct actual means; normalize these to 0 and 1. Mean compatibility gives native mixer closure, and induction on the four evalRaw constructors puts every allocated scalar-program value in the normalized mean range. The preexisting NativeGaussianDyadicDensity.exists_program_approx then gives approximation at every positive tolerance.",
+    "If the actual mean range is also closed, density implies that it is the entire complex plane. No finite-KL or non-Dirac premise is used: a nonconstant zero-variance family of Dirac preparations remains covered."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeMarginalMeanDensity.lean"
+      declarations := [
+        "IDT.QMClosure.NativeMarginalMeanDensity.evalRaw_mem",
+        "IDT.QMClosure.NativeMarginalMeanDensity.eval_mem",
+        "IDT.QMClosure.NativeMarginalMeanDensity.complexMean_eq_iff_preparation_eq",
+        "IDT.QMClosure.NativeMarginalMeanDensity.complexMean_compatibility",
+        "IDT.QMClosure.NativeMarginalMeanDensity.scalarProgram_mem_normalizedRange",
+        "IDT.QMClosure.NativeMarginalMeanDensity.denseRange_complexMean_of_ne",
+        "IDT.QMClosure.NativeMarginalMeanDensity.denseRange_complexMean",
+        "IDT.QMClosure.NativeMarginalMeanDensity.surjective_complexMean_of_closed"] },
+    { sourcePath := "Proofs/QMClosure/NativeGaussianDyadicDensity.lean"
+      declarations := ["IDT.QMClosure.NativeGaussianDyadicDensity.exists_program_approx"] }]
+  plannedArtifacts := []
+  dependencies := ["native_stationary_noise_classification",
+    "native_marginal_stationarity_noise_origin", "native_allocated_ball_observation"]
+  limits := [
+    "The mean-range membership and density results reuse the preexisting Gaussian-dyadic approximation theorem. The scalar compiler and ordinary complex topology are supplied context; this task does not rederive that prior density result.",
+    "The exact real carrier, native mixer, ordinary complex topology, independent input preparation and exact first-marginal covariance remain supplied. Density alone gives no exact surjectivity, closedness, finite uniform program budget, physical preparation or resource availability.",
+    "No physical variance, detector selection, Qraw identity, calibration, event actualization, Born rule or QM closure follows."] }
+
+def countableHistoryNativeNoiseWall : ResearchTask := {
+  id := "countable_history_native_noise_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply an entire history carrier H with Countable H and a measurable structure, a probability measure rho on H, and a deterministic measurable output map f into the specified real two-coordinate native sample carrier.",
+    "Require exact two-step native smoothing stationarity of rho.map f, with independent re-preparation at each smoothing step. Exact first-marginal stationarity is sufficient."]
+  conclusions := [
+    "The pushed-forward outcome law is the Dirac measure at its actual coordinate means, by countable concentration and the checked native two-step classifier."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CountableHistoryNativeNoiseWall.lean"
+      declarations := [
+        "IDT.QMClosure.CountableHistoryNativeNoiseWall.map_eq_dirac_of_twoStepStationary",
+        "IDT.QMClosure.CountableHistoryNativeNoiseWall.map_eq_dirac_of_firstMarginalStationary"] }]
+  plannedArtifacts := []
+  dependencies := ["native_stationary_noise_classification"]
+  limits := [
+    "The entire H must be countable. Infinite histories over a finite alphabet can form an uncountable carrier; a finite alphabet alone does not supply this premise.",
+    "The output map is deterministic and measurable, and its law is exactly stationary under the supplied native real mixer. Stochastic emission kernels, approximate stationarity and other outcome carriers lie outside this theorem.",
+    "The wall does not derive a physical history model, outcome actualization, Born rule, detector selection, calibrated scale or QM closure."] }
 
 def detectorConservationClosureWall : ResearchTask := {
   id := "detector_conservation_closure_wall"
@@ -5771,17 +5868,18 @@ def gaussianStatisticalRealizationAndDetectorBoundary : ResearchTask := {
     "For the residual analytic formulas supply centered isotropic Gaussian preparations K(x)=N(x,sigma squared I) on R squared with arbitrary sigma squared>0 and the native orthogonal two-port mixer. The translated family, real coordinates and shared variance are supplied.",
     "For the separate analytic detector classification supply a continuous positive effect g with g<=1 and g(0)=1, and require its product effect to be invariant under the native mixer."]
   conclusions := [
-    "The analytic general-variance family gives a nontrivial common-channel full-product realization. Its actual affinity is exp(-norm(x-y) squared/(8*sigma squared)), and its Jeffreys comparison is norm(x-y) squared/sigma squared. The separate checked Gaussian witness covers unit coordinate variance and actual KL and Jeffreys formulas, without formalizing this affinity formula or the general-variance family.",
+    "The separately checked native marginal family task supplies arbitrary shared-variance full-product covariance and finite KL at positive variance. Residual analytic formulas give actual affinity exp(-norm(x-y) squared/(8*sigma squared)) and Jeffreys comparison norm(x-y) squared/sigma squared. The unit-variance witness separately supplies its actual KL and Jeffreys formulas; the arbitrary-variance numerical formulas and actual affinity formula remain analytic.",
     "The analytic product-effect invariance argument gives g(z)=exp(-c*norm(z) squared), c>=0. Centered Gaussian acceptance is (1+2*c*sigma squared)^(-1)*exp(-c*norm(x) squared/(1+2*c*sigma squared)). Its normalized negative logarithm is quadratic with a free detector parameter c. The separate checked soft detector supplies the chosen case sigma squared=1 and c=1/2, leaving the general classification and formulas analytic.",
     "For a generic nonzero noise mean m, minus the log density ratio at external zero is (norm(m+x) squared-norm(m) squared)/(2*sigma squared). Radial identification requires centering or evaluation at the baseline center. Nonlinear coordinate conjugation preserves the native construction in the conjugated coordinates without selecting an external norm."]
   checkedEvidence := []
   plannedArtifacts := [
-    "Lean artifacts for arbitrary positive Gaussian variance and the actual affinity formula.",
+    "Lean artifacts for arbitrary-positive-variance numerical entropy formulas and the actual affinity formula.",
     "Lean artifacts for continuous positive product-effect classification, arbitrary detector parameter and explicit centering and coordinate-conjugation statements."]
   dependencies := ["classical_statistical_process_bridge",
+    "native_marginal_stationarity_noise_origin",
     "native_gaussian_independence_characterization"]
   limits := [
-    "This entry retains the residual analytic claims and carries no kernel-checked evidence. The separately checked unit-variance witness and chosen soft-detector case do not upgrade these broader claims.",
+    "This entry retains the residual analytic claims and carries no kernel-checked evidence. The separately checked general-variance family, unit-variance numerical witness and chosen soft-detector case do not upgrade the residual arbitrary-variance numerical entropy, affinity or detector-classification claims.",
     "A density value at a point depends on the chosen density version, and a Gaussian singleton has zero probability. Point-density evaluation supplies no finite detector event.",
     "The detector invariance law and a physical readout identity are additional premises. No independently given Qraw is identified, and no calibrated scale, actualization, Born, composites, Bell or QM closure follows."] }
 
@@ -7089,7 +7187,8 @@ def researchTasks : List ResearchTask := [
   finiteOutcomeAffinityRigidity, relativeEntropyDataProcessing,
   classicalStatisticalProcessBridge, finiteOutcomeChannelWall,
   nativeGaussianIndependenceCharacterization, nativeStationaryNoiseClassification,
-  nativeMarginalStationarityNoiseOrigin,
+  nativeMarginalStationarityNoiseOrigin, nativeMarginalMeanDensity,
+  countableHistoryNativeNoiseWall,
   detectorConservationClosureWall, gaussianDetectorRandomizationFront,
   gaussianStatisticalRealizationAndDetectorBoundary,
   unitVarianceGaussianStatisticalWitness, invariantEffectReadoutBridge,

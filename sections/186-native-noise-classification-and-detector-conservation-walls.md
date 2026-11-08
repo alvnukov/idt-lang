@@ -76,14 +76,12 @@ their actual hypotheses reside in the Lean sources above.
 
 ## Open neighboring obligations
 
-The weaker raw-family route remains analytic. It proposes to start with only
-first-marginal covariance for every ordered pair and raw square-swap, then
-derive shared Gaussian variance, full-product covariance and preparation-level
-diagonal transparency. Diagonal transparency is obtained for preparation measures, so the generic
-bridge uses the observed carrier or quotient by equality of preparations.
-Transparency of the original raw labels would require an extra condition such
-as preparation-map injectivity. The positive-variance finite-KL bridge and omission controls await
-their own formalization.
+The later native marginal process result now checks the weaker raw-family
+route from first-marginal covariance and raw square-swap, including shared
+Gaussian variance, full-product covariance, observed diagonal transparency
+and the precise finite-entropy boundary. Its countable deterministic-history
+wall and mean-density result retain their stated hypotheses. [Native marginal
+process result](187-native-marginal-process-and-countable-history-boundary.md)
 
 Detector randomization and the candidate selection route using coordinate
 factorization and one supplied 45-degree symmetry also remain analytic.
