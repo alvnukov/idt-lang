@@ -43,8 +43,11 @@ proof proceeds directly through the intermediate value theorem and algebra.
 
 The scalar witnesses are mathematical points of the supplied carrier.
 Their interpretation as available preparations or measurements requires a
-separate operational construction. Mathematical minimality of full normalized
-context coverage remains open.
+separate operational construction. A weaker sufficient contract uses continuity
+at one and one actual normalized echo with both inputs nonzero, while retaining
+global complex multiplication. Absolute minimality and physical availability
+of such a pair remain open.
+[Single-echo theorem and rational control](191-single-echo-readout-and-rational-control.md)
 
 ## Controls separate continuity and context coverage
 
