@@ -5100,25 +5100,164 @@ def rawTripodMidpointControl : ResearchTask := {
 
 def rawPlanePhaseParameterWall : ResearchTask := {
   id := "raw_plane_phase_parameter_wall"
-  stage := .analyticAwaitingFormalization
+  stage := .conditionalKernelTheorem
   review := .parentAccepted
   assumptions := [
-    "Use the particular supplied three-dimensional complex plane-phase family m_lambda(x,y)=familyM(lambda*parameter(x,y),x,y). Define its actual real response kernel G_lambda by the existing operation-defined readout formula and use the corresponding nonnegative squared-distance contract. P=parameter and R(x)=ratio(x)=|x_0|^2/W(x), with the existing zero convention.",
-    "All assertions in this record are independently reviewed analytic results awaiting a dedicated Lean artifact. Lambda is any real family parameter."]
+    "Use the supplied carrier Vec=Fin 3 -> Complex and the particular family m_lambda(x,y)=familyM(lambda*parameter(x,y),x,y), for any real lambda. Define G_lambda(x,y)=(W(x)+W(y)-2*W(m_lambda(x,-i*y)))/2 and d_lambda(x,y)=sqrt(W(x)+W(y)-2*G_lambda(x,y)).",
+    "The complex coordinates, weight W, ordinary-plane parameter, ratio and familyM are supplied mathematical structure from RawPlanePhaseFamily, RawPlanePhaseGeometry and RawPlanePhaseGramKernel. The checked claim concerns this specified family."]
   conclusions := [
-    "Accepted analytic result. For every nonzero lambda, set L=36+lambda^2, epsilon=lambda/L and eta=phase(-lambda/6). The preparations x=(1,1,1), -y with y=(1,i,1), and eta*z_epsilon with z_epsilon=(0,i-1,epsilon), at the all-ones real coefficient vector, have actual G_lambda Gram quadratic at most -2*epsilon^2<0.",
-    "The accepted analytic kernel identity uses the conjugate-first Hermitian response K_lambda(x,y)=phase(lambda*P(x,y)*R(x))*phase(-lambda*P(x,y)*R(y))*<x,y>, whose real part is the actual operation-defined G_lambda. This identity and the following reduction remain ANALYTIC/UNCHECKED.",
-    "For the displayed witness, set M=18+lambda^2, U_plus=L+M*(epsilon^2+epsilon), U_minus=L+M*(epsilon^2-epsilon), and t_plus=3*lambda*epsilon*(epsilon+1)/U_plus, t_minus=3*lambda*epsilon*(epsilon-1)/U_minus. The exact analytic quadratic is Q=epsilon^2+4*((t_minus+(1+epsilon)*t_minus^2)/(1+t_minus^2)-(t_plus+(epsilon-1)*t_plus^2)/(1+t_plus^2)).",
-    "The analytic bounds |epsilon|<=1/12 and L/2<=U_plus,U_minus<=2*L give p=t_plus>0 and m=-t_minus>0 with p,m<=1/4 and p+m>=3*epsilon^2. Applied to the exact quadratic reduction, these estimates give Q<=-2*epsilon^2<0 for every nonzero lambda. This proof route awaits its dedicated Lean artifact.",
-    "At lambda=0 the operation is native and its real Gram kernel is positive. Thus, within this particular family and under its kernel-distance contract, global three-point positivity and triangle inequality hold exactly at lambda=0.",
-    "The analytic witness excludes restoration of a triangle metric by arbitrarily small nonzero parameters within this family. It supplies no rigidity theorem for the full class of complex native-plane models."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/RawPlanePhaseParameterWall.lean"]
+    "For every real lambda, the actual response G_lambda is symmetric, real-homogeneous in each input and has diagonal W. Its distance is nonnegative and d_lambda(x,y)^2=G_lambda(x,x)+G_lambda(y,y)-2*G_lambda(x,y). Triangle inequality is equivalent to three-point Gram nonnegativity under these checked identities.",
+    "The checked conjugate-first response identity is G_lambda(x,y)=Re(phase(lambda*P(x,y)*R(x))*phase(-lambda*P(x,y)*R(y))*<x,y>), with P=parameter and R=ratio.",
+    "For lambda != 0, set L=36+lambda^2, epsilon=lambda/L and eta=phase(-lambda/6). The preparations X=(1,1,1), -Y with Y=(1,i,1), and eta*Z(epsilon) with Z(epsilon)=(0,i-1,epsilon), at all-ones real coefficients, have actual Gram quadratic scalarQ(lambda) <= -2*epsilon^2 < 0.",
+    "The exact scalarQ reduction uses M=18+lambda^2, Uplus=L+M*(epsilon^2+epsilon), Uminus=L+M*(epsilon^2-epsilon), p=3*lambda*epsilon*(epsilon+1)/Uplus and m=3*lambda*epsilon*(1-epsilon)/Uminus, giving scalarQ=epsilon^2+4*((-m+(1+epsilon)*m^2)/(1+m^2)-(p+(epsilon-1)*p^2)/(1+p^2)). The cited scalar bounds prove the uniform exclusion.",
+    "At lambda=0, G_0 equals nativeG and is Gram nonnegative at every finite arity. For this particular family, global three-point Gram nonnegativity holds exactly when lambda=0, and global triangle inequality holds exactly when lambda=0."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseParameterFamily.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.m",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.d",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G_inPlane",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G_symmetric",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G_diagonal",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G_real_smul_left",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G_real_smul_right",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.d_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.d_sq",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.triangle_iff_three_point",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.G_zero_parameter",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.nativeG_gram_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseParameterFamily.zero_parameter_gram_nonnegative" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseParameterBounds.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.L",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.M",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.epsilon",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.Uplus",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.Uminus",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.p",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.m",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.scalarQ",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.epsilon_bounds",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.U_bounds",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.pm_positive",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.pm_upper",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.pm_sum_lower",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.scalarQ_upper",
+        "IDT.QMClosure.RawPlanePhaseParameterBounds.scalarQ_negative" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseParameterWall.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseParameterWall.X",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.Y",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.Z",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.eta",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.preparations",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.G_eq_inner",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.actual_quadratic_scalar",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.actual_quadratic_upper",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.actual_quadratic_negative",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.not_three_point_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.three_point_nonnegative_iff",
+        "IDT.QMClosure.RawPlanePhaseParameterWall.triangle_iff_zero" ] }]
+  plannedArtifacts := []
   dependencies := ["raw_plane_phase_gram_control", "raw_metric_gram_arity"]
   limits := [
-    "All parameter-uniform formulas, inequalities and family classification in this record remain ANALYTIC/UNCHECKED. No machine-checked artifact is cited.",
-    "The complete Hermitian complex two-plane class with coherent complex scalars, actual native mixer and global three-point Gram positivity remains open. This analytic wall concerns only this chosen family.",
-    "Supplied complex geometry remains a mathematical input. No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+    "The parameter-uniform exclusion concerns only the supplied phase-deformation family. It supplies no general rigidity theorem for all complex native-plane models, and no smooth-rigidity claim is included among the checked conclusions.",
+    "Continuity in the parameter, square-swap and a LocalKernel adapter for arbitrary lambda are outside the checked claim of these three modules.",
+    "The complete Hermitian complex two-plane class with coherent complex scalars, actual native mixer and global three-point positivity remains open. Physical justification of compatibility with an external reference remains unexplained.",
+    "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawLocalMidpointCompatibility : ResearchTask := {
+  id := "raw_local_midpoint_compatibility"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply any carrier V, a symmetric real kernel G, unary maps H,N with G(H(x),z)=G(x,z)/2 and G(N(x),z)=-G(x,z), a chosen midpoint mid and HalfMidpointCompatible G H mid. No raw preparation commutation between H and N is required.",
+    "For the local route, supply a predicate U that eventually contains every dyadically contracted preparation: for every x there exists M such that U(H^n(x)) for all n>=M. Require squared Jensen only when the three inputs z,x,y lie in U. Membership of mid(x,y) in U is not required.",
+    "Alternatively supply SecondOrderJensenControl: for every fixed x,y,z there exists a real K such that for every natural n, squaredDistance(G,z,mid(H^n(x),H^n(y))) <= (squaredDistance(G,z,H^n(x))+squaredDistance(G,z,H^n(y)))/2+(2^(-n))^2*K. K may depend on the fixed triple and is uniform in n.",
+    "For the equivalences, positive diagonal-weight-ball specialization and all-finite Gram conclusions, also supply pairwise nonnegative squared distances. The raw sparse conclusions additionally require the existing Selection.Contract D and its explicit LocalKernel D G adapter."]
+  conclusions := [
+    "Local squared Jensen on an arbitrary dyadically absorbing U implies complete midpoint-row averaging. With pairwise nonnegative squares, it is equivalent to midpoint-row averaging under the stated symmetry, half-row, antiphase and midpoint-half compatibility premises.",
+    "Every strictly positive diagonal-weight ball G(x,x)<=R is dyadically absorbing under the stated symmetry, half-row and pairwise nonnegative-square premises. Local squared Jensen on such a ball therefore implies midpoint-row averaging.",
+    "The one-sided second-order Jensen control with its per-triple constant uniform in n implies midpoint-row averaging. With pairwise nonnegative squares it is equivalent to midpoint-row averaging.",
+    "Under pairwise nonnegative squares, either local Jensen on a dyadically absorbing U, local Jensen on a positive weight ball, or SecondOrderJensenControl implies Gram nonnegativity at every finite real arity.",
+    "With the additional explicit LocalKernel adapter, the local absorbing-set and second-order routes imply all finite Gram positivity, nonnegative D.weight, pair conservation, ObservedMedial, SparseMarginalLaw and the six universal sparse test families."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawLocalMidpointCompatibility.lean"
+      declarations := [
+        "IDT.QMClosure.RawLocalMidpointCompatibility.DyadicallyAbsorbing",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.LocalSquaredMidpointConvex",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.DiagonalWeightBall",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.SecondOrderJensenControl",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.le_zero_of_eventually_le_dyadic_mul",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.midpointRowAverage_of_localSquaredMidpointConvex",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.localSquaredMidpointConvex_iff_midpointRowAverage",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.dyadicallyAbsorbing_diagonalWeightBall",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.midpointRowAverage_of_weightBallSquaredMidpointConvex",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.midpointRowAverage_of_secondOrderJensenControl",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.secondOrderJensenControl_iff_midpointRowAverage",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.gramNonnegative_of_localSquaredMidpointConvex",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.gramNonnegative_of_weightBallSquaredMidpointConvex",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.gramNonnegative_of_secondOrderJensenControl",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.conclusions_of_localSquaredMidpointConvex",
+        "IDT.QMClosure.RawLocalMidpointCompatibility.conclusions_of_secondOrderJensenControl" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_dyadic_midpoint_compatibility", "raw_four_point_gram_bridge"]
+  limits := [
+    "Local Jensen and second-order Jensen control remain additional mathematical premises. Their compatibility with an external reference is an open origin obligation.",
+    "The proof uses Archimedean real dyadic decay and the imported finite coefficient-space density argument. It supplies no topology or arbitrary-real scaling operation on the preparation carrier.",
+    "The supplied H,N and mid require only their stated row laws and midpoint-half compatibility. They have no automatic identification with raw attenuation, antiphase or midpoint operations in an external contract.",
+    "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawPlanePhaseLocalMidpointControl : ResearchTask := {
+  id := "raw_plane_phase_local_midpoint_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing lambda-one supplied complex plane-phase operation, its actual response G, distance d and midpoint mid from raw_plane_phase_midpoint_control. Set half(x)=(1/2)*x, antipode(x)=-x and scale(r,x)=r*x in the supplied complex-coordinate carrier.",
+    "For the selected-orbit formulas retain the existing specific preparations fourX, fourY, fourU=mid(fourX,fourY) and fourZ. For the CN identity require z in InPlane(x,y), the ordinary complex span generated by the endpoints x,y."]
+  conclusions := [
+    "The actual half and antipode satisfy their required kernel-row laws. Uniform complex covariance of mid gives the preparation equality mid(half(x),half(y))=half(mid(x,y)) and hence HalfMidpointCompatible. Squared distances are nonnegative, while complete midpoint-row averaging fails.",
+    "Every strictly positive diagonal-weight ball fails LocalSquaredMidpointConvex for the actual G and mid. SecondOrderJensenControl G half mid also fails: some fixed triple admits no real error constant uniform over all contraction indices.",
+    "For the selected pair and reference orbit, selectedSlack(t,e), defined as the endpoint mean of actual distance squares minus the actual midpoint distance square, equals e^2/2+t*e/5. The actual midpoint of scale(e,fourX),scale(e,fourY) is scale(e,fourU).",
+    "At the fixed reference -fourZ, the midpoint excess over the endpoint mean equals e/5-e^2/2 and is strictly positive exactly when 0<e<2/5. On the two selected balanced reference rays t=e and t=-e, slack equals e^2*(1/2+1/5) and e^2*(1/2-1/5), respectively, and both are strictly positive for nonzero e.",
+    "For every x,y and z in their endpoint-generated ordinary complex span InPlane(x,y), the actual squared-distance CN identity holds: Q(z,mid(x,y))=(Q(z,x)+Q(z,y))/2-Q(x,y)/4. The proof transports that pair plane by H(-parameter(x,y)) to the native coordinate midpoint."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseLocalMidpointControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.half",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.antipode",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.half_row",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.antipode_row",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.mid_smul",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.half_midpoint",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.halfMidpointCompatible",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.nonnegativeSquaredDistances",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.not_midpointRowAverage",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.not_localSquaredMidpointConvex_weightBall",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.not_secondOrderJensenControl",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.scale",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.squaredDistance_scale",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.mid_scaled_selected_pair",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.selectedSlack",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.selectedSlack_exact",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.fixed_reference_excess",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.fixed_reference_excess_positive_iff",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.balanced_selected_slacks",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.balanced_selected_slacks_positive",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.inPlane_mid",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.native_midpoint",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.H_mid",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.squaredDistance_inPlane",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.native_squared_CN",
+        "IDT.QMClosure.RawPlanePhaseLocalMidpointControl.squared_CN_inPlane" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_local_midpoint_compatibility", "raw_plane_phase_midpoint_control"]
+  limits := [
+    "The passing balanced rays concern only the displayed endpoint pair and selected reference orbit. No all-triple balanced test is asserted.",
+    "The checked CN identity requires the reference to lie in the complex span generated by the endpoint pair. It supplies no unrestricted external-reference Jensen law.",
+    "This control uses lambda=1 only. Its supplied complex geometry and the physical origin of external-reference compatibility remain outside the checked result. No general smooth-rigidity theorem is recorded.",
+    "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
@@ -5958,6 +6097,7 @@ def researchTasks : List ResearchTask := [
   rawMetricGramArity, rawFourPointGramBridge, rawPlanePhaseGramControl,
   rawMidpointGramCompatibility, rawPlanePhaseMidpointControl, rawRealPlaneMetricControl,
   rawDyadicMidpointCompatibility, rawTripodMidpointControl, rawPlanePhaseParameterWall,
+  rawLocalMidpointCompatibility, rawPlanePhaseLocalMidpointControl,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
