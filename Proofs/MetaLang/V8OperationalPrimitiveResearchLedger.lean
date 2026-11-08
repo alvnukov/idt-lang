@@ -4568,11 +4568,178 @@ def rawPairPlaneAmalgamWall : ResearchTask := {
     "raw_sparse_conservation_tests",
     "raw_sparse_self_reference_selector"]
   limits := [
-    "The general transfer theorem for universal closure of quantifier-free raw-term formulas with at most two preparation variables, zero, m, W and raywise complex scalar action remains without a formal proof. Scalar parameters are allowed in the proposed scope. Arbitrary named preparation constants, nested preparation quantifiers, arbitrary-reference ObservationalEq and topology are excluded. The checked common-chart APIs support future transfer work. This broader formula claim is outside checkedEvidence.",
+    "For this older atlas construction, the general transfer theorem for universal closure of quantifier-free raw-term formulas with at most two preparation variables, zero, m, W and raywise complex scalar action remains without a formal proof. Scalar parameters are allowed in the proposed scope. Arbitrary named preparation constants, nested preparation quantifiers, arbitrary-reference ObservationalEq and topology are excluded. The checked common-chart APIs support future transfer work. This broader formula claim is outside checkedEvidence.",
     "The analytic continuity obstruction remains UNCHECKED: for t_epsilon=x+epsilon*e in P and q=i*x+y in Q, the proposed calculation is W(m(t_epsilon,q))=3/2+epsilon^2/2 for nonzero real epsilon and W(m(x,q))=5/2. No kernel-checked topological conclusion is recorded.",
-    "Continuity or another global compatibility principle remains a possible escape. Its sufficiency is not established. Such a principle need not literally use three preparation variables.",
+    "This checked pair-plane result leaves continuity open for that model. The separate checked raw_continuous_plane_phase_wall supplies a globally continuous countermodel, and raw_continuous_plane_local_theory transfers the exact two-preparation quantifier-free native-valid language to that same countermodel. Stronger global compatibility principles remain open and need not literally use three preparation variables.",
     "Only raywise complex scalar action is supplied. Global associative addition and a global vector-space structure are outside this construction.",
     "The original physics primitive goal remains open. This supplied complex-geometric countermodel gives no physical geometry origin, preparation availability, actualization, full QM or primitive closure. Public and manifest statuses remain unchanged."] }
+
+def rawContinuousPlanePhaseWall : ResearchTask := {
+  id := "raw_continuous_plane_phase_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supplied V=Fin 3 -> C with its ordinary product topology and W(v)=sum_j normSq(v_j). This complex quadratic geometry is an omission-control input, without a physical geometry origin or Born interpretation.",
+    "Use kappa(r)=(1+i*r)/(1-i*r), R(v)=normSq(v_0)/W(v) with division by zero equal to zero, and H_t(v)=kappa(t*R(v))*v. The family uses ordinary complex scalar action and the native mixer N with a=(1+i)/2 and b=(1-i)/2.",
+    "For the three coordinates w of x wedge y, set f(x,y)=(normSq(w_0)+normSq(w_1))/sum_j normSq(w_j), with 0/0=0. Define G_t by conjugating N on both ports with H_t, and the actual pair operation by F(x,y)=G_(f(x,y))(x,y)."]
+  conclusions := [
+    "H_t preserves W, is complex-homogeneous and injective and surjective, and is jointly continuous in t and its vector argument. Each fixed-parameter family operation squares to swap, is transparent and conserves pair weight.",
+    "The plane parameter lies in [0,1] and is invariant under invertible changes of the two-generator basis. On dependent pairs every G_t agrees with N. For subpairs in any supplied two-generated plane, the actual mixer agrees with the one fixed family mixer selected by that plane's generating pair.",
+    "The actual raw operation satisfies square-swap, transparency, nonnegative faithful weight, pair conservation, all six universal sparse test families, self-reference SparseAt x y A(x), and joint complex homogeneity. Its sparse identity holds for triples lying in a common supplied two-generated plane.",
+    "The actual pair operation and its first output are globally continuous in the ordinary product topology. Away from wedge zero, the parameter is continuous. At a dependent pair, joint continuity and compactness of [0,1] control arbitrary parameter selection because the entire family has the same value there.",
+    "For x=(1,0,0), y=(0,1,0), z=(1,0,1), the checked sparse left side is 2 and right side is 13/5. The mixed x,z output has weight 21/10. These exact values prove failure of full SparseMarginalLaw and ObservedMedial.",
+    "The constructed_continuous_countermodel theorem conjoins the universal tests, self-reference, nonnegative faithful weight, pair conservation, joint complex homogeneity and global continuity with failure of both full laws for the same explicit operation. Continuity added to these checked raw laws is therefore insufficient to force the full sparse marginal law."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseFamily.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseFamily.W_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseFamily.W_eq_zero_iff",
+        "IDT.QMClosure.RawPlanePhaseFamily.W_smul",
+        "IDT.QMClosure.RawPlanePhaseFamily.W_H",
+        "IDT.QMClosure.RawPlanePhaseFamily.H_smul",
+        "IDT.QMClosure.RawPlanePhaseFamily.H_injective",
+        "IDT.QMClosure.RawPlanePhaseFamily.H_surjective",
+        "IDT.QMClosure.RawPlanePhaseFamily.continuous_H",
+        "IDT.QMClosure.RawPlanePhaseFamily.familyOperation_square",
+        "IDT.QMClosure.RawPlanePhaseFamily.familyOperation_transparent",
+        "IDT.QMClosure.RawPlanePhaseFamily.familySparse",
+        "IDT.QMClosure.RawPlanePhaseFamily.family_conserved",
+        "IDT.QMClosure.RawPlanePhaseFamily.jointcontinuous_family" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseGeometry.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseGeometry.parameter_change_basis",
+        "IDT.QMClosure.RawPlanePhaseGeometry.parameter_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseGeometry.parameter_le_one",
+        "IDT.QMClosure.RawPlanePhaseGeometry.continuous_parameter_at",
+        "IDT.QMClosure.RawPlanePhaseGeometry.familyM_of_dependent",
+        "IDT.QMClosure.RawPlanePhaseGeometry.familyM_parameter_locality" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseControl.m_eq_family_of_inPlane",
+        "IDT.QMClosure.RawPlanePhaseControl.operation_square",
+        "IDT.QMClosure.RawPlanePhaseControl.operation_transparent",
+        "IDT.QMClosure.RawPlanePhaseControl.contract",
+        "IDT.QMClosure.RawPlanePhaseControl.A_eq",
+        "IDT.QMClosure.RawPlanePhaseControl.B_eq",
+        "IDT.QMClosure.RawPlanePhaseControl.sparse_inPlane",
+        "IDT.QMClosure.RawPlanePhaseControl.tests",
+        "IDT.QMClosure.RawPlanePhaseControl.selfSparse",
+        "IDT.QMClosure.RawPlanePhaseControl.weight_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseControl.weight_eq_zero_iff",
+        "IDT.QMClosure.RawPlanePhaseControl.pair_conserved",
+        "IDT.QMClosure.RawPlanePhaseControl.m_smul",
+        "IDT.QMClosure.RawPlanePhaseControl.operation_smul" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseContinuity.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseContinuity.continuousAt_compact_selection",
+        "IDT.QMClosure.RawPlanePhaseContinuity.continuous_operation",
+        "IDT.QMClosure.RawPlanePhaseContinuity.continuous_m" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseSparseWall.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseSparseWall.witness_m_xz_weight",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.witness_A_y_weight",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.witness_outer_forward",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.witness_outer_reverse",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.constructed_sparse_witness",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.constructed_not_sparse",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.constructed_not_observed_medial",
+        "IDT.QMClosure.RawPlanePhaseSparseWall.constructed_continuous_countermodel" ] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_pair_plane_amalgam_wall",
+    "raw_sparse_conservation_tests",
+    "raw_sparse_self_reference_selector"]
+  limits := [
+    "The checked theorem concerns the explicit noncomputable complex-geometric operation and its exact listed laws. The stronger two-preparation formula transfer is recorded separately in raw_continuous_plane_local_theory.",
+    "No transfer of the existing native output-profile Contract to this operation is asserted. No triangle-inequality or global Lipschitz claim is included in the current checked scope.",
+    "The proposed common Frechet derivative obstruction at the vacuum remains analytic. The smooth regularity and midpoint-convexity bridge routes retain their separate analyticAwaitingFormalization status.",
+    "No physical primitive origin, preparation availability, actualization, full QM or primitive-closure conclusion is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawContinuousPlaneLocalTheory : ResearchTask := {
+  id := "raw_continuous_plane_local_theory"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the supplied continuous plane-phase omission-control geometry and a Term2 language with Fin 2 preparation variables, zero, mixing and complex scalar coefficients. Interpret mixing natively in one semantics and by the actual operation in the other. Arbitrary preparation constants are excluded.",
+    "QuantifierfreeFormula2 consists of term equality, readoutPredicate(P)(terms) for a finite list of terms and a fixed P : List R -> Prop, conjunction and negation. Other Boolean connectives can be expressed from these. Each predicate is identical in both semantics, has no preparation-environment argument and has no model-dependent reinterpretation. No continuity or decidability of P is required.",
+    "External universally quantified complex scalar parameters are allowed through families of terms or formulas. Native validity means validity for every pair of preparations in the supplied native C3 model."]
+  conclusions := [
+    "For actual inputs x,y and k=f(x,y), every generated term stays in their plane and satisfies actualEval(t,x,y)=H_k(nativeEval(t,H_(-k)(x),H_(-k)(y))).",
+    "Injectivity of H_k and preservation of W yield equivalence of formula truth in the two related environments, including negation and arbitrary fixed predicates of finite readout lists.",
+    "For every formula, native validity implies actual validity. The comparison uses the supplied native C3 model directly.",
+    "Every collection of native-valid formulas in this exact language is satisfied by the same actual globally continuous operation with nonnegative faithful weight, the six sparse tests, self-reference, pair conservation and joint complex homogeneity, while full SparseMarginalLaw and ObservedMedial fail.",
+    "The native_valid_collection_does_not_force_sparse theorem records that validity of any such collection in this supplied actual model cannot imply its full sparse marginal law. External scalar-parameter families are covered by ranging over their formula instances."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseLocalTheory.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.Term2",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.QuantifierfreeFormula2",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.evalActual_inPlane",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.evalActual_transport",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.readoutsActual_transport",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.holdsActual_iff_transported",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.nativeValid_implies_actualValid",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.ActualCountermodelProperties",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.actualCountermodelProperties",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.native_valid_collection_countermodel",
+        "IDT.QMClosure.RawPlanePhaseLocalTheory.native_valid_collection_does_not_force_sparse" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_continuous_plane_phase_wall"]
+  limits := [
+    "The collection theorem concerns the exact implemented syntax, supplied semantics and explicit actual countermodel. It is a kernel theorem about this mathematical omission control.",
+    "The language excludes arbitrary raw preparation constants, nested preparation quantifiers, arbitrary-reference ObservationalEq and topology predicates. Predicates receive only finite real readout lists.",
+    "The supplied complex geometry and readout control give no physical primitive origin, Born interpretation, actualization, full QM or primitive closure. Public and manifest statuses remain unchanged."] }
+
+def rawVacuumRegularityBridge : ResearchTask := {
+  id := "raw_vacuum_regularity_bridge"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "A supplied pointed finite-dimensional real manifold without boundary, with smooth real multiplicative scaling h satisfying h_1=id, h_0=vacuum and h_s composed with h_t=h_(s*t).",
+    "Define the actual orbit velocity i(x)=d/dt at t=0 of h_t(x), valued in the vacuum tangent space. Assume only local invertibility of D i at the vacuum, the weight-one tangent selector, together with differentiability of the mixer at the vacuum pair and compatibility with h-scaling."]
+  conclusions := [
+    "Accepted conditional target: the inverse function theorem and scaling extend local invertibility to a global diffeomorphism i with i(h_t(x))=t*i(x). Global injectivity of an arbitrary feature map is not a premise.",
+    "In these reconstructed coordinates, mixer differentiability at the vacuum pair and homogeneity force linearity. Transparency gives A+B=I, hence commuting A and B and mediality. Square-swap then gives a complex structure J with J squared equal to -I.",
+    "The existing six sparse tests and nonnegativity yield pair conservation. The resulting ObservedMedial property then supplies the existing conservation-to-sparse route."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/RawRegularScalingReconstruction.lean",
+    "Proofs/QMClosure/RawHomogeneousVacuumDerivative.lean"]
+  dependencies := [
+    "raw_continuous_plane_phase_wall",
+    "raw_sparse_conservation_tests",
+    "raw_sparse_marginal_reconstruction"]
+  limits := [
+    "The manifold, smooth scaling, weight-one tangent selector and common Frechet derivative are supplied regularity premises with open physical origins. All new statements await Lean artifacts.",
+    "Smooth scaling alone is insufficient for the velocity construction: h_t(x)=t^2*x loses the orbit velocity. A smooth weights-(1,3) nonmedial polynomial control has nonfaithful W and does not satisfy all main countermodel properties.",
+    "The accepted continuous C3 omission control separates continuity from the common mixer derivative premise. No continuity or real quadratic representation of W follows here without its own regularity argument.",
+    "This is a conditional bridge plan without an actualization, full QM or primitive-closure conclusion. Public and manifest statuses remain unchanged."] }
+
+def rawMidpointConvexityBridge : ResearchTask := {
+  id := "raw_midpoint_convexity_bridge"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Restrict to a supplied two-generated native-plane class with complex scalar action. The six sparse tests and self-reference alone do not establish membership in this class.",
+    "Set d(x,y)^2=2*W(m(x,-i*y)), G(x,y)=(W(x)+W(y)-d(x,y)^2)/2 and h(x,y)=b*m(x,i*y), with b=(1-i)/2. In each supplied native plane, h is the ordinary midpoint. Assume faithful distance separation and global one-point midpoint-distance convexity d(z,h(x,y)) <= (d(z,x)+d(z,y))/2."]
+  conclusions := [
+    "Accepted analytic target: references of both signs with unbounded magnitude, applied to midpoint convexity and a limit as t tends to infinity, force G(z,h(x,y))=(G(z,x)+G(z,y))/2. Faithful separation then gives associative global addition, an inner-product representation and the sparse law.",
+    "An alternative four-point real Gram positivity premise makes a native three-term null relation have zero response against a fourth point, giving kernel additivity. Its physical origin remains open.",
+    "Product nonexpansivity of F collapses to isometry through F^4=id and restates the full sparse law at reference pair (i*z,0). It supplies no independent physical primitive origin.",
+    "The accepted continuous-control Gram witness uses x=e1,y=e2,u=(e1+e2)/2,z=e1+e3 and real matrix [[1,0,1/2,4/5],[0,1,1/2,0],[1/2,1/2,1/2,1/2],[4/5,0,1/2,2]]. The coefficient vector (-10,-10,20,-1) has quadratic value -2.",
+    "The same analytic control fails midpoint convexity at reference -3*z, with exact inequality sqrt(43/2) > (sqrt(119/5)+sqrt(19))/2."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/RawMidpointConvexityBridge.lean",
+    "Proofs/QMClosure/RawFourPointGramBridge.lean"]
+  dependencies := [
+    "raw_continuous_plane_phase_wall",
+    "raw_sparse_conservation_tests",
+    "raw_sparse_self_reference_selector"]
+  limits := [
+    "All new bridge statements, inequalities and Gram calculations remain analytic and await Lean artifacts. The supplied native-plane scope must be preserved.",
+    "The physical origins of global midpoint convexity, faithful separation, unbounded reference availability and four-point Gram positivity remain open. Sufficiency of the triangle inequality alone is unresolved.",
+    "No physical geometry origin, actualization, full QM or primitive-closure conclusion is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
@@ -5407,6 +5574,8 @@ def researchTasks : List ResearchTask := [
   sparseMarginalMedialCriterion, rawSparseMarginalReconstruction, rawSparseSignedControl,
   rawSparseConservationSelection, rawSparseInsertionOrigin, rawSparseConservationTests,
   rawSparseSelfReferenceSelector, rawPairPlaneAmalgamWall,
+  rawContinuousPlanePhaseWall, rawContinuousPlaneLocalTheory,
+  rawVacuumRegularityBridge, rawMidpointConvexityBridge,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
