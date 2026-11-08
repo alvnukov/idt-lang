@@ -4700,7 +4700,10 @@ def rawVacuumRegularityBridge : ResearchTask := {
   conclusions := [
     "Accepted conditional target: the inverse function theorem and scaling extend local invertibility to a global diffeomorphism i with i(h_t(x))=t*i(x). Global injectivity of an arbitrary feature map is not a premise.",
     "In these reconstructed coordinates, mixer differentiability at the vacuum pair and homogeneity force linearity. Transparency gives A+B=I, hence commuting A and B and mediality. Square-swap then gives a complex structure J with J squared equal to -I.",
-    "The existing six sparse tests and nonnegativity yield pair conservation. The resulting ObservedMedial property then supplies the existing conservation-to-sparse route."]
+    "The existing six sparse tests and nonnegativity yield pair conservation. The resulting ObservedMedial property then supplies the existing conservation-to-sparse route.",
+    "For a map f on the supplied real coordinate space with f(t*p)=t*f(p) for every real t, every ray derivative with real parameter t at the vacuum exists automatically and equals the map evaluated at that ray direction. A specified common continuous real-linear map represents all directional derivatives exactly when f agrees globally with that map. For the current three-dimensional complex control, the separate real vacuum derivatives of mixing are the linear attenuation maps A and B, and all joint real ray derivatives exist. A joint real Frechet derivative at the vacuum pair is excluded analytically by homogeneity together with the checked sparse failure. These derivative assertions await Lean artifacts.",
+    "For the actual orbit velocity i and a centered chart e at the vacuum, let C=De_vac be the tangent-coordinate identification and define f=C composed with i composed with e inverse on the centered chart neighborhood. Put P=Df(0). The scaling identities give P composed with f=f and P squared=P. Local isolation of f's zero at the vacuum and the ordinary inverse function theorem for g(u)=f(u)+(I-P)u imply P=I. This targets the actual velocity map and requires only local zero isolation. The full manifold reconstruction target remains in force.",
+    "A separate analytic sufficient route to velocity-zero isolation assumes a C2 scaling orbit at t=0, W Frechet differentiable at the vacuum with its minimum zero there, faithful zero weight, and the exact imported scaling W(h_t(x))=t^2*W(x). If i(x)=0, the orbit displacement is O(t^2). The vacuum derivative of W vanishes at its minimum, so W(h_t(x))=o(t^2), which forces W(x)=0 and then x=vacuum."]
   checkedEvidence := []
   plannedArtifacts := [
     "Proofs/QMClosure/RawRegularScalingReconstruction.lean",
@@ -4712,8 +4715,10 @@ def rawVacuumRegularityBridge : ResearchTask := {
   limits := [
     "The manifold, smooth scaling, weight-one tangent selector and common Frechet derivative are supplied regularity premises with open physical origins. All new statements await Lean artifacts.",
     "Smooth scaling alone is insufficient for the velocity construction: h_t(x)=t^2*x loses the orbit velocity. A smooth weights-(1,3) nonmedial polynomial control has nonfaithful W and does not satisfy all main countermodel properties.",
-    "The accepted continuous C3 omission control separates continuity from the common mixer derivative premise. No continuity or real quadratic representation of W follows here without its own regularity argument.",
-    "This is a conditional bridge plan without an actualization, full QM or primitive-closure conclusion. Public and manifest statuses remain unchanged."] }
+    "The accepted continuous three-dimensional complex omission control separates continuity from the common mixer derivative premise. No continuity or real quadratic representation of W follows here without its own regularity argument.",
+    "This is a conditional bridge plan without an actualization, full QM or primitive-closure conclusion. Public and manifest statuses remain unchanged.",
+    "All new derivative, local-isolation and regularity arguments in these refinements remain ANALYTIC/UNCHECKED. The four-module Gram cluster formalizes neither the full manifold inverse-function route nor these derivative refinements. Retain the separate raw_midpoint_convexity_bridge at analyticAwaitingFormalization.",
+    "The exact degree-two weight scaling used in the velocity-zero isolation argument is a supplied mathematical assumption with open physical origin. Smooth scaling alone remains insufficient. A real first-derivative regularity condition on W does not force a quadratic weight. The C1 homogeneous faithful readout-only example W(x,y)=sqrt(x^4+y^4) is nonquadratic. This comparison supplies no complete raw mixer control. Under the corresponding C2 regularity and exact scaling, the intrinsic vacuum Hessian at the critical vacuum gives W(x)=1/2 D^2 W_vac(i(x),i(x)) along actual orbit velocities. This identity makes no claim of global chart linearity. These comparison assertions await their own Lean artifacts."] }
 
 def rawMidpointConvexityBridge : ResearchTask := {
   id := "raw_midpoint_convexity_bridge"
@@ -4724,22 +4729,171 @@ def rawMidpointConvexityBridge : ResearchTask := {
     "Set d(x,y)^2=2*W(m(x,-i*y)), G(x,y)=(W(x)+W(y)-d(x,y)^2)/2 and h(x,y)=b*m(x,i*y), with b=(1-i)/2. In each supplied native plane, h is the ordinary midpoint. Assume faithful distance separation and global one-point midpoint-distance convexity d(z,h(x,y)) <= (d(z,x)+d(z,y))/2."]
   conclusions := [
     "Accepted analytic target: references of both signs with unbounded magnitude, applied to midpoint convexity and a limit as t tends to infinity, force G(z,h(x,y))=(G(z,x)+G(z,y))/2. Faithful separation then gives associative global addition, an inner-product representation and the sparse law.",
-    "An alternative four-point real Gram positivity premise makes a native three-term null relation have zero response against a fourth point, giving kernel additivity. Its physical origin remains open.",
-    "Product nonexpansivity of F collapses to isometry through F^4=id and restates the full sparse law at reference pair (i*z,0). It supplies no independent physical primitive origin.",
-    "The accepted continuous-control Gram witness uses x=e1,y=e2,u=(e1+e2)/2,z=e1+e3 and real matrix [[1,0,1/2,4/5],[0,1,1/2,0],[1/2,1/2,1/2,1/2],[4/5,0,1/2,2]]. The coefficient vector (-10,-10,20,-1) has quadratic value -2.",
-    "The same analytic control fails midpoint convexity at reference -3*z, with exact inequality sqrt(43/2) > (sqrt(119/5)+sqrt(19))/2."]
+    "The separate checked tasks raw_metric_gram_arity, raw_four_point_gram_bridge and raw_plane_phase_gram_control establish the exact triangle equivalence and null-transfer geometry, the conditional four-point-positive raw sparse bridge and the actual-operation negative controls.",
+    "The product-nonexpansivity comparison remains ANALYTIC/UNCHECKED. Product nonexpansivity of F collapses to isometry through F^4=id and restates the full sparse law at reference pair (i*z,0). It supplies no independent physical primitive origin.",
+    "The separately checked raw_plane_phase_gram_control continuous-control Gram witness uses x=e1,y=e2,u=(e1+e2)/2,z=e1+e3 and real matrix [[1,0,1/2,4/5],[0,1,1/2,0],[1/2,1/2,1/2,1/2],[4/5,0,1/2,2]]. The coefficient vector (-10,-10,20,-1) has quadratic value -2.",
+    "The midpoint-convexity comparison remains ANALYTIC/UNCHECKED. The same control is proposed to fail midpoint convexity at reference -3*z, with exact inequality sqrt(43/2) > (sqrt(119/5)+sqrt(19))/2."]
   checkedEvidence := []
   plannedArtifacts := [
-    "Proofs/QMClosure/RawMidpointConvexityBridge.lean",
-    "Proofs/QMClosure/RawFourPointGramBridge.lean"]
+    "Proofs/QMClosure/RawMidpointConvexityBridge.lean"]
   dependencies := [
     "raw_continuous_plane_phase_wall",
     "raw_sparse_conservation_tests",
-    "raw_sparse_self_reference_selector"]
+    "raw_sparse_self_reference_selector",
+    "raw_metric_gram_arity",
+    "raw_four_point_gram_bridge",
+    "raw_plane_phase_gram_control"]
   limits := [
-    "All new bridge statements, inequalities and Gram calculations remain analytic and await Lean artifacts. The supplied native-plane scope must be preserved.",
-    "The physical origins of global midpoint convexity, faithful separation, unbounded reference availability and four-point Gram positivity remain open. Sufficiency of the triangle inequality alone is unresolved.",
+    "The midpoint-convexity implication, product-nonexpansivity comparison and displayed midpoint-convexity inequality remain ANALYTIC/UNCHECKED and await Lean artifacts. The supplied native-plane scope must be preserved. The separate Gram geometry, four-point bridge and actual-operation Gram controls have checked records in their own tasks.",
+    "The separate raw_metric_gram_arity task proves that global triangle inequality is equivalent to global real three-point Gram positivity under the symmetry, separate real homogeneity and squared-distance contract tracked by raw_metric_gram_arity. Whether triangle inequality or three-point Gram positivity forces the full sparse law in the complete native-plane class remains unresolved.",
+    "The physical origins of global midpoint convexity, faithful separation, unbounded reference availability and four-point Gram positivity remain open. The midpoint-convexity route itself remains analyticAwaitingFormalization.",
     "No physical geometry origin, actualization, full QM or primitive-closure conclusion is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawMetricGramArity : ResearchTask := {
+  id := "raw_metric_gram_arity"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For the generic finite Gram quadratic and null-cross transfer, supply a carrier and a symmetric real kernel G. GramNonnegative n quantifies all n-point lists, allowing repetitions, and all real coefficient lists.",
+    "For triangle equivalence only, supply a real-parameter preparation map scale with G(scale(r,x),y)=r*G(x,y), and a nonnegative distance d satisfying d(x,y)^2=G(x,x)+G(y,y)-2*G(x,y)."]
+  conclusions := [
+    "The finite Gram quadratic is defined for every finite point list and real coefficient list. Four-point positivity transfers a three-point null relation with coefficient vector (1,1,-1) to any fourth preparation, forcing its mixed kernel response to vanish.",
+    "For a fixed three-point null relation with coefficient vector (1,1,-1) and a fourth point with nonnegative diagonal kernel value, positivity on the two-parameter coefficient plane (s,s,-s,t) is equivalent to vanishing of that external mixed response. This restricted positivity restates the corresponding response identity.",
+    "Global triangle inequality for d is equivalent to global real three-point Gram positivity under exactly the supplied kernel homogeneity, symmetry and nonnegative squared-distance contract.",
+    "The triangle equivalence supplies no implication from three-point positivity to four-point positivity or to the sparse law in the complete native-plane class."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawGramGeometry.lean"
+      declarations := [
+        "IDT.QMClosure.RawGramGeometry.quadratic",
+        "IDT.QMClosure.RawGramGeometry.GramNonnegative",
+        "IDT.QMClosure.RawGramGeometry.Triangle",
+        "IDT.QMClosure.RawGramGeometry.quadratic_three",
+        "IDT.QMClosure.RawGramGeometry.quadratic_four",
+        "IDT.QMClosure.RawGramGeometry.diagonal_nonnegative",
+        "IDT.QMClosure.RawGramGeometry.null_plane_quadratic",
+        "IDT.QMClosure.RawGramGeometry.four_point_null_transfer",
+        "IDT.QMClosure.RawGramGeometry.null_plane_nonnegative_iff",
+        "IDT.QMClosure.RawGramGeometry.triangle_iff_three_point" ] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The checked scope consists of the finite quadratic identities, null-transfer statements and the triangle equivalence in RawGramGeometry. The preparation map needs only the stated real kernel homogeneity.",
+    "Faithful separation, topology, a Hilbert representation and an additive carrier structure are outside the premises of the triangle equivalence.",
+    "The proposed generic signed four-ray control satisfying three-point but failing four-point positivity remains ANALYTIC/UNCHECKED. No artifact for that control is included here. Its lack of complete native pair-plane coverage also leaves it outside the required complete native-plane class.",
+    "The physical origin of global Gram positivity and the remaining complete-native-plane triangle-to-sparse implication are open."] }
+
+def rawFourPointGramBridge : ResearchTask := {
+  id := "raw_four_point_gram_bridge"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply the existing raw Selection.Contract and a LocalKernel with G symmetric, G(x,x)=W(x), G(A(x),z)=G(x,B(z)), and the three-point Gram quadratic at (A(x),B(y),m(x,y)) with coefficients (1,1,-1) equal to zero. Each local identity uses at most two independent preparations.",
+    "Supply real four-point Gram positivity for every quadruple, including repeated points."]
+  conclusions := [
+    "Four-point positivity and the local mixer null relation give G(m(x,y),z)=G(x,B(z))+G(y,A(z)) for every three preparations.",
+    "GramEq is equality of complete G rows. It preserves weight and is a congruence for both mixer arguments. Transparency and the two adjoint identities derive GramEq(A(B(x)),B(A(x))).",
+    "This commutation modulo GramEq yields mediality modulo GramEq. Transfer to the existing ObservationalEq gives ObservedMedial, including arbitrary finite one-hole observations with fixed references.",
+    "Repeated-point four-point positivity and the diagonal law yield W nonnegative. Square-swap and the adjoint kernel expansion derive pair conservation directly.",
+    "Pair conservation and ObservedMedial yield SparseMarginalLaw through the existing reconstruction adapter. The resulting sparse law gives all six universal sparse test families."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawFourPointGramBridge.lean"
+      declarations := [
+        "IDT.QMClosure.RawFourPointGramBridge.LocalKernel",
+        "IDT.QMClosure.RawFourPointGramBridge.GramEq",
+        "IDT.QMClosure.RawFourPointGramBridge.weight_nonnegative",
+        "IDT.QMClosure.RawFourPointGramBridge.B_adjoint",
+        "IDT.QMClosure.RawFourPointGramBridge.G_m",
+        "IDT.QMClosure.RawFourPointGramBridge.gramEq_weight",
+        "IDT.QMClosure.RawFourPointGramBridge.gramEq_m_left",
+        "IDT.QMClosure.RawFourPointGramBridge.gramEq_m_right",
+        "IDT.QMClosure.RawFourPointGramBridge.gramEq_observationalEq",
+        "IDT.QMClosure.RawFourPointGramBridge.gram_split",
+        "IDT.QMClosure.RawFourPointGramBridge.gram_attenuation_commute",
+        "IDT.QMClosure.RawFourPointGramBridge.G_attenuation_commute_right",
+        "IDT.QMClosure.RawFourPointGramBridge.gram_medial",
+        "IDT.QMClosure.RawFourPointGramBridge.observed_medial",
+        "IDT.QMClosure.RawFourPointGramBridge.pair_conserved",
+        "IDT.QMClosure.RawFourPointGramBridge.sparse_of_fourPointPositive",
+        "IDT.QMClosure.RawFourPointGramBridge.conclusions_of_fourPointPositive" ] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_metric_gram_arity",
+    "raw_sparse_conservation_tests",
+    "raw_sparse_marginal_reconstruction"]
+  limits := [
+    "The LocalKernel premises are symmetry, the weight diagonal, one adjoint identity and the mixer null relation. Literal raw A/B commutation, the six test families and pair conservation are outside the input contract. The core bridge also supplies no global addition, faithful separation, preparation scalar action or Hilbert representation.",
+    "Four-point positivity is an explicit additional premise with open physical origin. Restricted positivity around a local null relation is equivalent to the corresponding external kernel additivity and therefore does not independently derive that additivity.",
+    "An expectation of a squared linear combination requires a joint Gram representation or an actual operational weight identity. Both remain open primitive-origin obligations.",
+    "The bridge is conditional and supplies no physical geometry origin, actualization, full QM or primitive closure. Public and manifest statuses remain unchanged."] }
+
+def rawPlanePhaseGramControl : ResearchTask := {
+  id := "raw_plane_phase_gram_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the actual continuous three-dimensional complex plane-phase operation from raw_continuous_plane_phase_wall and its fixed-plane family. Define its actual G(x,y)=(W(x)+W(y)-2*W(m(x,-i*y)))/2 and d(x,y)=sqrt(W(x)+W(y)-2*G(x,y)).",
+    "The kernel and distance are defined from that actual operation. Supplied ordinary complex geometry remains the omission-control input."]
+  conclusions := [
+    "Fixed-plane family transport proves the LocalKernel contract, separate real homogeneity and the nonnegative squared-distance contract for this actual G and d. Thus the generic triangle equivalence applies to the operation-defined response.",
+    "For x=e1, y=e2, u=(e1+e2)/2, z=e1+e3, the checked four-point G matrix is [[1,0,1/2,4/5],[0,1,1/2,0],[1/2,1/2,1/2,1/2],[4/5,0,1/2,2]]. Coefficients (-10,-10,20,-1) give quadratic value -2, excluding global four-point positivity.",
+    "For x=(0,1,1), y=(1,2,1), z=(2,2,1), the checked three-point G matrix is [[2,120/41,18483/6961],[120/41,6,12793837/1838941],[18483/6961,12793837/1838941,9]]. Coefficients (5,-7,4) give quadratic value -142257420744/524835600341, excluding global three-point positivity.",
+    "For P=5*x, Q=-7*y and R=-2*z, the checked squared distances are d(P,R)^2=968306/6961, d(Q,R)^2=248623094/1838941 and d(P,Q)^2=22504/41. Their combination 2*d(P,R)^2+2*d(Q,R)^2-d(P,Q)^2=-142257420744/524835600341 is strictly negative and, using symmetry of d, gives d(P,Q)>d(P,R)+d(R,Q)."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseGramKernel.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.d",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_inPlane",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_eq_nativeG_transport",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_symmetric",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_diagonal",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_real_smul_left",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_real_smul_right",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.radicand_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.d_nonnegative",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.d_symmetric",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.d_sq",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.G_adjoint",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.mixer_null",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.localKernel",
+        "IDT.QMClosure.RawPlanePhaseGramKernel.triangle_iff_three_point" ] },
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseGramControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseGramControl.fourX",
+        "IDT.QMClosure.RawPlanePhaseGramControl.fourY",
+        "IDT.QMClosure.RawPlanePhaseGramControl.fourU",
+        "IDT.QMClosure.RawPlanePhaseGramControl.fourZ",
+        "IDT.QMClosure.RawPlanePhaseGramControl.four_cross_entries",
+        "IDT.QMClosure.RawPlanePhaseGramControl.four_diagonal_entries",
+        "IDT.QMClosure.RawPlanePhaseGramControl.four_quadratic",
+        "IDT.QMClosure.RawPlanePhaseGramControl.not_four_point_positive",
+        "IDT.QMClosure.RawPlanePhaseGramControl.threeX",
+        "IDT.QMClosure.RawPlanePhaseGramControl.threeY",
+        "IDT.QMClosure.RawPlanePhaseGramControl.threeZ",
+        "IDT.QMClosure.RawPlanePhaseGramControl.three_cross_entries",
+        "IDT.QMClosure.RawPlanePhaseGramControl.three_diagonal_entries",
+        "IDT.QMClosure.RawPlanePhaseGramControl.three_quadratic",
+        "IDT.QMClosure.RawPlanePhaseGramControl.not_three_point_positive",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangleP",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangleQ",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangleR",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangle_pr_sq",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangle_qr_sq",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangle_pq_sq",
+        "IDT.QMClosure.RawPlanePhaseGramControl.triangle_squared_defect",
+        "IDT.QMClosure.RawPlanePhaseGramControl.strict_triangle_violation",
+        "IDT.QMClosure.RawPlanePhaseGramControl.not_triangle",
+        "IDT.QMClosure.RawPlanePhaseGramControl.constructed_continuous_countercontrol" ] }]
+  plannedArtifacts := []
+  dependencies := [
+    "raw_continuous_plane_phase_wall",
+    "raw_continuous_plane_local_theory",
+    "raw_metric_gram_arity",
+    "raw_four_point_gram_bridge"]
+  limits := [
+    "The checked rational witnesses and triangle failure concern the actual operation-defined response and distance. The generic signed-four-ray comparison in raw_metric_gram_arity remains separately ANALYTIC/UNCHECKED.",
+    "This actual operation is excluded by both global three-point and four-point positivity. Whether triangle inequality or three-point positivity forces SparseMarginalLaw in the complete native-plane class remains open.",
+    "Supplied complex geometry remains an omission-control input. No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
@@ -5576,6 +5730,7 @@ def researchTasks : List ResearchTask := [
   rawSparseSelfReferenceSelector, rawPairPlaneAmalgamWall,
   rawContinuousPlanePhaseWall, rawContinuousPlaneLocalTheory,
   rawVacuumRegularityBridge, rawMidpointConvexityBridge,
+  rawMetricGramArity, rawFourPointGramBridge, rawPlanePhaseGramControl,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
