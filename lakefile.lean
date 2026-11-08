@@ -147,6 +147,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.MedialPortLocalization,
     `Proofs.QMClosure.NonadditiveClassicalSwapRoot,
     `Proofs.QMClosure.OperationalQuadraticReconstruction,
+    `Proofs.QMClosure.SingleCalibrationScalarFaithfulness,
+    `Proofs.QMClosure.LocalBranchOperatorFaithfulness,
     `Proofs.QMClosure.NormalizedEchoReadout,
     `Proofs.QMClosure.NormalizedEchoReadoutControls,
     `Proofs.QMClosure.SingleEchoReadout,

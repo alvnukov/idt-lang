@@ -177,11 +177,16 @@ their audited owning modules.
 
 ## Open operational obligations
 
-The physical origins of return reciprocity, same-scale raw branch accounting,
-reflection-stable semantic equality and the supplied scalar realization remain
-open. Single-calibration scalar faithfulness and native-circuit passivity are
-separate analytic research plans with empty checked evidence. Their proposed
-conclusions require their own machine-checkable artifacts.
+The physical origins of return reciprocity, same-scale raw branch accounting
+and reflection-stable semantic equality remain open. Conditional scalar,
+generated-operator and source-specific faithfulness results are recorded in
+[Calibrated branch-history faithfulness](195-calibrated-branch-history-faithfulness.md).
+Their supplied bridges include raw response extensionality, stationary serial
+gains and one native column normalization.
+
+Native-circuit passivity, the initial history presentation, the finite-window
+boundary and finite-history readout regularity remain separate analytic research
+plans with empty checked evidence.
 
 Physical Born readout, detector selection, event actualization, Hilbert and
 spectral representation, dynamics, tensor and entanglement closure, and physical

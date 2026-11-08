@@ -7631,23 +7631,212 @@ def reversibleEchoAccountingBoundary : ResearchTask := {
 
 def singleCalibrationScalarFaithfulnessOrigin : ResearchTask := {
   id := "single_calibration_scalar_faithfulness_origin"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Existing additive transparent square-swap reconstruction with a commutative scalar realization.",
-    "Multiplicative real response and one native column calibration w(a)+w(b)=1."]
+    "A supplied commutative semiring S and coefficients a,b with a+b=1, a*a+b*b=0 and a*b+b*a=1.",
+    "A real-valued response on all of S that is multiplicative, with one raw native column normalization w(a)+w(b)=1."]
   conclusions := [
-    "Analytic proposal derives unit response, phase response one, branch responses one half, w(2)=4 and w(0)=0.",
-    "Analytic proposal excludes finite characteristic through the finite order of unit 2.",
-    "Analytic proposal obtains characteristic zero and a faithful generated Gaussian-dyadic scalar image with canonical conjugation."]
-  checkedEvidence := []
+    "A compatible additive group and commutative ring are reconstructed through the existing transparent swap-root theorem.",
+    "Unit and zero response, native branch responses one half, w(2)=4, half response one quarter and phase response one are consequences of the supplied contract.",
+    "Characteristic zero and faithful integer Gaussian and dyadic arithmetic are consequences, with the exact integer cross-denominator equality criterion.",
+    "The generated arithmetic image carries canonical additive and multiplicative involutive conjugation fixing half and exchanging the native coefficients."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SingleCalibrationScalarFaithfulness.lean"
+      declarations := [
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.additiveReconstruction",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.scalarRing",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.weight_one",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.weight_zero",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.native_weights",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.weight_two",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.weight_half",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.weight_phase",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.characteristicZero",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.arithmetic_parameters",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.faithful_dyadic_arithmetic",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Contract.generated_coefficients",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.gaussian_injective",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.triple_eq_iff",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.dyadicEval_injective",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.conjugationEquiv",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.conjugation_involutive",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.conjugation_half",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.conjugation_phase",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.conjugation_a",
+        "IDT.QMClosure.SingleCalibrationScalarFaithfulness.Arithmetic.conjugation_b"] }]
   plannedArtifacts := ["Proofs/QMClosure/SingleCalibrationScalarFaithfulness.lean"]
   dependencies := ["operational_positive_readout"]
   limits := [
-    "No positivity, count order or all-input conservation is supplied.",
-    "Readout quadraticity and response conjugation invariance remain open.",
-    "Physical origin of the native normalization remains open.",
-    "Analytic conclusions await a machine-checkable artifact and do not close Born or QM."] }
+    "The supplied commutative scalar realization and globally multiplicative scalar response belong to this companion contract. The separate operator task supplies its smaller word-response entry point.",
+    "The response codomain in the checked implementation is the real numbers. Ordered-field generalization remains analytic.",
+    "Conjugation is constructed on the generated image. Response conjugation invariance on arbitrary sums and quadratic readout selection remain open.",
+    "Physical gate and calibration origins, detector interpretation, Born interpretation and full QM remain open."] }
+
+def localBranchOperatorFaithfulnessOrigin : ResearchTask := {
+  id := "local_branch_operator_faithfulness_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "An additive commutative monoid V and a complete additive operation T on V times V, transparent on the diagonal and with T squared equal to port exchange.",
+    "Real weights on finite words in the extracted native branches A and B, multiplicative under concatenation and extensional under equality of the resulting endomorphisms.",
+    "One raw native column normalization W([A])+W([B])=1."]
+  conclusions := [
+    "The empty word has weight one, both native branches have weight one half, every word has weight two raised to minus its length, and equal word actions have equal lengths.",
+    "The actual endomorphism ring has characteristic zero. Its native generated coefficient subring is commutative and contains a faithful Gaussian-dyadic arithmetic image.",
+    "That arithmetic image exhausts the native generated subring and admits canonical additive and multiplicative involutive conjugation exchanging A and B.",
+    "An additive real-valued extension agreeing with all calibrated word weights is impossible because coherent operator addition gives AB+BA=I.",
+    "The finite five-element local gate rejects the calibrated operator-response contract, while a supplied complex norm model witnesses consistency."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/LocalBranchOperatorFaithfulness.lean"
+      declarations := [
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.Gate.reconstruction",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.Gate.additiveGroup",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.Gate.generatedCommRing",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.weight_one",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.native_weights",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.weight_word",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.equal_actions_equal_lengths",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.reflection_invariant",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.half_powers_separate",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.endCharacteristicZero",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.generatedCharacteristicZero",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.dyadicOperator_injective",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.arithmeticSubring_eq_top",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.canonicalConjugation",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.canonicalConjugation_a",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.canonicalConjugation_b",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.canonicalConjugation_involutive",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.OperatorResponse.no_additive_extension",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.Controls.finite_no_operator_response",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.ConsistencyWitness.operator_contract"] }]
+  plannedArtifacts := ["Proofs/QMClosure/LocalBranchOperatorFaithfulness.lean"]
+  dependencies := ["single_calibration_scalar_faithfulness_origin"]
+  limits := [
+    "Operator response extensionality, stationary serial gains and one raw column normalization remain supplied physical bridges.",
+    "The response domain consists of serial branch words. Response on arbitrary coherent additive sums remains unspecified.",
+    "Commutativity belongs to the native generated coefficient subring. Ambient endomorphisms and general circuit composition retain their separate algebraic structure.",
+    "Faithfulness concerns operators. The separate source task supplies a stronger extensionality premise for evaluation at one reference.",
+    "The additive-extension obstruction concerns coherent operator addition. Additivity of probabilities for exclusive outcomes remains a separate statement.",
+    "Norm square is supplied within the consistency witness. Quadratic readout on arbitrary coherent sums, Born interpretation and full QM remain open."] }
+
+def sourceHistoryFaithfulnessOrigin : ResearchTask := {
+  id := "source_history_faithfulness_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "An additive commutative monoid V, a complete additive transparent square-swap operation T and a supplied reference v.",
+    "Real weights on finite native branch words with stationary one-step gains W(c::s)=W([c])*W(s) and one raw native column normalization W([A])+W([B])=1.",
+    "Equality of raw terminal states at v in the supplied additive carrier V, retaining preparation and attenuation scale, implies equality of word weights."]
+  conclusions := [
+    "The empty word has weight one, concatenation is multiplicative, every word has weight two raised to minus word length, and equal terminal states have equal word lengths.",
+    "The supplied reference is nonzero and has infinite additive order as a consequence of serial branch response.",
+    "Evaluation at the reference is injective on the native generated coefficient algebra and on the Gaussian-dyadic quotient. Triples (k,m,n) and (l,r,s) represent the same quotient element exactly when 2^l*m=2^k*r and 2^l*n=2^k*s.",
+    "The finite five-element local gate rejects the calibrated source-response contract, while the supplied complex norm witness at reference one gives a consistent instance."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/LocalBranchOperatorFaithfulness.lean"
+      declarations := [
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.operatorResponse",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.weight_one",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.weight_append",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.native_weights",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.weight_word",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.equal_terminal_states_equal_lengths",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.reference_nat_torsion_free",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.reference_int_torsion_free",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.reference_nonzero",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.gaussian_evaluation_injective",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.generatedEvaluation_injective",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.SourceResponse.dyadicReference_injective",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.Controls.finite_no_source_response",
+        "IDT.QMClosure.LocalBranchOperatorFaithfulness.ConsistencyWitness.nontrivial_contract"] }]
+  plannedArtifacts := ["Proofs/QMClosure/LocalBranchOperatorFaithfulness.lean"]
+  dependencies := ["local_branch_operator_faithfulness_origin"]
+  limits := [
+    "Terminal-state response extensionality is a stronger supplied premise than operator-response extensionality. Its physical origin remains open.",
+    "Infinite additive order is specific to the supplied reference. The theorem imposes no global torsion-free condition on the ambient carrier.",
+    "Physical preparability of all additive combinations in the generated cyclic image remains an additional bridge.",
+    "The response is specified on serial branch histories. Readout of arbitrary coherent sums, Born interpretation and full QM remain open."] }
+
+def nativeInitialHistoryPresentationOrigin : ResearchTask := {
+  id := "native_initial_history_presentation_origin"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The free unital possibly noncommutative semiring on generators a and b, quotiented by the least semiring congruence generated by a+b=1 and a*a+b*b=0."]
+  conclusions := [
+    "Analytic proposal makes the cross relation a*b+b*a=1 redundant and identifies the initial algebra with the Gaussian integers with inverse two adjoined.",
+    "Analytic proposal gives a universal map to every semiring model without characteristic-zero, nontriviality or response assumptions, together with normal-form completeness.",
+    "Analytic proposal obtains conjugation from swapping the two generators."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeInitialHistoryPresentation.lean"]
+  dependencies := ["reversible_echo_accounting_boundary"]
+  limits := [
+    "All proposed conclusions remain analytic until the planned artifact is compiled and reviewed.",
+    "Extra semantic quotients remain allowed, including F5 where reflection fails, F9 where reflection remains but faithfulness fails, and the trivial model.",
+    "The ambient target semiring and circuit composition need not be commutative.",
+    "The relation a*a+b*b=0 is an exact destructive-composition law supplied by the presentation.",
+    "This presentation leaves physical cancellation, grammar, readout, Born interpretation and full QM open."] }
+
+def localBranchFiniteWindowBoundary : ResearchTask := {
+  id := "local_branch_finite_window_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A finite word-window length L at least one and an odd prime p greater than 2^(L+1).",
+    "The raw additive carrier V=(ZMod p)^2 with J(x,y)=(-y,x), native branches A=(I+J)/2 and B=(I-J)/2, and reference v=(1,0).",
+    "The word window consists of terminal states obtained from branch words of length at most L."]
+  conclusions := [
+    "Analytic construction gives an additive two-port operation that is transparent on the diagonal and whose square is port exchange on all of V.",
+    "Within the window, equality of finite terminal states forces equality of the corresponding rational Gaussian values and equality of word lengths.",
+    "The window response W=2^(-word length) is well defined. Concatenation multiplicativity holds when the concatenated length is at most L, including stationary one-step gains on those window transitions.",
+    "Extending the response by zero outside the window gives a nonnegative response bounded by one, with W(0)=0 and W(v)=1.",
+    "The source satisfies p-fold additive torsion. A calibrated extension with stationary gains and raw terminal-state extensionality on all words is therefore impossible.",
+    "After clearing denominators by 2^L, the integer word coordinates have magnitude at most 2^L, so coordinate differences have magnitude less than p. A finite-field norm argument checks the boundary transition."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/LocalBranchFiniteWindowBoundary.lean"]
+  dependencies := ["source_history_faithfulness_origin"]
+  limits := [
+    "Every stated construction, estimate and consequence remains analytic until the planned artifact is compiled and reviewed.",
+    "Agreement on a bounded word window leaves the universal all-word response contract open.",
+    "The global source-history theorem retains its all-word hypotheses. This finite-window construction addresses inference from bounded evidence to that contract.",
+    "The response extension outside the window preserves the stated bounds and normalization. Its stationary gain law is confined to the specified window transitions.",
+    "Physical availability of arbitrarily long histories, physical readout origins, Born interpretation and full QM remain open."] }
+
+def finiteHistoryReadoutRegularityFrontier : ResearchTask := {
+  id := "finite_history_readout_regularity_frontier"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A real-valued response on the generated Gaussian-dyadic algebra that is multiplicative on the full algebra and satisfies one native column calibration.",
+    ("At least one of two alternative sufficient regularity packages is supplied. " ++
+      "EITHER (a) w(m+n*u) is a joint finite-degree polynomial for natural m,n, " ++
+      "equivalently a fixed-K context-independent exchangeable subset kernel over the original history tokens on that two-phase input family. " ++
+      "OR (b) the real span of Gaussian-integer translations of the restriction of w to Gaussian integers is finite dimensional, " ++
+      "together with nonzero response at every positive integer count. " ++
+      "Within package (b), the latter count premise may instead be nonzero response " ++
+      "at the single count N_d=2^lcm(1,...,d)-1 when an explicit global translation-rank bound d at least one is supplied.")]
+  conclusions := [
+    "Analytic proposal makes each alternative regularity package sufficient to select norm square on the generated Gaussian-dyadic algebra.",
+    "In the joint-polynomial route, doubling calibration removes every degree except two, and two multiplicative product identities force the mixed quadratic coefficient to vanish and fix the remaining coefficients.",
+    "In the finite-linear-rank route, spectral finite characters under chi mapped to chi squared isolate odd-torsion periodicity. The nonzero count condition removes the periodic branches and reduces the problem to the joint-polynomial route.",
+    "Analytic asymmetric Gaussian-prime valuation responses show that raywise quadratic scaling alone leaves additional response freedom.",
+    "Analytic finite-rank controls take norm square Q times a residue indicator. Reduction modulo a Gaussian prime above five gives Q(z)*1[z mod pi is nonzero], with translation rank at most twenty and w(5)=0.",
+    "A conjugation-invariant Gaussian zero filter modulo three gives another native-calibrated control, with translation rank at most thirty-six and w(3)=0."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/FiniteHistoryReadoutRegularity.lean"]
+  dependencies := [
+    "single_calibration_scalar_faithfulness_origin",
+    "native_initial_history_presentation_origin"]
+  limits := [
+    "Both sufficiency routes, their relationship to original-token kernels, the spectral reduction and every countercontrol remain analytic until Lean artifacts are compiled and reviewed.",
+    "The regularity packages are alternatives. Their conjunction is unnecessary for the proposed sufficiency result.",
+    "The proposed premises add neither positivity, count order nor response conjugation invariance. The response codomain is the real numbers.",
+    "Finite translation rank alone permits the stated calibrated residue filters. The nonzero count condition is a separate part of the finite-rank package.",
+    "Microscopic binary locality, finite code and finite-dimensional nonlinear registers leave a uniform bound on original-history arity or finite LINEAR translation rank unresolved.",
+    "A genuinely finite discrete automaton with stationary token updates has finite translation rank after linearization. Finite polynomial history arity remains a separate requirement, as parity illustrates, and residue filters retain the need for the nonannihilation premise.",
+    "Finite history arity and finite linear translation rank remain regularity premises whose physical origins are open.",
+    "Physical readout selection, Born interpretation and full QM remain open."] }
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -7764,7 +7953,9 @@ def researchTasks : List ResearchTask := [
   boundedLikelihoodProcessRigidity, singleEchoReadoutOrigin,
   rationalFiniteReadoutNonuniqueness, rationalCountOrderReadoutOrigin,
   reversibleEchoAccountingBoundary, singleCalibrationScalarFaithfulnessOrigin,
-  nativeCircuitPassivityReadoutWall]
+  localBranchOperatorFaithfulnessOrigin, sourceHistoryFaithfulnessOrigin,
+  nativeInitialHistoryPresentationOrigin, localBranchFiniteWindowBoundary,
+  finiteHistoryReadoutRegularityFrontier, nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
