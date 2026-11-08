@@ -127,7 +127,7 @@ This companion supplies the arithmetic machinery reused by the smaller operator-
 
 The physical origins of the exact local gate laws, response extensionality, stationary serial gains, and one raw column normalization remain supplied bridges. Detector injectivity on physical preparations, readout of arbitrary coherent sums, response conjugation invariance on such sums, quadratic readout selection, Born interpretation, and full QM closure remain open.
 
-The next planned stage is a least-congruence presentation of the initial history semiring and its universal property. That stage remains analytic and is recorded separately as `native_initial_history_presentation_origin` in the Lean research ledger. [V8OperationalPrimitiveResearchLedger.lean](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+The least-congruence presentation of the initial history semiring and its universal property are now checked in [Native initial history presentation](196-native-initial-history-presentation.md). Finite-history readout regularity remains a separate analytic frontier in the Lean research ledger. [V8OperationalPrimitiveResearchLedger.lean](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
 
 ## Reproducing the registered checks
 

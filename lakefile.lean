@@ -148,6 +148,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.NonadditiveClassicalSwapRoot,
     `Proofs.QMClosure.OperationalQuadraticReconstruction,
     `Proofs.QMClosure.SingleCalibrationScalarFaithfulness,
+    `Proofs.QMClosure.NativeInitialHistoryPresentation,
     `Proofs.QMClosure.LocalBranchOperatorFaithfulness,
     `Proofs.QMClosure.NormalizedEchoReadout,
     `Proofs.QMClosure.NormalizedEchoReadoutControls,
