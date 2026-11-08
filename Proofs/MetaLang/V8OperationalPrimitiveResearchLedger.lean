@@ -5775,6 +5775,114 @@ def countableHistoryNativeNoiseWall : ResearchTask := {
     "The output map is deterministic and measurable, and its law is exactly stationary under the supplied native real mixer. Stochastic emission kernels, approximate stationarity and other outcome carriers lie outside this theorem.",
     "The wall does not derive a physical history model, outcome actualization, Born rule, detector selection, calibrated scale or QM closure."] }
 
+def referenceEntropyFactorizationOrigin : ResearchTask := {
+  id := "reference_entropy_factorization_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply an arbitrary measurable outcome space Omega, probability preparations K(x), a probability reference alpha and one actual common Markov kernel kappa on outcome pairs preserving alpha product alpha. Require finite KL(K(x)||alpha) for every raw label. The external reference need not be among the preparations.",
+    "Supply a raw operation F with F squared equal to swap and both exact output marginal covariance laws under kappa. No raw measurability, Gaussianity, coordinates, diagonal transparency, channel inverse or finite pairwise KL premise is supplied. First-marginal covariance suffices in the separate theorem with explicit sample-kernel swap symmetry."]
+  conclusions := [
+    "For P(p)=K(p1) product K(p2), Q(p)=kappa(P(p)) and S(p)=KL(K(p1)||alpha)+KL(K(p2)||alpha), the checked product-reference decomposition and data processing give MI(p)+S(F(p))<=S(p). Apply the inequality at F(p) and use square-swap to obtain conservation of S; finite cancellation forces MI(p)=0 and exact full-product covariance. Reference-relative data processing is an equality for every input pair.",
+    "A normalized Radon-Nikodym-density construction gives a Markov disintegration of any joint probability dominated by a supplied probability product on arbitrary measurable spaces, with no StandardBorel or nonempty instance premise. The supplied second reference gives fallback rows at zero or infinite normalization. The product-reference decomposition holds unconditionally in ENNReal; faithful real conversion requires finite reference divergence.",
+    "Checked omission controls give correlated outputs when reference invariance, finite reference KL or raw square-swap is omitted. The infinite-reference-KL copy control also violates absolute continuity and does not isolate integrability alone. The square-swap control preserves the fair product reference, has finite directed pairwise KL and both prescribed marginals, with output masses 5/16 on the diagonal and 3/16 off it.",
+    "The Fin 5 Dirac control has an external uniform reference with finite reference KL, invariant reference product and full covariance while distinct pair KL is infinite. The unit-Gaussian control uses sample mixer -G and satisfies the reference contract and finite directed pairwise KL while its observed diagonal sends x to minus x. Changing G to -G preserves the boundary of the earlier G-specific diagonal theorem.",
+    "The classicalProcess adapter supplies the existing ClassicalStatisticalProcessBridge contract only after separately choosing a raw state and supplying raw fixed diagonals and finite directed pairwise KL."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DominatedProductDisintegration.lean"
+      declarations := [
+        "IDT.QMClosure.DominatedProductDisintegration.fst_withDensity_prod",
+        "IDT.QMClosure.DominatedProductDisintegration.exists_markov_disintegration_of_ac"] },
+    { sourcePath := "Proofs/QMClosure/ProductReferenceEntropyDecomposition.lean"
+      declarations := [
+        "IDT.QMClosure.ProductReferenceEntropyDecomposition.product_reference_decomposition_of_ac",
+        "IDT.QMClosure.ProductReferenceEntropyDecomposition.product_reference_decomposition",
+        "IDT.QMClosure.ProductReferenceEntropyDecomposition.product_reference_terms_ne_top",
+        "IDT.QMClosure.ProductReferenceEntropyDecomposition.product_reference_decomposition_toReal",
+        "IDT.QMClosure.ProductReferenceEntropyDecomposition.marginal_kl_sum_le",
+        "IDT.QMClosure.ProductReferenceEntropyDecomposition.marginal_product_kl_eq_zero_iff"] },
+    { sourcePath := "Proofs/QMClosure/ReferenceEntropyFactorization.lean"
+      declarations := [
+        "IDT.QMClosure.ReferenceEntropyFactorization.operation_commutes_swap",
+        "IDT.QMClosure.ReferenceEntropyFactorization.channel_comp_map_swap",
+        "IDT.QMClosure.ReferenceEntropyFactorization.secondMarginal_of_first",
+        "IDT.QMClosure.ReferenceEntropyFactorization.Contract.entropy_budget",
+        "IDT.QMClosure.ReferenceEntropyFactorization.Contract.referenceEntropy_conserved",
+        "IDT.QMClosure.ReferenceEntropyFactorization.Contract.mutualInformation_eq_zero",
+        "IDT.QMClosure.ReferenceEntropyFactorization.Contract.covariance",
+        "IDT.QMClosure.ReferenceEntropyFactorization.Contract.reference_dpi_equality",
+        "IDT.QMClosure.ReferenceEntropyFactorization.Contract.classicalProcess"] },
+    { sourcePath := "Proofs/QMClosure/ReferenceEntropyFactorizationControls.lean"
+      declarations := [
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.no_invariant_reference",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.no_finite_reference_entropy",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.sharedFlip_preserves_reference",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.sharedFlip_firstMarginal",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.sharedFlip_secondMarginal",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.biasedPreparation_finiteKL",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.sharedFlip_joint_probabilities",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.sharedFlip_not_product",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.collapseOperation_square_fails",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.finite_reference_not_pairwise_finite",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.negativeMixer_square",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.negativeMixer_fullCovariance",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.gaussianPreparation_finiteKL",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.negativeMixer_preserves_reference",
+        "IDT.QMClosure.ReferenceEntropyFactorizationControls.negativeMixer_observed_diagonal_moves"] }]
+  plannedArtifacts := []
+  dependencies := ["relative_entropy_data_processing", "classical_statistical_process_bridge",
+    "native_marginal_stationarity_noise_origin", "detector_conservation_closure_wall"]
+  limits := [
+    "The common channel is retained as the intended physical contract. Its mathematical minimality is unproved.",
+    "Finite reference KL does not imply finite directed pairwise KL or mutual absolute continuity among preparations. The detector endpoint wall therefore does not follow from this contract alone.",
+    "The supplied reference law, reference invariance, finite entropy, raw root-swap and marginal laws retain open physical justification. Raw fixed diagonals, a chosen raw state and finite directed pairwise KL remain separate process-adapter inputs.",
+    "No detector selection, independently specified Qraw identity, physical scale, event actualization, Born interpretation, Hilbert representation, composite or dynamics closure, full QM or GR follows."] }
+
+def detectorEndpointSupportWall : ResearchTask := {
+  id := "detector_endpoint_support_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For null-event transfer supply arbitrary measures mu absolutely continuous with respect to nu and one common detector kernel. The checked proof uses Mathlib AbsolutelyContinuous.comp_right.",
+    "For response classification supply a probability family whose preparation measures are mutually absolutely continuous and one common measurable effect g valued in [0,1]. Finite directed pairwise KL is sufficient. No process, conservation, square-swap or geometry premise is needed."]
+  conclusions := [
+    "Common-kernel output laws preserve absolute continuity, so a null output event for the dominating preparation remains null for the dominated preparation. A common bounded effect transfers zero acceptance in this direction; the complementary effect transfers acceptance one.",
+    "For a mutually absolutely continuous probability family, a zero response or a one response occurs everywhere or nowhere. The response family is all zero, all one or pointwise strictly interior. The theorem supplies no uniform positive margin from either endpoint.",
+    "A target assigning both zero and a nonzero value, or both one and a non-one value, cannot exactly equal this common bounded-effect response. Finite directed pairwise KL supplies the support premise. The native isotropic Gaussian specialization requires nonzero variance.",
+    "Checked positive Bool controls have finite directed pairwise KL and unequal indicator responses 1/3 and 2/3. Distinct Dirac preparations give indicator responses 1 and 0 with infinite directed KL."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DetectorEndpointSupportWall.lean"
+      declarations := [
+        "IDT.QMClosure.DetectorEndpointSupportWall.kernel_event_zero_of_absolutelyContinuous",
+        "IDT.QMClosure.DetectorEndpointSupportWall.kernel_event_not_one_zero",
+        "IDT.QMClosure.DetectorEndpointSupportWall.acceptance_zero_of_absolutelyContinuous",
+        "IDT.QMClosure.DetectorEndpointSupportWall.acceptance_one_of_absolutelyContinuous",
+        "IDT.QMClosure.DetectorEndpointSupportWall.acceptance_zero_iff",
+        "IDT.QMClosure.DetectorEndpointSupportWall.acceptance_one_iff",
+        "IDT.QMClosure.DetectorEndpointSupportWall.acceptance_trichotomy",
+        "IDT.QMClosure.DetectorEndpointSupportWall.absolutelyContinuous_of_finiteEntropy",
+        "IDT.QMClosure.DetectorEndpointSupportWall.acceptance_trichotomy_of_finiteEntropy",
+        "IDT.QMClosure.DetectorEndpointSupportWall.process_acceptance_trichotomy",
+        "IDT.QMClosure.DetectorEndpointSupportWall.no_effect_matching_zero_target",
+        "IDT.QMClosure.DetectorEndpointSupportWall.no_effect_matching_one_target",
+        "IDT.QMClosure.DetectorEndpointSupportWall.native_acceptance_trichotomy"] },
+    { sourcePath := "Proofs/QMClosure/DetectorEndpointSupportControls.lean"
+      declarations := [
+        "IDT.QMClosure.DetectorEndpointSupportControls.positiveEvent_response_zero",
+        "IDT.QMClosure.DetectorEndpointSupportControls.positiveEvent_response_one",
+        "IDT.QMClosure.DetectorEndpointSupportControls.finiteEntropy_nonconstant_response",
+        "IDT.QMClosure.DetectorEndpointSupportControls.diracEvent_response_zero",
+        "IDT.QMClosure.DetectorEndpointSupportControls.diracEvent_response_one",
+        "IDT.QMClosure.DetectorEndpointSupportControls.dirac_endpoint_separation"] }]
+  plannedArtifacts := []
+  dependencies := ["relative_entropy_data_processing", "classical_statistical_process_bridge",
+    "native_marginal_stationarity_noise_origin", "invariant_effect_readout_bridge",
+    "gaussian_soft_detector_boundary", "detector_conservation_closure_wall"]
+  limits := [
+    "The theorem allows nonconstant interior responses and supplies no uniform quantitative approximation bound. Zero-variance nonconstant native Dirac families need not satisfy its support premise.",
+    "Finite reference KL to one external reference does not imply mutual absolute continuity or finite directed pairwise KL. This wall does not automatically apply to the general reference-entropy factorization contract.",
+    "Any Born or QM exclusion requires a separately stipulated direct identification with the detector-event response. The wall identifies no independently supplied Qraw and supplies no detector selection, physical scale, actualization, Born interpretation, Hilbert representation, composite or dynamics closure, full QM or GR."] }
+
 def detectorConservationClosureWall : ResearchTask := {
   id := "detector_conservation_closure_wall"
   stage := .conditionalKernelTheorem
@@ -7189,6 +7297,7 @@ def researchTasks : List ResearchTask := [
   nativeGaussianIndependenceCharacterization, nativeStationaryNoiseClassification,
   nativeMarginalStationarityNoiseOrigin, nativeMarginalMeanDensity,
   countableHistoryNativeNoiseWall,
+  referenceEntropyFactorizationOrigin, detectorEndpointSupportWall,
   detectorConservationClosureWall, gaussianDetectorRandomizationFront,
   gaussianStatisticalRealizationAndDetectorBoundary,
   unitVarianceGaussianStatisticalWitness, invariantEffectReadoutBridge,
