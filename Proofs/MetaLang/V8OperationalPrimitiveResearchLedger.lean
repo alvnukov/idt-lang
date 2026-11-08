@@ -4726,27 +4726,33 @@ def rawMidpointConvexityBridge : ResearchTask := {
   review := .parentAccepted
   assumptions := [
     "Restrict to a supplied two-generated native-plane class with complex scalar action. The six sparse tests and self-reference alone do not establish membership in this class.",
-    "Set d(x,y)^2=2*W(m(x,-i*y)), G(x,y)=(W(x)+W(y)-d(x,y)^2)/2 and h(x,y)=b*m(x,i*y), with b=(1-i)/2. In each supplied native plane, h is the ordinary midpoint. Assume faithful distance separation and global one-point midpoint-distance convexity d(z,h(x,y)) <= (d(z,x)+d(z,y))/2."]
+    "Set d(x,y)^2=2*W(m(x,-i*y)), G(x,y)=(W(x)+W(y)-d(x,y)^2)/2 and h(x,y)=b*m(x,i*y), with b=(1-i)/2. In the supplied native chart of each plane, h is the Euclidean midpoint. Assume faithful distance separation and global one-point midpoint-distance convexity d(z,h(x,y)) <= (d(z,x)+d(z,y))/2."]
   conclusions := [
-    "Accepted analytic target: references of both signs with unbounded magnitude, applied to midpoint convexity and a limit as t tends to infinity, force G(z,h(x,y))=(G(z,x)+G(z,y))/2. Faithful separation then gives associative global addition, an inner-product representation and the sparse law.",
-    "The separate checked tasks raw_metric_gram_arity, raw_four_point_gram_bridge and raw_plane_phase_gram_control establish the exact triangle equivalence and null-transfer geometry, the conditional four-point-positive raw sparse bridge and the actual-operation negative controls.",
+    "The separate checked raw_midpoint_gram_compatibility task proves the exact equivalence of squared or ordinary midpoint convexity with full kernel-row averaging under its real homogeneity and squared-distance contract. It gives all finite Gram positivity and, with LocalKernel, the actual sparse law without an asymptotic limit.",
+    "The stronger native-plane target of raw associative global addition and an inner-product representation under faithful separation remains ANALYTIC/UNCHECKED. Its original RawMidpointConvexityBridge artifact is still planned.",
     "The product-nonexpansivity comparison remains ANALYTIC/UNCHECKED. Product nonexpansivity of F collapses to isometry through F^4=id and restates the full sparse law at reference pair (i*z,0). It supplies no independent physical primitive origin.",
-    "The separately checked raw_plane_phase_gram_control continuous-control Gram witness uses x=e1,y=e2,u=(e1+e2)/2,z=e1+e3 and real matrix [[1,0,1/2,4/5],[0,1,1/2,0],[1/2,1/2,1/2,1/2],[4/5,0,1/2,2]]. The coefficient vector (-10,-10,20,-1) has quadratic value -2.",
-    "The midpoint-convexity comparison remains ANALYTIC/UNCHECKED. The same control is proposed to fail midpoint convexity at reference -3*z, with exact inequality sqrt(43/2) > (sqrt(119/5)+sqrt(19))/2."]
+    "The separately checked raw_plane_phase_gram_control continuous-control Gram witness has coefficient vector (-10,-10,20,-1) and quadratic value -2. Its actual three-point Gram and triangle failures are recorded in that separate task.",
+    "The separate checked raw_plane_phase_midpoint_control task proves the actual midpoint failure at reference -3*z, including the strict inequality sqrt(43/2)>(sqrt(119/5)+sqrt(19))/2. Its exact threshold t>=-5/2 concerns only the chosen endpoint pair and reference orbit.",
+    "The separate checked raw_dyadic_midpoint_compatibility task replaces all-real preparation scaling with independent half and antiphase maps and midpoint-half kernel compatibility. Its global squared midpoint inequality yields all finite Gram positivity and, with LocalKernel, the sparse law. The checked raw_tripod_midpoint_control records why coherent antiphase cannot simply be omitted.",
+    "The independently reviewed real two-plane geometry comparison is tracked by raw_real_plane_metric_control at analyticAwaitingFormalization. It supplies no complete complex native-mixer countermodel."]
   checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/RawMidpointConvexityBridge.lean"]
+  plannedArtifacts := ["Proofs/QMClosure/RawMidpointConvexityBridge.lean"]
   dependencies := [
     "raw_continuous_plane_phase_wall",
     "raw_sparse_conservation_tests",
     "raw_sparse_self_reference_selector",
     "raw_metric_gram_arity",
     "raw_four_point_gram_bridge",
-    "raw_plane_phase_gram_control"]
+    "raw_plane_phase_gram_control",
+    "raw_midpoint_gram_compatibility",
+    "raw_plane_phase_midpoint_control",
+    "raw_real_plane_metric_control",
+    "raw_dyadic_midpoint_compatibility",
+    "raw_tripod_midpoint_control"]
   limits := [
-    "The midpoint-convexity implication, product-nonexpansivity comparison and displayed midpoint-convexity inequality remain ANALYTIC/UNCHECKED and await Lean artifacts. The supplied native-plane scope must be preserved. The separate Gram geometry, four-point bridge and actual-operation Gram controls have checked records in their own tasks.",
-    "The separate raw_metric_gram_arity task proves that global triangle inequality is equivalent to global real three-point Gram positivity under the symmetry, separate real homogeneity and squared-distance contract tracked by raw_metric_gram_arity. Whether triangle inequality or three-point Gram positivity forces the full sparse law in the complete native-plane class remains unresolved.",
-    "The physical origins of global midpoint convexity, faithful separation, unbounded reference availability and four-point Gram positivity remain open. The midpoint-convexity route itself remains analyticAwaitingFormalization.",
+    "Raw associative-addition and inner-product reconstruction and the product-nonexpansivity comparison remain ANALYTIC/UNCHECKED. The generic midpoint-row equivalence and sparse bridge and the actual midpoint failure have separate checked records. The supplied native-plane scope of the stronger reconstruction target must be preserved.",
+    "The checked raw_metric_gram_arity task proves triangle equivalence with global real three-point Gram positivity under its exact homogeneity and squared-distance contract. Whether complete Hermitian complex two-plane coverage, coherent complex scalar action, an actual native mixer and global three-point positivity force SparseMarginalLaw remains unresolved.",
+    "The physical origins of global midpoint convexity, faithful separation and four-point Gram positivity remain open. All-real reference availability is a supplied premise of the all-real route. The dyadic route instead supplies half-row homogeneity, coherent antiphase and midpoint-half compatibility, whose physical origins also remain open. This stronger reconstruction route retains analyticAwaitingFormalization status.",
     "No physical geometry origin, actualization, full QM or primitive-closure conclusion is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawMetricGramArity : ResearchTask := {
@@ -4894,6 +4900,225 @@ def rawPlanePhaseGramControl : ResearchTask := {
     "The checked rational witnesses and triangle failure concern the actual operation-defined response and distance. The generic signed-four-ray comparison in raw_metric_gram_arity remains separately ANALYTIC/UNCHECKED.",
     "This actual operation is excluded by both global three-point and four-point positivity. Whether triangle inequality or three-point positivity forces SparseMarginalLaw in the complete native-plane class remains open.",
     "Supplied complex geometry remains an omission-control input. No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawMidpointGramCompatibility : ResearchTask := {
+  id := "raw_midpoint_gram_compatibility"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For the generic geometry, supply any carrier, a symmetric real kernel G, a real-parameter preparation map scale with G(scale(r,x),y)=r*G(x,y) for every real r, any midpoint map mid, and pairwise nonnegative squaredDistance(x,y)=G(x,x)+G(y,y)-2*G(x,y).",
+    "For the ordinary-distance formulation, supply a nonnegative real d with d(x,y)^2=squaredDistance(x,y). Its midpoint convexity means d(z,mid(x,y)) <= (d(z,x)+d(z,y))/2 for all z,x,y.",
+    "For the raw sparse bridge, also supply the existing Selection.Contract D and four-field LocalKernel D G, consisting of symmetry, G(x,x)=W(x), the A/B adjoint identity and the mixer-null relation."]
+  conclusions := [
+    "Global squared midpoint convexity is equivalent to full kernel-row averaging G(mid(x,y),z)=(G(x,z)+G(y,z))/2. The forward proof uses complete real row scaling and the vanishing slope of an affine function nonnegative for every real parameter. It uses no asymptotic limit.",
+    "An available anchor gives a representative for every finite real weighted sum of kernel rows by repeated scaled midpoints. Symmetry and pairwise nonnegative squares then make every finite Gram quadratic nonnegative. The empty tuple is handled directly, so this positivity theorem also covers an empty carrier.",
+    "Under the nonnegative distance and squared-distance contract, ordinary distance midpoint convexity is also equivalent to full kernel-row averaging.",
+    "With LocalKernel, either global midpoint-convexity formulation yields all finite Gram positivity, W nonnegative, pair conservation, ObservedMedial, SparseMarginalLaw and all six universal sparse test families. These raw conclusions use the existing four-point-positive reconstruction adapter."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawMidpointGramGeometry.lean"
+      declarations := [
+        "IDT.QMClosure.RawMidpointGramGeometry.squaredDistance",
+        "IDT.QMClosure.RawMidpointGramGeometry.NonnegativeSquaredDistances",
+        "IDT.QMClosure.RawMidpointGramGeometry.SquaredMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramGeometry.MidpointRowAverage",
+        "IDT.QMClosure.RawMidpointGramGeometry.DistanceMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramGeometry.affine_slope_eq_zero",
+        "IDT.QMClosure.RawMidpointGramGeometry.midpointRowAverage_of_squaredMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramGeometry.squaredDistance_midpoint",
+        "IDT.QMClosure.RawMidpointGramGeometry.squaredMidpointConvex_of_midpointRowAverage",
+        "IDT.QMClosure.RawMidpointGramGeometry.squaredMidpointConvex_iff_midpointRowAverage",
+        "IDT.QMClosure.RawMidpointGramGeometry.diagonal_nonnegative",
+        "IDT.QMClosure.RawMidpointGramGeometry.scaled_midpoint_row_sum",
+        "IDT.QMClosure.RawMidpointGramGeometry.exists_finite_row_sum",
+        "IDT.QMClosure.RawMidpointGramGeometry.gramNonnegative_of_midpointRowAverage",
+        "IDT.QMClosure.RawMidpointGramGeometry.gramNonnegative_of_squaredMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramGeometry.nonnegativeSquaredDistances_of_distance",
+        "IDT.QMClosure.RawMidpointGramGeometry.squaredMidpointConvex_of_distanceMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramGeometry.gramNonnegative_of_distanceMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramGeometry.distanceMidpointConvex_of_midpointRowAverage",
+        "IDT.QMClosure.RawMidpointGramGeometry.distanceMidpointConvex_iff_midpointRowAverage" ] },
+    { sourcePath := "Proofs/QMClosure/RawMidpointGramBridge.lean"
+      declarations := [
+        "IDT.QMClosure.RawMidpointGramBridge.conclusions_of_squaredMidpointConvex",
+        "IDT.QMClosure.RawMidpointGramBridge.conclusions_of_distanceMidpointConvex" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_metric_gram_arity", "raw_four_point_gram_bridge"]
+  limits := [
+    "All real reference scalings and the global midpoint inequality are explicit mathematical premises of this route with open physical origin. The separate raw_dyadic_midpoint_compatibility task derives the corresponding kernel positivity and sparse conclusions from half and antiphase preparation maps with midpoint-half compatibility, using weaker preparation availability.",
+    "The theorem gives exact kernel-row synthesis and positivity without supplying raw equality separation, native-plane coverage, scalar-action laws, raw associative addition or a Hilbert representation. Those stronger reconstruction targets remain outside this checked record.",
+    "No physical geometry origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawPlanePhaseMidpointControl : ResearchTask := {
+  id := "raw_plane_phase_midpoint_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the actual continuous three-dimensional complex plane-phase operation, its operation-defined G and nonnegative distance d from raw_plane_phase_gram_control. Set mid(x,y)=b*m(x,i*y), with b=(1-i)/2, and ref(t)=t*Z for real t.",
+    "Fix only the endpoint pair X=e1,Y=e2 and reference direction Z=e1+e3. Their actual midpoint is U=(e1+e2)/2."]
+  conclusions := [
+    "The actual midpoint formula gives mid(X,Y)=U. For every real t, the checked squared distances from ref(t) to X,Y,U are respectively 2*t^2+1-8*t/5, 2*t^2+1 and 2*t^2+1/2-t.",
+    "For this one endpoint pair and this reference orbit, the endpoint mean squared distance minus midpoint squared distance is exactly 1/2+t/5. Its squared midpoint inequality holds exactly when t>=-5/2.",
+    "At t=-3 the midpoint squared distance is 43/2 and the endpoint squared distances are 119/5 and 19. The midpoint squared distance exceeds their mean by 1/10.",
+    "For the same actual operation and reference, the ordinary midpoint distance strictly exceeds the endpoint mean distance. Thus both global squared and ordinary distance midpoint convexity fail. In particular sqrt(43/2)>(sqrt(119/5)+sqrt(19))/2."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseMidpointControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.mid",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.ref",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.selected_pair_parameter",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.mid_fourX_fourY",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.ref_fourX_sq",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.ref_fourY_sq",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.ref_fourU_sq",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.orbit_squared_midpoint_slack",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.orbit_squared_midpoint_iff",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.negative_three_squares",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.negative_three_squared_defect",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.distance_square_eq",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.not_squaredMidpointConvex",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.strict_distance_midpoint_violation",
+        "IDT.QMClosure.RawPlanePhaseMidpointControl.not_distanceMidpointConvex" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_plane_phase_gram_control", "raw_midpoint_gram_compatibility"]
+  limits := [
+    "The exact threshold quantifies only the selected pair X,Y and references ref(t). Passing that selected inequality on a restricted t range supplies no all-pair or globally restricted-reference convexity theorem.",
+    "The midpoint and distance come from the actual operation. Supplied ordinary complex geometry remains an omission-control input with open physical origin.",
+    "No Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawRealPlaneMetricControl : ResearchTask := {
+  id := "raw_real_plane_metric_control"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Use ordinary R^3 with T=diag(4,1,1). For unit vectors u,v set delta(u,v)=(angle(u,v)+angle(Tu,Tv))/2. For x=r*u,y=s*v with nonnegative radii, define G(x,y)=r*s*cos(delta(u,v)) and d(x,y)^2=r^2+s^2-2*r*s*cos(delta(u,v)). Extend through zero by the zero kernel row and ordinary radial distance.",
+    "The carrier, Euclidean angles, linear T and ordinary real two-plane geometry are supplied mathematical inputs. This is an analytic geometry comparison awaiting its own Lean artifact."]
+  conclusions := [
+    "Accepted analytic result. Delta is a metric on unit directions with antipodal identity delta(-u,v)=pi-delta(u,v). Its cone distance d is a faithful metric, G is separately homogeneous for every real scalar, and all real three-point Gram quadratics are nonnegative.",
+    "On every ordinary real two-plane P, normalized T gives a monotone antipodal angular lift f_P. The angular average h_P(t)=(t+f_P(t))/2 defines an onto real-homogeneous Euclidean polar chart. Chart choices differ by O(2), collinear transported sums agree, and every whole real plane is closed under its transported addition.",
+    "For unit vectors e1,e2,u=(1,2,0)/sqrt(5),v=(1,0,2)/sqrt(5), the accepted analytic kernel entries are G12=0, G1u=G2u=G1v=1/sqrt(2), G2v=0 and Guv=c>0 with c^2=(29-6*sqrt(6))/50>1/4. With B=1/sqrt(2)-sqrt(2)*c, B is nonzero and coefficients (1,1,-sqrt(2),-B) give Gram quadratic -B^2<0.",
+    "This real geometry therefore combines complete ordinary real two-plane Euclidean charts and a faithful triangle distance with failure of four-point Gram positivity. These analytic properties separate the real-plane geometry question from the remaining complex native-mixer question."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/RawRealPlaneMetricControl.lean"]
+  dependencies := ["raw_metric_gram_arity", "raw_four_point_gram_bridge"]
+  limits := [
+    "All new real-plane construction, chart and metric assertions, exact entries and the negative four-point witness in this record remain ANALYTIC/UNCHECKED. Independent analytic review supplies no machine-checked proof status.",
+    "The construction supplies real geometry only. An actual raw square-swap mixer, a global multiplication by i, coherent complex scalar structure and complete Hermitian complex two-planes remain outside its scope. It is not a complete raw countermodel.",
+    "The naive complex extension fails already inside a complex two-plane. Whether complete Hermitian complex two-plane coverage, coherent complex scalar action, an actual native mixer and global three-point Gram positivity force SparseMarginalLaw remains open.",
+    "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawDyadicMidpointCompatibility : ResearchTask := {
+  id := "raw_dyadic_midpoint_compatibility"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply any carrier, a symmetric real kernel G, pairwise nonnegative squaredDistance(x,y)=G(x,x)+G(y,y)-2*G(x,y), and independent supplied maps H,N with G(H(x),z)=G(x,z)/2 and G(N(x),z)=-G(x,z).",
+    "Supply a chosen midpoint map mid and HalfMidpointCompatible, meaning G(mid(H(x),H(y)),z)=G(mid(x,y),z)/2. The squared midpoint inequality is required for all reference and endpoint preparations.",
+    "For the raw sparse conclusion, retain the existing Selection.Contract and its four-field LocalKernel. The supplied half map H has no required identification with the raw attenuation A(D)."]
+  conclusions := [
+    "Under the supplied kernel symmetry, half and antiphase identities and pairwise nonnegative squares, full midpoint-row averaging is equivalent to the conjunction of global squared midpoint convexity and HalfMidpointCompatible.",
+    "Iterating H contracts the target pair. Comparing the fixed references z and N(z) bounds both signs of its row defect by one fixed constant times successive real dyadic powers. The Archimedean real-number argument forces that defect to vanish.",
+    "Raw preparation equality mid(H(x),H(y))=H(mid(x,y)) supplies HalfMidpointCompatible as a sufficient corollary. The main theorem requires only the kernel-row identity.",
+    "Normalized finite signed-integer list synthesis proves all integer-coefficient Gram inequalities. Clearing common rational denominators and density in finite real coefficient spaces then yield every finite real Gram inequality, including empty tuples and empty carriers.",
+    "With the explicit LocalKernel adapter, these dyadic midpoint premises imply all finite Gram positivity, W nonnegative, pair conservation, ObservedMedial, SparseMarginalLaw and the six universal sparse test families."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawDyadicMidpointGram.lean"
+      declarations := [
+        "IDT.QMClosure.RawDyadicMidpointGram.HalfMidpointCompatible",
+        "IDT.QMClosure.RawDyadicMidpointGram.halfIterate",
+        "IDT.QMClosure.RawDyadicMidpointGram.halfIterate_row",
+        "IDT.QMClosure.RawDyadicMidpointGram.midpoint_halfIterate_row",
+        "IDT.QMClosure.RawDyadicMidpointGram.halfIterate_kernel",
+        "IDT.QMClosure.RawDyadicMidpointGram.midpoint_halfIterate_diagonal",
+        "IDT.QMClosure.RawDyadicMidpointGram.le_zero_of_le_dyadic_mul",
+        "IDT.QMClosure.RawDyadicMidpointGram.midpoint_slack_nonnegative",
+        "IDT.QMClosure.RawDyadicMidpointGram.midpointRowAverage_of_squaredMidpointConvex",
+        "IDT.QMClosure.RawDyadicMidpointGram.halfMidpointCompatible_of_preparationEquality",
+        "IDT.QMClosure.RawDyadicMidpointGram.midpointRowAverage_iff_squaredMidpointConvex_and_compatible",
+        "IDT.QMClosure.RawDyadicMidpointGram.diagonal_nonnegative",
+        "IDT.QMClosure.RawDyadicMidpointGram.midpoint_antiphase_zero_row",
+        "IDT.QMClosure.RawDyadicMidpointGram.exists_list_row_sum",
+        "IDT.QMClosure.RawDyadicMidpointGram.signedCopies",
+        "IDT.QMClosure.RawDyadicMidpointGram.signedCopies_row_sum",
+        "IDT.QMClosure.RawDyadicMidpointGram.integerRows",
+        "IDT.QMClosure.RawDyadicMidpointGram.integerRows_row_sum",
+        "IDT.QMClosure.RawDyadicMidpointGram.exists_integer_row_sum",
+        "IDT.QMClosure.RawDyadicMidpointGram.quadratic_scaled",
+        "IDT.QMClosure.RawDyadicMidpointGram.integer_quadratic_nonnegative",
+        "IDT.QMClosure.RawDyadicMidpointGram.exists_common_denominator",
+        "IDT.QMClosure.RawDyadicMidpointGram.gramNonnegative_of_integer_tests",
+        "IDT.QMClosure.RawDyadicMidpointGram.gramNonnegative_of_midpointRowAverage",
+        "IDT.QMClosure.RawDyadicMidpointGram.gramNonnegative_of_squaredMidpointConvex",
+        "IDT.QMClosure.RawDyadicMidpointGram.conclusions_of_squaredMidpointConvex" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_midpoint_gram_compatibility", "raw_four_point_gram_bridge"]
+  limits := [
+    "Half-row homogeneity, coherent antiphase, midpoint-half compatibility and the all-input squared midpoint inequality remain supplied mathematical premises with open physical origin.",
+    "The proof uses the Archimedean real numbers and topology of finite real coefficient spaces for its density step. It supplies no preparation map for arbitrary real scaling, unbounded reference preparation, topology on the preparation carrier or physical closure under arbitrary sums.",
+    "The half map is independent supplied structure. Its identification with any native raw attenuation requires a separate checked bridge.",
+    "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawTripodMidpointControl : ResearchTask := {
+  id := "raw_tripod_midpoint_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply the bounded carrier Fin 3 times Icc[0,1], retaining three zero representatives. Its real kernel is G((i,r),(j,s))=r*s on the same ray and -r*s on different rays. Set Q(x,y)=G(x,x)+G(y,y)-2*G(x,y).",
+    "The half map preserves the ray and halves the radius. On one ray the chosen midpoint averages radii. On different rays it selects the longer ray with radius half the radius difference, selecting the first zero representative for a tie."]
+  conclusions := [
+    "On the whole bounded carrier, G is symmetric, Q is nonnegative, G(H(x),z)=G(x,z)/2 and the actual preparation identity mid(H(x),H(y))=H(mid(x,y)) holds for every endpoint pair.",
+    "The strong squared midpoint inequality Q(z,mid(x,y)) <= (Q(z,x)+Q(z,y))/2-Q(x,y)/4 holds for every triple on the complete carrier. Consequently the weaker squared midpoint inequality also holds universally.",
+    "The three unit-radius tips have Gram quadratic -3 at the all-ones coefficient vector, so global three-point positivity fails.",
+    "No carrier map N can satisfy G(N(x),z)=-G(x,z) for every x,z, and full midpoint-row averaging fails. The combined bounded_half_midpoint_countercontrol theorem records these properties for the same explicit carrier and operations.",
+    "This is an all-pair omission control for removing coherent antiphase from the dyadic midpoint contract. It establishes the failure of that implication even with the stronger squared midpoint inequality and raw midpoint-half commutation."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawTripodMidpointControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawTripodMidpointControl.G",
+        "IDT.QMClosure.RawTripodMidpointControl.Q",
+        "IDT.QMClosure.RawTripodMidpointControl.half",
+        "IDT.QMClosure.RawTripodMidpointControl.mid",
+        "IDT.QMClosure.RawTripodMidpointControl.G_symmetric",
+        "IDT.QMClosure.RawTripodMidpointControl.radius_bounds",
+        "IDT.QMClosure.RawTripodMidpointControl.G_half_left",
+        "IDT.QMClosure.RawTripodMidpointControl.mid_half",
+        "IDT.QMClosure.RawTripodMidpointControl.nonnegativeSquaredDistances",
+        "IDT.QMClosure.RawTripodMidpointControl.StrongSquaredMidpointConvex",
+        "IDT.QMClosure.RawTripodMidpointControl.strongSquaredMidpointConvex",
+        "IDT.QMClosure.RawTripodMidpointControl.squaredMidpointConvex",
+        "IDT.QMClosure.RawTripodMidpointControl.tip",
+        "IDT.QMClosure.RawTripodMidpointControl.tips_quadratic",
+        "IDT.QMClosure.RawTripodMidpointControl.not_three_point_positive",
+        "IDT.QMClosure.RawTripodMidpointControl.no_coherent_antipode",
+        "IDT.QMClosure.RawTripodMidpointControl.not_midpointRowAverage",
+        "IDT.QMClosure.RawTripodMidpointControl.bounded_half_midpoint_countercontrol" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_dyadic_midpoint_compatibility"]
+  limits := [
+    "The three zero aliases are retained. A faithful metric on this raw carrier is outside the checked claim.",
+    "No actual raw square-swap mixer, global complex scalar action or native-plane structure is supplied. The result is a kernel-and-midpoint omission control within its exact listed hypotheses.",
+    "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawPlanePhaseParameterWall : ResearchTask := {
+  id := "raw_plane_phase_parameter_wall"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Use the particular supplied three-dimensional complex plane-phase family m_lambda(x,y)=familyM(lambda*parameter(x,y),x,y). Define its actual real response kernel G_lambda by the existing operation-defined readout formula and use the corresponding nonnegative squared-distance contract. P=parameter and R(x)=ratio(x)=|x_0|^2/W(x), with the existing zero convention.",
+    "All assertions in this record are independently reviewed analytic results awaiting a dedicated Lean artifact. Lambda is any real family parameter."]
+  conclusions := [
+    "Accepted analytic result. For every nonzero lambda, set L=36+lambda^2, epsilon=lambda/L and eta=phase(-lambda/6). The preparations x=(1,1,1), -y with y=(1,i,1), and eta*z_epsilon with z_epsilon=(0,i-1,epsilon), at the all-ones real coefficient vector, have actual G_lambda Gram quadratic at most -2*epsilon^2<0.",
+    "The accepted analytic kernel identity uses the conjugate-first Hermitian response K_lambda(x,y)=phase(lambda*P(x,y)*R(x))*phase(-lambda*P(x,y)*R(y))*<x,y>, whose real part is the actual operation-defined G_lambda. This identity and the following reduction remain ANALYTIC/UNCHECKED.",
+    "For the displayed witness, set M=18+lambda^2, U_plus=L+M*(epsilon^2+epsilon), U_minus=L+M*(epsilon^2-epsilon), and t_plus=3*lambda*epsilon*(epsilon+1)/U_plus, t_minus=3*lambda*epsilon*(epsilon-1)/U_minus. The exact analytic quadratic is Q=epsilon^2+4*((t_minus+(1+epsilon)*t_minus^2)/(1+t_minus^2)-(t_plus+(epsilon-1)*t_plus^2)/(1+t_plus^2)).",
+    "The analytic bounds |epsilon|<=1/12 and L/2<=U_plus,U_minus<=2*L give p=t_plus>0 and m=-t_minus>0 with p,m<=1/4 and p+m>=3*epsilon^2. Applied to the exact quadratic reduction, these estimates give Q<=-2*epsilon^2<0 for every nonzero lambda. This proof route awaits its dedicated Lean artifact.",
+    "At lambda=0 the operation is native and its real Gram kernel is positive. Thus, within this particular family and under its kernel-distance contract, global three-point positivity and triangle inequality hold exactly at lambda=0.",
+    "The analytic witness excludes restoration of a triangle metric by arbitrarily small nonzero parameters within this family. It supplies no rigidity theorem for the full class of complex native-plane models."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/RawPlanePhaseParameterWall.lean"]
+  dependencies := ["raw_plane_phase_gram_control", "raw_metric_gram_arity"]
+  limits := [
+    "All parameter-uniform formulas, inequalities and family classification in this record remain ANALYTIC/UNCHECKED. No machine-checked artifact is cited.",
+    "The complete Hermitian complex two-plane class with coherent complex scalars, actual native mixer and global three-point Gram positivity remains open. This analytic wall concerns only this chosen family.",
+    "Supplied complex geometry remains a mathematical input. No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
@@ -5731,6 +5956,8 @@ def researchTasks : List ResearchTask := [
   rawContinuousPlanePhaseWall, rawContinuousPlaneLocalTheory,
   rawVacuumRegularityBridge, rawMidpointConvexityBridge,
   rawMetricGramArity, rawFourPointGramBridge, rawPlanePhaseGramControl,
+  rawMidpointGramCompatibility, rawPlanePhaseMidpointControl, rawRealPlaneMetricControl,
+  rawDyadicMidpointCompatibility, rawTripodMidpointControl, rawPlanePhaseParameterWall,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
