@@ -154,6 +154,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.RationalEchoRegularityControl,
     `Proofs.QMClosure.RationalCountOrderReadout,
     `Proofs.QMClosure.RationalCountOrderReadoutControls,
+    `Proofs.QMClosure.ReversibleEchoAccountingBoundary,
+    `Proofs.QMClosure.FiniteScalarReversalBoundary,
     `Proofs.QMClosure.MixerGeneratedProcessWall,
     `Proofs.QMClosure.IntensityActualizationBoundary,
     `Proofs.QMClosure.RestrictedActualizationControls,

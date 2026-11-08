@@ -166,3 +166,8 @@ actualization remain open. So do spectral and Hilbert representation, tensor
 and composite structure, dynamics, physical scales, full QM and GR. The
 research ledger records the mathematical result as a conditional kernel theorem.
 [Operational research ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+
+The subsequent reversible echo controls distinguish actual undo, conjugate
+return reciprocity and same-scale raw accounting. They also exhibit a finite
+scalar obstruction to reflection descent and prove a one-row conditional echo
+bridge. [Reversible echo and scalar reflection boundaries](194-reversible-echo-and-scalar-reflection-boundaries.md)

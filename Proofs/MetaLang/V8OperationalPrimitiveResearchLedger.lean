@@ -7558,6 +7558,116 @@ def matterRegimeObligations : List ResearchTask := [
   openBridge "matter_regime_stable_records"
     "UNASSESSED: account for durable physical records and the apparatus using the same rules; distinguish archival stability, measurement repeatability and realization of one run."]
 
+def reversibleEchoAccountingBoundary : ResearchTask := {
+  id := "reversible_echo_accounting_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supplied rational Gaussian carrier with named multiplication, conjugation and unit, and real raw responses satisfying the complete WeightLaws contract.",
+    "The positive bridge separately supplies nonzero branches, actual inverse-return coefficients, one-column conjugate reciprocity, same-scale exhaustive accounting and unit response.",
+    "Finite scalar control uses ZMod 5, with its supplied commutative scalar arithmetic."]
+  conclusions := [
+    "The absolute-norm control has full WeightLaws, a genuine two-sided inverse and normalized nonzero raw branches, yet its conjugate echo response is 5/9.",
+    "The quartic control has full WeightLaws, transparent square-swap dynamics, conjugate inverse coefficients, nonzero branches and scalar echo one. Its context-normalized detector is balanced and returns deterministically, while its raw branch sum is 1/2.",
+    "The finite scalar control satisfies additive transparent square-swap and two-sided inverse laws, and instantiates the existing TransparentSwapRoot reconstruction. Its phase has square minus one, fourth power one, inverse three and a genuine half, but no additive unital map reverses the phase or swaps the coefficients.",
+    "The conditional bridge derives NondegenerateEcho from the separately supplied return, reciprocity, accounting and unit-response premises."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ReversibleEchoAccountingBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.absWeight_laws",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_undo_forward",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_forward_undo",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_unit_branches",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_branches_nonzero",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_raw_normalization",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_actual_return",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_conjugate_echo",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_echo_weight",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.unequal_echo_not_normalized",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_coefficients",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_square_swap",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_diagonal",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_undo_forward",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_forward_undo",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_conjugation",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_unit_branches",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_branches_nonzero",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.balanced_scalar_echo",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.quarticWeight_laws",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.quartic_balanced_weights",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.quartic_raw_sum",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.quartic_raw_not_normalized",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.quartic_echo",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.detector_balanced",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.detector_return",
+        "IDT.QMClosure.ReversibleEchoAccountingBoundary.nondegenerateEcho_of_return_accounting"] },
+    { sourcePath := "Proofs/QMClosure/FiniteScalarReversalBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteScalarReversalBoundary.coefficient_laws",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.square_swap",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.diagonal",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.undo_forward",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.forward_undo",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.forward_additive",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.reconstructed",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.coefficients_nonzero",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.coefficients_units",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.phase_value",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.phase_square",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.phase_fourth",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.phase_inverse_value",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.phase_inverse",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.half_value",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.half_doubles",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.no_additive_unital_phase_reversal",
+        "IDT.QMClosure.FiniteScalarReversalBoundary.no_additive_unital_coefficient_swap"] }]
+  plannedArtifacts := []
+  dependencies := ["rational_count_order_readout_origin"]
+  limits := [
+    "Physical origin of return reciprocity and same-scale raw branch accounting remains open.",
+    "The unequal reversible gate is not claimed to conserve raw response on every input.",
+    "Global semantic equality must be stable under reflection for conjugation to descend on a scalar image.",
+    "These mathematical controls do not prove physical Born readout, full QM, GR or physical scales."] }
+
+def singleCalibrationScalarFaithfulnessOrigin : ResearchTask := {
+  id := "single_calibration_scalar_faithfulness_origin"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Existing additive transparent square-swap reconstruction with a commutative scalar realization.",
+    "Multiplicative real response and one native column calibration w(a)+w(b)=1."]
+  conclusions := [
+    "Analytic proposal derives unit response, phase response one, branch responses one half, w(2)=4 and w(0)=0.",
+    "Analytic proposal excludes finite characteristic through the finite order of unit 2.",
+    "Analytic proposal obtains characteristic zero and a faithful generated Gaussian-dyadic scalar image with canonical conjugation."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/SingleCalibrationScalarFaithfulness.lean"]
+  dependencies := ["operational_positive_readout"]
+  limits := [
+    "No positivity, count order or all-input conservation is supplied.",
+    "Readout quadraticity and response conjugation invariance remain open.",
+    "Physical origin of the native normalization remains open.",
+    "Analytic conclusions await a machine-checkable artifact and do not close Born or QM."] }
+
+def nativeCircuitPassivityReadoutWall : ResearchTask := {
+  id := "native_circuit_passivity_readout_wall"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Proposed odd-prime downward valuation response W=N*p^(-v_p(N)) on Gaussian-dyadic coefficients.",
+    "Finite native basis-input circuits with source-normalized total passivity and perfect closed return."]
+  conclusions := [
+    "Analytic proposal bounds this response by N on Gaussian-dyadic coefficients.",
+    "Analytic proposal passes every finite native basis-source total bound and closed return while violating count order and allowing raw deficits.",
+    "Stronger state-relative passivity of an operation and its inverse on all reachable states implies conservation."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeCircuitPassivityReadoutWall.lean"]
+  dependencies := ["rational_count_order_readout_origin"]
+  limits := [
+    "Basis-source bounds and state-relative passivity are distinct quantified contracts.",
+    "All conclusions remain analytic until formalized.",
+    "Physical readout origin, Born interpretation and full QM remain open."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -7652,7 +7762,9 @@ def researchTasks : List ResearchTask := [
   normalizedEchoReadoutOrigin, gksOperationalSequenceBridge,
   internalReferenceSupportOrigin, internalReferencePairwiseEntropyFrontier,
   boundedLikelihoodProcessRigidity, singleEchoReadoutOrigin,
-  rationalFiniteReadoutNonuniqueness, rationalCountOrderReadoutOrigin]
+  rationalFiniteReadoutNonuniqueness, rationalCountOrderReadoutOrigin,
+  reversibleEchoAccountingBoundary, singleCalibrationScalarFaithfulnessOrigin,
+  nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
