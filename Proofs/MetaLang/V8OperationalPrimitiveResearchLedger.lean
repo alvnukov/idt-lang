@@ -5616,6 +5616,166 @@ def boundedComparisonReferenceWall : ResearchTask := {
     "The TV incompatibility concerns exact total calibration on the entire normalized distribution carrier. It supplies no exclusion of restricted preparation domains or of the separate unbounded raw response comparison.",
     "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
 
+def classicalMarginalComparisonWall : ResearchTask := {
+  id := "classical_marginal_comparison_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing native complex mixer and rational finite-support probability distributions. Compare distinct raw values by TV of their Dirac preparations, and form the pair comparison by adding its two port comparisons. The squared variant squares each single-port Dirac TV before adding.",
+    "For the mixture identities supply rational t in [0,1] and a common distribution rho. The flagged control uses the supplied Bool plus Unit disjoint carrier with ordinary probability weights."]
+  conclusions := [
+    "On the actual input pairs (1,0) and (0,0), the summed single-port Dirac TV changes from one to two under the native mixer. The summed squared single-port Dirac TV also changes from one to two. Each comparison fails the existing PairComparisonNonexpanding contract.",
+    "TV on distributions over the whole pair is preserved by the native mixer for all supplied distributions. On the same selected Dirac witness its value is one before and after. Whole-pair TV and the sum of marginal comparisons therefore obey different process laws.",
+    "TV(t*mu+(1-t)*rho,t*nu+(1-t)*rho)=t*TV(mu,nu), and squaring gives the factor t squared. On the actual flagged control squared TV is 1/4 while the ordinary probability-weighted sum of squared component comparisons is 1/2."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ClassicalMarginalComparisonWall.lean"
+      declarations := [
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.marginal_tv_before",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.marginal_tv_after",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.marginal_tv_not_nonexpanding",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.squared_marginal_tv_before",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.squared_marginal_tv_after",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.squared_marginal_tv_not_nonexpanding",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.joint_tv_preserved",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.joint_tv_before",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.joint_tv_after",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.tv_shared_mixture",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.squared_tv_shared_mixture",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.flagged_squared_tv",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.flag_weighted_squared_comparison",
+        "IDT.QMClosure.ClassicalMarginalComparisonWall.squared_tv_fails_ordinary_flagged_additivity"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_classical_process_envelope_omission_route", "raw_process_comparison_bridge"]
+  limits := [
+    "These controls concern the displayed classical TV comparisons. They exclude neither all quadratic comparisons nor a separately supplied data-processing contract for the original response Q.",
+    "The Dirac witnesses use the supplied complex native mixer. Its physical origin and identification of a comparison with physical detector response remain open.",
+    "No actualization, Bell, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def vacuumSupportEffectBoundary : ResearchTask := {
+  id := "vacuum_support_effect_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For a partially ordered effect carrier supply an order automorphism preserving the vacuum-certain subset. The detector-invariance theorem additionally supplies evaluation covariance, a vacuum-fixed state process and identification of the chosen detector effect with the least vacuum-certain effect.",
+    "The full-effect control supplies every function from states to [0,1], pointwise order, evaluation and pullbacks by state equivalences. Its complex-array specialization uses the existing finite-array power residuals and the actual native three-wire split."]
+  conclusions := [
+    "An order automorphism preserving a subset fixes its least element. Under the supplied covariance and detector-identification hypotheses the selected detector's residual evaluation is invariant.",
+    "The full function effect space has a least vacuum-certain effect, the exact-vacuum indicator. Every state-equivalence pullback is an order automorphism, and every vacuum-fixed equivalence preserves vacuum certainty and fixes that indicator.",
+    "Every supplied power residual with k>=1 is a vacuum-certain effect. For all finite complex arrays the k=1 residual equals the vacuum indicator. On Fin 3 arrays the power residual is the least vacuum-certain effect exactly when k=1.",
+    "The actual native split has fourth iterate identity and defines a vacuum-fixed state equivalence. For every k>1 its pullback changes the chosen power residual although the full effect space has a least vacuum-certain effect, the pullback preserves vacuum certainty and evaluation is covariant."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/VacuumSupportEffectBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.VacuumSupportEffectBoundary.least_fixed",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.identified_detector_invariant",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.pullback_covariance",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.pullback_preserves_vacuum_certainty",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.vacuumIndicator_least",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.pullback_fixes_vacuumIndicator",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.residualEffect_vacuum_certain",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.residual_one_eq_indicator",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.residualEffect_least_iff",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.native_split_fourth",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.nativeSplitEquiv_vacuum",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.native_pullback_changes_residual",
+        "IDT.QMClosure.VacuumSupportEffectBoundary.native_full_effect_countercontrol"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_power_loss_readout_control"]
+  limits := [
+    "Existence of a least vacuum-certain effect and covariance alone do not identify the actual chosen detector with that effect. The native countercontrol keeps the former properties while changing a different vacuum-certain residual.",
+    "The full function space includes discontinuous state tests. Availability of its effects and identification of a physical detector remain open, as do the origins of the supplied complex carrier and quadratic energy.",
+    "The k=1 leastness result is restricted to this supplied power family. It gives no uniqueness theorem for arbitrary readouts.",
+    "No actualization, Bell, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def finiteCovariantNoiseWall : ResearchTask := {
+  id := "finite_covariant_noise_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For the common-twins theorem supply a finite nontrivial carrier V, a gate F with F squared equal to swap and any family of real-valued functions whose pair sums are conserved by F. The multiplicative specialization supplies a strictly positive family with conserved pair products.",
+    "For kernel rigidity additionally supply a strictly positive real matrix K with each row summing to one, diagonal transparency of F and full product covariance K(F(x,y).first,F(a,b).first)*K(F(x,y).second,F(a,b).second)=K(x,a)*K(y,b) for every input pair and output pair."]
+  conclusions := [
+    "Every supplied additively conserved family has distinct x and y agreeing on every member of that family. This core conclusion requires neither positivity nor normalization nor diagonal transparency. Applying it to logarithms gives common twins for strictly positive multiplicatively conserved families, without normalization.",
+    "Normalized full product covariance respects equality of rows and descends the gate to the row-equivalence quotient. Under all kernel-rigidity hypotheses every row of K is identical.",
+    "The identity kernel has normalized, injectively distinguished rows and full covariance under every injective gate. On a nontrivial carrier it has zero entries, exhibiting the boundary of the strict-positivity hypothesis."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteCovariantNoiseWall.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteCovariantNoiseWall.no_injective_ordered_conserved",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.conserved_family_has_twins",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.positive_product_family_has_twins",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.covariance_respects_equal_rows",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.strictly_positive_covariant_kernel_constant_rows",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.identity_kernel_normalized",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.identity_kernel_injective",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.identity_kernel_covariant",
+        "IDT.QMClosure.FiniteCovariantNoiseWall.identity_kernel_has_zero"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "Common twins are equal only for the supplied conserved family. Full physical observational equivalence is a separate obligation.",
+    "Kernel rigidity gives identical rows, without a uniform-row conclusion. Its proof uses full product covariance for arbitrary inputs and outputs; diagonal-input invariance alone does not supply the row-quotient argument.",
+    "The theorem concerns finite carriers and exact covariance. It supplies no continuum exclusion or physical origin of a noise carrier, strict positivity, normalization or covariance.",
+    "No actualization, Bell, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def binaryNoiseMixingWall : ResearchTask := {
+  id := "binary_noise_mixing_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply any carrier V, a gate F with F squared equal to swap and F(x,x)=(x,x), and distinct a,b in V. For rational p in [0,1] let mu=p*Dirac(a)+(1-p)*Dirac(b), using rational finite-support distributions and their independent product.",
+    "The nonproduct conclusion additionally assumes 0<p<1 and quantifies over arbitrary, possibly unequal, rational finite-support probability distributions nu and rho on V."]
+  conclusions := [
+    "The image of each off-diagonal binary input lies outside {a,b} squared.",
+    "TV(F_*(mu product mu),mu product mu)=2*p*(1-p), including the endpoint cases. At p=1/2 this value is exactly 1/2.",
+    "For 0<p<1 the output differs from every product nu product rho. The output retains positive diagonal coefficients p squared and (1-p) squared while its cross coefficient at (a,b) is zero."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/BinaryNoiseMixingWall.lean"
+      declarations := [
+        "IDT.QMClosure.BinaryNoiseMixingWall.mixed_output_outside_binary",
+        "IDT.QMClosure.BinaryNoiseMixingWall.binary_noise_tv_exact",
+        "IDT.QMClosure.BinaryNoiseMixingWall.balanced_binary_noise_tv",
+        "IDT.QMClosure.BinaryNoiseMixingWall.binary_noise_not_product"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_classical_process_envelope_omission_route", "finite_covariant_noise_wall"]
+  limits := [
+    "The carrier may be infinite, while every probability distribution in the statement has rational finite support. The nonproduct theorem has no assertion about all unrestricted real probability laws.",
+    "This is a classical independent-noise test on a supplied binary distribution and gate. It supplies no coherent-amplitude comparison, universal Gaussian-noise exclusion or physical noise origin.",
+    "No actualization, Bell, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def covariantNoiseApproximationControl : ResearchTask := {
+  id := "covariant_noise_approximation_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply a finite nonempty carrier V of cardinality n and 0<t<1. Set K_t(x,r)=(1-t)*indicator(r=x)+t/n. Row TV is half the sum of absolute row differences. The coefficient covariance defect is the signed difference between the two sides of full product covariance, and channel covariance TV is half the sum of its absolute coefficients for one input pair.",
+    "The coefficient and channel bounds assume an injective gate F. Coefficient-bound attainment additionally assumes a nontrivial carrier, F squared equal to swap and diagonal transparency. The concrete four-state specialization uses the existing RawNetworkMedialWall.State and gate."]
+  conclusions := [
+    "Every K_t entry is at least t/n>0 and at most one, and each row sums to one. Every pair of distinct rows has TV exactly 1-t.",
+    "For every injective F each absolute covariance coefficient defect is at most t*(1-t)/n. Under the additional nontrivial square-swap and diagonal hypotheses this coefficient bound is attained.",
+    "For every injective F and every input pair channel covariance TV is at most 2*t*(1-t), a dimension-free bound. On a finite carrier injectivity makes F bijective, so output reindexing identifies this half-sum with TV between the corresponding two channels.",
+    "For every epsilon>0 there is 0<t<1 with positive normalized K_t, TV at least 1-epsilon between every distinct pair of rows, and both every absolute coefficient defect and every input channel-TV defect at most epsilon. On a nontrivial carrier a distinct row pair exists. The existing four-state square-swap gate supplies a concrete nonvacuous specialization."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CovariantNoiseApproximationControl.lean"
+      declarations := [
+        "IDT.QMClosure.CovariantNoiseApproximationControl.positivity_floor",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.row_sum",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.entry_le_one",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.rowTV_distinct",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.coefficient_defect_bound",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.coefficient_bound_attained",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.channel_covariance_TV_bound",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.arbitrarily_small_covariance_defects",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.nontrivial_near_distinguishable_family",
+        "IDT.QMClosure.CovariantNoiseApproximationControl.four_state_near_distinguishable_family"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_covariant_noise_wall", "raw_network_medial_wall"]
+  limits := [
+    "Exact-covariance rigidity remains valid. In this approximation family the positive lower bound t/n tends to zero as t tends to zero, while distinct rows approach maximal TV. Small coefficient or channel-TV error alone therefore supplies no floor-independent vanishing row-distinction bound.",
+    "The checked channel bound is 2*t*(1-t). No sharper analytic estimate is registered as checked evidence. Quantitative stability under a fixed positive entry floor or other additional assumptions remains open.",
+    "These are finite real stochastic matrices and specified finite-sum norms. They establish no continuum, resource-graded budget or Gaussian-noise theorem and supply no physical noise origin.",
+    "No actualization, Bell, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
   stage := .conditionalKernelTheorem
@@ -6353,13 +6513,15 @@ def openBridge (id : String) (obligation : String) : ResearchTask := {
 /-- Global obligations remain live independently of the conditional theorems. -/
 def globalBridges : List ResearchTask := [
   openBridge "physical_process_comparison_calibration"
-    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies.",
+    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Under the actual native mixer whole-pair TV is preserved, while the sum of marginal Dirac TVs and the sum of squared marginal Dirac TVs each change from one to two on the checked witness. Squared TV also fails ordinary probability-weighted flagged additivity on the supplied control. These results leave the original response Q identification open. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies.",
   openBridge "physical_global_residual_invariance"
-    "Justify invariance of an exhaustive global no-port-record event when pair-weight conservation is required. At fixed positive exposure and unchanged outside-port contribution the checked normalization identity makes these equivalent. The supplied power-response family preserves unconditional spectator ports while changing its global residual, so spectator locality alone supplies no such invariance.",
+    "Justify invariance of an exhaustive global no-port-record event when pair-weight conservation is required. At fixed positive exposure and unchanged outside-port contribution the checked normalization identity makes these equivalent. Spectator locality alone supplies no such invariance in the supplied power-response family. Covariance through an effect order automorphism, together with a vacuum-fixed process, makes a detector invariant when that actual detector is identified with the least vacuum-certain effect. The checked full-effect native countercontrol has a least effect, vacuum covariance and reversibility while a different chosen power residual changes. The detector identification remains an additional physical obligation.",
   openBridge "physical_fixed_resource_reference_domain"
-    "Specify the physically available carrier, resource budget and reference-preparation domain. Exact half comparison attenuation and a total reference right inverse force a nonnegative comparison to vanish under one upper bound uniform along each reference orbit. Finite depth retains a terminal term, and changing resource carriers does not establish the total single-carrier hypotheses.",
+    "Specify the physically available carrier, resource budget and reference-preparation domain. Exact half comparison attenuation and a total reference right inverse force a nonnegative comparison to vanish under one upper bound uniform along each reference orbit. Finite depth retains a terminal term, and changing resource carriers does not establish the total single-carrier hypotheses. Resource-indexed preparation domains and budget laws remain open research obligations.",
   openBridge "physical_detector_readout_availability"
-    "Justify the physically available detector and exhaustive event domain, including any supplied no-port-record outcome. Normalized Option-valued mathematical readouts, basis calibration and preserved spectator ports alone do not establish detector availability, actual events or physical origins of the supplied complex geometry and quadratic exposure.",
+    "Justify the physically available detector and exhaustive event domain, including any supplied no-port-record outcome. Normalized Option-valued readouts, basis calibration and preserved spectator ports alone do not establish detector availability, actual events or origins of the supplied complex geometry and quadratic exposure. The full mathematical effect space contains every [0,1]-valued state function, including discontinuous tests. Its least vacuum-certain effect is the exact-vacuum indicator. On the checked three-wire carrier, leastness selects k=1 only within the supplied power-residual family. Physical availability of those effects and identification of the actual detector with that least effect remain open.",
+  openBridge "physical_noise_carrier_covariance"
+    "Justify the physical noise carrier, admitted distributions and covariance law, including whether the law is exact and which norm and entry lower bounds control its error. On finite carriers strict positivity, row normalization, square-swap, diagonal transparency and exact full product covariance force identical rows, without a uniform-row conclusion. Identity noise retains distinguished rows and exact covariance while having zeros. Positive noisy-identity kernels can have arbitrarily small coefficient and channel-TV covariance defects while distinct rows remain almost maximally TV-distinguishable as their positivity floor tends to zero. Stability under a fixed positive floor remains open. The rational binary-noise theorem applies on any carrier but only to finite-support distributions. These results leave continuum and Gaussian-noise routes open.",
   openBridge "physical_raw_root_medial_all_input_closure"
     "Physically justify the raw root, exact medial law and closure over all inputs. The checked network equivalence identifies mediality with full row/column layer commutation under square-swap. The checked four-state control satisfies square-swap, diagonal transparency, declared-reference balance and all six raw probability kinds, yet violates that network law in an actual five-wire preparation. Mere disjoint-support locality or one balanced reference splitter cannot replace overlapping-network interchange. The checked continuous nonlinear complex mixer also retains exact native vacuum outputs, joint complex homogeneity, transparency, square-swap and squared-norm conservation while violating mediality and yielding a different probability from the native interpretation of the same actual word. These regularity and balance conditions therefore do not supply the missing interchange law.",
   openBridge "real_archimedean_readout_codomain"
@@ -6467,6 +6629,9 @@ def researchTasks : List ResearchTask := [
   oneSidedDistributiveSwapControl, rawProcessComparisonBridge,
   rawPlanePhaseProcessComparisonControl, rawClassicalProcessEnvelopeOmissionRoute,
   rawPowerLossReadoutControl, boundedComparisonReferenceWall,
+  classicalMarginalComparisonWall, vacuumSupportEffectBoundary,
+  finiteCovariantNoiseWall, binaryNoiseMixingWall,
+  covariantNoiseApproximationControl,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,

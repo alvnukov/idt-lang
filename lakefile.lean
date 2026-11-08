@@ -341,7 +341,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.RawPlanePhaseLocalTheory,
     `Proofs.QMClosure.RawSparseQuarticControl,
     `Proofs.QMClosure.RawPowerLossReadoutControl,
+    `Proofs.QMClosure.VacuumSupportEffectBoundary,
     `Proofs.QMClosure.BoundedComparisonReferenceWall,
+    `Proofs.QMClosure.ClassicalMarginalComparisonWall,
     `Proofs.QMClosure.RawSparseSignedControl,
     `Proofs.QMClosure.RawSparseSelfReferenceSelector,
     `Proofs.QMClosure.RawSparseSelfReferenceControl,
@@ -433,5 +435,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.ProductFeatureExchange,
     `Proofs.QMClosure.ProductExchangeObservationBoundary,
     `Proofs.QMClosure.VacuumPortEffectCompletion,
-    `Proofs.QMClosure.NativeMixerInfiniteOrder
+    `Proofs.QMClosure.NativeMixerInfiniteOrder,
+    `Proofs.QMClosure.FiniteCovariantNoiseWall,
+    `Proofs.QMClosure.BinaryNoiseMixingWall,
+    `Proofs.QMClosure.CovariantNoiseApproximationControl
   ]
