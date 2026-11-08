@@ -5502,6 +5502,163 @@ def classicalAffinityLogWall : ResearchTask := {
     "The abstract product-affinity law is supplied. No Markov data-processing theorem, admissible noise carrier, gate-compatible detector realization or statistical detector-model existence theorem is established here.",
     "No identification of the original response Qraw, physical comparison scale, event actualization, Born interpretation, composites, Bell, full QM or physical-scale closure is established. Public and manifest statuses remain unchanged."] }
 
+def finiteOutcomeAffinityRigidity : ResearchTask := {
+  id := "finite_outcome_affinity_rigidity"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply PairComparisonReconstruction.Contract on an arbitrary raw carrier V and normalized nonnegative real probability rows K(x) on one fixed finite outcome space Omega. Identify the full contract comparison with minus the logarithm of the actual finite affinity sum_w sqrt(K(x,w)*K(y,w)).",
+    "For equality of the actual probability rows, additionally require strictly positive affinity for every pair of raw preparations. No finite raw carrier, uniform positive floor, input group, topology or completeness is assumed."]
+  conclusions := [
+    "Among card(Omega)+1 normalized rows, two distinct indices have affinity at least 1/card(Omega). Combining this finite packing bound with constructed natural multiples in the reconstructed feature image forces every reconstructed feature and comparison to vanish. The observed quotient is a subsingleton.",
+    "Under the separate all-pairs positive-affinity guard, every actual probability row K(x) is equal to every K(y). This excludes nontrivial law families satisfying the entire supplied reconstruction contract on one fixed finite outcome space."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteOutcomeAffinityRigidity.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.finite_affinity_packing",
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.law_eq_of_affinity_one",
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.exists_feature_nat_multiple",
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.feature_eq_zero",
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.comparison_eq_zero",
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.observed_quotient_subsingleton",
+        "IDT.QMClosure.FiniteOutcomeAffinityRigidity.all_laws_equal"] }]
+  plannedArtifacts := []
+  dependencies := ["pair_comparison_reconstruction", "classical_affinity_log_wall"]
+  limits := [
+    "The feature, comparison and observed-quotient conclusions also hold algebraically when some affinity is zero because Lean's real logarithm is totalized. Equality of actual laws requires positive affinity. Zero-overlap negative logarithms receive no statistical-distance interpretation here.",
+    "Identical law rows and a subsingleton observed quotient do not imply a singleton raw carrier. The theorem does not exclude individual finite experiments, all finite measurement families or approximate realizations, and supplies no quantitative approximation bound.",
+    "The input contract retains its exact universal process-comparison law. Physical carrier availability, the original response Qraw, actualization, Born, composites, Bell and physical scales remain open."] }
+
+def relativeEntropyDataProcessing : ResearchTask := {
+  id := "relative_entropy_data_processing"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply actual probability measures on arbitrary measurable spaces. Deterministic processing is a measurable map. Stochastic processing uses one common Markov kernel for the two compared measures. Independent products use the ordinary product measures."]
+  conclusions := [
+    "Actual measure-theoretic relative entropy cannot increase under a measurable map or one common Markov kernel. Measurable equivalences preserve relative entropy.",
+    "Relative entropy is additive on independent products, including infinite values. Finite input relative entropy remains finite under measurable-map processing.",
+    "The proofs use the existing Radon-Nikodym conditional-expectation identity, convex Jensen inequality and KL chain rule. No comparison-level contraction inequality, Standard Borel structure, disintegration or reference-measure-preserving hypothesis is supplied."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RelativeEntropyDataProcessing.lean"
+      declarations := [
+        "IDT.QMClosure.RelativeEntropyDataProcessing.klDiv_map_le",
+        "IDT.QMClosure.RelativeEntropyDataProcessing.klDiv_map_ne_top",
+        "IDT.QMClosure.RelativeEntropyDataProcessing.klDiv_map_measurableEquiv",
+        "IDT.QMClosure.RelativeEntropyDataProcessing.klDiv_prod_swap",
+        "IDT.QMClosure.RelativeEntropyDataProcessing.klDiv_prod",
+        "IDT.QMClosure.RelativeEntropyDataProcessing.klDiv_markov_le"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "These theorems concern ordinary statistical measures and channels. Physically available preparations, channels and detector events remain separate obligations.",
+    "Actual affinity data processing and product multiplicativity on arbitrary measurable outcome spaces remain unformalized. The finite-KL entropy route leaves that weaker positive-affinity route open. The checked stochastic-affinity adapter covers finite outcome spaces only.",
+    "Product additivity supplies no physical tensor/composite interpretation, Bell closure, actualization or identification of the original response Qraw."] }
+
+def classicalStatisticalProcessBridge : ResearchTask := {
+  id := "classical_statistical_process_bridge"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply an arbitrary raw carrier V, a chosen reference o and a total operation F with F squared equal to swap and F(x,x)=(x,x). Supply actual preparation probability measures K(x) on an arbitrary measurable space Omega, with finite KL(K(x),K(y)) for every ordered raw pair.",
+    "Supply one state-independent Markov kernel T on Omega times Omega. For every raw input pair (x,y), require T applied to K(x) product K(y) to equal K(F(x,y)1) product K(F(x,y)2). This exact common-channel full-product covariance and the product-preparation family remain explicit inputs."]
+  conclusions := [
+    "Define delta(x,y)=KL(K(x),K(y)).toReal+KL(K(y),K(x)).toReal, the ordinary Jeffreys comparison. Actual KL data processing and product additivity derive summed pair nonexpansion. No comparison-level inequality is assumed.",
+    "The resulting comparison law instantiates PairComparisonReconstruction.Contract. Its existing reconstruction gives exact pair isometry, conservation of Qnoise(x)=delta(x,o), observed mediality, the sparse marginal law and the full squared Hilbert distance delta(x,y)=norm(feature(x)-feature(y)) squared.",
+    "Zero comparison is equivalent to equality of the actual preparation measures. The reconstructed feature distinguishes exactly those measures and has squared norm Qnoise(x)."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ClassicalStatisticalProcessBridge.lean"
+      declarations := [
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.comparison",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.pairEntropy",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.directed_pair_nonexpanding",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.comparison_nonexpanding",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.reconstruction",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.comparison_eq_norm_sub_sq",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.norm_feature_sq",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.comparison_eq_zero_iff",
+        "IDT.QMClosure.ClassicalStatisticalProcessBridge.Contract.feature_eq_iff_preparation_eq"] }]
+  plannedArtifacts := []
+  dependencies := ["relative_entropy_data_processing", "pair_comparison_reconstruction"]
+  limits := [
+    "All ordered KL divergences are required finite so conversion to real numbers retains their ordinary meaning and excludes infinity.toReal=0. This premise is stronger than positive affinity. Jeffreys divergence is not identified with minus log affinity in general.",
+    "The contract's physical origin and a nontrivial statistical model remain outside this checked result. The continuum Gaussian realization and characterization are analytic tasks awaiting Lean artifacts.",
+    "Qnoise is a newly constructed comparison readout. The original response Qraw=c*delta(-,o), its positive calibration c, detector-event realization, actualization, Born, QM closure, composites, Bell and physical scales remain open."] }
+
+def finiteOutcomeChannelWall : ResearchTask := {
+  id := "finite_outcome_channel_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply normalized nonnegative preparation rows on one fixed finite outcome space, with strictly positive actual affinity for every raw pair. The raw carrier V is arbitrary. Supply a transparent square-swap operation F.",
+    "Supply one common finite stochastic channel on outcome pairs, with nonnegative normalized rows, whose output on every independent preparation K(x) product K(y) is exactly K(F(x,y)1) product K(F(x,y)2)."]
+  conclusions := [
+    "Actual finite affinity obeys data processing under the supplied stochastic channel and is multiplicative on independent products. These facts derive the product-affinity comparison law required by the separate negative-log reconstruction.",
+    "The finite-outcome affinity rigidity theorem then forces all preparation rows to be identical. The common stochastic channel and exact product covariance establish the full comparison inequality.",
+    "A separate omission control uses Dirac rows on ZMod 5 and F(x,y)=(4*x+2*y,2*x+4*y). It has normalized nonnegative laws, a deterministic common channel, square-swap, diagonal transparency and exact product covariance, yet distinct laws with zero affinity. Thus positive overlap is essential to equality of laws."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteOutcomeChannelWall.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteOutcomeChannelWall.Channel.affinity_data_processing",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.affinity_product",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.comparison_nonexpanding_of_common_channel",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.reconstructionOfCommonChannel",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.all_laws_equal_of_common_channel",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.dirac_nonnegative",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.dirac_normalized",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.operation_square",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.operation_diagonal",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.common_channel_covariance",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.logarithmic_comparison_zero",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.distinct_laws",
+        "IDT.QMClosure.FiniteOutcomeChannelWall.ZeroOverlapControl.zero_overlap"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_outcome_affinity_rigidity", "classical_affinity_log_wall"]
+  limits := [
+    "This wall applies to one fixed finite outcome space under exact all-input product covariance and positive pairwise overlap. It assumes no finite raw carrier and establishes no exclusion for all finite measurements or approximate models.",
+    "The Dirac omission control has zero totalized-log comparison even between its distinct laws. Its zero affinities receive no statistical-distance interpretation through the totalized logarithm.",
+    "No physical channel availability, original-response calibration, actual detector events, Born interpretation, QM closure or physical-scale derivation follows."] }
+
+def nativeGaussianIndependenceCharacterization : ResearchTask := {
+  id := "native_gaussian_independence_characterization"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply iid Borel random vectors X,Y on R squared with common law mu, the fixed 90-degree rotation J, and linear maps A=(I+J)/2 and B=(I-J)/2. Require AX+BY and BX+AY to be independent. No moment, density or growth premise is used in the reviewed analytic argument."]
+  conclusions := [
+    "The independently reviewed analytic argument characterizes mu as N(m,sigma squared I), allowing sigma squared=0 and hence Dirac laws. Both outputs have the same marginal mu.",
+    "The characteristic-function route first excludes zeros using the contracting A and B maps, fixes the continuous sign, takes a global continuous logarithm on R squared, and derives a finite-difference identity. Mollification makes the Hessian rotation-invariant and yields an isotropic quadratic plus affine logarithm. Characteristic-function symmetry and boundedness give the Gaussian form."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "A Lean artifact for the native two-dimensional iid independence characterization, including zero exclusion, continuous logarithm, finite-difference regularization and the degenerate Gaussian case."]
+  dependencies := []
+  limits := [
+    "This is an analytic result awaiting formalization and carries no kernel-checked evidence. It classifies one iid noise law after supplying real coordinates and the specified linear mixer.",
+    "A translated preparation family, common variance across preparations, physical coordinates, a detector, the original response Qraw and physical comparison scale remain outside this characterization."] }
+
+def gaussianStatisticalRealizationAndDetectorBoundary : ResearchTask := {
+  id := "gaussian_statistical_realization_detector_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For the analytic realization supply centered isotropic Gaussian preparations K(x)=N(x,sigma squared I) on R squared with sigma squared>0 and the native orthogonal two-port mixer. The translated family, real coordinates and shared variance are supplied.",
+    "For the separate detector calculation supply a continuous positive effect g with g<=1 and g(0)=1, and require its product effect to be invariant under the native mixer."]
+  conclusions := [
+    "The analytic Gaussian family gives a nontrivial common-channel full-product realization. Its actual affinity is exp(-norm(x-y) squared/(8*sigma squared)), and its Jeffreys comparison is norm(x-y) squared/sigma squared. Its shared positive variance and centering/translation convention remain supplied.",
+    "The analytic product-effect invariance argument gives g(z)=exp(-c*norm(z) squared), c>=0. Centered Gaussian acceptance is (1+2*c*sigma squared)^(-1)*exp(-c*norm(x) squared/(1+2*c*sigma squared)). Its normalized negative logarithm is quadratic with a free detector parameter c.",
+    "For a generic nonzero noise mean m, minus the log density ratio at external zero is (norm(m+x) squared-norm(m) squared)/(2*sigma squared). Radial identification requires centering or evaluation at the baseline center. Nonlinear coordinate conjugation preserves the native construction in the conjugated coordinates without selecting an external norm."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "A Lean artifact for the nontrivial isotropic Gaussian common-channel product-covariant realization and its affinity and Jeffreys formulas.",
+    "A separate Lean artifact for continuous positive product-effect invariance and Gaussian acceptance, with explicit centering and detector assumptions."]
+  dependencies := ["classical_statistical_process_bridge",
+    "native_gaussian_independence_characterization"]
+  limits := [
+    "The realization, density and detector calculations remain analytic and unformalized. They supply no checked nontrivial model for the statistical-process contract.",
+    "A density value at a point depends on the chosen density version, and a Gaussian singleton has zero probability. Point-density evaluation supplies no finite detector event.",
+    "The detector invariance law and a physical readout identity are additional premises. No independently given Qraw is identified, and no calibrated scale, actualization, Born, composites, Bell or QM closure follows."] }
+
 def rawPlanePhaseProcessComparisonControl : ResearchTask := {
   id := "raw_plane_phase_process_comparison_control"
   stage := .conditionalKernelTheorem
@@ -6593,7 +6750,7 @@ def openBridge (id : String) (obligation : String) : ResearchTask := {
 /-- Global obligations remain live independently of the conditional theorems. -/
 def globalBridges : List ResearchTask := [
   openBridge "physical_process_comparison_calibration"
-    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Under the actual native mixer whole-pair TV is preserved, while the sum of marginal Dirac TVs and the sum of squared marginal Dirac TVs each change from one to two on the checked witness. Squared TV also fails ordinary probability-weighted flagged additivity on the supplied control. These results leave the original response Q identification open. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies. The checked pair-comparison reconstruction now derives conservation, observed mediality and full squared Hilbert distance from an arbitrary carrier and transparent square-swap gate with a symmetric nonnegative zero-diagonal real comparison satisfying exact universal summed pair nonexpansion. The pair-port sum and all-input process law remain supplied. A separately supplied positive affinity with product-affinity nondecrease under the gate implies this negative-log pair law. Ordinary classical-affinity Gram positivity alone does not supply CND of its negative logarithm or entrywise-root positivity, as the exact three-Bernoulli countercontrol shows. Identifying the original response Qraw(x) with c*delta(x,o) for a positive scale c remains open. In the negative-log specialization this requires Qraw(x)=c*(-log A(x,o)) for a physically justified affinity and scale.",
+    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Under the actual native mixer whole-pair TV is preserved, while the sum of marginal Dirac TVs and the sum of squared marginal Dirac TVs each change from one to two on the checked witness. Squared TV also fails ordinary probability-weighted flagged additivity on the supplied control. These results leave the original response Q identification open. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies. The checked pair-comparison reconstruction now derives conservation, observed mediality and full squared Hilbert distance from an arbitrary carrier and transparent square-swap gate with a symmetric nonnegative zero-diagonal real comparison satisfying exact universal summed pair nonexpansion. The pair-port sum and all-input process law remain supplied. A separately supplied positive affinity with product-affinity nondecrease under the gate implies this negative-log pair law. Ordinary classical-affinity Gram positivity alone does not supply CND of its negative logarithm or entrywise-root positivity, as the exact three-Bernoulli countercontrol shows. Identifying the original response Qraw(x) with c*delta(x,o) for a positive scale c remains open. In the negative-log specialization this requires Qraw(x)=c*(-log A(x,o)) for a physically justified affinity and scale. The separate ordinary statistical entropy route now derives summed pair comparison nonexpansion from actual KL data processing, independent-product additivity and one state-independent Markov channel with exact full-product covariance on all raw preparation pairs. All ordered preparation KL divergences must be finite. The resulting Jeffreys comparison feeds the existing full-distance reconstruction without an assumed comparison-level contraction law. This comparison is distinct from the generic positive-affinity negative-log route. The original response Qraw and its positive calibration against the new comparison readout remain open. A nonconstant preparation family on one fixed finite outcome space with positive pairwise actual affinity is excluded under the full reconstruction contract, even when the raw carrier is unrestricted. The finite common-channel affinity theorem derives the comparison inequality for that fixed-finite-outcome wall. Continuum Gaussian realization and native iid Gaussian characterization remain analytic tasks awaiting Lean formalization. No physical detector event, actualization, Born, tensor/composite, Bell or physical-scale closure is supplied.",
   openBridge "physical_global_residual_invariance"
     "Justify invariance of an exhaustive global no-port-record event when pair-weight conservation is required. At fixed positive exposure and unchanged outside-port contribution the checked normalization identity makes these equivalent. Spectator locality alone supplies no such invariance in the supplied power-response family. Covariance through an effect order automorphism, together with a vacuum-fixed process, makes a detector invariant when that actual detector is identified with the least vacuum-certain effect. The checked full-effect native countercontrol has a least effect, vacuum covariance and reversibility while a different chosen power residual changes. The detector identification remains an additional physical obligation.",
   openBridge "physical_fixed_resource_reference_domain"
@@ -6601,7 +6758,7 @@ def globalBridges : List ResearchTask := [
   openBridge "physical_detector_readout_availability"
     "Justify the physically available detector and exhaustive event domain, including any supplied no-port-record outcome. Normalized Option-valued readouts, basis calibration and preserved spectator ports alone do not establish detector availability, actual events or origins of the supplied complex geometry and quadratic exposure. The full mathematical effect space contains every [0,1]-valued state function, including discontinuous tests. Its least vacuum-certain effect is the exact-vacuum indicator. On the checked three-wire carrier, leastness selects k=1 only within the supplied power-residual family. Physical availability of those effects and identification of the actual detector with that least effect remain open.",
   openBridge "physical_noise_carrier_covariance"
-    "Justify the physical noise carrier, admitted distributions and covariance law, including whether the law is exact and which norm and entry lower bounds control its error. On finite carriers strict positivity, row normalization, square-swap, diagonal transparency and exact full product covariance force identical rows, without a uniform-row conclusion. Identity noise retains distinguished rows and exact covariance while having zeros. Positive noisy-identity kernels can have arbitrarily small coefficient and channel-TV covariance defects while distinct rows remain almost maximally TV-distinguishable as their positivity floor tends to zero. Stability under a fixed positive floor remains open. The rational binary-noise theorem applies on any carrier but only to finite-support distributions. These results leave continuum and Gaussian-noise routes open. The checked negative-log bridge turns a supplied strictly positive product-affinity nondecrease law into summed pair-comparison nonexpansion. Together with the separate symmetric, diagonal-one and at-most-one affinity laws and transparent square-swap gate, this feeds the conditional full-distance reconstruction. These implications do not construct a physical noise carrier or prove the requisite Markov data-processing, product covariance, detector realization or affinity existence laws. Ordinary affinity PSD is insufficient, as witnessed by the actual three-Bernoulli negative-log and entrywise-square-root countercontrols. Identification of Qraw=c*(-log A(-,o)), the positive scale c and physical applicability remain open.",
+    "Justify the physical noise carrier, admitted distributions and covariance law, including whether the law is exact and which norm and entry lower bounds control its error. On finite carriers strict positivity, row normalization, square-swap, diagonal transparency and exact full product covariance force identical rows, without a uniform-row conclusion. Identity noise retains distinguished rows and exact covariance while having zeros. Positive noisy-identity kernels can have arbitrarily small coefficient and channel-TV covariance defects while distinct rows remain almost maximally TV-distinguishable as their positivity floor tends to zero. Stability under a fixed positive floor remains open. The rational binary-noise theorem applies on any carrier but only to finite-support distributions. These results leave continuum and Gaussian-noise routes open. The checked negative-log bridge turns a supplied strictly positive product-affinity nondecrease law into summed pair-comparison nonexpansion. Together with the separate symmetric, diagonal-one and at-most-one affinity laws and transparent square-swap gate, this feeds the conditional full-distance reconstruction. These implications do not construct a physical noise carrier or prove the requisite Markov data-processing, product covariance, detector realization or affinity existence laws. Ordinary affinity PSD is insufficient, as witnessed by the actual three-Bernoulli negative-log and entrywise-square-root countercontrols. Identification of Qraw=c*(-log A(-,o)), the positive scale c and physical applicability remain open. The fixed-finite-outcome affinity wall is separate from the earlier finite-raw-carrier covariance wall. On one fixed finite outcome space, normalized nonnegative rows with all-pairs positive affinity and the full transparent square-swap negative-log reconstruction contract have identical laws for an arbitrary raw carrier. Actual finite stochastic-channel affinity data processing and product multiplicativity derive that contract's comparison law when one common channel has exact full-product covariance on every raw pair. The ordinary statistical entropy route works on arbitrary measurable outcome spaces with one common Markov channel and finite KL for every ordered preparation pair, deriving its Jeffreys comparison law from actual data processing and product additivity. Actual affinity data processing and product multiplicativity on arbitrary measurable outcome spaces remain unformalized. The finite-KL entropy route leaves the weaker positive-affinity route open, and the checked stochastic-affinity adapter covers finite outcome spaces only. Neither route justifies the physical preparation family or channel covariance. The reviewed continuum Gaussian realization and one-law native iid independence characterization remain analytic and unformalized. Their supplied coordinates, translated family, common variance and detector assumptions remain explicit. The original response Qraw, its calibration, finite detector events, actualization, Born, composites, Bell and physical scales remain open.",
   openBridge "physical_raw_root_medial_all_input_closure"
     "Physically justify the raw root, exact medial law and closure over all inputs. The checked network equivalence identifies mediality with full row/column layer commutation under square-swap. The checked four-state control satisfies square-swap, diagonal transparency, declared-reference balance and all six raw probability kinds, yet violates that network law in an actual five-wire preparation. Mere disjoint-support locality or one balanced reference splitter cannot replace overlapping-network interchange. The checked continuous nonlinear complex mixer also retains exact native vacuum outputs, joint complex homogeneity, transparency, square-swap and squared-norm conservation while violating mediality and yielding a different probability from the native interpretation of the same actual word. These regularity and balance conditions therefore do not supply the missing interchange law.",
   openBridge "real_archimedean_readout_codomain"
@@ -6708,6 +6865,10 @@ def researchTasks : List ResearchTask := [
   threeSourceDistributiveSwapRoot, threeSourceExchangeReadoutBoundary,
   oneSidedDistributiveSwapControl, rawProcessComparisonBridge,
   pairComparisonReconstruction, classicalAffinityLogWall,
+  finiteOutcomeAffinityRigidity, relativeEntropyDataProcessing,
+  classicalStatisticalProcessBridge, finiteOutcomeChannelWall,
+  nativeGaussianIndependenceCharacterization,
+  gaussianStatisticalRealizationAndDetectorBoundary,
   rawPlanePhaseProcessComparisonControl, rawClassicalProcessEnvelopeOmissionRoute,
   rawPowerLossReadoutControl, boundedComparisonReferenceWall,
   classicalMarginalComparisonWall, vacuumSupportEffectBoundary,
