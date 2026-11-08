@@ -5422,6 +5422,86 @@ def rawProcessComparisonBridge : ResearchTask := {
     "Tensor/composite, entanglement and Bell closure remain outside this result. The classical product-distribution reference in the separate classical completion is a different construction.",
     "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
 
+def pairComparisonReconstruction : ResearchTask := {
+  id := "pair_comparison_reconstruction"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply an arbitrary carrier V, a chosen vacuum o and a total two-port operation F. Require F squared equal to swap and F(x,x)=(x,x) for every input.",
+    "Supply a real comparison delta that is symmetric, nonnegative and zero on the diagonal. For every four preparations x,y,u,v require delta((F(x,y))1,(F(u,v))1)+delta((F(x,y))2,(F(u,v))2)<=delta(x,u)+delta(y,v). This exact sum and its universal process inequality are supplied."]
+  conclusions := [
+    "Derive exact pair-comparison isometry from square-swap. With Q(x)=delta(x,o), derive nonnegative vacuum-zero pair-weight conservation.",
+    "For the reconstructed polarization G(x,y)=(Q(x)+Q(y)-delta(x,y))/2, derive observed mediality and the sparse marginal law. Raw addition, Gram positivity and conditional negative definiteness are absent from the input contract.",
+    "Construct the observed quotient and a mathematical complex Hilbert feature map with Q(x)=norm(feature(x)) squared and the full supplied delta(x,y)=norm(feature(x)-feature(y)) squared. Derive comparison attenuation by one half under the reconstructed vacuum splitter A.",
+    "The supplied comparison is zero exactly when preparations are observationally equivalent under the reconstructed weight. A separate existing complex mixer with squared-norm comparison satisfies every contract premise, has delta(1,0)=1 and produces a nonzero reconstructed feature."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PairComparisonReconstruction.lean"
+      declarations := [
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.comparison_isometry",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.conserved",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.observed_medial",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.sparse",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.norm_feature_sq",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.comparison_half_A",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.inner_feature_re",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.comparison_eq_norm_sub_sq",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.feature_eq_iff_observationalEq",
+        "IDT.QMClosure.PairComparisonReconstruction.Contract.comparison_eq_zero_iff_observationalEq",
+        "IDT.QMClosure.PairComparisonReconstruction.ComplexWitness.model",
+        "IDT.QMClosure.PairComparisonReconstruction.ComplexWitness.comparison_one_zero",
+        "IDT.QMClosure.PairComparisonReconstruction.ComplexWitness.feature_one_ne_zero"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_process_comparison_bridge", "raw_observable_medial_wall",
+    "raw_sparse_marginal_reconstruction", "operational_context_quotient"]
+  limits := [
+    "The pair-port additive comparison rule and exact all-input process inequality remain supplied separability and process laws. The Hilbert carrier is a conditional mathematical construction. The complex consistency example supplies its carrier, mixer and squared-norm comparison and establishes no primitive physical origin.",
+    "The reconstructed Q=delta(-,o) is not identified with the original response Qraw. The generic identification Qraw(x)=c*delta(x,o) for a positive scale c remains open. For the negative-log-affinity specialization this is Qraw(x)=c*(-log A(x,o)); the scale and physical origin of the affinity and process laws remain open.",
+    "No physical detector origin, event actualization, Born interpretation, composites, Bell, physical-scale derivation or full-QM closure is established. Public and manifest statuses remain unchanged."] }
+
+def classicalAffinityLogWall : ResearchTask := {
+  id := "classical_affinity_log_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply the three Bernoulli rows (1/5,4/5), (1/2,1/2) and (4/5,1/5). Their actual finite classical affinity is sum_r sqrt(P_i(r)*P_j(r)).",
+    "The separate abstract negative-log bridge assumes a supplied strictly positive affinity A and a supplied gate F under which the product of the two output-port affinities is at least the product of the two input-port affinities."]
+  conclusions := [
+    "Every actual probability-row entry is positive and each row sums to one. The actual affinity is symmetric, positive, at most one, diagonal-one and positive semidefinite by its square-root-row Gram factorization. Its adjacent entry is a=3/sqrt(10) and its endpoint entry is 4/5.",
+    "The actual symmetric nonnegative zero-diagonal comparison delta=-log(affinity) fails conditional negative definiteness. For zero-sum c=(1,-2,1), its quadratic form is exactly 2*log(81/80)>0.",
+    "The entrywise square root of the actual affinity fails positive semidefiniteness. For c=(1,-2*sqrt(a),1), its quadratic form is 2*(1+sqrt(4/5)-2*a)<0.",
+    "For a separately supplied affinity, symmetry, diagonal-one and the upper bound one transfer to negative-log symmetry, diagonal-zero and nonnegativity under positivity. The separately supplied product-affinity process inequality implies the exact summed pair negative-log nonexpansion law. The affinityContract adapter assembles these explicit laws with a supplied vacuum and transparent square-swap gate; negativeLog_distance gives the resulting full squared Hilbert distance."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ClassicalAffinityLogWall.lean"
+      declarations := [
+        "IDT.QMClosure.ClassicalAffinityLogWall.probabilityRow_positive",
+        "IDT.QMClosure.ClassicalAffinityLogWall.probabilityRow_normalized",
+        "IDT.QMClosure.ClassicalAffinityLogWall.affinity_matrix",
+        "IDT.QMClosure.ClassicalAffinityLogWall.adjacent_eq_three_div_sqrt_ten",
+        "IDT.QMClosure.ClassicalAffinityLogWall.affinity_positive",
+        "IDT.QMClosure.ClassicalAffinityLogWall.affinity_le_one",
+        "IDT.QMClosure.ClassicalAffinityLogWall.affinity_eq_gram",
+        "IDT.QMClosure.ClassicalAffinityLogWall.affinity_posSemidef",
+        "IDT.QMClosure.ClassicalAffinityLogWall.logWitness_zero_sum",
+        "IDT.QMClosure.ClassicalAffinityLogWall.logWitness_quadraticForm",
+        "IDT.QMClosure.ClassicalAffinityLogWall.logWitness_positive",
+        "IDT.QMClosure.ClassicalAffinityLogWall.logComparison_not_conditionallyNegative",
+        "IDT.QMClosure.ClassicalAffinityLogWall.rootWitness_quadraticForm",
+        "IDT.QMClosure.ClassicalAffinityLogWall.rootWitness_negative",
+        "IDT.QMClosure.ClassicalAffinityLogWall.rootAffinity_not_posSemidef",
+        "IDT.QMClosure.ClassicalAffinityLogWall.negativeLog_symmetric",
+        "IDT.QMClosure.ClassicalAffinityLogWall.negativeLog_self",
+        "IDT.QMClosure.ClassicalAffinityLogWall.negativeLog_nonnegative",
+        "IDT.QMClosure.ClassicalAffinityLogWall.negativeLog_pair_nonexpanding",
+        "IDT.QMClosure.ClassicalAffinityLogWall.affinityContract",
+        "IDT.QMClosure.ClassicalAffinityLogWall.negativeLog_distance"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_process_comparison_bridge", "classical_marginal_comparison_wall",
+    "pair_comparison_reconstruction"]
+  limits := [
+    "Ordinary classical-affinity positivity and Gram positivity do not suffice to derive CND of the negative logarithm or positive semidefiniteness of every positive entrywise power. The full universal globally covariant gate contract remains a separate stronger hypothesis.",
+    "The abstract product-affinity law is supplied. No Markov data-processing theorem, admissible noise carrier, gate-compatible detector realization or statistical detector-model existence theorem is established here.",
+    "No identification of the original response Qraw, physical comparison scale, event actualization, Born interpretation, composites, Bell, full QM or physical-scale closure is established. Public and manifest statuses remain unchanged."] }
+
 def rawPlanePhaseProcessComparisonControl : ResearchTask := {
   id := "raw_plane_phase_process_comparison_control"
   stage := .conditionalKernelTheorem
@@ -6513,7 +6593,7 @@ def openBridge (id : String) (obligation : String) : ResearchTask := {
 /-- Global obligations remain live independently of the conditional theorems. -/
 def globalBridges : List ResearchTask := [
   openBridge "physical_process_comparison_calibration"
-    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Under the actual native mixer whole-pair TV is preserved, while the sum of marginal Dirac TVs and the sum of squared marginal Dirac TVs each change from one to two on the checked witness. Squared TV also fails ordinary probability-weighted flagged additivity on the supplied control. These results leave the original response Q identification open. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies.",
+    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Under the actual native mixer whole-pair TV is preserved, while the sum of marginal Dirac TVs and the sum of squared marginal Dirac TVs each change from one to two on the checked witness. Squared TV also fails ordinary probability-weighted flagged additivity on the supplied control. These results leave the original response Q identification open. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies. The checked pair-comparison reconstruction now derives conservation, observed mediality and full squared Hilbert distance from an arbitrary carrier and transparent square-swap gate with a symmetric nonnegative zero-diagonal real comparison satisfying exact universal summed pair nonexpansion. The pair-port sum and all-input process law remain supplied. A separately supplied positive affinity with product-affinity nondecrease under the gate implies this negative-log pair law. Ordinary classical-affinity Gram positivity alone does not supply CND of its negative logarithm or entrywise-root positivity, as the exact three-Bernoulli countercontrol shows. Identifying the original response Qraw(x) with c*delta(x,o) for a positive scale c remains open. In the negative-log specialization this requires Qraw(x)=c*(-log A(x,o)) for a physically justified affinity and scale.",
   openBridge "physical_global_residual_invariance"
     "Justify invariance of an exhaustive global no-port-record event when pair-weight conservation is required. At fixed positive exposure and unchanged outside-port contribution the checked normalization identity makes these equivalent. Spectator locality alone supplies no such invariance in the supplied power-response family. Covariance through an effect order automorphism, together with a vacuum-fixed process, makes a detector invariant when that actual detector is identified with the least vacuum-certain effect. The checked full-effect native countercontrol has a least effect, vacuum covariance and reversibility while a different chosen power residual changes. The detector identification remains an additional physical obligation.",
   openBridge "physical_fixed_resource_reference_domain"
@@ -6521,7 +6601,7 @@ def globalBridges : List ResearchTask := [
   openBridge "physical_detector_readout_availability"
     "Justify the physically available detector and exhaustive event domain, including any supplied no-port-record outcome. Normalized Option-valued readouts, basis calibration and preserved spectator ports alone do not establish detector availability, actual events or origins of the supplied complex geometry and quadratic exposure. The full mathematical effect space contains every [0,1]-valued state function, including discontinuous tests. Its least vacuum-certain effect is the exact-vacuum indicator. On the checked three-wire carrier, leastness selects k=1 only within the supplied power-residual family. Physical availability of those effects and identification of the actual detector with that least effect remain open.",
   openBridge "physical_noise_carrier_covariance"
-    "Justify the physical noise carrier, admitted distributions and covariance law, including whether the law is exact and which norm and entry lower bounds control its error. On finite carriers strict positivity, row normalization, square-swap, diagonal transparency and exact full product covariance force identical rows, without a uniform-row conclusion. Identity noise retains distinguished rows and exact covariance while having zeros. Positive noisy-identity kernels can have arbitrarily small coefficient and channel-TV covariance defects while distinct rows remain almost maximally TV-distinguishable as their positivity floor tends to zero. Stability under a fixed positive floor remains open. The rational binary-noise theorem applies on any carrier but only to finite-support distributions. These results leave continuum and Gaussian-noise routes open.",
+    "Justify the physical noise carrier, admitted distributions and covariance law, including whether the law is exact and which norm and entry lower bounds control its error. On finite carriers strict positivity, row normalization, square-swap, diagonal transparency and exact full product covariance force identical rows, without a uniform-row conclusion. Identity noise retains distinguished rows and exact covariance while having zeros. Positive noisy-identity kernels can have arbitrarily small coefficient and channel-TV covariance defects while distinct rows remain almost maximally TV-distinguishable as their positivity floor tends to zero. Stability under a fixed positive floor remains open. The rational binary-noise theorem applies on any carrier but only to finite-support distributions. These results leave continuum and Gaussian-noise routes open. The checked negative-log bridge turns a supplied strictly positive product-affinity nondecrease law into summed pair-comparison nonexpansion. Together with the separate symmetric, diagonal-one and at-most-one affinity laws and transparent square-swap gate, this feeds the conditional full-distance reconstruction. These implications do not construct a physical noise carrier or prove the requisite Markov data-processing, product covariance, detector realization or affinity existence laws. Ordinary affinity PSD is insufficient, as witnessed by the actual three-Bernoulli negative-log and entrywise-square-root countercontrols. Identification of Qraw=c*(-log A(-,o)), the positive scale c and physical applicability remain open.",
   openBridge "physical_raw_root_medial_all_input_closure"
     "Physically justify the raw root, exact medial law and closure over all inputs. The checked network equivalence identifies mediality with full row/column layer commutation under square-swap. The checked four-state control satisfies square-swap, diagonal transparency, declared-reference balance and all six raw probability kinds, yet violates that network law in an actual five-wire preparation. Mere disjoint-support locality or one balanced reference splitter cannot replace overlapping-network interchange. The checked continuous nonlinear complex mixer also retains exact native vacuum outputs, joint complex homogeneity, transparency, square-swap and squared-norm conservation while violating mediality and yielding a different probability from the native interpretation of the same actual word. These regularity and balance conditions therefore do not supply the missing interchange law.",
   openBridge "real_archimedean_readout_codomain"
@@ -6627,6 +6707,7 @@ def researchTasks : List ResearchTask := [
   rawLocalMidpointCompatibility, rawPlanePhaseLocalMidpointControl,
   threeSourceDistributiveSwapRoot, threeSourceExchangeReadoutBoundary,
   oneSidedDistributiveSwapControl, rawProcessComparisonBridge,
+  pairComparisonReconstruction, classicalAffinityLogWall,
   rawPlanePhaseProcessComparisonControl, rawClassicalProcessEnvelopeOmissionRoute,
   rawPowerLossReadoutControl, boundedComparisonReferenceWall,
   classicalMarginalComparisonWall, vacuumSupportEffectBoundary,

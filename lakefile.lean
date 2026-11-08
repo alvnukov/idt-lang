@@ -334,6 +334,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.RawPlanePhaseMidpointControl,
     `Proofs.QMClosure.RawPlanePhaseLocalMidpointControl,
     `Proofs.QMClosure.RawProcessComparisonBridge,
+    `Proofs.QMClosure.PairComparisonReconstruction,
+    `Proofs.QMClosure.ClassicalAffinityLogWall,
     `Proofs.QMClosure.RawPlanePhaseProcessComparisonControl,
     `Proofs.QMClosure.RationalFiniteDistribution,
     `Proofs.QMClosure.RawClassicalProcessEnvelope,
