@@ -5419,7 +5419,7 @@ def rawProcessComparisonBridge : ResearchTask := {
     "The sum over the two raw pair ports is supplied as the block comparison. A Hilbert tensor product and an independent quantum-composite comparison rule remain outside the result.",
     "Quarter-turn isometry, attenuation calibration, calibrated independent-reference preparation and the port-additive all-input nonexpansion law remain explicit mathematical premises with open operational origin.",
     "Reversibility alone supplies no nonexpansion of this particular comparison. The four-point route retains the existing supplied LocalKernel and Gram-positivity assumptions.",
-    "Tensor/composite, entanglement and Bell closure remain outside this result. The classical product-distribution reference in the separate analytic completion is a different construction.",
+    "Tensor/composite, entanglement and Bell closure remain outside this result. The classical product-distribution reference in the separate classical completion is a different construction.",
     "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawPlanePhaseProcessComparisonControl : ResearchTask := {
@@ -5474,24 +5474,146 @@ def rawPlanePhaseProcessComparisonControl : ResearchTask := {
 
 def rawClassicalProcessEnvelopeOmissionRoute : ResearchTask := {
   id := "raw_classical_process_envelope_omission_route"
-  stage := .analyticAwaitingFormalization
+  stage := .conditionalKernelTheorem
   review := .parentAccepted
   assumptions := [
-    "Analytic construction awaiting a dedicated Lean artifact. For any raw carrier V consider rational finitely supported functions mu:V->Q with mu>=0 and total mass one. Supply Dirac preparations, pushforward, finite-support Markov rows with rational coefficients, Markov bind, independent product, marginals and mixtures with rational coefficients. The carrier V may be infinite. Each distribution and each Markov row has finite support.",
-    "Define TV(mu,nu)=(1/2)*sum_v abs(mu(v)-nu(v)). Raw deterministic gates act by pushforward on distributions over the corresponding raw wire tuples. For the original real response Q define Qbar(mu,nu)=sum_(x,y) mu(x)*nu(y)*Q(x,y), viewing the rational coefficients as real numbers. Finite support makes this a finite sum, and Qbar(Dirac(x),Dirac(y))=Q(x,y)."]
+    "For any supplied carrier V use rational finite-support probability distributions FinDist V, Dirac preparations, Markov bind, pushforward, independent product, marginals and rational mixtures. V may be infinite. Each distribution and each Markov row has finite support.",
+    "Use TV(mu,nu)=(1/2)*sum_v abs(mu(v)-nu(v)). Raw deterministic gates act by pushforward on distributions over their raw wire tuples. For any supplied real response Q define Qbar(mu,nu)=sum_(x,y) mu(x)*nu(y)*Q(x,y), with rational coefficients cast to real numbers. The gate-isometry specialization assumes the raw square-swap identity."]
   conclusions := [
-    "Analytic route. In this classical completion of an arbitrary raw gate, generic finite Markov data processing holds and adjoining a common independent probability-distribution reference preserves TV exactly. Composition is associative, operations on disjoint wire sets commute, and a local Markov operation preserves the untouched marginal. A reversible gate with fourth iterate equal to identity acts as a TV isometry.",
-    "The separately defined Qbar agrees with the original Q on Dirac preparations. The existing pure-preparation Jensen failure therefore persists on those embedded inputs and the embedded chosen pure midpoint, even when the completion has the preceding classical process laws. No data-processing inequality for Qbar is asserted.",
-    "Classical forgetting and mixture do not create the chosen coherent pure midpoint. Equality Dirac(m)=(Dirac(x)+Dirac(y))/2 forces x=y=m. The generic classical laws supply no derivation of the calibrated raw-Q comparison/nonexpansion principle. Existing raw calibration identities are inherited inputs whose origin remains unexplained."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/RawClassicalProcessEnvelope.lean"]
+    "Markov bind is associative and respects mixtures. Disjoint local Markov operations commute on arbitrary correlated joint inputs and preserve untouched marginals. TV obeys Markov data processing and is exactly invariant under adjoining a common independent distribution reference. A supplied square-swap gate acts as a TV isometry.",
+    "Dirac is injective. Equality Dirac(m)=(Dirac(x)+Dirac(y))/2 forces x=y=m. Classical mixing therefore cannot supply the selected distinct coherent pure midpoint.",
+    "Qbar agrees with the original Q on Dirac inputs. On the actual plane control, the selected pure midpoint comparison defect is exactly 1/10 and remains strictly positive after Dirac embedding.",
+    "The TV process laws and the Qbar obstruction concern different comparisons. This establishes a nonidentification and origin gap for the raw response comparison, with no countermodel to an explicitly supplied data-processing contract for that same Q."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RationalFiniteDistribution.lean"
+      declarations := [
+        "IDT.QMClosure.RationalFiniteDistribution.bind_bind",
+        "IDT.QMClosure.RationalFiniteDistribution.bind_mixture",
+        "IDT.QMClosure.RationalFiniteDistribution.disjoint_local_commute",
+        "IDT.QMClosure.RationalFiniteDistribution.remote_marginal_left",
+        "IDT.QMClosure.RationalFiniteDistribution.remote_marginal_right",
+        "IDT.QMClosure.RationalFiniteDistribution.tv_bind_le",
+        "IDT.QMClosure.RationalFiniteDistribution.tv_product_right",
+        "IDT.QMClosure.RationalFiniteDistribution.dirac_injective",
+        "IDT.QMClosure.RationalFiniteDistribution.half_mixture_dirac"] },
+    { sourcePath := "Proofs/QMClosure/RawClassicalProcessEnvelope.lean"
+      declarations := [
+        "IDT.QMClosure.RawClassicalProcessEnvelope.tv_map_eq_of_leftInverse",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.gate_fourfold",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.gate_pushforward_tv",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.Qbar_dirac",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.pure_midpoint_mixture_wall",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.plane_Qbar_midpoint_defect",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.plane_Qbar_midpoint_violation",
+        "IDT.QMClosure.RawClassicalProcessEnvelope.plane_midpoint_not_classical_mixture"] }]
+  plannedArtifacts := []
   dependencies := ["raw_process_comparison_bridge", "raw_plane_phase_process_comparison_control"]
   limits := [
-    "Every construction and assertion in this record is ANALYTIC/UNCHECKED. Empty checkedEvidence records the missing dedicated Lean artifact.",
-    "TV is a classical comparison on the added distributions. It is distinct from the original response Q and supplies no identification with physical outcome probabilities.",
-    "The completion has a classical joint latent carrier. It supplies no Bell, non-hidden-joint or full-physics omission control. TV need not continuously embed the original pure-preparation topology.",
-    "Independent product-distribution references are part of this classical envelope. They do not derive the calibrated coherent reference or port additivity required for the raw pair-port response comparison.",
-    "The main missing origin remains independent-reference calibration, port additivity and availability of overlapping exchange. Equivalent three-source laws and this classical envelope supply no derivation of those from weaker physical premises. No C0 rigidity upgrade is recorded.",
+    "TV is a classical comparison on the supplied distributions. No identification with the original response Q or physical outcome probabilities is established, and no Qbar data-processing inequality is asserted.",
+    "The completion has a classical joint carrier. It supplies no Bell or non-hidden-joint closure. Dirac embedding supplies no continuous embedding of the original pure-preparation topology.",
+    "Independent product-distribution references do not derive the calibrated coherent reference, pair-port comparison additivity or overlapping exchange required by the separate raw process route. Existing raw calibration identities remain supplied.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawPowerLossReadoutControl : ResearchTask := {
+  id := "raw_power_loss_readout_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply any finite complex array x and natural k>=1. Set e_i=normSq(x_i), E=sum_i e_i, exposure E^k, port_i=e_i^k/E^k and global residual=1-sum_i port_i. Option outcomes assign some i to port_i and none to the residual, using the totalized division convention at E=0.",
+    "Use the existing supplied native complex circuit grammar and mixer. Their conserved quadratic energy E supplies a common exposure. The general residual identity separately assumes fixed B>0 and the same outside-port normalization S before and after a process."]
+  conclusions := [
+    "All Option outcomes are nonnegative, normalized and at most one. On a zero-energy array every port is zero and the residual is one. Equal prepared arrays have equal readouts, output permutations fix none, and arbitrary finite vacuum padding preserves all old ports and the residual while assigning zero to new ports.",
+    "Every native circuit preserves E and exposure. A pair gate preserves the unconditional probability of each untouched wire. Nonzero basis inputs are calibrated, and all ports use the common fixed-exposure response. The corresponding prepared native circuit statements are checked.",
+    "At fixed B>0 and unchanged outside contribution S, the two normalization equations imply Wout-Win=B*(Lin-Lout), hence pair-weight conservation iff the global residual is invariant.",
+    "For the actual native balanced split, the residual changes from zero to 1-2*(1/2)^k and is invariant iff k=1 within this power family. Every k>1 fails pair-weight conservation on that split.",
+    "On the actual three-wire witness the untouched port has unconditional probability (1/2)^k both before and after. Conditioning on any port record changes its probability from 1/2 to 2^k/(2^k+2), with unequal values for every k>1. At k=2 this reproduces the existing 1/2 versus 2/3 control."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPowerLossReadoutControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawPowerLossReadoutControl.probability_nonneg",
+        "IDT.QMClosure.RawPowerLossReadoutControl.probability_sum_all_outcomes",
+        "IDT.QMClosure.RawPowerLossReadoutControl.probability_le_one",
+        "IDT.QMClosure.RawPowerLossReadoutControl.zero_energy_port",
+        "IDT.QMClosure.RawPowerLossReadoutControl.zero_energy_residual",
+        "IDT.QMClosure.RawPowerLossReadoutControl.common_local_response",
+        "IDT.QMClosure.RawPowerLossReadoutControl.prepared_array_consistency",
+        "IDT.QMClosure.RawPowerLossReadoutControl.probability_permutation",
+        "IDT.QMClosure.RawPowerLossReadoutControl.port_padding_old",
+        "IDT.QMClosure.RawPowerLossReadoutControl.port_padding_new",
+        "IDT.QMClosure.RawPowerLossReadoutControl.residual_padding",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_energy",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_exposure",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_spectator_port",
+        "IDT.QMClosure.RawPowerLossReadoutControl.circuit_prepared_consistency",
+        "IDT.QMClosure.RawPowerLossReadoutControl.circuit_output_permutation",
+        "IDT.QMClosure.RawPowerLossReadoutControl.circuit_spectator",
+        "IDT.QMClosure.RawPowerLossReadoutControl.circuit_vacuum_old",
+        "IDT.QMClosure.RawPowerLossReadoutControl.circuit_vacuum_new",
+        "IDT.QMClosure.RawPowerLossReadoutControl.circuit_vacuum_residual",
+        "IDT.QMClosure.RawPowerLossReadoutControl.basis_calibration",
+        "IDT.QMClosure.RawPowerLossReadoutControl.residual_defect",
+        "IDT.QMClosure.RawPowerLossReadoutControl.conservation_iff_residual_invariant",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_split_residual_after",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_split_residual_invariant_iff",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_pair_not_conserved",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_spectator_unconditional_invariant",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_spectator_port_before",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_spectator_port_after",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_click_conditional_before",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_click_conditional_after",
+        "IDT.QMClosure.RawPowerLossReadoutControl.native_click_conditioning_changes_spectator",
+        "IDT.QMClosure.RawPowerLossReadoutControl.quartic_click_conditional_matches_existing",
+        "IDT.QMClosure.RawPowerLossReadoutControl.quartic_response_matches_existing"] }]
+  plannedArtifacts := []
+  dependencies := ["native_vacuum_probability_family", "native_contextual_probability_control"]
+  limits := [
+    "The none outcome is one global no-port-record event. It supplies no additional circuit spectator wire, and unconditional spectator locality imposes no invariance of that global residual.",
+    "For k>1 the Option-valued family has a nonzero residual on split inputs and does not satisfy the earlier port-only normalized Law. The k=1 selection here is restricted to this supplied power family and this split, with no uniqueness theorem for arbitrary readouts.",
+    "The complex carrier, native geometry and conserved quadratic exposure are supplied countermodel resources. The elementary fixed-exposure residual identity supplies accounting; its use does not derive those resources from IDT primitives.",
+    "These real readouts on arbitrary complex arrays are separate from the rational finite-distribution envelope. No combination on a common probability carrier is established without additional restrictions.",
+    "Physical detector availability, exhaustive event interpretation, residual invariance and continuity at the vacuum remain open. No actualization, Bell, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def boundedComparisonReferenceWall : ResearchTask := {
+  id := "bounded_comparison_reference_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For finite depth N supply a real sequence f, real c>=0, real error epsilon, terminal bound f(N)<=M and recurrence f(n)<=c*f(n+1)+epsilon for n<N. The infinite recurrence additionally assumes c<1 and one upper bound M uniform over every n. Epsilon and M may be signed.",
+    "For comparisons D and a total reference map R on one carrier, the upper bound may depend on the input pair but must be uniform along its full R-iterate orbit. The exact collapse specialization assumes nonnegative D, attenuation D(Bx,By)=D(x,y)/2 and total calibration B(Rx)=x. The approximate specialization supplies errors directly in comparison units."]
+  conclusions := [
+    "Finite depth gives f(0)<=c^N*M+epsilon*sum_(j<N)c^j. At c=1/2 this is 2^(-N)*M+2*epsilon*(1-2^(-N)). The infinite uniformly bounded recurrence gives f(0)<=epsilon/(1-c), hence f(0)<=2*epsilon for half attenuation.",
+    "A per-pair orbit-uniform bound and D(x,y)<=D(Rx,Ry)/2+epsilon imply D(x,y)<=2*epsilon. With attenuation error epsilon and comparison-level calibration error abs(D(BRx,BRy)-D(x,y))<=eta, the bound is D(x,y)<=2*(epsilon+eta).",
+    "Nonnegative D, exact half attenuation, a total reference right inverse and per-pair orbit-uniform upper bounds force D=0. A global upper bound is a sufficient special case. The process-reference adapter takes R(z)=(F(z,Jz)).first under a global comparison bound, without a metric, reversibility, nonexpansion or additive-port premise.",
+    "For epsilon>=0, the bounded Bool comparison with values zero and 2*epsilon attains the robust half-attenuation error ceiling. A finite sharp chain has terminal value M and initial value 2^(-N)*M. For M>=0 it stays in [0,M]. Its exact step law is asserted only for n<N, so it supplies no infinite calibrated reference orbit.",
+    "Real-cast TV on rational FinDist is between zero and one, and distinct Dirac preparations have TV one. On the entire FinDist carrier of a nontrivial V, exact TV half attenuation is incompatible with any total reference right inverse."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/BoundedComparisonReferenceWall.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedComparisonReferenceWall.finite_recurrence_bound",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.finite_half_recurrence_bound",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.bounded_recurrence_bound",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.bounded_half_recurrence_bound",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.comparison_le_twice_error_of_orbit_bound",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.comparison_le_twice_combined_error",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.comparison_eq_zero_of_exact_half_reference",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.comparison_eq_zero_of_global_bound",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.process_reference_comparison_eq_zero",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.twoPointComparison_bounded",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.twoPointComparison_half_error",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.twoPointComparison_attains_error_ceiling",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.finiteSharpChain_step",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.finiteSharpChain_admissible",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.finiteSharpChain_attainment",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.real_tv_bounds",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.real_tv_dirac_of_ne",
+        "IDT.QMClosure.BoundedComparisonReferenceWall.no_total_tv_half_reference"] }]
+  plannedArtifacts := []
+  dependencies := ["raw_process_comparison_bridge", "raw_classical_process_envelope_omission_route"]
+  limits := [
+    "A finite bound at each separate iteration is insufficient. One upper bound must hold along the complete orbit for each fixed pair. Finite-depth estimates retain the terminal term and do not imply exact collapse.",
+    "All maps in the total-reference theorem act on one carrier. Changing resource budgets or moving between resource-indexed carriers does not establish its fixed-carrier hypotheses.",
+    "Pointwise preparation closeness alone supplies no comparison calibration error. Exact and approximate comparison laws, reference availability and resource bounds remain supplied mathematical hypotheses.",
+    "The TV incompatibility concerns exact total calibration on the entire normalized distribution carrier. It supplies no exclusion of restricted preparation domains or of the separate unbounded raw response comparison.",
     "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
 
 def rawSparseSignedControl : ResearchTask := {
@@ -6230,6 +6352,14 @@ def openBridge (id : String) (obligation : String) : ResearchTask := {
 
 /-- Global obligations remain live independently of the conditional theorems. -/
 def globalBridges : List ResearchTask := [
+  openBridge "physical_process_comparison_calibration"
+    "Justify the physical comparison, calibrated coherent reference and pair-port comparison rule used by the raw process route. Classical TV data processing and independent-distribution reference invariance concern a separate supplied comparison. Approximate preparation identities require their own comparison-level error control before the robust comparison theorem applies.",
+  openBridge "physical_global_residual_invariance"
+    "Justify invariance of an exhaustive global no-port-record event when pair-weight conservation is required. At fixed positive exposure and unchanged outside-port contribution the checked normalization identity makes these equivalent. The supplied power-response family preserves unconditional spectator ports while changing its global residual, so spectator locality alone supplies no such invariance.",
+  openBridge "physical_fixed_resource_reference_domain"
+    "Specify the physically available carrier, resource budget and reference-preparation domain. Exact half comparison attenuation and a total reference right inverse force a nonnegative comparison to vanish under one upper bound uniform along each reference orbit. Finite depth retains a terminal term, and changing resource carriers does not establish the total single-carrier hypotheses.",
+  openBridge "physical_detector_readout_availability"
+    "Justify the physically available detector and exhaustive event domain, including any supplied no-port-record outcome. Normalized Option-valued mathematical readouts, basis calibration and preserved spectator ports alone do not establish detector availability, actual events or physical origins of the supplied complex geometry and quadratic exposure.",
   openBridge "physical_raw_root_medial_all_input_closure"
     "Physically justify the raw root, exact medial law and closure over all inputs. The checked network equivalence identifies mediality with full row/column layer commutation under square-swap. The checked four-state control satisfies square-swap, diagonal transparency, declared-reference balance and all six raw probability kinds, yet violates that network law in an actual five-wire preparation. Mere disjoint-support locality or one balanced reference splitter cannot replace overlapping-network interchange. The checked continuous nonlinear complex mixer also retains exact native vacuum outputs, joint complex homogeneity, transparency, square-swap and squared-norm conservation while violating mediality and yielding a different probability from the native interpretation of the same actual word. These regularity and balance conditions therefore do not supply the missing interchange law.",
   openBridge "real_archimedean_readout_codomain"
@@ -6336,6 +6466,7 @@ def researchTasks : List ResearchTask := [
   threeSourceDistributiveSwapRoot, threeSourceExchangeReadoutBoundary,
   oneSidedDistributiveSwapControl, rawProcessComparisonBridge,
   rawPlanePhaseProcessComparisonControl, rawClassicalProcessEnvelopeOmissionRoute,
+  rawPowerLossReadoutControl, boundedComparisonReferenceWall,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
