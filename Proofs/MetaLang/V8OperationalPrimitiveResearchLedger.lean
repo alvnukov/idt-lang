@@ -7163,6 +7163,183 @@ def recordWindowStability : ResearchTask := {
     "A reversible integer clock with a separately supplied distinguished label can produce and retain a label while respecting relabeling covariance; that control supplies asymmetry and does not select an outcome from a symmetric probability profile.",
     "No actual chosen history, physical persistence times, thermodynamic theorem, energy accounting or matter-regime applicability is established."] }
 
+def normalizedEchoReadoutOrigin : ResearchTask := {
+  id := "normalized_echo_readout_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply the global complex carrier, topology, addition, serial multiplication and conjugate reversal, with a continuous nonnegative weight w satisfying w(0)=0, w(1)=1, multiplicativity and conjugation invariance.",
+    "Supply every algebraic normalized echo context: w(a)+w(b)=1 implies w(a*conj(a)+b*conj(b))=1. Physical availability of this context coverage remains supplied."]
+  conclusions := [
+    "Complex inverses give faithfulness. IVT supplies a scalar of weight 1/2; its balanced echo gives w(2)=4. Powers of two and IVT supply every positive real response level.",
+    "Common-scalar normalization gives universal echo and the complex star identity gives the parallelogram law. Existing polarization and continuity then select w=Complex.normSq and yield conservation for the supplied native coordinate mixer.",
+    "The support indicator satisfies all normalized echoes but is discontinuous and violates the parallelogram law. The continuous quartic weight has every positive real response level and passes all explicitly admitted deterministic echoes while violating full normalized echo and the parallelogram law."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NormalizedEchoReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.faithful",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.balanced_reference",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.two",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.positive_real_level",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.universal_echo",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.parallelogram",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.weight_eq_normSq",
+        "IDT.QMClosure.NormalizedEchoReadout.WeightLaws.native_pair_conservation"] },
+    { sourcePath := "Proofs/QMClosure/NormalizedEchoReadoutControls.lean"
+      declarations := [
+        "IDT.QMClosure.NormalizedEchoReadoutControls.support_normalized_echo",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.support_discontinuous",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.support_parallelogram_fails",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.quartic_laws",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.quartic_positive_real_level",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.deterministic_context_normalized",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.deterministic_context_echo",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.quartic_parallelogram_fails",
+        "IDT.QMClosure.NormalizedEchoReadoutControls.quartic_not_normalized_echo"] }]
+  plannedArtifacts := []
+  dependencies := ["operational_positive_readout", "mixer_record_naturality"]
+  limits := [
+    "The global raw weight has w(2)=4. A mathematical scalar witness alone leaves physical context realization open. Carrier, topology, addition, serial multiplication, reversal and global context availability retain physical justification obligations. Minimality of full normalized-context coverage remains open.",
+    "The direct IVT and algebra argument assumes normalized weight sums and derives norm-square selection. The operational sequence adapter, two-dimensional representation hypotheses and separate unitarity argument remain open under gks_operational_sequence_bridge.",
+    "Independent Qraw identification, Born interpretation, detector selection, event actualization, full QM, GR and physical-scale closure remain open."] }
+
+def gksOperationalSequenceBridge : ResearchTask := {
+  id := "gks_operational_sequence_bridge"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "Literature context only: Goyal, Knuth and Skilling, arXiv:0907.0909v3, sections II-III, equations 27-34. No operational sequence adapter has been accepted."]
+  conclusions := []
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Specify the sequence carrier and composability, coherent coarsening distinct from forgetting records, last-atomic-outcome sufficiency, repeatability and operational reversal.",
+    "Supply normalized-context availability, global amplitude extension and readout factorization through exact artifacts. Retrieve the precise two-dimensional Aczel-Hosszú hypotheses before using the representation theorem."]
+  dependencies := ["normalized_echo_readout_origin", "operational_positive_readout",
+    "mixer_record_naturality"]
+  limits := [
+    "A real-pair representation does not supply ordered-pair history readout; dense preparation means do not supply sequence amplitudes; raw F squared equal to swap does not supply history reversal; classical output independence does not supply temporal closure. A scalar representation theorem does not substitute for the two-dimensional hypotheses.",
+    "C2 equation 31 in isolation admits dual-number reversal-identity and sign counterexamples; these are not countermodels to the full paper. A full real-pair globally continuous probability extension may repair C2, but that route is unformalized. Unitarity remains separate in section IV, page 13.",
+    "Literature is not Lean proof. No public invalidity or novelty claim, Born interpretation, independently specified Qraw identity, event actualization, full QM, GR or calibrated-scale closure is recorded."] }
+
+def internalReferenceSupportOrigin : ResearchTask := {
+  id := "internal_reference_support_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Order theorem: a preorder and a coordinatewise-monotone two-port F with F squared equal to swap and every raw diagonal fixed.",
+    "Statistical support theorem: probability preparations, one common kernel with exact full-product covariance, raw square-swap and fixed diagonals. An internal reference K(x0) dominates every preparation; the reference-factorization adapter obtains this one-way absolute continuity from finite reference KL."]
+  conclusions := [
+    "Every preorder comparison reverses. On a partial order, comparable elements are equal. Common-kernel covariance preserves the preparation absolute-continuity preorder, so the internal reference connects every pair in both directions.",
+    "Every common effect has responses that are all zero, all one, or pointwise strictly between zero and one.",
+    "A Bool-squared fair/point-law routing control retains one common channel, full covariance, square-swap, internal reference preservation and finite reference KL while moving a diagonal and having infinite pairwise KL. A five-label control retains fixed diagonals and pair-dependent full covariance with finite internal-reference KL, but has infinite pairwise KL and admits no common channel."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentSwapRootOrderWall.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentSwapRootOrderWall.reverse_le",
+        "IDT.QMClosure.TransparentSwapRootOrderWall.eq_of_le"] },
+    { sourcePath := "Proofs/QMClosure/InternalReferenceSupportBridge.lean"
+      declarations := [
+        "IDT.QMClosure.InternalReferenceSupportBridge.product_absolutelyContinuous_iff",
+        "IDT.QMClosure.InternalReferenceSupportBridge.covariance_preserves_absolutelyContinuous",
+        "IDT.QMClosure.InternalReferenceSupportBridge.reverse_absolutelyContinuous",
+        "IDT.QMClosure.InternalReferenceSupportBridge.ReferenceContract.mutually_absolutelyContinuous",
+        "IDT.QMClosure.InternalReferenceSupportBridge.ReferenceContract.acceptance_trichotomy"] },
+    { sourcePath := "Proofs/QMClosure/InternalReferenceProcessControls.lean"
+      declarations := [
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutFixedDiagonal.contract",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutFixedDiagonal.reference_internal",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutFixedDiagonal.diagonal_not_fixed",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutFixedDiagonal.diagonal_law_moves",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutFixedDiagonal.infinite_pairwiseKL",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.operation_square",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.operation_diagonal",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.reference_preserving",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.covariance",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.finite_referenceKL",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.infinite_pairwiseKL",
+        "IDT.QMClosure.InternalReferenceProcessControls.WithoutCommonChannel.no_common_channel",
+        "IDT.QMClosure.InternalReferenceProcessControls.GaussianWitness.pointedModel",
+        "IDT.QMClosure.InternalReferenceProcessControls.GaussianWitness.preparations_distinct"] }]
+  plannedArtifacts := []
+  dependencies := ["reference_entropy_factorization_origin", "detector_endpoint_support_wall",
+    "classical_statistical_process_bridge"]
+  limits := [
+    "Mutual absolute continuity alone leaves log integrability open. The full pairwise-entropy bridge is recorded separately. The endpoint conclusion is pointwise strict interiority; a uniform positive margin requires its own premise.",
+    "The controls separate premises of the stronger support and pairwise-entropy result. These controls make no minimality claim for the earlier factorization theorem.",
+    "Independent Qraw identification, Born interpretation, detector selection, event actualization, full QM, GR and physical-scale closure remain open."] }
+
+def internalReferencePairwiseEntropyFrontier : ResearchTask := {
+  id := "internal_reference_pairwise_entropy_frontier"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Retain the arbitrary-measurable reference-entropy factorization contract: probability preparations, one common Markov kernel, invariant reference product, finite KL(K(x)||alpha), raw square-swap and exact marginal covariance. Add alpha=K(x0) and fixed raw diagonals.",
+    "The alternate PointedContract supplies full product covariance, probabilities, a chosen reference preparation, one-way finite KL to that preparation, raw square-swap, fixed diagonals and one common Markov channel. Reference-product invariance follows at the fixed reference diagonal."]
+  conclusions := [
+    "Mutual absolute continuity and the affinity data-processing cycle yield exact likelihood transport on the actual stationary coupling alpha squared compProd channel, whose two marginals are alpha squared.",
+    "Finite almost-everywhere log relations require no L1 premise. Product-coordinate separation makes Q_x=g_(a squared x)-g_(a x)+g_x/2 constant. Combining three Q relations gives the actual fourth raw iterate g_(a to the fourth x)=-g_x/4+c, with a(x)=fst(F(x,x0)).",
+    "Density normalization yields an Integrable reciprocal-quarter moment. Forward density integrability and Young's entropy inequality with supplied finite reference KL yield cross-log integrability and finite directed KL(K(x)||K(y)) for every pair.",
+    "The final adapter derives every helper premise from the original data. Both interfaces construct the existing classical statistical process contract with its all-pair finiteEntropy field."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/LikelihoodTransportSaturation.lean"
+      declarations := [
+        "IDT.QMClosure.LikelihoodTransportSaturation.ae_eq_condExp_of_integral_sqrt_eq",
+        "IDT.QMClosure.LikelihoodTransportSaturation.affinity_markov_le",
+        "IDT.QMClosure.LikelihoodTransportSaturation.likelihood_markov_of_affinity_eq"] },
+    { sourcePath := "Proofs/QMClosure/LogDensityProcessTransport.lean"
+      declarations := [
+        "IDT.QMClosure.LogDensityProcessTransport.ae_sum_eq_zero_separates",
+        "IDT.QMClosure.LogDensityProcessTransport.Contract.origin_sum",
+        "IDT.QMClosure.LogDensityProcessTransport.Contract.origin_quadratic_constant",
+        "IDT.QMClosure.LogDensityProcessTransport.Contract.reciprocal_log_witness"] },
+    { sourcePath := "Proofs/QMClosure/RelativeEntropyMomentTransfer.lean"
+      declarations := [
+        "IDT.QMClosure.RelativeEntropyMomentTransfer.integrable_exp_abs_llr_quarter",
+        "IDT.QMClosure.RelativeEntropyMomentTransfer.integrable_llr_of_reciprocal_quarter_moment",
+        "IDT.QMClosure.RelativeEntropyMomentTransfer.llr_sub_of_equivalent_reference",
+        "IDT.QMClosure.RelativeEntropyMomentTransfer.klDiv_ne_top_of_reciprocal_quarter_moment"] },
+    { sourcePath := "Proofs/QMClosure/InternalReferenceEntropyBridge.lean"
+      declarations := [
+        "IDT.QMClosure.InternalReferenceEntropyBridge.ReferenceContract.affinity_saturated",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.ReferenceContract.log_transport",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.ReferenceContract.logDensityProcess",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.ReferenceContract.reciprocal_quarter_moment",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.ReferenceContract.finite_pairwise_entropy",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.ReferenceContract.classicalProcess",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.PointedContract.referenceFactorization",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.PointedContract.finite_pairwise_entropy",
+        "IDT.QMClosure.InternalReferenceEntropyBridge.PointedContract.classicalProcess"] }]
+  plannedArtifacts := []
+  dependencies := ["internal_reference_support_origin", "reference_entropy_factorization_origin",
+    "classical_statistical_process_bridge"]
+  limits := [
+    "Helper transport and reciprocal-moment hypotheses are discharged by the final adapter. The argument uses genuine Integrable bounds and finite almost-everywhere relations. Arbitrary measurable outcome carriers are supported through the common forward kernel.",
+    "The existing process interfaces retain their definitions. The new pointed interface derives their all-pair finite entropy from its supplied one-way reference entropy.",
+    "At the reference preparation g_x0=0 expresses density ratio one. Detector acceptance, the echo algebra's zero input and an identification of statistical with echo readout retain separate obligations.",
+    "Physical Qraw identification, Born interpretation, detector selection, event actualization, tensor structure, dynamics, physical scales, full QM and GR remain open."] }
+
+def boundedLikelihoodProcessRigidity : ResearchTask := {
+  id := "bounded_likelihood_process_rigidity"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Standalone analytic target: probability preparations on an arbitrary measurable outcome carrier, one common Markov channel, full product covariance, raw F squared equal to swap and every raw diagonal fixed. For the compared preparations supply a finite positive constant C with P(x)<=C*P(y) as measures.",
+    "The standalone formulation has no finite-KL premise. The internal-reference consequence additionally assumes a preparation reference alpha dominating every preparation under the same exact full-carrier process laws."]
+  conclusions := [
+    "Parent and independent research review accept the analytic route, awaiting Lean: bounded domination is a coordinate-product preorder preserved by the common channel and probability marginals. Transparent-root preorder reversal yields reverse bounded domination.",
+    "Restrict to the absolute-continuity equivalence component of P(y), closed under the raw operation, and use P(y) as internal reference. Hellinger saturation gives likelihood and finite almost-everywhere log transport. Bounded g_x has oscillation osc(g_x)=osc(g_(a x))+osc(g_(b x)). The finite relations g_(a a x)+g_(b b x)=constant and g_(a b x)-g_(b a x)=constant give osc(g_(a x))=osc(g_(b x))=osc(g_x)/2.",
+    "Four actual a-iterations scale oscillation by 1/16, while the reciprocal-log identity scales it by 1/4. Hence the log density has zero oscillation, and probability normalization gives P(x)=P(y). The argument combines finite almost-everywhere relations.",
+    "For a dominated internal-reference family, each preparation distinct from alpha has reference-essential density supremum infinity and infimum zero. Either an individual finite upper likelihood bound or a positive lower bound forces equality. Finite effective reference support consequently forces the dominated family constant."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/BoundedLikelihoodProcessRigidity.lean"]
+  dependencies := ["internal_reference_support_origin",
+    "internal_reference_pairwise_entropy_frontier"]
+  limits := [
+    "All conclusions in this entry remain analytic and await a machine-checkable artifact. The dependencies identify reusable likelihood and log-transport machinery; finite KL is not a hypothesis of this standalone target. Log integrability must not be assumed through an unproved real-integral identity.",
+    "The likelihood bounds and essential extrema are individual preparation statements. A bound uniform over the family remains a separate condition. Exact product covariance and full-carrier closure would also have to hold for record laws before the rigidity result applied to observations.",
+    "FiniteOutcomeChannelWall.all_laws_equal_of_common_channel already proves fixed-finite-outcome constancy under all-pair positive affinity. The new analytic target is individual bounded-likelihood rigidity on arbitrary measurable carriers.",
+    "Physical Qraw identification, Born interpretation, detector selection, event actualization, tensor structure, dynamics, physical scales, full QM and GR remain open."] }
+
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
   stage := .openPhysicalBridge
@@ -7314,7 +7491,10 @@ def researchTasks : List ResearchTask := [
   nativePreparationNaturality, responsePhaseQuotientWall,
   portFrameAlignment, nativeSingleSourceReferenceWall, referenceOccurrenceCompilation,
   nativeRecipeContextRealization, nativeReferenceSeparation, nativeRecipeSubstitution,
-  referenceProvenanceAndSubstitution, recordWindowStability]
+  referenceProvenanceAndSubstitution, recordWindowStability,
+  normalizedEchoReadoutOrigin, gksOperationalSequenceBridge,
+  internalReferenceSupportOrigin, internalReferencePairwiseEntropyFrontier,
+  boundedLikelihoodProcessRigidity]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
