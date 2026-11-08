@@ -183,9 +183,17 @@ full QM and GR. The complex algebra and the actual pair's physical availability
 remain supplied interpretation work. The rational witnesses establish
 mathematical nonuniqueness on their stated carrier.
 
-The bounded-likelihood process-rigidity research task remains analytic with
-empty checked evidence. Temporary helper drafts supply no status change.
-The rational-carrier count-order alternative also remains analytic and
-unformalized, with the physical justification of its universal count order,
-reversal and actual echo preparation still open.
+The bounded-likelihood process-rigidity theorem has proof artifacts for
+one-way domination, essential-width elimination, density endpoints and
+constancy for families absolutely continuous with respect to a finite atomic
+internal reference, under its supplied exact process laws.
+[Bounded likelihood process rigidity](192-bounded-likelihood-process-rigidity.md)
+
+On the supplied rational Gaussian carrier, universal adjacent count order and
+an actual nondegenerate normalized echo select the squared norm. Its direct
+balanced specialization has a separate proof. The carrier, coherent
+operations, reversal, universal order and physical echo preparation remain
+supplied operational obligations. The signed and asymmetric controls remain
+analytic proposals awaiting artifacts.
+[Rational count-order readout](193-rational-count-order-readout.md)
 [Operational research ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)

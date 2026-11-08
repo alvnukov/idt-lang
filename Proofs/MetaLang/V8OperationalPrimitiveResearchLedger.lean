@@ -7360,28 +7360,58 @@ def singleEchoReadoutOrigin : ResearchTask := {
 
 def boundedLikelihoodProcessRigidity : ResearchTask := {
   id := "bounded_likelihood_process_rigidity"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "The standalone analytic target assumes probability preparations on an arbitrary measurable outcome carrier, one common Markov channel, full product covariance, raw F squared equal to swap and every raw diagonal fixed. For the compared preparations supply a finite positive constant C with P(x)<=C*P(y) as measures.",
-    "The standalone formulation has no finite-KL premise. The internal-reference consequence additionally assumes a preparation reference alpha dominating every preparation under the same exact full-carrier process laws."]
+    "Supply probability preparations on an arbitrary measurable outcome carrier, one raw operation with F squared equal to swap and every raw diagonal fixed, and one common Markov channel satisfying exact full product covariance for every raw pair. For the compared preparations supply a finite positive constant C with P(x)<=C*P(y) as measures.",
+    "The finite atomic internal-reference consequence additionally supplies P(y) as a finite sum of Dirac measures with positive finite NNReal weights and absolute continuity of every preparation with respect to P(y). The upper density-bound and essential-endpoint corollaries explicitly assume absolute continuity for the compared pair."]
   conclusions := [
-    "Parent and independent research review accept the analytic route, awaiting Lean. Bounded domination is a coordinate-product preorder preserved by products, the common kernel and probability marginals. Transparent-root preorder reversal yields reverse bounded domination.",
-    "Use the bounded-domination component {z | there exists a finite positive C with P(z)<=C*P(y)}. Reversal gives two-sided domination, and product/kernel/marginal closure together with the fixed reference diagonal makes this component closed under F. Two-sided Radon-Nikodym bounds derive finite KL to the internal reference P(y), then instantiate the existing PointedContract and logDensityProcess machinery.",
-    "The planned EssentialBounds helper represents lower and upper essential bounds lo and hi with sharp almost-everywhere bounds. Fubini gives additivity of bounds for independent-coordinate sums. The transported finite log relations make width(g_x)=width(g_(a x))+width(g_(b x)), while g_(a a x)+g_(b b x)=constant and g_(a b x)-g_(b a x)=constant give width(g_(a x))=width(g_(b x))=width(g_x)/2.",
-    "Four actual a-iterations scale width by 1/16, while the reciprocal-log identity scales it by 1/4. Hence the log density has zero width, and probability normalization gives P(x)=P(y). The argument combines finite almost-everywhere relations. Two-sided bounds supply log integrability within the analytic argument.",
-    "For a dominated internal-reference family, each preparation measure distinct from alpha has reference-essential density supremum infinity and infimum zero. Either an individual finite upper likelihood bound or a positive lower bound forces equality. An explicitly finite atomic reference with positive masses covering every preparation consequently forces the dominated family constant."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/BoundedLikelihoodProcessRigidity.lean",
-    "Proofs/QMClosure/BoundedLogProcessRigidity.lean",
-    "Proofs/QMClosure/BoundedDominationProcess.lean"]
+    "One-way bounded domination implies equality of preparation measures. Under the supplied full process contract bounded domination is equivalent to measure equality. Distinct preparation labels may still denote the same measure.",
+    "Products, a common kernel and probability marginals preserve the bounded-domination preorder. Transparent square-swap reversal gives reverse domination. The component of preparations bounded by an individual finite multiple of P(y) is closed under the raw operation. Two-sided bounds derive finite relative entropy, bounded log likelihood and log integrability, then instantiate the existing pointed and log-transport contracts.",
+    "Sharp finite almost-everywhere log bounds have additive widths for independent-coordinate sums. Transported log relations give equal half-widths for the two origin branches. Four actual a-iterations scale width by 1/16, while the reciprocal-log identity scales it by 1/4. Finite elimination forces zero width, and normalization identifies the probability measures.",
+    "An individual finite positive upper RN density bound forces equality when absolute continuity covers the preparation measure. A positive finite lower RN density bound forces equality even when a singular part is initially allowed. Distinct absolutely continuous preparation measures have reference-essential density supremum infinity and infimum zero.",
+    "An explicitly finite atomic internal reference dominating every preparation forces the family of preparation measures constant on an arbitrary measurable carrier. Its proof constructs a finite upper RN density bound for each preparation separately.",
+    "Two finite omission controls exhibit a preparation bounded by four times its internal reference and distinct from it. One omits fixed raw diagonals while retaining the common-channel covariance laws. The other retains fixed diagonals and pair-dependent covariance while excluding any one common channel."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/BoundedLogProcessRigidity.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedLogProcessRigidity.SharpBounds.exists_of_bounded",
+        "IDT.QMClosure.BoundedLogProcessRigidity.SharpBounds.width_productSum",
+        "IDT.QMClosure.BoundedLogProcessRigidity.Contract.ae_constant_of_individually_bounded"] },
+    { sourcePath := "Proofs/QMClosure/BoundedDominationProcess.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedDominationProcess.Contract.reverse_boundedDom",
+        "IDT.QMClosure.BoundedDominationProcess.Contract.operation_closed",
+        "IDT.QMClosure.BoundedDominationProcess.rnDeriv_bounds",
+        "IDT.QMClosure.BoundedDominationProcess.integrable_llr_reference",
+        "IDT.QMClosure.BoundedDominationProcess.integrable_llr_preparation",
+        "IDT.QMClosure.BoundedDominationProcess.Contract.component_finiteReferenceEntropy",
+        "IDT.QMClosure.BoundedDominationProcess.Contract.pointedComponent",
+        "IDT.QMClosure.BoundedDominationProcess.Contract.logDensityProcess"] },
+    { sourcePath := "Proofs/QMClosure/BoundedLikelihoodProcessRigidity.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedLikelihoodProcessRigidity.Contract.eq_of_le_smul",
+        "IDT.QMClosure.BoundedLikelihoodProcessRigidity.Contract.boundedDom_iff_eq",
+        "IDT.QMClosure.BoundedLikelihoodProcessRigidity.Contract.not_boundedDom_of_ne"] },
+    { sourcePath := "Proofs/QMClosure/BoundedLikelihoodProcessControls.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedLikelihoodProcessControls.WithoutFixedDiagonal.omission_control",
+        "IDT.QMClosure.BoundedLikelihoodProcessControls.WithoutCommonChannel.omission_control"] },
+    { sourcePath := "Proofs/QMClosure/BoundedLikelihoodReferenceCorollaries.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedLikelihoodReferenceCorollaries.Contract.eq_of_ae_upper_rnDeriv",
+        "IDT.QMClosure.BoundedLikelihoodReferenceCorollaries.Contract.eq_of_ae_positive_lower_rnDeriv",
+        "IDT.QMClosure.BoundedLikelihoodReferenceCorollaries.Contract.essential_density_endpoints_of_ne",
+        "IDT.QMClosure.BoundedLikelihoodReferenceCorollaries.exists_bound_rnDeriv_of_finite_atomic",
+        "IDT.QMClosure.BoundedLikelihoodReferenceCorollaries.Contract.constant_of_finite_atomic_reference"] }]
+  plannedArtifacts := []
   dependencies := ["internal_reference_support_origin",
     "internal_reference_pairwise_entropy_frontier"]
   limits := [
-    "All conclusions in this entry remain analytic and await a machine-checkable artifact. The dependencies identify reusable likelihood and log-transport machinery. Finite KL and log integrability are intermediate conclusions from two-sided domination, with finite KL absent from the standalone input premises.",
-    "The finite atomic consequence requires an explicitly finite atomic reference with positive masses covering every preparation. The likelihood bounds and essential extrema are individual preparation statements. A bound uniform over the family remains a separate condition. Exact product covariance and full-carrier closure would also have to hold for record laws before the rigidity result applied to observations.",
-    "FiniteOutcomeChannelWall.all_laws_equal_of_common_channel already proves fixed-finite-outcome constancy under all-pair positive affinity. The new analytic target is individual bounded-likelihood rigidity on arbitrary measurable carriers.",
-    "Physical Qraw identification, Born interpretation, detector selection, event actualization, tensor structure, dynamics, physical scales, full QM and GR remain open."] }
+    "The probability family, raw square-swap and fixed-diagonal operation, one common Markov channel and exact full product covariance remain supplied. Finite KL and log integrability follow inside the closed component. Bounds may depend on the pair and on the component member.",
+    "The essential extrema describe almost-everywhere bounds and may be unattained. The upper-bound theorem uses absolute continuity to account for the whole preparation measure. The positive lower-bound theorem accepts an initially singular part. The finite atomic consequence includes absolute continuity of every preparation with respect to the internal reference and requires only a measurable-space structure on the carrier.",
+    "The two controls isolate fixed diagonal and common-channel omissions only. Full assumption minimality remains open. The existing supplied NativeGaussianStatisticalProcess.model provides the process fields with an injective preparation family and retains its supplied Gaussian semantics.",
+    "Application to physical records requires their own exact covariance and full-carrier process closure. Physical Qraw identification, Born interpretation, detector selection, event actualization, spectral and Hilbert representation, tensor structure, dynamics, physical scales, full QM and GR remain open."] }
 
 def rationalFiniteReadoutNonuniqueness : ResearchTask := {
   id := "rational_finite_readout_nonuniqueness"
@@ -7427,32 +7457,45 @@ def rationalFiniteReadoutNonuniqueness : ResearchTask := {
 
 def rationalCountOrderReadoutOrigin : ResearchTask := {
   id := "rational_count_order_readout_origin"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Supply the rational Gaussian carrier Q x Q with named multiplication, conjugation and unit, and norm N(a,b)=a^2+b^2.",
+    "Supply the rational Gaussian carrier Q x Q with named multiplication, conjugation and unit, and squared norm N(a,b)=a^2+b^2.",
     "Supply a real raw weight w that is nonnegative everywhere, satisfies w(0)=0 and w(1)=1, is globally multiplicative, and preserves conjugate reversal.",
     "Supply universal adjacent natural-count order. For every natural n, w((n,0))<=w((n+1,0)).",
-    "Supply one actual pair of nonzero carrier inputs a,b with w(a)+w(b)=1 and w(a*conj(a)+b*conj(b))=1."]
+    "Supply one actual pair of nonzero carrier inputs a,b with w(a)+w(b)=1 and w(a*conj(a)+b*conj(b))=1. The balanced specialization separately supplies one c with w(c)=1/2 and its normalized echo."]
   conclusions := [
-    "Parent and independent research review accept the analytic target w=N under these supplied premises. The theorem and all controls in this entry await Lean formalization.",
-    "For f(q)=w((q,0)), natural-count monotonicity and complete multiplicativity give f(q)=q^alpha on positive rationals for one real alpha. Reversal gives w(z)^2=f(N(z)), and nonnegativity gives w(z)=N(z)^(alpha/2) away from zero. The nondegenerate normalized echo selects alpha=2.",
-    "A supplied balanced witness c with w(c)=1/2 and its balanced echo gives f(2)=4 and admits a direct proof avoiding real-character classification.",
-    "In the direct balanced proof, count-step order gives natural-number monotonicity. For n>=1 and k>=1 choose m with 2^m<=n^k<2^(m+1). Both f(n)^k and n^(2*k) lie between 4^m and 4^(m+1), bounding their ratio powers between 1/4 and 4. Archimedean unbounded powers force f(n)=n^2. Rational fractions, multiplicativity and positive inverses extend f(q)=q^2 to rational scalars. Reversal gives w(z)^2=N(z)^2, and nonnegativity gives w(z)=N(z).",
-    "The existing analytic prime-family comparison violates count order at n=p. It has Wp((p,0))=p^4>(p+1)^2=Wp((p+1,0)).",
-    "The planned signed control W=N*(-1)^v_5(N) retains count order, rational-scalar square weights, multiplicativity, reversal and the balanced echo, while W((2,1))=-5 violates nonnegativity.",
-    "The planned asymmetric Gaussian-prime control has D=v_(2+i)-v_(2-i) and W=N*5^D. It retains positive weights, count order and the balanced echo, but W((2,1))=25 and W((2,-1))=1 violate reversal invariance."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/RationalCountOrderReadout.lean",
-    "Proofs/QMClosure/RationalCountOrderReadoutControls.lean"]
+    "The supplied weight laws, universal count order and actual arbitrary nondegenerate normalized echo imply w=N on the rational Gaussian carrier. The general theorem accepts unequal branch responses directly. Its assumptions contain no continuity or additional balanced-witness premise.",
+    "Natural-count monotonicity and complete multiplicativity determine one logarithmic slope. Positive rational scalar weights satisfy f(q)=exp(alpha*log(q)). Reversal and nonnegativity give w(z)=exp(p*log(N(z))) away from zero with p=alpha/2. The nondegenerate normalized echo selects radial exponent p=1 and scalar exponent alpha=2.",
+    "The separate direct balanced route derives f(2)=4. Common dyadic brackets bound both f(n)^k and n^(2*k) between 4^m and 4^(m+1). Uniform bounds by four on both ratio powers and real Archimedean unbounded powers force f(n)=n^2. Integer signs and rational denominators extend the scalar identity; reversal and nonnegativity then give w=N.",
+    "For every finite rational Gaussian evaluation set S, there exists a prime p(S)>2 whose existing weightAt family agrees with N on S and retains its actual nondegenerate balanced normalized echo. Its response drops from Wp((p,0))=p^4 to Wp((p+1,0))=(p+1)^2, violating universal count order. The existing prime-family zero, unit, nonnegativity, multiplicativity and conjugation laws retain their original checked status.",
+    "The signed norm-valuation and asymmetric Gaussian-prime controls remain analytic future proposals with no machine-checkable evidence. The signed proposal W=N*(-1)^v_5(N) targets failure of nonnegativity while retaining count order and balanced echo. The asymmetric proposal W=N*5^(v_(2+i)-v_(2-i)) targets failure of reversal while retaining positive weights, count order and balanced echo."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RationalCountOrderReadout.lean"
+      declarations := [
+        "IDT.QMClosure.RationalCountOrderReadout.nat_log_character",
+        "IDT.QMClosure.RationalCountOrderReadout.nat_square_character",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.two_of_balanced_echo",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.scalar_rat_eq_sq",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.weight_eq_normQ_of_balanced_echo",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.scalar_positive_character",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.radial_character",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.weight_eq_normQ_of_pair",
+        "IDT.QMClosure.RationalCountOrderReadout.WeightLaws.weight_eq_normQ"] },
+    { sourcePath := "Proofs/QMClosure/RationalCountOrderReadoutControls.lean"
+      declarations := [
+        "IDT.QMClosure.RationalCountOrderReadoutControls.weightAt_count_drop",
+        "IDT.QMClosure.RationalCountOrderReadoutControls.prime_weight_not_count_order",
+        "IDT.QMClosure.RationalCountOrderReadoutControls.finite_agreement_with_count_violation"] }]
+  plannedArtifacts := []
   dependencies := ["single_echo_readout_origin", "rational_finite_readout_nonuniqueness",
     "gks_operational_sequence_bridge"]
   limits := [
-    "Every theorem route and control stated in this entry remains analytic with empty checked evidence. The named valuations and character arguments require their own machine-checkable artifacts.",
-    "The target's carrier is Q(i). An analytic discontinuous full-complex extension character can fix all logarithms of positive rationals while differing elsewhere. Extending the rational conclusion to the full complex carrier requires an additional condition.",
-    "Adjacent-count order is an infinite universally quantified schema. Its use is consistent with the checked finite-evaluation wall, whose prime may depend on the prescribed finite set. The real Archimedean codomain remains supplied even in the direct proof without a continuity premise.",
-    "Physical justification of phase-aligned unit append increasing or preserving raw response and of reversal preserving readout remains open. The raw weight is unbounded, and a probability-monotonicity interpretation requires a separate bridge.",
-    "The passage from histories to rational Gaussian algebra, coherent addition, serial multiplication and availability of an actual nondegenerate echo preparation remain open. Physical Qraw identification, Born interpretation, detector selection, event actualization, spectral and tensor structure, dynamics, physical scales, full QM and GR remain open."] }
+    "The two theorem routes and prime-family count-order failure have their displayed proof artifacts. The signed norm-valuation and asymmetric Gaussian-prime controls retain analytic status, with their valuation constructions and all retained-law claims awaiting machine-checkable artifacts.",
+    "The conclusion is on Q(i). Extension to the full complex carrier requires additional premises. The analytic discontinuous full-complex character proposal retains its separate unproved status.",
+    "Adjacent-count order is an infinite universally quantified schema. The finite-evaluation control chooses a prime depending on the prescribed finite set. The real Archimedean codomain remains supplied in both selection routes.",
+    "Physical justification of phase-aligned unit append preserving or increasing raw response and reversal preserving readout remains open. The raw weight is unbounded, and a probability interpretation requires a separate bridge.",
+    "The passage from histories to the rational Gaussian carrier, coherent addition, serial multiplication and availability of an actual nondegenerate echo preparation remain open. Physical Qraw identification, Born interpretation, detector selection, event actualization, spectral and Hilbert representation, tensor structure, dynamics, physical scales, full QM and GR remain open."] }
 
 def openBridge (id : String) (obligation : String) : ResearchTask := {
   id := id
