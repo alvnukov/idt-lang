@@ -5259,6 +5259,241 @@ def rawPlanePhaseLocalMidpointControl : ResearchTask := {
     "This control uses lambda=1 only. Its supplied complex geometry and the physical origin of external-reference compatibility remain outside the checked result. No general smooth-rigidity theorem is recorded.",
     "No physical primitive origin, Born interpretation, actualization, full QM or primitive closure is recorded. Public and manifest statuses remain unchanged."] }
 
+def threeSourceDistributiveSwapRoot : ResearchTask := {
+  id := "three_source_distributive_swap_root"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "On an arbitrary carrier V supply a binary operation m with idempotence m(x,x)=x, bookend m(m(x,y),m(y,x))=y, left distributivity m(x,m(y,z))=m(m(x,y),m(x,z)) and right distributivity m(m(x,y),z)=m(m(x,z),m(y,z)). No additive, finite or division structure is supplied.",
+    "For the complete-operation equivalences, supply T:(V times V)->(V times V), transparency T(x,x)=(x,x) and square-swap T(T(p))=swap(p). Use its existing firstChannel. RestrictedExchange compares all four output coordinates of row-after-column and column-after-row on ((x,x),(y,z))."]
+  conclusions := [
+    "The supplied binary laws imply left and right cancellation, explicit operation-term inverses for both translations and hence bijectivity of both ports on every carrier. They also imply cyclic exchange, alterability and the four-input medial law.",
+    "The new Laws contract is equivalent to the existing MedialSwapRoot.Laws contract. The reverse direction obtains left and right distributivity by substituting repeated inputs in mediality.",
+    "Under transparency and square-swap, RestrictedExchange is equivalent to the new Laws for the first channel and equivalent to CompleteExchange. CompleteExchange agrees with the existing RawNetworkMedialWall.RowColumnCommutes, with the equality orientation reversed.",
+    "The three-source presentation counts three independent preparation values carried on four wires with one repeated value. It provides an equivalent presentation of the existing medial route and explicit division terms within that presentation."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ThreeSourceDistributiveSwapRoot.lean"
+      declarations := [
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.Laws",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.oppositeLaws",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.left_injective",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.right_injective",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.rightDivisionTerm",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.leftDivisionTerm",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.rightDivisionTerm_apply",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.leftDivisionTerm_apply",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.rightDivisionTerm_reverse",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.leftDivisionTerm_reverse",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.right_bijective",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.left_bijective",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.cyclic_exchange",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.alterability",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.medial",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.toMedialSwapRootLaws",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.ofMedialSwapRootLaws",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.laws_iff_medialSwapRootLaws",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.laws_of_complete_operation",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.rowGate",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.transpose",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.columnGate",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.RestrictedExchange",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.CompleteExchange",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.completeExchange_iff_rowColumnCommutes",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.restrictedExchange_iff_laws",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.completeExchange_iff_medial",
+        "IDT.QMClosure.ThreeSourceDistributiveSwapRoot.restrictedExchange_iff_completeExchange" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_medial_addition", "raw_network_medial_wall"]
+  limits := [
+    "The two distributivity laws and restricted overlapping-network exchange remain additional supplied process assumptions. Under the base laws they have the same logical strength as mediality. Their physical origin remains open.",
+    "Repeating a preparation value requires repeatable preparation or explicit replay. The mathematical repeated input supplies no cloning operation.",
+    "The existing raw_medial_addition record already provides raw-port reconstruction and the canonical group from medial laws. This equivalent presentation records no newly closed group-reconstruction obligation.",
+    "Disjoint locality or no-signalling supplies no overlapping row/column exchange premise, and preparation exchange alone supplies no readout conservation.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def threeSourceExchangeReadoutBoundary : ResearchTask := {
+  id := "three_source_exchange_readout_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Retain the exact Term2 and QuantifierfreeFormula2 syntax, supplied native and actual semantics, and ActualCountermodelProperties from raw_continuous_plane_local_theory. Let Gamma be any set of formulas each valid for every preparation pair in the supplied native complex three-dimensional model.",
+    "For the independent readout boundary use the existing supplied native mixer with nonnegative quartic readout RawSparseQuarticControl.contract."]
+  conclusions := [
+    "The same actual lambda-one plane-phase operation satisfies every formula in Gamma and retains ActualCountermodelProperties, while RestrictedExchange fails.",
+    "The quartic control satisfies the new distributive Laws, RestrictedExchange, CompleteExchange and nonnegative weight, while PairConserved and SparseMarginalLaw both fail. Thus even complete preparation exchange leaves these readout obligations open."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ThreeSourceExchangeReadoutBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.ThreeSourceExchangeReadoutBoundary.actual_not_restrictedExchange",
+        "IDT.QMClosure.ThreeSourceExchangeReadoutBoundary.native_valid_collection_exchange_countermodel",
+        "IDT.QMClosure.ThreeSourceExchangeReadoutBoundary.quartic_laws",
+        "IDT.QMClosure.ThreeSourceExchangeReadoutBoundary.quartic_exchange_readout_boundary" ] }]
+  plannedArtifacts := []
+  dependencies := ["three_source_distributive_swap_root", "raw_continuous_plane_local_theory", "raw_sparse_conservation_selection"]
+  limits := [
+    "The collection theorem has precisely the existing two-preparation quantifier-free syntax. It excludes arbitrary raw preparation constants, nested preparation quantifiers, arbitrary-reference ObservationalEq and topology predicates.",
+    "Readout predicates receive finite real readout lists through a fixed predicate identical in both semantics, with no preparation-environment argument or model-dependent reinterpretation. External scalar-parameter families are covered only through their formula instances.",
+    "The two controls are supplied mathematical constructions. Their preparation availability and an overlapping-exchange physical principle remain open.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def oneSidedDistributiveSwapControl : ResearchTask := {
+  id := "one_sided_distributive_swap_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the finite carrier ((ZMod 5 times ZMod 5) times ZMod 5). Write omega(v,w)=v1*w2-v2*w1 and m((v,t),(w,s))=(-v+2*w,2*t-s-omega(v,w)). Define the complete operation T(x,y)=(m(x,y),m(y,x))."]
+  conclusions := [
+    "The symbolic identities establish idempotence, bookend and universal left distributivity. Both translations have explicit inverse terms, with forward and reverse identities and hence bijectivity.",
+    "For X=((1,0),0), Y=((0,1),0), Z=((0,0),0), right distributivity has outputs ((1,3),3) and ((1,3),4). Consequently right distributivity, MedialSwapRoot.Laws and RestrictedExchange fail, although T is transparent and square-swap.",
+    "The opposite operation m_op(x,y)=m(y,x) retains idempotence, bookend and both port bijections, satisfies universal right distributivity and fails left distributivity. Either individual distributivity law can therefore be omitted only at the cost exposed by the corresponding control."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/OneSidedDistributiveSwapControl.lean"
+      declarations := [
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.Carrier",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.omega",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.m",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.idempotent",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.bookend",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.left_distributive",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.leftInverseTerm",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.rightInverseTerm",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.leftInverseTerm_apply",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.leftInverseTerm_reverse",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.rightInverseTerm_apply",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.rightInverseTerm_reverse",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.left_bijective",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.right_bijective",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.witnessX",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.witnessY",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.witnessZ",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.right_distributive_witness",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.not_right_distributive",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.not_medial",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.operation",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.transparent",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.square",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.not_restrictedExchange",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite_idempotent",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite_bookend",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite_right_distributive",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite_not_left_distributive",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite_left_bijective",
+        "IDT.QMClosure.OneSidedDistributiveSwapControl.opposite_right_bijective" ] }]
+  plannedArtifacts := []
+  dependencies := ["three_source_distributive_swap_root"]
+  limits := [
+    "This is a finite raw-algebra omission control on 125 carrier states. A nontrivial real readout, nonnegative conserved weight or physical realization is outside its checked scope.",
+    "The control separates the individual distributivity laws under the listed raw algebraic hypotheses. It supplies no weaker physical derivation of their conjunction.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawProcessComparisonBridge : ResearchTask := {
+  id := "raw_process_comparison_bridge"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Supply any real comparison D on a carrier V and a complete raw gate F on V times V. Define pairComparison(D,p,q)=D(p1,q1)+D(p2,q2) and PairComparisonNonexpanding by the all-input nonexpansion inequality for this exact sum.",
+    "The isometry-from-nonexpansion theorem additionally assumes square-swap F(F(p))=swap(p). It requires no comparison nonnegativity or metric law.",
+    "For the midpoint bound supply maps J,B, a zero and a midpoint map with D(Jx,Jy)=D(x,y), D(Bx,By)=D(x,y)/2, B(first(F(z,Jz)))=z, second(F(z,Jz))=zero and B(first(F(x,Jy)))=mid(x,y), together with PairComparisonNonexpanding D F. Dropping the residual additionally requires D nonnegative.",
+    "For the separate four-point route supply the existing RawSparseConservationSelection.Contract, G and its LocalKernel with symmetry, weight diagonal, attenuation adjoint and mixer null relation, together with GramNonnegative G 4. Use D=squaredDistance G."]
+  conclusions := [
+    "Square-swap and assumed global nonexpansion imply exact pairComparison isometry. Reversibility strengthens an already supplied comparison law.",
+    "The calibrated process comparison gives 2*D(mid(x,y),z)+D(second(F(x,Jy)),zero)<=D(x,z)+D(y,z). Nonnegativity of the retained residual yields the weak midpoint Jensen bound.",
+    "For a symmetric real kernel G with nonnegative squared distances, the explicit comparison calibration and nonexpansion premises imply SquaredMidpointConvex G mid.",
+    "The existing LocalKernel and four-point Gram-positivity contract implies pairComparison isometry under the actual complete operation for D=squaredDistance G, and hence PairComparisonNonexpanding. Pair-weight conservation is outside the input assumptions of this implication."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawProcessComparisonBridge.lean"
+      declarations := [
+        "IDT.QMClosure.RawProcessComparisonBridge.pairComparison",
+        "IDT.QMClosure.RawProcessComparisonBridge.PairComparisonNonexpanding",
+        "IDT.QMClosure.RawProcessComparisonBridge.pairComparison_swap",
+        "IDT.QMClosure.RawProcessComparisonBridge.pairComparison_isometry_of_nonexpanding",
+        "IDT.QMClosure.RawProcessComparisonBridge.pairComparison_isometry_of_fourPointPositive",
+        "IDT.QMClosure.RawProcessComparisonBridge.pairComparisonNonexpanding_of_fourPointPositive",
+        "IDT.QMClosure.RawProcessComparisonBridge.calibrated_midpoint_bound_with_residual",
+        "IDT.QMClosure.RawProcessComparisonBridge.calibrated_midpoint_convex",
+        "IDT.QMClosure.RawProcessComparisonBridge.squaredMidpointConvex_of_calibrated_processComparison" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_four_point_gram_bridge", "raw_local_midpoint_compatibility"]
+  limits := [
+    "The sum over the two raw pair ports is supplied as the block comparison. A Hilbert tensor product and an independent quantum-composite comparison rule remain outside the result.",
+    "Quarter-turn isometry, attenuation calibration, calibrated independent-reference preparation and the port-additive all-input nonexpansion law remain explicit mathematical premises with open operational origin.",
+    "Reversibility alone supplies no nonexpansion of this particular comparison. The four-point route retains the existing supplied LocalKernel and Gram-positivity assumptions.",
+    "Tensor/composite, entanglement and Bell closure remain outside this result. The classical product-distribution reference in the separate analytic completion is a different construction.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawPlanePhaseProcessComparisonControl : ResearchTask := {
+  id := "raw_plane_phase_process_comparison_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the supplied actual lambda-one plane-phase operation, its existing response G, Q(x,y)=G(x,x)+G(y,y)-2*G(x,y), and midpoint mid from raw_plane_phase_local_midpoint_control. Let quarter(x)=i*x, attenuate(x)=b*x and comparison(p,q)=Q(p1,q1)+Q(p2,q2).",
+    "Retain the existing selected preparations fourX, fourY, fourZ and real scale(r,x)=r*x. The supplied operation has the existing complete scalar-weight conservation property."]
+  conclusions := [
+    "The actual comparison Q is symmetric and common complex scaling multiplies it by normSq(c). Quarter-turn preserves Q, attenuation divides Q by two, the reference operation sends (z,quarter(z)) to ((1+i)*z,0), and attenuation of its first output returns z. The midpoint calibration is the actual preparation identity.",
+    "The unused output residual is exactly Q(x,y)/2. On inputs (x,quarter(y)) and (z,quarter(z)), comparison input equals Q(z,x)+Q(z,y) and output equals 2*Q(z,mid(x,y))+Q(x,y)/2.",
+    "On the selected scaled orbit, input comparison is 4*t^2+2*e^2-(8/5)*t*e, output comparison is 4*t^2+2*e^2-2*t*e, and output minus input is exactly -(2/5)*t*e.",
+    "At e=1/5,t=-1 the exact comparison grows from 22/5 to 112/25. PairComparisonNonexpanding Q operation therefore fails despite the existing scalar-weight conservation law. At the fixed selected reference t=-1 the comparison defect is strictly positive for every e>0.",
+    "For the selected balanced reference t=-e and any nonzero e, weak squared Jensen has positive slack while the process comparison increases. This selected passing Jensen orbit does not provide the all-input comparison law."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RawPlanePhaseProcessComparisonControl.lean"
+      declarations := [
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.Q",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.quarter",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.attenuate",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.comparison",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.Q_symmetric",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.G_complex_smul",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.Q_complex_smul",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.quarter_comparison",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.attenuate_comparison",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.operation_reference",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.reference_calibration",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.midpoint_calibration",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.Q_zero",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.Q_response",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.residual_comparison",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.comparison_input",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.comparison_output",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.comparison_defect",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.selected_endpoint_comparison",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.selected_input_exact",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.selected_defect_exact",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.selected_output_exact",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.rational_witness",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.not_pairComparisonNonexpanding",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.fixed_reference_defect_positive",
+        "IDT.QMClosure.RawPlanePhaseProcessComparisonControl.balanced_pass_with_comparison_increase" ] }]
+  plannedArtifacts := []
+  dependencies := ["raw_process_comparison_bridge", "raw_plane_phase_local_midpoint_control", "raw_plane_phase_gram_control"]
+  limits := [
+    "The orbit formulas concern only the displayed endpoint pair and selected reference orbit. No all-triple balanced Jensen statement is recorded.",
+    "The argument uses the actual response-defined nonnegative comparison. A triangle metric, global bilinear Gram representation or physical comparison interpretation is outside its premises.",
+    "The block comparison sums two raw pair-port comparisons. Its operational port additivity and independent-reference availability remain open origin obligations, with no tensor/composite or Bell closure implied.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
+def rawClassicalProcessEnvelopeOmissionRoute : ResearchTask := {
+  id := "raw_classical_process_envelope_omission_route"
+  stage := .analyticAwaitingFormalization
+  review := .parentAccepted
+  assumptions := [
+    "Analytic construction awaiting a dedicated Lean artifact. For any raw carrier V consider rational finitely supported functions mu:V->Q with mu>=0 and total mass one. Supply Dirac preparations, pushforward, finite-support Markov rows with rational coefficients, Markov bind, independent product, marginals and mixtures with rational coefficients. The carrier V may be infinite. Each distribution and each Markov row has finite support.",
+    "Define TV(mu,nu)=(1/2)*sum_v abs(mu(v)-nu(v)). Raw deterministic gates act by pushforward on distributions over the corresponding raw wire tuples. For the original real response Q define Qbar(mu,nu)=sum_(x,y) mu(x)*nu(y)*Q(x,y), viewing the rational coefficients as real numbers. Finite support makes this a finite sum, and Qbar(Dirac(x),Dirac(y))=Q(x,y)."]
+  conclusions := [
+    "Analytic route. In this classical completion of an arbitrary raw gate, generic finite Markov data processing holds and adjoining a common independent probability-distribution reference preserves TV exactly. Composition is associative, operations on disjoint wire sets commute, and a local Markov operation preserves the untouched marginal. A reversible gate with fourth iterate equal to identity acts as a TV isometry.",
+    "The separately defined Qbar agrees with the original Q on Dirac preparations. The existing pure-preparation Jensen failure therefore persists on those embedded inputs and the embedded chosen pure midpoint, even when the completion has the preceding classical process laws. No data-processing inequality for Qbar is asserted.",
+    "Classical forgetting and mixture do not create the chosen coherent pure midpoint. Equality Dirac(m)=(Dirac(x)+Dirac(y))/2 forces x=y=m. The generic classical laws supply no derivation of the calibrated raw-Q comparison/nonexpansion principle. Existing raw calibration identities are inherited inputs whose origin remains unexplained."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/RawClassicalProcessEnvelope.lean"]
+  dependencies := ["raw_process_comparison_bridge", "raw_plane_phase_process_comparison_control"]
+  limits := [
+    "Every construction and assertion in this record is ANALYTIC/UNCHECKED. Empty checkedEvidence records the missing dedicated Lean artifact.",
+    "TV is a classical comparison on the added distributions. It is distinct from the original response Q and supplies no identification with physical outcome probabilities.",
+    "The completion has a classical joint latent carrier. It supplies no Bell, non-hidden-joint or full-physics omission control. TV need not continuously embed the original pure-preparation topology.",
+    "Independent product-distribution references are part of this classical envelope. They do not derive the calibrated coherent reference or port additivity required for the raw pair-port response comparison.",
+    "The main missing origin remains independent-reference calibration, port additivity and availability of overlapping exchange. Equivalent three-source laws and this classical envelope supply no derivation of those from weaker physical premises. No C0 rigidity upgrade is recorded.",
+    "No physical primitive origin, actualization, Born interpretation, full QM, GR or physical-scale closure is recorded. Public and manifest statuses remain unchanged."] }
+
 def rawSparseSignedControl : ResearchTask := {
   id := "raw_sparse_signed_control"
   stage := .conditionalKernelTheorem
@@ -6098,6 +6333,9 @@ def researchTasks : List ResearchTask := [
   rawMidpointGramCompatibility, rawPlanePhaseMidpointControl, rawRealPlaneMetricControl,
   rawDyadicMidpointCompatibility, rawTripodMidpointControl, rawPlanePhaseParameterWall,
   rawLocalMidpointCompatibility, rawPlanePhaseLocalMidpointControl,
+  threeSourceDistributiveSwapRoot, threeSourceExchangeReadoutBoundary,
+  oneSidedDistributiveSwapControl, rawProcessComparisonBridge,
+  rawPlanePhaseProcessComparisonControl, rawClassicalProcessEnvelopeOmissionRoute,
   equivariantOutcomeSelectionWall, primitivePresentationAlternatives,
   particleAsProcessResultHypothesis, standingMatterRegimeConstraint,
   recordMarginalActualizationWall, compositionExchangeScope,
