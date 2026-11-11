@@ -2,7 +2,7 @@
 
 ## Current status
 
-The checked conditional result derives the two native half-transfer laws from real nonnegative column conservation throughout a forward-closed source family. The generic core, native adapter, controls and exact cross-increment composition have accepted registered Lean builds, complete actual-origin/type/body auditing and independent final review. The column record has stage `conditionalKernelTheorem`, review `parentAccepted` and exact checked citations. The three quantitative records, norm-drift record and dyadic stability record retain `analyticAwaitingFormalization`, `notYetKernelChecked` and empty checked evidence.
+The checked conditional result derives the two native half-transfer laws from real nonnegative column conservation throughout a forward-closed source family. The generic core, native adapter, controls and exact cross-increment composition have accepted registered Lean builds, complete actual-origin/type/body auditing and independent final review. The relative-error branch bound, every-natural-depth absolute-error branch bound and their native lower controls now have the same accepted checks. The column, relative-error and checked absolute-error records have stage `conditionalKernelTheorem`, review `parentAccepted` and exact checked citations. The finite-depth, optimized integer-depth square-root upper, norm-drift and dyadic stability records retain `analyticAwaitingFormalization`, `notYetKernelChecked` and empty checked evidence.
 
 ## Exact source-local contract
 
@@ -123,16 +123,13 @@ Terminal mass concentrated in one residue class modulo four, with values above i
 
 ## Uniform relative conservation error
 
-The relative and absolute estimates have pinned uncompiled source drafts. Their universal claims retain analytic status pending registered builds, audits and independent final review.
-
-Require nonnegativity at every forward source and the uniform relative defect bound
+The relative branch estimate is a checked conditional theorem. Its contract uses a commutative monoid with \(a^4=b^4\), a real readout \(W\), and a source family \(S\) closed under multiplication by each generator. For every \(q\in S\), require nonnegativity and the uniform relative defect bound
 
 \[
-|W(ax)+W(bx)-W(x)|\le\varepsilon W(x).
+|W(aq)+W(bq)-W(q)|\le\varepsilon W(q).
 \]
 
-For \(0\le\varepsilon<\sqrt2-1\), set
-\(\eta=2\varepsilon+\varepsilon^2\) and \(R=2\eta/(1-\eta)\). The accepted analytic estimate is
+Assume \(\varepsilon\ge0\) and \(\eta=2\varepsilon+\varepsilon^2<1\), and set \(R=2\eta/(1-\eta)\). For every \(p\in S\), the checked estimate is
 
 \[
 \Delta_p\le
@@ -147,32 +144,37 @@ W(p)=N(p)+\tau\operatorname{Im}(z^2),\qquad
 \tau=\frac\varepsilon{1+\varepsilon}.
 \]
 
-This control is globally faithful and unit-normalized, has column sum \(N(p)\), satisfies the relative defect bound, and has imbalance \(\tau\) at the unit source. The numerical upper coefficient is an available estimate. Sharpness concerns the linear order.
+This control is globally nonnegative, faithful and unit-normalized for \(\varepsilon\ge0\), has column sum \(N(p)\), satisfies the relative defect bound, and has imbalance \(\tau\) at the unit source. For \(0\le\varepsilon\le1\), its imbalance is at least \(\varepsilon/2\). The numerical upper coefficient is an available estimate. Sharpness concerns the linear order. The source-family contract includes arbitrarily long finite forward words.
+[Checked branch estimates](../Proofs/QMClosure/ColumnConservationRobustness.lean) · [Checked native controls](../Proofs/QMClosure/ColumnConservationRobustnessControls.lean)
 
 ## Uniform absolute conservation error
 
-Require nonnegativity at every forward source and
+Use the same commutative-monoid, equal-fourth-power, real-readout and forward-closed source-family contract. For every \(q\in S\), require nonnegativity and
 
 \[
-|W(ax)+W(bx)-W(x)|\le e\qquad(e\ge0).
+|W(aq)+W(bq)-W(q)|\le e\qquad(e\ge0).
 \]
 
-For every natural \(n\), the accepted analytic estimate is
+For every \(p\in S\) and every natural \(n\), the checked conditional estimate is
 
 \[
-\Delta_p\le2^{-n}(W(p)+7e)+20e\,2^n+2e.
+\Delta_p\le\frac{W(p)+7e}{2^n}+20e\,2^n+2e.
 \]
 
-For unit \(W(p)=1\), optimizing the integer depth gives an upper bound of order \(\sqrt e\) as \(e\) tends to zero. The clipped native control
+For unit \(W(p)=1\), optimizing the integer depth gives an accepted analytic upper bound of order \(\sqrt e\) as \(e\) tends to zero. This corollary has its own `analyticAwaitingFormalization` record, `positive_column_absolute_defect_sqrt_upper`, with review `notYetKernelChecked` and empty checked evidence.
+
+The checked clipped native control
 
 \[
 W_\delta(p)=\max\{N(p)+\delta\operatorname{Im}z,0\},
 \qquad0<\delta\le1,
 \]
 
-is nonnegative and unit-normalized, has imbalance \(\delta\), and has column defect between zero and \(\delta^2/4\) at every source. The positive-part sum identity gives the defect estimate. This supplies the matching square-root order. Sharp upper constants remain a separate question.
+is nonnegative and unit-normalized, has imbalance \(\delta\), and has column defect between zero and \(\delta^2/4\) at every source. The checked positive-part defect bound gives the defect estimate, and the squared imbalance equals \(4(\delta^2/4)\). This supplies the square-root lower order. Sharp upper constants remain a separate question.
+[Checked every-depth estimate](../Proofs/QMClosure/ColumnConservationRobustness.lean) · [Checked clipped control](../Proofs/QMClosure/ColumnConservationRobustnessControls.lean)
 
-The current absolute-error draft supplies the every-depth estimate and the native lower control. The optimized integer-depth square-root upper corollary remains a separate formalization obligation.
+The three robustness modules have accepted registered Lean builds and independent final review. Their complete type/body audit covers all 98 actual origins, including private and generated declarations, with zero local axiom declarations and zero unsafe origins. Their aggregate transitive axioms are `propext`, `Quot.sound` and `Classical.choice`. The generic recurrence core and monoid adapter have zero prior project declaration dependencies. The control module uses the existing faithful native complex model. The optimized integer-depth square-root upper corollary remains a separate formalization obligation.
+[Checked recurrence core](../Proofs/QMClosure/ColumnConservationRobustnessCore.lean) · [Authoritative task records and exact declarations](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
 
 ## Branch stability and global norm drift
 
@@ -277,6 +279,6 @@ the full comparison is \(\alpha(1-\tau)N\le W\le\beta(1+\tau)N\), yielding the s
 
 ## Scientific boundary
 
-The finite-depth, robustness, norm-drift and dyadic stability statements require their respective checked artifacts and independent final review. Their operational research records are analytic tasks. The exact-column and composition citations identify accepted installed sources through the accompanying claim map and source manifest.
+The exact-column, composition, relative-error and every-natural-depth absolute-error bounds have accepted checked artifacts and independent final review, together with the cited controls. The finite-depth, optimized square-root upper, norm-drift and dyadic stability statements retain analytic task records with their respective formalization obligations. The robustness theorems bound first-branch imbalance under their full source-family contracts. Approximate norm selection, physical interpretation and QM closure retain independent obligations.
 
 The result reduces the native readout premise to normalized positive column conservation on unlimited forward histories. Physical availability of that serial family, detector interpretation, conservation and positivity origins, the cross-increment sign, echo accessibility, Born/Hilbert origin, full QM/GR closure and physical scales remain open obligations under the existing public boundary.

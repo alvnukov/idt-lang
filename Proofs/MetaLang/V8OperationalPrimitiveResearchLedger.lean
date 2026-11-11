@@ -9169,48 +9169,89 @@ def positiveColumnFiniteDepthBounds : ResearchTask := {
 
 def positiveColumnRelativeDefectRobustness : ResearchTask := {
   id := "positive_column_relative_defect_robustness"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Use a commutative monoid with a^4=b^4, a real W and source p. Require W>=0 on every forward source and abs(W(a*x)+W(b*x)-W(x))<=epsilon*W(x) at every forward source.",
-    "Require 0<=epsilon<sqrt(2)-1. Put eta=2*epsilon+epsilon^2 and R=2*eta/(1-eta)."]
+    "Use a commutative monoid with a^4=b^4, real W and a source family S forward-closed under a and b. Require W(q)>=0 and abs(W(a*q)+W(b*q)-W(q))<=epsilon*W(q) for every q in S. The conclusion holds for every p in S.",
+    "Require epsilon>=0 and eta=2*epsilon+epsilon^2<1. Put R=2*eta/(1-eta). Arbitrarily long finite forward words remain within the quantified source family."]
   conclusions := [
-    "Accepted analytic estimate: abs(W(a*p)-W(b*p))<=(R*(1+epsilon)^4+(1+epsilon)^4-(1+epsilon))*W(p).",
-    "For 0<=epsilon<=1/20 the estimate gives imbalance<=9*epsilon*W(p).",
-    "The normalized native control W=N+tau*Im(z^2), tau=epsilon/(1+epsilon), is globally faithful, has column sum N, satisfies the relative defect bound and has unit-source imbalance tau. This matches the linear error order."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/ColumnConservationRobustnessCore.lean",
-    "Proofs/QMClosure/ColumnConservationRobustness.lean",
-    "Proofs/QMClosure/ColumnConservationRobustnessControls.lean"]
+    "The checked estimate is abs(W(a*p)-W(b*p))<=(R*(1+epsilon)^4+(1+epsilon)^4-(1+epsilon))*W(p).",
+    "For 0<=epsilon<=1/20 the checked estimate gives imbalance<=9*epsilon*W(p).",
+    "For epsilon>=0 the normalized native control W=N+tau*Im(z^2), tau=epsilon/(1+epsilon), is globally nonnegative and faithful, has column sum N, satisfies the relative defect bound and has unit-source imbalance tau. For epsilon<=1 this imbalance is at least epsilon/2, giving a matching linear lower order."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ColumnConservationRobustnessCore.lean"
+      declarations := [
+        "IDT.QMClosure.ColumnConservationRobustnessCore.relative_opposite_bound",
+        "IDT.QMClosure.ColumnConservationRobustnessCore.relativeConstant",
+        "IDT.QMClosure.ColumnConservationRobustnessCore.relativeConstant_le_nine"] },
+    { sourcePath := "Proofs/QMClosure/ColumnConservationRobustness.lean"
+      declarations := [
+        "IDT.QMClosure.ColumnConservationRobustness.relative_branch_bound",
+        "IDT.QMClosure.ColumnConservationRobustness.relative_branch_bound_nine"] },
+    { sourcePath := "Proofs/QMClosure/ColumnConservationRobustnessControls.lean"
+      declarations := [
+        "IDT.QMClosure.ColumnConservationRobustnessControls.relativeReadout_nonnegative",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.relativeReadout_faithful",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.relativeReadout_unit",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.relativeReadout_column",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.relativeReadout_root_imbalance",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.relativeReadout_linear_lower"] }]
+  plannedArtifacts := []
   dependencies := ["positive_column_conservation_native_transfer"]
   limits := [
-    "Accepted analytic result with pinned uncompiled robustness source drafts. Relative error estimates, epsilon range, zero-source cases and faithful native controls await registered builds, audits and independent final review. The upper coefficient is an estimate. the claimed sharpness concerns linear order.",
-    "The estimate concerns the two first branch readings. Approximate column conservation plus the cross-increment sign and bounded calibrations admits analytic norm-drift countercontrols. uniform norm comparison requires separate premises and a theorem.",
+    "The three robustness modules have accepted registered builds, complete actual-origin/type/body audits and independent final review. Their 98 actual origins include private and generated declarations, with no local axiom declarations or unsafe origins and aggregate transitive axioms propext, Quot.sound and Classical.choice. The numerical upper coefficient is an estimate. Sharpness concerns linear order.",
+    "The estimate concerns the two first branch readings. Approximate column conservation plus the cross-increment sign and bounded calibrations admits analytic norm-drift countercontrols. Uniform norm comparison requires separate premises and a theorem.",
     "The relative bound is uniform over the complete forward source family. Its physical realization, unbounded serial availability, positivity and error provenance remain open obligations.",
     "Physical readout actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales retain independent obligations."] }
 
 def positiveColumnAbsoluteDefectRobustness : ResearchTask := {
   id := "positive_column_absolute_defect_robustness"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use a commutative monoid with a^4=b^4, real W and a source family S forward-closed under a and b. Require W(q)>=0 and abs(W(a*q)+W(b*q)-W(q))<=e for every q in S, with e>=0. The conclusion holds for every p in S and every natural n.",
+    "Arbitrarily long finite forward words remain within the quantified source family. The native lower control uses 0<delta<=1 and W_delta=max(N+delta*Im(z),0)."]
+  conclusions := [
+    "The checked estimate at every natural n is abs(W(a*p)-W(b*p))<=(W(p)+7*e)/2^n+20*e*2^n+2*e.",
+    "The clipped native control W_delta is globally nonnegative and unit-normalized, has unit-source imbalance delta and column defect in [0,delta^2/4] at every source. The checked positive-part defect bound and squared-imbalance relation supply a square-root lower order."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ColumnConservationRobustnessCore.lean"
+      declarations := [
+        "IDT.QMClosure.ColumnConservationRobustnessCore.absolute_opposite_bound"] },
+    { sourcePath := "Proofs/QMClosure/ColumnConservationRobustness.lean"
+      declarations := [
+        "IDT.QMClosure.ColumnConservationRobustness.absolute_branch_bound"] },
+    { sourcePath := "Proofs/QMClosure/ColumnConservationRobustnessControls.lean"
+      declarations := [
+        "IDT.QMClosure.ColumnConservationRobustnessControls.positive_part_defect",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.absoluteReadout_nonnegative",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.absoluteReadout_unit",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.absoluteReadout_column",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.absoluteReadout_absolute_column",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.absoluteReadout_root_imbalance",
+        "IDT.QMClosure.ColumnConservationRobustnessControls.absoluteReadout_square_lower"] }]
+  plannedArtifacts := []
+  dependencies := ["positive_column_conservation_native_transfer"]
+  limits := [
+    "The every-depth estimate, positive-part defect bound and clipped native lower control have accepted registered builds, complete actual-origin/type/body audits and independent final review. The optimized integer-depth square-root upper corollary remains the separate analytic task positive_column_absolute_defect_sqrt_upper. Sharp upper constants remain open.",
+    "The absolute error bound is uniform over every forward source. Physical access to arbitrary finite depth, detector positivity and error provenance remain explicit operational obligations.",
+    "Readout actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales remain open."] }
+
+def positiveColumnAbsoluteDefectSqrtUpper : ResearchTask := {
+  id := "positive_column_absolute_defect_sqrt_upper"
   stage := .analyticAwaitingFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "Use a commutative monoid with a^4=b^4, a real W and source p. Require W>=0 and abs(W(a*x)+W(b*x)-W(x))<=e at every forward source, with e>=0.",
-    "For the normalized asymptotic conclusion supply W(p)=1. The native lower control uses 0<delta<=1 and W_delta=max(N+delta*Im(z),0)."]
+    "Use the full forward-closed commutative-monoid contract of positive_column_absolute_defect_robustness, including a^4=b^4, real nonnegative W, a uniform absolute error e>=0 at every source in S and arbitrary serial depth.",
+    "For a source p in S supply W(p)=1."]
   conclusions := [
-    "Accepted analytic estimate at every natural n: abs(W(a*p)-W(b*p))<=2^(-n)*(W(p)+7*e)+20*e*2^n+2*e.",
-    "For W(p)=1 optimizing the integer depth gives imbalance of order sqrt(e) as e tends to zero.",
-    "The clipped native control W_delta is globally nonnegative and unit-normalized, has unit-source imbalance delta and column defect in [0,delta^2/4] at every source. The positive-part sum identity supplies a matching square-root lower order."]
+    "For W(p)=1 optimizing the integer depth gives imbalance of order sqrt(e) as e tends to zero."]
   checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/ColumnConservationRobustnessCore.lean",
-    "Proofs/QMClosure/ColumnConservationRobustness.lean",
-    "Proofs/QMClosure/ColumnConservationRobustnessControls.lean"]
-  dependencies := ["positive_column_conservation_native_transfer"]
+  plannedArtifacts := ["Proofs/QMClosure/ColumnConservationRobustnessSqrtUpper.lean"]
+  dependencies := ["positive_column_absolute_defect_robustness"]
   limits := [
-    "Accepted analytic result with pinned uncompiled robustness source drafts for the every-depth estimate, positive-part identity and native lower control. Registered builds, audits and independent final review remain pending. The optimized integer-depth square-root upper corollary awaits a separate artifact. Sharp upper constants remain open.",
-    "The absolute error bound is uniform over every forward source. Physical access to arbitrary finite depth, detector positivity and error provenance remain explicit operational obligations.",
-    "Readout actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales remain open."] }
+    "This accepted analytic corollary awaits its optimized integer-depth Lean artifact, registered build, audit and independent final review. The checked every-natural-depth estimate supplies its starting bound. Sharp upper constants remain open.",
+    "The conclusion concerns first-branch balance. Physical serial availability, detector positivity, error provenance, readout actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales retain independent obligations."] }
 
 def approximateColumnNormDrift : ResearchTask := {
   id := "approximate_column_norm_drift"
@@ -9384,7 +9425,7 @@ def researchTasks : List ResearchTask := [
   countCrossIncrementRigidity, nativeCrossIncrementReadoutSelection,
   positiveColumnConservationNativeTransfer, positiveColumnFiniteDepthBounds,
   positiveColumnRelativeDefectRobustness, positiveColumnAbsoluteDefectRobustness,
-  approximateColumnNormDrift, dyadicScaledApproximateColumnNormSelection]
+  positiveColumnAbsoluteDefectSqrtUpper, approximateColumnNormDrift, dyadicScaledApproximateColumnNormSelection]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

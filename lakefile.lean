@@ -532,5 +532,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.PositiveColumnConservationCore,
     `Proofs.QMClosure.PositiveColumnConservation,
     `Proofs.QMClosure.PositiveColumnConservationControls,
-    `Proofs.QMClosure.ConservativeCrossIncrementReadout
+    `Proofs.QMClosure.ConservativeCrossIncrementReadout,
+    `Proofs.QMClosure.ColumnConservationRobustnessCore,
+    `Proofs.QMClosure.ColumnConservationRobustness,
+    `Proofs.QMClosure.ColumnConservationRobustnessControls
   ]
