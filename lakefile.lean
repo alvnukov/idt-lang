@@ -490,5 +490,12 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeMixerInfiniteOrder,
     `Proofs.QMClosure.FiniteCovariantNoiseWall,
     `Proofs.QMClosure.BinaryNoiseMixingWall,
-    `Proofs.QMClosure.CovariantNoiseApproximationControl
+    `Proofs.QMClosure.CovariantNoiseApproximationControl,
+    `Proofs.QMClosure.MultiplicativeResidueQuadratics,
+    `Proofs.QMClosure.FiniteTranslationSpectrum,
+    `Proofs.QMClosure.FiniteDifferencePolynomial,
+    `Proofs.QMClosure.FiniteRankReadoutFilter,
+    `Proofs.QMClosure.FiniteTranslationExponentialPolynomial,
+    `Proofs.QMClosure.FiniteTranslationDilationSupport,
+    `Proofs.QMClosure.FiniteReadoutTomographyWall
   ]

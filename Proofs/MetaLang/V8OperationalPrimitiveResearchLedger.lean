@@ -7857,7 +7857,8 @@ def finiteHistoryReadoutRegularityFrontier : ResearchTask := {
     "single_calibration_scalar_faithfulness_origin",
     "native_initial_history_presentation_origin"]
   limits := [
-    "Both sufficiency routes, their relationship to original-token kernels, the spectral reduction and every countercontrol remain analytic until Lean artifacts are compiled and reviewed.",
+    "Both complete sufficiency routes and their relationship to original-token kernels remain analytic. Individual spectral, difference, extraction, dilation, quadratic-algebra and countercontrol contracts are tracked separately in the finite-translation and readout tasks below.",
+    "The universal 4/20 gap, degree-two selection, residue reconstruction, coset-to-polynomial identity, support classification and real-to-complex rank transfer retain separate proof obligations.",
     "The regularity packages are alternatives. Their conjunction is unnecessary for the proposed sufficiency result.",
     "The proposed premises add neither positivity, count order nor response conjugation invariance. The response codomain is the real numbers.",
     "Finite translation rank alone permits the stated calibrated residue filters. The nonzero count condition is a separate part of the finite-rank package.",
@@ -7865,6 +7866,197 @@ def finiteHistoryReadoutRegularityFrontier : ResearchTask := {
     "A genuinely finite discrete automaton with stationary token updates has finite translation rank after linearization. Finite polynomial history arity remains a separate requirement, as parity illustrates, and residue filters retain the need for the nonannihilation premise.",
     "Finite history arity and finite linear translation rank remain regularity premises whose physical origins are open.",
     "Physical readout selection, Born interpretation and full QM remain open."] }
+
+def finiteTranslationSpectralExtraction : ResearchTask := {
+  id := "finite_translation_spectral_extraction"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A complex-valued function on the full integer lattice has a finite-dimensional complex span of all translations."]
+  conclusions := [
+    "Checked spectral declarations decompose the actual translate space into joint generalized eigenspaces and provide translation-compatible projections.",
+    "Checked difference declarations give a unique bivariate complex polynomial from two global coordinate annihilators.",
+    "The extraction bridge identifies each actual supported component with a nonzero polynomial times its coordinate character and reconstructs the function by their finite sum."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteTranslationSpectrum.lean"
+      declarations := [
+        "FiniteTranslationSpectrum.jointBlock_isInternal",
+        "FiniteTranslationSpectrum.jointProjection_translationEnd",
+        "FiniteTranslationSpectrum.sum_readoutComponents",
+        "FiniteTranslationSpectrum.readoutComponents_coordinate_ne_zero"] },
+    { sourcePath := "Proofs/QMClosure/FiniteDifferencePolynomial.lean"
+      declarations := [
+        "IDT.TranslationRankGap.existsUnique_polynomial_of_coordinate_fwdDiff_eq_zero"] },
+    { sourcePath := "Proofs/QMClosure/FiniteTranslationExponentialPolynomial.lean"
+      declarations := [
+        "IDT.TranslationRankGap.exists_polynomial_of_jointBlock_mem",
+        "IDT.TranslationRankGap.exists_finite_exponentialPolynomial"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The hypotheses use complex translation dimension. Transfer from a supplied real translation space remains a separate obligation.",
+    "Degree-two selection, residue reconstruction and universal rank classification remain open formalization obligations."] }
+
+def finiteTranslationDilationSupport : ResearchTask := {
+  id := "finite_translation_dilation_support"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A complex-valued function on the full integer lattice has finite-dimensional complex global translate space.",
+    "The global dilation law f(z+z)=4*f(z) is supplied."]
+  conclusions := [
+    "Coordinatewise character squaring is a permutation of the actual finite readout support.",
+    "Components satisfy exact dilation, and one common positive odd exponent M has chi(i)^M=1 for every supported character coordinate."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteTranslationDilationSupport.lean"
+      declarations := [
+        "FiniteTranslationDilationSupport.support_square_eq",
+        "FiniteTranslationDilationSupport.square_injective_on_support",
+        "FiniteTranslationDilationSupport.dilate_component",
+        "FiniteTranslationDilationSupport.exists_common_odd_period"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_translation_spectral_extraction"]
+  limits := [
+    "Polynomial degree, residue polynomial reconstruction, support counts and rank bounds require further arguments.",
+    "The supplied global dilation and finite-dimensionality contracts require a physical origin."] }
+
+def multiplicativeResidueQuadraticAlgebra : ResearchTask := {
+  id := "multiplicative_residue_quadratic_algebra"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A monoid-indexed family Q_r of homogeneous real quadratics is calibrated by Q_1(1,0)=1.",
+    "Q_(r*s)(z*t)=Q_r(z)*Q_s(t) is supplied universally for independent monoid indices and arbitrary real coordinate pairs with Gaussian multiplication."]
+  conclusions := [
+    "Every family member is Q_r(z)=c(r)*N(z), with c(1)=1 and c(r*s)=c(r)*c(s).",
+    "The coefficient map is a monoid homomorphism to the multiplicative reals.",
+    "Every such real multiplicative coefficient map supplies a calibrated family satisfying the universal polynomial identity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/MultiplicativeResidueQuadratics.lean"
+      declarations := [
+        "IDT.MultiplicativeResidueQuadratics.classify",
+        "IDT.MultiplicativeResidueQuadratics.coefficientHom",
+        "IDT.MultiplicativeResidueQuadratics.diagonal_calibrated",
+        "IDT.MultiplicativeResidueQuadratics.diagonal_multiplicative"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The full real-coordinate polynomial identity is a supplied premise. Its derivation from multiplicativity on residue cosets remains open.",
+    "Residue reconstruction, coefficient support classification and universal rank conclusions require separate artifacts."] }
+
+def finiteRankModFiveReadoutControl : ResearchTask := {
+  id := "finite_rank_mod_five_readout_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The source carrier is integer pairs with explicit Gaussian multiplication and N(m,n)=m^2+n^2.",
+    "The fixed response is f(m,n)=N(m,n) when m-2*n is nonzero modulo five, and zero otherwise."]
+  conclusions := [
+    "The response is nonnegative and globally multiplicative, with f(1)=1, f(2)=4, f(i)=1 and f(1+i)=2.",
+    "The response has f(5)=0 and fails conjugation invariance at an explicit pair.",
+    "The global real translate span has dimension exactly twenty, from a twenty-feature upper bound and an explicit invertible twenty-by-twenty sample matrix."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteRankReadoutFilter.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRankReadoutFilter.mod5_filter_control",
+        "IDT.QMClosure.FiniteRankReadoutFilter.readout_five",
+        "IDT.QMClosure.FiniteRankReadoutFilter.conjugation_failure",
+        "IDT.QMClosure.FiniteRankReadoutFilter.translateSpan_finrank_eq_twenty"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "This artifact concerns the full integer carrier. Dyadic extension and the universal 4/20 rank gap remain separate formalization obligations."] }
+
+def fourProbeTomographyMixtureWall : ResearchTask := {
+  id := "four_probe_tomography_mixture_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the fixed modulo-five response on integer pairs and P(z)=(f(z),f(z+1),f(z+i),f(z+1+i)).",
+    "A two-source mean is the componentwise arithmetic average of its two probe vectors."]
+  conclusions := [
+    "P is injective and its actual image is equivalent to the entire source carrier.",
+    "Every source operation transports to that actual image, and every source equivalence transports reversibly.",
+    "Equal-half ensembles {0,-1-i} and {-1,-i} both have mean vector (1,1,1,1).",
+    "After translation by +1 their mean vectors are (1,3,1,1/2) and (1,3,1,3).",
+    "Consequently no function on four real mean coordinates reproduces this translation for every equal-half source pair."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteReadoutTomographyWall.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteReadoutTomographyWall.probe_injective",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.observableEquiv",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.inducedUpdate_observe",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.inducedEquiv",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.four_probe_translate_rank_separation",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.equal_meanProbes",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.shifted_meanProbe_first_pair",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.shifted_meanProbe_second_pair",
+        "IDT.QMClosure.FiniteReadoutTomographyWall.no_meanProbe_translation_update"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_rank_mod_five_readout_control"]
+  limits := [
+    "Reconstruction uses exact realized probe vectors. Continuity and noise-stable inference require additional hypotheses.",
+    "Ordinary averaging has a mathematical definition here. Its interpretation as physically realizable exclusive preparation mixtures remains supplied."] }
+
+def finiteTranslationUniversalRankGap : ResearchTask := {
+  id := "finite_translation_universal_rank_gap"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A real readout on Gaussian integers is globally multiplicative, has f(2)=4, and has finite global real translate rank d."]
+  conclusions := [
+    "The analytic proposal gives f=N with d=4, or f different from N with d at least twenty.",
+    "Its proposed equality classification at rank twenty consists of the two modulo-five filters N(m,n)*1[m+2*n nonzero modulo five] and N(m,n)*1[m-2*n nonzero modulo five]."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/FiniteTranslationRankGap.lean"]
+  dependencies := [
+    "finite_translation_spectral_extraction", "finite_translation_dilation_support",
+    "multiplicative_residue_quadratic_algebra", "finite_rank_mod_five_readout_control"]
+  limits := [
+    "The universal gap and equality classification await formalization.",
+    "Remaining obligations include real-to-complex rank transfer, degree-two selection, real residue polynomial reconstruction, extension of coset multiplicativity to a universal polynomial identity, exact character-block rank, support counting and equality classification.",
+    "Acceptance of individual dependencies supplies only their stated contracts."] }
+
+def finiteGateLocalizationReadoutWall : ResearchTask := {
+  id := "finite_gate_localization_readout_wall"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A finite Gaussian-rational generator alphabet, optionally including finitely many inverse gates, and finitely many tested inputs are specified.",
+    "Choose an odd prime avoiding denominators and numerator norms of the selected nonzero values."]
+  conclusions := [
+    "The analytic construction W(z)=N(z)*1[reduction(N(z)) is nonzero modulo p] is nonnegative, multiplicative and conjugation invariant on the associated localization.",
+    "It agrees with N on the finite tests and serial products of the selected generators, and annihilates the nonzero integer p.",
+    "Residue indicators times N, the two coordinates and the constant function give global real translate rank at most 4*p^2 on the translation domain of that localization."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/FiniteGateLocalizationReadoutWall.lean"]
+  dependencies := []
+  limits := [
+    "This wall remains analytic awaiting formalization.",
+    "Serial-product agreement has the stated multiplicative scope. Coherent circuits producing additional sums require their own argument."] }
+
+def localMixtureCongruenceReadoutOrigin : ResearchTask := {
+  id := "local_mixture_congruence_readout_origin"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "P is the entire vector of four fixed probe responses on Gaussian integers.",
+    "Every finite probability ensemble with arbitrary nonnegative real weights summing to one is admitted.",
+    "For each elementary translation +1,-1,+i,-i, equality of entire expected P vectors implies equality of entire expected P vectors after that translation."]
+  conclusions := [
+    "The analytic argument descends each elementary translation to an affine map on the convex hull of P's image.",
+    "Every integer translate of the first response lies in the real span of the constant function and the four probe functions, giving rank at most five.",
+    "The explicit modulo-five equal-half witness supplies a finite obstruction to the required congruence."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/FiniteMixtureContinuationRank.lean"]
+  dependencies := ["four_probe_tomography_mixture_wall"]
+  limits := [
+    "The conditional rank-at-most-five argument awaits formalization.",
+    "The ensemble quantifier includes all finite real probability weights. Rational or dyadic weights alone require an additional extension argument.",
+    "The entire expected probe vector must remain congruent under each generator so that the rule can be iterated.",
+    "This supplied rule expresses finite affine closure operationally. Deriving regularity from bare microscopic locality remains open.",
+    "Physical realization of ordinary mixtures and sufficiency of their bounded probe means under local continuation remain open primitive-origin obligations.",
+    "Combining this proposal with universal norm selection also requires the separately unproved universal rank gap."] }
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -7983,7 +8175,12 @@ def researchTasks : List ResearchTask := [
   reversibleEchoAccountingBoundary, singleCalibrationScalarFaithfulnessOrigin,
   localBranchOperatorFaithfulnessOrigin, sourceHistoryFaithfulnessOrigin,
   nativeInitialHistoryPresentationOrigin, localBranchFiniteWindowBoundary,
-  finiteHistoryReadoutRegularityFrontier, nativeCircuitPassivityReadoutWall]
+  finiteHistoryReadoutRegularityFrontier,
+  finiteTranslationSpectralExtraction, finiteTranslationDilationSupport,
+  multiplicativeResidueQuadraticAlgebra, finiteRankModFiveReadoutControl,
+  fourProbeTomographyMixtureWall, finiteTranslationUniversalRankGap,
+  finiteGateLocalizationReadoutWall, localMixtureCongruenceReadoutOrigin,
+  nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
