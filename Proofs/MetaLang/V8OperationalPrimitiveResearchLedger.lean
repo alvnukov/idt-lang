@@ -9586,23 +9586,48 @@ def uniformCopyGainFiniteErrorRobustness : ResearchTask := {
 
 def uniformCopyGainContinuousNullControl : ResearchTask := {
   id := "uniform_copy_gain_continuous_null_control"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Analytic response on S={(z,x) in C times R : x>0} union {0}, using the proposed log-periodic null-response construction."]
+    "The supplied topological semiring S={(z,q) in C times R : q>0} union {(0,0)}, with inherited product topology, a=((1+i)/2,1/2), b=((1-i)/2,1/2), N(z)=Complex.normSq z, and W(0)=0.",
+    "For nonzero carrier points use the concrete response W(z,q)=N(z)*(1+(1/2)*sin(2*pi*log(q)/log(2))). The topology and response are supplied."]
   conclusions := [
-    "The analytic construction has continuous response, exact half columns and gain four, with W(T)=0 and W(1+T) differing from W(1).",
-    "The missing ambient element (1,0) creates a continuous-extension obstruction."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/DuplicationGainContinuousNullControl.lean"]
+    "The response is continuous on S including the origin, normalized, nonnegative, and bounded above by (3/2)*N(z). It satisfies both global half laws, both conservation columns and fixed duplication gain four.",
+    "The carrier retains T != 0 and c=2ab != 1 while W(T*p)=0 and W(c*p)=W(p) for every preparation p. Its nonzero sector e is readout-null, so global zero detection fails.",
+    "The strict witness W(1+T)<W(1) rules out factorization W=V composed with f for every semiring homomorphism f:S to R killing e and every function V:R to real."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RegroupingNullContextControls.lean"
+      declarations := [
+        "IDT.RegroupingNullContextControls.readout_zero",
+        "IDT.RegroupingNullContextControls.readout_one",
+        "IDT.RegroupingNullContextControls.readout_nonneg",
+        "IDT.RegroupingNullContextControls.readout_le_normSq",
+        "IDT.RegroupingNullContextControls.readout_continuous",
+        "IDT.RegroupingNullContextControls.readout_halfA",
+        "IDT.RegroupingNullContextControls.readout_halfB",
+        "IDT.RegroupingNullContextControls.readout_column",
+        "IDT.RegroupingNullContextControls.readout_duplication",
+        "IDT.RegroupingNullContextControls.readout_regrouping_column",
+        "IDT.RegroupingNullContextControls.regrouping_contract",
+        "IDT.RegroupingNullContextControls.defect_ne_zero",
+        "IDT.RegroupingNullContextControls.transparency_ne_one",
+        "IDT.RegroupingNullContextControls.readout_defect_context",
+        "IDT.RegroupingNullContextControls.readout_transparency",
+        "IDT.RegroupingNullContextControls.readout_sector",
+        "IDT.RegroupingNullContextControls.zero_detection_fails",
+        "IDT.RegroupingNullContextControls.readout_one_add_defect_lt_one",
+        "IDT.RegroupingNullContextControls.image_defect_eq_zero",
+        "IDT.RegroupingNullContextControls.no_factorization_killing_sector"] }]
+  plannedArtifacts := []
   dependencies := [
     "uniform_copy_gain_destructive_core",
-    "fourth_rejoin_three_algebraic_controls"]
+    "fourth_rejoin_three_algebraic_controls",
+    "second_regrouping_gain_selection"]
   limits := [
-    "Global zero detection is omitted in this analytic control. Its null relation fails the proposed additive congruence.",
-    "Continuity on the stated carrier and continuous extension to its ambient closure are separate obligations. All proposed control conclusions await Lean formalization.",
-    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+    "Continuity concerns the stated carrier. The missing-(1,0) continuous-extension obstruction is retained in the separate analytic uniform_copy_gain_continuous_extension_obstruction task, whose checkedEvidence is empty.",
+    "The concrete nullity and factorization countercontrol supplies no global zero detection or readout-descent theorem.",
+    "The log-periodic response is an explicitly supplied mathematical control. A physical response-selection principle remains open.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
 }
 
 def fourthRejoinTwoRelatorPrimitiveBase : ResearchTask := {
@@ -9942,29 +9967,344 @@ def topologicalCompletionAndDegreeSelection : ResearchTask := {
 
 def transparentFourthInitialPresentationAndQuotient : ResearchTask := {
   id := "transparent_fourth_initial_presentation_and_quotient"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Planned initial unital Nat-semiring presentation with two generators and only the exact contextual relators a+b=1 and a^4=b^4. Serial multiplication may initially be noncommutative; pair commutation is an obligation to establish.",
-    "Reuse the existing NativeInitialHistoryPresentation universal-presentation machinery and the pure fourth-rejoin core."]
+    "The initial unital Nat-semiring P is its own FreeAlgebra Nat Bool modulo the semiring congruence generated only by a+b=1 and a^4=b^4. Its target universal property ranges over arbitrary Semirings.",
+    "The semiring grammar is supplied. The destructive bridge uses the additional congruence generated by e=0, where T=a^2+b^2 and e=2*T, and compares that quotient with the existing Native destructive presentation."]
   conclusions := [
-    "Planned construction and obligation: construct the initial two-relator history carrier and prove its universal map property by generator evaluation.",
-    "Planned construction and obligation: construct its real shadow taking both generators to 1/2 and prove nontriviality. The existing provided-shadow theorem applies after this homomorphism has been constructed.",
-    "Planned construction and obligation: prove that quotienting the canonical idempotent e=2*(a^2+b^2) to zero is equivalent to the destructive relation T=a^2+b^2=0.",
-    "Planned construction and obligation: construct opposite universal maps between that quotient and the existing destructive initial presentation, then use generator homomorphism extensionality to prove they are inverse."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/TransparentFourthInitialHistoryPresentation.lean"]
+    "The two-relator presentation has generator evaluation, uniqueness by generator images, and positive grammar induction. Pair commutation extends by generation to all of P.",
+    "The canonical NNReal semiring shadow sends a and b to 1/2, detects zero, and gives global half laws, the first column, linear natural counts and duplication gain two.",
+    "The initial carrier has T != 0 and e != 0,1, unequal generators and no additive inverse of one. Distinct generators and the distinct pair e,1 have equal shadow values.",
+    "The additional e=0 semiring quotient has T=0 and is semiring-equivalent to the existing Native destructive presentation through opposite generator maps. Its generated congruence is exactly the kernel of the map from P to Native.",
+    "No real response on P simultaneously satisfies unit normalization, global zero detection, the global first column, one fixed global duplication gain, and unit contrast W(2)≠2. Destructive cancellation requires an additional quotient selection."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentFourthInitialHistoryPresentation.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.Rel",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.presentationCon",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.eval",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.eval_unique",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.hom_ext",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.presentation_induction",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.coefficients_commute",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.multiplication_commutes",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.presentationCommSemiring",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_a",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_b",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_zero_iff",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_half_a",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_half_b",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_column",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_counts",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.shadow_duplication_gain_two",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.realShadow",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.T_ne_zero",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.e_ne_zero",
+        "IDT.QMClosure.TransparentFourthInitialHistoryPresentation.no_additive_inverse_one"] },
+    { sourcePath := "Proofs/QMClosure/TransparentFourthDestructiveQuotient.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.initial_e_ne_one",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.initial_a_ne_b",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.initial_nontrivial_idempotent",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.classical_shadow_not_injective",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.classical_shadow_identifies_sector_unit",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.destructiveCon",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.q_e",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.quotient_destructive",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.toNative",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.F",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.G",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.F_comp_G",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.G_comp_F",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.destructiveEquiv",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.destructiveCon_eq_kernel",
+        "IDT.QMClosure.TransparentFourthDestructiveQuotient.no_full_duplication_gain_contract"] }]
+  plannedArtifacts := []
   dependencies := [
     "native_initial_history_presentation_origin",
     "fourth_rejoin_two_relator_primitive_base",
     "fourth_rejoin_canonical_idempotent",
     "uniform_copy_gain_initial_presentation_shadow"]
   limits := [
-    "The new initial object, its shadow, quotient maps, equivalence and any normal-form implementation remain future proof obligations with empty checked evidence.",
-    "The current provided-real-shadow theorem assumes a supplied homomorphism. Existence of the shadow on this new planned initial object awaits its construction.",
-    "An operational carrier or destructive quotient requires independent physical justification. Physical source of the grammar and exact contextual relators remains open.",
-    "Full QM, GR and physical-scale closure remain open."]
+    "The initial core uses its own free algebra and two relators. Native enters downstream in the separate destructive-quotient bridge.",
+    "All-P commutation is restricted to this coefficient-generated carrier. A physical operation algebra requires separate justification.",
+    "The constructed shadow distinguishes zero but identifies distinct elements. Equality detection and physical readout selection remain separate contracts.",
+    "The exact Gaussian-dyadic normal form, additive cancellation and classification of every idempotent remain analytic obligations.",
+    "The algebraic quotient equivalence supplies no physical criterion selecting that quotient.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+
+/-!
+Initial-carrier reflection and two-column readout cluster. The records retain
+explicit semiring and readout premises. The continuous-extension,
+normal-form, classical-quotient, positive-power and power-response tasks retain
+empty checked evidence.
+-/
+
+def initialShadowZeroStructure : ResearchTask := {
+  id := "transparent_fourth_initial_shadow_zero_structure"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The independent initial two-relator semiring P and its constructed zero-detecting NNReal semiring shadow."]
+  conclusions := [
+    "In P, p+q=0 exactly when p=q=0, and p*q=0 exactly when p=0 or q=0. The original semiring operations consequently carry NoZeroDivisors.",
+    "Every nonzero element of P has no additive inverse in either order."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentFourthReflectionEcho.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentFourthReflectionEcho.add_eq_zero_iff",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.mul_eq_zero_iff",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.presentationNoZeroDivisors",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.no_additive_inverse_right",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.no_additive_inverse_left"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "transparent_fourth_initial_presentation_and_quotient"]
+  limits := [
+    "Zero-sum freedom and absence of zero divisors are the scoped conclusions. Additive cancellation remains in the later normal-form obligation; the nontrivial idempotent supplies a multiplicative-cancellation counterexample.",
+    "The canonical shadow is an algebraic witness. It identifies distinct elements.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def initialReflectionEchoBoundary : ResearchTask := {
+  id := "transparent_fourth_initial_reflection_echo_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The initial universal property for exactly a+b=1 and a^4=b^4, and the zero structure of the same initial semiring."]
+  conclusions := [
+    "The unique generator-swapping semiring map J satisfies J composed with J=id, is involutive and bijective, and defines a semiring equivalence.",
+    "The canonical NNReal shadow is invariant under J, and J fixes T and e.",
+    "The algebraic echo p*J(p) is nonzero for every nonzero p and has shadow equal to shadow(p)^2. The idempotent e is its own nonzero echo.",
+    "The generator echo is a*b, has shadow 1/4, and satisfies 2*echo(a) != 1."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentFourthReflectionEcho.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_a",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_b",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_square",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_involutive",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_bijective",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.JEquiv",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_unique",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.shadow_comp_J",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.shadow_J",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_T",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.J_e",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.echo",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.echo_nonzero",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.shadow_echo",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.echo_e",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.echo_e_nonzero",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.echo_a",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.echo_b",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.shadow_echo_a",
+        "IDT.QMClosure.TransparentFourthReflectionEcho.generator_echo_not_inverse_two"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "transparent_fourth_initial_presentation_and_quotient",
+    "transparent_fourth_initial_shadow_zero_structure"]
+  limits := [
+    "The source imports only the initial presentation. Its canonical reflection concerns this initial coefficient-generated carrier.",
+    "The last inequality tests the scalar inverse-of-two normalization. Existing finite positive inverse words for a*b remain available in the pure inverse-context theorem.",
+    "Physical echo availability, general normalized echoes and invariance of an arbitrary selected readout require additional contracts.",
+    "The separate faithful arbitrary-target generated-conjugation packet remains analytic and unchanged.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def secondRegroupingGainSelection : ResearchTask := {
+  id := "second_regrouping_gain_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S with exact a+b=1 and a^4=b^4; W:S to real and k:real; W(1)=1; global first column W(a*p)+W(b*p)=W(p); one fixed global gain W(2*p)=k*W(p); and W(2) != 2.",
+    "Independently supply the global second column W(T*p)+W(c*p)=W(p), where T=a^2+b^2 and c=2*(a*b). Every displayed readout law ranges over all right preparations p."]
+  conclusions := [
+    "The supplied coefficient identities, first column, fixed gain, unit and contrast force W(T*p)=0 for every right preparation p.",
+    "The additional second column gives W(c*p)=W(p), both global half laws, and k=4."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RegroupingGainSelection.lean"
+      declarations := [
+        "IDT.RegroupingGainSelection.null_defect_contexts",
+        "IDT.RegroupingGainSelection.Contract",
+        "IDT.RegroupingGainSelection.Conclusion",
+        "IDT.RegroupingGainSelection.derive",
+        "IDT.RegroupingGainSelection.gain_selection_of_regrouping",
+        "IDT.RegroupingGainSelection.readout_transparency",
+        "IDT.RegroupingGainSelection.half_laws"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "uniform_copy_gain_destructive_core",
+    "fourth_rejoin_two_relator_primitive_base"]
+  limits := [
+    "The contract consists of the displayed semiring, coefficient and real-readout laws. Global zero detection, positivity, continuity, multiplicativity and additive cancellation are absent from its assumptions.",
+    "The conclusions concern readout nullity and transparency. Algebraic equalities T=0 and c=1, readout descent and norm uniqueness require additional arguments.",
+    "The second column, fixed gain and unit contrast are supplied operational assumptions whose physical origins remain open.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def secondRegroupingOmissionControls : ResearchTask := {
+  id := "second_regrouping_omission_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The existing S={(z,q):q>0} union {(0,0)} with a=((1+i)/2,1/2), b=((1-i)/2,1/2), N(z)=Complex.normSq z, and W8(z,q)=N(z)^2/q with the zero-at-origin convention.",
+    "On C times R take a=((1+i)/2,1/2), b=((1-i)/2,1/2), N(z)=Complex.normSq z, and mixedWeight(theta,(z,q))=theta*N(z)+(1-theta)*abs(q), with 0<theta<1 for the aggregate omission control."]
+  conclusions := [
+    "W8 is normalized, nonnegative and multiplicative, satisfies both half laws and the first column, and has fixed gain eight with W8(2) != 2.",
+    "For W8 the defect contexts are null but the second column fails, with W8(c)=2 at the unit preparation.",
+    "The mixed response satisfies the second column for every real theta. For 0<theta<1 it simultaneously has both columns, unit response, nonnegativity, global zero detection, W(2) != 2 and T != 0, while no single global duplication gain exists."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RegroupingNullContextControls.lean"
+      declarations := [
+        "IDT.RegroupingNullContextControls.gainEightReadout",
+        "IDT.RegroupingNullContextControls.gainEightReadout_zero",
+        "IDT.RegroupingNullContextControls.gainEightReadout_one",
+        "IDT.RegroupingNullContextControls.gainEightReadout_nonneg",
+        "IDT.RegroupingNullContextControls.gainEightReadout_mul",
+        "IDT.RegroupingNullContextControls.gainEightReadout_halfA",
+        "IDT.RegroupingNullContextControls.gainEightReadout_halfB",
+        "IDT.RegroupingNullContextControls.gainEightReadout_column",
+        "IDT.RegroupingNullContextControls.gainEightReadout_duplication",
+        "IDT.RegroupingNullContextControls.gainEightReadout_two",
+        "IDT.RegroupingNullContextControls.gainEightReadout_contrast",
+        "IDT.RegroupingNullContextControls.gainEightReadout_defect_context",
+        "IDT.RegroupingNullContextControls.gainEightReadout_transparency_value",
+        "IDT.RegroupingNullContextControls.gainEightReadout_regrouping_fails",
+        "IDT.RegroupingNullContextControls.MixedGainOmission.product_transparency_value",
+        "IDT.RegroupingNullContextControls.MixedGainOmission.mixed_defect_context",
+        "IDT.RegroupingNullContextControls.MixedGainOmission.mixed_transparency_context",
+        "IDT.RegroupingNullContextControls.MixedGainOmission.mixed_regrouping_column",
+        "IDT.RegroupingNullContextControls.MixedGainOmission.mixed_two_column_omission_control"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "second_regrouping_gain_selection",
+    "uniform_copy_gain_continuous_null_control",
+    "uniform_copy_gain_three_omission_controls"]
+  limits := [
+    "The gain-eight control carries no origin-continuity assertion.",
+    "The mixed-weight adapter reuses the installed omission control and adds its second-column identity. Its aggregate source theorem carries no continuity premise or conclusion.",
+    "These controls isolate the supplied second-column and fixed-gain assumptions. A physical rule selecting them remains open.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainContinuousExtensionObstruction : ResearchTask := {
+  id := "uniform_copy_gain_continuous_extension_obstruction"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The supplied log-periodic response on S={(z,q):q>0} union {(0,0)}, with its inherited topology and the same fixed positive-carrier coefficients.",
+    "The ambient product-topology closure includes the missing point (1,0)."]
+  conclusions := [
+    "The analytic log-periodic construction proposes failure of a continuous response extension to the ambient closure at (1,0)."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/DuplicationGainContinuousNullExtension.lean"]
+  dependencies := [
+    "uniform_copy_gain_continuous_null_control"]
+  limits := [
+    "The continuous-extension obstruction remains analytic and unformalized, with empty checked evidence.",
+    "The installed control source has carrier-continuity and quotient-factorization theorems. Its actual-origin audit contains no continuous-extension-at-(1,0) theorem.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def transparentFourthExactInitialNormalForm : ResearchTask := {
+  id := "transparent_fourth_exact_initial_normal_form"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The independent initial two-relator semiring P, its positive inverse words and coefficient-generated commutativity.",
+    "Define Gaussian dyadics G by z=(m+n*i)/2^k with k:Nat and m,n:Int, and real dyadics D by q=m/2^k with k:Nat and m:Int."]
+  conclusions := [
+    "Analytic exact semiring equivalence P with {(0,0)} union {(z,q):z in G,q in D,q>0}, including injectivity and the exact image.",
+    "The intended coordinates are a=((1+i)/2,1/2), b=((1-i)/2,1/2), T=(0,1/2) and e=(0,1).",
+    "The direct cyclic four-coefficient congruence and common-denominator homogenization should establish equality reflection and surjectivity onto every positive-second-coordinate Gaussian-dyadic pair.",
+    "The normal form should establish additive cancellation, exactly the three idempotents 0,e,1, and the absence of an additive complement to e."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/CyclicFourPositiveCongruence.lean",
+    "Proofs/QMClosure/TransparentFourthInitialNormalForm.lean"]
+  dependencies := [
+    "transparent_fourth_initial_presentation_and_quotient",
+    "transparent_fourth_initial_reflection_echo_boundary"]
+  limits := [
+    "The analytic normal-form argument has no checked Lean implementation. The cyclic-congruence precursor is uncompiled. Lean elaboration and kernel checking pending.",
+    "The initial P and its normal-form argument keep the destructive Native relation downstream. Target-coordinate arithmetic reuse requires its own dependency audit.",
+    "Denominator exponents are natural numbers; numerator parameters are integers.",
+    "The canonical reflection already has its own initial-carrier record. This task introduces no duplicate reflection obligation.",
+    "The existing nontrivial idempotent gives e*1=e*e with 1 != e. Multiplicative cancellation has that explicit counterexample.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def transparentFourthClassicalUnitSectorQuotient : ResearchTask := {
+  id := "transparent_fourth_classical_unit_sector_quotient"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The proposed exact initial normal form and the additional semiring congruence generated by e=1."]
+  conclusions := [
+    "Analytic exact equivalence of the e=1 quotient with the nonnegative dyadic semiring.",
+    "The generated e=1 congruence should be exactly the second-coordinate kernel."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/TransparentFourthInitialNormalForm.lean"]
+  dependencies := [
+    "transparent_fourth_exact_initial_normal_form"]
+  limits := [
+    "The quotient classification awaits Lean artifacts.",
+    "Physical selection of the unit-sector quotient remains open. The checked e=0 destructive quotient is a separate existing construction.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def transparentPositivePowerRejoin : ResearchTask := {
+  id := "transparent_positive_power_rejoin"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Arbitrary Semiring S with a+b=1 and a^(m+1)=b^(n+1), where m,n:Nat. Both rejoin exponents are positive."]
+  conclusions := [
+    "The source-reviewed analytic route proposes finite positive two-sided inverse words U=(sum of b^j for j<n+1)+a^m for a and V=(sum of a^j for j<m+1)+b^n for b, and pair commutation.",
+    "The three-level maximum-addition endomorphism source proposes a transparent noncommuting pair whose positive powers never rejoin, with a*b != b*a. A separate exponent-zero example records the need for positive exponents.",
+    "The unequal-power golden-ratio example and equal-third-power complex-root example record analytic boundaries to finite-ratio-order and fourth-specific idempotent conclusions."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/TransparentPositivePowerRejoin.lean",
+    "Proofs/QMClosure/TransparentNoncommutingControl.lean"]
+  dependencies := []
+  limits := [
+    "The source-reviewed general positive-power package is bound to /tmp/idt-positive-power-rejoin/v2 with its repaired declaration inventory. The source remains uncompiled. Lean elaboration and kernel checking pending.",
+    "The route carries no fourth-specific canonical-idempotent conclusion.",
+    "The golden-ratio boundary remains analytic: a=(sqrt(5)-1)/2, b=(3-sqrt(5))/2 satisfy a+b=1 and a^2=b, while a/b has infinite multiplicative order. The equal-third-power boundary remains analytic: a=(1+i*sqrt(3))/2 and b=conj(a) have a^3=b^3=-1, T=-1 and e=-2, which is not idempotent. Both boundaries retain empty checked evidence.",
+    "A least positive ratio-order claim requires an additional exact-order argument.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
+}
+
+def transparentFourthPowerReadoutNullIdealBoundary : ResearchTask := {
+  id := "transparent_fourth_power_readout_null_ideal_nondescent"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The proposed exact initial normal form and a supplied real parameter alpha with 0<alpha<=1.",
+    "Write N(z)=Complex.normSq z. For nonzero normal-form coordinates use Walpha(z,q)=N(z)^alpha*q^(1-alpha), with value zero at the origin and the inherited topology."]
+  conclusions := [
+    "The analytic family is normalized, nonnegative, multiplicative and continuous, has both half laws and first-column conservation, and has duplication gain 2^(1+alpha).",
+    "Its null set is the additive and serially stable principal ideal eP.",
+    "For 0<alpha<1, Walpha(1+e)=2^(1-alpha) != 1 while Walpha(e)=0, giving a null-ideal example with failure of function-level descent through the e=0 quotient."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/TransparentFourthPowerReadoutNullControl.lean"]
+  dependencies := [
+    "transparent_fourth_exact_initial_normal_form"]
+  limits := [
+    "This is a parent-supplied analytic family extending the design packet square-root special case alpha=1/2. It has no checked source artifact.",
+    "Global zero detection fails at the nonzero element e. Null-ideal closure and quotient descent remain separate properties.",
+    "The strict nondescent witness is restricted to 0<alpha<1; the endpoint alpha=1 has its stated separate value.",
+    "Physical origins of the supplied semiring grammar, exact contextual relators, readout contracts and operational availability remain open. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale closure remain open."]
 }
 
 def researchTasks : List ResearchTask := [
@@ -10112,7 +10452,16 @@ def researchTasks : List ResearchTask := [
   quarticFiniteCycleCountercontrol,
   powerOfTwoCyclotomicFamily,
   topologicalCompletionAndDegreeSelection,
-  transparentFourthInitialPresentationAndQuotient]
+  transparentFourthInitialPresentationAndQuotient,
+  initialShadowZeroStructure,
+  initialReflectionEchoBoundary,
+  secondRegroupingGainSelection,
+  secondRegroupingOmissionControls,
+  uniformCopyGainContinuousExtensionObstruction,
+  transparentFourthExactInitialNormalForm,
+  transparentFourthClassicalUnitSectorQuotient,
+  transparentPositivePowerRejoin,
+  transparentFourthPowerReadoutNullIdealBoundary]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

@@ -42,7 +42,7 @@ In the analytic quartic model, the norm is continuous in the full rational power
 
 The Minkowski completion is `C²`. The extended response is the product of the two squared complex absolute values, and its nonzero coordinate axes are norm-null. Faithfulness on the field and its generated carrier therefore leaves faithful completion as a further construction problem. [Topology and completion obligations](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
 
-A separate analytic continuous-null control uses the semiring `{(z,x) ∈ C×R | x>0} ∪ {0}` and a log-periodic response. It proposes exact half columns and gain four with `W(T)=0` but `W(1+T) ≠ W(1)`. Global zero detection is omitted. The proposed failure of null-congruence and obstruction to extension at the missing `(1,0)` still require formal proofs. Continuity on this carrier and continuous extension to an ambient closure are separate conditions. [Continuous-null control obligation](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+A separate continuous-null control uses the semiring `{(z,q) ∈ C×R | q>0} ∪ {0}` and a concrete log-periodic response with the supplied topology. It has both conservation columns, exact half laws and gain four while `T≠0` and `W(1+T)<W(1)`. The factorization exclusion applies to every semiring map killing `e`. The proposed continuous-extension obstruction at the missing ambient point `(1,0)` remains analytic and unformalized, with empty checked evidence in its separate ledger task. Continuity on the stated carrier and extension to an ambient closure retain separate contracts. [Continuous-null control and readout-descent boundary](210-regrouping-conservation-and-readout-boundaries.md)
 
 ## Generated conjugation and response symmetry
 
