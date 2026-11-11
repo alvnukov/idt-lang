@@ -510,5 +510,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeSingleContinuationReadout,
     `Proofs.QMClosure.NativeRegularReadoutCountercontrol,
     `Proofs.QMClosure.NativeTwoProbeContinuationReadout,
-    `Proofs.QMClosure.NativeLocalSquareReadout
+    `Proofs.QMClosure.NativeLocalSquareReadout,
+    `Proofs.QMClosure.OriginalOccurrenceKernel,
+    `Proofs.QMClosure.OriginalOccurrenceNormSelection,
+    `Proofs.QMClosure.NativeBoundedResourceWall,
+    `Proofs.QMClosure.RegularReadoutOccurrenceKernelSeparation
   ]

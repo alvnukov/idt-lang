@@ -152,6 +152,88 @@ private theorem quadratic_form_of_coeff_vanish
       simpa [h0, h1] using exponentPair_coordinates d
   simp [h20, h11, h02, hvanish d hd]
 
+/-- The full natural-number grid determines any complex bivariate polynomial. -/
+theorem polynomial_unique_on_natural_lattice
+    (P Q : MvPolynomial (Fin 2) ℂ)
+    (h : ∀ m n : ℕ,
+      eval ![(m : ℂ), (n : ℂ)] P = eval ![(m : ℂ), (n : ℂ)] Q) : P = Q := by
+  have hinj : Function.Injective (fun z : ℕ => (z : ℂ)) := by
+    intro a b hab
+    change (a : ℂ) = (b : ℂ) at hab
+    exact_mod_cast hab
+  apply MvPolynomial.funext_set
+    (fun _ : Fin 2 => Set.range (fun z : ℕ => (z : ℂ)))
+    (fun _ => Set.infinite_range_of_injective hinj)
+  intro x hx
+  obtain ⟨m, hm⟩ := hx 0 (Set.mem_univ 0)
+  obtain ⟨n, hn⟩ := hx 1 (Set.mem_univ 1)
+  have hx' : x = ![(m : ℂ), (n : ℂ)] := by
+    funext i
+    fin_cases i
+    · simpa using hm.symm
+    · simpa using hn.symm
+  rw [hx']
+  exact h m n
+
+/-- Natural-grid doubling alone gives the polynomial doubling identity. -/
+private theorem natural_dyadic_polynomial_identity
+    (P : MvPolynomial (Fin 2) ℂ)
+    (hscale : ∀ m n : ℕ,
+      eval ![((2 * m : ℕ) : ℂ), ((2 * n : ℕ) : ℂ)] P =
+        4 * eval ![(m : ℂ), (n : ℂ)] P) :
+    dyadicSubstitution P = C 4 * P := by
+  apply polynomial_unique_on_natural_lattice
+  intro m n
+  rw [eval_dyadicSubstitution, map_mul, eval_C]
+  have hx :
+      (fun i => (2 : ℂ) * ![(m : ℂ), (n : ℂ)] i) =
+        ![((2 * m : ℕ) : ℂ), ((2 * n : ℕ) : ℂ)] := by
+    funext i
+    fin_cases i <;> simp
+  rw [hx]
+  exact hscale m n
+
+/-- Three native a/b-bag calibrations fix a natural-grid dyadic polynomial.
+The proof first removes every nonquadratic monomial. It does not assert
+uniqueness of coefficients in a separate binomial-kernel representation. -/
+theorem polynomial_eq_half_sum_squares_of_nat_dyadic_calibrations
+    (P : MvPolynomial (Fin 2) ℂ)
+    (hscale : ∀ m n : ℕ,
+      eval ![((2 * m : ℕ) : ℂ), ((2 * n : ℕ) : ℂ)] P =
+        4 * eval ![(m : ℂ), (n : ℂ)] P)
+    (h10 : eval ![1, 0] P = 1 / 2)
+    (h01 : eval ![0, 1] P = 1 / 2)
+    (h11 : eval ![1, 1] P = 1) :
+    P = C (1 / 2) * (X 0 ^ 2 + X 1 ^ 2) := by
+  have hidentity := natural_dyadic_polynomial_identity P hscale
+  have hscaleInt : ∀ m n : ℤ,
+      eval ![((2 * m : ℤ) : ℂ), ((2 * n : ℤ) : ℂ)] P =
+        4 * eval ![(m : ℂ), (n : ℂ)] P := by
+    intro m n
+    have heval := congrArg (eval ![(m : ℂ), (n : ℂ)]) hidentity
+    rw [eval_dyadicSubstitution, map_mul, eval_C] at heval
+    have hx :
+        (fun i => (2 : ℂ) * ![(m : ℂ), (n : ℂ)] i) =
+          ![((2 * m : ℤ) : ℂ), ((2 * n : ℤ) : ℂ)] := by
+      funext i
+      fin_cases i <;> simp
+    simpa only [hx] using heval
+  let A := coeff (exponentPair 2 0) P
+  let B := coeff (exponentPair 1 1) P
+  let D := coeff (exponentPair 0 2) P
+  have hquad :
+      P = C A * X 0 ^ 2 + C B * (X 0 * X 1) + C D * X 1 ^ 2 :=
+    quadratic_form_of_coeff_vanish P (coeff_eq_zero_of_degree_ne_two P hscaleInt)
+  have hA : A = 1 / 2 := by simpa [hquad] using h10
+  have hD : D = 1 / 2 := by simpa [hquad] using h01
+  have hB : B = 0 := by
+    have h := h11
+    simp [hquad, hA, hD] at h
+    linear_combination h
+  rw [hquad, hA, hD, hB]
+  simp
+  ring
+
 /--
 Integer-lattice dyadic scaling and quarter-turn symmetry determine the entire
 supplied polynomial, including its zero case.

@@ -8524,61 +8524,139 @@ def nativeReadoutContinuationContractComparison : ResearchTask := {
 
 def originalAbFiniteSubsetReadoutSelection : ResearchTask := {
   id := "original_ab_finite_subset_readout_selection"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Use the existing initial presentation and an arbitrary real W with W(a)+W(b)=1 and both all-input native transfers W(a*p)=W(a)*W(p), W(b*p)=W(b)*W(p).",
-    "Supply one finite K and one fixed signed real kernel kappa(j,k), independent of the input bag and depending only on the a-label and b-label counts of an original subset.",
-    "For every natural n,m, tag the original occurrences by Fin(n) disjoint-union Fin(m). Require W(n*a+m*b) to equal the sum of kappa over all original unordered subsets of size at most K, explicitly compatible with evaluation of the additive bag."]
+    "Supply one arbitrary finite K and one fixed signed real kernel kappa(j,k), independent of the input bag and depending only on the a-label and b-label counts of an original unordered subset.",
+    "For every natural n,m, tag the original occurrences by Fin(n) disjoint-union Fin(m). Explicitly require W(n*a+m*b) to equal the sum of kappa over the actual unordered subsets of size at most K, including the empty subset, compatible with evaluation of that additive bag."]
   conclusions := [
-    "The accepted analytic compiler groups tagged subsets by label counts, giving W(n*a+m*b)=sum_{j+k<=K} kappa(j,k)*choose(n,j)*choose(m,k) for every natural n,m, hence one finite bivariate response polynomial.",
-    "Native doubling selects the polynomial's homogeneous degree two part. The native values W(a)=W(b)=1/2 and W(a+b)=1 fix W(n*a+m*b)=(n^2+m^2)/2.",
-    "The phase action phase*a=-b and phase*b=a extends the bag result through four sign quadrants. Gaussian(m,n)=(m+n)*a+(m-n)*b gives the integer norm, and half scaling extends it to every Gaussian-dyadic normal form.",
-    "The proposed universal conclusion is W(p)=Complex.normSq(complexEval(p)) under the supplied original-occurrence compatibility contract.",
-    "A planned adapter uses this analytic selector and the existing regular-control norm-difference witness to exclude every finite compatible original a,b kernel for that family when c>0."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/OriginalOccurrenceKernel.lean",
-    "Proofs/QMClosure/OriginalOccurrenceNormSelection.lean",
-    "Proofs/QMClosure/RegularReadoutOccurrenceKernelSeparation.lean",
-    "Proofs/QMClosure/QuadraticPolynomialDyadicSelection.lean"]
+    "The checked compiler groups the actual tagged subsets by their label counts and obtains sum_{j+k<=K} kappa(j,k)*choose(n,j)*choose(m,k), represented by one finite bivariate polynomial for all natural n,m.",
+    "Native normalization and the two universal generator transfers supply doubling by four and W(a)=W(b)=1/2, W(a+b)=1. The polynomial adapter selects homogeneous degree two and W(n*a+m*b)=(n^2+m^2)/2.",
+    "The phase action phase*a=-b, phase*b=a covers four sign quadrants. Gaussian(m,n)=(m+n)*a+(m-n)*b and half scaling extend the norm-square conclusion to every presentation element.",
+    "The source gives K>=2 as a conclusion. A concrete nonnegative K=2 witness has kappa(1,0)=kappa(0,1)=1/2, kappa(2,0)=kappa(0,2)=1 and every other witness coefficient zero.",
+    "The selector gives W(p)=Complex.normSq(complexEval(p)). The regular-control adapter combines it with the independent norm-difference witness to exclude every finite compatible original a,b kernel for c>0."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/OriginalOccurrenceKernel.lean"
+      declarations := [
+        "IDT.QMClosure.OriginalOccurrenceKernel.sum_occurrenceValue",
+        "IDT.QMClosure.OriginalOccurrenceKernel.originalSubsetCount_eq_binomialSum",
+        "IDT.QMClosure.OriginalOccurrenceKernel.eval_kernelPolynomial",
+        "IDT.QMClosure.OriginalOccurrenceKernel.compatible_polynomial_eval",
+        "IDT.QMClosure.OriginalOccurrenceKernel.pairKernel_nonnegative",
+        "IDT.QMClosure.OriginalOccurrenceKernel.binomialSum_pairKernel"] },
+    { sourcePath := "Proofs/QMClosure/OriginalOccurrenceNormSelection.lean"
+      declarations := [
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.kernelPolynomial_eq_half_sum_squares",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.readout_bag_eq_half_sum_squares",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.compatible_order_at_least_two",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.readout_gaussian_eq_norm_of_bag_formula",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.readout_normal_form_of_original_kernel",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.readout_eq_complex_norm_of_original_kernel",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.readout_eq_complex_norm_of_normalized_generator_transfer",
+        "IDT.QMClosure.OriginalOccurrenceNormSelection.pairKernel_compatible_normReadout"] },
+    { sourcePath := "Proofs/QMClosure/QuadraticPolynomialDyadicSelection.lean"
+      declarations := [
+        "IDT.TranslationRankGap.polynomial_unique_on_natural_lattice",
+        "IDT.TranslationRankGap.polynomial_eq_half_sum_squares_of_nat_dyadic_calibrations"] },
+    { sourcePath := "Proofs/QMClosure/RegularReadoutOccurrenceKernelSeparation.lean"
+      declarations := [
+        "IDT.QMClosure.RegularReadoutOccurrenceKernelSeparation.counterWeight_no_finite_original_kernel"] }]
+  plannedArtifacts := []
   dependencies := [
     "finite_history_readout_regularity_frontier", "native_initial_history_presentation_origin",
     "native_generator_mixture_readout_selection", "native_regular_readout_countercontrol"]
   limits := [
-    "The accepted v2 compiler, insertion-only natural-grid polynomial adapter, norm selector and regular-control separation adapter remain uncompiled.",
-    "The kernel order K is supplied as an arbitrary finite uniform bound. The coefficients are fixed signed reals for all natural input counts.",
-    "The stated conclusion concerns the evaluated response polynomial. Vanishing of each higher Newton-basis coefficient requires a coefficient-uniqueness artifact.",
-    "Compatibility joins original tagged occurrence subsets to evaluated additive bags explicitly; this is an added readout regularity contract.",
-    "A uniform physical original-ancestry bound remains open. Binary arity alone leaves ancestry size unbounded across growing depth.",
-    "Growing subset participation is allowed by the kernel representation; assigning physical resource or event roles to its terms requires an additional bridge.",
+    "K is an arbitrary finite input bound. The degree-two and K>=2 conclusions arise under the stated compatibility and native premises.",
+    "Newton-basis uniqueness and vanishing of arbitrary supplied higher kappa coefficients require a separate artifact. The concrete witness has its own explicit coefficient definition.",
+    "The supplied static subset-order and context-independence contracts concern original tagged syntax. A uniform physical causal-ancestry bound requires an additional bridge.",
+    "The subset representation permits growing participation as the input grows. Physical event or resource roles for its terms require an explicit accounting model.",
     "Physical readout origins, outcome frequencies, Born actualization, Hilbert representation and full QM closure remain open."] }
 
 def nativeReadoutLinearResourceBoundary : ResearchTask := {
   id := "native_readout_linear_resource_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing initial presentation and native normalization with both all-input generator transfers, hence the native unit and doubling laws.",
+    "Supply complete firing-occurrence levels indexed by preparation token count N. Their initial level is at most A*N+H, each next accounted level is at most F times the preceding level up to fixed depth D, and every event is covered by a uniform B times the sum of those levels.",
+    "The numeric level bounds represent a supplied finite-depth/outgoing-degree occurrence graph. Repeated uses of one component are distinct firing occurrences, and all firings and their events are counted. Fixed background H is allowed.",
+    "The original diagonal bag(n,n)=n*a+n*b=n has 2*n tagged inputs. Supply a linear/affine physical preparation-cost bridge using that actual input size.",
+    "Additionally require W(n*a+n*b)<=omega*events(2*n) for every natural n, with one fixed nonnegative event-weight ceiling omega. Exact positive-calibration identification is a special case."]
+  conclusions := [
+    "The checked resource wall gives W(2^k)=4^k from native unit and doubling, excluding every uniform affine readout bound independently of the kernel selector.",
+    "The complete level budget gives events(N)<=B*(A*N+H)*sum_{r=0}^D F^r. Reindexing the scalar diagonal doubles the initial slope and preserves H, giving an affine bound on events(2*n).",
+    "Under the stated model, the additional physical preparation/readout ceiling imposes an affine bound on W(n), contradicting the native power-of-two subsequence."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeBoundedResourceWall.lean"
+      declarations := [
+        "IDT.QMClosure.NativeBoundedResourceWall.readout_two_pow",
+        "IDT.QMClosure.NativeBoundedResourceWall.no_uniform_affine_bound",
+        "IDT.QMClosure.NativeBoundedResourceWall.UniformResourceBounds.events_le",
+        "IDT.QMClosure.NativeBoundedResourceWall.diagonalBag_original_input_count",
+        "IDT.QMClosure.NativeBoundedResourceWall.diagonalBag_eq_nat",
+        "IDT.QMClosure.NativeBoundedResourceWall.no_uniform_weighted_resource_bridge",
+        "IDT.QMClosure.NativeBoundedResourceWall.no_original_diagonal_bag_resource_bridge"] }]
+  plannedArtifacts := []
+  dependencies := ["native_generator_mixture_readout_selection"]
+  limits := [
+    "The wall uses native unit, native doubling and affine-growth accounting. Its source dependency route is independent of the finite-subset compiler and full norm selector.",
+    "Reusable physical components can support arbitrarily many firing occurrences. The supplied uniform bounds apply to the complete occurrence accounting.",
+    "Physical preparation cost, the correspondence of original tokens with physical inputs, and the raw-response/event-count ceiling are extra bridges. Coherent sum syntax supplies an algebraic value.",
+    "The all-subset representation permits growing participation. A conditional resource wall leaves physical detector realization, outcome interpretation and QM closure open."] }
+
+def nativeObservationStoppingReadoutBoundary : ResearchTask := {
+  id := "native_observation_stopping_readout_boundary"
   stage := .analyticAwaitingFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "Use the existing initial presentation and native normalization with both all-input generator transfers, hence the native unit and doubling laws.",
-    "Index assemblies by original token count N. Every firing occurrence is reachable from at most A*N+H initial roots in a dependency graph with input-independent finite depth and outgoing-degree bounds. The affine root bound allows fixed background roots.",
-    "Count every firing occurrence and all its events, with uniform event-count and fixed nonnegative event-weight ceilings. Repeated uses of one physical component are distinct firing occurrences.",
-    "The scalar count n is the original a,b diagonal bag(n,n)=n*(a+b)=n, containing 2*n tagged tokens. Supply a linear/affine physical assembly-cost bridge at input size 2*n.",
-    "Additionally supply one fixed nonnegative ceiling omega with W(n*a+n*b)<=omega*events(2*n) for every natural n, using the complete event total. Exact positive-calibration identification is a special case."]
+    "Supply aggregate real coordinates x,y with N=x^2+y^2 and H=Im((x+i*y)^4), ideal real registers and clocks, prescribed continuous dynamics, exact event detection and a chosen analog-output interpretation.",
+    "Use the parent-reviewed analytic controller mathematics below. The source-level drafts are accepted for later compilation, and c>0 supplies the nontrivial readout defects."]
   conclusions := [
-    "The accepted analytic native argument gives W(2^k)=4^k from unit calibration and doubling. This subsequence excludes every uniform affine bound W(n)<=C*n+D.",
-    "The resource model bounds all reachable firing occurrences by (A*N+H) times the finite depth/fanout geometric sum. The complete event total is consequently bounded affinely in N.",
-    "On the original scalar diagonal, events(2*n) has an affine bound in n, with doubled initial slope and the same fixed background. The extra raw-to-event ceiling conflicts with the native power-of-two subsequence."]
+    "Polynomial relaxation q'=H^2-N^3*q, initialized to zero, has the analytic trajectory q_t=Q*(1-exp(-N^3*t)), Q=H^2/N^3 with zero vacuum value. For g=a or b, q(g*z,t)=q(z,t/8)/2 gives time-rescaled transfer; same positive common-time transfer fails when H is nonzero. Equilibrium gives the regular family N+c*Q.",
+    "For the polynomial flow (q,r)=(x^2*t,t), put A=16*y^2*(x^2-y^2)^2 and guard N^3*r-A=0. Its least nonnegative hit is T=A/N^3, T(0)=0, with 0<=T<=16. Terminal q=Q gives the regular output N+c*Q.",
+    "For Q_j=x^2,y^2,(x+y)^2/2,(x-y)^2/2 and m=min_j Q_j, the analytic response R_c=N+c*m has native half transfer, real-axis squares and continuity, and is faithful for c>=0. For c>0, its value at 2+i is 5+c/2, raw I3 at (1,1,i) is c/2 and mixer input (1,2) total five becomes 5+c/2.",
+    "The competing-guard realization has q'=(1+N), q initialized to zero, four guards q-(1+N)-Q_j=0, and output N+c*(q-(1+N)). All initial guards are negative, every time slope is 1+N>=1, and first time 1+m/(1+N) lies in [1,3/2). At vacuum all four guards tie at time one and the terminal output is R_c."]
   checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeBoundedResourceWall.lean"]
-  dependencies := ["native_generator_mixture_readout_selection"]
+  plannedArtifacts := [
+    "Proofs/QMClosure/NativeRelaxationReadoutCountercontrol.lean",
+    "Proofs/QMClosure/NativePolynomialStoppingCountercontrol.lean",
+    "Proofs/QMClosure/NativeCompetingGuardReadoutCountercontrol.lean"]
+  dependencies := ["native_regular_readout_countercontrol", "native_vacuum_quadratic_readout_selection"]
   limits := [
-    "The accepted NativeBoundedResourceWall draft remains uncompiled. This entry records an analytic conditional resource-accounting obligation.",
-    "The wall uses native unit and doubling. Its proof route is independent of the finite-subset compiler and kernel selector.",
-    "Reusable physical components can support arbitrarily many distinct firing occurrences. The uniform graph bounds apply to those occurrences and every event is counted.",
-    "The fixed raw-event ceiling and linear/affine physical preparation cost are additional bridges. Coherent sum syntax alone supplies an algebraic value.",
-    "Original history occurrences require an explicit interpretation as physical inputs, roots, firings or events, including the scalar diagonal's 2*n token size.",
-    "The all-subset kernel permits growing participation. Counting its terms as physical events is a separate accounting assumption.",
-    "Physical realizability, measurement frequencies, Born actualization and full QM closure remain open."] }
+    "All three observation mechanisms remain analytic obligations with empty checked evidence. Accepted uncompiled source-level drafts supply context for later builds and audits.",
+    "Relaxation has uniform absolute-output convergence. Relative convergence near vacuum is nonuniform, and the nontrivial equilibrium lacks a common second-order quadratic vacuum expansion.",
+    "The timer tau/N^3 is finite off vacuum and unbounded near it. A positive threshold has no vacuum hit, so a total stopped response requires a separate vacuum convention.",
+    "The single-guard controller uses least nonnegative immediate-hit semantics. Every vacuum time is a hit and zero is first, while the time slope N^3 degenerates there.",
+    "The competing guards are individually uniformly transverse. The remaining obligation concerns the regularity of the complete stopping/selection operation or a stable active branch, including its four-way vacuum tie.",
+    "Aggregate coordinates, ideal real dynamics/clock, exact detection and output interpretation remain imports. Discrete detector realization and physical derivation remain open.",
+    "Generic fixed-common-time C2 mechanism results and the common-quadratic Peano selector require separate artifacts and hypotheses. Outcome frequencies, Born actualization and full QM closure remain open."] }
+
+def originalMaskLocalKernelCharacterization : ResearchTask := {
+  id := "original_mask_local_kernel_characterization"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For every tagged original a,b universe supply a finite output set and real contribution functions frozen across every input mask. Each contribution has a fixed support of at most K original mask bits, with one finite K uniform across all universes and masks.",
+    "For every mask, the sum of all output contributions equals the same supplied W evaluated on the coherent bag of retained original occurrences."]
+  conclusions := [
+    "The accepted analytic Boolean-Mobius argument gives one fixed label-count kernel kappa(j,k) and a finite original-occurrence subset representation. The all-mask calibration supplies the label-count invariance.",
+    "Conversely, a finite original-occurrence kernel supplies frozen mask-local contributions indexed by its subsets, giving an equivalent operational characterization.",
+    "The analytic next artifacts include a K=2 norm witness with nonnegative contributions, a constant empty-support control satisfying only full-mask calibration, and the need for unbounded support across universes for the regular c>0 family.",
+    "An independent analytic pair-coverage wall uses empty/singleton/same-type-pair calibration, whose pair finite difference is one. Every same-type pair lies in some fixed support. With support at most K and per-original incidence at most M, each nonempty type class has size at most 1+M*(K-1), and same-type pair count is at most card(outputs)*choose(K,2)."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/OriginalMaskLocalKernel.lean",
+    "Proofs/QMClosure/OriginalMaskCircuitAncestry.lean",
+    "Proofs/QMClosure/OriginalMaskLocalityControls.lean"]
+  dependencies := ["original_ab_finite_subset_readout_selection", "native_regular_readout_countercontrol"]
+  limits := [
+    "The characterization, witnesses and countercontrol remain analytic with empty checked evidence.",
+    "The finite output set and every contribution function stay fixed while the mask varies. Calibration is required for every retained subset.",
+    "A complete bounded-fanin/depth DAG can supply the original-mask support bound, including event presence, stopping, control, normalization and output selection. The same-W all-mask retained-bag calibration is an independent bridge.",
+    "Syntactic masks require a supplied physical shutter/preparation interpretation. Uniform DAG bounds and all-mask calibration are additional contracts.",
+    "The pair-coverage wall permits unrestricted real contribution magnitudes. A graph-to-incidence bridge must account for distinct component endpoints, copies, ports, event presence and control across all outputs.",
+    "This operational characterization leaves physical origin, detector realization, Born actualization and full QM closure open."] }
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -8709,7 +8787,8 @@ def researchTasks : List ResearchTask := [
   nativeRegularReadoutRegularity, nativeVacuumQuadraticReadoutSelection,
   nativeTwoProbeContinuationReadoutSelection, nativeLocalSquareReadoutSelection,
   nativeReadoutContinuationContractComparison, originalAbFiniteSubsetReadoutSelection,
-  nativeReadoutLinearResourceBoundary, nativeCircuitPassivityReadoutWall]
+  nativeReadoutLinearResourceBoundary, nativeObservationStoppingReadoutBoundary,
+  originalMaskLocalKernelCharacterization, nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
