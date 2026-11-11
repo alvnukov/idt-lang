@@ -9306,6 +9306,667 @@ def dyadicScaledApproximateColumnNormSelection : ResearchTask := {
     "The scalar proof route uses dyadic-rational finite induction and an auxiliary reflection average. Continuity, monotonicity, full real homogeneity and readout reflection symmetry have no role as supplied premises.",
     "The native algebra, physical all-input preparation/scaling availability, readout/error provenance, detector actualization, Born/Hilbert origin, full QM/GR and physical scales retain independent open obligations."] }
 
+/-!
+Local-history origin cluster with fourteen conditional theorem records and twelve
+analytic obligations. The conditional records cite installed proof declarations.
+The analytic obligations retain notYetKernelChecked review and empty
+checkedEvidence. Source binding follows the sealed comment-repair-v2 manifest
+and its original complete actual-origin audit chain.
+-/
+
+def integerReciprocalCountClassification : ResearchTask := {
+  id := "integer_reciprocal_count_classification"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Real sequence g, natural d, g(0)=0, g(1)=1/2, and g(d*n+k)+g(k)=2*g(n)+2*g(n+k) for every natural n,k."]
+  conclusions := [
+    "The recurrence gives a constant second difference and the complete quadratic-linear polynomial formula.",
+    "Exactly the supplied classification holds: d=2 with g(n)=n^2/2, or d=4 with g(n)=n/2. The d=3 recurrence is impossible.",
+    "Finite contrast g(2) differs from one characterizes the quadratic branch; g(2)=1 characterizes the linear branch."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/IntegerReciprocalCountClassification.lean"
+      declarations := [
+        "IDT.QMClosure.IntegerReciprocalCountClassification.second_difference",
+        "IDT.QMClosure.IntegerReciprocalCountClassification.polynomial_formula",
+        "IDT.QMClosure.IntegerReciprocalCountClassification.classification",
+        "IDT.QMClosure.IntegerReciprocalCountClassification.cubic_impossible",
+        "IDT.QMClosure.IntegerReciprocalCountClassification.quadratic_iff_finite_contrast",
+        "IDT.QMClosure.IntegerReciprocalCountClassification.linear_iff_unit_second_value"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "These are universal sequence theorems under the displayed recurrence. The adapter supplying that recurrence is separate.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def semiringReciprocalCrossClassification : ResearchTask := {
+  id := "semiring_reciprocal_cross_classification"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, exact carrier equality a+b=1, natural d with (d:S)*(a*b)=1, W:S to real, W(1)=1, and global half laws W(a*p)=W(p)/2 and W(b*p)=W(p)/2.",
+    "For f(n,m)=W(n*a+m*b), supply one uniform choice of mixed-increment sign over all natural pairs. Quadratic selection additionally supplies W(2*a) differing from W(1). Destructive closure additionally supplies global zero detection."]
+  conclusions := [
+    "Half laws and uniform mixed sign give count separability and the scalar sequence recurrence without additive cancellation.",
+    "The natural-bag classification is d=2 with f(n,m)=(n^2+m^2)/2, or d=4 with f(n,m)=(n+m)/2. Finite contrast selects d=2.",
+    "On the selected branch global zero detection yields T=a^2+b^2=0, the witness 4*a^4+1=0, and an additive inverse for each carrier element.",
+    "In an arbitrary semiring the additional cubic relator a^3+b^3=0 with a+b=1 gives reciprocal cross 3; the readout/sign classification excludes that branch.",
+    "The standard complex pair and norm-squared readout inhabit the complete selected reciprocal-cross contract, including uniform mixed sign, finite contrast and global zero detection."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SemiringReciprocalCrossClassification.lean"
+      declarations := [
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.vacuum",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.saturated",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.count_separable",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.axis_recurrence",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.classification",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.quadratic_of_finite_contrast",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.selected_destructive",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.additive_inverse_exists_of_faithful",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.cubic_reciprocal_noncommutative",
+        "IDT.QMClosure.SemiringReciprocalCrossClassification.cubic_impossible"] },
+    { sourcePath := "Proofs/QMClosure/ReciprocalCrossQuadraticWitness.lean"
+      declarations := [
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.laws",
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.nonnegative",
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.faithful",
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.count_value",
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.uniform_sign",
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.finite_contrast",
+        "IDT.QMClosure.ReciprocalCrossQuadraticWitness.selected_destructive_witness"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "count_cross_increment_rigidity",
+    "integer_reciprocal_count_classification"]
+  limits := [
+    "The classification covers natural bags n*a+m*b. A global formula for W requires further premises.",
+    "A common natural scalar return is stronger than invertibility of a*b. The half laws and uniform mixed sign remain supplied inputs. The cited cubic helper uses only Semiring.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def reciprocalCrossClassificationControls : ResearchTask := {
+  id := "reciprocal_cross_classification_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The concrete real equal-half control and real dual-number control with the specified piecewise scalar/nilpotent absolute-value response.",
+    "The separate square-zero-free corollary assumes CommRing R, a b : R, natural d, W : R to real, Laws a b d W, UniformMixedSign a b W, forall x : R, x*x=0 implies x=0, and a != b."]
+  conclusions := [
+    "The real equal-half model realizes the d=4 linear branch with global nonnegativity and global zero detection.",
+    "Distinct dual generators also realize the d=4 branch with unit, global half laws, nonnegativity, global zero detection, a readout-preserving reflection and zero mixed increments.",
+    "The dual model fails finite contrast and response multiplicativity and has a nonzero square-zero element with positive response.",
+    "Assuming CommRing R, Laws a b d W, UniformMixedSign a b W, forall x : R, x*x=0 implies x=0, and a != b, the linear branch is excluded and d=2 with W(n*a+m*b)=(n^2+m^2)/2 for all natural n,m."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ReciprocalCrossClassificationControls.lean"
+      declarations := [
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Classical.laws",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Classical.nonnegative",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Classical.faithful",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Classical.count_value",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Classical.mixed_zero",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.laws",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.distinct",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.nonnegative",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.faithful",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.uniform_sign",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.reflect_readout",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.finite_contrast_fails",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.not_multiplicative",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.eps_nonzero",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.eps_square",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.Dual.eps_value",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.linear_square_zero",
+        "IDT.QMClosure.ReciprocalCrossClassificationControls.quadratic_of_square_zero_free"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "semiring_reciprocal_cross_classification"]
+  limits := [
+    "The dual control concerns the reciprocal-cross family. A fourth-rejoin property is outside its cited conclusions.",
+    "Continuity, positive-power separation, ghost-faithfulness and scalar-return-omission controls remain separate analytic contracts outside these checked declarations.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainCompleteComplexInhabitant : ResearchTask := {
+  id := "uniform_copy_gain_complete_complex_inhabitant"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The concrete complex pair a=(1+i)/2 and b=(1-i)/2 with W(z)=Complex.normSq(z) and k=4."]
+  conclusions := [
+    "The standard complex pair is a complete nonnegative inhabitant of the unknown-copy-gain Contract, with distinct generators and a nonzero generator.",
+    "The inhabited contract yields its complete Conclusion and 2*a*b=1."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DuplicationGainDestructiveControls.lean"
+      declarations := [
+        "IDT.DuplicationGainDestructive.Controls.standard_complex_contract",
+        "IDT.DuplicationGainDestructive.Controls.standard_complex_nonneg",
+        "IDT.DuplicationGainDestructive.Controls.standard_complex_generators_distinct",
+        "IDT.DuplicationGainDestructive.Controls.standard_complex_generator_nonzero",
+        "IDT.DuplicationGainDestructive.Controls.standard_complex_conclusion",
+        "IDT.DuplicationGainDestructive.Controls.standard_complex_transparency"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "This mathematical inhabitant establishes consistency and nonvacuity of the conditional contract. Its physical origin remains open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainDestructiveCore : ResearchTask := {
+  id := "uniform_copy_gain_destructive_core"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S and the exact DuplicationGainDestructive.Contract, including explicit Commute a b, a+b=1, a^4=b^4, W(1)=1, global zero detection, global column conservation, a single fixed input-independent unknown duplication gain k, and W(2) differing from 2."]
+  conclusions := [
+    "The conditional derivation yields T=0, 2*a*b=1, global half laws, k=4 and algebraic inverse witnesses.",
+    "A finite helper already forces T=0 from the displayed unit, gain and column contexts plus zero detection at T."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DuplicationGainDestructiveCore.lean"
+      declarations := [
+        "IDT.DuplicationGainDestructive.Contract",
+        "IDT.DuplicationGainDestructive.Conclusion",
+        "IDT.DuplicationGainDestructive.derive",
+        "IDT.DuplicationGainDestructive.destructive_zero_of_finite_contexts"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The public contract retains global zero detection. The finite helper is a local proof interface.",
+    "The explicit Contract.commute field is preserved. The separate pure fourth-rejoin constructor derives pair commutation from the two carrier relators.",
+    "Positivity, continuity and mixed-increment signs are outside the contract. Selection of a unique norm remains open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainAllPreparationHalves : ResearchTask := {
+  id := "uniform_copy_gain_all_preparation_halves"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, explicit Commute a b, a^4=b^4, 2*a*b=1, real W, k differing from 2, global column conservation and global duplication gain."]
+  conclusions := [
+    "A finite fourth-difference identity and finite column/gain contexts give W(a*x)=W(x)/2 and W(b*x)=W(x)/2 for every preparation x."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DuplicationGainDestructiveCore.lean"
+      declarations := [
+        "IDT.DuplicationGainDestructive.finite_fourth_difference",
+        "IDT.DuplicationGainDestructive.half_laws"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "uniform_copy_gain_destructive_core"]
+  limits := [
+    "The global hypotheses permit the finite contexts needed for each x. Laboratory availability of those contexts remains an interpretation obligation.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainAlgebraicInverseContexts : ResearchTask := {
+  id := "uniform_copy_gain_algebraic_inverse_contexts"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, explicit Commute a b, a^2+b^2=0 and 2*a*b=1."]
+  conclusions := [
+    "Finite algebraic words provide the inverse contexts and negative-one witness specified by AlgebraicWitnesses."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DuplicationGainDestructiveCore.lean"
+      declarations := [
+        "IDT.DuplicationGainDestructive.AlgebraicWitnesses",
+        "IDT.DuplicationGainDestructive.algebraic_witnesses"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "uniform_copy_gain_destructive_core"]
+  limits := [
+    "The conclusion concerns words generated by the supplied algebraic operations. Physical echo availability and arbitrary normalized echoes remain open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainThreeOmissionControls : ResearchTask := {
+  id := "uniform_copy_gain_three_omission_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The concrete real absolute-value, blind product and mixed product responses defined in DuplicationGainDestructiveControls. The mixed control uses 0<c<1."]
+  conclusions := [
+    "The real model satisfies the remaining displayed laws at gain two with nonzero T and fails the finite unit-duplication contrast.",
+    "The blind product response has gain four and unit contrast with W(T)=0 and nonzero T, and fails global zero detection.",
+    "The mixed product response is nonnegative, globally zero detecting and column conserving with unit contrast and nonzero T, while no input-independent fixed gain exists."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DuplicationGainDestructiveControls.lean"
+      declarations := [
+        "IDT.DuplicationGainDestructive.Controls.real_omission_control",
+        "IDT.DuplicationGainDestructive.Controls.blind_omission_control",
+        "IDT.DuplicationGainDestructive.Controls.mixed_omission_control"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "uniform_copy_gain_destructive_core"]
+  limits := [
+    "The omission controls locate the roles of the supplied hypotheses within this family.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainInitialPresentationShadow : ResearchTask := {
+  id := "uniform_copy_gain_initial_presentation_shadow"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S with a unital semiring homomorphism phi:S to real taking both a and b to 1/2."]
+  conclusions := [
+    "The classical real shadow sends T=a^2+b^2 to 1/2.",
+    "Such a shadow rules out existence of any W,k satisfying the full unknown-copy-gain Contract on that carrier."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DuplicationGainDestructiveCore.lean"
+      declarations := [
+        "IDT.DuplicationGainDestructive.real_shadow_destructive_value",
+        "IDT.DuplicationGainDestructive.no_contract_of_real_shadow"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "uniform_copy_gain_destructive_core"]
+  limits := [
+    "An operational faithful carrier or quotient must be justified independently of readout selection. Semiring grammar with the two relators alone still admits the classical shadow.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainFiniteErrorRobustness : ResearchTask := {
+  id := "uniform_copy_gain_finite_error_robustness"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Analytic perturbative versions of the finite destructive proof and finite eight-cycle exact-gain contexts, with explicit strict gaps."]
+  conclusions := [
+    "Analytic strict-gap destructive bounds and an exact-gain finite-cycle spectral band await formalization.",
+    "The analytic boundary counterexample uses 0<epsilon<1. At epsilon=0 its gain is two and its unit contrast fails."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/DuplicationGainDestructiveRobustness.lean"]
+  dependencies := [
+    "uniform_copy_gain_destructive_core"]
+  limits := [
+    "All perturbation bounds and the gain-error spectral extension remain uncompiled. Exact theorems supply no error-tolerant conclusion.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def uniformCopyGainContinuousNullControl : ResearchTask := {
+  id := "uniform_copy_gain_continuous_null_control"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Analytic response on S={(z,x) in C times R : x>0} union {0}, using the proposed log-periodic null-response construction."]
+  conclusions := [
+    "The analytic construction has continuous response, exact half columns and gain four, with W(T)=0 and W(1+T) differing from W(1).",
+    "The missing ambient element (1,0) creates a continuous-extension obstruction."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/DuplicationGainContinuousNullControl.lean"]
+  dependencies := [
+    "uniform_copy_gain_destructive_core",
+    "fourth_rejoin_three_algebraic_controls"]
+  limits := [
+    "Global zero detection is omitted in this analytic control. Its null relation fails the proposed additive congruence.",
+    "Continuity on the stated carrier and continuous extension to its ambient closure are separate obligations. All proposed control conclusions await Lean formalization.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinTwoRelatorPrimitiveBase : ResearchTask := {
+  id := "fourth_rejoin_two_relator_primitive_base"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, with a+b=1 and a^4=b^4 as exact equalities in the history carrier, usable in every algebraic context."]
+  conclusions := [
+    "The positive geometric words 1+b+b^2+b^3+a^3 and its swapped form are two-sided inverses of a and b.",
+    "The two relators derive Commute a b and construct the preserved fourth-rejoin Contract."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FourthRejoinIdempotentCore.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.geometricInverse",
+        "IDT.FourthRejoinIdempotent.geometric_inverse_a",
+        "IDT.FourthRejoinIdempotent.geometric_inverse_b",
+        "IDT.FourthRejoinIdempotent.commute_of_transparent_fourth",
+        "IDT.FourthRejoinIdempotent.contract_of_transparent_fourth"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The Semiring grammar remains supplied: associative serial composition, commutative parallel composition, distributivity, zero, unit and natural counting.",
+    "Only pair serial commutation is concluded. Commutation with unrelated elements and physical realization remain open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinCanonicalIdempotent : ResearchTask := {
+  id := "fourth_rejoin_canonical_idempotent"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, exact a+b=1 and a^4=b^4; use the two-relator constructor to obtain the explicit Contract."]
+  conclusions := [
+    "For T=a^2+b^2 and e=2T, the identities 2T^2=T, e^2=e, eT=T and ae=be=ea=eb=T hold.",
+    "The characterizations are e=0 iff T=0 and e=1 iff a=b, yielding T=0 or a=b or a nontrivial idempotent e."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FourthRejoinIdempotentCore.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.contract_of_transparent_fourth",
+        "IDT.FourthRejoinIdempotent.two_defect_sq",
+        "IDT.FourthRejoinIdempotent.sector_idempotent",
+        "IDT.FourthRejoinIdempotent.sector_mul_defect",
+        "IDT.FourthRejoinIdempotent.pair_mul_sector",
+        "IDT.FourthRejoinIdempotent.sector_eq_zero_iff",
+        "IDT.FourthRejoinIdempotent.sector_eq_one_iff",
+        "IDT.FourthRejoinIdempotent.sector_trilemma_of_transparent_fourth"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "fourth_rejoin_two_relator_primitive_base"]
+  limits := [
+    "The trilemma is a disjunction. Its alternatives may overlap in a trivial semiring.",
+    "Ambient complementary idempotents, centrality relative to unrelated elements and ambient direct-sum decomposition require separate premises.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinFiniteInverseContexts : ResearchTask := {
+  id := "fourth_rejoin_finite_inverse_contexts"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The exact arbitrary-semiring two-relator premises of fourth_rejoin_canonical_idempotent."]
+  conclusions := [
+    "The two-sided inverse words are 2b+e for a, 2a+e for b, 2+2e for ab and ab+T^2 for natural two.",
+    "At e=0 the pair words reduce to 2b,2a and the cross word to 2; at e=1 the cross word equals 4."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FourthRejoinIdempotentCore.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.InverseContexts",
+        "IDT.FourthRejoinIdempotent.inverse_contexts_of_transparent_fourth",
+        "IDT.FourthRejoinIdempotent.destructive_inverse_words",
+        "IDT.FourthRejoinIdempotent.classical_cross_word"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "fourth_rejoin_canonical_idempotent"]
+  limits := [
+    "These words are formal generated histories under the supplied grammar. Their availability as laboratory protocols remains open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinThreeAlgebraicControls : ResearchTask := {
+  id := "fourth_rejoin_three_algebraic_controls"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The complex unequal pair, real equal halves, their product pair, and the positive-second-coordinate subsemiring of the complex-real product."]
+  conclusions := [
+    "The complex control realizes T=e=0 with unequal generators; real equal halves realize T=1/2 and e=1.",
+    "The product control has unequal generators, T=(0,1/2), e=(0,1), a nontrivial idempotent and the displayed inverse words.",
+    "The restricted positive-second-coordinate semiring is additively cancellative and has no zero divisors while retaining a nontrivial idempotent. Its ambient complementary pair (1,0) and difference pair (i,0) are absent."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FourthRejoinIdempotentControls.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.Controls.complex_contract",
+        "IDT.FourthRejoinIdempotent.Controls.complex_defect",
+        "IDT.FourthRejoinIdempotent.Controls.complex_sector",
+        "IDT.FourthRejoinIdempotent.Controls.complex_pair_ne",
+        "IDT.FourthRejoinIdempotent.Controls.real_contract",
+        "IDT.FourthRejoinIdempotent.Controls.real_pair_eq",
+        "IDT.FourthRejoinIdempotent.Controls.real_defect",
+        "IDT.FourthRejoinIdempotent.Controls.real_sector",
+        "IDT.FourthRejoinIdempotent.Controls.mixed_contract",
+        "IDT.FourthRejoinIdempotent.Controls.mixed_defect",
+        "IDT.FourthRejoinIdempotent.Controls.mixed_sector",
+        "IDT.FourthRejoinIdempotent.Controls.mixed_nontrivial",
+        "IDT.FourthRejoinIdempotent.Controls.mixed_idempotent",
+        "IDT.FourthRejoinIdempotent.Controls.mixed_inverse_words"] },
+    { sourcePath := "Proofs/QMClosure/FourthRejoinPositiveCarrierControl.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.Controls.positive_add_right_cancel",
+        "IDT.FourthRejoinIdempotent.Controls.positive_add_left_cancel",
+        "IDT.FourthRejoinIdempotent.Controls.positive_mul_eq_zero",
+        "IDT.FourthRejoinIdempotent.Controls.positive_contract",
+        "IDT.FourthRejoinIdempotent.Controls.positive_nontrivial_idempotent",
+        "IDT.FourthRejoinIdempotent.Controls.complementary_pair_absent",
+        "IDT.FourthRejoinIdempotent.Controls.difference_pair_absent"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "fourth_rejoin_canonical_idempotent",
+    "fourth_rejoin_finite_inverse_contexts"]
+  limits := [
+    "These are explicit full-semiring controls. A generated-image identification and universal free-presentation isomorphism require separate proofs.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinCoefficientIdempotentPurityBoundary : ResearchTask := {
+  id := "fourth_rejoin_coefficient_idempotent_purity_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, exact a+b=1 and a^4=b^4, unequal a,b and the additional coefficient-carrier purity premise forall x, x*x=x implies x=0 or x=1."]
+  conclusions := [
+    "The additional coefficient-idempotent purity premise forces T=0.",
+    "Additive cancellation and absence of zero divisors do not imply coefficient-idempotent purity, as witnessed by the positive-carrier control."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FourthRejoinIdempotentCore.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.CoefficientIdempotentPurity",
+        "IDT.FourthRejoinIdempotent.destructive_of_purity_transparent_fourth"] },
+    { sourcePath := "Proofs/QMClosure/FourthRejoinPositiveCarrierControl.lean"
+      declarations := [
+        "IDT.FourthRejoinIdempotent.Controls.positive_add_right_cancel",
+        "IDT.FourthRejoinIdempotent.Controls.positive_mul_eq_zero",
+        "IDT.FourthRejoinIdempotent.Controls.positive_nontrivial_idempotent",
+        "IDT.FourthRejoinIdempotent.Controls.positive_coefficient_purity_fails"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "fourth_rejoin_canonical_idempotent",
+    "fourth_rejoin_three_algebraic_controls"]
+  limits := [
+    "Purity is scoped to the coefficient carrier. Its physical selection remains open. Application to general measurement algebras or projector families requires its own justification.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinPositiveDyadicImageBoundary : ResearchTask := {
+  id := "fourth_rejoin_positive_dyadic_image_analytic_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The concrete mixed a,b and their positive-coefficient generated subsemiring."]
+  conclusions := [
+    "The analytic image proposal identifies the generated carrier with Gaussian dyadics times strictly positive dyadics, union zero.",
+    "Proposed generators include r=ab+T^2=(1/2,1/2), c=2a^2=(i,1/2), c^4=(1,1/16) and e=(0,1)."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/FourthRejoinPositiveDyadicImage.lean"]
+  dependencies := [
+    "fourth_rejoin_three_algebraic_controls"]
+  limits := [
+    "The generated-subsemiring image theorem awaits formalization. A free-presentation isomorphism and an ambient decomposition remain separate.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def fourthRejoinPhysicalEchoBoundary : ResearchTask := {
+  id := "fourth_rejoin_physical_echo_availability_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The supplied abstract coefficient contract and finite inverse words."]
+  conclusions := [
+    "Physical implementation of the inverse words remains an open interpretation obligation.",
+    "The identities ae=be=T and 2T=e suggest a generated-carrier retraction interpretation through e. An image carrier with unit e remains unconstructed."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/FourthRejoinPhysicalEchoAvailabilityBoundary.lean"]
+  dependencies := [
+    "fourth_rejoin_finite_inverse_contexts"]
+  limits := [
+    "Physical source of the Semiring grammar and the exact contextual carrier equalities a+b=1 and a^4=b^4 remains open.",
+    "Faithful detection, continuity, fixed duplication gain, preparation availability and normalized echoes require their own operational source.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def gainFourCharacteristicZero : ResearchTask := {
+  id := "gain_four_characteristic_zero_draft"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Arbitrary Ring R, real W, W(1)=1 and global W(2*x)=4*W(x)."]
+  conclusions := [
+    "The reviewed analytic finite-residue argument proposes characteristic zero using successive powers of two."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/GainFaithfulGeneratedConjugation.lean"]
+  dependencies := []
+  limits := [
+    "All new proof source remains uncompiled. Unit response and gain four are supplied. Multiplicativity and a unique quadratic response remain separate.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def faithfulGeneratedConjugation : ResearchTask := {
+  id := "gain_four_faithful_generated_conjugation_draft"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A Semiring S with ExactPair.Laws, its canonically constructed scalarRing as the sole installed Ring structure, a real response with unit value one and uniform duplication gain four."]
+  conclusions := [
+    "The reviewed analytic draft proposes characteristic zero and injective evaluation of the initial Gaussian-dyadic presentation.",
+    "It proposes identifying the actual image with the coefficient-generated semiring and transporting source reflection to a unique generator-swapping ring involution.",
+    "It proposes generated inverse words 2b,2a and nonvanishing of every nonzero generated raw conjugate product."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/GainFaithfulGeneratedConjugation.lean"]
+  dependencies := [
+    "gain_four_characteristic_zero_draft"]
+  limits := [
+    "All new source remains uncompiled. Reflection preserving W is an additional condition.",
+    "Ambient commutativity, ambient domain structure, physical echo availability and arbitrary normalized echoes remain separate.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def duplicationGainOriginAdapter : ResearchTask := {
+  id := "uniform_duplication_gain_faithful_origin_adapter_draft"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The exact DuplicationGainDestructive.Contract with its explicit Commute field, transparent sum, fourth rejoin, unit, global zero detection, column law, fixed unknown gain and unit contrast."]
+  conclusions := [
+    "The analytic adapter proposes feeding destructive zero and gain four from the existing conditional derivation into the uncompiled faithful-generated-arithmetic route."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/DuplicationGainFaithfulConjugationAdapter.lean"]
+  dependencies := [
+    "uniform_copy_gain_destructive_core",
+    "gain_four_faithful_generated_conjugation_draft"]
+  limits := [
+    "The adapter and downstream generated-conjugation source remain uncompiled. The existing contract keeps explicit pair commutation.",
+    "The pure two-relator theorem separately supplies that field. Physical justification of the full contract remains open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def readoutConjugationBoundary : ResearchTask := {
+  id := "gain_four_readout_conjugation_boundary_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Complex model, N(z)=|z|^2, 0<c<1, Wc(0)=0 and Wc(z)=N(z)+c*Im(z^8)/N(z)^3 for nonzero z."]
+  conclusions := [
+    "The analytic control is positive faithful, unital, column preserving and has gain four while distinguishing conjugates.",
+    "The proposed values are Wc(2+i)=5-336*c/125 and Wc(2-i)=5+336*c/125."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/GainFourReadoutConjugationControl.lean"]
+  dependencies := [
+    "gain_four_faithful_generated_conjugation_draft"]
+  limits := [
+    "This control has no Lean proof in the packet. Gain and columns leave W-reflection invariance as a separate requirement.",
+    "For a=(1+i)/2 and b its conjugate, N(a)=N(b)=1/2 refers to norm squared.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def quarticFiniteCycleCountercontrol : ResearchTask := {
+  id := "cyclotomic_quartic_finite_cycle_countercontrol"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "K=Q(zeta8), zeta8 primitive of order eight; a=(1+zeta8)^(-1), b=zeta8*a; W the rational field norm embedded in real; H the unital subsemiring generated by a,b."]
+  conclusions := [
+    "The reviewed analytic model is positive faithful, unital, multiplicative, conjugation preserving and obeys both half laws, with duplication gain sixteen.",
+    "The least positive rejoin exponent is eight; a^4=-b^4 differs from b^4; T differs from zero and W(T)=1.",
+    "The natural-count formula is W(n*a+m*b)=(n^4+m^4)/2 with zero mixed increments, coordinatewise monotonicity and third same-sector increment eighteen at zero.",
+    "The proposed generated carrier is Z[1/2,zeta8], which omits 1/3; the ambient field has inverses for every nonzero element. The inverse of ab is 2+sqrt(2), precluding a common natural reciprocal scalar."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/CyclotomicFiniteCycleReadoutControl.lean"]
+  dependencies := []
+  limits := [
+    "All universal model and generated-carrier claims remain analytic and uncompiled. The finite probe covers selected anchors and 81 count pairs.",
+    "The proposed continuity uses full power-basis or Minkowski topology. Single-complex-embedding continuity fails. Faithful completion and physical realization remain open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def powerOfTwoCyclotomicFamily : ResearchTask := {
+  id := "cyclotomic_power_of_two_degree_wall"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For every natural r>=2, K_r=Q(zeta) with zeta primitive of order 2^r, D=2^(r-1), a=(1+zeta)^(-1), b=zeta*a and W_r the rational field norm embedded in real."]
+  conclusions := [
+    "The analytic family has degree D, norm(1+zeta)=2, positive faithful multiplicative readout, both half laws and duplication gain 2^D.",
+    "The proposed natural-count formula is (n^D+m^D)/2 and the least positive rejoin exponent is 2^r. T differs from zero for r>=3.",
+    "The proposed third same-sector increment at zero is (3^D-3*2^D+3)/2, zero at D=2 and eighteen at D=4.",
+    "These members exhibit higher degree under binary columns, unspecified fixed gain, an unspecified finite cycle and the stated count regularities. Exact fourth rejoin excludes the members r>=3."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/PowerOfTwoCyclotomicReadoutFamily.lean"]
+  dependencies := [
+    "cyclotomic_quartic_finite_cycle_countercontrol"]
+  limits := [
+    "The family is analytic and uncompiled. The finite quartic probe samples r=3.",
+    "Exclusion within this family leaves general degree-selection sufficiency and physical selection open.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def topologicalCompletionAndDegreeSelection : ResearchTask := {
+  id := "cyclotomic_topology_completion_degree_selection_obligation"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The quartic K and generated H with norm W; power-basis topology as the rational Q^4 coordinate subspace of R^4; full Minkowski embedding in C^2; a selected complex embedding with positive sqrt(2)."]
+  conclusions := [
+    "The analytic norm is continuous and faithful on K and H in the full power-basis/Minkowski topology.",
+    "The generated sequence (sqrt(2)-1)^n tends to zero in the selected complex embedding while W remains one, so continuity in that single embedding fails.",
+    "The Minkowski completion is C^2 with extended response the product of squared complex absolute values. Nonzero coordinate axes are norm-null.",
+    "Degree/rank restrictions or zero third interference exclude higher-degree members of the displayed family. General sufficiency remains open."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/CyclotomicReadoutTopologyBoundary.lean",
+    "Proofs/QMClosure/CyclotomicDegreeSelectionSufficiency.lean"]
+  dependencies := [
+    "cyclotomic_quartic_finite_cycle_countercontrol",
+    "cyclotomic_power_of_two_degree_wall"]
+  limits := [
+    "All topology, completion and general sufficiency obligations remain uncompiled. A faithful completed carrier requires an additional condition or construction.",
+    "Physical justification of the supplied grammar, contextual identifications, preparations and readout laws remains open. Full QM, GR and physical-scale closure remain open."]
+}
+
+def transparentFourthInitialPresentationAndQuotient : ResearchTask := {
+  id := "transparent_fourth_initial_presentation_and_quotient"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Planned initial unital Nat-semiring presentation with two generators and only the exact contextual relators a+b=1 and a^4=b^4. Serial multiplication may initially be noncommutative; pair commutation is an obligation to establish.",
+    "Reuse the existing NativeInitialHistoryPresentation universal-presentation machinery and the pure fourth-rejoin core."]
+  conclusions := [
+    "Planned construction and obligation: construct the initial two-relator history carrier and prove its universal map property by generator evaluation.",
+    "Planned construction and obligation: construct its real shadow taking both generators to 1/2 and prove nontriviality. The existing provided-shadow theorem applies after this homomorphism has been constructed.",
+    "Planned construction and obligation: prove that quotienting the canonical idempotent e=2*(a^2+b^2) to zero is equivalent to the destructive relation T=a^2+b^2=0.",
+    "Planned construction and obligation: construct opposite universal maps between that quotient and the existing destructive initial presentation, then use generator homomorphism extensionality to prove they are inverse."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/TransparentFourthInitialHistoryPresentation.lean"]
+  dependencies := [
+    "native_initial_history_presentation_origin",
+    "fourth_rejoin_two_relator_primitive_base",
+    "fourth_rejoin_canonical_idempotent",
+    "uniform_copy_gain_initial_presentation_shadow"]
+  limits := [
+    "The new initial object, its shadow, quotient maps, equivalence and any normal-form implementation remain future proof obligations with empty checked evidence.",
+    "The current provided-real-shadow theorem assumes a supplied homomorphism. Existence of the shadow on this new planned initial object awaits its construction.",
+    "An operational carrier or destructive quotient requires independent physical justification. Physical source of the grammar and exact contextual relators remains open.",
+    "Full QM, GR and physical-scale closure remain open."]
+}
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -9425,7 +10086,33 @@ def researchTasks : List ResearchTask := [
   countCrossIncrementRigidity, nativeCrossIncrementReadoutSelection,
   positiveColumnConservationNativeTransfer, positiveColumnFiniteDepthBounds,
   positiveColumnRelativeDefectRobustness, positiveColumnAbsoluteDefectRobustness,
-  positiveColumnAbsoluteDefectSqrtUpper, approximateColumnNormDrift, dyadicScaledApproximateColumnNormSelection]
+  positiveColumnAbsoluteDefectSqrtUpper, approximateColumnNormDrift, dyadicScaledApproximateColumnNormSelection,
+  integerReciprocalCountClassification,
+  semiringReciprocalCrossClassification,
+  reciprocalCrossClassificationControls,
+  uniformCopyGainCompleteComplexInhabitant,
+  uniformCopyGainDestructiveCore,
+  uniformCopyGainAllPreparationHalves,
+  uniformCopyGainAlgebraicInverseContexts,
+  uniformCopyGainThreeOmissionControls,
+  uniformCopyGainInitialPresentationShadow,
+  uniformCopyGainFiniteErrorRobustness,
+  uniformCopyGainContinuousNullControl,
+  fourthRejoinTwoRelatorPrimitiveBase,
+  fourthRejoinCanonicalIdempotent,
+  fourthRejoinFiniteInverseContexts,
+  fourthRejoinThreeAlgebraicControls,
+  fourthRejoinCoefficientIdempotentPurityBoundary,
+  fourthRejoinPositiveDyadicImageBoundary,
+  fourthRejoinPhysicalEchoBoundary,
+  gainFourCharacteristicZero,
+  faithfulGeneratedConjugation,
+  duplicationGainOriginAdapter,
+  readoutConjugationBoundary,
+  quarticFiniteCycleCountercontrol,
+  powerOfTwoCyclotomicFamily,
+  topologicalCompletionAndDegreeSelection,
+  transparentFourthInitialPresentationAndQuotient]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
