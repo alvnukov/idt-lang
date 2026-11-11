@@ -521,5 +521,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.OriginalMaskPairCoverage,
     `Proofs.QMClosure.OriginalMaskLocalityControls,
     `Proofs.QMClosure.NativeBoundedResourceWall,
-    `Proofs.QMClosure.RegularReadoutOccurrenceKernelSeparation
+    `Proofs.QMClosure.RegularReadoutOccurrenceKernelSeparation,
+    `Proofs.QMClosure.PositiveUnboundedKernelDuplication,
+    `Proofs.QMClosure.PersistentOriginalEventAtoms,
+    `Proofs.QMClosure.NativePositiveSupportReadout,
+    `Proofs.QMClosure.NativePositiveSupportReadoutControls
   ]

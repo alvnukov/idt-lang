@@ -8801,6 +8801,183 @@ def nativeBranchSpecificOutputCountercontrol : ResearchTask := {
     "Aggregate preparation/coordinates, ideal time, exact winner detection, branch-specific response and physical interpretation remain supplied. Detector actualization, Born/Hilbert origin, full QM closure and physical scales remain open."] }
 
 
+def positiveUnboundedKernelDuplication : ResearchTask := {
+  id := "positive_unbounded_kernel_duplication"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use an unrestricted real kernel kappa(j,k) on all natural index pairs and its finite binomial transform F(n,m)=sum_{j<=n,k<=m} choose(n,j)*choose(m,k)*kappa(j,k).",
+    "Require universal count doubling F(2*n,2*m)=4*F(n,m) and either nonnegativity of every coefficient or one global tail threshold D with forall j,k, D<j+k implies 0<=kappa(j,k).",
+    "For exact coefficient selection additionally require F(1,0)=F(0,1)=1/2 and F(1,1)=1."]
+  conclusions := [
+    "The checked finite inversion gives unique canonical signed coefficients for every count response. Its exact duplication identity defines Dkappa(j,k)=sum_{r<=j,s<=k} choose(j,r)*choose(k,s)*2^(j-r)*2^(k-s)*kappa(j+r,k+s) and gives F_Dkappa(n,m)=F_kappa(2*n,2*m). Inversion and duplication are checked conclusions of the registered artifact.",
+    "Universal doubling implies Dkappa=4*kappa. The nonnegative r=s=0 term eliminates coefficients of total degree above two. Eventual tail nonnegativity also suffices by eliminating the high tail and descending through the finite signed head.",
+    "The three small calibrations identify exactly the pair kernel, with singleton coefficients 1/2, same-type pair coefficients one and all other coefficients zero. Its transform is (n^2+m^2)/2.",
+    "The all-one positive kernel has unbounded support and fails doubling. The calibrated control kappa*=pairKernel+indicator(j+k>=3) preserves vacuum and the three small calibrations but has F(2,0)=2 and F(4,0)=13, conflicting with doubling's required value eight."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PositiveUnboundedKernelDuplication.lean"
+      declarations := [
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.canonical_transform",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.transform_canonical",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.duplicate_formula",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.transform_duplicate",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.duplicate_eq_four_mul",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.support_le_two_of_eventuallyNonnegative",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.eq_quadraticKernel_of_eventuallyNonnegative",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.allOne_nonnegative",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.allOne_unbounded_support",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.allOne_not_doubling",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_nonnegative",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_unbounded_positive_support",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_zero_zero",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_transform_one_zero",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_transform_zero_one",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_transform_one_one",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_transform_two_zero",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_transform_four_zero",
+        "IDT.QMClosure.PositiveUnboundedKernelDuplication.calibratedPositiveTail_not_doubling"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The registered generic count artifact has accepted build and origin/dependency evidence under the supplied doubling, sign and calibration contracts. Checked evidence is restricted to the cited public declarations.",
+    "No finite support cutoff, inversion or duplication recurrence is assumed. The global cone threshold quantifies over every pair above one D. A signed finite head is allowed.",
+    "The checked proof uses finite differences, finite binomial identities, positivity and finite descending induction. Continuity, limiting and Archimedean premises are absent.",
+    "The generic module is mathematically independent of native/physical interpretation. The coefficient uniqueness belongs to this new unrestricted inversion artifact. Physical readout origin, Born/Hilbert origin, full QM and physical scales remain open."] }
+
+
+def nativePersistentEventReadoutOrigin : ResearchTask := {
+  id := "native_persistent_event_readout_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing initial-history presentation and original tagged a,b bag family with supplied native normalization and both universal generator half-transfer contracts.",
+    "For the event route supply a finite E in each original universe, fixed supports T_e and weights w_e>=0, all frozen across masks S, event presence iff T_e is a subset of S, and sum of active weights equal to the same W(bag S) on every mask. Event counts and support sizes have no uniform bound.",
+    "The more general coefficient route supplies an unrestricted kernel compatible with all original a,b bags and one eventual nonnegative tail threshold uniform over all coefficient indices."]
+  conclusions := [
+    "The checked event compiler identifies each actual-subset Boolean coefficient with the sum of weights of events having exactly that support. Frozen all-mask positive event families are equivalent to nonnegative canonical count coefficients. The converse constructs one event per subset. Distinct event identities may share a support and split its total weight, so canonical coefficient uniqueness leaves event decomposition nonunique.",
+    "The native adapter gives the exact finite compatible pair kernel from eventual tail nonnegativity, and explicitly invokes the earlier native carrier extension to obtain W(p)=normSq(complexEval p) on the presentation.",
+    "Any native readout differing from norm has forall D, exists j,k with D<j+k and negative canonical coefficient. The regular c>0 family has this property and the explicit coefficient kappa(3,1)=-288*c/125.",
+    "A monotone persistent positive OR event has pair Mobius coefficient -1, separating that trigger from the principal-support contract. Adding -a to positive a gives zero and conflicts with inclusion monotonicity. The native a,-a pair coefficient is -1 and excludes a universal extension of the same positive principal-support event model to arbitrary signed originals."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PersistentOriginalEventAtoms.lean"
+      declarations := [
+        "IDT.QMClosure.PersistentOriginalEventAtoms.EventApparatus.mobius_eq_supportScore",
+        "IDT.QMClosure.PersistentOriginalEventAtoms.allMaskEventFamily_iff_countKernel_nonnegative",
+        "IDT.QMClosure.PersistentOriginalEventAtoms.canonicalEvents_agreement",
+        "IDT.QMClosure.PersistentOriginalEventAtoms.orReadout_monotone",
+        "IDT.QMClosure.PersistentOriginalEventAtoms.orReadout_negative_pairMobius",
+        "IDT.QMClosure.PersistentOriginalEventAtoms.cancellation_obstructs_positive_events"] },
+    { sourcePath := "Proofs/QMClosure/NativePositiveSupportReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativePositiveSupportReadout.kernel_eq_pairKernel_of_eventuallyNonnegative",
+        "IDT.QMClosure.NativePositiveSupportReadout.pairKernel_compatible_of_allMaskEventFamily",
+        "IDT.QMClosure.NativePositiveSupportReadout.readout_eq_complex_norm_of_eventuallyNonnegative_kernel",
+        "IDT.QMClosure.NativePositiveSupportReadout.readout_eq_complex_norm_of_allMaskEventFamily",
+        "IDT.QMClosure.NativePositiveSupportReadout.canonical_negative_arbitrarily_high"] },
+    { sourcePath := "Proofs/QMClosure/NativePositiveSupportReadoutControls.lean"
+      declarations := [
+        "IDT.QMClosure.NativePositiveSupportReadoutControls.counterWeight_canonical_negative_arbitrarily_high",
+        "IDT.QMClosure.NativePositiveSupportReadoutControls.counterWeight_canonical_three_one",
+        "IDT.QMClosure.NativePositiveSupportReadoutControls.native_signed_a_pairMobius",
+        "IDT.QMClosure.NativePositiveSupportReadoutControls.native_signed_a_no_positive_events"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "positive_unbounded_kernel_duplication",
+    "original_mask_local_kernel_characterization",
+    "original_ab_finite_subset_readout_selection",
+    "native_regular_readout_countercontrol"]
+  limits := [
+    "The registered event, native-adapter and control artifacts have accepted build and origin/dependency evidence under their supplied contracts. The native carrier extension remains an explicit prior dependency.",
+    "The event equivalence characterizes a supplied original a,b preparation family. Fixed principal-support triggers, nonnegative scores and all-mask agreement require independent physical justification.",
+    "The native adapter uses the existing algebra/local relators, native transfer laws and final carrier-extension artifact. The generic count theorem has its own independent dependency boundary.",
+    "The signed-cancellation control blocks a universal positive-event extension under the same rules. Detector ontology, event realization and interpretation of analog scores remain open.",
+    "Born actualization, Hilbert origin, full QM/GR closure and physical-scale derivations remain outside these conditional routes."] }
+
+
+def nativeStochasticQueryMomentBoundary : ResearchTask := {
+  id := "native_stochastic_query_moment_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Fix an original universe of L>0 indices and one mask-independent program querying independent uniform original indices with replacement, returning A, B or empty.",
+    "For retained counts n,m put p=n/L, q=m/L, s=p+q and d=p^2+q^2. Supply ideal independent randomness, fixed universe gain L^2 and 0<c<=1/16.",
+    "Activate only after AA or BB in the first two queries. Otherwise halt with output zero. On activation obtain four fresh labels by rejecting mixed pairs of nonempty observations, accepting AA as U and BB as V."]
+  conclusions := [
+    "The accepted analytic construction uses Y=indicator(L1=U,L2=V)*S(L3)*S(L4), with S(U)=1 and S(V)=-1, and activated output Z=L^2*(1+16*c*Y)/2. It has 0<=Z<=L^2 and mean N+c*H^2/N^3, with vacuum value zero.",
+    "Here N=(n^2+m^2)/2 and H=n*m*(n^2-m^2). The mean restricts the existing ambient regular family at z=(n+m)/2+i*(n-m)/2.",
+    "The analytic query law gives almost-sure halting at every parameter, E Q=2+8*s<=10 and E Q^2=80*s^2/d+24*s-4<=180 for s>0. Vacuum Q=2.",
+    "Along p=q=s/2, E Q^2=156+24*s and Q tends to 2 in probability. Both Q^2 and W*Q*(Q-1), W=Z/L^2, fail uniform integrability, and for every delta>0 the moment E Q^(2+delta) diverges as s tends to zero.",
+    "The accepted roulette extension fixes 0<rho<1, applies independent survival coins before each query and compensates completed output by rho^(-Q). It preserves the nonquadratic mean with uniform exponential actual-query tails and unbounded normalized gain."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeStochasticQueryMomentBoundary.lean"]
+  dependencies := ["native_regular_readout_countercontrol"]
+  limits := [
+    "The actual query PMF, marked geometric and rejection independence, fresh-block laws, almost-sure halting, exact moments and tail certificates await formalization.",
+    "At L=2*k and n=m=1 the mean is one and the variance is L^2*(1+64*c^2)/2-1. Gain is fixed across masks within one universe and varies across universes.",
+    "The normalized program is fixed and parameter-independent. Query count has unbounded support. The countermodel lacks the weighted uniform-integrability premise of the proposed selector.",
+    "The roulette extension removes bounded gain. Its axis second-moment formulas and direct weighted uniform-integrability failure await formalization.",
+    "Original-count agreement with the regular family requires a separate adapter for ambient native gates. Sampling, ideal randomness and expectation-as-readout interpretation remain supplied.",
+    "All new results are analytic. Physical detector origin, Born actualization, Hilbert origin, full QM closure and physical scales remain open."] }
+
+
+def nativeUniformIntegrabilityReadoutSelection : ResearchTask := {
+  id := "native_uniform_integrability_readout_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply one fixed parameter-independent finite-terminal-trace protocol driven by iid ternary A,B,empty labels of probabilities p,q,1-p-q throughout the nonnegative simplex p+q<=1.",
+    "Internal randomness is independent of parameters. The same protocol halts almost surely at every parameter, including the vacuum, and has one uniform gain bound 0<=W<=B.",
+    "For f(p,q)=E W require exact dyadic scaling f(p/2,q/2)=f(p,q)/4 throughout the simplex.",
+    "Require X=W*Q*(Q-1) uniformly integrable as p+q tends to zero, uniformly in direction. A uniform bound on E Q^(2+delta) for some delta>0 suffices."]
+  conclusions := [
+    "The accepted analytic argument yields f(p,q)=A20*p^2+A11*p*q+A02*q^2 throughout the simplex, with finite nonnegative coefficients.",
+    "A nonnegative terminal-trace expansion, vacuum halting and weighted uniform integrability give a common uniform quadratic Peano jet. Exact dyadic contraction extends that jet to equality.",
+    "Within this same protocol class, bounded second query moments alone are insufficient, while every uniformly bounded moment of order strictly above two supplies the weighted uniform-integrability premise.",
+    "With bounded gain, a uniform conditional continuation ceiling rho<1 before every query, including the first, gives exponential query tails and hence the weighted uniform-integrability premise."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeUniformIntegrabilityReadoutSelection.lean"]
+  dependencies := [
+    "native_stochastic_query_moment_boundary",
+    "native_vacuum_quadratic_readout_selection"]
+  limits := [
+    "Trace semantics and expansion, coefficient summability, vacuum coupling, uniform tail control, the Peano argument and the higher-moment implication await formalization.",
+    "The theorem concerns one fixed iid-label protocol. Arbitrary indexed-mask queries, adaptive sampling distributions and universe-varying normalized programs require separate contracts.",
+    "Quadratic response permits long traces. Necessity of weighted uniform integrability for every quadratic algorithm is a separate question.",
+    "Native calibrations would select A20=A02=1/2 and A11=0 only through an explicit adapter with the required domain and gate laws.",
+    "The hazard corollary requires a well-formed protocol with finite internal transitions. Exact expected dyadic and native laws need verification after any controller change. Uniform hazard, bounded gain and observation access remain supplied.",
+    "With-replacement sampling supplies replay/nondestructive access to original labels. Two-observation terms may revisit one original. An actual-subset pair adapter must include singletons and pairs of distinct originals.",
+    "The protocol, gain, ideal randomness and expectation interpretation remain supplied. Physical readout origin, Born/Hilbert origin, full QM closure and physical scales remain open."] }
+
+
+def originalSupportResourceBudgetBoundary : ResearchTask := {
+  id := "original_support_resource_budget_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use one global count response f with its unique signed binomial coefficients kappa(j,k), and canonical absolute variation V(n,m)=sum binom(n,j)*binom(m,k)*abs(kappa(j,k)).",
+    "A polynomial resource bound has fixed C>=0 and natural finite exponent P across arbitrarily large balanced dyadic universes. An eventual or cofinal bound with these same constants suffices.",
+    "For the atom bridge supply finite frozen real-score atoms, each triggered exactly when its fixed support is contained in the retained mask, with all-mask agreement with the same global response.",
+    "For the native nonnorm two-budget corollary use native diagonal normalization and the separately accepted high-degree negative canonical-coefficient result."]
+  conclusions := [
+    "The accepted analytic coefficient-growth argument makes V(2^r,2^r)<=C*(2^r+1)^P imply kappa(j,k)=0 for j+k>P. Existence of some polynomial variation bound is equivalent to a finite support cutoff.",
+    "Signed principal-support atoms give V<=sum abs(w_e). Each actual subset with nonzero canonical coefficient needs a distinct nonzero-score atom of exactly that support. Either polynomial absolute-score or event-count budget forces a cutoff.",
+    "For each native nonnorm readout, every natural P and C>=0 admit R such that both positive and negative canonical budgets exceed C*(2^r+1)^P for all r>=R, while their net value is 4^r.",
+    "Finite pair atoms give quadratic norm budgets. Frozen exact-count-table events realize the regular counterreadout on all masks with polynomial ordinary event and score budgets through global count-dependent triggers."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeSupportResourceBudgetBoundary.lean"]
+  dependencies := [
+    "original_mask_local_kernel_characterization",
+    "original_ab_finite_subset_readout_selection",
+    "native_persistent_event_readout_origin",
+    "native_regular_readout_countercontrol"]
+  limits := [
+    "This extension characterizes the existing cutoff. Coefficient growth, cutoff equivalence, signed-budget growth, atom bounds and controls await formalization in a future proof cluster.",
+    "The high-degree negative-coefficient input depends on the separately checked native positive-support theorem. Resource growth and bridge results remain analytic.",
+    "The resource bridge uses exact principal-upset triggers and simultaneous all-mask agreement. Net budgets and full-mask-only calibration supply insufficient constraints. Finite windows leave higher degrees untested.",
+    "Count-table triggers have global dependence. Canonical support variation needs an explicit-atom resource interpretation. Aggregate and shared algorithms require their own complexity model.",
+    "Growth onset depends on the readout and coefficient magnitudes. Physical apparatus origin, detector realization, Born/Hilbert origin, full QM closure and physical scales remain open."] }
+
+
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
   stage := .analyticAwaitingFormalization
@@ -8933,7 +9110,9 @@ def researchTasks : List ResearchTask := [
   nativeReadoutLinearResourceBoundary, nativeObservationStoppingReadoutBoundary,
   originalMaskLocalKernelCharacterization, originalMaskAsymptoticReadoutSelection,
   nativeFiniteFirstEventC1ReadoutSelection, nativeBranchSpecificOutputCountercontrol,
-  nativeCircuitPassivityReadoutWall]
+  positiveUnboundedKernelDuplication, nativePersistentEventReadoutOrigin,
+  nativeStochasticQueryMomentBoundary, nativeUniformIntegrabilityReadoutSelection,
+  originalSupportResourceBudgetBoundary, nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
