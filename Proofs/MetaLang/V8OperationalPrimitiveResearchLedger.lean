@@ -8037,26 +8037,148 @@ def finiteGateLocalizationReadoutWall : ResearchTask := {
 
 def localMixtureCongruenceReadoutOrigin : ResearchTask := {
   id := "local_mixture_congruence_readout_origin"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "P is the entire vector of four fixed probe responses on Gaussian integers.",
-    "Every finite probability ensemble with arbitrary nonnegative real weights summing to one is admitted.",
+    "P is an arbitrary vector of four real probe functions on the full integer lattice.",
+    "The congruence quantifies over every finite probability ensemble with arbitrary nonnegative real weights summing to one.",
     "For each elementary translation +1,-1,+i,-i, equality of entire expected P vectors implies equality of entire expected P vectors after that translation."]
   conclusions := [
-    "The analytic argument descends each elementary translation to an affine map on the convex hull of P's image.",
-    "Every integer translate of the first response lies in the real span of the constant function and the four probe functions, giving rank at most five.",
-    "The explicit modulo-five equal-half witness supplies a finite obstruction to the required congruence."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/FiniteMixtureContinuationRank.lean"]
+    "For any source update U and k probes, all-real finite-mixture congruence is equivalent to each updated probe coordinate lying in the real span of the constant function and the k original probes.",
+    "Generator closure propagates to finite continuation words; on the integer lattice every translate of each probe lies in that augmented probe span, giving real translate dimension at most k+1 and at most five for four probes.",
+    "Casting the same augmented probes into complex-valued functions gives complex translate dimension at most k+1, hence at most five for four probes.",
+    "The concrete shifted-norm probes satisfy mixture congruence under every integer translation; the existing modulo-five equal-half witness supplies an obstruction for its distinct filtered probes."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteMixtureContinuationRank.lean"
+      declarations := [
+        "FiniteMixtureContinuationRank.mixtureCongruent_iff_updated_coordinates_mem",
+        "FiniteMixtureContinuationRank.word_coordinate_mem",
+        "FiniteMixtureContinuationRank.finrank_translationSpan_le",
+        "FiniteMixtureContinuationRank.four_probe_translation_rank_le_five",
+        "FiniteMixtureContinuationRank.normProbes_mixtureCongruent",
+        "FiniteMixtureContinuationRank.normReadout_finite_translation_rank"] },
+    { sourcePath := "Proofs/QMClosure/MixtureProbeComplexRank.lean"
+      declarations := [
+        "MixtureProbeComplexRank.cast_mem_complexProbeSpace",
+        "MixtureProbeComplexRank.finrank_translationSpanC_le",
+        "MixtureProbeComplexRank.four_probe_complex_translation_rank_le_five"] }]
+  plannedArtifacts := []
   dependencies := ["four_probe_tomography_mixture_wall"]
   limits := [
-    "The conditional rank-at-most-five argument awaits formalization.",
-    "The ensemble quantifier includes all finite real probability weights. Rational or dyadic weights alone require an additional extension argument.",
-    "The entire expected probe vector must remain congruent under each generator so that the rule can be iterated.",
-    "This supplied rule expresses finite affine closure operationally. Deriving regularity from bare microscopic locality remains open.",
-    "Physical realization of ordinary mixtures and sufficiency of their bounded probe means under local continuation remain open primitive-origin obligations.",
-    "Combining this proposal with universal norm selection also requires the separately unproved universal rank gap."] }
+    "All finite real probability weights are quantified. Selection under rational or dyadic weights requires a separate argument.",
+    "The complex bound uses the explicit cast augmented-probe family. A generic equality of real and complex translate ranks remains outside this contract.",
+    "The entire expected probe vector remains congruent under each generator so that the rule can be iterated.",
+    "Physical realization of ordinary mixtures, accessibility of all real weights and sufficiency of bounded probe means under local continuation remain open primitive-origin obligations.",
+    "Norm selection follows with the additional checked symmetry/doubling contract or the three-premise multiplicative mixture contract recorded separately."] }
+
+def smallRankSymmetryReadoutSelection : ResearchTask := {
+  id := "small_rank_symmetry_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A complex-valued function f on the full integer lattice has an explicitly finite-dimensional complex span of all integer translations.",
+    "The complex translate-space finrank is strictly less than eight.",
+    "For every lattice source z, f(z+z)=4*f(z), and for every integer m,n, f(-n,m)=f(m,n)."]
+  conclusions := [
+    "Dilation cycles force zero origin values for the actual supported readout components.",
+    "A nontrivial supported character has a common positive odd period and generates four distinct rotated character blocks, each containing two independent vectors; rank below eight forces every supported character to be trivial.",
+    "Trivial supported characters give a global polynomial representation on the integer lattice; doubling selects homogeneous degree two and quarter rotation gives f(m,n)=f(1,0)*(m^2+n^2).",
+    "The scalar theorem includes the zero readout. Calibration f(1,0)=1 selects the squared norm.",
+    "Four arbitrary real probes with all-real finite-mixture continuation congruence provide complex translate rank at most five, so their first coordinate is selected under the supplied doubling and rotation laws."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteTranslationSmallRankSupport.lean"
+      declarations := [
+        "FiniteTranslationSmallRankSupport.component_zero",
+        "FiniteTranslationSmallRankSupport.eight_le_finrank_of_supported_nontrivial",
+        "FiniteTranslationSmallRankSupport.supported_eq_one_of_finrank_lt_eight"] },
+    { sourcePath := "Proofs/QMClosure/QuadraticPolynomialDyadicSelection.lean"
+      declarations := [
+        "IDT.TranslationRankGap.polynomial_eq_scalar_norm_of_dyadic_rotation",
+        "IDT.TranslationRankGap.polynomial_readout_eq_scalar_norm_of_dyadic_rotation"] },
+    { sourcePath := "Proofs/QMClosure/MixtureProbeComplexRank.lean"
+      declarations := ["MixtureProbeComplexRank.four_probe_complex_translation_rank_le_five"] },
+    { sourcePath := "Proofs/QMClosure/FiniteTranslationNormSelection.lean"
+      declarations := [
+        "IDT.TranslationRankGap.original_mem_trivial_jointBlock_of_finrank_lt_eight",
+        "IDT.TranslationRankGap.exists_polynomial_of_finrank_lt_eight_dyadic_rotation",
+        "IDT.TranslationRankGap.readout_eq_scalar_norm_of_finrank_lt_eight_dyadic_rotation",
+        "IDT.TranslationRankGap.readout_eq_norm_of_finrank_lt_eight_dyadic_rotation_of_calibrated",
+        "IDT.TranslationRankGap.four_probe_readout_eq_scalar_norm",
+        "IDT.TranslationRankGap.four_probe_readout_eq_norm_of_calibrated"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "finite_translation_spectral_extraction", "finite_translation_dilation_support",
+    "local_mixture_congruence_readout_origin"]
+  limits := [
+    "The strict bound below eight is sufficient. Sharpness remains unproved.",
+    "Finite dimension, global doubling and quarter-turn invariance are supplied for the complex small-rank theorem; their physical origin remains open.",
+    "The real four-probe application uses the explicit augmented-probe complex-span bound and all finite real probability ensembles.",
+    "The universal multiplicative rank-four versus rank-twenty classification, physical readout origin, normalized event interpretation and full QM closure remain open."] }
+
+def multiplicativeMixtureReadoutSelection : ResearchTask := {
+  id := "multiplicative_mixture_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "P is an arbitrary vector of four real probe functions on the full integer lattice; for every finite real probability ensemble, equality of the entire expected vector is preserved under each translation +1,-1,+i,-i.",
+    "The first response f(z)=P(z,0) is globally Gaussian-multiplicative on every pair of integer lattice sources using Gaussian multiplication with its cross terms.",
+    "The sole supplied calibration is f(2,0)=4."]
+  conclusions := [
+    "Global multiplicativity and the calibration derive f(1,0)=f(-1,0)=f(0,1)=1, quarter-turn invariance and quadratic doubling.",
+    "The first probe equals the squared Gaussian norm on every integer pair: P((m,n),0)=m^2+n^2.",
+    "Nonnegativity, conjugation invariance, monotonicity on nonnegative integer counts, the raw parallelogram identity and vanishing raw third-order inclusion-exclusion follow from selection.",
+    "The shifted-norm probes satisfy exactly these three contracts, and an existential theorem records a concrete inhabitant."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/MultiplicativeMixtureReadout.lean"
+      declarations := [
+        "IDT.MultiplicativeMixtureReadout.unit_readout_eq_one",
+        "IDT.MultiplicativeMixtureReadout.negative_unit_readout_eq_one",
+        "IDT.MultiplicativeMixtureReadout.imaginary_unit_readout_eq_one",
+        "IDT.MultiplicativeMixtureReadout.quarter_turn_invariant",
+        "IDT.MultiplicativeMixtureReadout.doubling_readout",
+        "IDT.MultiplicativeMixtureReadout.four_probe_readout_eq_norm",
+        "IDT.MultiplicativeMixtureReadout.readout_nonnegative",
+        "IDT.MultiplicativeMixtureReadout.conjugation_invariant",
+        "IDT.MultiplicativeMixtureReadout.natural_count_readout_mono",
+        "IDT.MultiplicativeMixtureReadout.readout_parallelogram",
+        "IDT.MultiplicativeMixtureReadout.readout_three_way_inclusion_exclusion",
+        "IDT.MultiplicativeMixtureReadout.normProbes_contract",
+        "IDT.MultiplicativeMixtureReadout.exists_four_probe_contract"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "local_mixture_congruence_readout_origin", "small_rank_symmetry_readout_selection"]
+  limits := [
+    "The physical origins of real-valued probes, global Gaussian multiplicativity, the calibration, all-real mixture accessibility and local sufficiency remain open.",
+    "Global Gaussian multiplicativity ranges over arbitrary integer pairs, including sources represented by coherent sums. Extending serial-word multiplication to this full law requires a separate argument.",
+    "The conclusions concern raw algebraic readouts. Normalized event probabilities, Born actualization, Hilbert representation, full QM closure and physical scales remain open.",
+    "A nondegenerate normalized echo requires a carrier extension beyond the integer lattice.",
+    "The next research stage is selection under rational or dyadic mixture weights together with robustness under approximate mean equality and continuation laws, followed by transport to the initial dyadic history quotient.",
+    "The sufficient complex rank bound below eight leaves sharpness and the universal rank-four versus rank-twenty classification open."] }
+
+def fixedCornerHalfMixtureReadoutSelection : ResearchTask := {
+  id := "fixed_corner_half_mixture_readout_selection"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A real-valued response f on the full integer lattice is Gaussian-multiplicative on every pair of sources.",
+    "The supplied calibration is f(2,0)=4, and the supplied diagonal sign is f(1,1)>=0.",
+    "The probe geometry is fixed as P(z)=(f(z),f(z+1),f(z+i),f(z+1+i)).",
+    "For each elementary translation s in +1,-1,+i,-i and every four sources a,b,c,d, equality of entire vectors P(a)+P(b)=P(c)+P(d) implies P(a+s)+P(b+s)=P(c+s)+P(d+s). This congruence quantifies only equal-half two-source mixtures."]
+  conclusions := [
+    "The accepted analytic strategy reuses the multiplicative unit calibrations, derives f(0,0)=0, and combines f(1,1)^2=4 with the supplied sign to give f(1,1)=2.",
+    "The unit and diagonal values give the seed identity P(0)+P(-1,-1)=P(-1,0)+P(0,-1). Iterating the four signed continuation rules yields f(z+1+i)+f(z)=f(z+1)+f(z+i) for every integer lattice source z.",
+    "The global rectangle identity and quarter-turn invariance give f(a,b)=g(a)+g(b), where g(n)=f(n,0). Multiplication by 1+i gives g(a+b)+g(a-b)=2*g(a)+2*g(b).",
+    "The recurrence g(n+1)+g(n-1)=2*g(n)+2 together with g(0)=0 and g(1)=1 gives g(n)=n^2 on all integers, hence f(m,n)=m^2+n^2."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/FixedCornerHalfMixtureReadout.lean"]
+  dependencies := ["multiplicative_mixture_readout_selection"]
+  limits := [
+    "The analytic proof is parent accepted and independently reviewed; its Lean artifact remains in formalization and has yet to compile or receive a proof audit.",
+    "The dependency supplies reusable multiplicative calibration lemmas. This strategy proceeds by the rectangle and integer recurrence argument.",
+    "Only equal-half two-source mixtures are quantified. The proof strategy uses the fixed translated-readout corner geometry and pair congruence as supplied premises.",
+    "All-real or all-rational finite-mixture congruence, a translate-rank bound and continuity are outside the premises of this proposed theorem.",
+    "The signed alternative f(1,1)=-2 remains unresolved.",
+    "Physical origins of the real response, global multiplicativity, calibration, diagonal sign, prescribed probe geometry and pair congruence remain open; Born actualization and full QM closure remain open."] }
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -8180,7 +8302,8 @@ def researchTasks : List ResearchTask := [
   multiplicativeResidueQuadraticAlgebra, finiteRankModFiveReadoutControl,
   fourProbeTomographyMixtureWall, finiteTranslationUniversalRankGap,
   finiteGateLocalizationReadoutWall, localMixtureCongruenceReadoutOrigin,
-  nativeCircuitPassivityReadoutWall]
+  smallRankSymmetryReadoutSelection, multiplicativeMixtureReadoutSelection,
+  fixedCornerHalfMixtureReadoutSelection, nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

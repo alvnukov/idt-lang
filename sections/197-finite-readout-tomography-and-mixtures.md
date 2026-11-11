@@ -110,11 +110,13 @@ f=N,\ d=4,\qquad\text{or}\qquad f\ne N,\ d\ge20,
 \]
 
 with exactly the two filters \(N(m,n)\mathbf1_{m\pm2n\not\equiv0\pmod5}\)
-at rank twenty. The remaining formal obligations include real-to-complex rank
-transfer, degree-two selection, real residue polynomial reconstruction, the
-coset-to-polynomial identity, exact block rank, support counting and the
-equality classification. The explicit rank-twenty example and the checked
-algebraic bridges have their own bounded contracts.
+at rank twenty. Remaining universal obligations include general rank transfer,
+residue-polynomial degree selection and reconstruction, the coset-to-polynomial
+identity, exact block rank, support counting and the equality classification.
+The small-rank norm-selection theorem now supplies a sufficient bound below
+eight for the mixture route. The explicit rank-twenty example and each checked
+bridge retain their own bounded contracts.
+[Mixture norm selection](198-mixture-continuation-norm-selection.md)
 [Operational ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
 
 ## A conditional route through mixture sufficiency
@@ -134,15 +136,18 @@ Supply a local rule for each generator \(s\in\{1,-1,i,-i\}\)
 \overline P((\tau_s)_*\mu)=\overline P((\tau_s)_*\nu).
 \]
 
-Equality concerns the entire four-vector after each generator. The analytic
-argument then makes each generator an affine map on the convex hull of
-\(P(\mathbb Z[i])\). Iterating these maps puts every translated first
-response in the real span of \(1,P_0,P_1,P_2,P_3\), so its translate rank is
-at most five. Restricting the ensemble quantifier to rational or dyadic
-weights requires an additional extension argument. The conditional bound
-awaits formalization. Norm selection would also require the separately open
-universal rank gap.
-[Operational ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+Equality concerns the entire four-vector after each generator. The checked
+mixture theorem identifies this congruence with affine-coordinate closure.
+Iterating the generator actions puts every translated first response in the
+real span of \(1,P_0,P_1,P_2,P_3\), so its translate rank is at most five.
+Casting that explicit augmented-probe family also bounds complex translate
+rank by five. A checked sufficient rank bound below eight now gives norm
+selection when global Gaussian multiplicativity and the sole calibration
+\(f(2,0)=4\) are supplied. Selection under rational or dyadic weights remains
+a separate research obligation.
+[Mixture source](../Proofs/QMClosure/FiniteMixtureContinuationRank.lean)
+[Complex-span source](../Proofs/QMClosure/MixtureProbeComplexRank.lean)
+[Mixture norm selection](198-mixture-continuation-norm-selection.md)
 
 For the squared norm itself, define the separate probe vector
 
@@ -151,7 +156,7 @@ Q(z)=\bigl(Q_0(z),Q_1(z),Q_2(z),Q_3(z)\bigr)
      =\bigl(N(z),N(z+1),N(z+i),N(z+1+i)\bigr).
 \]
 
-The analytic translation identity is
+The checked translation identity is
 
 \[
 N(z+a)=(1-a_x-a_y)Q_0(z)+a_xQ_1(z)+a_yQ_2(z)+N(a)-a_x-a_y.
@@ -188,14 +193,18 @@ agreement argument. This localization wall awaits formalization.
 
 ## Verification and scope
 
-Seven registered Lean targets compiled successfully. An exact-origin audit
-covered 390 declarations, including 112 private declarations, with zero local
-axioms and zero unsafe declarations. Their aggregate transitive axiom set was
-the standard `propext`, `Quot.sound` and `Classical.choice`. The authoritative
-research stages are recorded in the operational primitive ledger. Compiling
-that ledger checks its metadata. Mathematical authority lies in the cited
-theorem statements under their actual hypotheses.
+The seven-target tomography and spectral cluster summarized here compiled
+successfully. Its exact-origin audit covered 390 declarations, including 112
+private declarations, with zero local axioms and zero unsafe declarations.
+Its aggregate transitive axiom set was the standard `propext`, `Quot.sound` and
+`Classical.choice`. The authoritative research stages are recorded in the
+operational primitive ledger. Compiling that ledger checks its metadata.
+Mathematical authority lies in the cited theorem statements under their actual
+hypotheses.
 [Operational ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+
+The subsequent six-target mixture-selection cluster has its own verification
+record. [Mixture norm selection](198-mixture-continuation-norm-selection.md)
 
 Physical readout selection, the origin of ordinary mixture averaging and its
 local sufficiency, Born actualization and full QM closure remain open.

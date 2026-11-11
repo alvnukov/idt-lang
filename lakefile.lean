@@ -497,5 +497,11 @@ lean_lib Proofs where
     `Proofs.QMClosure.FiniteRankReadoutFilter,
     `Proofs.QMClosure.FiniteTranslationExponentialPolynomial,
     `Proofs.QMClosure.FiniteTranslationDilationSupport,
-    `Proofs.QMClosure.FiniteReadoutTomographyWall
+    `Proofs.QMClosure.FiniteReadoutTomographyWall,
+    `Proofs.QMClosure.FiniteMixtureContinuationRank,
+    `Proofs.QMClosure.QuadraticPolynomialDyadicSelection,
+    `Proofs.QMClosure.FiniteTranslationSmallRankSupport,
+    `Proofs.QMClosure.MixtureProbeComplexRank,
+    `Proofs.QMClosure.FiniteTranslationNormSelection,
+    `Proofs.QMClosure.MultiplicativeMixtureReadout
   ]
