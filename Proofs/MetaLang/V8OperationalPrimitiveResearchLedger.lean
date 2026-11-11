@@ -8333,31 +8333,92 @@ def nativeTransferPairSufficiencyOrigin : ResearchTask := {
 
 def nativeRegularReadoutCountercontrol : ResearchTask := {
   id := "native_regular_readout_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing initial history presentation and its faithful complex evaluation. For every real c define N(z)=normSq(z), H(z)=Im(z^4), Q(z)=H(z)^2/N(z)^3 with total division giving Q(0)=0, F_c=N+c*Q, and W_c(p)=F_c(complexEval(p))."]
+  conclusions := [
+    "For every real c, F_c is globally continuous and is an explicit ambient extension of W_c through complexEval; the theorem states an extension property on the ambient complex plane.",
+    "For every real c, W_c has zero/unit values, normalized generator readings one half, both all-input native transfer laws, reflection invariance and the canonical nondegenerate normalized raw echo.",
+    "For every real c, F_c(t)=t^2 on the real axis, W_c(n)=n^2 on natural counts, natural-count readout order is equivalent to natural order, and W_c(half^k*p)=W_c(p)/4^k for every k and p.",
+    "For c>=0, the checked bounds N<=F_c<=(1+c)*N give nonnegative W_c with W_c(p)=0 iff p=0.",
+    "For c>0, W_c differs from the ordinary squared norm. Both fixed-corner seed pair sums are [2,2,2,2], while their +1 packets are [2,6,2,6+alpha] and [2,6+alpha,2,6], where alpha=576*c/125>0, so the universal single-continuation pair law fails.",
+    "For every real c, coherent mixer input (1,2) has input total five and output total 5+alpha, raw I3 at (1,1,phase) equals alpha, and the multiplication defect at (2+phase)^2 equals 1152*c*(527+288*c)/15625. For c>0 these witness failures of general conservation, vanishing raw I3 and global multiplicativity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeRegularReadoutCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.norm_fourth_decomposition",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.angularCorrection_le_norm",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.ambientWeight_bounds",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.ambientWeight_continuous",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.ambientWeight_real",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_normalized_generator_transfer",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_normalized_raw_echo",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_reflection",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_nonnegative",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_zero_iff",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_nat_order_iff",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_has_continuous_extension",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_dyadic_scale",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_not_norm",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.corner_seed_values",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.shifted_corner_packet_left",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.shifted_corner_packet_right",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_not_single_continuation",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.mixer_conservation_counterexample",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.rawI3_counterexample",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_multiplication_defect",
+        "IDT.QMClosure.NativeRegularReadoutCountercontrol.counterWeight_not_multiplicative"] }]
+  plannedArtifacts := []
+  dependencies := ["native_single_continuation_readout_selection"]
+  limits := [
+    "Continuity is an ambient extension property; an intrinsic topology on the abstract presentation remains an additional contract.",
+    "Differentiability, Lipschitz-gradient, convexity and Banach-norm claims remain in separate analytic tasks with empty checked evidence.",
+    "The checked order-equivalence theorem concerns natural counts; the ambient real-axis formula and presentation dyadic-scaling formula retain their own domains.",
+    "The targeted dependency audit uses a named exclusion list of seventeen prior modules with explicit permitted definitions and native-transfer/echo lemmas.",
+    "The positive alpha-valued controls belong to this family; the finite-field mask retains its own packets and raw I3 value minus five.",
+    "The raw echo leaves outcome frequencies, physical readout origins, Born actualization, Hilbert representation, full QM closure and physical scales open."] }
+
+def nativeRegularReadoutRegularity : ResearchTask := {
+  id := "native_regular_readout_regularity"
   stage := .analyticAwaitingFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "On the ambient real plane define N(x,y)=x^2+y^2, H(x,y)=4*x*y*(x^2-y^2), and Q(x,y)=H(x,y)^2/N(x,y)^3 away from the origin, with Q(0,0)=0.",
-    "Choose a real c>0 and define F_c=N+c*Q; on the existing initial presentation compose F_c with the real and imaginary parts of its faithful complex evaluation."]
+    "Use the ambient real-plane family F_c=N+c*Q, where Q=r^2*sin(4*theta)^2 away from zero and Q(0)=0, with real parameter c."]
   conclusions := [
-    "The accepted analytic candidate uses N^4-H^2=(x^4-6*x^2*y^2+y^4)^2 to give 0<=Q<=N and N<=F_c<=(1+c)*N, hence nonnegativity and zero only at the origin.",
-    "The analytic ambient response is globally C1 and real analytic away from zero. It fails twice Frechet differentiability at zero because the degree-two homogeneous Q vanishes on both axes and diagonals while Q(2,1)>0.",
-    "For both native complex generators, N scales by 1/2 and H scales by -1/4, hence Q and F_c scale by 1/2. The composed candidate has normalized native readings 1/2, both universal native transfer laws, the canonical normalized raw echo and reflection invariance.",
-    "For every real scalar t, F_c(t,0)=t^2. Nonnegative ambient scalar counts have exact order equivalence; the presentation supplies the corresponding available dyadic and natural scalar counts.",
-    "The fixed-corner seed pair sums agree. With alpha=c*576/125, the +1 shifted packets are [2,6,2,6+alpha] and [2,6+alpha,2,6], so pair sufficiency fails.",
-    "The coherent mixer input (1,2) has total five and output total 5+alpha; raw I3 at (1,1,i) equals alpha.",
-    "Global multiplicativity fails with the positive gap F_c(2+i)^2-F_c(3+4*i)=1152*c*(527+288*c)/15625.",
-    "These proposed analytic controls test whether faithfulness, continuity and scalar count order can replace fixed-corner pair sufficiency while preserving normalized native transfer."]
+    "The parent-reviewed analytic argument gives global C1,1 regularity, gradient Lipschitz bound 2+32*abs(c), and real analyticity away from zero. For c nonzero, twice Frechet differentiability at zero fails despite the existence of every directional second derivative.",
+    "In an orthonormal polar frame, the analytic Hessian of Q is [[1-u,4*v],[4*v,1+31*u]], with u=cos(8*theta), v=sin(8*theta), and bounds -30*I<=Hessian(Q)<=32*I.",
+    "At c=1/32 the analytic off-origin lower Hessian bound is 17/16, giving global strong convexity. The function sqrt(F_c) is a Banach norm over the real vector space R^2, with squared-norm parallelogram defect 36/125 at 1 and 2*i."]
   checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/NativeRegularReadoutCountercontrol.lean"]
-  dependencies := [
-    "native_single_continuation_readout_selection", "native_generator_readout_countercontrol"]
+  plannedArtifacts := ["Proofs/QMClosure/NativeRegularReadoutRegularity.lean"]
+  dependencies := ["native_regular_readout_countercontrol"]
   limits := [
-    "The analytic construction is parent accepted and independently reviewed; all listed claims await a Lean artifact and remain outside the current checked publication cluster.",
-    "The ambient smoothness claims concern the real plane. The composed presentation readout uses its available Gaussian-dyadic histories.",
-    "Rational readout values on dyadic inputs require rational c; c=1 is a proposed concrete choice.",
-    "A future proof obligation is to assess a second-order Peano expansion at the vacuum together with exact dyadic scaling as an alternative selector. Selection under this replacement remains unproved.",
-    "The candidate's alpha-valued controls belong to this analytic construction; the separately checked finite-field mask has its own exact packets and raw I3 value minus five.",
-    "Physical origins, event frequencies, Born actualization, Hilbert representation, full QM closure and physical scales remain open."] }
+    "Every claim in this entry awaits a Lean artifact. The checked countercontrol supplies ambient continuity and exact finite witnesses.",
+    "The Hessian comparison uses determinant identities 15*(1+u)*(63-u) and 15*(1-u)*(63+u) for the shifted matrices.",
+    "The Banach-norm claim concerns the ambient real plane and real scalar homogeneity. The presentation restriction has its Gaussian-dyadic carrier.",
+    "Directional second derivatives alone do not supply the common quadratic expansion, even with exact dyadic scaling and native calibration.",
+    "Physical regularity origins, outcome frequencies, Born actualization and full QM closure remain open."] }
+
+def nativeVacuumQuadraticReadoutSelection : ResearchTask := {
+  id := "native_vacuum_quadratic_readout_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply an ambient real-plane readout R and one common homogeneous real quadratic form q with R(z)-q(z)=o(norm(z)^2) at the vacuum z=0.",
+    "Supply exact dyadic scaling R(z/2)=R(z)/4 for every z.",
+    "Supply the native values R(1)=R(i)=1 and R(1+i)=2."]
+  conclusions := [
+    "The parent-reviewed analytic contraction argument gives R=q at every ambient point by following exact dyadic contractions into the common quadratic vacuum expansion.",
+    "The three supplied native values select q(x,y)=x^2+y^2.",
+    "The analytic regular family at c=1/32 has every directional second derivative with nonbilinear dependence. Directional second derivatives alone do not supply the common quadratic expansion, even with exact dyadic scaling and native calibration."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeVacuumQuadraticReadoutSelection.lean"]
+  dependencies := ["native_regular_readout_countercontrol", "native_regular_readout_regularity"]
+  limits := [
+    "The selector and its directional-regularity comparison await Lean artifacts.",
+    "The common homogeneous quadratic tangent is a supplied structural premise; its physical derivation remains open.",
+    "Transport to the abstract presentation requires an explicit ambient extension contract with the corresponding scaling and native values.",
+    "Physical readout origins, outcome frequencies, Born actualization, Hilbert representation and full QM closure remain open."] }
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -8485,6 +8546,7 @@ def researchTasks : List ResearchTask := [
   fixedCornerHalfMixtureReadoutSelection, nativeGeneratorMixtureReadoutSelection,
   nativeSingleContinuationReadoutSelection, nativeGeneratorReadoutCountercontrol,
   nativeTransferPairSufficiencyOrigin, nativeRegularReadoutCountercontrol,
+  nativeRegularReadoutRegularity, nativeVacuumQuadraticReadoutSelection,
   nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
