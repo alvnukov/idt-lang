@@ -503,5 +503,9 @@ lean_lib Proofs where
     `Proofs.QMClosure.FiniteTranslationSmallRankSupport,
     `Proofs.QMClosure.MixtureProbeComplexRank,
     `Proofs.QMClosure.FiniteTranslationNormSelection,
-    `Proofs.QMClosure.MultiplicativeMixtureReadout
+    `Proofs.QMClosure.MultiplicativeMixtureReadout,
+    `Proofs.QMClosure.FixedCornerHalfMixtureReadout,
+    `Proofs.QMClosure.NativeGeneratorReadoutCountercontrol,
+    `Proofs.QMClosure.NativeGeneratorMixtureReadout,
+    `Proofs.QMClosure.NativeSingleContinuationReadout
   ]

@@ -153,22 +153,26 @@ same four means develop different means after translation. Its checked
 obstruction locates the force of the mixture-sufficiency premise.
 [Tomography and mixture wall](197-finite-readout-tomography-and-mixtures.md)
 
-Rational or dyadic mixture accessibility requires its own selection argument.
-An independently reviewed analytic route is now in formalization for fixed
-translated-readout corner probes, equal-half two-source continuation congruence,
-global Gaussian multiplicativity, the calibration \(f(2,0)=4\), and the diagonal
-sign \(f(1,1)\ge0\); its rectangle and integer-recurrence argument awaits a
-compiled Lean artifact. Robustness under approximate mean equality, approximate
-continuation laws and finite precision also remains open. The next research
-stage concerns those mixture contracts, followed by transport to the initial
-dyadic history quotient.
+The fixed-corner equal-half route is now a checked integer theorem under
+universal fixed-corner equal-half pair congruence for the four signed unit
+translations, global Gaussian multiplicativity, \(f(2,0)=4\) and
+\(f(1,1)\ge0\). Its proof uses rectangle propagation and an integer recurrence.
+Its checked extension to the existing initial history quotient derives the
+integer generator laws from normalized native transfer and reduces pair
+sufficiency to one universal continuation law. The resulting norm formula holds
+on every presented history under those supplied premises. Physical origins and
+finite-precision stability remain open research obligations.
+[Native generator and half-mixture route](199-native-generator-half-mixture-readout.md)
 [Operational ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
 
 Physical origins of the real probes, global multiplicativity, calibration and
 all-real mixture sufficiency remain open. Normalized event probabilities, Born
 actualization, Hilbert representation and full QM closure retain their separate
-obligations. The integer carrier also requires an extension before a
-nondegenerate normalized echo can be realized.
+obligations. The integer-carrier theorem establishes the raw readout formula on
+integer pairs. The linked native extension constructs a nondegenerate
+normalized algebraic echo on the initial dyadic presentation. Physical
+accessibility remains open.
+[Native echo extension](199-native-generator-half-mixture-readout.md)
 [Physical scope boundary](150-physical-scope-boundary.md)
 [Operational ledger](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
 

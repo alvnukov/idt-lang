@@ -8157,28 +8157,207 @@ def multiplicativeMixtureReadoutSelection : ResearchTask := {
 
 def fixedCornerHalfMixtureReadoutSelection : ResearchTask := {
   id := "fixed_corner_half_mixture_readout_selection"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "A real-valued response f on the full integer lattice is Gaussian-multiplicative on every pair of sources.",
     "The supplied calibration is f(2,0)=4, and the supplied diagonal sign is f(1,1)>=0.",
     "The probe geometry is fixed as P(z)=(f(z),f(z+1),f(z+i),f(z+1+i)).",
     "For each elementary translation s in +1,-1,+i,-i and every four sources a,b,c,d, equality of entire vectors P(a)+P(b)=P(c)+P(d) implies P(a+s)+P(b+s)=P(c+s)+P(d+s). This congruence quantifies only equal-half two-source mixtures."]
   conclusions := [
-    "The accepted analytic strategy reuses the multiplicative unit calibrations, derives f(0,0)=0, and combines f(1,1)^2=4 with the supplied sign to give f(1,1)=2.",
-    "The unit and diagonal values give the seed identity P(0)+P(-1,-1)=P(-1,0)+P(0,-1). Iterating the four signed continuation rules yields f(z+1+i)+f(z)=f(z+1)+f(z+i) for every integer lattice source z.",
-    "The global rectangle identity and quarter-turn invariance give f(a,b)=g(a)+g(b), where g(n)=f(n,0). Multiplication by 1+i gives g(a+b)+g(a-b)=2*g(a)+2*g(b).",
-    "The recurrence g(n+1)+g(n-1)=2*g(n)+2 together with g(0)=0 and g(1)=1 gives g(n)=n^2 on all integers, hence f(m,n)=m^2+n^2."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/FixedCornerHalfMixtureReadout.lean"]
+    "Multiplicative calibration derives the unit values and f(0,0)=0; the supplied sign selects f(1,1)=2.",
+    "The corner seed propagates under the four signed continuation rules to the global rectangle identity, which separates coordinates and yields the integer quadratic recurrence, hence f(m,n)=m^2+n^2.",
+    "The generator-law core selects the same norm from zero/unit values, quarter-turn invariance, diagonal generator scaling and the four fixed-corner pair laws.",
+    "The concrete norm satisfies the stated pair congruence under every lattice translation and inhabits the standalone multiplicative selection contract."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FixedCornerHalfMixtureReadout.lean"
+      declarations := [
+        "IDT.FixedCornerHalfMixtureReadout.rectangle_packet_of_seed",
+        "IDT.FixedCornerHalfMixtureReadout.integer_rectangle_separates",
+        "IDT.FixedCornerHalfMixtureReadout.corner_seed_iff_diagonal_eq_two",
+        "IDT.FixedCornerHalfMixtureReadout.integer_quadratic_recurrence",
+        "IDT.FixedCornerHalfMixtureReadout.fixed_corner_readout_eq_norm_of_generator_laws",
+        "IDT.FixedCornerHalfMixtureReadout.fixed_corner_readout_eq_norm",
+        "IDT.FixedCornerHalfMixtureReadout.normReadout_pairCongruent_translation",
+        "IDT.FixedCornerHalfMixtureReadout.exists_fixed_corner_contract"] }]
+  plannedArtifacts := []
   dependencies := ["multiplicative_mixture_readout_selection"]
   limits := [
-    "The analytic proof is parent accepted and independently reviewed; its Lean artifact remains in formalization and has yet to compile or receive a proof audit.",
-    "The dependency supplies reusable multiplicative calibration lemmas. This strategy proceeds by the rectangle and integer recurrence argument.",
-    "Only equal-half two-source mixtures are quantified. The proof strategy uses the fixed translated-readout corner geometry and pair congruence as supplied premises.",
-    "All-real or all-rational finite-mixture congruence, a translate-rank bound and continuity are outside the premises of this proposed theorem.",
-    "The signed alternative f(1,1)=-2 remains unresolved.",
+    "The dependency supplies reusable multiplicative calibration lemmas; the selection proof uses rectangle propagation and the integer recurrence.",
+    "Only equal-half two-source mixtures are quantified. The fixed translated-readout corner geometry and pair congruence remain supplied premises.",
+    "The signed alternative f(1,1)=-2 remains unresolved for the standalone scalar contract.",
+    "The native history selector derives its generator laws from a distinct transfer contract on the already supplied initial presentation.",
     "Physical origins of the real response, global multiplicativity, calibration, diagonal sign, prescribed probe geometry and pair congruence remain open; Born actualization and full QM closure remain open."] }
+
+def nativeGeneratorMixtureReadoutSelection : ResearchTask := {
+  id := "native_generator_mixture_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The carrier is the existing initial free unital semiring presentation with the relations a+b=1 and a*a+b*b=0, with its ring, half, phase, reflection, Gaussian-dyadic normal forms and faithful algebraic representation supplied by the existing initial-presentation theorems.",
+    "W is an arbitrary real readout with W(a)+W(b)=1.",
+    "Two fixed native contexts factor at every input: for every presentation element p, W(a*p)=W(a)*W(p) and W(b*p)=W(b)*W(p).",
+    "On f(m,n)=W(m+n*phase), the four fixed corner probes preserve equality of entire two-source pair sums under every signed elementary translation +1,-1,+i,-i."]
+  conclusions := [
+    "The checked source derives W(1)=1 from normalized transfer at one. Equal fourth histories a^4=b^4 and real normalized factorization derive W(a)=W(b)=1/2.",
+    "The resulting native transfer contract derives zero, half/doubling, phase and diagonal laws. It gives a canonical nondegenerate normalized raw echo before fixed-corner pair sufficiency is introduced.",
+    "The fixed-corner generator-law selector gives the integer norm; native half scaling and the existing normal forms give W(half^k*(m+n*phase))=(m^2+n^2)/4^k for every presented history.",
+    "The global conclusion is W(p)=Complex.normSq(complexEval(p)), with the faithful algebraic representation used in the conclusion.",
+    "The checked source derives full readout multiplicativity, syntactic-reflection invariance, nonnegativity, zero iff p=0, natural-count order iff, the dyadic-count formula, all-input mixer conservation, the parallelogram identity and vanishing raw I3.",
+    "A concrete norm-model witness inhabits the complete native-transfer and fixed-corner pair contract."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeGeneratorMixtureReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.generator_fourth_history",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.nativeTransfer_of_normalized_generator_transfer",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.normalized_raw_echo",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.integer_readout_eq_norm",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_normal_form",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_eq_complex_norm",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_multiplicative",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_reflection",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_nonnegative",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_zero_iff",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_nat_order_iff",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_dyadic_count",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.mixer_conservation",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_parallelogram",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.raw_I3_zero",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.readout_eq_complex_norm_of_normalized_generator_transfer",
+        "IDT.QMClosure.NativeGeneratorMixtureReadout.exists_native_pair_contract"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_initial_history_presentation_origin", "fixed_corner_half_mixture_readout_selection"]
+  limits := [
+    "Native transfer quantifies every presentation element; the two fixed generator contexts are universal input laws.",
+    "Pair sufficiency quantifies every source quadruple for four prescribed translated responses and equal-half two-source ensembles.",
+    "External arithmetic averaging of readout pairs and coherent composition a*x+b*y are distinct operations whose physical relationship remains open.",
+    "The dyadic-count conclusion is an exact value formula; the cited order-equivalence theorem concerns natural counts.",
+    "The supplied grammar/destructive relation, real normalized readout, all-context native factorization and fixed-probe sufficiency retain open physical-origin obligations.",
+    "Event frequencies, Born actualization, Hilbert representation, full QM closure and physical scales remain open."] }
+
+def nativeSingleContinuationReadoutSelection : ResearchTask := {
+  id := "native_single_continuation_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The carrier is the existing initial two-relator presentation; W is an arbitrary real readout with W(a)+W(b)=1.",
+    "For every presentation element p, W(a*p)=W(a)*W(p) and W(b*p)=W(b)*W(p).",
+    "For the prescribed probes P(z)=(f(z),f(z+1),f(z+i),f(z+1+i)) of f(m,n)=W(m+n*phase), every equality P(x)+P(y)=P(v)+P(w) is preserved after translating all four integer sources by +1."]
+  conclusions := [
+    "The checked source derives the native half-transfer contract and quarter-turn invariance from normalized universal generator transfer.",
+    "The affine map K(z)=i*z-1 permutes the four fixed corners by [2,0,3,1], has fourth iterate identity, and transports the single +1 pair law to all four signed elementary translation laws.",
+    "The resulting contract gives W(p)=Complex.normSq(complexEval(p)) and W(half^k*(m+n*phase))=(m^2+n^2)/4^k for every presentation element and normal form.",
+    "Global multiplicativity, syntactic-reflection invariance, nonnegativity, zero iff p=0 and all-input mixer conservation follow through the native and pair contracts obtained by native_contract_of_single_continuation.",
+    "The concrete norm model inhabits the exact normalization, two universal generator transfers and single universal pair-continuation contract."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeSingleContinuationReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeSingleContinuationReadout.fixedCornerProbes_cornerTurn",
+        "IDT.QMClosure.NativeSingleContinuationReadout.fixedCornerPairLaws_of_single_translation",
+        "IDT.QMClosure.NativeSingleContinuationReadout.native_contract_of_single_continuation",
+        "IDT.QMClosure.NativeSingleContinuationReadout.readout_eq_complex_norm_of_single_continuation",
+        "IDT.QMClosure.NativeSingleContinuationReadout.readout_normal_form_of_single_continuation",
+        "IDT.QMClosure.NativeSingleContinuationReadout.global_readout_laws_of_single_continuation",
+        "IDT.QMClosure.NativeSingleContinuationReadout.modelReadout_reduced_contract"] }]
+  plannedArtifacts := []
+  dependencies := ["native_generator_mixture_readout_selection"]
+  limits := [
+    "The single continuation law quantifies every source quadruple with equal entire prescribed probe vectors.",
+    "The corner geometry is fixed by translated values of the same integer restriction; its completeness under continuation remains supplied.",
+    "This premise reduction leaves the physical origins of the grammar/destructive relation, real normalized readout, universal native transfer and fixed-probe pair sufficiency open.",
+    "Independence of the remaining premises and stability under finite precision remain open research obligations.",
+    "Raw readout selection leaves event-frequency interpretation, Born actualization, Hilbert representation and full QM closure open."] }
+
+def nativeGeneratorReadoutCountercontrol : ResearchTask := {
+  id := "native_generator_readout_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the same existing initial destructive two-generator presentation, its faithful complex evaluation, syntactic reflection and finite evaluation E into ZMod 5.",
+    "Define the concrete counterWeight to be zero when E(p*reflection(p))=0 and Complex.normSq(complexEval(p)) otherwise."]
+  conclusions := [
+    "The checked countercontrol source gives nonnegativity, unit value one, reflection invariance and global multiplicativity.",
+    "Both universal native generator transfers divide the readout by two, and the canonical raw echo has normalized total weight one.",
+    "The nonzero history five has weight zero; natural-count monotonicity fails since 1<=5 while the weights are one and zero.",
+    "Both prescribed corner seed pair sums are [2,2,2,2]; after the +1 continuation they are [2,6,2,1] and [2,1,2,6], yielding an explicit failure of pair congruence.",
+    "At coherent mixer input (1,2), total input weight is five and total output weight is zero; raw I3 at (1,1,i) is minus five.",
+    "The control supplies an independence witness for fixed-probe pair sufficiency from normalized native transfer and the canonical echo, even with supplied nonnegativity, reflection invariance and global multiplicativity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeGeneratorReadoutCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.counterWeight_nonnegative",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.counterWeight_one",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.counterWeight_reflection",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.counterWeight_mul",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.native_transfer_a",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.native_transfer_b",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.canonical_raw_echo_normalized",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.nonzero_null",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.not_count_monotone",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.corner_seed_values",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.shifted_corner_packet_left",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.shifted_corner_packet_right",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.not_pairCongruent_unit_shift",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.conservation_counterexample",
+        "IDT.QMClosure.NativeGeneratorReadoutCountercontrol.latticeRawI3_counterexample"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_initial_history_presentation_origin", "fixed_corner_half_mixture_readout_selection"]
+  limits := [
+    "This concrete control is defined by a finite-field zero mask of the algebraic norm on the existing carrier.",
+    "Its nonzero null history violates faithfulness and strict positivity; the explicit pair-congruence and conservation failures mark the scope of its canonical echo.",
+    "The control isolates one independence boundary. Independence of the other remaining selection premises remains open.",
+    "Physical realization, event-frequency interpretation, Born actualization and full QM closure remain open."] }
+
+def nativeTransferPairSufficiencyOrigin : ResearchTask := {
+  id := "native_transfer_pair_sufficiency_origin"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The exact native readout route supplies the initial two-generator grammar/destructive relation, a real normalized readout, two all-input native transfer laws and fixed-corner equal-half pair sufficiency under one continuation.",
+    "The finite-field mask countercontrol identifies a pair-sufficiency obstruction compatible with normalized native transfer and the canonical raw echo."]
+  conclusions := [
+    "Seek a physically justified operational origin for the normalized native transfer laws and completeness of the prescribed probe-pair means under continuation.",
+    "Test independence of the remaining supplied premises individually using explicit controls.",
+    "Formulate and test finite-precision versions of generator transfer and fixed-probe pair sufficiency, including stability of the selected readout under approximate hypotheses.",
+    "Connect external equal-half preparation averaging with a justified operational mixture contract while retaining its distinction from coherent composition."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := [
+    "native_single_continuation_readout_selection", "native_generator_readout_countercontrol"]
+  limits := [
+    "This entry records the open physical and robust operational-origin research obligations.",
+    "The grammar/destructive relation, real normalization and universal contexts retain their stated supplied status until independently justified.",
+    "Exact algebraic readout selection alone leaves event frequencies, Born actualization, Hilbert representation, full QM closure and physical scales open."] }
+
+def nativeRegularReadoutCountercontrol : ResearchTask := {
+  id := "native_regular_readout_countercontrol"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "On the ambient real plane define N(x,y)=x^2+y^2, H(x,y)=4*x*y*(x^2-y^2), and Q(x,y)=H(x,y)^2/N(x,y)^3 away from the origin, with Q(0,0)=0.",
+    "Choose a real c>0 and define F_c=N+c*Q; on the existing initial presentation compose F_c with the real and imaginary parts of its faithful complex evaluation."]
+  conclusions := [
+    "The accepted analytic candidate uses N^4-H^2=(x^4-6*x^2*y^2+y^4)^2 to give 0<=Q<=N and N<=F_c<=(1+c)*N, hence nonnegativity and zero only at the origin.",
+    "The analytic ambient response is globally C1 and real analytic away from zero. It fails twice Frechet differentiability at zero because the degree-two homogeneous Q vanishes on both axes and diagonals while Q(2,1)>0.",
+    "For both native complex generators, N scales by 1/2 and H scales by -1/4, hence Q and F_c scale by 1/2. The composed candidate has normalized native readings 1/2, both universal native transfer laws, the canonical normalized raw echo and reflection invariance.",
+    "For every real scalar t, F_c(t,0)=t^2. Nonnegative ambient scalar counts have exact order equivalence; the presentation supplies the corresponding available dyadic and natural scalar counts.",
+    "The fixed-corner seed pair sums agree. With alpha=c*576/125, the +1 shifted packets are [2,6,2,6+alpha] and [2,6+alpha,2,6], so pair sufficiency fails.",
+    "The coherent mixer input (1,2) has total five and output total 5+alpha; raw I3 at (1,1,i) equals alpha.",
+    "Global multiplicativity fails with the positive gap F_c(2+i)^2-F_c(3+4*i)=1152*c*(527+288*c)/15625.",
+    "These proposed analytic controls test whether faithfulness, continuity and scalar count order can replace fixed-corner pair sufficiency while preserving normalized native transfer."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeRegularReadoutCountercontrol.lean"]
+  dependencies := [
+    "native_single_continuation_readout_selection", "native_generator_readout_countercontrol"]
+  limits := [
+    "The analytic construction is parent accepted and independently reviewed; all listed claims await a Lean artifact and remain outside the current checked publication cluster.",
+    "The ambient smoothness claims concern the real plane. The composed presentation readout uses its available Gaussian-dyadic histories.",
+    "Rational readout values on dyadic inputs require rational c; c=1 is a proposed concrete choice.",
+    "A future proof obligation is to assess a second-order Peano expansion at the vacuum together with exact dyadic scaling as an alternative selector. Selection under this replacement remains unproved.",
+    "The candidate's alpha-valued controls belong to this analytic construction; the separately checked finite-field mask has its own exact packets and raw I3 value minus five.",
+    "Physical origins, event frequencies, Born actualization, Hilbert representation, full QM closure and physical scales remain open."] }
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -8303,7 +8482,10 @@ def researchTasks : List ResearchTask := [
   fourProbeTomographyMixtureWall, finiteTranslationUniversalRankGap,
   finiteGateLocalizationReadoutWall, localMixtureCongruenceReadoutOrigin,
   smallRankSymmetryReadoutSelection, multiplicativeMixtureReadoutSelection,
-  fixedCornerHalfMixtureReadoutSelection, nativeCircuitPassivityReadoutWall]
+  fixedCornerHalfMixtureReadoutSelection, nativeGeneratorMixtureReadoutSelection,
+  nativeSingleContinuationReadoutSelection, nativeGeneratorReadoutCountercontrol,
+  nativeTransferPairSufficiencyOrigin, nativeRegularReadoutCountercontrol,
+  nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
