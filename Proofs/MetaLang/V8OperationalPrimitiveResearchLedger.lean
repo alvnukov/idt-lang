@@ -8997,6 +8997,274 @@ def nativeCircuitPassivityReadoutWall : ResearchTask := {
     "All conclusions remain analytic until formalized.",
     "Physical readout origin, Born interpretation and full QM remain open."] }
 
+def countCrossIncrementRigidity : ResearchTask := {
+  id := "count_cross_increment_rigidity"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use a real grid f on natural count pairs, mixed increment d(n,m)=f(n+1,m+1)-f(n+1,m)-f(n,m+1)+f(n,m), and saturated squares f(N,N)-f(N,0)-f(0,N)+f(0,0)=0 for every N.",
+    "For the global-sign route require all mixed increments nonnegative or all nonpositive. For the eventual-sign route additionally supply dyadic f(2*n,2*m)=4*f(n,m), d(0,0)=0, and one uniform total-count threshold."]
+  conclusions := [
+    "The checked telescoping argument makes either global uniform sign force d=0 and f(n,m)=f(n,0)+f(0,m)-f(0,0).",
+    "Dyadic scaling refines each parent increment into four children whose sum is four times the parent. A signed nonzero amplitude escapes every total-count threshold through finite child iteration.",
+    "Under saturation, dyadic scaling and d(0,0)=0, an eventual uniform sign forces d=0. Every nonzero increment grid has both signs arbitrarily far with one fixed positive magnitude."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CountCrossIncrementRigidity.lean"
+      declarations := [
+        "IDT.QMClosure.CountCrossIncrementRigidity.row_telescope",
+        "IDT.QMClosure.CountCrossIncrementRigidity.rectangle_telescope",
+        "IDT.QMClosure.CountCrossIncrementRigidity.mixed_zero_of_nonnegative",
+        "IDT.QMClosure.CountCrossIncrementRigidity.mixed_zero_of_nonpositive",
+        "IDT.QMClosure.CountCrossIncrementRigidity.separable_of_mixed_zero",
+        "IDT.QMClosure.CountCrossIncrementRigidity.mixed_refines",
+        "IDT.QMClosure.CountCrossIncrementRigidity.positive_escape",
+        "IDT.QMClosure.CountCrossIncrementRigidity.negative_escape",
+        "IDT.QMClosure.CountCrossIncrementRigidity.mixed_zero_of_eventual_nonnegative",
+        "IDT.QMClosure.CountCrossIncrementRigidity.mixed_zero_of_eventual_nonpositive",
+        "IDT.QMClosure.CountCrossIncrementRigidity.both_signs_arbitrarily_far"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "Registered builds and complete actual-origin/type/body audits are independently accepted. The generic dependency profile has no prior project declaration dependencies. Kernel authority belongs to the cited declarations under their actual hypotheses.",
+    "The eventual threshold is uniform over every n,m with n+m>D. Finite windows, row-dependent thresholds and fixed-ray or adjacent-cell alternation need separate results.",
+    "These generic grid statements use their explicit saturation and scaling contracts. Physical origins of those contracts belong to their adapters."] }
+
+def nativeCrossIncrementReadoutSelection : ResearchTask := {
+  id := "native_cross_increment_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing presented-history algebra and NativeTransfer W, meaning W(1)=1 and W(a*p)=W(p)/2=W(b*p) for every presented history p.",
+    "Define f(n,m)=W(bagEval(n,m)). For selection supply either one mixed-increment sign at all backgrounds, or one sign beyond a single uniform total-count threshold."]
+  conclusions := [
+    "The checked route derives saturation before any count-square formula. Vanishing mixed increments and a native bag identity yield g(k+2)+g(k)=2*g(k+1)+1, hence f(n,m)=(n^2+m^2)/2.",
+    "The whole-carrier theorem uses the count formula, cone transport and half-normal forms to obtain W(p)=normSq(complexEval(p)). Original-subset pair-kernel compatibility is also obtained from the count formula.",
+    "Under NativeTransfer alone, failure of the norm identity gives epsilon>0 such that beyond every total-count threshold there are increments at least epsilon and at most -epsilon.",
+    "All-order canonical nonnegativity implies nonnegative mixed increments. OR gives the converse predicate countercontrol outside native doubling. For 0<c<=1/16 the regular native counterfamily is coordinatewise monotone and has both mixed signs."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeCrossIncrementReadoutSelection.lean"
+      declarations := [
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.countGrid_saturated",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.countGrid_dyadic",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.countGrid_mixed_origin",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.bag_row_transfer",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.countGrid_row_transfer",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.count_formula_of_mixed_zero",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.compatible_pair_of_mixed_zero",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.readout_eq_norm_of_mixed_zero",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.readout_eq_norm_of_uniform_mixed_sign",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.readout_eq_norm_of_eventual_mixed_sign",
+        "IDT.QMClosure.NativeCrossIncrementReadoutSelection.nonnorm_both_signs_arbitrarily_far"] },
+    { sourcePath := "Proofs/QMClosure/NativeCrossIncrementReadoutControls.lean"
+      declarations := [
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.nonnegative_canonical_implies_mixed_nonnegative",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_mixed",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_monotone_left",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_monotone_right",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_calibrations",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_not_dyadic",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_canonical_axis",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.orGrid_negative_canonical",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.counterWeight_mixed_zero_one",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.counterWeight_mixed_one_one",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.countWeight_monotone_left",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.countWeight_monotone_right",
+        "IDT.QMClosure.NativeCrossIncrementReadoutControls.monotone_nonnorm_native_countercontrol"] }]
+  plannedArtifacts := []
+  dependencies := ["count_cross_increment_rigidity", "native_generator_mixture_readout_selection"]
+  limits := [
+    "Registered builds and the complete actual-origin/type/body audit are independently accepted. The final native norm-route profile excludes old polynomial selectors, positive-selection conclusions and the fixed-corner pair-law selector. Earlier algebraic, cone-transport and normal-form interfaces remain actual dependencies.",
+    "Readout positivity, reflection, continuity, polynomiality, canonical coefficient positivity, finite support and event atoms are absent from the selector's additional premises.",
+    "The coefficient comparison concerns all orders. Eventual canonical positivity with a signed head has separate scope. The regular control supplies first-derivative monotonicity and direct axis handling.",
+    "Native algebra, composition/cancellation and half-transfer laws remain supplied. Physical sign origin, operational realization, echo/cloning interpretations, Born/Hilbert origin, full QM/GR and physical scales remain open."] }
+
+def positiveColumnConservationNativeTransfer : ResearchTask := {
+  id := "positive_column_conservation_native_transfer"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Generic source-local route: a commutative monoid, a^4=b^4, real W, p in S, S forward-closed under a and b, and W(x)>=0 with W(a*x)+W(b*x)=W(x) for every x in S.",
+    "Native adapter: the existing presented-history algebra supplies equal fourth histories through its destructive grammar. Require real W>=0 and column conservation on the entire presentation, with W(1)=1 for NativeTransfer."]
+  conclusions := [
+    "The checked source-local conclusion is W(a*p)=W(b*p)=W(p)/2. Every orbit slot at (a*b)^2*p is a forward word. Real Archimedean order and arbitrary serial depth supply the exact rigidity.",
+    "On the native presentation, nonnegative unit-normalized column conservation is equivalent to nonnegative NativeTransfer. Positivity is retained on both sides of the equivalence.",
+    "Re(complexEval) is normalized, conserving, positive on the original a/b bag cone and has zero mixed increments, while failing serial positivity and half transfers. The quartic norm is positive and normalized while failing conservation. Scaling and zero preserve unnormalized equations.",
+    "The lex-pair readout (N,Re-N) is faithfully lex-positive, normalized and conserving while its phase and half laws fail. Its value space is an ordered additive real-vector control.",
+    "An illustrative analytic classical model with nonnegative real sources, a=b=1/2 and W(x)=x satisfies the generic contract and equal branches. Its a^2+b^2=1/2 records the separate native destructive-algebra requirement.",
+    "A finite-depth perturbation N+2^(-K)*Im(z) stays positive through K with unequal first-column readings. The positive regular native nonnorm family still satisfies the exact column theorem. A further uniform cross-increment sign selects the norm under the native contracts."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PositiveColumnConservationCore.lean"
+      declarations := [
+        "IDT.QMClosure.PositiveColumnConservationCore.four_cycle_equal",
+        "IDT.QMClosure.PositiveColumnConservationCore.local_branch_balance"] },
+    { sourcePath := "Proofs/QMClosure/PositiveColumnConservation.lean"
+      declarations := [
+        "IDT.QMClosure.PositiveColumnConservation.local_branch_balance",
+        "IDT.QMClosure.PositiveColumnConservation.nativeTransfer_of_nonnegative_column_conservation",
+        "IDT.QMClosure.PositiveColumnConservation.nonnegative_column_conservation_iff_nativeTransfer",
+        "IDT.QMClosure.PositiveColumnConservation.readout_zero_of_column_conservation"] },
+    { sourcePath := "Proofs/QMClosure/PositiveColumnConservationControls.lean"
+      declarations := [
+        "IDT.QMClosure.PositiveColumnConservationControls.realPart_unit",
+        "IDT.QMClosure.PositiveColumnConservationControls.realPart_column",
+        "IDT.QMClosure.PositiveColumnConservationControls.realPart_nonnegative_bag",
+        "IDT.QMClosure.PositiveColumnConservationControls.realPart_mixed_increment",
+        "IDT.QMClosure.PositiveColumnConservationControls.realPart_phase_branch_failure",
+        "IDT.QMClosure.PositiveColumnConservationControls.quartic_nonnegative",
+        "IDT.QMClosure.PositiveColumnConservationControls.quartic_unit",
+        "IDT.QMClosure.PositiveColumnConservationControls.quartic_column_half",
+        "IDT.QMClosure.PositiveColumnConservationControls.quartic_rejects_column",
+        "IDT.QMClosure.PositiveColumnConservationControls.scaledNorm_properties",
+        "IDT.QMClosure.PositiveColumnConservationControls.finiteDepth_unit",
+        "IDT.QMClosure.PositiveColumnConservationControls.finiteDepth_column",
+        "IDT.QMClosure.PositiveColumnConservationControls.finiteDepth_nonnegative_word",
+        "IDT.QMClosure.PositiveColumnConservationControls.finiteDepth_branch_imbalance",
+        "IDT.QMClosure.PositiveColumnConservationControls.finiteDepth_no_nativeTransfer",
+        "IDT.QMClosure.PositiveColumnConservationControls.finiteDepth_control",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_unit",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_nonnegative",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_faithful",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_column",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_generators",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_phase_branch_failure",
+        "IDT.QMClosure.PositiveColumnConservationControls.lexReadout_scalar_two_boundary",
+        "IDT.QMClosure.PositiveColumnConservationControls.lex_infinitesimal"] },
+    { sourcePath := "Proofs/QMClosure/ConservativeCrossIncrementReadout.lean"
+      declarations := [
+        "IDT.QMClosure.ConservativeCrossIncrementReadout.readout_eq_norm_of_uniform_mixed_sign",
+        "IDT.QMClosure.ConservativeCrossIncrementReadout.readout_eq_norm_of_eventual_mixed_sign"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_generator_mixture_readout_selection",
+    "native_cross_increment_readout_selection",
+    "native_regular_readout_countercontrol"]
+  limits := [
+    "The four installed modules have accepted registered builds, complete actual-origin/type/body audits and independent final review. The generic core has no prior project declaration dependencies. The native adapter's actual dependencies from the older generator module are only NativeTransfer and its fields/constructor, plus generator_fourth_history. The separate bridge uses the checked cross-increment selector. The elementary classical illustration retains analytic status.",
+    "The separate ConservativeCrossIncrementReadout composition derives NativeTransfer from global positivity, unit and column conservation, then invokes the checked global or eventual uniform-sign selector. The generic monoid core retains its independent fourth-history, positivity and conservation contract.",
+    "Separate unattenuated phase availability, continuity and individual half transfer are absent from the source-local premises. Real Archimedean order and arbitrary serial positivity/conservation retain their full quantified scope.",
+    "The lex control claims an ordered additive and real-vector structure. Ordered-ring and ordered-field claims require separate constructions.",
+    "The grammar, physical forward composition, positivity and column-conservation origins, arbitrarily deep availability, cross-increment sign, detector actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales remain open."] }
+
+def positiveColumnFiniteDepthBounds : ResearchTask := {
+  id := "positive_column_finite_depth_bounds"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use a commutative monoid with a^4=b^4, a real readout W and source p. For integer K>=1 require W>=0 on every forward word of length at most K from p.",
+    "For the global-conservation bound require W(a*x)+W(b*x)=W(x) at every forward source. For the finite-only bound require that equation at depths strictly below K."]
+  conclusions := [
+    "Accepted analytic sharp global bound: abs(W(a*p)-W(b*p))<=r_K*W(p), where r_(2m)=1/(2^m-1) for m>=1 and r_(2m+1)=2^(-m) for m>=0.",
+    "Normalized native attaining controls at p=1 are N+2^(-m)*Im(z) for K=2m+1 and (2^m*N-Re(z)+Im(z))/(2^m-1) for K=2m, with N=normSq(z) and z=complexEval(p). Their required positivity holds through K.",
+    "Accepted analytic sharp finite-only constants: tilde_r_1=1, tilde_r_(2m)=2^(1-m) for m>=1 and tilde_r_(2m+1)=1/(2^m-1) for m>=1. Terminal mass in one mod-four residue with recursive sums above attains the bound.",
+    "For K>=3 one additional conservation layer forces terminal parity v0+v2=v1+v3 and recovers the global bound. The K=2 missing-residue case requires separate treatment using only available positivity constraints."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/PositiveColumnFiniteDepthBounds.lean",
+    "Proofs/QMClosure/NativeColumnFiniteDepthControls.lean"]
+  dependencies := ["positive_column_conservation_native_transfer"]
+  limits := [
+    "Accepted analytic result only. Exact constants, boundary cases, terminal-residue realizability and attaining controls await Lean formalization, registered builds and independent review.",
+    "Finite-depth positivity is quantified over every word through K. Attaining controls may lose positivity at later depth. Exact global conservation and finite-only conservation retain separate contracts.",
+    "Forward histories, their physical availability, serial depth, real readout positivity and conservation origins remain supplied operational obligations. Echo accessibility and Born/Hilbert origin remain open."] }
+
+def positiveColumnRelativeDefectRobustness : ResearchTask := {
+  id := "positive_column_relative_defect_robustness"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use a commutative monoid with a^4=b^4, a real W and source p. Require W>=0 on every forward source and abs(W(a*x)+W(b*x)-W(x))<=epsilon*W(x) at every forward source.",
+    "Require 0<=epsilon<sqrt(2)-1. Put eta=2*epsilon+epsilon^2 and R=2*eta/(1-eta)."]
+  conclusions := [
+    "Accepted analytic estimate: abs(W(a*p)-W(b*p))<=(R*(1+epsilon)^4+(1+epsilon)^4-(1+epsilon))*W(p).",
+    "For 0<=epsilon<=1/20 the estimate gives imbalance<=9*epsilon*W(p).",
+    "The normalized native control W=N+tau*Im(z^2), tau=epsilon/(1+epsilon), is globally faithful, has column sum N, satisfies the relative defect bound and has unit-source imbalance tau. This matches the linear error order."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/ColumnConservationRobustnessCore.lean",
+    "Proofs/QMClosure/ColumnConservationRobustness.lean",
+    "Proofs/QMClosure/ColumnConservationRobustnessControls.lean"]
+  dependencies := ["positive_column_conservation_native_transfer"]
+  limits := [
+    "Accepted analytic result with pinned uncompiled robustness source drafts. Relative error estimates, epsilon range, zero-source cases and faithful native controls await registered builds, audits and independent final review. The upper coefficient is an estimate. the claimed sharpness concerns linear order.",
+    "The estimate concerns the two first branch readings. Approximate column conservation plus the cross-increment sign and bounded calibrations admits analytic norm-drift countercontrols. uniform norm comparison requires separate premises and a theorem.",
+    "The relative bound is uniform over the complete forward source family. Its physical realization, unbounded serial availability, positivity and error provenance remain open obligations.",
+    "Physical readout actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales retain independent obligations."] }
+
+def positiveColumnAbsoluteDefectRobustness : ResearchTask := {
+  id := "positive_column_absolute_defect_robustness"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use a commutative monoid with a^4=b^4, a real W and source p. Require W>=0 and abs(W(a*x)+W(b*x)-W(x))<=e at every forward source, with e>=0.",
+    "For the normalized asymptotic conclusion supply W(p)=1. The native lower control uses 0<delta<=1 and W_delta=max(N+delta*Im(z),0)."]
+  conclusions := [
+    "Accepted analytic estimate at every natural n: abs(W(a*p)-W(b*p))<=2^(-n)*(W(p)+7*e)+20*e*2^n+2*e.",
+    "For W(p)=1 optimizing the integer depth gives imbalance of order sqrt(e) as e tends to zero.",
+    "The clipped native control W_delta is globally nonnegative and unit-normalized, has unit-source imbalance delta and column defect in [0,delta^2/4] at every source. The positive-part sum identity supplies a matching square-root lower order."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/ColumnConservationRobustnessCore.lean",
+    "Proofs/QMClosure/ColumnConservationRobustness.lean",
+    "Proofs/QMClosure/ColumnConservationRobustnessControls.lean"]
+  dependencies := ["positive_column_conservation_native_transfer"]
+  limits := [
+    "Accepted analytic result with pinned uncompiled robustness source drafts for the every-depth estimate, positive-part identity and native lower control. Registered builds, audits and independent final review remain pending. The optimized integer-depth square-root upper corollary awaits a separate artifact. Sharp upper constants remain open.",
+    "The absolute error bound is uniform over every forward source. Physical access to arbitrary finite depth, detector positivity and error provenance remain explicit operational obligations.",
+    "Readout actualization, echo accessibility, Born/Hilbert origin, full QM/GR and physical scales remain open."] }
+
+def approximateColumnNormDrift : ResearchTask := {
+  id := "approximate_column_norm_drift"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the native faithful complex evaluation z=x+i*y and N=normSq(z). For delta>0 put q=2+delta and W_delta(z)=(abs(x+y)^q+abs(x-y)^q)/2.",
+    "For the finite-window control fix any real T>=2, set H_T(0)=0 and H_T(t)=t^2*max(log(abs(t)/T),0) for t!=0, set g(t)=t^2+delta*H_T(t), and W(z)=(g(x+y)+g(x-y))/2."]
+  conclusions := [
+    "The accepted analytic power control is globally positive and faithful, unit-normalized and has both generator readings 1/2. Both branch readings equal A/2, where A=abs(x)^q+abs(y)^q. Its count response is (n^q+m^q)/2, with every mixed increment zero and coordinatewise monotonicity.",
+    "For the power control, 2^(-delta)*W<=A<=W gives uniform relative column error epsilon=1-2^(-delta) tending to zero. On positive integer sources, W(n)/n^2=n^delta is unbounded.",
+    "The accepted analytic window control is globally positive and faithful, unit-normalized, has generator readings 1/2, equal branches, zero mixed count increments and monotone count response. It equals normSq(z) throughout abs(x+y)<=T and abs(x-y)<=T, hence on every bounded calibration window after choosing T and in particular at scalar two.",
+    "For the window control, A_H=H_T(x)+H_T(y), W_H=(H_T(x+y)+H_T(x-y))/2 and abs(A_H-W_H)<=log(2)*N<=log(2)*W. Thus its uniform relative column defect is bounded by delta*log(2), while W(n)/n^2=1+delta*log(n/T) is unbounded for positive integer n>T.",
+    "The native a and b maps preserve the entire box abs(x+y)<=T and abs(x-y)<=T. Norm agreement therefore extends to every serial descendant of every preparation in this bounded region, including all serial descendants of the native unit. Small relative branch imbalance, exact mixed signs and bounded calibration data therefore permit unbounded global norm drift."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/ApproximateColumnNormDrift.lean",
+    "Proofs/QMClosure/FiniteWindowColumnNormDrift.lean"]
+  dependencies := [
+    "positive_column_relative_defect_robustness",
+    "native_cross_increment_readout_selection"]
+  limits := [
+    "Both families have independent analytic acceptance. Power inequalities, the logarithmic entropy bound, finite-window and unit-orbit agreement, and universal drift controls await Lean artifacts, builds and audits.",
+    "The two families lose exact all-input degree-two dyadic scaling. Scalar W(2)=4 and even all serial probes from the unit leave a different quantified contract from W(2*p)=4*W(p) for every p.",
+    "The separate parent-accepted analytic repair adds exact all-input dyadic degree-two scaling and exact zero mixed increments to obtain uniform norm comparison. Its proof artifact remains pending. Replacing exact zero by only one global or eventual mixed-increment sign remains an open robustness question.",
+    "The relative branch-stability result bounds the two branch readings under its source-local contract. Uniform norm robustness requires its own theorem and premises.",
+    "Physical access to the all-input preparation family, detector interpretation, readout actualization, Born/Hilbert origin, full QM/GR and physical scales retain independent open obligations."] }
+
+def dyadicScaledApproximateColumnNormSelection : ResearchTask := {
+  id := "dyadic_scaled_approximate_column_norm_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the existing native presented-history algebra, real W>=0 globally and W(1)=1. Supply exact all-input scaling W(2*p)=4*W(p) for every presented history p.",
+    "Require every mixed increment of f(n,m)=W(bagEval(n,m)) to be exactly zero for all natural n,m.",
+    "Require abs(W(a*p)+W(b*p)-W(p))<=epsilon*W(p) for every native p, with 0<=epsilon<=1/1000."]
+  conclusions := [
+    "The accepted analytic full-carrier estimate is abs(W(p)-normSq(complexEval(p)))<=100*epsilon*normSq(complexEval(p)) for every native presented history p. The coefficient 100 is unoptimized.",
+    "Set eta=2*epsilon+epsilon^2 and d=2*eta. The all-four-phase comparison has factor kappa=(1+d)/(1-d). An auxiliary reflection average and exact count separability lead to R(z)=(h(x+y)+h(x-y))/2 with an even scalar h built from the real-axis readout.",
+    "The effective scalar relative parallelogram error is delta=d+(1+d)*epsilon=5*epsilon+6*epsilon^2+2*epsilon^3. The obtained scalar h is even, nonnegative, unit-normalized and exactly dyadic, with relative parallelogram error delta<1/2. These premises give abs(h(t)-t^2)<=tau*t^2 on dyadic rationals, where tau=16*delta/(1-2*delta).",
+    "The scalar route uses finite denominator-depth bounds and a three-quarter contraction for h(t)-t^2. The full factors alpha=(1-d)^2/(1+d) and beta=(1+d)^2/(1-d) give alpha*(1-tau)*N<=W<=beta*(1+tau)*N and yield the stated 100*epsilon estimate."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/DyadicScaledColumnStability.lean"]
+  dependencies := [
+    "native_cross_increment_readout_selection",
+    "positive_column_relative_defect_robustness",
+    "approximate_column_norm_drift"]
+  limits := [
+    "Parent-accepted analytic argument only. Four-phase transport, auxiliary averaging, scalar recurrence, dyadic denominator induction, all-carrier transfer and numerical constants await Lean formalization, registered builds, dependency/axiom audits and independent final review.",
+    "The mixed-increment premise is exact zero at every natural count pair. A robust theorem with only one global or eventual mixed-increment sign remains open.",
+    "All-input degree-two scaling remains an exact supplied operational law. The finite-window norm-drift control shows that bounded calibration data and their entire serial closure leave that law unestablished.",
+    "The scalar proof route uses dyadic-rational finite induction and an auxiliary reflection average. Continuity, monotonicity, full real homogeneity and readout reflection symmetry have no role as supplied premises.",
+    "The native algebra, physical all-input preparation/scaling availability, readout/error provenance, detector actualization, Born/Hilbert origin, full QM/GR and physical scales retain independent open obligations."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -9112,7 +9380,11 @@ def researchTasks : List ResearchTask := [
   nativeFiniteFirstEventC1ReadoutSelection, nativeBranchSpecificOutputCountercontrol,
   positiveUnboundedKernelDuplication, nativePersistentEventReadoutOrigin,
   nativeStochasticQueryMomentBoundary, nativeUniformIntegrabilityReadoutSelection,
-  originalSupportResourceBudgetBoundary, nativeCircuitPassivityReadoutWall]
+  originalSupportResourceBudgetBoundary, nativeCircuitPassivityReadoutWall,
+  countCrossIncrementRigidity, nativeCrossIncrementReadoutSelection,
+  positiveColumnConservationNativeTransfer, positiveColumnFiniteDepthBounds,
+  positiveColumnRelativeDefectRobustness, positiveColumnAbsoluteDefectRobustness,
+  approximateColumnNormDrift, dyadicScaledApproximateColumnNormSelection]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

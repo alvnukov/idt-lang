@@ -525,5 +525,12 @@ lean_lib Proofs where
     `Proofs.QMClosure.PositiveUnboundedKernelDuplication,
     `Proofs.QMClosure.PersistentOriginalEventAtoms,
     `Proofs.QMClosure.NativePositiveSupportReadout,
-    `Proofs.QMClosure.NativePositiveSupportReadoutControls
+    `Proofs.QMClosure.NativePositiveSupportReadoutControls,
+    `Proofs.QMClosure.CountCrossIncrementRigidity,
+    `Proofs.QMClosure.NativeCrossIncrementReadoutSelection,
+    `Proofs.QMClosure.NativeCrossIncrementReadoutControls,
+    `Proofs.QMClosure.PositiveColumnConservationCore,
+    `Proofs.QMClosure.PositiveColumnConservation,
+    `Proofs.QMClosure.PositiveColumnConservationControls,
+    `Proofs.QMClosure.ConservativeCrossIncrementReadout
   ]
