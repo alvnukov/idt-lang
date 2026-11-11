@@ -508,5 +508,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeGeneratorReadoutCountercontrol,
     `Proofs.QMClosure.NativeGeneratorMixtureReadout,
     `Proofs.QMClosure.NativeSingleContinuationReadout,
-    `Proofs.QMClosure.NativeRegularReadoutCountercontrol
+    `Proofs.QMClosure.NativeRegularReadoutCountercontrol,
+    `Proofs.QMClosure.NativeTwoProbeContinuationReadout,
+    `Proofs.QMClosure.NativeLocalSquareReadout
   ]

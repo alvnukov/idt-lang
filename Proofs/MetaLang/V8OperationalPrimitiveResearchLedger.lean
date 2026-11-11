@@ -8420,6 +8420,166 @@ def nativeVacuumQuadraticReadoutSelection : ResearchTask := {
     "Transport to the abstract presentation requires an explicit ambient extension contract with the corresponding scaling and native values.",
     "Physical readout origins, outcome frequencies, Born actualization, Hilbert representation and full QM closure remain open."] }
 
+def nativeTwoProbeContinuationReadoutSelection : ResearchTask := {
+  id := "native_two_probe_continuation_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing initial presentation a+b=1 and a*a+b*b=0. W is an arbitrary real readout with W(a)+W(b)=1.",
+    "At every presentation input p, W(a*p)=W(a)*W(p) and W(b*p)=W(b)*W(p).",
+    "On f(m,n)=W(m+n*phase), fix P2(z)=(f(z),f(z+e)) with e=(1,0). For every source quadruple x,y,v,w, equality P2(x)+P2(y)=P2(v)+P2(w) persists after translating all four sources by +e."]
+  conclusions := [
+    "The checked source transports the universal P2 pair law to the published four-corner continuation contract, giving W(p)=Complex.normSq(complexEval(p)) and the Gaussian-dyadic normal-form formula.",
+    "The full native/pair contract supplies global multiplication, syntactic-reflection invariance, nonnegativity, faithfulness and all-input mixer conservation.",
+    "For every fixed scalar offset t, native axis values make duplicate sources e-t,e-t and -e-t,-e-t have initial scalar pair sums two and two, followed by eight and zero under +e. One fixed scalar translate therefore cannot carry this universal pair-continuation contract.",
+    "The concrete norm model satisfies the two-probe contract, giving sufficiency of two fixed translates within this specified scalar-translate class."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeTwoProbeContinuationReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.fixedCornerPairLaw_of_horizontalPairLaw",
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.native_contract_of_twoProbe",
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.readout_eq_complex_norm_of_twoProbe",
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.readout_normal_form_of_twoProbe",
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.global_readout_laws_of_twoProbe",
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.no_scalar_translate_continuation_of_native",
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.modelReadout_twoProbe_contract"] }]
+  plannedArtifacts := []
+  dependencies := ["native_single_continuation_readout_selection"]
+  limits := [
+    "The minimality statement is restricted to fixed translates of one scalar readout and congruence for every source quadruple, including repeated sources.",
+    "The native transfers quantify all presentation inputs; the P2 law quantifies all source quadruples.",
+    "External equal-half pair arithmetic, its physical accessibility and the origin of probe sufficiency remain supplied/open.",
+    "Outcome frequencies, Born actualization, Hilbert representation, full QM closure and physical scales remain open."] }
+
+def nativeLocalSquareReadoutSelection : ResearchTask := {
+  id := "native_local_square_readout_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the existing initial presentation and an arbitrary real W with W(a)+W(b)=1 and both universal native transfers W(a*p)=W(a)*W(p), W(b*p)=W(b)*W(p).",
+    "For f(m,n)=W(m+n*phase), fix P2(z)=(f(z),f(z+e)). For every lattice z, equality of P2 pair sums for the adjacent-square quartet (z,z+e+i,z+e,z+i) persists after shifting all four sources by +e."]
+  conclusions := [
+    "The checked source identifies the restricted premise with D(z)=D(z+e)=0 implying D(z+2e)=0, where D is the mixed adjacent-square difference.",
+    "Native rotation gives D(K(z))=-D(z) for the affine corner turn K(z)=i*z-e, and native calibration gives D(0)=0. The point-opposite map K^2(z)=-z-e-i enables backward propagation; rows, columns and then every row give D identically zero.",
+    "The independent source path uses rectangle separation, native diagonal scaling and the integer quadratic recurrence to select f(m,n)=m^2+n^2. Half scaling and normal forms then give W(p)=Complex.normSq(complexEval(p)).",
+    "After selection, universal P2 and full corner pair laws follow. The full native/pair contract supplies global multiplication, syntactic reflection, nonnegativity, faithfulness and all-input mixer conservation.",
+    "Under NativeTransfer, the restricted premise is equivalent to universal P2 continuation and to the squared-norm readout; the concrete norm model inhabits the restricted contract.",
+    "For the published regular family with c>0, the source gives D(-1,-1)=D(0,-1)=0 and D(1,-1)=-alpha, alpha=576*c/125. Initial square P2 pair sums are [2,2] and continued sums are [2,6] and [2,6+alpha], violating the restricted premise."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeLocalSquareReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeLocalSquareReadout.restrictedSquareContinuation_iff",
+        "IDT.QMClosure.NativeLocalSquareReadout.zero_everywhere_of_cornerTurn_forward",
+        "IDT.QMClosure.NativeLocalSquareReadout.squareDifference_eq_zero",
+        "IDT.QMClosure.NativeLocalSquareReadout.integer_readout_eq_norm_of_restricted_square",
+        "IDT.QMClosure.NativeLocalSquareReadout.readout_eq_complex_norm_of_native_restricted_square",
+        "IDT.QMClosure.NativeLocalSquareReadout.readout_normal_form_of_restricted_square",
+        "IDT.QMClosure.NativeLocalSquareReadout.global_readout_laws_of_restricted_square",
+        "IDT.QMClosure.NativeLocalSquareReadout.twoProbeContinuation_of_native_restricted_square",
+        "IDT.QMClosure.NativeLocalSquareReadout.fixedCornerPairLaws_of_native_restricted_square",
+        "IDT.QMClosure.NativeLocalSquareReadout.native_restricted_square_iff_norm",
+        "IDT.QMClosure.NativeLocalSquareReadout.modelReadout_restricted_square_contract",
+        "IDT.QMClosure.NativeLocalSquareReadout.regular_square_difference_values",
+        "IDT.QMClosure.NativeLocalSquareReadout.regular_square_shift_packets",
+        "IDT.QMClosure.NativeLocalSquareReadout.counterWeight_not_restricted_square"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_generator_mixture_readout_selection", "native_two_probe_continuation_readout_selection",
+    "native_regular_readout_countercontrol"]
+  limits := [
+    "The square point-opposite map is a consequence of quarter-turn geometry. Syntactic readout reflection occurs among the post-selection consequences.",
+    "The restricted law quantifies every base square and its exact two-coordinate antecedent; it is a supplied conditional continuation rule.",
+    "The source uses the earlier full-pair consequences only after constructing their contract from the selected norm.",
+    "The existing natural-count and raw I3 theorems apply under the resulting full native/pair contract with their actual hypotheses.",
+    "Physical origins of the native grammar, normalized readout, universal transfers, external pair means and restricted sufficiency remain open; Born actualization and full QM remain open."] }
+
+def nativeReadoutContinuationContractComparison : ResearchTask := {
+  id := "native_readout_continuation_contract_comparison"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For arbitrary real functions on the integer lattice, compare universal +e pair congruence on P2=(f(z),f(z+e)), universal +e pair congruence on the four corner probes P4, and the restricted adjacent-square P2 continuation rule."]
+  conclusions := [
+    "The checked sources give direct implications from universal P2 continuation to both P4 continuation and restricted square continuation.",
+    "The cubic x^3+x*y satisfies P4 continuation and violates P2 continuation, making the P2-to-P4 implication strict on arbitrary lattice functions.",
+    "The separable quartic x^4+y^4 has zero mixed difference and satisfies restricted continuation while violating universal P4 and P2 continuation. Its displayed quartet has initial P4 sums [18,18,18,18] and continued coordinate-one sums thirty-four and eighty-two.",
+    "The projected quartic q(x+2*y), q(t)=t^4-4*t^2, satisfies P4 continuation and has mixed differences zero, zero and forty-eight at (-2,0),(-1,0),(0,0), violating restricted continuation.",
+    "Thus P2 strictly implies restricted continuation, while restricted and P4 continuation are incomparable for arbitrary real lattice readouts. Under the separately supplied native contract, the selection and norm-witness theorems characterize the same squared-norm readout."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeTwoProbeContinuationReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeTwoProbeContinuationReadout.fourCorner_does_not_imply_horizontal"] },
+    { sourcePath := "Proofs/QMClosure/NativeLocalSquareReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeLocalSquareReadout.restrictedSquareContinuation_of_horizontalPairLaw",
+        "IDT.QMClosure.NativeLocalSquareReadout.restricted_fourCorner_incomparable",
+        "IDT.QMClosure.NativeLocalSquareReadout.restricted_does_not_imply_horizontal"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "native_two_probe_continuation_readout_selection", "native_local_square_readout_selection"]
+  limits := [
+    "The strict implications and incomparability use arbitrary real lattice functions with the same explicitly specified continuation predicates.",
+    "Their relationship under native assumptions has its own supplied normalization and universal transfer contract.",
+    "These algebraic controls leave physical readout origins and outcome interpretation open."] }
+
+def originalAbFiniteSubsetReadoutSelection : ResearchTask := {
+  id := "original_ab_finite_subset_readout_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the existing initial presentation and an arbitrary real W with W(a)+W(b)=1 and both all-input native transfers W(a*p)=W(a)*W(p), W(b*p)=W(b)*W(p).",
+    "Supply one finite K and one fixed signed real kernel kappa(j,k), independent of the input bag and depending only on the a-label and b-label counts of an original subset.",
+    "For every natural n,m, tag the original occurrences by Fin(n) disjoint-union Fin(m). Require W(n*a+m*b) to equal the sum of kappa over all original unordered subsets of size at most K, explicitly compatible with evaluation of the additive bag."]
+  conclusions := [
+    "The accepted analytic compiler groups tagged subsets by label counts, giving W(n*a+m*b)=sum_{j+k<=K} kappa(j,k)*choose(n,j)*choose(m,k) for every natural n,m, hence one finite bivariate response polynomial.",
+    "Native doubling selects the polynomial's homogeneous degree two part. The native values W(a)=W(b)=1/2 and W(a+b)=1 fix W(n*a+m*b)=(n^2+m^2)/2.",
+    "The phase action phase*a=-b and phase*b=a extends the bag result through four sign quadrants. Gaussian(m,n)=(m+n)*a+(m-n)*b gives the integer norm, and half scaling extends it to every Gaussian-dyadic normal form.",
+    "The proposed universal conclusion is W(p)=Complex.normSq(complexEval(p)) under the supplied original-occurrence compatibility contract.",
+    "A planned adapter uses this analytic selector and the existing regular-control norm-difference witness to exclude every finite compatible original a,b kernel for that family when c>0."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/OriginalOccurrenceKernel.lean",
+    "Proofs/QMClosure/OriginalOccurrenceNormSelection.lean",
+    "Proofs/QMClosure/RegularReadoutOccurrenceKernelSeparation.lean",
+    "Proofs/QMClosure/QuadraticPolynomialDyadicSelection.lean"]
+  dependencies := [
+    "finite_history_readout_regularity_frontier", "native_initial_history_presentation_origin",
+    "native_generator_mixture_readout_selection", "native_regular_readout_countercontrol"]
+  limits := [
+    "The accepted v2 compiler, insertion-only natural-grid polynomial adapter, norm selector and regular-control separation adapter remain uncompiled.",
+    "The kernel order K is supplied as an arbitrary finite uniform bound. The coefficients are fixed signed reals for all natural input counts.",
+    "The stated conclusion concerns the evaluated response polynomial. Vanishing of each higher Newton-basis coefficient requires a coefficient-uniqueness artifact.",
+    "Compatibility joins original tagged occurrence subsets to evaluated additive bags explicitly; this is an added readout regularity contract.",
+    "A uniform physical original-ancestry bound remains open. Binary arity alone leaves ancestry size unbounded across growing depth.",
+    "Growing subset participation is allowed by the kernel representation; assigning physical resource or event roles to its terms requires an additional bridge.",
+    "Physical readout origins, outcome frequencies, Born actualization, Hilbert representation and full QM closure remain open."] }
+
+def nativeReadoutLinearResourceBoundary : ResearchTask := {
+  id := "native_readout_linear_resource_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the existing initial presentation and native normalization with both all-input generator transfers, hence the native unit and doubling laws.",
+    "Index assemblies by original token count N. Every firing occurrence is reachable from at most A*N+H initial roots in a dependency graph with input-independent finite depth and outgoing-degree bounds. The affine root bound allows fixed background roots.",
+    "Count every firing occurrence and all its events, with uniform event-count and fixed nonnegative event-weight ceilings. Repeated uses of one physical component are distinct firing occurrences.",
+    "The scalar count n is the original a,b diagonal bag(n,n)=n*(a+b)=n, containing 2*n tagged tokens. Supply a linear/affine physical assembly-cost bridge at input size 2*n.",
+    "Additionally supply one fixed nonnegative ceiling omega with W(n*a+n*b)<=omega*events(2*n) for every natural n, using the complete event total. Exact positive-calibration identification is a special case."]
+  conclusions := [
+    "The accepted analytic native argument gives W(2^k)=4^k from unit calibration and doubling. This subsequence excludes every uniform affine bound W(n)<=C*n+D.",
+    "The resource model bounds all reachable firing occurrences by (A*N+H) times the finite depth/fanout geometric sum. The complete event total is consequently bounded affinely in N.",
+    "On the original scalar diagonal, events(2*n) has an affine bound in n, with doubled initial slope and the same fixed background. The extra raw-to-event ceiling conflicts with the native power-of-two subsequence."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeBoundedResourceWall.lean"]
+  dependencies := ["native_generator_mixture_readout_selection"]
+  limits := [
+    "The accepted NativeBoundedResourceWall draft remains uncompiled. This entry records an analytic conditional resource-accounting obligation.",
+    "The wall uses native unit and doubling. Its proof route is independent of the finite-subset compiler and kernel selector.",
+    "Reusable physical components can support arbitrarily many distinct firing occurrences. The uniform graph bounds apply to those occurrences and every event is counted.",
+    "The fixed raw-event ceiling and linear/affine physical preparation cost are additional bridges. Coherent sum syntax alone supplies an algebraic value.",
+    "Original history occurrences require an explicit interpretation as physical inputs, roots, firings or events, including the scalar diagonal's 2*n token size.",
+    "The all-subset kernel permits growing participation. Counting its terms as physical events is a separate accounting assumption.",
+    "Physical realizability, measurement frequencies, Born actualization and full QM closure remain open."] }
+
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
   stage := .analyticAwaitingFormalization
@@ -8547,7 +8707,9 @@ def researchTasks : List ResearchTask := [
   nativeSingleContinuationReadoutSelection, nativeGeneratorReadoutCountercontrol,
   nativeTransferPairSufficiencyOrigin, nativeRegularReadoutCountercontrol,
   nativeRegularReadoutRegularity, nativeVacuumQuadraticReadoutSelection,
-  nativeCircuitPassivityReadoutWall]
+  nativeTwoProbeContinuationReadoutSelection, nativeLocalSquareReadoutSelection,
+  nativeReadoutContinuationContractComparison, originalAbFiniteSubsetReadoutSelection,
+  nativeReadoutLinearResourceBoundary, nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
