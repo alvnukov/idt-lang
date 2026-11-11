@@ -8607,56 +8607,199 @@ def nativeReadoutLinearResourceBoundary : ResearchTask := {
 
 def nativeObservationStoppingReadoutBoundary : ResearchTask := {
   id := "native_observation_stopping_readout_boundary"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Supply aggregate real coordinates x,y with N=x^2+y^2 and H=Im((x+i*y)^4), ideal real registers and clocks, prescribed continuous dynamics, exact event detection and a chosen analog-output interpretation.",
-    "Use the parent-reviewed analytic controller mathematics below. The source-level drafts are accepted for later compilation, and c>0 supplies the nontrivial readout defects."]
+    "Supply aggregate real coordinates x,y with N=x^2+y^2 and H=Im((x+i*y)^4), ideal real registers and clocks, prescribed continuous dynamics, exact event detection and an analog-output interpretation.",
+    "Use the parent-accepted registered controller artifacts under their supplied mathematical contracts, with c>0 for the nontrivial defects."]
   conclusions := [
-    "Polynomial relaxation q'=H^2-N^3*q, initialized to zero, has the analytic trajectory q_t=Q*(1-exp(-N^3*t)), Q=H^2/N^3 with zero vacuum value. For g=a or b, q(g*z,t)=q(z,t/8)/2 gives time-rescaled transfer; same positive common-time transfer fails when H is nonzero. Equilibrium gives the regular family N+c*Q.",
-    "For the polynomial flow (q,r)=(x^2*t,t), put A=16*y^2*(x^2-y^2)^2 and guard N^3*r-A=0. Its least nonnegative hit is T=A/N^3, T(0)=0, with 0<=T<=16. Terminal q=Q gives the regular output N+c*Q.",
-    "For Q_j=x^2,y^2,(x+y)^2/2,(x-y)^2/2 and m=min_j Q_j, the analytic response R_c=N+c*m has native half transfer, real-axis squares and continuity, and is faithful for c>=0. For c>0, its value at 2+i is 5+c/2, raw I3 at (1,1,i) is c/2 and mixer input (1,2) total five becomes 5+c/2.",
-    "The competing-guard realization has q'=(1+N), q initialized to zero, four guards q-(1+N)-Q_j=0, and output N+c*(q-(1+N)). All initial guards are negative, every time slope is 1+N>=1, and first time 1+m/(1+N) lies in [1,3/2). At vacuum all four guards tie at time one and the terminal output is R_c."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/NativeRelaxationReadoutCountercontrol.lean",
-    "Proofs/QMClosure/NativePolynomialStoppingCountercontrol.lean",
-    "Proofs/QMClosure/NativeCompetingGuardReadoutCountercontrol.lean"]
+    "Polynomial relaxation q'=H^2-N^3*q has trajectory q(z,t)=Q(z)*(1-exp(-N(z)^3*t)), Q=H^2/N^3 with zero vacuum value. Native transfer gives q(g*z,t)=q(z,t/8)/2 for g=a,b. For q itself, positive same-common-time transfer fails when H is nonzero. The output N+c*q inherits that defect for c>0. Equilibrium gives the regular family F_c=N+c*Q.",
+    "For polynomial flow (q,r)=(x^2*t,t), A=16*y^2*(x^2-y^2)^2 and guard N^3*r-A=0 give least nonnegative hit T=A/N^3, T(0)=0 and 0<=T<=16. Terminal q=Q gives N+c*Q.",
+    "For Q_j=x^2,y^2,(x+y)^2/2,(x-y)^2/2 and m=min_j Q_j, R_c=N+c*m is continuous and has native half transfer and real-axis square calibration for every real c. It is faithful for c>=0. For c>0, R_c(2+i)=5+c/2, raw I3 at (1,1,i) is c/2 and mixer input (1,2) total five becomes 5+c/2.",
+    "The competing-guard realization uses q'=(1+N), zero initialization, guards q-(1+N)-Q_j=0 and output N+c*(q-(1+N)). All initial guards are negative and every time slope is 1+N>=1. The first time 1+m/(1+N) belongs to [1,3/2). All four vacuum guards tie at time one and every active branch gives terminal output R_c."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NativeRelaxationReadoutCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.register_native_a",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.register_native_b",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_native_a",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_native_b",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_same_time_witness",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_same_time_a_lt",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_same_time_b_lt",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.stoppingTime_native_a_pow",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_remainder",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.finiteWeight_tendsto",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.stoppingTime_native_a",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.stoppingTime_native_b",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.timer_vacuum_never_reaches",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.stoppedCounterWeight_eq",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.register_polynomial_ODE",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.correction_is_equilibrium",
+        "IDT.QMClosure.NativeRelaxationReadoutCountercontrol.correction_balance"] },
+    { sourcePath := "Proofs/QMClosure/NativePolynomialStoppingCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.solvedTime_bounds",
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.solvedTime_first_hit",
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.vacuum_first_hit_iff",
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.guard_vacuum_every_time",
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.guardOnFlow_hasDerivAt",
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.terminalWeight_eq",
+        "IDT.QMClosure.NativePolynomialStoppingCountercontrol.guard_time_slope_vacuum"] },
+    { sourcePath := "Proofs/QMClosure/NativeCompetingGuardReadoutCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.guard_initial_negative",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.guardOnFlow_hasDerivAt",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.rate_ge_one",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.solvedTime_bounds",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.first_guard_hit_iff",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.vacuum_all_guards_tie",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.active_branch_terminal_output",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.terminalWeight_eq",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.counterResponse_native",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.counterResponse_zero_iff",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.counterResponse_has_continuous_extension",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.rawI3_counterexample",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.mixer_conservation_counterexample",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.counterResponse_not_norm",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.ambientResponse_continuous",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.ambientResponse_native_a",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.ambientResponse_native_b",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.ambientResponse_real",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.ambientResponse_zero_iff",
+        "IDT.QMClosure.NativeCompetingGuardReadoutCountercontrol.ambientResponse_witness"] }]
+  plannedArtifacts := []
   dependencies := ["native_regular_readout_countercontrol", "native_vacuum_quadratic_readout_selection"]
   limits := [
-    "All three observation mechanisms remain analytic obligations with empty checked evidence. Accepted uncompiled source-level drafts supply context for later builds and audits.",
-    "Relaxation has uniform absolute-output convergence. Relative convergence near vacuum is nonuniform, and the nontrivial equilibrium lacks a common second-order quadratic vacuum expansion.",
-    "The timer tau/N^3 is finite off vacuum and unbounded near it. A positive threshold has no vacuum hit, so a total stopped response requires a separate vacuum convention.",
-    "The single-guard controller uses least nonnegative immediate-hit semantics. Every vacuum time is a hit and zero is first, while the time slope N^3 degenerates there.",
-    "The competing guards are individually uniformly transverse. The remaining obligation concerns the regularity of the complete stopping/selection operation or a stable active branch, including its four-way vacuum tie.",
-    "Aggregate coordinates, ideal real dynamics/clock, exact detection and output interpretation remain imports. Discrete detector realization and physical derivation remain open.",
-    "Generic fixed-common-time C2 mechanism results and the common-quadratic Peano selector require separate artifacts and hypotheses. Outcome frequencies, Born actualization and full QM closure remain open."] }
+    "The cited registered controller artifacts have accepted full-origin and dependency audits. Their conditional conclusions retain the supplied aggregate-coordinate, dynamics, observation and analog-output contracts. Uniform absolute-output convergence remains analytic and is outside the checked-evidence claim.",
+    "Uniform absolute-output relaxation convergence is an analytic result awaiting its artifact. Relative convergence near vacuum is nonuniform and the nontrivial equilibrium has no common second-order quadratic vacuum expansion.",
+    "The positive-threshold timer tau/N^3 diverges near vacuum and has no vacuum threshold hit. A total stopped response uses a separate vacuum-output convention.",
+    "The single guard includes immediate least-nonnegative hits. Every vacuum time is a hit, zero is first and the slope N^3 degenerates there.",
+    "The four guards are individually uniformly transverse. Their complete stopping/selection operation and vacuum tie need separate regularity premises. No C1 or C2 theorem for that response is included.",
+    "Short aggregate-coordinate controller formulas supply no bound on dependence on individual original-mask inputs. Aggregate preparation, ideal real dynamics/time, exact event detection and analog-output interpretation remain supplied bridges.",
+    "Generic fixed-common-time C2 mechanism results and a common-quadratic Peano selector retain separate hypotheses and artifacts. Physical detector realization, Born actualization and full QM closure remain open."] }
 
 def originalMaskLocalKernelCharacterization : ResearchTask := {
   id := "original_mask_local_kernel_characterization"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "For each original tagged a,b universe U=Fin n plus Fin m supply a finite output set E, supports A_e and total real contribution functions f_e, all fixed across every input mask S. One finite K bounds every support in every universe.",
+    "Require sum_e f_e(S intersect A_e)=W(bag S) for every mask, with the same W reading the coherent bag of retained original occurrences.",
+    "The complete-circuit route supplies one finite ranked indexed DAG per contribution, original mask bits/constants as inputs, arbitrary total real gates, fanin r and depth D. Shared nodes are allowed. The final additive collector has unrestricted terminal count and is explicitly outside the fanin/depth bound."]
+  conclusions := [
+    "Boolean-Mobius inversion kills coefficients above K. All-mask same-W agreement gives a single fixed label-count kernel kappa and compatible actual-original-subset representation. A compatible finite kernel conversely supplies a frozen mask-local family.",
+    "Complete circuit ancestry gives support at most r^D when 1<=r, with the arbitrary-r wrapper using max(1,r)^D. Native normalization and transfers then permit the existing conditional norm selector.",
+    "The order-two norm witness has nonnegative singleton contributions 1/2 and same-type pair contributions one. An empty-support constant can match a single full-mask value. The positive regular family has no finite uniform support bound under all-mask agreement.",
+    "An independent native-only pair wall uses just empty/singleton/same-type-pair readings 0,1/2,2. Each same-type pair must lie in a fixed support and choose(n,2)+choose(m,2)<=sum_e(choose(a_e,2)+choose(b_e,2))<=card(E)*choose(K,2).",
+    "Per-original incidence at most M implies each nonempty type population is at most 1+M*(K-1). Order-zero locality forces constant mask response and is excluded by native empty/singleton readings in a nonempty universe."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/OriginalMaskLocalKernel.lean"
+      declarations := [
+        "IDT.QMClosure.OriginalMaskLocalKernel.LocalApparatus.mobius_eq_zero",
+        "IDT.QMClosure.OriginalMaskLocalKernel.mobius_eq_countKernel",
+        "IDT.QMClosure.OriginalMaskLocalKernel.compatible_of_allMaskLocalFamily",
+        "IDT.QMClosure.OriginalMaskLocalKernel.allMaskLocalFamily_iff_compatible"] },
+    { sourcePath := "Proofs/QMClosure/OriginalMaskCircuitAncestry.lean"
+      declarations := [
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.Expression.support_card_le",
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.Circuit.unroll_stable",
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.Circuit.value_equation",
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.Circuit.value_unique",
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.Circuit.weakenFanin_value",
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.Circuit.weakenFanin_reported",
+        "IDT.QMClosure.OriginalMaskCircuitAncestry.allMaskLocalFamily_of_completeCircuitFamily_max"] },
+    { sourcePath := "Proofs/QMClosure/OriginalMaskLocalityControls.lean"
+      declarations := [
+        "IDT.QMClosure.OriginalMaskLocalityControls.readout_eq_complex_norm_of_allMaskLocalFamily",
+        "IDT.QMClosure.OriginalMaskLocalityControls.readout_eq_complex_norm_of_completeCircuitFamily",
+        "IDT.QMClosure.OriginalMaskLocalityControls.pairApparatus_localValue_nonnegative",
+        "IDT.QMClosure.OriginalMaskLocalityControls.pairApparatus_allMaskAgreement",
+        "IDT.QMClosure.OriginalMaskLocalityControls.fullMaskConstantApparatus_fails_allMaskAgreement",
+        "IDT.QMClosure.OriginalMaskLocalityControls.counterWeight_no_allMaskLocalFamily",
+        "IDT.QMClosure.OriginalMaskLocalityControls.counterWeight_no_completeCircuitFamily"] },
+    { sourcePath := "Proofs/QMClosure/OriginalMaskPairCoverage.lean"
+      declarations := [
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_sameTypePairs_nonzero",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_pair_count_bounds",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_left_participation",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_right_participation",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_left_incidence_wall",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_right_incidence_wall",
+        "IDT.QMClosure.OriginalMaskPairCoverage.value_eq_empty_of_zero_order",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_left_order_pos",
+        "IDT.QMClosure.OriginalMaskPairCoverage.native_right_order_pos"] }]
+  plannedArtifacts := []
+  dependencies := ["original_ab_finite_subset_readout_selection", "native_regular_readout_countercontrol"]
+  limits := [
+    "The cited characterization, circuit compiler, pair wall, witnesses and exclusions have accepted registered builds and full-origin/dependency audits. Their conclusions remain conditional on the supplied operational contracts.",
+    "The finite E, every support and every contribution function remain fixed across masks. All-mask same-W calibration is an independent bridge beyond DAG ancestry.",
+    "Complete per-contribution ancestry includes event presence, stopping, control, normalization, input aggregation and output selection. Aggregate coordinates can depend on unboundedly many original bits. Bounded elapsed time and spatial locality alone leave this contract unestablished.",
+    "The accepted native-only pair body-dependency profile excludes the norm selector. Transitive module imports can contain earlier selection modules through the native-generator chain. The independent body-dependency result supplies its exact boundary.",
+    "The low-order wall assumes no global compatible kernel, full norm formula, higher-mask calibration or contribution-magnitude bound. Graph fanout supplies incidence only through explicit endpoint-copy/port/output accounting.",
+    "Mask/shutter preparation, the physical gate grammar, complete uniform ancestry and additive analog-output interpretation remain supplied. The equivalence characterizes an operational premise. Physical origin, detector realization, Born actualization and full QM closure remain open."] }
+
+def originalMaskAsymptoticReadoutSelection : ResearchTask := {
+  id := "original_mask_asymptotic_readout_selection"
   stage := .analyticAwaitingFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "For every tagged original a,b universe supply a finite output set and real contribution functions frozen across every input mask. Each contribution has a fixed support of at most K original mask bits, with one finite K uniform across all universes and masks.",
-    "For every mask, the sum of all output contributions equals the same supplied W evaluated on the coherent bag of retained original occurrences."]
+    "Fix one finite K and a readout W satisfying native normalization W(a)+W(b)=1 and universal generator transfers W(a*p)=W(a)*W(p), W(b*p)=W(b)*W(p) for every p. For every finite original base universe U supply one sequence of frozen K-local apparatuses on 2^k copies of its original tokens. At each k a single apparatus serves all base masks simultaneously.",
+    "For every base mask S require (g_k(inflate_k S)-W(2^k*bag S))/4^k tending to zero. Supply native exact dyadic growth and the physical replication/raw-fidelity interpretation."]
   conclusions := [
-    "The accepted analytic Boolean-Mobius argument gives one fixed label-count kernel kappa(j,k) and a finite original-occurrence subset representation. The all-mask calibration supplies the label-count invariance.",
-    "Conversely, a finite original-occurrence kernel supplies frozen mask-local contributions indexed by its subsets, giving an equivalent operational characterization.",
-    "The analytic next artifacts include a K=2 norm witness with nonnegative contributions, a constant empty-support control satisfying only full-mask calibration, and the need for unbounded support across universes for the regular c>0 family.",
-    "An independent analytic pair-coverage wall uses empty/singleton/same-type-pair calibration, whose pair finite difference is one. Every same-type pair lies in some fixed support. With support at most K and per-original incidence at most M, each nonempty type class has size at most 1+M*(K-1), and same-type pair count is at most card(outputs)*choose(K,2)."]
+    "The accepted analytic argument restricts each replicate apparatus to copied blocks, preserving K locality. A finite Boolean-Mobius-sum limit kills every base coefficient above K and gives the compatible kernel needed by the existing norm selector.",
+    "A uniform raw-error bound C*(L+1)^p with fixed C>=0 and 0<=p<2 is sufficient. A quadratic ceiling with arbitrarily small positive coefficient is insufficient, since regular F_c versus the norm apparatus has error at most c*L^2/2 for original token count L.",
+    "If mu_U W(T) is nonzero and card(T)>K, each replicated K-local apparatus has maximum base-mask absolute error at least 4^k*abs(mu_U W(T))/2^card(T). For regular c>0 each K has an existential finite witness.",
+    "Exact mask-independent affine calibration with nonzero gain can be normalized. With approximate gain lambda_k the required error is o(abs(lambda_k)*4^k). Nonzero gain alone fails, as g_k=0 and lambda_k=2^(-k) illustrate. Probability-scale gain of order 4^(-k) requires actual calibrated error tending to zero."]
   checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/OriginalMaskLocalKernel.lean",
-    "Proofs/QMClosure/OriginalMaskCircuitAncestry.lean",
-    "Proofs/QMClosure/OriginalMaskLocalityControls.lean"]
-  dependencies := ["original_ab_finite_subset_readout_selection", "native_regular_readout_countercontrol"]
+  plannedArtifacts := ["Proofs/QMClosure/OriginalMaskAsymptoticReadoutSelection.lean"]
+  dependencies := ["original_mask_local_kernel_characterization", "original_ab_finite_subset_readout_selection", "native_regular_readout_countercontrol"]
   limits := [
-    "The characterization, witnesses and countercontrol remain analytic with empty checked evidence.",
-    "The finite output set and every contribution function stay fixed while the mask varies. Calibration is required for every retained subset.",
-    "A complete bounded-fanin/depth DAG can supply the original-mask support bound, including event presence, stopping, control, normalization and output selection. The same-W all-mask retained-bag calibration is an independent bridge.",
-    "Syntactic masks require a supplied physical shutter/preparation interpretation. Uniform DAG bounds and all-mask calibration are additional contracts.",
-    "The pair-coverage wall permits unrestricted real contribution magnitudes. A graph-to-incidence bridge must account for distinct component endpoints, copies, ports, event presence and control across all outputs.",
-    "This operational characterization leaves physical origin, detector realization, Born actualization and full QM closure open."] }
+    "This concise next task is analytic only and has no source proof or checked evidence. The existing exact selector supplies only its separately checked conditional conclusion.",
+    "K is uniform across universes and replication levels. Apparatuses may vary with universe and level while staying frozen across all masks at that level. Mask-dependent gain evades the fixed calibration contract even with an entirely frozen apparatus, as a norm apparatus matching F_c through a mask-dependent ratio illustrates. Per-mask retuning evades the frozen simultaneous-apparatus premise.",
+    "No witness-size bound uniform in K, or positive lower bound uniform in K and c, is asserted.",
+    "Finite ancestry, coherent replication, raw analog fidelity and their physical preparation/readout meanings remain supplied bridges. Detector realization, Born interpretation, Hilbert origin, full QM closure and physical scales remain open."] }
+
+
+def nativeFiniteFirstEventC1ReadoutSelection : ResearchTask := {
+  id := "native_finite_first_event_c1_readout_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "On a real-plane ball U around zero supply a finite nonempty family of C2 branch-time functions t_i with t_i(0)=t0, T=min_i t_i, and one common scalar F(z,t) that is C2 near (0,t0). Define R(z)=F(z,T(z)) on U and require R to be C1 throughout a neighborhood of zero within U.",
+    "Require exact local laws R(z/2)=R(z)/4 and R(i*z)=R(z) on U. A nonzero local real-axis calibration R(r,0)=r^2 is an additional premise when fixing the coefficient."]
+  conclusions := [
+    "The parent-reviewed analytic result gives R(z)=kappa*abs(z)^2 on U. A nonzero calibrated real point inside U fixes kappa=1.",
+    "Native a,b half-transfer laws supply the dyadic and quarter-turn laws when valid on the required ambient domain. Syntax-only laws need an explicit ambient extension or density/continuity bridge."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeFiniteFirstEventC1ReadoutSelection.lean"]
+  dependencies := ["native_observation_stopping_readout_boundary", "native_vacuum_quadratic_readout_selection"]
+  limits := [
+    "This mechanism result remains analytic and has no Lean proof artifact. C1 is required throughout a neighborhood. Differentiability only at zero does not supply that hypothesis.",
+    "Calibration at one is usable only if that point belongs to U or global exact scaling transports it into U. Positivity, faithfulness, a stable unique winning branch and output monotonicity are absent from the premise list.",
+    "Smooth flow and transverse guards may supply C2 branch-time functions through the implicit function theorem only with finite persistent first-hit branches and exclusion of earlier hidden events. Transversality alone leaves the full signature unestablished.",
+    "The mechanism has one first-event stage and one common C2 scalar output. Sequential resets and branch-specific outputs require separate analysis. Physical preparation, ambient readout interpretation, detector actualization, Born/Hilbert origin and full QM closure remain open."] }
+
+
+def nativeBranchSpecificOutputCountercontrol : ResearchTask := {
+  id := "native_branch_specific_output_countercontrol"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Supply aggregate real coordinates z=x+i*y and 0<c<=1. On ordered X=max(abs x,abs y), Y=min(abs x,abs y), evaluate the forms at (X,Y), with qA=x^2+(1-2*c/9)*y^2, qB=(1+c/9)*x^2-2*c*x*y/3+(1+7*c/9)*y^2 and qC=(1-c/9)*(x^2+y^2)+2*c*x*y/9, selected respectively by 3*Y<=X, X<=3*Y and 2*Y<=X, or X<=2*Y.",
+    "Use signed-permutation branch outputs and sixteen rational slopes p given by four axis vectors, four (+/-7/10,+/-7/10), and eight (+/-9/10,+/-3/10),(+/-3/10,+/-9/10). Supply the flow q'=(1+abs(z)^2), q(0)=0, guards q-(1+abs(z)^2)+p dot z=0 and exact first-winner identification."]
+  conclusions := [
+    "The analytic response is globally C1,1 and strongly convex, with native a,b half transfer and R(1)=R(i)=1, R(1+i)=2. Its piece Hessians lie between 2*(1-2*c/9)*I and 2*(1+c*(4+3*sqrt(2))/9)*I, and boundary gradients agree.",
+    "R(2+i)=5-c/9, raw I3(1,1,i)=-c/9 and mixer total is 5-c/9 versus input five. Thus C1,1 and strong convexity permit the nonquadratic response when output is branch-specific.",
+    "All sixteen guards start negative and have time slope 1+abs(z)^2>=1. Their first hit is T=1-max_p(p dot z)/(1+abs(z)^2) in [1/2,1]. All vacuum guards tie at one and every tied branch output and gradient agrees. This uses one first-event stage."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/NativeBranchSpecificOutputCountercontrol.lean"]
+  dependencies := ["native_finite_first_event_c1_readout_selection", "native_observation_stopping_readout_boundary"]
+  limits := [
+    "This necessity boundary remains analytic and has no Lean proof artifact. Branch-specific polynomial output is the changed premise relative to the common-output mechanism result. No C2 conclusion is asserted.",
+    "The rational guard dynamics have D4 symmetry while the terminal response has D8 symmetry. The one-stage model has no sequential reset or earlier hidden event. The finite rational probe supported falsification search and supplies no universal theorem evidence.",
+    "Aggregate preparation/coordinates, ideal time, exact winner detection, branch-specific response and physical interpretation remain supplied. Detector actualization, Born/Hilbert origin, full QM closure and physical scales remain open."] }
+
 
 def nativeCircuitPassivityReadoutWall : ResearchTask := {
   id := "native_circuit_passivity_readout_wall"
@@ -8788,7 +8931,9 @@ def researchTasks : List ResearchTask := [
   nativeTwoProbeContinuationReadoutSelection, nativeLocalSquareReadoutSelection,
   nativeReadoutContinuationContractComparison, originalAbFiniteSubsetReadoutSelection,
   nativeReadoutLinearResourceBoundary, nativeObservationStoppingReadoutBoundary,
-  originalMaskLocalKernelCharacterization, nativeCircuitPassivityReadoutWall]
+  originalMaskLocalKernelCharacterization, originalMaskAsymptoticReadoutSelection,
+  nativeFiniteFirstEventC1ReadoutSelection, nativeBranchSpecificOutputCountercontrol,
+  nativeCircuitPassivityReadoutWall]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

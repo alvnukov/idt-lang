@@ -509,10 +509,17 @@ lean_lib Proofs where
     `Proofs.QMClosure.NativeGeneratorMixtureReadout,
     `Proofs.QMClosure.NativeSingleContinuationReadout,
     `Proofs.QMClosure.NativeRegularReadoutCountercontrol,
+    `Proofs.QMClosure.NativeRelaxationReadoutCountercontrol,
+    `Proofs.QMClosure.NativePolynomialStoppingCountercontrol,
+    `Proofs.QMClosure.NativeCompetingGuardReadoutCountercontrol,
     `Proofs.QMClosure.NativeTwoProbeContinuationReadout,
     `Proofs.QMClosure.NativeLocalSquareReadout,
     `Proofs.QMClosure.OriginalOccurrenceKernel,
     `Proofs.QMClosure.OriginalOccurrenceNormSelection,
+    `Proofs.QMClosure.OriginalMaskLocalKernel,
+    `Proofs.QMClosure.OriginalMaskCircuitAncestry,
+    `Proofs.QMClosure.OriginalMaskPairCoverage,
+    `Proofs.QMClosure.OriginalMaskLocalityControls,
     `Proofs.QMClosure.NativeBoundedResourceWall,
     `Proofs.QMClosure.RegularReadoutOccurrenceKernelSeparation
   ]
