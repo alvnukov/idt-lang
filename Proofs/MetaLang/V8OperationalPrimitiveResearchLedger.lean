@@ -10585,35 +10585,202 @@ def initialExactRawCalibrationNaturalCountRigidityDraft : ResearchTask := {
 
 def finiteCycleBalanceDraft : ResearchTask := {
   id := "finite_cycle_balance_analytic"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
-    "Use the pure original initial two-relator algebra and finite inverse contexts, with r=a*b^-1, r^4=1, b^-1=1+r, c*b^-2=2r and scalar two a unit.",
-    "W:P->Real is nonnegative and satisfies first-column conservation W(ap)+W(bp)=W(p) and serial c transparency W(cp)=W(p) at every preparation."
-  ]
+    "P is the literal initial positive Nat algebra with exactly a+b=1 and a^4=b^4; c=2ab, and the inverse words are constructed inside this carrier.",
+    "W:P->Real is nonnegative at every preparation and satisfies first-column conservation W(ap)+W(bp)=W(p) and exact serial c transparency W(cp)=W(p) at every preparation.",
+    "In the prepared-count adapter, replace supplied nonnegativity by natural-count coordinatewise order at every preparation. The weaker comparison W(B(0,0)p)<=W(B(1,1)p) already suffices."]
   conclusions := [
-    "Independently accepted analytic balance lemma: W(rp)=W(p), both half laws W(ap)=W(bp)=W(p)/2, and W(2p)=4W(p).",
-    "The four-cycle sums and differences obey S(2p)=4S(p), D_j(2p)=2D_j(p), E(2p)=0. Inverse dyadic scaling and nonnegativity force every D_j and E to vanish.",
-    "For the five-schema application, first-column conservation gives W(0)=0 and universal prepared count order derives nonnegativity. Thus the balance lemma needs no separately supplied positivity or unit normalization."
-  ]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Formalize the pure inverse-word identities and the first-column expansion at b^-2*p.",
-    "Formalize four-cycle response arithmetic, scalar-two inverse transport and the fixed-preparation Archimedean bound 2^n*abs(D_j(p))<=S(p).",
-    "Derive half laws and gain four, then provide the adapter from first column and prepared count order to nonnegativity."
-  ]
+    "The checked pure algebraic finite-cycle theorem yields W(rho*p)=W(p), both half laws W(ap)=W(bp)=W(p)/2, and W(2p)=4W(p), where rho=a*bInv and rho^4=1.",
+    "Four-cycle sum and difference recurrences, scalar-two inverse transport and a fixed-preparation real Archimedean bound force the difference modes to vanish.",
+    "First-column conservation yields W(0)=0. The prepared-count comparison derives nonnegativity and supplies both half laws and gain four through the adapter.",
+    "If W(1)=1 is additionally supplied, W(2)=4."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentFourthColumnBalance.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentFourthColumnBalance.rho_four",
+        "IDT.QMClosure.TransparentFourthColumnBalance.c_mul_bInv_sq",
+        "IDT.QMClosure.TransparentFourthColumnBalance.mode_recurrences",
+        "IDT.QMClosure.TransparentFourthColumnBalance.vanishing_difference",
+        "IDT.QMClosure.TransparentFourthColumnBalance.orbit_balance",
+        "IDT.QMClosure.TransparentFourthColumnBalance.column_balance_and_double_gain",
+        "IDT.QMClosure.TransparentFourthColumnBalance.response_zero",
+        "IDT.QMClosure.TransparentFourthColumnBalance.nonnegative_of_zero_one_count_order",
+        "IDT.QMClosure.TransparentFourthColumnBalance.nonnegative_of_prepared_count_order",
+        "IDT.QMClosure.TransparentFourthColumnBalance.prepared_column_balance_and_double_gain",
+        "IDT.QMClosure.TransparentFourthColumnBalance.double_unit_value"] }]
+  plannedArtifacts := []
   dependencies := [
     "transparent_fourth_initial_presentation_and_quotient",
-    "fourth_rejoin_finite_inverse_contexts"
-  ]
+    "fourth_rejoin_finite_inverse_contexts"]
   limits := [
-    "Analytic acceptance is reported by the parent. The private implementation at /tmp/idt-finite-cycle-column-balance/v1 is active and uncompiled. Checked evidence remains empty.",
-    "The balance lemma has no normal-form dependency, no exact-order-four requirement, no W(1) premise and no global boundedness premise.",
-    "The full five-schema W=N conclusion additionally uses the separate weak D reconstruction and its exact combined-coordinate normal-form prerequisite.",
-    "Relative nonredundancy concerns the five-schema normalized norm conclusion. It gives no globally minimal axiom system or necessity theorem for quotient descent.",
-    "The smooth prepared-order countercontrol has an independently accepted exact rational interval witness, which remains analytic computational evidence awaiting formalization.",
-    "Physical origins of the grammar, relators and response schemas remain open; no full-QM claim is made."
-  ]
+    "The retained historical task id is finite_cycle_balance_analytic; its checked scope is the pure balance theorem and prepared-count adapter.",
+    "Unit normalization, exact combined-coordinate normal form, destructive quotient descent and physical response interpretation are outside the balance theorem premises.",
+    "The full five-schema W=N application additionally requires the separate weak D reconstruction, whose checked evidence remains empty, and its exact combined-coordinate normal-form prerequisite.",
+    "Physical origins of the grammar, relators and response schemas retain their separate obligations."]
+}
+
+def transparentFourthOrderedReadoutBoundary : ResearchTask := {
+  id := "transparent_fourth_ordered_readout_boundary"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Use the same literal initial carrier, its complex evaluation E and N=Complex.normSq(E).",
+    "The supplied response carrier is Real x Real with componentwise addition and explicit LexLE x y iff x.1<y.1 or x.1=y.1 and x.2<=y.2; the distinguished unit is (1,0).",
+    "Set L(p)=(N(p), Re(E(p))-N(p)). Its contract uses exact c transparency, universal prepared natural-count order, word-scaled raw mixed zero and L(0)=0, L(1)=(1,0), L(T)=0."]
+  conclusions := [
+    "The explicit lexicographic relation is a total antisymmetric translation-compatible additive order and its unit is strictly positive.",
+    "L is lexicographically nonnegative and satisfies all six ordered-pair response schemas. Mixed zero holds at every preparation, hence at every supplied scale family.",
+    "L also obeys first-column conservation and null insertion, while L(2)=(4,-2), L(ab)=(1/4,1/4), and L(a^2)=(1/4,-1/4) differs from half(L(a)).",
+    "The discrepancy L(ab)-(N(ab),0)=(0,1/4) is positive and every natural multiple lies strictly below (1,0).",
+    "T is nonzero in the original carrier while L(T)=0."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentFourthOrderedReadoutBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.lexLE_trans",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.lexLE_antisymm",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.lexLE_total",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.lexLE_add_right_iff",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.unit_positive",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_nonnegative",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_preparedOrder",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_preparedMixedZero",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_scaledMixedZero",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_contract",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_column",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_nullInsertion",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_two_ne_normPair",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_ab_ne_normPair",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_a_squared_ne_half",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_ab_infinitesimal",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.infinitesimal_positive",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.infinitesimal_nsmul_lt_unit",
+        "IDT.QMClosure.TransparentFourthOrderedReadoutBoundary.L_has_nonzero_null"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "transparent_fourth_initial_presentation_and_quotient"]
+  limits := [
+    "This control establishes failure of the displayed readout conclusions after replacing real-valued response by the supplied lexicographically ordered additive-pair response.",
+    "An ordered-field structure and faithful response are outside the supplied contract. The carrier retains T nonzero.",
+    "The real-valued reconstruction retains its actual hypotheses. This control supplies no necessity or completeness characterization for real order, and its first coordinate is N.",
+    "Kernel evidence concerns the explicit mathematical control. Physical origins and probability interpretation remain separate obligations."]
+}
+
+def initialScaledCountSixSchemaNonredundancy : ResearchTask := {
+  id := "initial_scaled_count_six_schema_nonredundancy_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the initial carrier evaluations E, nonnegative real shadow q and N=Complex.normSq(E); define delta(p)=1 exactly when E(p)=0 and q(p)>0, and zero otherwise.",
+    "The original real-valued six-schema family is S0: W(0)=0, S1: W(1)=1, Sc: universal W(cp)=W(p), So: universal prepared natural-count order, Sm: adjacent raw mixed zero at every scalar preparation 2^(-k), and ST: W(T)=0.",
+    "The alternative exact-transparency family replaces scalar preparations by (ab)^k and ST by the origin-cell mixed test at T."]
+  conclusions := [
+    "Independently accepted analytic original-family omission controls, in the order S0,S1,Sc,So,Sm,ST, are 2N-1+delta, 2N, q*indicator(E!=0), Re(E), N^2, N+delta. Each obeys its five retained schemas and violates the omitted schema.",
+    "The alternative-family omission table is checked analytically separately and uses 2N-1 for its S0 omission, with the other five controls retained.",
+    "With additional global positivity, S0 follows from So and ST in the original family. The alternative T-origin family has the positive S0-omission control (N+1)/2."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize the exact C/Q/J prepared formulas, both raw-grid evaluation formulas and six original-family omission certificates.",
+    "Formalize the alternative-family certificates and the separate positivity boundaries under their exact retained schemas."]
+  dependencies := [
+    "initial_scaled_dyadic_raw_mixed_null_calibration_sufficiency_analytic"]
+  limits := [
+    "The new omission certificates have empty checked evidence. Their universal retained-schema proofs and exact failure witnesses remain analytic.",
+    "The independence statement concerns these precise real-valued schema families. Global positivity is supplied only in the separately stated boundary cases.",
+    "Relative independence of these quantified schemas establishes no globally minimal physical axiom system or physical origin."]
+}
+
+def initialTransparencyCalibrationReplacementBoundary : ResearchTask := {
+  id := "initial_transparency_calibration_replacement_boundary_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use E, q>=0 and N on the initial carrier. Retain real-valued vacuum zero, unit normalization, universal prepared natural-count order, all scalar-dyadic raw mixed-zero tests and W(T)=0.",
+    "For the stronger control retain all word-preparation raw tests and the T-origin mixed-zero test as well."]
+  conclusions := [
+    "For every R>=1, H_R(p)=max(N(p),q(p)*max(0,sqrt(N(p))-R)) satisfies the retained schemas and agrees with N throughout N<=R^2.",
+    "H_R passes both scalar and word raw families directly and H_R(c^j)=1 for every integer j. It obeys the opposite serial inequality H_R(cp)<=H_R(p).",
+    "At R=1 and p=2(1+e)^2, H_1(p)=8 and H_1(cp)=4 while N(p)=N(cp)=4. Thus even the complete integer unit-orbit calibration leaves universal transparency undetermined.",
+    "For every fixed finite set F of preparations, a sufficiently large dyadic threshold R makes H_R agree with N on F and pass the corresponding finite transparency tests, with a larger explicit universal-transparency failure.",
+    "The cap family min(N,4^J*q^2), J>=1, passes the scalar raw family and the first J serial unit comparisons, then fails the next. Its word-family origin defect at (ab)^J is 4^(-J)/2>0."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize both response families, exact retained-schema certificates, integer unit-orbit calibration, finite-set quantifiers and exact transparency/null-insertion witnesses.",
+    "Formalize the cap word-family failure separately from its scalar raw certificate."]
+  dependencies := [
+    "initial_scaled_count_six_schema_nonredundancy_analytic"]
+  limits := [
+    "These new analytic controls have empty checked evidence. Ambient coordinate formulas are continuous; a topology or detector realization on P remains a separate obligation.",
+    "H_1 agrees with N on all N<=1. Its displayed deviation concerns a larger-norm preparation.",
+    "The finite-set statement has quantifiers forall finite F exists H_R. Universal agreement on every preparation is outside that statement.",
+    "The cap family retains scalar tests only after transparency is weakened. Exact-transparency scalar/word equivalence cannot transfer its retained tests.",
+    "Calibration replacement, normalized physical domains and origins of response laws retain their precise separate scopes."]
+}
+
+def initialOneSidedScalarReadoutSelection : ResearchTask := {
+  id := "initial_one_sided_scalar_readout_selection_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The original initial carrier and separately checked exact combined-coordinate normal form, including equality reflection, exact image and the required actual inverse contexts.",
+    "W:P->Real satisfies W(0)=0, W(1)=1, universal W(cp)>=W(p), universal prepared natural-count coordinatewise order and every adjacent raw mixed-zero test at scalar preparation 2^(-k).",
+    "The optional sixth schema is W(T)=0, equivalently its single T-origin mixed test after null-sector equality is deduced."]
+  conclusions := [
+    "Independently accepted analytic first-five classification is exactly W=N+kappa*indicator(E=0 and q>0), kappa>=0, including the converse. The sixth schema selects W=N.",
+    "Global exact c transparency follows from this classification. The exact-transparency reconstruction is a corollary of the stronger scalar theorem.",
+    "Four directed replacements suffice: w(d/2)<=W(dab) for origin continuity, W(p)<=W(c^j p) for upper landing, W(c^(-h)p)<=W(p) for lower landing, and null-sector prepared order supplies the reverse inequality to derive equality.",
+    "The response family H_1 in the calibration boundary obeys universal W(cp)<=W(p) and both raw families, yet has values 8 and 4 at p=2(1+e)^2 and cp. The opposite direction therefore leaves norm selection undetermined."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize the scalar one-sided reconstruction with its exact inverse-context quantifiers and the four directed proof replacements.",
+    "Formalize null-sector equality, the first-five converse, deduced global transparency and the optional T-test reformulation."]
+  dependencies := [
+    "initial_scaled_dyadic_raw_mixed_null_calibration_sufficiency_analytic",
+    "initial_transparency_calibration_replacement_boundary_analytic"]
+  limits := [
+    "The strengthened classification and controls remain analytic awaiting formalization with empty checked evidence.",
+    "The supplied mixed tests are scalar-dyadic. The separate word-only one-sided theorem obtains the same classification from word tests using an orbit-supremum argument.",
+    "Global transparency and word-grid response equality follow after the scalar classification. The separate word theorem supplies the reverse route under its own exact contract.",
+    "Physical availability of inverse contexts and the origins of the one-sided law, count order, all-scale tests and null calibration remain open."]
+}
+
+def initialOneSidedWordReadoutSelection : ResearchTask := {
+  id := "initial_one_sided_word_readout_selection_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Use the literal initial two-relator carrier P and the separately checked exact combined-coordinate normal form, including equality reflection, exact image and actual algebraic inverse contexts.",
+    "W:P->Real satisfies W(0)=0, W(1)=1, universal W(cp)>=W(p), universal prepared natural-count coordinatewise order and adjacent mixed zero at every word preparation (ab)^k for all k,n,m:Nat.",
+    "The optional sixth schema is W(T)=0. No scalar-grid mixed-zero hypothesis or exact serial equality is supplied for W."]
+  conclusions := [
+    "Independently accepted analytic first-five classification is exactly W=N+kappa*indicator(E=0 and q>0), kappa>=0, including the converse. The sixth schema selects W=N.",
+    "The bounded monotone c-orbit response has a finite supremum V. V is exactly c-transparent, satisfies prepared count order and every scalar-dyadic raw mixed-zero test. Its positive unit value v=V(1) permits application of the original equality-based scalar classification to V/v.",
+    "On nonnull preparations V=vN. A finite-grid isotonicity argument gives uniform convergence of W(c^k x) to V(x) on compact dyadic raw boxes. Actual denominator-cleared changing-source transport then yields W(p)>=vN(p); W(p)<=V(p) gives equality on nonnull p and unit normalization fixes v=1.",
+    "The null-sector serial equality follows from count order and the forward serial inequality. Power-of-two sandwiching gives one nonnegative positive-null constant and the all-kappa converse.",
+    "Exact serial equality and all scalar-grid mixed-zero tests are conclusions. The former word-only one-sided open question is analytically settled under these precise premises."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize dyadic prepared order, actual units and finite monotonic programs, including rational overhead and paired-program estimates.",
+    "Formalize arbitrarily close raw upper landing from only the forward serial inequality, prepared order and algebraic geometry, before raw response calibration.",
+    "Formalize one finite bound for every c orbit, independent of its index, with a fixed rotation and fixed natural raw upper bag in the nonnull case.",
+    "Formalize the bounded monotone real orbit supremum, pointwise convergence, tail-supremum equality, inherited count order and positive finite v=V(1).",
+    "Formalize finite word-rectangle telescoping and c^k*u^j=2^(k-j)*h^k for k>=j, followed by four fixed-preparation limits to obtain scalar mixed zero for V.",
+    "Apply the original equality-based scalar first-five classification to V/v with every premise discharged; retain its own analytic formalization obligation.",
+    "Formalize uniform convergence on every compact dyadic raw box using finite lower grids, count monotonicity and the continuous quadratic limit.",
+    "Formalize paired programs for growing lambda_k with (lambda_k-1)*t_k<epsilon_k/(1+epsilon_k) and 2*u0*t_k/abs(v0)<epsilon_k, giving R_k->1 and eta_k->0.",
+    "Formalize positive integer denominator clearing, exact actual identities before and after multiplication by c^k, and positive dyadic d_k with d_k*H_k<=1 and d_k*H_k->1.",
+    "Formalize the varying-source uniform-convergence lower bound for each fixed rotation, then the separate rotation limit and unit normalization v=1.",
+    "Formalize positive-null classification, the all-kappa converse and optional T test, followed by deduced global equality and scalar/word response equivalence."]
+  dependencies := [
+    "initial_scaled_dyadic_raw_mixed_null_calibration_sufficiency_analytic",
+    "transparent_fourth_exact_initial_normal_form"]
+  limits := [
+    "The new word-only theorem is independently accepted analytically and awaits formalization with empty checked evidence.",
+    "The proof invokes the original equality-based scalar classification on V/v. It does not assume scalar mixed zero for W or depend on the separate one-sided scalar theorem.",
+    "The response remains real-valued. Ordinary real order, completeness and numerical limits are mathematical prerequisites; continuity of W is not supplied.",
+    "Earlier six-schema omission certificates concern the original exact-transparency scalar family and its separately analytically verified alternative. No new six-row one-sided word-family certificate is recorded here.",
+    "Physical availability of inverse contexts, detector realization, probability interpretation and origins of all response schemas remain separate obligations."]
 }
 
 def initialVacuumFirstColumnReplacementCountermodels : ResearchTask := {
@@ -10865,6 +11032,11 @@ def researchTasks : List ResearchTask := [
   initialNaturalCountMixedReconstructionDraft,
   initialExactRawCalibrationNaturalCountRigidityDraft,
   finiteCycleBalanceDraft,
+  transparentFourthOrderedReadoutBoundary,
+  initialScaledCountSixSchemaNonredundancy,
+  initialTransparencyCalibrationReplacementBoundary,
+  initialOneSidedScalarReadoutSelection,
+  initialOneSidedWordReadoutSelection,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
 

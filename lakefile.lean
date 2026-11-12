@@ -547,6 +547,8 @@ lean_lib Proofs where
     `Proofs.QMClosure.TransparentFourthNullPassivity,
     `Proofs.QMClosure.TransparentFourthNullPassivityQuotient,
     `Proofs.QMClosure.TransparentFourthVacuumCountermodels,
+    `Proofs.QMClosure.TransparentFourthColumnBalance,
+    `Proofs.QMClosure.TransparentFourthOrderedReadoutBoundary,
     `Proofs.QMClosure.NativeCrossIncrementReadoutSelection,
     `Proofs.QMClosure.NativeCrossIncrementReadoutControls,
     `Proofs.QMClosure.PositiveColumnConservationCore,

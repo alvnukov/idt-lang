@@ -1,6 +1,6 @@
 # Scaled-count readout reconstruction
 
-This analytic conditional reconstruction awaits Lean formalization. Its checked-evidence list remains empty. It uses the exact initial normal form and six supplied response schemas. [Analytic task](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean) · [Checked initial normal form](../Proofs/QMClosure/TransparentFourthInitialNormalForm.lean)
+This analytic conditional reconstruction awaits Lean formalization. Its checked-evidence list remains empty. It uses the exact initial normal form and six supplied response schemas. The strongest accepted analytic version supplies the one-sided serial law W(cp)≥W(p) and raw mixed tests only at word preparations (ab)^k, deriving serial equality and scalar-grid tests. The exact-transparency and one-sided scalar-grid arguments below are established intermediate results. The final section gives the word-grid theorem. [Analytic task](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean) · [Checked initial normal form](../Proofs/QMClosure/TransparentFourthInitialNormalForm.lean)
 
 ## Exact premises
 
@@ -261,3 +261,201 @@ has complex coordinate (1+sign(theta)i epsilon_n)^n, with squared modulus (1+eps
 The argument uses the exact initial combined-coordinate normal form (including equality reflection, exact image, commutative coordinate operations and the required algebraic units), the six explicitly quantified response schemas, ordinary real order/Archimedean completeness, monotone-envelope facts and elementary finite-program numerical limits. Appendix A states the finite geometry in full with its minimal response dependencies. Rational divisions in section 7 are parameter design only, followed by integer clearing and equality of actual P elements.
 
 The resulting W=N mathematically yields the first-column equation, both half responses, scalar quadratic gain, multiplicativity and null insertion/destructive-quotient descent. The original initial carrier retains its nonzero element e. The analytic response factorization selects equality of readout values along the destructive quotient. Physical availability of preparations and inverse contexts, detector realization, probability interpretation and the origins of all six response schemas remain separate obligations. [Physical scope boundary](150-physical-scope-boundary.md)
+
+## One-sided serial strengthening on scalar grids
+
+The supplied serial equality in the scalar-grid theorem can be weakened analytically to
+
+W(cp)≥W(p) for every p in P.
+
+Retain vacuum zero, unit normalization, universal prepared count order and every scalar-dyadic raw mixed-zero test exactly as quantified above. The first five schemas still classify exactly
+
+W(p)=N(p)+κ indicator(E(p)=0 and q(p)>0), κ≥0.
+
+The sixth schema W(T)=0 selects W=N. Exact serial equality follows from the classification. This strengthened theorem is independently reviewed and awaits Lean formalization, with empty checked evidence. The equality-based theorem above is its corollary. [Authoritative analytic and open tasks](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+
+### Directed changes to the proof
+
+The raw separation and scalar-order arguments use the same scalar grids. For section 1, the necessary origin estimate becomes
+
+w(d/2)≤W(c(d/2))=W(dab)≤U(d), V(d).
+
+The first inequality is the supplied serial law. The algebraic identity and the two prepared-count comparisons give the remaining steps. The same monotone origin limits satisfy A+B≤A and A+B≤B, forcing A=B=0.
+
+For upper landing in section 2 and Appendix A3, choose a nonnegative integer j so that c^j p has shadow smaller than its positive real complex coordinate. The serial law supplies W(p)≤W(c^j p). All subsequent finite programs are response-increasing by prepared order, so their calibrated endpoints still bound W(p) from above. Sections 3 and 4 then derive the same rotationally invariant scalar envelopes and exact raw quadratic calibration. Section 6 derives the same nonnull upper bound.
+
+For lower landing in section 7, replace the target by the actual inverse context p′=c^(−h)p with sufficiently large shadow. Universality of the supplied inequality gives
+
+W(p′)≤W(c^h p′)=W(p).
+
+The denominator-cleared finite construction and section 5 transfer give numerical lower bounds for W(p′), hence for W(p). The numerical limits therefore yield W(p)≥N(p), completing nonnull reconstruction. Rational design parameters and actual P preparations retain their roles in section 7.
+
+For a positive-null p=(0,q), the carrier identities give cp=ap=bp=(0,q/2). Prepared order supplies W(cp)=W(ap)≤W(p), while the serial hypothesis supplies W(cp)≥W(p). Thus equality holds on the positive-null sector. Monotonicity and power-of-two sandwiching make its response a constant κ≥0. Every displayed κ response satisfies the five supplied schemas by the same prepared-count formula as section 9.2, proving the converse. Since aT=bT=cT, the T-origin mixed defect is −W(T). The single local test and the null calibration are again equivalent under these deduced null-sector facts.
+
+### Scope of the raw test family
+
+The strengthened theorem supplies mixed tests at scalar preparations 2^(−k). Before reconstruction, the identity (ab)^k=c^k 2^(−k) and the one-sided law yield only
+
+W((ab)^k B(n,m))≥W(2^(−k) B(n,m)).
+
+A mixed defect has coefficients of both signs, so these cellwise inequalities supply no equality of defects. The final section independently proves reconstruction with mixed tests supplied only at (ab)^k, using an orbit supremum and the original exact-transparency scalar theorem. After either reconstruction, deduced exact serial equality gives equality of both raw test families. The earlier scalar/word equivalence continues to apply with its stated exact-transparency premise. [Word-grid analytic task](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+
+### Opposite orientation and calibration boundary
+
+The reverse universal inequality W(cp)≤W(p) leaves additional responses. An explicit analytic control is
+
+H(p)=max(N(p), q(p) max(0,√N(p)−1)).
+
+It has vacuum zero, unit normalization, universal prepared count order, W(T)=0, every scalar and word raw mixed-zero test, and H(c^j)=1 for every integer j. At p=2(1+e)^2 it gives H(p)=8 and H(cp)=4, with N(p)=N(cp)=4. Throughout N≤1 it agrees exactly with N. The complete retained-schema proof and further calibration and omission boundaries are recorded in the companion section. These controls remain analytic awaiting formalization. [Branch balance and readout-order boundaries](213-branch-balance-and-readout-order-boundaries.md)
+
+## Word-grid reconstruction with one-sided serial order
+
+The strongest accepted analytic contract uses actual word preparations h^k=(ab)^k for its raw tests. Let u=2^(−1) be the actual scalar inverse of two. Retain the same initial carrier, exact combined-coordinate normal form, equality reflection, exact image and actual units from the preceding arguments. For W:P→Real supply these five schemas.
+
+1. W(0)=0.
+2. W(1)=1.
+3. W(cp)≥W(p) for every actual p.
+4. Universal natural-count coordinatewise order at every actual preparation.
+5. For every k,n,m in Nat, the adjacent mixed defect at preparation h^k is zero.
+
+Then exactly the responses W=N+κ indicator(E=0 and q>0), κ≥0, satisfy the five schemas. The optional sixth schema W(T)=0 selects W=N. Exact serial transparency and scalar-grid mixed zero follow from the classification. This theorem is independently reviewed analytically and awaits Lean formalization with empty checked evidence. Its dependency is the original exact-transparency scalar first-five classification established analytically above. [Authoritative word-grid task](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean)
+
+### Finite orbit bounds from uncalibrated raw landing
+
+Dyadic prepared order follows by clearing powers of two in the counts and changing the actual preparation. It gives W≥0. For a positive-null p, cp=ap=bp, and count order gives W(cp)≤W(p). The supplied forward inequality therefore gives equality. Dyadic scalar order and power-of-two sandwiching make W one nonnegative constant κ on this sector.
+
+The finite programs F_plus, F_minus, D and the paired (R,Q) construction from Appendix A remain response-increasing by count order alone. For a strict right-wedge preparation p=(x+iy,q), first choose j≥0 so that p₀=c^j p has shadow q₀<x. The serial inequality gives W(p)≤W(p₀). Choose paired programs with λ=x/q₀, put γ=q₀Q and τ=(Rx−γ)/(γ+Ry), and use D(α,τ) with α tending to one. The actual endpoint is a raw bag B(s,t), with s→x+y and t→x−y. Every step increases response, giving an arbitrarily close raw upper landing without using raw calibration.
+
+For any fixed nonnull p, choose one fixed finite rotation L with E(Lp)=x+iy in that strict wedge. Since c preserves E, the same x,y apply to Lc^k p for all k. Choose a natural M>max(x+y,x−y)+1. Landing each Lc^k p with count tolerance one and applying dyadic count order gives
+
+W(c^k p)≤W(Lc^k p)≤W(B(s_k,t_k))≤W(B(M,M)).
+
+The right side is one finite real bound independent of k. The individual landing programs may depend on k. Zero and positive-null preparations already have constant orbits. Thus every c orbit is bounded above.
+
+### The orbit supremum has exact transparency
+
+Put W_k(p)=W(c^k p). These sequences are nonnegative, nondecreasing and bounded above. Define the finite real value
+
+V(p)=sup over k in Nat of W_k(p).
+
+Pointwise monotone convergence gives W_k(p)→V(p). The sequence and its one-step tail have the same supremum, so V(cp)=V(p). Also V(0)=0, W≤V, and V inherits universal prepared count order term by term. On positive-null preparations V=W=κ. Put v=V(1), so 1≤v<∞.
+
+Fix a scalar depth j and natural n,m. For every k≥j put M_k=2^(k−j). The actual identity
+
+c^k u^j=M_k h^k
+
+follows from h=cu and 2u=1. Telescoping the supplied word mixed equation over an M_k-by-M_k rectangle gives its four-corner equality at the counts M_k n, M_k m. The identity converts these terms into the four values
+
+W_k(u^j B(n+1,m+1)), W_k(u^j B(n+1,m)),
+
+W_k(u^j B(n,m+1)), W_k(u^j B(n,m)).
+
+Each preparation in this display is fixed while k tends to infinity. Their four finite limits give scalar-dyadic mixed zero for V. This is an exact rectangle identity followed by convergence at four fixed inputs.
+
+Apply the original exact-transparency scalar first-five theorem to V/v. Its unit value is one, v is positive, and every other hypothesis has just been established. The conclusion gives V=vN on nonnull preparations and V=κ on positive-null preparations. In particular, on all nonnegative dyadic raw bags,
+
+V(B(s,t))=F(s,t)=v(s²+t²)/2.
+
+At this stage v remains an unknown number at least one. This application uses the original equality-based theorem directly, keeping the analytic dependency acyclic.
+
+### Uniform convergence for changing raw inputs
+
+For every fixed natural R≥1, W_k(B(s,t)) converges uniformly to F(s,t) over all dyadic (s,t) in [0,R]². The needed argument uses a finite grid and count order.
+
+Given ε>0, choose a dyadic mesh δ with 2vRδ<ε/2 and grid endpoints including R. Pointwise convergence on this finite grid yields an index K such that every grid corner (a,b) has
+
+0≤F(a,b)−W_k(B(a,b))<ε/2
+
+for k≥K. For any dyadic (s,t) in the box, take its lower grid corner, with 0≤s−a<δ and 0≤t−b<δ, allowing equality at the box boundary. The quadratic formula gives
+
+0≤F(s,t)−F(a,b)≤vR((s−a)+(t−b))<ε/2.
+
+Spatial monotonicity and W_k≤V therefore give
+
+0≤F(s,t)−W_k(B(s,t))
+
+≤F(s,t)−F(a,b)+F(a,b)−W_k(B(a,b))<ε.
+
+The estimate holds at every dyadic point of the box, including changing inputs with arbitrarily large denominators. It supplies the convergence needed for the following varying-source transfer. Continuity belongs to the deduced quadratic F in this argument. The response W retains precisely its supplied order laws.
+
+### Quantitative paired programs for growing shadow ratio
+
+Fix a nonnull p=(z,q) and one finite response-increasing rotation A=(α,β) so that the rational design coordinate z/α=u₀+iv₀ satisfies u₀>|v₀|>0. This quotient supplies design parameters. All preparations below are actual P elements.
+
+For large k let p_k=c^(−k)p=(z,2^k q), q_k=2^k q, and λ_k=q_k/(βu₀)>1. Choose ε_k→0, 0<ε_k<1, and a positive dyadic t_k≤1 so small that
+
+(λ_k−1)t_k<ε_k/(1+ε_k),
+
+2u₀t_k/|v₀|<ε_k.
+
+Apply the finite paired construction with λ_k and t_k, obtaining (R_k,Q_k), and define
+
+η_k=(u₀−q_k R_k/(βQ_k))/v₀.
+
+Its quantitative estimates give
+
+n_k t_k²<(λ_k−1)t_k<ε_k/(1+ε_k),
+
+1≤R_k<1+ε_k,
+
+|η_k|≤(u₀/|v₀|)(K_k−1)≤2u₀t_k/|v₀|<ε_k.
+
+Here K_k=(1+t_k)²/(1+t_k²) and λ_k/K_k≤Q_k/R_k<λ_k. Thus R_k→1 and η_k→0 even while λ_k grows. Each construction is finite. Its required program length may grow with k.
+
+### An actual varying-source lower transfer
+
+For large k, clear all rational denominators with a positive integer X_k so that
+
+A_k=X_k(1+η_k), B_k=X_k(1−η_k)
+
+and the two raw counts corresponding to
+
+z_k=(X_k/R_k)(u₀+iv₀)(1+iη_k)
+
+are positive natural numbers. Let r_k be that natural raw bag. Its shadow is
+
+q(r_k)=Re z_k=(X_k/R_k)(u₀−v₀η_k)=X_k q_k/(βQ_k).
+
+Both coordinates then prove the actual identity
+
+A(R_k,Q_k) r_k=B(A_k,B_k)p_k.
+
+Multiplying this identity by the actual c^k gives
+
+A(R_k,Q_k)(c^k r_k)=B(A_k,B_k)p.
+
+Every identity concerns actual P elements after integer denominator clearing. Set H_k=max(A_k,B_k)=X_k(1+|η_k|). Choose a positive dyadic d_k with
+
+1−ε_k<d_k H_k≤1,
+
+and put x_k=d_k r_k. Then d_k X_k→1 and
+
+E(x_k)=(d_k X_k/R_k)(u₀+iv₀)(1+iη_k)→u₀+iv₀.
+
+The raw counts of x_k converge to u₀+v₀ and u₀−v₀, both positive, so all sufficiently late x_k lie in one fixed compact raw box. Scaling the actual identity by d_k, using the response-increasing program and then prepared order with d_k A_k,d_k B_k≤1, gives
+
+W_k(x_k)≤W(A(R_k,Q_k)(c^k x_k))
+
+=W(B(d_k A_k,d_k B_k)p)≤W(p).
+
+The c powers have been moved inside an algebraic identity. The proof uses the actual response values at c^k x_k.
+
+Uniform raw convergence on that fixed box now gives
+
+W_k(x_k)−vN(x_k)→0,
+
+W_k(x_k)→vN(p)/|α|².
+
+For this fixed rotation A, W(p)≥vN(p)/|α|² follows. Choose a sequence of finite Euler rotations A_j whose design coordinate stays in the strict nonaxis right wedge and whose |α_j|² tends to one. Applying the already established fixed-A bound to each j and then taking that separate numerical limit gives W(p)≥vN(p). The upper inequality W(p)≤V(p)=vN(p) gives equality. Applying it to p=1 fixes v=1.
+
+### Converse and the sixth local test
+
+The positive-null constant κ≥0 was deduced before the supremum construction. Together with the nonnull result and W(0)=0 it gives the stated full classification. Conversely, each W_κ=N+κδ satisfies the five word schemas. Its prepared formula is
+
+W_κ(B(n,m)p)=((n²+m²)/2)N(p)+κδ(p) indicator(n+m>0).
+
+The nonnegative count factors are coordinatewise nondecreasing. c preserves N and δ. On every word raw grid the exceptional term vanishes and the response is 4^(−k)(n²+m²)/2, whose mixed defect is zero. Thus the classification includes the converse.
+
+W(T)=0 selects κ=0. Before that sixth schema, the classification already gives global exact c transparency, and h^k=c^k u^k then gives scalar/word response equality and scalar-grid mixed zero. Since aT=bT=cT and the null-sector response equality was deduced directly, the T-origin defect is −W(T). The sixth schema therefore also has the single local-test presentation.
+
+The word-only question is analytically settled under these exact hypotheses. The earlier six-schema omission certificates concern their stated exact-transparency families and retain that scope. The new theorem's formalization obligations include the uncalibrated orbit bound, exact supremum transfer, finite word rectangles, uniform raw convergence, variable-ratio program estimates, actual changing-source identities and the final normalization. They are recorded in the Lean research ledger with empty checked evidence. Real-valued output, the exact carrier prerequisite and universal availability of the stated mathematical preparation contexts remain explicit assumptions. Physical origins, detector and probability interpretation retain their separate obligations. [Authoritative analytic tasks](../Proofs/MetaLang/V8OperationalPrimitiveResearchLedger.lean) · [Physical scope boundary](150-physical-scope-boundary.md)
