@@ -10294,16 +10294,16 @@ def transparentPositivePowerRejoin : ResearchTask := {
   assumptions := [
     "Arbitrary Semiring S with a+b=1 and a^(m+1)=b^(n+1), where m,n:Nat. Both rejoin exponents are positive."]
   conclusions := [
-    "The source-reviewed analytic route proposes finite positive two-sided inverse words U=(sum of b^j for j<n+1)+a^m for a and V=(sum of a^j for j<m+1)+b^n for b, and pair commutation.",
+    "The separately checked core proves finite positive two-sided inverse words U=(sum of b^j for j<n+1)+a^m for a and V=(sum of a^j for j<m+1)+b^n for b, and pair commutation.",
     "The three-level maximum-addition endomorphism source proposes a transparent noncommuting pair whose positive powers never rejoin, with a*b != b*a. A separate exponent-zero example records the need for positive exponents.",
     "The unequal-power golden-ratio example and equal-third-power complex-root example record analytic boundaries to finite-ratio-order and fourth-specific idempotent conclusions."]
   checkedEvidence := []
   plannedArtifacts := [
-    "Proofs/QMClosure/TransparentPositivePowerRejoin.lean",
     "Proofs/QMClosure/TransparentNoncommutingControl.lean"]
-  dependencies := []
+  dependencies := [
+    "transparent_positive_power_rejoin_checked_core"]
   limits := [
-    "The source-reviewed general positive-power package is bound to /tmp/idt-positive-power-rejoin/v2 with its repaired declaration inventory. The source remains uncompiled. Lean elaboration and kernel checking pending.",
+    "This combined task retains analytic status and empty checked evidence for the noncommuting, exponent-zero, unequal-power and equal-third-power controls. Its inverse-word and pair-commutation core has a separate checked task; the remaining controls await formalization.",
     "The route carries no fourth-specific canonical-idempotent conclusion.",
     "The golden-ratio boundary remains analytic: a=(sqrt(5)-1)/2, b=(3-sqrt(5))/2 satisfy a+b=1 and a^2=b, while a/b has infinite multiplicative order. The equal-third-power boundary remains analytic: a=(1+i*sqrt(3))/2 and b=conj(a) have a^3=b^3=-1, T=-1 and e=-2, which is not idempotent. Both boundaries retain empty checked evidence.",
     "A least positive ratio-order claim requires an additional exact-order argument.",
@@ -10934,6 +10934,213 @@ def initialScaledCountReadoutOperationalOrigin : ResearchTask := {
     "The original grammar, Born actualization, Hilbert representation, dynamics, composites, full QM, GR and physical scales retain their separate obligations."]
 }
 
+def transparentPositivePowerRejoinCheckedCore : ResearchTask := {
+  id := "transparent_positive_power_rejoin_checked_core"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Arbitrary Semiring S, elements a,b:S and natural m,n with a+b=1 and a^(m+1)=b^(n+1). Both rejoin exponents are positive."]
+  conclusions := [
+    "Finite positive geometric words give explicit two-sided inverses of a and b.",
+    "Both inverse products equal the same positive sum; the inverse words commute and a*b=b*a.",
+    "Equal positive finite rejoin is a checked specialization."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentPositivePowerRejoin.lean"
+      declarations := [
+        "IDT.TransparentPositivePowerRejoin.geometric_inverse_a",
+        "IDT.TransparentPositivePowerRejoin.geometric_inverse_b",
+        "IDT.TransparentPositivePowerRejoin.inverse_product_expansions",
+        "IDT.TransparentPositivePowerRejoin.inverse_words_commute",
+        "IDT.TransparentPositivePowerRejoin.commute_of_transparent_positive_power",
+        "IDT.TransparentPositivePowerRejoin.commute_of_transparent_finite_rejoin"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The theorem concerns this pair in an arbitrary semiring. Whole ambient commutativity requires a separate generation argument.",
+    "Only this donor theorem subset is checked here. The noncommuting, exponent-zero, unequal-power and equal-third-power controls retain their separate analytic task.",
+    "General unequal-power rejoin supplies no fixed finite ratio order. Fourth-specific idempotents, readout selection and physical primitive origins retain separate obligations."]
+}
+
+def eighthRejoinPresentationAndReadoutCountermodels : ResearchTask := {
+  id := "eighth_rejoin_presentation_and_readout_countermodels"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "P8 is FreeAlgebra Nat Bool modulo exactly a+b=1 and a^8=b^8. Concrete complex evaluations E2,E1,E3 are defined after proving those relators.",
+    "X=normSq(E2), Y=normSq(E1)*normSq(E3), W=min(X,Y), V(p)=if Y(p)=0 then 0 else X(p). Set h=ab, c=2ab, T=a^2+b^2, s=a^4+b^4, z=2a^4+b^4 and B(n,m)=na+mb."]
+  conclusions := [
+    "Universal maps admit arbitrary semiring targets. Generator commutation followed by positive syntax induction derives commutativity on the entire generated P8 carrier.",
+    "W and V satisfy normalized nonnegativity, universal forward serial increase, universally prepared natural-count order, all-depth word-grid formulas, all-depth raw-word mixed zero and T-nullity.",
+    "W additionally has both global half laws, first-column conservation, swap invariance and self-echo. V additionally has exact c transparency, full multiplicativity, all-preparation mixed zero, quadratic natural gain and the exact prepared raw quadratic formula.",
+    "Both responses differ from X, fail additive closure of their zero sets and fail function factorization through the additional fourth-rejoin quotient. P8 itself satisfies s!=0, T!=0 and a^4!=b^4.",
+    "At z, W has strict forward serial increase and a prepared mixed defect 1/4. Its four checked cell values are 153/32,144/32,82/32,81/32 at counts (4,1),(4,0),(3,1),(3,0)."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/EighthRejoinInitialPresentation.lean"
+      declarations := [
+        "IDT.QMClosure.EighthRejoinInitialPresentation.eval_unique",
+        "IDT.QMClosure.EighthRejoinInitialPresentation.presentation_induction",
+        "IDT.QMClosure.EighthRejoinInitialPresentation.multiplication_commutes"] },
+    { sourcePath := "Proofs/QMClosure/EighthRejoinReadoutCountermodels.lean"
+      declarations := [
+        "IDT.QMClosure.EighthRejoinReadoutCountermodels.W_enhanced_certificate",
+        "IDT.QMClosure.EighthRejoinReadoutCountermodels.V_strong_certificate",
+        "IDT.QMClosure.EighthRejoinReadoutCountermodels.W_strict_serial_witness",
+        "IDT.QMClosure.EighthRejoinReadoutCountermodels.W_z_cells",
+        "IDT.QMClosure.EighthRejoinReadoutCountermodels.W_prepared_mixed_defect",
+        "IDT.QMClosure.EighthRejoinReadoutCountermodels.concrete_countermodel_certificate"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "transparent_positive_power_rejoin_checked_core"]
+  limits := [
+    "These evaluations establish concrete models on literal P8. They supply no faithful evaluation, full number-field norm theorem, generated-carrier classification or complete cyclotomic family theorem.",
+    "The six-schema controls concern raw word preparations at all depths; universal mixed zero at every preparation is a separately checked stronger property of V.",
+    "Readout laws preserve the distinction between literal source equality and numerical response equality. The original P4 reconstruction tasks keep their separate carrier premises and analytic status.",
+    "Physical origins and operational availability of the grammar, relators and response laws remain open. No QM, GR or physical-scale closure follows."]
+}
+
+def eighthRejoinLocalNullCoalescenceDescent : ResearchTask := {
+  id := "eighth_rejoin_local_null_coalescence_descent"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "On literal P8 with T=a^2+b^2 and s=a^4+b^4, let A=certificateA and B=certificateB be the actual natural-coefficient words in EighthRejoinNullClosureDescent.",
+    "For R:P8->Real, supply exactly R(1)!=0, R(T)=0, the single equality R(T*A)=R(T)*R(A), every-p equality R(s*p)=R(s)*R(p), and the single implication R(T*A)=0 -> R(s*B)=0 -> R(T*A+s*B)=0."]
+  conclusions := [
+    "The positive certificate T*A+s*B=(a+b)^9=1 forces R(s)!=0 under the five local premises.",
+    "The continuation congruence x~y iff s*x=s*y contains the fourth-rejoin relation. The canonical surjection pi:P8->P4 has each fiber contained in this congruence.",
+    "Real cancellation gives response constancy on pi fibers and a unique function R4:P4->Real with R=R4 composed with pi.",
+    "The certificate summands have (X,Y) pairs (0,1) and (1,0). W and V vanish on both summands and equal one on their sum, so both fail the exact local coalescence implication.",
+    "The separate stronger global contract transfers unit normalization, multiplication, T-nullity and additive null closure to the descended response."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/EighthRejoinNullClosureDescent.lean"
+      declarations := [
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.certificate_unit",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.fixed_continuation_fourth",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.pi_fiber_continuation",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.LocalCoalescenceContract",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.continuation_response_nonzero",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.unique_fourth_factorization",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.global_unique_fourth_factorization",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.certificate_norm_pairs",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.concrete_certificate_values",
+        "IDT.QMClosure.EighthRejoinNullClosureDescent.concrete_local_coalescence_failures"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "eighth_rejoin_presentation_and_readout_countermodels",
+    "transparent_fourth_initial_presentation_and_quotient"]
+  limits := [
+    "The local contract has five premises. Nonnegative output, normalization to one, general multiplicativity, arbitrary zero-addition closure and continuity are outside those premises.",
+    "Given R(T*A)=0 and R(1)!=0, the single coalescence implication excludes R(s*B)=0. It is a supplied separation test. The separate fixed-s multiplication premise ranges over every actual preparation; physical derivation of either premise remains open.",
+    "The kernel of pi is contained in the continuation congruence; equality of the two congruences is outside the checked result.",
+    "The conclusion is unique function-level readout factorization. Literal a^4=b^4 on P8, arbitrary null insertion, destructive T=0 quotient descent, norm selection and QM closure remain separate obligations.",
+    "The global inheritance corollary requires its explicitly stronger global contract. Physical justification of either response contract remains open."]
+}
+
+def generalFiniteCycleNullSelection : ResearchTask := {
+  id := "general_finite_cycle_null_selection_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Literal Pn for positive n, with a+b=1 and a^n=b^n; T=a^2+b^2. The readout contract is real output, W(1)=1, global multiplicativity, W(T)=0 and global additive closure of the zero set.",
+    "For the refined descent theorem put n=4m and additionally assume W(m)!=0. Normalized universally prepared natural-count order is one sufficient way to obtain this condition."]
+  conclusions := [
+    "The analytic positive-word unit criterion is: T is a unit exactly when four does not divide n. Therefore the readout contract admits cycles only when four divides n.",
+    "For n=4m, finite cyclic smoothing of signed coefficient designs eventually gives actual nonnegative-coefficient words A,B and separator F with a^4*F=b^4*F and T*A+F*B=n.",
+    "With W(m)!=0 the certificate forces W(F)!=0 and unique P4 readout factorization. Normalized prepared count order gives W(k)>=1 for every positive natural k.",
+    "For power-of-two cycles n>=4 the contract derives the needed natural nonvanishing without an extra count-order premise.",
+    "Every cycle divisible by four with an odd prime divisor has an analytic nested residue-characteristic countermodel. At n=12 it has W(3)=0, an additively closed null ideal and failure of P4 factorization.",
+    "Among cycles divisible by four, the contract alone universally forces P4 readout descent exactly for powers of two. Cycles not divisible by four have no response satisfying the contract."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/FiniteCyclicAveraging.lean",
+    "Proofs/QMClosure/GeneralFiniteCycleNullSelection.lean",
+    "Proofs/QMClosure/FiniteCycleResidueReadoutCountermodels.lean"]
+  dependencies := [
+    "transparent_positive_power_rejoin_checked_core",
+    "eighth_rejoin_local_null_coalescence_descent"]
+  limits := [
+    "The universal smoothing, parity/unit, separator, general descent and residue-family arguments are analytic and await formalization. Exact finite probes supply only their selected instances.",
+    "Natural-count nonvanishing is a sufficient condition for this descent theorem. Its necessity for each individual descending response is outside the claim.",
+    "The n=12 residue control uses a characteristic-three filter nested inside a complex evaluation. The concrete P8 min/support proofs supply no checked artifact for this different construction.",
+    "Literal fourth equality, physical selection of cycles, Born actualization, full QM and physical scales remain open."]
+}
+
+def finiteCycleFirstColumnBalance : ResearchTask := {
+  id := "finite_cycle_first_column_balance_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Any semiring with a+b=1 and a^n=b^n for positive n, using the constructed units and rho=a*bInv with rho^n=1.",
+    "W:S->Real is nonnegative at every preparation and satisfies W(a*p)+W(b*p)=W(p) at every preparation."]
+  conclusions := [
+    "The analytic finite-cycle argument gives W(rho*p)=W(p) and W(a*p)=W(b*p)=W(p)/2 at every preparation.",
+    "The backward cyclic averages have fixed finite total mass; every changing terminal vector has one uniform bound. Uniform contraction then gives phase invariance by real Archimedean reasoning.",
+    "The column law derives W(0)=0. Prepared count comparisons from the zero bag to the unit bag supply a nonnegativity adapter.",
+    "With c=2ab, W(2p)=4W(cp). Exact c invariance is equivalent to global gain four under these premises; the half laws alone leave this gain open."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/FiniteCyclicAveraging.lean",
+    "Proofs/QMClosure/FiniteRejoinColumnBalance.lean"]
+  dependencies := [
+    "transparent_positive_power_rejoin_checked_core"]
+  limits := [
+    "The general finite-cycle theorem and numeric cyclic-averaging draft are uncompiled. The checked fourth-cycle theorem retains its stronger supplied exact-c contract and separate task.",
+    "Real output and the Archimedean conclusion are substantive. General ordered response objects require a different theorem; the existing lexicographic control retains its role.",
+    "Normalization, response continuity and physical availability of all inverse-context preparations remain separate issues. No readout norm classification or QM closure is established here."]
+}
+
+def eighthRejoinNullClosedEchoCountercontrol : ResearchTask := {
+  id := "eighth_rejoin_null_closed_echo_countercontrol_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "On literal P8 use the checked X,Y evaluations and define U(p)=X(p) when Y(p)>0, and U(p)=X(p)^2 when Y(p)=0."]
+  conclusions := [
+    "The analytic gamma=2 control satisfies all six word schemas, exact c transparency, raw scalar-dyadic mixed zero, exact natural calibration, additive null closure, swap invariance and self-echo.",
+    "At s=a^4+b^4 it gives U(s)=1/16 while U(2a^4)=U(s+T)=1/4 and U(T)=0. P4 factorization and arbitrary null insertion fail.",
+    "The control fails global half and first-column conservation, universal prepared mixed zero and multiplicativity. At p=2 it fails the all-p fixed-s multiplication premise used in local descent, although U(s)!=0."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/EighthRejoinNullClosedEchoCountercontrol.lean"]
+  dependencies := [
+    "eighth_rejoin_presentation_and_readout_countermodels",
+    "eighth_rejoin_local_null_coalescence_descent"]
+  limits := [
+    "The gamma=2 construction is analytically reviewed with exact rational anchors and remains uncompiled. The checked min/support controls supply only its evaluation prerequisites.",
+    "This isolates a substantive fixed-continuation premise relative to the displayed package. Necessity of multiplication under every other reconstruction contract is outside the claim.",
+    "The carrier remains P8; physical origin, readout selection and QM closure remain open."]
+}
+
+def initialColumnOrderEchoReadoutSelection : ResearchTask := {
+  id := "initial_column_order_echo_readout_selection_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The exact literal P4 both-coordinate normal form, actual dyadic geometry and canonical generator swap J.",
+    "W:P4->Real has W(1)=1, universal first-column conservation, W(c*p)>=W(p), universally prepared natural-count order and W(p*J(p))=W(p)^2."]
+  conclusions := [
+    "The independently reviewed analytic theorem gives W=N on all actual P4 preparations using finite-cycle column balance, exact dyadic relative landings, a uniform annulus bound and echo amplification.",
+    "Vacuum zero and T-nullity follow from the supplied contract. Raw mixed zero, multiplicativity and response continuity are absent from the supplied contract.",
+    "The accepted relative-landing interface takes actual r,p with positive shadows and positive dyadic d such that E(r)=d*E(p), under universally prepared count order and forward c response increase. An internal c shift gives an actual response-increasing finite program landing at raw(s,t)*p with positive dyadic counts arbitrarily close to d. Exact complex and shadow equality reflection is required.",
+    "Upper annulus landing uses dyadic d=x. Lower landing uses d=1/4 and a uniform response fraction 1/16; repeated echo removes the fixed fraction after integer calibration."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/InitialEchoCoordinates.lean",
+    "Proofs/QMClosure/InitialDyadicRelativeLanding.lean",
+    "Proofs/QMClosure/InitialColumnOrderEchoSelection.lean"]
+  dependencies := [
+    "transparent_fourth_exact_initial_normal_form",
+    "initial_count_geometry_and_prepared_order",
+    "finite_cycle_first_column_balance_analytic"]
+  limits := [
+    "The route has fresh independent analytic acceptance. The assembled selection theorem, finite-cycle helper and new proof packages remain uncompiled with empty checked evidence.",
+    "The route exchanges assumptions with the older scalar/word reconstruction packages. An overall weaker contract is outside the claim; those older tasks retain their separate analytic formalization obligations.",
+    "Formalize E(Jp)=conj(Ep), shadow preservation, real-axis fixedness and echo coordinates explicitly. Canonical self-echo remains a supplied paired operational law with a separate physical-origin obligation.",
+    "The proportional complex-coordinate factor d is dyadic in the accepted relative-landing interface. The construction uses the supplied forward c increase internally; its shadow-ratio condition arises after that shift. A general rational d needs a separate denominator-clearing argument.",
+    "Programs are finite per target and tolerance. A uniform program-cost bound and physical availability are outside the analytic result.",
+    "Operational origins of conservation, order, canonical pairing and echo remain supplied/open. Born actualization, Hilbert reconstruction, dynamics, composites, full QM, GR and physical scales remain open."]
+}
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -11104,6 +11311,13 @@ def researchTasks : List ResearchTask := [
   initialOneSidedScalarReadoutSelection,
   initialCountGeometry,
   initialOneSidedWordReadoutSelection,
+  transparentPositivePowerRejoinCheckedCore,
+  eighthRejoinPresentationAndReadoutCountermodels,
+  eighthRejoinLocalNullCoalescenceDescent,
+  generalFiniteCycleNullSelection,
+  finiteCycleFirstColumnBalance,
+  eighthRejoinNullClosedEchoCountercontrol,
+  initialColumnOrderEchoReadoutSelection,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
 
