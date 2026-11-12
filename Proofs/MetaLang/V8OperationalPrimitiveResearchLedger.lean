@@ -12586,6 +12586,109 @@ def phaseEchoInterfaceOriginContinuation : ResearchTask := {
     "The three new kernels close bounded algebraic interfaces. Physical primitive origin, full atomicity, pair-cone reconstruction, ancilla equality, full QM and physical-scale origins remain open.",
     "Earlier ledger rows preserve the historical checkpoint and its then-open signature gaps. The new kernel rows record the bounded interfaces now supplied."] }
 
+def boundedFibrePowerEnvelopeKernel : ResearchTask := {
+  id := "bounded_fibre_power_envelope_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A real Banach space, a bounded set with algebraic span equal to the full space, and a continuous linear operator preserving that set.",
+    "For the fibre specialization, a finite-dimensional real ambient space, a bounded fibre K, and one fixed positive q with T(K) contained in qK.",
+    "The marginal construction supplies a cone closed under nonnegative scaling, positive T, marginal naturality with a local map L, and the endpoint relation Lx=qx. Boundedness of the marginal fibre remains supplied."]
+  conclusions := [
+    "Uniform operator-power bounds follow from bounded algebraically spanning invariant sets through pointwise boundedness and Banach-Steinhaus.",
+    "The fixed-success law is derived from the cone/marginal contract. It gives invariance and a uniform q-power envelope on the algebraic span of differences from K.",
+    "The actual restricted difference-span endomorphism is constructed from the derived invariance. Its powers coerce to ambient powers and have the same uniform operator-norm envelope.",
+    "The control fibre contains a nonzero difference direction and supports the constant-success q identity example. A variable-success map with success between one quarter and three quarters fails difference-span invariance."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/BoundedFibrePowerEnvelope.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.bounded_spanning_set_power_bound",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.fixed_success_fibre_invariant",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.fixed_success_fibre_power_envelope",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.restrictedFibreOperator",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.restrictedFibreOperator_pow_apply",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.subtype_restrictedFibreOperator",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.fixed_success_restricted_fibre_power_envelope",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.marginal_fibre_fixed_success",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.bounded_marginal_fibre_power_envelope",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.VariableSuccessControl.constant_success_nontrivial_power_envelope",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.VariableSuccessControl.variable_success_normalized_output",
+        "IDT.QMClosure.BoundedFibrePowerEnvelope.VariableSuccessControl.variable_success_not_invariant"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The constant is uniform over all powers for the chosen operator and set. Uniformity across reference dimensions is unproved.",
+    "A difference span may contain ordinary reference directions. Identifying a product-invisible hidden kernel, a common hidden carrier or a selected invariant quotient requires further proof.",
+    "The physical origins of boundedness, exact fixed success, the supplied positive maps and marginal naturality remain external. Full atomicity remains open."] }
+
+def quotientPowerEnvelopeKernel : ResearchTask := {
+  id := "quotient_power_envelope_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Real or complex normed source and complete target spaces, an actual surjective continuous linear intertwiner, a positive rate, and one fixed all-power operator-norm envelope on the source operator.",
+    "The complementary target theorem additionally supplies a nontrivial target, two original envelopes with independent positive rates, both intertwining laws, and scalar complementarity on that same target."]
+  conclusions := [
+    "Uniform power envelopes descend to the supplied surjective image. Completeness is required only on the target, and the source may be incomplete.",
+    "The complementary target operators obey norm(c) at most qA+qB, derived from the original operator bounds and quotient complementarity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/QuotientPowerEnvelope.lean"
+      declarations := [
+        "IDT.QMClosure.QuotientPowerEnvelope.intertwining_power",
+        "IDT.QMClosure.QuotientPowerEnvelope.surjective_power_envelope",
+        "IDT.QMClosure.QuotientPowerEnvelope.quotient_complementary_rate_bound"] }]
+  plannedArtifacts := []
+  dependencies := ["complementary_power_envelope_kernel"]
+  limits := [
+    "The descent theorem assumes no right inverse or supplied quotient norm envelope. It still requires an actual continuous surjective intertwiner and target operators.",
+    "The kernel does not construct a shared hidden quotient carrying both low-endpoint bounds and scalar complementarity."] }
+
+def complementaryPowerEnvelopeKernel : ResearchTask := {
+  id := "complementary_power_envelope_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Two continuous linear operators on one nontrivial real or complex normed carrier satisfy A+B=c identity.",
+    "Both operators have fixed uniform all-power envelopes on that same carrier, with independent positive rates qA and qB."]
+  conclusions := [
+    "Scalar complementarity derives commutation. The binomial expansion gives the sum-rate envelope and forces norm(c) at most qA+qB.",
+    "For equal positive real rates, the real complementary scalar is at most twice that rate."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ComplementaryPowerEnvelope.lean"
+      declarations := [
+        "IDT.QMClosure.ComplementaryPowerEnvelope.complementary_commute",
+        "IDT.QMClosure.ComplementaryPowerEnvelope.commuting_sum_power_bound",
+        "IDT.QMClosure.ComplementaryPowerEnvelope.complementary_operator_rate_bound",
+        "IDT.QMClosure.ComplementaryPowerEnvelope.complementary_operator_equal_rate_bound"] }]
+  plannedArtifacts := []
+  dependencies := ["atomicity_spectral_boundary_kernel"]
+  limits := [
+    "The direct same-carrier obstruction needs no finite dimension, completeness, eigenvectors or real-complexification bridge.",
+    "The common nontrivial carrier and both compatible power envelopes remain premises. The theorem does not construct the hidden representation needed by the intended atomicity route."] }
+
+def commonHiddenCarrierContinuation : ResearchTask := {
+  id := "common_hidden_carrier_continuation"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The bounded-fibre, surjective-image and direct complementary-operator packages address distinct interfaces with their stated premises.",
+    "The proposed atomicity contradiction starts from a hypothetical nonzero hidden deviation. It does not assert unconditional existence of a nontrivial hidden carrier."]
+  conclusions := [
+    "The next substantive obligation is to derive a suitable nontrivial common carrier or quotient from that hypothetical deviation, with both low-endpoint envelopes and scalar complementarity, or identify an obstruction to this route.",
+    "Containment of the relevant hidden directions in the required fibre spans, compatible invariant representations and actual surjective intertwining maps remain to be established."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Under a hypothetical failure of atomicity, construct the common hidden invariant carrier and prove both endpoint-envelope transfers and complementary relation there, or supply a countercontrol to the proposed implication.",
+    "Prove the required hidden-fibre containment and quotient/representation existence from the intended operational geometry.",
+    "Continue the independent physical origins of fixed success, bounded fibres, positivity, marginal naturality and complete process comparisons."]
+  dependencies := [
+    "bounded_fibre_power_envelope_kernel", "quotient_power_envelope_kernel",
+    "complementary_power_envelope_kernel", "optimal_unread_atomicity_origin",
+    "phase_echo_interface_origin_continuation"]
+  limits := [
+    "The direct same-carrier scalar obstruction removes real-complexification norm transfer from that particular argument. A separate Lie/weight route may still need its own complexification and quotient norm theorems.",
+    "A bounded ordinary fibre span supplies no automatic hidden-carrier identification. The current packages leave full atomicity, independent primitive origin and full QM reconstruction open."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -12802,7 +12905,11 @@ def researchTasks : List ResearchTask := [
   pauliOrientationCompletionKernel,
   cnotPhaseDefectTransferKernel,
   complexAtomicitySpectralBoundaryKernel,
-  phaseEchoInterfaceOriginContinuation]
+  phaseEchoInterfaceOriginContinuation,
+  boundedFibrePowerEnvelopeKernel,
+  quotientPowerEnvelopeKernel,
+  complementaryPowerEnvelopeKernel,
+  commonHiddenCarrierContinuation]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
