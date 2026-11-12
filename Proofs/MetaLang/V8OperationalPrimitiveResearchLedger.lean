@@ -11052,14 +11052,14 @@ def generalFiniteCycleNullSelection : ResearchTask := {
     "Among cycles divisible by four, the contract alone universally forces P4 readout descent exactly for powers of two. Cycles not divisible by four have no response satisfying the contract."]
   checkedEvidence := []
   plannedArtifacts := [
-    "Proofs/QMClosure/FiniteCyclicAveraging.lean",
     "Proofs/QMClosure/GeneralFiniteCycleNullSelection.lean",
     "Proofs/QMClosure/FiniteCycleResidueReadoutCountermodels.lean"]
   dependencies := [
     "transparent_positive_power_rejoin_checked_core",
-    "eighth_rejoin_local_null_coalescence_descent"]
+    "eighth_rejoin_local_null_coalescence_descent",
+    "finite_cycle_first_column_balance_analytic"]
   limits := [
-    "The universal smoothing, parity/unit, separator, general descent and residue-family arguments are analytic and await formalization. Exact finite probes supply only their selected instances.",
+    "The numeric cyclic-averaging core, including eventual positivity of integral coefficient vectors with positive sum, is checked through the finite-cycle column-balance dependency. The general-cycle source parity/unit criterion, positive separator certificates, null-selection/descent theorem and residue-family arguments remain analytic and await formalization.",
     "Natural-count nonvanishing is a sufficient condition for this descent theorem. Its necessity for each individual descending response is outside the claim.",
     "The n=12 residue control uses a characteristic-three filter nested inside a complex evaluation. The concrete P8 min/support proofs supply no checked artifact for this different construction.",
     "Literal fourth equality, physical selection of cycles, Born actualization, full QM and physical scales remain open."]
@@ -11067,26 +11067,36 @@ def generalFiniteCycleNullSelection : ResearchTask := {
 
 def finiteCycleFirstColumnBalance : ResearchTask := {
   id := "finite_cycle_first_column_balance_analytic"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "Any semiring with a+b=1 and a^n=b^n for positive n, using the constructed units and rho=a*bInv with rho^n=1.",
     "W:S->Real is nonnegative at every preparation and satisfies W(a*p)+W(b*p)=W(p) at every preparation."]
   conclusions := [
-    "The analytic finite-cycle argument gives W(rho*p)=W(p) and W(a*p)=W(b*p)=W(p)/2 at every preparation.",
-    "The backward cyclic averages have fixed finite total mass; every changing terminal vector has one uniform bound. Uniform contraction then gives phase invariance by real Archimedean reasoning.",
-    "The column law derives W(0)=0. Prepared count comparisons from the zero bag to the unit bag supply a nonnegativity adapter.",
-    "With c=2ab, W(2p)=4W(cp). Exact c invariance is equivalent to global gain four under these premises; the half laws alone leave this gain open."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/FiniteCyclicAveraging.lean",
-    "Proofs/QMClosure/FiniteRejoinColumnBalance.lean"]
+    "The checked finite-cycle theorem gives W(rho*p)=W(p) and W(a*p)=W(b*p)=W(p)/2 at every preparation, for arbitrary semiring targets satisfying the exact positive finite-rejoin premises.",
+    "The checked numeric core bounds cyclic averaging uniformly for changing zero-sum terminal vectors, proves eventual strict positivity for integral coefficient vectors with positive total sum and proves constancy of backward nonnegative harmonic families.",
+    "The semiring adapter constructs the phase data and transfers backward harmonic constancy to phase invariance and the two half responses. The column law also gives W(0)=0; prepared zero-to-unit comparisons supply the nonnegativity needed by this theorem.",
+    "With c=2ab the half laws give W(2p)=4W(cp). Exact c invariance is equivalent to global gain four under these premises; the half laws alone leave this gain open."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteCyclicAveraging.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteCyclicAveraging.P_variable_terminal_abs_le",
+        "IDT.QMClosure.FiniteCyclicAveraging.exists_T_iterate_pos",
+        "IDT.QMClosure.FiniteCyclicAveraging.backward_nonnegative_harmonic_constant"] },
+    { sourcePath := "Proofs/QMClosure/FiniteRejoinColumnBalance.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRejoinColumnBalance.rho_data",
+        "IDT.QMClosure.FiniteRejoinColumnBalance.phase_power_invariant",
+        "IDT.QMClosure.FiniteRejoinColumnBalance.phase_invariant",
+        "IDT.QMClosure.FiniteRejoinColumnBalance.half_responses"] }]
+  plannedArtifacts := []
   dependencies := [
     "transparent_positive_power_rejoin_checked_core"]
   limits := [
-    "The general finite-cycle theorem and numeric cyclic-averaging draft are uncompiled. The checked fourth-cycle theorem retains its stronger supplied exact-c contract and separate task.",
+    "The checked result concerns the numeric averaging core and finite-rejoin column-balance adapter. General finite-cycle null selection, separator construction and residue-family descent retain their separate analytic obligations.",
     "Real output and the Archimedean conclusion are substantive. General ordered response objects require a different theorem; the existing lexicographic control retains its role.",
-    "Normalization, response continuity and physical availability of all inverse-context preparations remain separate issues. No readout norm classification or QM closure is established here."]
+    "The checked fourth-cycle theorem retains its separate exact-c contract. Normalization, response continuity, physical availability of inverse-context preparations and norm selection are separate issues.",
+    "Physical origins of source relations and response laws, Born actualization, Hilbert reconstruction, dynamics, composites, full QM, GR and physical-scale closure remain open."]
 }
 
 def eighthRejoinNullClosedEchoCountercontrol : ResearchTask := {
@@ -11113,32 +11123,287 @@ def eighthRejoinNullClosedEchoCountercontrol : ResearchTask := {
 
 def initialColumnOrderEchoReadoutSelection : ResearchTask := {
   id := "initial_column_order_echo_readout_selection_analytic"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "The exact literal P4 both-coordinate normal form, actual dyadic geometry and canonical generator swap J.",
-    "W:P4->Real has W(1)=1, universal first-column conservation, W(c*p)>=W(p), universally prepared natural-count order and W(p*J(p))=W(p)^2."]
+    "W:P4->Real has exactly W(1)=1, universal first-column conservation, W(c*p)>=W(p), universally prepared natural-count order and W(p*J(p))=W(p)^2."]
   conclusions := [
-    "The independently reviewed analytic theorem gives W=N on all actual P4 preparations using finite-cycle column balance, exact dyadic relative landings, a uniform annulus bound and echo amplification.",
-    "Vacuum zero and T-nullity follow from the supplied contract. Raw mixed zero, multiplicativity and response continuity are absent from the supplied contract.",
-    "The accepted relative-landing interface takes actual r,p with positive shadows and positive dyadic d such that E(r)=d*E(p), under universally prepared count order and forward c response increase. An internal c shift gives an actual response-increasing finite program landing at raw(s,t)*p with positive dyadic counts arbitrarily close to d. Exact complex and shadow equality reflection is required.",
-    "Upper annulus landing uses dyadic d=x. Lower landing uses d=1/4 and a uniform response fraction 1/16; repeated echo removes the fixed fraction after integer calibration."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/InitialEchoCoordinates.lean",
-    "Proofs/QMClosure/InitialDyadicRelativeLanding.lean",
-    "Proofs/QMClosure/InitialColumnOrderEchoSelection.lean"]
+    "The checked selected theorem gives W(p)=Complex.normSq(E(p)) for every actual p under the exact five-field Contract. The checked norm_model inhabits that contract and exists_unique_response establishes nonvacuous unique numerical response selection.",
+    "The checked coordinates give E(Jp)=conj(Ep), shadow preservation, exact echo coordinates, real-axis J fixedness and an actual inverse of h.",
+    "The checked relative_landing interface takes actual r,p with positive shadows and positive dyadic d such that E(r)=d*E(p), under universally prepared count order and forward c response increase. For every positive tolerance it constructs a response-increasing finite multiplier M with M*r=raw(s,t)*p and positive dyadic endpoint counts arbitrarily close to d, using exact both-coordinate equality.",
+    "The checked proof derives vacuum zero, nonnegativity, half and h scaling, null annihilation, uniform annulus/global bounds, integer calibration and a uniform lower fraction. Echo amplification selects the norm response. Exact c invariance, numerical multiplicativity, null insertion and prepared raw mixed zero are checked consequences."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialEchoCoordinates.lean"
+      declarations := [
+        "IDT.QMClosure.InitialEchoCoordinates.E_comp_J",
+        "IDT.QMClosure.InitialEchoCoordinates.E_J",
+        "IDT.QMClosure.InitialEchoCoordinates.q_J",
+        "IDT.QMClosure.InitialEchoCoordinates.E_echo",
+        "IDT.QMClosure.InitialEchoCoordinates.q_echo",
+        "IDT.QMClosure.InitialEchoCoordinates.J_fixed_of_real",
+        "IDT.QMClosure.InitialEchoCoordinates.h_mul_hInv",
+        "IDT.QMClosure.InitialEchoCoordinates.hInv_mul_h"] },
+    { sourcePath := "Proofs/QMClosure/InitialDyadicRelativeLanding.lean"
+      declarations := [
+        "IDT.QMClosure.InitialDyadicRelativeLanding.relative_landing_of_shadow_lt",
+        "IDT.QMClosure.InitialDyadicRelativeLanding.relative_landing"] },
+    { sourcePath := "Proofs/QMClosure/InitialColumnOrderEchoSelection.lean"
+      declarations := [
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.Contract",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.selected",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.norm_model",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.exists_unique_response",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.response_zero",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.response_nonnegative",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.null_response",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.c_equality",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.multiplicative",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.null_insertion",
+        "IDT.QMClosure.InitialColumnOrderEchoSelection.raw_mixed_zero"] }]
+  plannedArtifacts := []
   dependencies := [
     "transparent_fourth_exact_initial_normal_form",
     "initial_count_geometry_and_prepared_order",
     "finite_cycle_first_column_balance_analytic"]
   limits := [
-    "The route has fresh independent analytic acceptance. The assembled selection theorem, finite-cycle helper and new proof packages remain uncompiled with empty checked evidence.",
-    "The route exchanges assumptions with the older scalar/word reconstruction packages. An overall weaker contract is outside the claim; those older tasks retain their separate analytic formalization obligations.",
-    "Formalize E(Jp)=conj(Ep), shadow preservation, real-axis fixedness and echo coordinates explicitly. Canonical self-echo remains a supplied paired operational law with a separate physical-origin obligation.",
-    "The proportional complex-coordinate factor d is dyadic in the accepted relative-landing interface. The construction uses the supplied forward c increase internally; its shadow-ratio condition arises after that shift. A general rational d needs a separate denominator-clearing argument.",
-    "Programs are finite per target and tolerance. A uniform program-cost bound and physical availability are outside the analytic result.",
-    "Operational origins of conservation, order, canonical pairing and echo remain supplied/open. Born actualization, Hilbert reconstruction, dynamics, composites, full QM, GR and physical scales remain open."]
+    "The route exchanges assumptions with the older scalar/word reconstruction packages. Those older tasks retain their own analytic formalization obligations; their proof closure is separate from this checked five-schema theorem.",
+    "Canonical self-echo remains a supplied paired operational law with a separate physical-origin obligation. The physical origin of the exact P4 carrier and universally prepared contexts also remains supplied/open.",
+    "The proportional complex-coordinate factor d is dyadic in the checked relative-landing interface. The construction uses supplied forward c increase internally. A general rational d requires a separate denominator-clearing argument.",
+    "Programs are finite per source, target and tolerance. Uniform operational cost and physical availability remain separate obligations. Response continuity, raw calibrated response, global numerical multiplicativity and null-zero fields are absent from the supplied Contract.",
+    "Born/readout actualization, Hilbert representation, reversible dynamics, composites, full QM, GR and physical-scale origins remain open."]
+}
+
+def initialColumnEchoOmissionControls : ResearchTask := {
+  id := "initial_column_echo_omission_controls_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal initial P4 with exactly a+b=1 and a^4=b^4, its both-coordinate normal form, complex evaluation E, nonnegative real shadow q and canonical generator swap J. Put N=normSq(E), c=2ab and B(n,m)=na+mb.",
+    "The tested package consists of unit normalization, universal first-column conservation, universal oriented c increase, universally prepared coordinatewise natural-count order and universal canonical self-echo. Responses may be arbitrary real-valued functions."]
+  conclusions := [
+    "Five independently accepted analytic omission certificates establish relative nonredundancy of these five schemas on this fixed carrier. Each control retains the other four schemas universally, is nonnegative and vanishes at actual zero.",
+    "Omitting unit uses the zero response. Omitting column conservation uses N^2, whose first column at one is 1/2. Omitting c increase uses q, with q(c)=1/2<q(1)=1.",
+    "Omitting prepared order uses N on N>=q and zero otherwise. At the actual preparation p=1+e with (E(p),q(p))=(1,2), ordered count pairs (0,2)<=(1,2) have responses 2 and 0.",
+    "Omitting self-echo uses the continuous dyadically homogeneous radial response f(N), where f(2^k t)=2^k*(t+(t-1)*(2-t)/2) for 1<=t<=2 and integer k, with f(0)=0. At actual p=1+2rho, rho=a*bInv, N(p)=5 and the echo defect is -123/64."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/InitialColumnEchoOmissionControls.lean",
+    "Define all five responses, prove the four retained schemas universally for each and exhibit the actual failed-schema witness. Prove annulus boundary agreement and continuity of the self-echo omission control, including zero."]
+  dependencies := [
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "These are analytic certificates awaiting formalization and frozen-source kernel/premise/axiom/unsafe review. The checked evidence list is empty.",
+    "The normalization certificate is the trivial zero response. Its applicability is to the stated arbitrary-response class; an additional nontriviality condition changes that premise package.",
+    "The result establishes relative nonredundancy on literal P4. Global minimality of primitives and physical necessity remain separate obligations.",
+    "Continuity belongs to the displayed self-echo omission control. The physical origins of P4, canonical pairing and all-context response schemas remain supplied/open. Born actualization, Hilbert reconstruction, dynamics, composites and physical scales remain open."]
+}
+
+def initialRobustColumnEchoSelection : ResearchTask := {
+  id := "initial_robust_column_echo_selection_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P4 carrier, both-coordinate normal form, complex evaluation E, nonnegative real shadow q, canonical swap J and actual finite dyadic preparation geometry. Put N=normSq(E), h=ab and c=2ab.",
+    "W:P4->Real satisfies W(1)=1, W(ap)+W(bp)=W(p) for every p, W(cp)>=W(p) for every p, and coordinatewise natural-count order at every actual preparation.",
+    "There is ONE fixed finite real C>=1 such that EVERY actual p satisfies W(p)^2/C<=W(p*J(p))<=C*W(p)^2. The same C applies to all powers, shadows and tested preparations."]
+  conclusions := [
+    "The independently accepted universal analytic theorem gives N(p)/C<=W(p)<=C*N(p) for every actual preparation p, with the exact factor C. At N(p)=0 it gives W(p)=0 exactly.",
+    "The proof derives zero response, nonnegativity, half scaling and integer h scaling from the four exact laws. An echo-free annulus bound is uniform in shadow; distorted-echo iteration on powers, integer lower calibration and finite relative landing give the two exact-factor real-axis bounds. Echo then transfers them to arbitrary p.",
+    "For 1<C<=2^(1/3), continuous radial controls satisfying the four exact laws and the same uniform distorted echo show optimality of both factors. Actual dyadic scalar preparations approach response ratios C and 1/C. The actual norm-5 preparation attains the extreme echo-distortion ratios."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/InitialRobustColumnEchoSelection.lean",
+    "Formalize distorted-echo iteration with nonnegative powers, exact C exponent accounting, the uniform annulus and lower-fraction amplification arguments and the final nonnegative square-root comparison.",
+    "Formalize the optional periodic Lipschitz controls and their actual dyadic sharpness sequences separately from the universal bound."]
+  dependencies := [
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "The robust theorem and sharpness controls are analytic results awaiting formalization with empty checked evidence. Fresh independent analytic acceptance supplies no kernel status.",
+    "The uniformity of C over every actual preparation is substantive. A preparation-dependent constant and finitely many echo measurements are outside this conclusion.",
+    "Sharpness is established on 1<C<=2^(1/3), together with the normalization boundary C=1. Optimality for larger C remains open in this packet. The limiting irrational norm is approached by actual preparations.",
+    "Response continuity, measurability and numerical multiplicativity are absent from the theorem premises. The proof uses numerical power comparisons and finite programs chosen per target/tolerance.",
+    "Physical origins of the carrier, canonical pairing, universally prepared comparisons and response laws remain supplied/open. Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale closure remain open."]
+}
+
+def initialEchoProbeCountermodels : ResearchTask := {
+  id := "initial_echo_probe_countermodels_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P4 normal form, complex evaluation E, real shadow q, canonical swap J and actual inverse words a^r*b^s for all integer r,s. Put N=normSq(E) and c=2ab.",
+    "The four exact response laws are unit normalization, universal first-column conservation, universal oriented c increase and universally prepared coordinatewise natural-count order.",
+    "F is any finite family of actual preparations. Echo(p) denotes W(p*J(p))=W(p)^2."]
+  conclusions := [
+    "For EVERY finite F there EXISTS a response W different from N satisfying the four laws and exact echo at every inverse word and every inverse-word-scaled member of F.",
+    "A continuous radial construction f(N) uses a periodic product of squared sine factors vanishing at the finitely many tested logarithmic norm phases and their doubles. A small positive perturbation preserves monotonicity and dyadic homogeneity. An actual dyadic scalar from a finite candidate family witnesses nonidentity.",
+    "A separate discontinuous shadow-dependent finite-gap construction satisfies the same finite-family and full inverse-word-orbit tests. Two actual preparations with the same amplitude and different positive dyadic shadows have different responses.",
+    "The simpler shadow-step control also satisfies the four laws and all inverse-word echoes. At actual p=(1,2), its echo response is 1/2 and its squared response is 1/4."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/InitialEchoProbeCountermodels.lean",
+    "Formalize finite phase selection, periodic perturbations, the monotonicity estimate and actual nonidentity witnesses, preserving the order forall finite F, exists W.",
+    "Formalize the shadow-step and shadow-dependent finite-gap controls, including null cases, breakpoint branches and universal prepared count order."]
+  dependencies := [
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "The universal countermodel constructions have independent analytic acceptance and await formalization. The checked evidence list is empty.",
+    "The response may depend on F. A single response simultaneously passing every possible finite F is outside the claimed quantifier order.",
+    "The continuous radial controls are smooth on the positive scalar axis and continuous at zero. Differentiability at zero remains outside their established regularity. The shadow-dependent controls are discontinuous.",
+    "The inverse-word family is supplied by actual algebraic inverses. Exhaustion of all units by this family is outside the argument.",
+    "Finite echo probing leaves numerical selection and shadow independence underdetermined in this premise class. Physical operational availability, pairing origin, Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale closure remain open."]
+}
+
+def initialMaskedEchoSelection : ResearchTask := {
+  id := "initial_masked_echo_selection_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P4 normal form with both-coordinate equality reflection, complex evaluation E, real shadow q, canonical swap J and actual dyadic preparation geometry. Put N=normSq(E) and c=2ab.",
+    "W satisfies unit normalization, universal first-column conservation, universal oriented c increase and universally prepared coordinatewise natural-count order.",
+    "Fix one actual g with N(g)>0. Supply W((g*p)*J(g*p))=W(g*p)^2 for EVERY actual preparation p."]
+  conclusions := [
+    "The independently accepted universal analytic theorem gives W(p)=N(p) for every actual p from self-echo on the single nonnull principal ideal gP.",
+    "For E(g)=(u+i*v)/2^D and q(g)=t/2^H, choose positive natural M=t*(u^2+v^2) and actual r with coordinates (t*2^D*(u-i*v),2^H*(u^2+v^2)). Then g*r=(M,M), so MP is contained in gP by actual natural denominator clearing.",
+    "Restricted echo on MP supports power amplification, exact calibration of positive natural multiples of M, finite landing with one uniform positive lower fraction and equality W=N on MP. Actual scalar multiples of M approaching one from below and above then squeeze each fixed W(p) using prepared dyadic order.",
+    "The example g=3 has a proper nonunit principal ideal and is covered. When N(g)=0, all g-context echoes are automatic under the four laws, so the nonnull boundary is sharp for this scheme."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/InitialMaskedEchoSelection.lean",
+    "Formalize the both-coordinate natural denominator-clearing witness and membership/closure of MP under the exact operations used in echo amplification.",
+    "Prove calibration only where supplied restricted echo applies, then formalize the actual dyadic scalar lower and upper sandwiches. Keep the universal context quantifier and the null-mask case explicit."]
+  dependencies := [
+    "initial_column_order_echo_readout_selection_analytic",
+    "initial_echo_probe_countermodels_analytic"]
+  limits := [
+    "The theorem has fresh independent analytic acceptance and awaits formalization with empty checked evidence.",
+    "Echo is required for every actual context after one fixed nonnull mask. The context set is infinite. Finite probe success has its separate countermodel task.",
+    "The argument clears denominators with an actual natural M and uses actual dyadic preparations. Odd inverses and response continuity are absent from its premises.",
+    "Physical availability of all contexts, physical origin of canonical pairing and the P4 carrier, Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale closure remain open."]
+}
+
+def generatedNullIdealAndEighthRejoinCountermodels : ResearchTask := {
+  id := "generated_null_ideal_and_eighth_rejoin_countermodels_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "For the generic lemma, a unital Nat semiring is generated by a,b through positive source syntax. W is nonnegative, W(a*p)+W(b*p)=W(p) for every p, and its zero set is closed under addition.",
+    "For the concrete controls, use literal P8 with exactly a+b=1 and a^8=b^8, the checked evaluations X=normSq(E2) and Y=normSq(E1)*normSq(E3), canonical swap J, h=ab, c=2ab, T=a^2+b^2, s=a^4+b^4 and z=2a^4+b^4.",
+    "Define L(p)=X(p) when Y(p)=0 and min(X(p),Y(p)) otherwise. Define U(p)=0 when X(p)=0 and max(X(p),Y(p)) otherwise."]
+  conclusions := [
+    "The accepted generic analytic argument makes the zero set a left ideal on the positively generated semiring. Column conservation at zero gives zero membership, nonnegativity gives generator-left closure and positive syntax induction gives arbitrary left multiplication closure. P8 commutativity supplies right multiplication closure as well.",
+    "Both P8 controls satisfy the five response schemas, T-nullity and additive null closure. Their zero set is exactly the Gaussian kernel X=0, a proper two-sided ideal on commutative P8; they also satisfy zero-product separation.",
+    "For L, the P4-equal fiber terms s*z and (2*a^4)*z have responses 9/64 and 1/16. Fixed-s multiplication fails because L(s)*L(z)=1/64. Also L(T)=0 while L(z+T)=9/16 and L(z)=1/16.",
+    "For U, the P4-equal terms s and 2*a^4 have responses 1/4 and 1. Fixed-s multiplication fails at c because U(s*c)=1/4 and U(s)*U(c)=1. Also U(T)=0 while U(s+T)=1 and U(s)=1/4.",
+    "L satisfies raw natural-count calibration at every natural h-word depth. Along actual z^n its ratio to X is 9^(-n), excluding every positive uniform lower factor. Along actual c^n, U=4^n and X=1, excluding every finite upper factor.",
+    "Both controls satisfy the other four fields of the checked local coalescence descent contract while violating its universal fixed-s multiplication field. Closure of the null set under addition and continuation leaves null-insertion invariance and response constancy on P4 fibers unforced."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/GeneratedNullIdeal.lean",
+    "Proofs/QMClosure/EighthRejoinNullIdealReadoutCountermodels.lean",
+    "Formalize the generic left-sided lemma with its exact generation hypothesis, then use P8 commutativity for the two-sided specialization.",
+    "Define L,U from the checked evaluations, prove all retained schemas universally and verify exact null sets, fiber/fixed-s/insertion witnesses, natural raw h-word calibration for L and the two quantified power families. State satisfaction of the other four local-contract fields as an explicit conjunction."]
+  dependencies := [
+    "eighth_rejoin_presentation_and_readout_countermodels",
+    "eighth_rejoin_local_null_coalescence_descent"]
+  limits := [
+    "These generic and concrete results are analytically accepted and await formalization with empty checked evidence. A source draft or supplemental finite check supplies no new kernel status.",
+    "The generic semiring conclusion is a left ideal. Two-sided closure requires the P8 commutativity specialization or a separately supplied right-closure argument.",
+    "Raw calibration for L uses natural counts and natural h-word depth. Exact c transparency and raw dyadic scalar calibration belong to the separate stronger-control task.",
+    "The lower and upper comparison failures use two separate responses. Classification of all responses and global primitive minimality remain open.",
+    "The existing local descent theorem retains its exact fixed-s multiplication premise. Physical source/response origins, null-insertion justification, Born actualization, Hilbert reconstruction, dynamics, composites and physical scales remain open."]
+}
+
+def eighthRejoinCalibratedNullIdealCountermodels : ResearchTask := {
+  id := "eighth_rejoin_calibrated_null_ideal_countermodels_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P8 source and checked maps X,Y,E1,E3, canonical swap J and actual inverse of two. Put h=ab, c=2ab, T=a^2+b^2, s=a^4+b^4 and z=2a^4+b^4.",
+    "For the lower control, h1=(2-sqrt(2))/2, h3=(2+sqrt(2))/2 and t=(log(h3)+log(2))/(log(h3)-log(h1)), with 1/2<t<1. Put Z=normSq(E1)^t*normSq(E3)^(1-t) and Rlower(p)=X(p) when Y(p)=0, min(X(p),Z(p)) otherwise.",
+    "For the upper family use the canonical real semiring shadow q(a)=q(b)=1/2 and its positive-syntax zero-detection property. Put k=1/sqrt(2), d0=log(1+k)-k*log(2), rho=d0/(d0+log(2)), with 0<rho<1, and fix 0<epsilon<=1/4.",
+    "Set v=1+epsilon*(1+rho-k*(1-rho)) and r=2*epsilon*k*(1-rho). On X>0 and Y>0 define C=X^v*normSq(E1)^(-epsilon)*normSq(E3)^(-epsilon*rho)*q^r. Define Rupper=0 on X=0, X on X>0 and Y=0, and max(X,C) on X>0 and Y>0."]
+  conclusions := [
+    "The independently accepted analytic lower control and every upper-family member are finite-valued real responses satisfying all five response schemas, T-nullity, additive null closure and the exact null set X=0, a proper two-sided ideal on commutative P8 with zero-product separation.",
+    "Both controls have exact c transparency, exact degree-two gain R(d*p)=d^2*R(p) for every actual nonnegative dyadic scalar d and every p, and quadratic raw calibration for all actual nonnegative dyadic counts at every natural h-word depth.",
+    "For the lower control Rlower(z)=1/16 and X(z)=9/16. The universally prepared mixed-zero cell after z with lower corner (1,1) has a strict negative defect. The P4-equal terms s*z and (2*a^4)*z have responses 9/64 and 1/64; fixed-s multiplication and null insertion at z+2T fail.",
+    "For every natural n, Rlower(z^n)/X(z^n)=9^(-n), excluding every positive uniform lower factor. Along actual p_j=s+2^(-j)*a^4, its response tends to zero while Rlower(s)=1/4, giving an explicit evaluation-topology discontinuity.",
+    "For the upper family put F=3^(2*epsilon*(1+rho))>1. Then Rupper(z^n)/X(z^n)=F^n for every natural n, excluding every finite uniform upper factor. Also Rupper(s*z)=9/64 and Rupper((2*a^4)*z)=(9/64)*F, so P4 descent and fixed-s multiplication fail.",
+    "At each actual p_d=s+d*a^4 with positive dyadic d, Rupper(p_d)/X(p_d)=((2+d)/d)^(2*epsilon*(1+rho)). These finite responses are unbounded as d tends to zero through actual dyadics. With phase=a*bInv and r_d=2*phase^2*p_d, E2(r_d)=(2+d)/2 lies in [1,3/2] for 0<d<=1 while Rupper(r_d)=4*Rupper(p_d) is unbounded."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Prove the actual P8 inverse of two first using half=a^8+4*a^7*b+14*a^6*b^2+28*a^5*b^3+35*a^4*b^4+28*a^3*b^5+14*a^2*b^6+4*a*b^7 and 2*half=1 from the positive eighth-binomial expansion and a^8=b^8. Construct actual dyadic scalars from this finite source term before using dyadic calibration.",
+    "Proofs/QMClosure/EighthRejoinCalibratedNullIdealCountermodel.lean",
+    "Proofs/QMClosure/EighthRejoinShadowUpperCountermodel.lean",
+    "For the lower control formalize logarithmic calibration, positive exponents, nonnegative real-power products including zero bases, raw-formula monotonicity and the concavity comparison, followed by the exact witnesses.",
+    "For the upper family construct q and prove only the required positive-syntax zero detection. Prove logarithmic parameter bounds and calibration, raw character monotonicity, finite-valued positive-branch negative powers, all retained laws and the actual unbounded-ratio and fixed-annulus families."]
+  dependencies := [
+    "eighth_rejoin_presentation_and_readout_countermodels",
+    "eighth_rejoin_local_null_coalescence_descent",
+    "generated_null_ideal_and_eighth_rejoin_countermodels_analytic"]
+  limits := [
+    "Both families are analytic exclusions awaiting formalization with empty checked evidence. Their logarithm, real-power, monotonicity and Archimedean obligations remain pending Lean proof.",
+    "The upper character uses negative exponents only on strictly positive bases. Every individual response is finite. Its shadow evaluation requires zero detection; a faithful full multiple-evaluation normal form is outside its assumptions.",
+    "The lower and upper comparison failures use separate responses. Their dyadic/raw/h-word laws retain those actual preparation domains. The universally prepared quadratic and mixed-zero schemas are outside this task's retained law list.",
+    "The lower control is discontinuous and the upper family is unbounded near s in the evaluation topology. Sufficiency of adding continuity or local boundedness remains open in this packet.",
+    "Exact c transparency, dyadic scalar gain and raw dyadic calibration leave P4 descent and numerical response selection underdetermined in this premise class. Physical origin, canonical pairing, Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale closure remain open."]
+}
+
+def eighthRejoinArithmeticReadoutCountermodel : ResearchTask := {
+  id := "eighth_rejoin_arithmetic_readout_countermodel_analytic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P8 source, checked actual generator inverses and evaluations E1,E2, canonical swap J, h=ab, c=2ab, T=a^2+b^2 and s=a^4+b^4. Put phase=a*bInv, so E2(phase)=i and E1(phase)=(1-i)/sqrt(2).",
+    "Let K=Q(sqrt(2)), D=Z[sqrt(2)], piL=3+sqrt(2), piR=3-sqrt(2), X=normSq(E2) and H=normSq(E1) with its K-valued interpretation.",
+    "The proposed response is R(p)=X(p) when H(p)=0, and X(p)*chi(H(p)) otherwise, where chi(x)=7^((wL(x)-wR(x))/2) for nonzero x in K. The analytic construction defines and proves the required prime orders wL,wR from piL,piR."]
+  conclusions := [
+    "The independently accepted elementary analytic construction proves the two prime-division residue criteria in D, finite maximal prime orders from the integer norm bound, product additivity, denominator independence on K and equal rational restrictions of wL,wR. The real half-exponent character is strictly positive, finite and multiplicative on nonzero K.",
+    "For every nonzero actual nonnegative dyadic bag B(n,m), the forms n^2-3nm+m^2 and n^2+3nm+m^2 are anisotropic modulo seven after common seven-factor removal. Hence wL(H(B))=wR(H(B)) and chi(H(B))=1, including count axes and arbitrarily high common seven divisibility.",
+    "The same total response R satisfies R(B(n,m)*p)=((n^2+m^2)/2)*R(p) for EVERY actual p and ALL actual nonnegative dyadic n,m, including every H=0 and zero-bag case. It therefore satisfies universal prepared order and mixed zero, all raw/h-word calibrations, dyadic scalar gain, normalization, column conservation, exact c transparency, canonical self-echo and T-nullity.",
+    "Its null set is exactly the Gaussian kernel X=0, a proper two-sided ideal on commutative P8 with additive null closure and zero-product separation.",
+    "The actual positive-word preparations pPlus=3+phase+phase^7 and pMinus=3+phase^3+phase^5 both have X=9, while R(pPlus)=63 and R(pMinus)=9/7. For every natural n the SAME response has ratios R(pPlus^n)/X(pPlus^n)=7^n and R(pMinus^n)/X(pMinus^n)=7^(-n), excluding every finite uniform upper factor and every positive uniform lower factor.",
+    "Null insertion fails because R(T)=0, R(pPlus+T)=9 and R(pPlus)=63. The P4-equal terms s*pPlus and (2*a^4)*pPlus have responses 9/4 and 63/4, so P4 descent and fixed-s multiplication fail. The response retains the other four fields of the checked local coalescence descent contract."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Prove the actual P8 inverse of two first using half=a^8+4*a^7*b+14*a^6*b^2+28*a^5*b^3+35*a^4*b^4+28*a^3*b^5+14*a^2*b^6+4*a*b^7 and 2*half=1 from the positive eighth-binomial expansion and a^8=b^8. Construct actual dyadic scalars from this finite source term before using dyadic calibration.",
+    "Proofs/QMClosure/EighthRejoinArithmeticReadoutCountermodel.lean",
+    "Formalize the K-valued evaluation H and the elementary prime-division/order construction, including the norm bound, product law, denominator independence and rational restrictions.",
+    "Formalize both finite-field anisotropy facts and equal bag orders with all axes/common-seven-factor cases, then prove positivity and multiplication of the real half-exponent character.",
+    "Define the total response with its explicit H=0 branch. Prove the universal prepared dyadic quadratic formula, all remaining schemas, exact null set and actual witness/power families, preserving the exceptional branch in every multiplication argument."]
+  dependencies := [
+    "eighth_rejoin_presentation_and_readout_countermodels",
+    "eighth_rejoin_local_null_coalescence_descent",
+    "generated_null_ideal_and_eighth_rejoin_countermodels_analytic"]
+  limits := [
+    "This is an independently accepted universal analytic countermodel awaiting formalization with empty checked evidence. The elementary prime-order, real-character and universal response proofs remain Lean obligations.",
+    "The character is defined only on nonzero K. The response has a separate H=0 branch. Multiplicativity of the character on nonzero arguments supplies no global numerical response multiplication across that branch.",
+    "The exponent (wL-wR)/2 is a real half-integer exponent. General evenness of the order difference is absent from the construction. The prime orders are mathematical ingredients justified by the analytic construction, with their formal artifacts pending.",
+    "The argument uses actual source preparations and existing evaluations. Faithful full P8 representation, full number-field prime classification and a classification of all responses are outside its assumptions and conclusions.",
+    "Universally prepared quadratic readout and mixed zero still leave fixed-s cancellation, P4 descent and null insertion unforced under the stated P8 package. Physical origins, canonical pairing, Born actualization, Hilbert reconstruction, dynamics, composites and physical scales remain open."]
+}
+
+def primitiveOriginOperationalCourseAudit : ResearchTask := {
+  id := "primitive_origin_operational_course_audit"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The original objective is an independently motivated local generative or operational origin of cancellation, composition, conjugation, order and echo.",
+    "The present cluster strengthens conditional reconstruction and supplies structural exclusions. The operational origin of its supplied carrier and response rules remains open."]
+  conclusions := [
+    "After each coherent milestone, before a large new package and after prolonged work, assess which origin obligation changed, which consequences were formalized, why the next step could change an origin obligation and its falsifier or route-stop criterion. Check whether the desired structure is being reintroduced as a new axiom.",
+    "The next action is to investigate independently specified preparation, record-retention/discard and comparison operations that could justify invisibility of null insertion. Evaluate proposed two-input conservation operationally before adopting a stronger readout law.",
+    "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := [
+    "initial_column_order_echo_readout_selection_analytic",
+    "eighth_rejoin_arithmetic_readout_countermodel_analytic",
+    "operational_positive_readout"]
+  limits := [
+    "This entry is an open research plan and course-audit obligation. It records no new checked scientific result or physical-origin derivation.",
+    "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Proposed two-input lemmas retain their own unchecked status until actual proof artifacts and acceptance exist.",
+    "Conditional readout selection and exclusions retain their exact supplied mathematical premises. Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale origins remain open."]
 }
 
 def researchTasks : List ResearchTask := [
@@ -11318,6 +11583,14 @@ def researchTasks : List ResearchTask := [
   finiteCycleFirstColumnBalance,
   eighthRejoinNullClosedEchoCountercontrol,
   initialColumnOrderEchoReadoutSelection,
+  initialColumnEchoOmissionControls,
+  initialRobustColumnEchoSelection,
+  initialEchoProbeCountermodels,
+  initialMaskedEchoSelection,
+  generatedNullIdealAndEighthRejoinCountermodels,
+  eighthRejoinCalibratedNullIdealCountermodels,
+  eighthRejoinArithmeticReadoutCountermodel,
+  primitiveOriginOperationalCourseAudit,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
 
