@@ -11873,85 +11873,194 @@ def cubicRejoinReadoutCountercontrol : ResearchTask := {
 
 def twoPortConservationPairingOrigin : ResearchTask := {
   id := "two_port_conservation_pairing_origin"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "An additive commutative monoid V, additive endomorphisms A,B,C,D, and a real readout W.",
     "A and B are surjective. Every (z,0) is reachable under G(x,y)=(A(x)+B(y),C(x)+D(y)).",
     "For every x,y, W(A(x)+B(y))+W(C(x)+D(y))=W(x)+W(y)."]
   conclusions := [
-    "The independently accepted analytic pairing argument obtains mixed second differences independent of their base point. It subtracts four full conservation equations and compares a first-axis preimage with zero.",
+    "The checked conservation theorem obtains mixed second differences independent of their base point by comparing full conservation equations and a first-axis preimage.",
     "P(u,v)=(W(u+v)-W(u)-W(v)+W(0))/2 is symmetric and biadditive. L(x)=W(x)-W(0)-P(x,x) is additive, giving W(x)=W(0)+P(x,x)+L(x).",
     "The seven-term algebraic expression W(x+y+z)-W(x+y)-W(x+z)-W(y+z)+W(x)+W(y)+W(z) equals W(0). A zero vacuum gives I3=0.",
     "Full surjectivity of G supplies first-axis reachability under the remaining branch hypotheses. For a symmetric mixer, first-axis reachability is equivalent to full surjectivity.",
-    "The analytic Nat control A=B=id, C=D=0 and W(n)=n satisfies this minimal contract with nonnegative zero-vacuum readout, P=0 and nonzero L=W. Its outputs lie on the first axis.",
-    "The analytic identity-mixer control has A=D=id, B=C=0 and W(n)=n^3 on Nat. It has first-axis reachability and full mixer surjectivity, with a failed B-surjectivity premise and I3(1,1,1)=6.",
-    "The finite-rejoin symmetric core uses additional half gains and additive cancellation to eliminate the linear remainder. Pairing extraction itself uses the stated smaller contract."]
-  checkedEvidence := []
-  plannedArtifacts := ["Proofs/QMClosure/TwoPortConservationPairing.lean"]
+    "The checked Nat control A=B=id, C=D=0 and W(n)=n satisfies the minimal contract with nonnegative zero-vacuum readout, P=0 and nonzero L=W. Its two-port map fails full surjectivity.",
+    "The checked identity-mixer control has A=D=id, B=C=0 and W(n)=n^3 on Nat. It has first-axis reachability and full mixer surjectivity, with a failed B-surjectivity premise and I3(1,1,1)=6."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TwoPortConservationPairing.lean"
+      declarations := [
+        "IDT.QMClosure.TwoPortConservationPairing.base_independent_of_conservation",
+        "IDT.QMClosure.TwoPortConservationPairing.Polarization.symmetric",
+        "IDT.QMClosure.TwoPortConservationPairing.Polarization.add_left",
+        "IDT.QMClosure.TwoPortConservationPairing.Polarization.add_right",
+        "IDT.QMClosure.TwoPortConservationPairing.readout_decomposition",
+        "IDT.QMClosure.TwoPortConservationPairing.remainder_add",
+        "IDT.QMClosure.TwoPortConservationPairing.i3_eq_vacuum",
+        "IDT.QMClosure.TwoPortConservationPairing.i3_zero_of_vacuum",
+        "IDT.QMClosure.TwoPortConservationPairing.first_axis_of_surjective",
+        "IDT.QMClosure.TwoPortConservationPairing.symmetric_surjective_iff_first_axis",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_conserved",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_axis",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_nonnegative",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_vacuum",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_polarization",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_remainder_nonzero",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_linear_twoPort_not_surjective",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.identity_conserved",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.identity_first_axis",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.identity_twoPort_surjective",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_zero_not_surjective",
+        "IDT.QMClosure.TwoPortConservationPairing.Controls.nat_cubic_i3"] }]
+  plannedArtifacts := []
   dependencies := []
   limits := [
-    "This is an accepted analytic reduction in formalization with empty checkedEvidence. Pairing extraction, remainder decomposition and its controls require the planned Lean artifact and review.",
-    "Transparency, finite cycle, group structure, positivity and vacuum normalization are separate possible hypotheses. The supplied minimal contract is exactly the monoid, branch surjectivity, first-axis reachability and full two-input conservation above.",
-    "The linear remainder remains an obligation after pairing extraction. The nonnegative zero-vacuum Nat control retains it explicitly.",
+    "The accepted build and independent dependency review support only the supplied minimal monoid, branch-surjectivity, first-axis-reachability and universal two-input conservation contract.",
+    "The linear remainder survives this contract, including nonnegative zero-vacuum readouts. The finite-rejoin core has additional hypotheses that imply positive quadraticity.",
     "The I3 identity is algebraic. A physical experiment and whole-domain lossless preparation/readout access require independent operational bridges. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
 }
 
 def finiteRejoinReversibleQuadraticOrigin : ResearchTask := {
   id := "finite_rejoin_reversible_quadratic_origin"
-  stage := .inFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "An additive commutative monoid V and additive endomorphisms a,b with a+b=id and a^n=b^n for one supplied positive natural n.",
     "The complete symmetric two-port map F(x,y)=(a(x)+b(y),b(x)+a(y)) is surjective on V times V.",
     "The real readout has W(0)=0, W(p)>=0 for every p, and W(a(x)+b(y))+W(b(x)+a(y))=W(x)+W(y) for every pair x,y."]
   conclusions := [
-    "The accepted analytic core obtains native positive inverse words from finite rejoin and branch half gains from the existing finite-cycle column-balance result. A preimage of (p,0) then supplies an actual additive inverse for every p in the original monoid.",
-    "On that additive group, set r=a*bInv and R=r^2. Full conservation takes the form W(x+y)+W(x+R(y))=2*W(x)+2*W(y). Symmetry and phase invariance make translations by (R^2-id)(y) invisible to the readout.",
-    "Surjectivity of F gives surjectivity of a-b and then R-id. Translation invariance therefore covers (R+id)(y), giving the ordinary parallelogram law.",
-    "Positive quadraticity gives general null insertion, quadratic gains for every integer count, algebraic I3=0, W((a^2+b^2)(p))=0 and W((2*a*b)(p))=W(p). These are conclusions under the supplied full-domain contract.",
-    "Transparency and the branch half gains make the polarization of a(p) and b(p) zero. Thus W(n*a(p)+m*b(p))=((n^2+m^2)/2)*W(p) for natural n,m. Positivity gives universally prepared count order as a further conclusion."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/FiniteRejoinReversibleQuadraticReadout.lean",
-    "Proofs/QMClosure/FiniteRejoinQuadraticReadoutControls.lean"]
+    "Finite rejoin supplies native inverse words. Complete two-port surjectivity then gives an actual additive inverse for every element of the original monoid, with its original addition and zero preserved.",
+    "The checked half-response theorem gives W(a(p))=W(p)/2 and W(b(p))=W(p)/2. The reversible half-conservation theorem gives the ordinary parallelogram law on the reconstructed additive group.",
+    "The reconstruct theorem packages positive quadraticity, W((a^2+b^2)(p))=0 and W((2*a*b)(p))=W(p) for every preparation.",
+    "Checked consequences include general null insertion, square gains for natural and integer counts, algebraic I3=0 and zero polarization between a(p) and b(p).",
+    "For every preparation and natural n,m, W(n*a(p)+m*b(p))=((n^2+m^2)/2)*W(p). Componentwise prepared count order follows from positivity.",
+    "The canonical complex norm-square model satisfies the complete nonzero contract. Separate compiled controls expose vacuum normalization, positivity and whole-pair accessibility."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteRejoinReversibleQuadraticReadout.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Gate.additive_inverses",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Gate.carrierGroup",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.half_responses",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.parallelogram_of_reversible_half_conservation",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.reconstruct",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.count_square",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.integer_square",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.third_order_zero",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.null_translate",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.branch_orthogonal",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.prepared_count_weight",
+        "IDT.QMClosure.FiniteRejoinReversibleQuadraticReadout.Reconstruction.prepared_count_order"] },
+    { sourcePath := "Proofs/QMClosure/FiniteRejoinQuadraticReadoutControls.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRejoinQuadraticReadoutControls.CanonicalComplex.complete_nonzero_contract",
+        "IDT.QMClosure.FiniteRejoinQuadraticReadoutControls.VacuumControl.control_contract",
+        "IDT.QMClosure.FiniteRejoinQuadraticReadoutControls.PositivityControl.control_contract",
+        "IDT.QMClosure.FiniteRejoinQuadraticReadoutControls.SurjectivityControl.incomplete_contract"] }]
+  plannedArtifacts := []
   dependencies := [
     "finite_cycle_first_column_balance_analytic",
     "operational_positive_readout",
     "positive_quadratic_polarization"]
   limits := [
-    "The immutable core source is uncompiled. This task remains in formalization with empty checkedEvidence until its build, actual premise/dependency audit and independent artifact review.",
-    "The hypothesis package exchanges exact swap-square for supplied whole-pair surjectivity and lossless positive conservation. Surjectivity is the stated accessibility condition. The two packages retain separate physical-origin obligations.",
-    "Continuity, echo and additional readout monotonicity would change the approved input contract. Count-square gain, c invariance and null insertion belong to its conclusions.",
-    "The same-branch operator is readout-null on every input. Literal fourth rejoin on the original full carrier has a separate countercontrol, and the observational quotient remains a separate analytic continuation.",
+    "This conditional kernel theorem has an accepted build and independent source/dependency review. Its universal hypotheses concern the entire supplied carrier and pair domain.",
+    "Whole-pair surjectivity and lossless positive conservation carry explicit physical-origin obligations. Exact swap-square routes retain their own supplied contracts.",
+    "Continuity, echo and additional readout monotonicity would add premises. Count-square gain, c=2*a*b invariance and null insertion are conclusions here.",
+    "The same-branch operator is readout-null on every input. The checked observable quotient and original-carrier countercontrol are recorded in finite_rejoin_observable_native_readout_checked. Broad continuation obligations remain in finite_rejoin_observational_quotient_native_arithmetic.",
     "Physical origins of the additive carrier, whole pair-domain accessibility, finite operator rejoin, lossless conservation and real positive readout remain open, together with Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins."]
 }
 
 def finiteRejoinObservationalQuotientNativeArithmetic : ResearchTask := {
   id := "finite_rejoin_observational_quotient_native_arithmetic"
-  stage := .analyticAwaitingFormalization
+  stage := .inFormalization
   review := .notYetKernelChecked
   assumptions := [
-    "The additive group and positive quadratic readout supplied by the proposed finite-rejoin surjective two-port core.",
-    "The observational relation is W(x-y)=0, with null subgroup N={x | W(x)=0}. Native operators act through the additive quotient V/N.",
-    "Nontrivial arithmetic and cycle conclusions use an explicit preparation with positive W. The normalized native-echo conclusion uses a supplied reference v with W(v)=1."]
+    "The additive group and positive quadratic readout supplied by the checked finite-rejoin surjective two-port core.",
+    "The observational relation is W(x-y)=0, with null subgroup N={x | W(x)=0}. Native operators descend to the additive quotient V/N.",
+    "Faithful arithmetic, canonical conjugation and normalized native gain use a supplied preparation p with W(p)>0. Normalization divides by W(p)."]
   conclusions := [
-    "The accepted analytic quotient argument gives r^2=-id, a^2+b^2=0, 2*a*b=id, F^2=swap and a^4=b^4 as native quotient-operator identities. When W is nonzero, the supplied finite rejoin period is divisible by four.",
-    "For nonzero W, the native generated operator ring is a faithful Gaussian-dyadic arithmetic image. It has canonical coefficient conjugation and readout gain W(T(p))=normSq(eval(T))*W(p). A normalized nonzero reference gives native echo on its coefficient-generated preparation family.",
-    "The analytic accessibility control V=nonnegative reals with a=b=half and W(x)=x has transparency, finite rejoin and full conservation, with only diagonal two-port outputs. Its additive carrier and readout expose the whole-pair accessibility obligation.",
-    "The analytic conservation control on C^2 has W(z,w)=normSq(z)*normSq(w), t_1=1-sqrt(2), t_3=-1-sqrt(2), a_j=(1+i*t_j)/2 and b_j=conj(a_j). It has eighth rejoin, native half gains and an onto mixer. Inputs (1,0) and (0,1) have total response zero, and the two outputs have total response one.",
-    "For the canonical complex mixer, W=1 keeps full conservation with a nonzero vacuum. W=Re keeps vacuum zero and full conservation with a failed positivity premise. These analytic controls retain the separate vacuum and positivity boundaries.",
-    "The analytic literal-fourth control on C^2 uses visible coefficients (1+i)/2 and (1-i)/2, hidden coefficients (1+i*sqrt(3))/2 and its conjugate, and W(z,w)=normSq(z). It has period twelve and the core contract, with hidden a^2+b^2=-id and unequal fourth powers. The corresponding fourth identities hold observationally.",
-    "The analytic null-ideal control on C^2 uses canonical diagonal branches and W(z,w)=normSq(z+w). The null element (1,-1) becomes visible after componentwise ambient multiplication by (1,0), delimiting quotient transport to the native operator algebra.",
-    "A Gaussian-dyadic carrier realizes the finite algebraic package. Extending scalars or completing that carrier requires additional structure."]
+    "The checked quotient/native-readout substage is recorded in finite_rejoin_observable_native_readout_checked. It supplies reference-test equivalence, observable same=0 and cross=1, swap-square, fourth equality, faithful generated arithmetic, conjugation, universal native gain and paired echo under the exact checked contracts.",
+    "The broader accepted analytic continuation also predicts that nonzero W forces the supplied finite rejoin period to be divisible by four. This period-divisibility obligation remains unencoded.",
+    "Literal construction and identification of the original generated operator quotient R0/kerDelta remain unencoded. The checked arithmetic is the generated operator algebra after passage to V/N.",
+    "Physical accessibility of positive histories remains unencoded. The checked additive quotient and generated native operators alone leave that accessibility obligation open.",
+    "The pending combined conservation-omission certificate on C^2 uses W(z,w)=normSq(z)*normSq(w), t_1=1-sqrt(2), t_3=-1-sqrt(2), a_j=(1+i*t_j)/2 and b_j=conj(a_j). Its analytic eighth-rejoin, half-gain and onto-mixer claims, together with zero input total and output total one for inputs (1,0),(0,1), still require the combined checked artifact.",
+    "The pending ambient null-ideal control uses canonical diagonal branches on C^2 and W(z,w)=normSq(z+w). The analytic null element (1,-1) becomes visible after componentwise multiplication by (1,0). Its dedicated certificate remains unencoded.",
+    "A Gaussian-dyadic carrier realizes the finite algebraic package. Scalar extension, completion and physical interpretation retain separate obligations."]
   checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := [
+    "finite_rejoin_reversible_quadratic_origin",
+    "finite_rejoin_observable_native_readout_checked"]
+  limits := [
+    "This broad task remains incomplete and in formalization. Its checked substage has its own task and evidence. Period divisibility, positive-history accessibility, literal R0/kerDelta, the ambient null-ideal control and the combined P8 conservation-omission certificate remain outstanding.",
+    "The quotient equivalence uses a null difference. Equality of individual numerical weights has its own weaker relation.",
+    "Canonical conjugation acts on native generated coefficients. A whole-carrier conjugation, ambient-semiring ideal quotient and completed real or Hilbert structure require their own bridges.",
+    "Physical experimental interpretation, normalized-detector realization, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def finiteRejoinObservableNativeReadoutChecked : ResearchTask := {
+  id := "finite_rejoin_observable_native_readout_checked"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The full finite_rejoin_reversible_quadratic_origin contract, or its checked Reconstruction G W package on the reconstructed additive group.",
+    "The observable carrier is the additive quotient V/N, N={x | W(x)=0}, with equality characterized by W(x-y)=0.",
+    "Faithful generated arithmetic, canonical conjugation and general native operator gain use a supplied p with 0<W(p). The reference response is normalized internally by division by W(p)."]
+  conclusions := [
+    "Observable equality is equivalent to equality of W(x+z) and W(y+z) for every additive reference z. The descended readout is positive quadratic and has only the zero class at zero response.",
+    "The descended branch operators satisfy A^2+B^2=0, A*B+B*A=1, operation squared equals swap and A^4=B^4.",
+    "The positive-reference SourceResponse derives normalized serial multiplication. Generated evaluation is injective, and generatedArithmeticEquiv identifies the native generated ring with its Gaussian-dyadic arithmetic image. Canonical conjugation swaps A and B and is involutive.",
+    "Every native generated operator has a Gaussian-dyadic normal form. Its universal readout gain on every native preparation is the squared Gaussian norm divided by 4^k for that normal form.",
+    "Gain is independent of the positive reference, multiplicative under composition and invariant under canonical conjugation. Canonical conjugation is the adjoint for the reconstructed real polarization.",
+    "Paired echo is checked as an operator equality. If gain(T)+gain(S)=1, then T*conj(T)+S*conj(S)=id on the native observable carrier.",
+    "The checked unbalanced complex control satisfies the remaining transparent, invertible, onto, norm-square-conservation contract and has no positive finite rejoin. Its readout is quadratic, while its branch half gains and same-null conclusions fail.",
+    "The checked hidden-sector C^2 control has period twelve, the complete core contract and a normalized visible readout. Its original carrier has a nonzero same-branch output and unequal fourth branch powers in the hidden coordinate."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteRejoinObservableQuotient.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.projection_eq_iff",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.projection_eq_iff_all_reference_tests",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.positiveQuadratic",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.weight_eq_zero_iff",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.same_coefficients",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.cross_coefficients",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.operation_square",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.native_fourth_rejoin",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.sourceResponse",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.wordWeight_append",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.generatedEvaluation_injective",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.generatedArithmeticEquiv",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.canonicalConjugation_a",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.canonicalConjugation_b",
+        "IDT.QMClosure.FiniteRejoinObservableQuotient.canonicalConjugation_involutive"] },
+    { sourcePath := "Proofs/QMClosure/NativeOperatorQuadraticReadout.lean"
+      declarations := [
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.operator_normal_form",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.gain_value",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.weight_action",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.gain_reference_independent",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.gain_mul",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.gain_conjugation",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.value_paired_echo",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.pairing_operator_adjoint",
+        "IDT.QMClosure.NativeOperatorQuadraticReadout.normalized_paired_echo"] },
+    { sourcePath := "Proofs/QMClosure/FiniteRejoinCarrierChoiceControls.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.coefficient_ne_pow",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.remaining_contract",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.no_gate_with_these_branches",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.branch_invertible",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.quadratic_parallelogram",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.stronger_conclusions_fail",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.HiddenCubicSector.complete_readout_certificate",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.HiddenCubicSector.fourth_difference_at_hidden_state",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.HiddenCubicSector.original_carrier_failure_certificate"] }]
   plannedArtifacts := []
   dependencies := ["finite_rejoin_reversible_quadratic_origin"]
   limits := [
-    "This continuation and its controls are accepted analytic results with empty checkedEvidence. Their quotient, arithmetic, faithfulness, gain and control artifacts remain future obligations.",
-    "The quotient equivalence uses a null difference. Numerical level sets of W retain their own relation.",
-    "The canonical conjugation concerns native coefficients and their generated preparation family. A whole-carrier conjugation, arbitrary ambient-semiring ideal quotient and completed real or Hilbert structure each require their own bridge.",
-    "The controls record algebraic and readout boundaries. Physical experimental interpretation, normalized-detector realization, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+    "The six-source cluster has an accepted build and independent shared dependency audit. These conditional kernel artifacts establish the listed observable/native substage.",
+    "Faithfulness concerns generated operator evaluation. Numerical gain retains phase degeneracy. Arithmetic is generated inside the supplied additive-endomorphism algebra, and the concrete complex controls use imported complex arithmetic as their model space.",
+    "The fourth and swap-square identities use observable equality. Original-carrier equality retains the checked hidden-sector obstruction.",
+    "The broader task finite_rejoin_observational_quotient_native_arithmetic remains in formalization, with period divisibility, positive-history accessibility, literal R0/kerDelta, ambient null-ideal and combined P8 conservation-omission certificates outstanding.",
+    "The pairing adjoint and paired echo are algebraic. Physical adjoint, time reversal, detector implementation, whole-domain accessibility, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
 }
 
 def primitiveOriginOperationalCourseAudit : ResearchTask := {
@@ -11970,8 +12079,8 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "The finite calibration countercontrol F(p)=sqrt(max(N(p)^2,N(p)*q(p))) retains normalization, column conservation, prepared order, self-square, all-null silence and unit F(c)=1, yet the finite positive word p=1+e gives F(p)=sqrt(2) and F(c*p)=1. Its separate coordinate-continuity evidence concerns this same response. The global c origin obligation survives the specified unit c and dark-null calibration replacement. Adding finite calibration rules solely to remove this countercontrol leaves that origin question unresolved.",
     "The separately accepted analytic instability family gives, for each epsilon>0, one fixed response satisfying relative c tolerance for every preparation while having no finite upper factor against N on actual finite expressions with N=1. Its formalization remains open. Algebraic q/N bounds are mathematical domain restrictions, whose laboratory resource interpretation requires a separate bridge. The current physical question concerns the source of universal square response and full universally prepared c comparison.",
     "The literal dyadic detector countercontrol retains continuous coordinate readout, exact c equality, null insertion and all native branch-word gains, together with faithful coefficient action and exact serial composition. Its finite p=1+a witness still separates numerical square response from repeated algebraic process composition. The remaining detector-gain bridge concerns coherent operations beyond native a/b words.",
-    "The fixed-P4 stationary-tripler selector now has an independently accepted compiled proof, while its literal carrier and full-domain readout hypotheses remain supplied. The next origin-directed formalization is the finite-rejoin surjective two-port quadratic core and its lower-premise pairing reduction. These retain empty checkedEvidence. The cubic-carrier and earlier analytic follow-ups retain their existing statuses. Whole pair-domain access and lossless conservation are new explicit physical-origin obligations, and the actual normalized-detector bridge remains open.",
-    "The two-port pairing reduction separates a constant vacuum, symmetric biadditive pairing and additive linear remainder. The finite-rejoin core uses native half gains and additive cancellation to obtain positive quadraticity, null insertion and prepared count order. Fourth rejoin and Gaussian-dyadic arithmetic belong to a separate analytic observational-quotient continuation. This package exchanges premises with exact swap-square routes, and the overall origin goal remains open.",
+    "The fixed-P4 stationary-tripler selector, finite-rejoin surjective two-port quadratic core and lower-premise conservation pairing now have accepted compiled artifacts and independent review. The observable quotient/native-readout substage is also checked. The broader continuation retains its outstanding formalization obligations. The cubic-carrier and earlier analytic follow-ups retain their existing statuses. Whole pair-domain access, lossless conservation and the actual normalized-detector bridge remain explicit physical-origin obligations.",
+    "The checked two-port pairing reduction separates a constant vacuum, symmetric biadditive pairing and additive linear remainder. The checked finite-rejoin core obtains positive quadraticity, null insertion and prepared count order. Observable fourth rejoin, faithful generated arithmetic, canonical conjugation, universal gain and paired echo now have checked artifacts under the stated contracts and positive-reference premises. The broader continuation remains in formalization. Exact swap-square routes retain their own premises, and the overall origin goal remains open.",
     "Existing checked eighth-rejoin controls already record generic carrier-selection walls. The checked cubic generated-carrier construction adds a continuous product/subspace response with global multiplicativity, the corresponding four response equations and count calibration. Its finite depth-two algebraic I3 is -3/4 and null insertion fails. It has an even sixth-rejoin witness. The independent scalar-half extension remains an analytic continuation outside the checked two-generator C3 artifact. Its role is the continuous multiplicative combination and explicit graded witness alongside the earlier P8 controls. Existing literal-P4 selection retains its exact fourth-rejoin geometry.",
     "Pair-order preservation under the coherent tripler is a supplied two-equal-exposure ensemble promise. Its stationary-limit argument requires one common convergent subsequence across the countable carrier. The actual-P4 rational-equality countercontrol preserves every finite rational equality under literal multiplication while its tripler gain fails. Pure-preparation continuity and continuity on quotient ensemble means retain separate obligations.",
     "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
@@ -11997,7 +12106,8 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "eighth_rejoin_presentation_and_readout_countermodels",
     "two_port_conservation_pairing_origin",
     "finite_rejoin_reversible_quadratic_origin",
-    "finite_rejoin_observational_quotient_native_arithmetic"]
+    "finite_rejoin_observational_quotient_native_arithmetic",
+    "finite_rejoin_observable_native_readout_checked"]
   limits := [
     "This entry is an open research plan and course-audit obligation. Its stopped record-counting route remains analytic, and the cited event controls retain their original supplied contracts.",
     "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Independently motivated reversal, physical readout domains, calibrated attenuation, raw-response accounting and identification of reset trials with coherent echo require their own contracts and evidence.",
@@ -12203,6 +12313,7 @@ def researchTasks : List ResearchTask := [
   twoPortConservationPairingOrigin,
   finiteRejoinReversibleQuadraticOrigin,
   finiteRejoinObservationalQuotientNativeArithmetic,
+  finiteRejoinObservableNativeReadoutChecked,
   primitiveOriginOperationalCourseAudit,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]

@@ -579,5 +579,11 @@ lean_lib Proofs where
     `Proofs.QMClosure.ConservativeCrossIncrementReadout,
     `Proofs.QMClosure.ColumnConservationRobustnessCore,
     `Proofs.QMClosure.ColumnConservationRobustness,
-    `Proofs.QMClosure.ColumnConservationRobustnessControls
+    `Proofs.QMClosure.ColumnConservationRobustnessControls,
+    `Proofs.QMClosure.TwoPortConservationPairing,
+    `Proofs.QMClosure.FiniteRejoinReversibleQuadraticReadout,
+    `Proofs.QMClosure.FiniteRejoinQuadraticReadoutControls,
+    `Proofs.QMClosure.FiniteRejoinObservableQuotient,
+    `Proofs.QMClosure.NativeOperatorQuadraticReadout,
+    `Proofs.QMClosure.FiniteRejoinCarrierChoiceControls
   ]
