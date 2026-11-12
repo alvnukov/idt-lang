@@ -12083,6 +12083,7 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "The checked two-port pairing reduction separates a constant vacuum, symmetric biadditive pairing and additive linear remainder. The checked finite-rejoin core obtains positive quadraticity, null insertion and prepared count order. Observable fourth rejoin, faithful generated arithmetic, canonical conjugation, universal gain and paired echo now have checked artifacts under the stated contracts and positive-reference premises. The broader continuation remains in formalization. Exact swap-square routes retain their own premises, and the overall origin goal remains open.",
     "Existing checked eighth-rejoin controls already record generic carrier-selection walls. The checked cubic generated-carrier construction adds a continuous product/subspace response with global multiplicativity, the corresponding four response equations and count calibration. Its finite depth-two algebraic I3 is -3/4 and null insertion fails. It has an even sixth-rejoin witness. The independent scalar-half extension remains an analytic continuation outside the checked two-generator C3 artifact. Its role is the continuous multiplicative combination and explicit graded witness alongside the earlier P8 controls. Existing literal-P4 selection retains its exact fourth-rejoin geometry.",
     "Pair-order preservation under the coherent tripler is a supplied two-equal-exposure ensemble promise. Its stationary-limit argument requires one common convergent subsequence across the countable carrier. The actual-P4 rational-equality countercontrol preserves every finite rational equality under literal multiplication while its tripler gain fails. Pure-preparation continuity and continuity on quotient ensemble means retain separate obligations.",
+    "The checked transparent surjective-mixing reconstruction derives the original additive group and a nonnegative real biadditive diagonal from separate branch coverage, exact first-axis recovery and full two-input conservation. The unequal-gain no-rejoin model and transparency-omission routing control delimit this weaker contract. Its supplied laws retain their physical-origin obligations. The next origin question concerns an independently motivated reverse-operation algebra and its relation to the forward/branch-inverse operation grammar. The overall research goal remains active.",
     "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
   checkedEvidence := []
   plannedArtifacts := []
@@ -12107,13 +12108,73 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "two_port_conservation_pairing_origin",
     "finite_rejoin_reversible_quadratic_origin",
     "finite_rejoin_observational_quotient_native_arithmetic",
-    "finite_rejoin_observable_native_readout_checked"]
+    "finite_rejoin_observable_native_readout_checked",
+    "surjective_two_port_quadratic_origin"]
   limits := [
     "This entry is an open research plan and course-audit obligation. Its stopped record-counting route remains analytic, and the cited event controls retain their original supplied contracts.",
     "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Independently motivated reversal, physical readout domains, calibrated attenuation, raw-response accounting and identification of reset trials with coherent echo require their own contracts and evidence.",
     "Existing branch-word action identifies concatenation with operator composition under supplied stationary numerical gain. Its response domain consists of serial words. Arbitrary coherent sums and the all-preparation scalar-process bridge remain open in gks_operational_sequence_bridge.",
     "Carrier transfer must reconcile the additive group obtained from Gate reconstruction with literal P4's inverse-of-one obstruction. An independently specified observational or destructive quotient and its preservation contract remain separate obligations.",
     "Conditional readout selection and exclusions retain their exact supplied mathematical premises. Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale origins remain open."]
+}
+
+/-- Checked conditional reconstruction from transparent surjective mixing. -/
+def surjectiveTwoPortQuadraticOrigin : ResearchTask := {
+  id := "surjective_two_port_quadratic_origin"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A supplied additive commutative monoid V and additive endomorphisms a,b satisfy transparency a+b=id on the whole carrier.",
+    "Each branch a and b is surjective. Every target p admits x,y with a(x)+b(y)=p and b(x)+a(y)=0.",
+    "The real readout W satisfies W(0)=0 and W(p)>=0 for every p.",
+    "For every pair x,y in V, W(a(x)+b(y))+W(b(x)+a(y))=W(x)+W(y)."]
+  conclusions := [
+    "A finite positive branch expression supplies an additive inverse for every original element. The constructed additive group retains the complete original AddCommMonoid structure by a compiled reflexivity theorem, including addition, zero and natural action.",
+    "Supplied branch right-preimage functions and first-axis recovery data give an explicit negRecipe. The existence-only interface supplies chosen inverses through Classical.choose. Composite coverage already suffices for the inverse-existence stage.",
+    "Full conservation and recovery derive the centered symmetric real biadditive pairing B and an additive remainder L. Nonnegativity gives a nonnegative diagonal Q(x)=B(x,x), the decomposition W=Q+L and the all-x bound |L(x)|<=Q(x).",
+    "Endpoint energy estimates and recursively defined finite positive branch words give arbitrary-error quadratic halving. They improve each all-preparation domination constant C>=0 to C/2. Real Archimedean arithmetic then forces L=0.",
+    "The compiled end-to-end theorem concludes W(x)=B(x,x) on the original additive carrier. Derived-group identities give evenness, parallelogram and integer-square scaling. A separate compiled wrapper gives natural count-square scaling for the original monoid action.",
+    "The generic branch-orthogonality theorem derives B(a(x),b(x))=0 from transparency and quadratic column conservation.",
+    "The complex control satisfies the reconstruction contract with positive readout, unequal branch gains 4/5 and 1/5, and failure of every positive finite rejoin a^n=b^n.",
+    "The multiset binary-word routing control retains both branch coverages, full symmetric-mixer coverage, exact first-axis recovery and positive count conservation. Transparency fails, its positive singleton has no additive inverse, and its readout admits no real biadditive diagonal. A native B context separates the transparency violation even when the raw scalar readings agree."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TransparentSurjectiveMixingGroup.lean"
+      declarations := [
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.add_inverseWord",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.add_negRecipe",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.additive_inverses_of_axis_recovery",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.additive_inverses_of_branch_surjective",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.symmetric_surjective_iff_first_axis",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.groupFromRecoveryData",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.Gate.additiveGroup",
+        "IDT.QMClosure.TransparentSurjectiveMixingGroup.Gate.additiveGroup_toAddCommMonoid"] },
+    { sourcePath := "Proofs/QMClosure/SurjectiveMixingQuadraticReadout.lean"
+      declarations := [
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.endpoint_bound_of_preimage",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.halfWord_identity",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.residual_arbitrarily_small",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.approximate_halving",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.improve_global_bound",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.additive_remainder_zero",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.reconstruct_of_first_axis",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.readout_identities",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.branch_orthogonality",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadout.count_square"] },
+    { sourcePath := "Proofs/QMClosure/SurjectiveMixingQuadraticReadoutControls.lean"
+      declarations := [
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadoutControls.WithoutFiniteRejoin.control_contract",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadoutControls.WithoutTransparency.control_contract",
+        "IDT.QMClosure.SurjectiveMixingQuadraticReadoutControls.WithoutTransparency.contextual_transparency_failure"] }]
+  plannedArtifacts := []
+  dependencies := ["two_port_conservation_pairing_origin"]
+  limits := [
+    "Balanced branch gains, exact native half, Gaussian coefficient selection, universal operator gain and normalized paired echo retain separate selection obligations.",
+    "Faithfulness and positive definiteness require additional assumptions. The checked conclusion is a nonnegative quadratic map on the constructed additive group.",
+    "The supplied universal coverage, exact recovery and full two-input conservation apply to the complete declared carrier. Their operational domain and independently motivated physical origins remain open.",
+    "The explicit recipe is relative to supplied right-preimage and recovery functions. Physical accessibility, implementation and resource bounds require separate evidence.",
+    "The reconstruction derives its group and pairing from the stated contract. Carrier scalar action, continuity of W, finite rejoin and branch injectivity are additional structures outside that contract.",
+    "The older finite-rejoin observational/native-arithmetic task retains its existing pending obligations. Its stronger conclusions retain their own premises.",
+    "Physical inverse operations, Born actualization, Hilbert reconstruction, dynamics, composites, full QM, GR and physical-scale origins remain open. The overall research goal remains active."]
 }
 
 def researchTasks : List ResearchTask := [
@@ -12311,6 +12372,7 @@ def researchTasks : List ResearchTask := [
   initialMultiplicationRationalEqualityCountercontrol,
   cubicRejoinReadoutCountercontrol,
   twoPortConservationPairingOrigin,
+  surjectiveTwoPortQuadraticOrigin,
   finiteRejoinReversibleQuadraticOrigin,
   finiteRejoinObservationalQuotientNativeArithmetic,
   finiteRejoinObservableNativeReadoutChecked,
