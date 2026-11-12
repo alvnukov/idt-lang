@@ -12414,9 +12414,11 @@ def controlledPhaseOriginRoute : ResearchTask := {
         "IDT.QMClosure.CentralInversionWitness.conditional_visible_output_not_product_positive"] }]
   plannedArtifacts := [
     "Formalize the normalized controlled-process construction and pure-program projector argument.",
+    "Derive an operational left recovery or a sufficient reversible-control principle before applying the conditional program-phase synthesis kernel.",
     "Formalize noncentral compact-group closure including dimension four, and the central dimension-three face, lift, branch-formula and twirl bridges."]
   dependencies := ["optimal_unread_atomicity_origin", "central_inversion_visible_witness"]
   limits := [
+    "The normalized controlled-process contract supplies no recovery or reversibility theorem. Pure fixed-program responses can be noninjective under control dephasing, so the conditional phase formula requires an additional justified recovery premise.",
     "The geometric and controlled-process bridges remain unformalized. The checked coefficient witness does not itself derive the operational central dimension-three exclusion.",
     "The central case in general local dimension remains open."] }
 
@@ -12800,6 +12802,178 @@ def hypotheticalHiddenCarrierContinuation : ResearchTask := {
     "The argument seeks no unconditional nonzero hidden carrier. The controls leave the full atomicity core and general compatible quotient routes unresolved.",
     "The stated results leave full atomicity, independent primitive origin and completed QM reconstruction open."] }
 
+def sharpEffectRankOneKernel : ResearchTask := {
+  id := "sharp_effect_rank_one_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A supplied finite-dimensional real inner-product ball/Lorentz cone, a unit pointer direction and positive linear effects with exact one/zero endpoint calibration.",
+    "For the general positive-map conclusion, an extreme interval ray for the total effect and a separating family of bounded positive output effects with a normalized calibrated input."]
+  conclusions := [
+    "Riesz representation covers every algebraic real linear effect in finite dimension. Sharp endpoint calibration uniquely determines the sharp effect, whose full order interval is a ray.",
+    "Bounded Lorentz effects separate the output space. Positivity and fixed/zero endpoint calibration give the rank-one measure-and-prepare formula for a Lorentz endomorphism on the whole space."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SharpEffectRankOne.lean"
+      declarations := [
+        "IDT.QMClosure.SharpEffectRankOne.linear_effect_representation",
+        "IDT.QMClosure.SharpEffectRankOne.sharp_interval_ray",
+        "IDT.QMClosure.SharpEffectRankOne.bounded_effects_separate",
+        "IDT.QMClosure.SharpEffectRankOne.sharp_unique",
+        "IDT.QMClosure.SharpEffectRankOne.positive_map_rank_one",
+        "IDT.QMClosure.SharpEffectRankOne.calibrated_lorentz_endomorphism"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "Ball geometry, positive operations and endpoint calibration remain supplied. The theorem supplies no independent physical origin of the local cone or sharp instruments."] }
+
+def fixedPureProgramRestrictionKernel : ResearchTask := {
+  id := "fixed_pure_program_restriction_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Normalized bases, a spanning local base, embedding/retraction with retract composed with embed equal to identity, and the stated normalized-base preservation laws.",
+    "A supplied reversible joint linear control preserving the joint base in both directions, target-fibre atomic factorization, and target-program invariance on normalized embedded inputs.",
+    "The local target-invariance derivation additionally supplies local midpoint symmetry, a pure target program, target-base preservation and a fixed embedded centre."]
+  conclusions := [
+    "Atomic factorization extends exact forward and inverse intertwining from the normalized local base to its full linear span. The induced maps are mutual inverses and form a base-preserving linear equivalence.",
+    "The weaker forward intertwining alone gives left recovery R Fplus=identity for R=retract composed with inverse joint control composed with embed. Recovery-base preservation follows from the supplied map-preservation laws.",
+    "Pointer fixation transfers to the induced map. Arbitrary reference-system target invariance transfers through supplied marginal naturality without reference-base symmetry."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FixedPureProgramRestriction.lean"
+      declarations := [
+        "IDT.QMClosure.FixedPureProgramRestriction.left_recovery_of_forward_intertwining",
+        "IDT.QMClosure.FixedPureProgramRestriction.induced_mapsTo",
+        "IDT.QMClosure.FixedPureProgramRestriction.atomicity_intertwining",
+        "IDT.QMClosure.FixedPureProgramRestriction.induced_pointer_fixed",
+        "IDT.QMClosure.FixedPureProgramRestriction.reversible_fibre_restriction",
+        "IDT.QMClosure.FixedPureProgramRestriction.fixed_pure_program_restriction",
+        "IDT.QMClosure.FixedPureProgramRestriction.reference_target_transfer"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "Joint reversibility is an additional premise beyond the normalized controlled-process contract. The recovery theorem supplies no origin for that premise.",
+    "Atomic factorization and reference naturality remain supplied. Local midpoint symmetry is applied only to the local base, with no symmetry or interior premise on an arbitrary reference composite."] }
+
+def completeSharpBranchRigidityKernel : ResearchTask := {
+  id := "complete_sharp_branch_rigidity_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A spanning joint cone, two positive lifts of one rank-one local branch, a normalized pointer and compatible local marginal actions.",
+    "Unnormalized output atomic factorization whenever the local marginal lies on the pointer ray, including zero weight.",
+    "Separating reference effects, the append/product-slice law, and interchange of each lift with every reference effect in that family."]
+  conclusions := [
+    "Atomicity factors each positive output. Applying every reference slice and the unit effect determines equal reference marginals, giving equality of both lifts on the spanning cone and hence globally.",
+    "Nonnegative cone scaling and an explicitly faithful normalization effect extend supplied normalized atomicity to the zero-inclusive unnormalized premise."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CompleteSharpBranchRigidity.lean"
+      declarations := [
+        "IDT.QMClosure.CompleteSharpBranchRigidity.complete_sharp_branch_unique",
+        "IDT.QMClosure.CompleteSharpBranchRigidity.unnormalized_atomicity_of_normalized"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "All-reference effect interchange and unnormalized atomicity remain explicit assumptions. Discard naturality alone leaves this complete-branch argument unjustified.",
+    "Deriving unnormalized atomicity from normalized atomicity requires faithfulness, with the normalization effect strictly positive on every nonzero cone element. That condition is supplied explicitly.",
+    "Reference-effect separation suffices for this proof. No joint-state tomography theorem or complete operational sharp-instrument construction is derived."] }
+
+def programPhaseSynthesisKernel : ResearchTask := {
+  id := "program_phase_synthesis_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A supplied linear program response Phi, mixed-program equality, and explicit response identities Phi(tplus)=Fplus, Phi(tminus)=Fminus, Phi(yplus)=Phi(yminus)=E.",
+    "One supplied left recovery R Fplus=identity, destructive-range fixation Fplus E=E and idempotence E squared=E.",
+    "The normalized-set corollary additionally requires R and Fminus to preserve the actual supplied set K."]
+  conclusions := [
+    "Mixed-program linearity gives Fplus+Fminus=2E. Left recovery fixes E and yields J=R Fminus=2E-identity, J squared=identity, and E=(identity+J)/2.",
+    "Preservation of K composes, and involution packages J as a linear equivalence whose inverse also preserves K.",
+    "Binary pointer fixation gives destructive-range fixation, and the orthogonal binary projector table gives idempotence of its sum."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ProgramPhaseSynthesis.lean"
+      declarations := [
+        "IDT.QMClosure.ProgramPhaseSynthesis.recoverable_phase_package",
+        "IDT.QMClosure.ProgramPhaseSynthesis.program_response_sum",
+        "IDT.QMClosure.ProgramPhaseSynthesis.program_phase_package",
+        "IDT.QMClosure.ProgramPhaseSynthesis.normalized_recovered_phase",
+        "IDT.QMClosure.ProgramPhaseSynthesis.binary_pointer_range_fixed",
+        "IDT.QMClosure.ProgramPhaseSynthesis.binary_projector_idempotent"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The source assumes the program-response identities, including both destructive responses. The other kernels support possible bridge steps, while the integrated operational construction remains open.",
+    "One left recovery is supplied. Its physical origin is unproved, and normalization alone cannot establish it.",
+    "The signatures permit E=identity and J=identity. Nontriviality of a synthesized phase needs separate evidence.",
+    "Preservation of a supplied K models normalized-base preservation when K is that base. Cone positivity requires actual cone preservation or a separate generating argument."] }
+
+def dephasedControlledCountercontrol : ResearchTask := {
+  id := "dephased_controlled_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The explicit real-matrix Kraus control combines controlled Z with control dephasing and the stated finite real reference extensions.",
+    "The supplied real-matrix state cone, trace-one normalization, distinguished pointer/program states and coherent companion U=K0+K1."]
+  conclusions := [
+    "The dephased control preserves positivity and trace after every finite real reference extension, has the stated controlled pointer laws and fixed/flipped target programs, and has noninjective fixed-program responses.",
+    "Explicit distinct positive trace-one inputs collide. Neither the dephased local response nor the full controlled map admits any recovery function on all normalized positive inputs.",
+    "Conjugation by U=K0+K1 is positive, trace preserving and involutive. Its reduced fixed-program responses are identity and phase, and both flipped-program reduced responses are dephasing.",
+    "The actual supplied matrix phase is nontrivial on yPlus, and dephasing is its half-sum with identity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/DephasedControlledCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.DephasedControlledCountercontrol.reference_positive",
+        "IDT.QMClosure.DephasedControlledCountercontrol.reference_trace",
+        "IDT.QMClosure.DephasedControlledCountercontrol.reference_state",
+        "IDT.QMClosure.DephasedControlledCountercontrol.reference_product",
+        "IDT.QMClosure.DephasedControlledCountercontrol.sector_zero",
+        "IDT.QMClosure.DephasedControlledCountercontrol.sector_one",
+        "IDT.QMClosure.DephasedControlledCountercontrol.fixed_program_zero",
+        "IDT.QMClosure.DephasedControlledCountercontrol.fixed_program_one",
+        "IDT.QMClosure.DephasedControlledCountercontrol.phase_yPlus",
+        "IDT.QMClosure.DephasedControlledCountercontrol.ensemble_equality",
+        "IDT.QMClosure.DephasedControlledCountercontrol.product_yPlus_state",
+        "IDT.QMClosure.DephasedControlledCountercontrol.product_yMinus_state",
+        "IDT.QMClosure.DephasedControlledCountercontrol.controlled_collision",
+        "IDT.QMClosure.DephasedControlledCountercontrol.dephase_no_state_recovery",
+        "IDT.QMClosure.DephasedControlledCountercontrol.controlled_no_state_recovery",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_positive",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_trace",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_involutive",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_program_zero",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_program_one",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_program_yPlus",
+        "IDT.QMClosure.DephasedControlledCountercontrol.coherent_program_yMinus",
+        "IDT.QMClosure.DephasedControlledCountercontrol.phase_nontrivial",
+        "IDT.QMClosure.DephasedControlledCountercontrol.dephase_as_phase_average"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The exclusion concerns recovery inferred from the normalized controlled contract. The supplied coherent companion separately exhibits a nontrivial phase within this real-matrix model.",
+    "The result supplies no full atomicity-core or local-dimension-three countermodel. Atomicity and pure-marginal factorization of the matrix model are not separately kernel checked here."] }
+
+def controlledProgramRecoveryOrigin : ResearchTask := {
+  id := "controlled_program_recovery_origin"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The normalized controlled-process route and the checked algebraic bridge kernels retain their exact supplied contracts."]
+  conclusions := [
+    "Determine a justified operational left-recovery principle, or a sufficient reversible-control construction, that supports the conditional phase synthesis.",
+    "Derive all-reference effect interchange and the complete destructive-response identities from the actual program/control construction before combining the kernels into an operational origin theorem."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Close the operational recovery premise without inferring it from normalization.",
+    "Test the candidate mixture G_eta=eta coherent+(1-eta)dephased for 0<eta<1, including its pointer/program laws, algebraic invertibility and a possible obstruction to positive linear left recovery. This is an unchecked falsification obligation.",
+    "Integrate sharp endpoint calibration, complete branch uniqueness, reference naturality, mixed-program response identities and recovered-phase synthesis under one explicit operational contract.",
+    "Continue the separate geometric central/noncentral, Lie/weight, rank/dimension and independent primitive-origin obligations."]
+  dependencies := [
+    "sharp_effect_rank_one_kernel", "fixed_pure_program_restriction_kernel",
+    "complete_sharp_branch_rigidity_kernel", "program_phase_synthesis_kernel",
+    "dephased_controlled_countercontrol", "controlled_phase_origin_route"]
+  limits := [
+    "The separate algebraic kernels retain their supplied application contracts until this continuation is resolved.",
+    "The checked bridges leave recovery origin, full atomicity and completed QM reconstruction open."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -13024,7 +13198,13 @@ def researchTasks : List ResearchTask := [
   separateFibreIntersectionObstructionKernel,
   algebraicSeparateCarrierCountercontrol,
   classicalSeparateFibreControl,
-  hypotheticalHiddenCarrierContinuation]
+  hypotheticalHiddenCarrierContinuation,
+  sharpEffectRankOneKernel,
+  fixedPureProgramRestrictionKernel,
+  completeSharpBranchRigidityKernel,
+  programPhaseSynthesisKernel,
+  dephasedControlledCountercontrol,
+  controlledProgramRecoveryOrigin]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

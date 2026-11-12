@@ -19,6 +19,11 @@ lean_exe idt_v8_experiment_protocols where
 @[default_target]
 lean_lib Proofs where
   roots := #[
+    `Proofs.QMClosure.DephasedControlledCountercontrol,
+    `Proofs.QMClosure.CompleteSharpBranchRigidity,
+    `Proofs.QMClosure.ProgramPhaseSynthesis,
+    `Proofs.QMClosure.FixedPureProgramRestriction,
+    `Proofs.QMClosure.SharpEffectRankOne,
     `Proofs.QMClosure.ClassicalSeparateFibreControl,
     `Proofs.QMClosure.FibreIntersectionObstruction,
     `Proofs.QMClosure.SeparateCarrierCountercontrol,
