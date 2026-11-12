@@ -584,6 +584,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.TransparentSurjectiveMixingGroup,
     `Proofs.QMClosure.SurjectiveMixingQuadraticReadout,
     `Proofs.QMClosure.SurjectiveMixingQuadraticReadoutControls,
+    `Proofs.QMClosure.UnbalancedRecoveryOperatorRingWall,
     `Proofs.QMClosure.FiniteRejoinReversibleQuadraticReadout,
     `Proofs.QMClosure.FiniteRejoinQuadraticReadoutControls,
     `Proofs.QMClosure.FiniteRejoinObservableQuotient,

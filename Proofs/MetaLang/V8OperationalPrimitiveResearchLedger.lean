@@ -12177,6 +12177,70 @@ def surjectiveTwoPortQuadraticOrigin : ResearchTask := {
     "Physical inverse operations, Born actualization, Hilbert reconstruction, dynamics, composites, full QM, GR and physical-scale origins remain open. The overall research goal remains active."]
 }
 
+/-- Checked concrete recovery exclusion for the integer-generated operator ring. -/
+def unbalancedRecoveryOperatorRingWall : ResearchTask := {
+  id := "unbalanced_recovery_operator_ring_wall"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The fixed published NoFiniteRejoin complex model has alpha=(4+2i)/5, beta=(1-2i)/5 and norm-square readout. Its branches are transparent and invertible, its complete mixer is onto, and conservation holds for every complex input pair.",
+    "The compared coefficient ring is the unital Subring.closure of exactly alpha, beta, alpha inverse and beta inverse. Finite expression coefficients are integers.",
+    "The compared operator ring is the unital Subring.closure of the corresponding four actual additive endomorphisms, with multiplication given by composition."]
+  conclusions := [
+    "coefficientRing_eq_denominatorRing identifies the generated ring with the elementary Gaussian denominator subring using powers of 4-2i. The imaginary unit and one half are generated inside that ring.",
+    "The Gaussian residue homomorphism to ZMod 5 at i mapped to 3 excludes the first and second recovered coefficients and the inverse branch difference for every natural denominator exponent.",
+    "Faithful scalarEndHom transport proves the same three exclusions in the ring of actual additive endomorphisms. Evaluation at one detects equality of the scalar operators.",
+    "For every positive natural exponent the branch difference has no identity power and the complete forward mixer has no identity iterate.",
+    "The concrete recovered coefficients satisfy both scalar block equations. concrete_recovery_returns exports F(K(x,y))=(x,y) for every complex pair x,y.",
+    "Adding the scalar one fifth removes this particular exclusion through C=8*(1/5)-alpha.",
+    "positive_cubic_negation proves 2*alpha^3+9*alpha*beta^2+11*beta^3=-1, supplying additive inverses through positive forward algebraic expressions in this fixed model."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/UnbalancedRecoveryOperatorRingWall.lean"
+      declarations := [
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.coefficientRing_eq_denominatorRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.imaginary_mem_coefficientRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.half_mem_coefficientRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.residue_denominator",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.residue_conjugatePrime",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.residue_forwardPrime",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredAlpha_not_mem_denominatorRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredAlpha_not_mem_coefficientRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredBeta_not_mem_coefficientRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.inverseDifference_not_mem_coefficientRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.scalarEndHom_injective",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.operatorRing_eq_explicit",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.operatorRing_eq_map",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.scalarEnd_mem_operatorRing_iff",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredAlphaEnd_not_mem_operatorRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredBetaEnd_not_mem_operatorRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.inverseDifferenceEnd_not_mem_operatorRing",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.difference_no_positive_period",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.forwardMixer_no_positive_period",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.normalized_model_input",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredBeta_eq_conjugate",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.concrete_recovery_blocks",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.concrete_recovery_returns",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.recoveredAlpha_eq_with_one_fifth",
+        "IDT.QMClosure.UnbalancedRecoveryOperatorRingWall.positive_cubic_negation"] },
+    { sourcePath := "Proofs/QMClosure/FiniteRejoinCarrierChoiceControls.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.transparent",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.branch_invertible",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.onto",
+        "IDT.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin.norm_conservation"] }]
+  plannedArtifacts := []
+  dependencies := ["Proofs.QMClosure.FiniteRejoinCarrierChoiceControls.NoFiniteRejoin"]
+  limits := [
+    "The exclusion concerns the specified finite integer-generated grammar, including branch inverses and internally generated dyadic halves. Adding one fifth changes the coefficient ring and removes this particular obstruction.",
+    "The fixed nonzero conserved complex model refutes a universal exact-synthesis assertion. Enlarged scalar languages, nonlinear operations, limits and approximate synthesis require their own statements and evidence.",
+    "Mathematical recovery is already available in the ambient model. The exported concrete return theorem states F composed with K equals identity. Physical access to the branches, their inverse maps, signed recombinations and recovered devices requires an operational resource contract.",
+    "Positive cubic negation is an algebraic expression certificate. Physical preparation allocation, branching, recombination and bounded-resource circuit execution remain separate obligations.",
+    "Generic semidefinite quotient adjoint identification, the relation-preserving recovery-ring star operation, its involution and the mixed-gain countercontrol retain pending formalization.",
+    "The upstream exact-versus-approximate access continuation concerns uniform relative first-axis recovery in a genuine readout metric along actual repeated conserving mixer applications. Its candidate-control review and pending Lean work belong to a separate task. Approximate synthesis for this rational model also requires a separate error and resource statement.",
+    "The older finite-rejoin continuation and the overall research goal retain their pending tasks. Physical carrier origins, Born actualization, Hilbert origin, dynamics, tensor composites, physical-scale origins, full QM and GR remain open."]
+}
+
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -12373,6 +12437,7 @@ def researchTasks : List ResearchTask := [
   cubicRejoinReadoutCountercontrol,
   twoPortConservationPairingOrigin,
   surjectiveTwoPortQuadraticOrigin,
+  unbalancedRecoveryOperatorRingWall,
   finiteRejoinReversibleQuadraticOrigin,
   finiteRejoinObservationalQuotientNativeArithmetic,
   finiteRejoinObservableNativeReadoutChecked,
