@@ -11679,39 +11679,279 @@ def initialDyadicDetectorProcessCountercontrol : ResearchTask := {
 
 def initialFixedTriplerReadoutSelection : ResearchTask := {
   id := "initial_fixed_tripler_readout_selection"
-  stage := .analyticAwaitingFormalization
-  review := .notYetKernelChecked
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
   assumptions := [
     "The literal P4 carrier, existing E and N, and exactly the four-law InitialColumnOrderReadoutCore.BaseContract: unit normalization, universal column conservation, universal oriented c comparison and prepared natural-count order.",
     "One additional supplied universal stationary gain law W((3:P4)*p)=W(3)*W(p) for every actual preparation p. The coherent multiplier 3 acts on p within the literal carrier."]
   conclusions := [
-    "The independently accepted analytic argument selects W=N and forces W(3)=9. Lean formalization and kernel review remain pending.",
+    "The checked conditional selected theorem gives W(p)=N(p) on every actual preparation. The norm model and exists_unique_response give an inhabited unique response, and the count stage obtains W(3)=9 with universal natural count-square gain.",
     "Writing G=W(3), count order gives G>=1. The core positive real-axis coarse upper estimate gives G^n<=G*9^n, while doubling and count sandwiches give 9^n<4*G^n. Power comparison forces G=9.",
     "Irrational-log pigeonhole near-collisions 1<3^n/2^m<1+epsilon force exact W(2*p)=4*W(p), then exact c equality. Natural j can be bracketed by successive powers of such a near-unit ratio. Clearing positive integer denominators gives W(j*p)=j^2*W(p).",
     "The literal twoInv coefficient supplies dyadic scalar homogeneity. Relative landing with d=1 and positive dyadic tolerances gives E-extensionality. Natural homogeneity then makes the extension from Gaussian dyadic coordinates to Q(i) well-defined by denominator clearing.",
     "Rational prepared-count cones yield the local estimate (1-eta)^2*F(v)<=F(u)<=(1+eta)^2*F(v), where eta=abs(Re(u/v)-1)+abs(Im(u/v))<=1 and v is nonzero. Real-axis calibration and the sector bound K=256 provide uniform annular Lipschitz bounds and a continuous extension to complex coordinates, including zero.",
     "Boundary count order gives F((1+i*t)*z)>=F(z) and F((1-i*t)*z)>=F(z). Degree-two real homogeneity yields F(exp(i*delta)*z)>=cos(delta)^2*F(z) for abs(delta)<pi/2. Finite equal-angle subdivision, Bernoulli-limit estimates and the reverse comparison give isotropy and norm-square selection.",
-    "The three critical formalization obligations are a strictly positive Dirichlet near-collision including the reciprocal-integer case, positive dyadic tolerance selection before extending coordinates, and small-angle subdivision before the isotropy limit.",
+    "The proof uses strictly positive Dirichlet near-collisions including the reciprocal-integer case, positive dyadic tolerances before extending coordinates, and small-angle subdivision for isotropy.",
     "Analytic controls retain the premise boundary: the dyadic detector response satisfies BaseContract and fails the tripler law; q satisfies normalization, column laws, prepared order and tripler gain W(3)=3 while failing c comparison; the angular response N+Im(z^4)^2/N^3 satisfies column, c and tripler laws while failing full prepared order.",
     "For that angular control, the actual p=a+3*b and count pairs (2,0)<=(2,1) give complex coordinates 3+i and 7/2-i/2. The responses are 2402/125 and 503521/31250, with second-minus-first equal to -96979/31250."]
-  checkedEvidence := []
-  plannedArtifacts := [
-    "Proofs/QMClosure/InitialStationaryTriplerCountCalibration.lean",
-    "Proofs/QMClosure/InitialCountHomogeneousReadoutSelection.lean",
-    "Proofs/QMClosure/InitialStationaryTriplerSelection.lean"]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialStationaryTriplerCountCalibration.lean"
+      declarations := [
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.Contract",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.tripler_powers",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.tripler_gain",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.nearcollision",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.doubling_exact",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.c_equality",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.natural_gain",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.scalar_gain",
+        "IDT.QMClosure.InitialStationaryTriplerCountCalibration.raw_diagonal_gain"] },
+    { sourcePath := "Proofs/QMClosure/InitialCountHomogeneousReadoutSelection.lean"
+      declarations := [
+        "IDT.QMClosure.InitialCountHomogeneousReadoutSelection.evaluation_extensional",
+        "IDT.QMClosure.InitialCountHomogeneousReadoutSelection.selected"] },
+    { sourcePath := "Proofs/QMClosure/InitialStationaryTriplerSelection.lean"
+      declarations := [
+        "IDT.QMClosure.InitialStationaryTriplerSelection.Contract",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.selected",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.norm_model",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.exists_unique_response",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.multiplicative",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.square_response",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.paired_echo",
+        "IDT.QMClosure.InitialStationaryTriplerSelection.null_insertion"] }]
+  plannedArtifacts := []
   dependencies := [
     "initial_dyadic_detector_process_countercontrol",
     "initial_same_preparation_square_selection",
     "gks_operational_sequence_bridge"]
   limits := [
-    "This is an accepted analytic selection argument and future formalization plan with empty checkedEvidence. The planned modules and analytic controls require actual artifacts before any checked status.",
+    "The three source modules have accepted builds and independent source/dependency review. The q, angular and detector controls retain their separately stated analytic status.",
     "Continuity and coordinate factorization are conclusions of the proposed argument. The supplied five-field contract consists of BaseContract and universal stationary coherent-tripler response, with gain nine obtained analytically.",
     "The square and tripler contracts have the same selected model class under BaseContract. Their operational premises describe different process promises whose independent physical motivation remains open.",
-    "The future selected-proof dependency closure must exclude the old InitialColumnOrderEchoSelection and InitialSquareReadoutSelection selected and Contract declarations and their selfEcho or selfSquare premise accessors. The approved hypotheses are BaseContract and the fixed stationary-tripler response law.",
+    "The accepted selected-proof dependency audit records the old echo/square selector, their Contract and selfEcho/selfSquare premise accessors, and RealAxisSquare exclusions. The supplied hypotheses are BaseContract and the fixed stationary-tripler response law.",
     "The existing core, count-sector geometry and coordinate machinery, including mathematical reflection, remain explicit proof inputs. The continuous complex extension serves as a mathematical proof device. Interpreting its points as physically available states requires a separate bridge.",
     "The stationary tripler law acts on every actual input. Identifying coherent 3*p with a physical operation requires an additional bridge. Independent repetitions and physical copying retain their own contracts.",
     "The angular formula is used on nonzero complex coordinates, with zero response at zero. Its control calculations remain analytic in this task.",
     "Detector-gain origin, the scalar-process versus preparation interface, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def initialTriplerPairOrderSelection : ResearchTask := {
+  id := "initial_tripler_pair_order_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal initial P4 carrier with its existing E and N, and exactly InitialColumnOrderReadoutCore.BaseContract W.",
+    "For all actual p,q,r,s, W(p)+W(q)<=W(r)+W(s) implies W(3*p)+W(3*q)<=W(3*r)+W(3*s), with the same fixed coherent multiplier 3 on each preparation."]
+  conclusions := [
+    "The independently accepted analytic argument selects W=N. Its stationary-limit and ordinal steps remain awaiting Lean formalization.",
+    "A generalized base-only sector estimate gives 0<=W(p)<=K*N(p) with K=256*W(3). Native count sandwiches give W((3:P4)^n)>=9^n/4. These are required future artifacts under the four-law premise boundary.",
+    "Set A_n(p)=9^(-n)*W(3^n*p) and take Cesaro averages C_M over n<M with M>=1. They are pointwise bounded, and C_M(1)>=1/4. Countability of P4 gives one common diagonal convergent subsequence for every preparation, with limit L.",
+    "Telescoping gives L(3*p)=9*L(p). Since L(1)>0, normalization by L(1) supplies BaseContract and stationary tripler gain. The analytic fixed-tripler selector then gives L(p)=L(1)*N(p).",
+    "The pair-order premise iterates through coherent powers of three. The common convergent Cesaro subsequence transfers each initial W pair-order inequality to the corresponding N pair-order inequality.",
+    "Tiny calibrated preparations a^k have W(a^k)=N(a^k)=2^(-k). They give equality of W on N fibres, hence W=f composed with N. Strict order of norm sums gives strict order of the corresponding response sums.",
+    "For a positive local norm gap below one, choose a dyadic delta strictly above the gap and at most twice it. Calibrated dyadics then give a local two-Lipschitz estimate for f on N(P4). The dyadic squares in N(P4) are dense, so f has a continuous extension to all nonnegative real arguments.",
+    "Comparison with dense attainable norm values immediately above and below x+y gives additivity of the continuous extension. The zero-sum case is treated separately. Unit normalization then identifies the extension with the identity, selecting W=N.",
+    "Under BaseContract, the pair-order contract, fixed-tripler contract and norm response have the same accepted analytic model class. Their operational promises retain separate physical-origin obligations."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := ["initial_fixed_tripler_readout_selection"]
+  limits := [
+    "This task records an accepted analytic result with empty checkedEvidence. The generalized base-only bound, common stationary limit and ordinal completion argument require future machine-checkable artifacts.",
+    "Two-sum transfer requires one jointly convergent subsequence and ordinary limits of sums. A pointwise liminf construction alone leaves that transfer unjustified.",
+    "The attainable norm set requires a dense continuous extension before asserting additivity for arbitrary sums. Its additive closure remains a separate property.",
+    "The pair-order law is a supplied order-preservation contract for two equal-exposure ensemble means. Physical mixtures, ordinary count additivity and reset semantics require their own operational bridges.",
+    "Continuity and radial response factorization are conclusions of this analytic argument. The actual normalized-detector bridge, primitive origins, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def initialMultiplicationRationalEqualityCountercontrol : ResearchTask := {
+  id := "initial_multiplication_rational_equality_countercontrol"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal initial P4 carrier and its existing complex-coordinate norm square N. Let X be the positive values of N on actual preparations, and R=X intersect [1,2).",
+    "For the analytic existence construction choose a countable dense algebraically independent T in (1,2) over Q and an order isomorphism from R minus {1} to T. Extend it to a continuous strictly increasing g on [1,2] with g(1)=1 and g(2)=2.",
+    "For positive x=2^k*r with integer k and 1<=r<2, define f(x)=2^k*g(r), and set f(0)=0 and W(p)=f(N(p))."]
+  conclusions := [
+    "The accepted analytic construction uses the countable dense norm set X, its closure under multiplication by 2^k, and the countable dense set R minus {1}. The resulting profile is continuous and strictly increasing on nonnegative reals, normalized and exactly dyadically homogeneous.",
+    "W satisfies the full four-law BaseContract, exact c equality, null insertion and all native branch-word gains.",
+    "For any finite rational coefficients a_i and actual preparations p_i, an equality sum(a_i*W(p_i))=0 forces every coefficient grouped by the source dyadic norm orbit to vanish. This follows from Q-linear independence of {1} union T, with zero-norm inputs handled separately.",
+    "For every literal multiplication context q, exact dyadic homogeneity gives W(q*p_i)=2^k_i*f(N(q)*r_i) within each normalized source orbit r_i. The zero grouped coefficients therefore give sum(a_i*W(q*p_i))=0. The argument accommodates coincident target groups.",
+    "Thus all finite rational mean equalities are preserved under every fixed literal multiplication context.",
+    "The actual coefficients 3 and 9 have W(3)=8*g(9/8) and W(9)=64*g(81/64). Algebraic independence gives W(9)!=W(3)^2, so universal stationary tripler response fails despite the preserved rational equalities."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := [
+    "initial_fixed_tripler_readout_selection",
+    "initial_dyadic_detector_process_countercontrol"]
+  limits := [
+    "This is an accepted analytic existence countercontrol with empty checkedEvidence. The norm-set, algebraic-independence, order-isomorphism, extension and equality-transfer arguments require future Lean artifacts.",
+    "Q-linear independence restricts the rational equality kernel to zero grouped source-orbit coefficients. Native calibration equalities are retained. Additional proposed ensemble relations require verification for this response.",
+    "The context class consists of literal multiplication by one fixed actual coefficient. Arbitrary real exposure weights, additive-reference contexts and order preservation require their own contracts.",
+    "Pure-preparation profile continuity concerns that domain. Continuity after quotienting rational ensemble means is a separate topological and operational requirement. Order, stability and real-exposure closure have distinct remaining proof obligations.",
+    "The auxiliary choices are mathematical existence data. A computable detector algorithm, empirical detector realization and the actual normalized-detector bridge remain open, together with Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins."]
+}
+
+def cubicRejoinReadoutCountercontrol : ResearchTask := {
+  id := "cubic_rejoin_readout_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "In the ambient product semiring S=Complex times NNReal, let zeta=(1+i*sqrt(3))/2, a=(zeta,1/2) and b=(conj(zeta),1/2). The actual carrier G is the subsemiring generated by exactly a and b.",
+    "For p=(z,q) in G, use E(p)=z, the nonnegative shadow q(p)=q, W(p)=norm(z)*q and J(p)=(conj(z),q). Continuity refers to the ambient product topology and the induced subspace topology on G."]
+  conclusions := [
+    "The existing eighth-rejoin presentation and readout countermodels already record generic carrier-selection walls. This cubic construction adds the combination of product/subspace continuity, global multiplicativity, the corresponding four response equations, count calibration, an explicit I3 witness and a positive generated carrier.",
+    "The independently accepted analytic construction gives q(p)=0 iff p=0 by positive-expression induction. On this generated carrier, x*y=0 implies x=0 or y=0, and x+y=0 implies x=y=0. These properties concern q. The response has nonzero null elements.",
+    "Transparency a+b=1 holds, a!=b, a^2!=b^2 and a^3=b^3=(-1,1/8). The minimal positive rejoin cycle is three, a^4!=b^4 and a^6=b^6. An existential even-rejoin witness therefore admits this control.",
+    "W is continuous, nonnegative, normalized and globally multiplicative. Native generator interchange J preserves G and W. The column responses are W(a*p)=W(b*p)=W(p)/2. With c=2*a*b=(2,1/2), W(c)=1 gives exact W(c*p)=W(p).",
+    "Natural count calibration holds on every preparation: W(k*p)=k^2*W(p) for natural k, including stationary tripler gain nine. Universal self-square and paired self-echo response also hold.",
+    "For B(n,m)=n*a+m*b, W(B(n,m))^2=(n+m)^2*(n^2-n*m+m^2)/4=(n^4+n^3*m+n*m^3+m^4)/4. The nonnegative coefficients give coordinatewise natural-count monotonicity, and multiplicativity supplies prepared count order on every input.",
+    "The positive finite words aInv=1+b+b^2+a^2 and bInv=1+a+a^2+b^2 are actual multiplicative inverses of the native coefficients.",
+    "For the same-depth terms x=a^2, y=a*b and z=b^2, every single response is 1/4 and every pair response is 1/2. Their sum t=x+y+z=(0,3/4) has W(t)=0, giving algebraic I3=-3/4. The labels aa, ab and bb form a three-label subfamily of the four binary depth-two words.",
+    "Null insertion fails: W(1+t)=7/4 while W(1)=1. More sharply, t+a*b=1 while W(a*b)=1/4 and W(t)=0. Equal E coordinates at 1 and 1+t therefore have different responses.",
+    "The separate analytic scalar-half continuation has E(G)=Z[zeta] for the two-generator carrier and adjoins d=(1/2,1/2) as a third generator to supply 2*d=1 while preserving the response laws and witnesses. This continuation remains outside the checked two-generator C3 artifact.",
+    "Generic transparency, some positive finite rejoin and the corresponding four response equations with fixed tripler gain admit this cubic carrier, even with global multiplicativity and paired echo. The literal-P4 selector retains its exact fourth-rejoin carrier and geometry premises."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CubicRejoinReadoutCountermodel.lean"
+      declarations := [
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.Q_zero_iff",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.carrierNoZeroDivisors",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.zero_sum_reflection",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.J_involutive",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.J_a",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.J_b",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.transparent",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.cubic_rejoin",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.sixth_rejoin",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.fourth_rejoin_false",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.a_inverse",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.b_inverse",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_continuous",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_zero",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_one",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_nonnegative",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_multiplicative",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_swap",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_self_square",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_self_echo",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_global_halves",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_first_column",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_exact_serial",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_natural_gain",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_stationary_tripler",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_B_sq",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_prepared_count_order",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_base_contract",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.t_nonzero",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_x",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_y",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_z",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_x_add_y",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_y_add_z",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_x_add_z",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_t",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.I3_witness",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.t_add_y",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.null_insertion_failure",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_one_add_t",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_zero_iff_E_zero",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_null_additive",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_zero_product_separation",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.W_not_factors_through_E",
+        "IDT.QMClosure.CubicRejoinReadoutCountermodel.continuous_countermodel_certificate"] }]
+  plannedArtifacts := []
+  dependencies := ["eighth_rejoin_presentation_and_readout_countermodels"]
+  limits := [
+    "The generated two-generator carrier source has an accepted build and independent source/dependency review. The separately labelled scalar-half continuation retains analytic status outside this checked artifact.",
+    "The generated subsemiring G is essential to zero reflection and the resulting carrier properties. The full ambient product serves as the construction space.",
+    "The shadow q reflects zero. W has the explicit nonzero null element t. Its continuity uses the product and subspace topologies. Factorization through E has the stated finite counterexample.",
+    "The independent scalar-half extension remains an analytic continuation outside the checked two-generator C3 artifact. Its third generator preserves the original construction as a subcarrier.",
+    "Prepared count order here uses the stated quartic-square-root response formula. Earlier eighth-rejoin controls retain their own prepared mixed-zero and readout contracts.",
+    "The witness supplies an algebraic I3 calculation on depth-two words. A physical Sorkin experiment requires an independent context and experimental bridge.",
+    "Carrier selection, null passivity, physical normalized-detector interpretation, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open. Existing exact fourth-cycle theorem statuses retain their present scope."]
+}
+
+def twoPortConservationPairingOrigin : ResearchTask := {
+  id := "two_port_conservation_pairing_origin"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "An additive commutative monoid V, additive endomorphisms A,B,C,D, and a real readout W.",
+    "A and B are surjective. Every (z,0) is reachable under G(x,y)=(A(x)+B(y),C(x)+D(y)).",
+    "For every x,y, W(A(x)+B(y))+W(C(x)+D(y))=W(x)+W(y)."]
+  conclusions := [
+    "The independently accepted analytic pairing argument obtains mixed second differences independent of their base point. It subtracts four full conservation equations and compares a first-axis preimage with zero.",
+    "P(u,v)=(W(u+v)-W(u)-W(v)+W(0))/2 is symmetric and biadditive. L(x)=W(x)-W(0)-P(x,x) is additive, giving W(x)=W(0)+P(x,x)+L(x).",
+    "The seven-term algebraic expression W(x+y+z)-W(x+y)-W(x+z)-W(y+z)+W(x)+W(y)+W(z) equals W(0). A zero vacuum gives I3=0.",
+    "Full surjectivity of G supplies first-axis reachability under the remaining branch hypotheses. For a symmetric mixer, first-axis reachability is equivalent to full surjectivity.",
+    "The analytic Nat control A=B=id, C=D=0 and W(n)=n satisfies this minimal contract with nonnegative zero-vacuum readout, P=0 and nonzero L=W. Its outputs lie on the first axis.",
+    "The analytic identity-mixer control has A=D=id, B=C=0 and W(n)=n^3 on Nat. It has first-axis reachability and full mixer surjectivity, with a failed B-surjectivity premise and I3(1,1,1)=6.",
+    "The finite-rejoin symmetric core uses additional half gains and additive cancellation to eliminate the linear remainder. Pairing extraction itself uses the stated smaller contract."]
+  checkedEvidence := []
+  plannedArtifacts := ["Proofs/QMClosure/TwoPortConservationPairing.lean"]
+  dependencies := []
+  limits := [
+    "This is an accepted analytic reduction in formalization with empty checkedEvidence. Pairing extraction, remainder decomposition and its controls require the planned Lean artifact and review.",
+    "Transparency, finite cycle, group structure, positivity and vacuum normalization are separate possible hypotheses. The supplied minimal contract is exactly the monoid, branch surjectivity, first-axis reachability and full two-input conservation above.",
+    "The linear remainder remains an obligation after pairing extraction. The nonnegative zero-vacuum Nat control retains it explicitly.",
+    "The I3 identity is algebraic. A physical experiment and whole-domain lossless preparation/readout access require independent operational bridges. Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def finiteRejoinReversibleQuadraticOrigin : ResearchTask := {
+  id := "finite_rejoin_reversible_quadratic_origin"
+  stage := .inFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "An additive commutative monoid V and additive endomorphisms a,b with a+b=id and a^n=b^n for one supplied positive natural n.",
+    "The complete symmetric two-port map F(x,y)=(a(x)+b(y),b(x)+a(y)) is surjective on V times V.",
+    "The real readout has W(0)=0, W(p)>=0 for every p, and W(a(x)+b(y))+W(b(x)+a(y))=W(x)+W(y) for every pair x,y."]
+  conclusions := [
+    "The accepted analytic core obtains native positive inverse words from finite rejoin and branch half gains from the existing finite-cycle column-balance result. A preimage of (p,0) then supplies an actual additive inverse for every p in the original monoid.",
+    "On that additive group, set r=a*bInv and R=r^2. Full conservation takes the form W(x+y)+W(x+R(y))=2*W(x)+2*W(y). Symmetry and phase invariance make translations by (R^2-id)(y) invisible to the readout.",
+    "Surjectivity of F gives surjectivity of a-b and then R-id. Translation invariance therefore covers (R+id)(y), giving the ordinary parallelogram law.",
+    "Positive quadraticity gives general null insertion, quadratic gains for every integer count, algebraic I3=0, W((a^2+b^2)(p))=0 and W((2*a*b)(p))=W(p). These are conclusions under the supplied full-domain contract.",
+    "Transparency and the branch half gains make the polarization of a(p) and b(p) zero. Thus W(n*a(p)+m*b(p))=((n^2+m^2)/2)*W(p) for natural n,m. Positivity gives universally prepared count order as a further conclusion."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/FiniteRejoinReversibleQuadraticReadout.lean",
+    "Proofs/QMClosure/FiniteRejoinQuadraticReadoutControls.lean"]
+  dependencies := [
+    "finite_cycle_first_column_balance_analytic",
+    "operational_positive_readout",
+    "positive_quadratic_polarization"]
+  limits := [
+    "The immutable core source is uncompiled. This task remains in formalization with empty checkedEvidence until its build, actual premise/dependency audit and independent artifact review.",
+    "The hypothesis package exchanges exact swap-square for supplied whole-pair surjectivity and lossless positive conservation. Surjectivity is the stated accessibility condition. The two packages retain separate physical-origin obligations.",
+    "Continuity, echo and additional readout monotonicity would change the approved input contract. Count-square gain, c invariance and null insertion belong to its conclusions.",
+    "The same-branch operator is readout-null on every input. Literal fourth rejoin on the original full carrier has a separate countercontrol, and the observational quotient remains a separate analytic continuation.",
+    "Physical origins of the additive carrier, whole pair-domain accessibility, finite operator rejoin, lossless conservation and real positive readout remain open, together with Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins."]
+}
+
+def finiteRejoinObservationalQuotientNativeArithmetic : ResearchTask := {
+  id := "finite_rejoin_observational_quotient_native_arithmetic"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The additive group and positive quadratic readout supplied by the proposed finite-rejoin surjective two-port core.",
+    "The observational relation is W(x-y)=0, with null subgroup N={x | W(x)=0}. Native operators act through the additive quotient V/N.",
+    "Nontrivial arithmetic and cycle conclusions use an explicit preparation with positive W. The normalized native-echo conclusion uses a supplied reference v with W(v)=1."]
+  conclusions := [
+    "The accepted analytic quotient argument gives r^2=-id, a^2+b^2=0, 2*a*b=id, F^2=swap and a^4=b^4 as native quotient-operator identities. When W is nonzero, the supplied finite rejoin period is divisible by four.",
+    "For nonzero W, the native generated operator ring is a faithful Gaussian-dyadic arithmetic image. It has canonical coefficient conjugation and readout gain W(T(p))=normSq(eval(T))*W(p). A normalized nonzero reference gives native echo on its coefficient-generated preparation family.",
+    "The analytic accessibility control V=nonnegative reals with a=b=half and W(x)=x has transparency, finite rejoin and full conservation, with only diagonal two-port outputs. Its additive carrier and readout expose the whole-pair accessibility obligation.",
+    "The analytic conservation control on C^2 has W(z,w)=normSq(z)*normSq(w), t_1=1-sqrt(2), t_3=-1-sqrt(2), a_j=(1+i*t_j)/2 and b_j=conj(a_j). It has eighth rejoin, native half gains and an onto mixer. Inputs (1,0) and (0,1) have total response zero, and the two outputs have total response one.",
+    "For the canonical complex mixer, W=1 keeps full conservation with a nonzero vacuum. W=Re keeps vacuum zero and full conservation with a failed positivity premise. These analytic controls retain the separate vacuum and positivity boundaries.",
+    "The analytic literal-fourth control on C^2 uses visible coefficients (1+i)/2 and (1-i)/2, hidden coefficients (1+i*sqrt(3))/2 and its conjugate, and W(z,w)=normSq(z). It has period twelve and the core contract, with hidden a^2+b^2=-id and unequal fourth powers. The corresponding fourth identities hold observationally.",
+    "The analytic null-ideal control on C^2 uses canonical diagonal branches and W(z,w)=normSq(z+w). The null element (1,-1) becomes visible after componentwise ambient multiplication by (1,0), delimiting quotient transport to the native operator algebra.",
+    "A Gaussian-dyadic carrier realizes the finite algebraic package. Extending scalars or completing that carrier requires additional structure."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := ["finite_rejoin_reversible_quadratic_origin"]
+  limits := [
+    "This continuation and its controls are accepted analytic results with empty checkedEvidence. Their quotient, arithmetic, faithfulness, gain and control artifacts remain future obligations.",
+    "The quotient equivalence uses a null difference. Numerical level sets of W retain their own relation.",
+    "The canonical conjugation concerns native coefficients and their generated preparation family. A whole-carrier conjugation, arbitrary ambient-semiring ideal quotient and completed real or Hilbert structure each require their own bridge.",
+    "The controls record algebraic and readout boundaries. Physical experimental interpretation, normalized-detector realization, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
 }
 
 def primitiveOriginOperationalCourseAudit : ResearchTask := {
@@ -11730,7 +11970,10 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "The finite calibration countercontrol F(p)=sqrt(max(N(p)^2,N(p)*q(p))) retains normalization, column conservation, prepared order, self-square, all-null silence and unit F(c)=1, yet the finite positive word p=1+e gives F(p)=sqrt(2) and F(c*p)=1. Its separate coordinate-continuity evidence concerns this same response. The global c origin obligation survives the specified unit c and dark-null calibration replacement. Adding finite calibration rules solely to remove this countercontrol leaves that origin question unresolved.",
     "The separately accepted analytic instability family gives, for each epsilon>0, one fixed response satisfying relative c tolerance for every preparation while having no finite upper factor against N on actual finite expressions with N=1. Its formalization remains open. Algebraic q/N bounds are mathematical domain restrictions, whose laboratory resource interpretation requires a separate bridge. The current physical question concerns the source of universal square response and full universally prepared c comparison.",
     "The literal dyadic detector countercontrol retains continuous coordinate readout, exact c equality, null insertion and all native branch-word gains, together with faithful coefficient action and exact serial composition. Its finite p=1+a witness still separates numerical square response from repeated algebraic process composition. The remaining detector-gain bridge concerns coherent operations beyond native a/b words.",
-    "The independently accepted analytic fixed-tripler route adds universal W(3*p)=W(3)*W(p) to BaseContract and obtains W=N with gain W(3)=9. Its planned Lean artifacts and critical approximation steps remain open. The current origin question is an independently motivated stationary gain for one fixed coherent multiplier acting on every preparation, together with the scalar-process versus actual-preparation interface. A proposal that simply relabels multiplicativity or copying stops that route.",
+    "The fixed-P4 stationary-tripler selector now has an independently accepted compiled proof, while its literal carrier and full-domain readout hypotheses remain supplied. The next origin-directed formalization is the finite-rejoin surjective two-port quadratic core and its lower-premise pairing reduction. These retain empty checkedEvidence. The cubic-carrier and earlier analytic follow-ups retain their existing statuses. Whole pair-domain access and lossless conservation are new explicit physical-origin obligations, and the actual normalized-detector bridge remains open.",
+    "The two-port pairing reduction separates a constant vacuum, symmetric biadditive pairing and additive linear remainder. The finite-rejoin core uses native half gains and additive cancellation to obtain positive quadraticity, null insertion and prepared count order. Fourth rejoin and Gaussian-dyadic arithmetic belong to a separate analytic observational-quotient continuation. This package exchanges premises with exact swap-square routes, and the overall origin goal remains open.",
+    "Existing checked eighth-rejoin controls already record generic carrier-selection walls. The checked cubic generated-carrier construction adds a continuous product/subspace response with global multiplicativity, the corresponding four response equations and count calibration. Its finite depth-two algebraic I3 is -3/4 and null insertion fails. It has an even sixth-rejoin witness. The independent scalar-half extension remains an analytic continuation outside the checked two-generator C3 artifact. Its role is the continuous multiplicative combination and explicit graded witness alongside the earlier P8 controls. Existing literal-P4 selection retains its exact fourth-rejoin geometry.",
+    "Pair-order preservation under the coherent tripler is a supplied two-equal-exposure ensemble promise. Its stationary-limit argument requires one common convergent subsequence across the countable carrier. The actual-P4 rational-equality countercontrol preserves every finite rational equality under literal multiplication while its tripler gain fails. Pure-preparation continuity and continuity on quotient ensemble means retain separate obligations.",
     "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
   checkedEvidence := []
   plannedArtifacts := []
@@ -11747,7 +11990,14 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "source_history_faithfulness_origin",
     "gks_operational_sequence_bridge",
     "initial_dyadic_detector_process_countercontrol",
-    "initial_fixed_tripler_readout_selection"]
+    "initial_fixed_tripler_readout_selection",
+    "initial_tripler_pair_order_selection",
+    "initial_multiplication_rational_equality_countercontrol",
+    "cubic_rejoin_readout_countercontrol",
+    "eighth_rejoin_presentation_and_readout_countermodels",
+    "two_port_conservation_pairing_origin",
+    "finite_rejoin_reversible_quadratic_origin",
+    "finite_rejoin_observational_quotient_native_arithmetic"]
   limits := [
     "This entry is an open research plan and course-audit obligation. Its stopped record-counting route remains analytic, and the cited event controls retain their original supplied contracts.",
     "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Independently motivated reversal, physical readout domains, calibrated attenuation, raw-response accounting and identification of reset trials with coherent echo require their own contracts and evidence.",
@@ -11947,6 +12197,12 @@ def researchTasks : List ResearchTask := [
   initialSquareCComparisonInstability,
   initialDyadicDetectorProcessCountercontrol,
   initialFixedTriplerReadoutSelection,
+  initialTriplerPairOrderSelection,
+  initialMultiplicationRationalEqualityCountercontrol,
+  cubicRejoinReadoutCountercontrol,
+  twoPortConservationPairingOrigin,
+  finiteRejoinReversibleQuadraticOrigin,
+  finiteRejoinObservationalQuotientNativeArithmetic,
   primitiveOriginOperationalCourseAudit,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
