@@ -11462,6 +11462,146 @@ def independentTrialEchoOriginCountercontrol : ResearchTask := {
     "The conditional selection theorem retains its existing premises. Physical primitives, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
 }
 
+def initialSamePreparationSquareSelection : ResearchTask := {
+  id := "initial_same_preparation_square_selection"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The literal initial P4 carrier with its existing exact complex-coordinate and shadow machinery, a+b=1, a^4=b^4 and c=2*a*b.",
+    "W:P4->Real satisfies exactly W(1)=1, universal column conservation W(a*p)+W(b*p)=W(p), the oriented comparison W(c*p)>=W(p), and universally prepared natural-count order.",
+    "The fifth supplied law is universal same-preparation square response W(p*p)=W(p)^2 for every actual p."]
+  conclusions := [
+    "The selected theorem gives W(p)=N(p)=Complex.normSq(E(p)) for every actual p. The norm model inhabits the Contract, and exists_unique_response establishes a unique nonvacuous numerical response.",
+    "The core derives vacuum zero, nonnegativity, column half laws and null silence from the four-field BaseContract. Real-axis square response yields the positive real-axis upper bound. All real-axis callbacks quantify explicitly over x : ℝ.",
+    "Finite phase words, dyadic prepared comparisons and annulus bounds give the global coarse upper bound 256*N. Square amplification sharpens it to N. Natural calibration and positive real-axis exactness then give the global lower bound N/16, and a second square amplification selects N.",
+    "Paired echo, exact c invariance, multiplicativity and null insertion follow after response selection.",
+    "The square and legacy echo Contracts both select N. They have the same model class while supplying different operational response premises. The core extraction preserves the legacy Contract and its 26 public statement signatures."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialColumnOrderReadoutCore.lean"
+      declarations := [
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.BaseContract",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.RealAxisSquare",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.response_zero",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.response_nonnegative",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.half_responses",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.null_response",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.real_axis_upper",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.naturals_calibrated",
+        "IDT.QMClosure.InitialColumnOrderReadoutCore.real_axis_selected"] },
+    { sourcePath := "Proofs/QMClosure/InitialCountSectorBounds.lean"
+      declarations := [
+        "IDT.QMClosure.InitialCountSectorBounds.sector_normalize",
+        "IDT.QMClosure.InitialCountSectorBounds.sector_upper",
+        "IDT.QMClosure.InitialCountSectorBounds.sector_lower",
+        "IDT.QMClosure.InitialCountSectorBounds.global_coarse_upper",
+        "IDT.QMClosure.InitialCountSectorBounds.global_coarse_lower"] },
+    { sourcePath := "Proofs/QMClosure/InitialSquareReadoutSelection.lean"
+      declarations := [
+        "IDT.QMClosure.InitialSquareReadoutSelection.Contract",
+        "IDT.QMClosure.InitialSquareReadoutSelection.real_axis_square",
+        "IDT.QMClosure.InitialSquareReadoutSelection.square_powers",
+        "IDT.QMClosure.InitialSquareReadoutSelection.norm_power",
+        "IDT.QMClosure.InitialSquareReadoutSelection.global_upper",
+        "IDT.QMClosure.InitialSquareReadoutSelection.real_axis_selected",
+        "IDT.QMClosure.InitialSquareReadoutSelection.global_lower_fraction",
+        "IDT.QMClosure.InitialSquareReadoutSelection.selected",
+        "IDT.QMClosure.InitialSquareReadoutSelection.norm_model",
+        "IDT.QMClosure.InitialSquareReadoutSelection.exists_unique_response",
+        "IDT.QMClosure.InitialSquareReadoutSelection.paired_echo",
+        "IDT.QMClosure.InitialSquareReadoutSelection.c_equality",
+        "IDT.QMClosure.InitialSquareReadoutSelection.multiplicative",
+        "IDT.QMClosure.InitialSquareReadoutSelection.null_insertion"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "initial_echo_arithmetic_context_obstruction",
+    "independent_trial_echo_origin_countercontrol",
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "The universal square law remains a supplied diagonal serial-response premise. Physical repeatability, copying and independent trials require separate source and process contracts.",
+    "The operational-premise replacement preserves the selected model class. Independent physical justification of either terminal premise remains open.",
+    "Mathematical paired constants and complex-coordinate conjugation geometry remain in the proof substrate. Introducing response continuity, global multiplicativity or input-dependent conjugate echo as an assumption would change the supplied five-field contract.",
+    "The full universally prepared c comparison remains supplied. Its finite calibration replacement and approximate comparison variants have their own countercontrols and analytic limits.",
+    "The scalar-process versus actual-preparation interface, primitive origins, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def initialSquareFiniteCCalibrationCountercontrol : ResearchTask := {
+  id := "initial_square_finite_c_calibration_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The literal initial P4 carrier with existing complex-coordinate norm square N, algebraic shadow q, c=2*a*b and the finite positive word e=2*(a*a+b*b).",
+    "F(p)=sqrt(max(N(p)^2,N(p)*q(p))). Its coordinate extension is (n,t) maps to sqrt(max(n^2,n*t)) on ℝ × ℝ."]
+  conclusions := [
+    "F is normalized, has both column responses F(p)/2, satisfies prepared count order and universal self-square response, and vanishes on every N-null input. Unit c calibration holds exactly as F(c)=1.",
+    "The separate continuous coordinateReadout theorem and F_coordinate_formula establish coordinate continuity for this same F. The terminal calibration nonselection theorem has its own premises, with continuity supplied by these separate declarations.",
+    "At the actual finite positive-word preparation p=1+e, E(e)=0, q(e)=1, E(p)=1, q(p)=2 and N(p)=1. Thus F(e)=0, F(1)=1, F(p)=sqrt(2), E(c*p)=1, q(c*p)=1 and F(c*p)=1.",
+    "F fails universal oriented c increase, differs from N, and fails null insertion despite F(e)=0. Multiplicativity fails at c and p.",
+    "The specified replacement of global c comparison by unit F(c)>=1 and dark-null calibration leaves selection underdetermined, even with all-null silence and coordinate continuity. The witness is a finite positive expression."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialSquareFiniteCalibrationCountermodel.lean"
+      declarations := [
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.coordinateReadout_continuous",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_coordinate_formula",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_one",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_a_mul",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_b_mul",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_column",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_self_square",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_preparedCountOrder",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_null_silent",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_c",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.unit_c_calibration",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.witness_coordinates",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.witness_normSq",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.c_witness_coordinates",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_witness",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_c_witness",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_e",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_c_strict_failure",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_not_cIncreasing",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_ne_normSq",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_null_insertion_failure",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.F_not_multiplicative",
+        "IDT.QMClosure.InitialSquareFiniteCalibrationCountermodel.calibration_replacement_does_not_select"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "initial_same_preparation_square_selection",
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "The excluded replacement is the specified unit c and null calibration package. Other finite test families require their own exact analysis.",
+    "Coordinate continuity is supplied by the same explicit response formula and its separate checked declaration. The terminal nonselection theorem retains its exact stated premise list.",
+    "The countercontrol retains the supplied literal carrier and response coordinates. Independent physical origins of the square law, global c comparison and preparation/process interface remain open.",
+    "Primitive origins, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def initialSquareCComparisonInstability : ResearchTask := {
+  id := "initial_square_c_comparison_instability"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P4 carrier, norm square N, algebraic shadow q, c=2*a*b and finite positive word e=2*(a*a+b*b).",
+    "F_0(p)=max(N(p),q(p)) and F_(k+1)(p)=sqrt(N(p)*F_k(p)). The retained-law claims concern each fixed natural k>=1.",
+    "gamma_0=1/2, gamma_(k+1)=sqrt(gamma_k), and gamma_k=2^(-2^(-k))."]
+  conclusions := [
+    "The accepted analytic family has normalization, column conservation, prepared count order, universal self-square response, all-null silence, coordinate continuity and F_k(c)=1 for every fixed k>=1.",
+    "For every actual p, gamma_k*F_k(p)<=F_k(c*p)<=F_k(p), with gamma_k tending to one. The ratio is sharp at p=1+e.",
+    "For every epsilon>0 there exists one fixed k>=1, hence one fixed response W=F_k, whose relative c inequality (1-epsilon)*W(p)<=W(c*p)<=W(p) holds for every preparation. That same response has no finite global upper factor against N.",
+    "For each fixed k>=1 and every natural m, the actual positive finite expression p_m=(1+e)^(2^k*m) has E(p_m)=1, N(p_m)=1, q(p_m)=2^(2^k*m) and F_k(p_m)=2^m. Thus for every real C an actual finite p has N(p)=1 and F_k(p)>C. These values use the explicit family formula.",
+    "For N(p)>0 the exact family formula is F_k(p)/N(p)=max(1,(q(p)/N(p))^(2^(-k))). It gives pointwise convergence to N, uniform convergence on fixed finite preparation sets, and uniform relative convergence under a fixed finite q/N bound."]
+  checkedEvidence := []
+  plannedArtifacts := []
+  dependencies := [
+    "initial_same_preparation_square_selection",
+    "initial_square_finite_c_calibration_countercontrol"]
+  limits := [
+    "This is an accepted analytic instability result awaiting a Lean artifact. Its checkedEvidence is empty.",
+    "The tolerance is relative to W(p), and one response is fixed before quantifying over all preparations. The arbitrary-size readout discrepancy uses that same response.",
+    "The q/N bound is a mathematical preparation-domain restriction. Relating the algebraic shadow q to laboratory resources requires a separate physical bridge.",
+    "The relative convergence estimate applies to this explicit family. Combining the q/N domain restriction with a finite N bound yields uniform absolute convergence for this family. General bounded-domain stability requires its own theorem.",
+    "The exact square-selection theorem and the earlier echo-distortion result retain their exact c comparison premise. Their statements remain valid under that premise.",
+    "Independent physical origins of universal square response and full prepared c comparison remain open, together with Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins."]
+}
+
 def primitiveOriginOperationalCourseAudit : ResearchTask := {
   id := "primitive_origin_operational_course_audit"
   stage := .openPhysicalBridge
@@ -11474,7 +11614,9 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "The analytic audit stopped the fixed positive additive record-counting family. Additive W and the column half laws give W(c*p)=W(p)/2 for c=2*a*b, conflicting at W(1)=1 with the oriented comparison W(c*p)>=W(p). This stopped route has no newly checked counting theorem. Existing positive-event overlap and cancellation controls are already recorded in native_persistent_event_readout_origin.",
     "The two-input arithmetic-expression obstruction changes the exact-output interface boundary while leaving the physical operation library and response-comparison contract open. A separate accepted analytic countercontrol retains all four non-echo readout laws and independent repeated trials while violating self-echo by 5/1024 on actual bounded preparations. Its formalization remains open.",
     "Reset and independence supply a product mean. Identifying that reset process with coherent algebraic echo requires an independently justified operational relation and raw-response accounting. Restricting echo to a domain meeting every forward h orbit transfers the obligation to universally calibrated attenuation and available depth.",
-    "The next active question concerns independently motivated locality, resources or an actual native rewrite that could justify this relation. Each next test must identify the origin-obligation delta, explain its independent action motivation, state a falsifier or route-stop criterion and expose every new premise. A law simply restating multiplicativity or self-echo stops that route.",
+    "The same-preparation square contract conditionally selects W=N while retaining normalization, column conservation, global oriented c increase and prepared count order. The independent physical source of the square law and the scalar-process versus actual-preparation interface remain open, alongside detector locality and reset comparison. Each next test must identify the origin-obligation delta, independent action motivation, falsifier or route-stop criterion and added premises. A proposed law that simply relabels multiplicativity or copying stops that research route.",
+    "The finite calibration countercontrol F(p)=sqrt(max(N(p)^2,N(p)*q(p))) retains normalization, column conservation, prepared order, self-square, all-null silence and unit F(c)=1, yet the finite positive word p=1+e gives F(p)=sqrt(2) and F(c*p)=1. Its separate coordinate-continuity evidence concerns this same response. The global c origin obligation survives the specified unit c and dark-null calibration replacement. Adding finite calibration rules solely to remove this countercontrol leaves that origin question unresolved.",
+    "The separately accepted analytic instability family gives, for each epsilon>0, one fixed response satisfying relative c tolerance for every preparation while having no finite upper factor against N on actual finite expressions with N=1. Its formalization remains open. Algebraic q/N bounds are mathematical domain restrictions, whose laboratory resource interpretation requires a separate bridge. The current physical question concerns the source of universal square response and full universally prepared c comparison.",
     "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
   checkedEvidence := []
   plannedArtifacts := []
@@ -11484,10 +11626,17 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "operational_positive_readout",
     "native_persistent_event_readout_origin",
     "initial_echo_arithmetic_context_obstruction",
-    "independent_trial_echo_origin_countercontrol"]
+    "independent_trial_echo_origin_countercontrol",
+    "initial_same_preparation_square_selection",
+    "initial_square_finite_c_calibration_countercontrol",
+    "initial_square_c_comparison_instability",
+    "source_history_faithfulness_origin",
+    "gks_operational_sequence_bridge"]
   limits := [
     "This entry is an open research plan and course-audit obligation. Its stopped record-counting route remains analytic, and the cited event controls retain their original supplied contracts.",
     "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Independently motivated reversal, physical readout domains, calibrated attenuation, raw-response accounting and identification of reset trials with coherent echo require their own contracts and evidence.",
+    "Existing branch-word action identifies concatenation with operator composition under supplied stationary numerical gain. Its response domain consists of serial words. Arbitrary coherent sums and the all-preparation scalar-process bridge remain open in gks_operational_sequence_bridge.",
+    "Carrier transfer must reconcile the additive group obtained from Gate reconstruction with literal P4's inverse-of-one obstruction. An independently specified observational or destructive quotient and its preservation contract remain separate obligations.",
     "Conditional readout selection and exclusions retain their exact supplied mathematical premises. Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale origins remain open."]
 }
 
@@ -11677,6 +11826,9 @@ def researchTasks : List ResearchTask := [
   eighthRejoinArithmeticReadoutCountermodel,
   initialEchoArithmeticContextObstruction,
   independentTrialEchoOriginCountercontrol,
+  initialSamePreparationSquareSelection,
+  initialSquareFiniteCCalibrationCountercontrol,
+  initialSquareCComparisonInstability,
   primitiveOriginOperationalCourseAudit,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
