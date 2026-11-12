@@ -10745,6 +10745,71 @@ def initialOneSidedScalarReadoutSelection : ResearchTask := {
     "Physical availability of inverse contexts and the origins of the one-sided law, count order, all-scale tests and null calibration remain open."]
 }
 
+def initialCountGeometry : ResearchTask := {
+  id := "initial_count_geometry_and_prepared_order"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The literal initial two-relator semiring P and its checked combined-coordinate normal form, with complex evaluation E, nonnegative real dyadic shadow q and equality reflection using both coordinates.",
+    "Numerical count design and paired bounds use ordinary natural, rational and real arithmetic. Scalar and raw preparations are actual P elements with finite binary count representations.",
+    "For arbitrary W:P->Real, PreparedCountOrder means forall p,n,m,n',m', n<=n' and m<=m' imply W(bag(n,m)*p)<=W(bag(n',m')*p). ResponseIncreasing(W,M) means forall p, W(p)<=W(M*p).",
+    "Response comparisons retain their exact local premises, with prepared count order for dyadic order and finite-word increase, and ResponseIncreasing for the chosen transport program. W(0)=0 is supplied only for the response-nonnegativity corollary.",
+    "Finite paired bounds assume target>1, 0<t<=1 and the displayed last-strict-power conditions. The reciprocal upper bound additionally requires (target-1)*t<1. Convergence statements hold for each fixed target>1."]
+  conclusions := [
+    "Actual scalar and raw dyadic preparations have exact finite binary-count representations. Raw endpoint recognition and transport identities retain both E and q, including the raw-cone shadow equality.",
+    "ExactRawTransport records four natural counts and an actual identity M*bag(rawA,rawB)=bag(targetA,targetB)*p. Rational-coordinate designs clear denominators into such identities, with the constructor-specific positivity premises preserved.",
+    "The actual inverse units, repeated transports, scalar-shifted transports and serial-shifted transports are checked. For j<=k, c^k*twoInv^j=2^(k-j)*h^k, where c=2ab and h=ab.",
+    "Natural prepared count order gives dyadic prepared order and response increase for the finite plus, minus and paired words at every preparation. Exact lower transfers, including a serial-shifted source with target p fixed, follow by count comparison at the actual inverse-binary-scaled preparation.",
+    "Quantitative finite paired bounds control ratio crossing, n*t^2 and real amplification. They remain applicable pointwise when target varies. The separate fixed-target limits give real amplification tending to one and shadow amplification tending to that fixed target."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialCountGeometry.lean"
+      declarations := [
+        "IDT.QMClosure.InitialCountGeometry.eq_of_combined_coordinates",
+        "IDT.QMClosure.InitialCountGeometry.exists_raw_endpoint_of_cone",
+        "IDT.QMClosure.InitialCountGeometry.ExactRawTransport",
+        "IDT.QMClosure.InitialCountGeometry.exact_transport_of_complex_coordinates",
+        "IDT.QMClosure.InitialCountGeometry.exists_transport_from_rational_design",
+        "IDT.QMClosure.InitialCountGeometry.serial_scalar_word_grid_identity",
+        "IDT.QMClosure.InitialCountGeometry.scalar_grid",
+        "IDT.QMClosure.InitialCountGeometry.raw_grid",
+        "IDT.QMClosure.InitialCountGeometry.scalar_shifted_transport",
+        "IDT.QMClosure.InitialCountGeometry.serial_shifted_transport",
+        "IDT.QMClosure.InitialCountGeometry.exists_exact_transport_from_rational_counts"] },
+    { sourcePath := "Proofs/QMClosure/InitialPairedCountBounds.lean"
+      declarations := [
+        "IDT.QMClosure.InitialPairedCountBounds.exists_small_rational_overhead",
+        "IDT.QMClosure.InitialPairedCountBounds.exists_last_strict_power",
+        "IDT.QMClosure.InitialPairedCountBounds.finite_pair_bounds",
+        "IDT.QMClosure.InitialPairedCountBounds.finite_pair_R_upper",
+        "IDT.QMClosure.InitialPairedCountBounds.ratioAmplification_tendsto",
+        "IDT.QMClosure.InitialPairedCountBounds.realAmplification_tendsto",
+        "IDT.QMClosure.InitialPairedCountBounds.shadowAmplification_tendsto"] },
+    { sourcePath := "Proofs/QMClosure/InitialPreparedCountOrder.lean"
+      declarations := [
+        "IDT.QMClosure.InitialPreparedCountOrder.PreparedCountOrder",
+        "IDT.QMClosure.InitialPreparedCountOrder.ResponseIncreasing",
+        "IDT.QMClosure.InitialPreparedCountOrder.plusWord_increasing",
+        "IDT.QMClosure.InitialPreparedCountOrder.minusWord_increasing",
+        "IDT.QMClosure.InitialPreparedCountOrder.pairedWord_increasing",
+        "IDT.QMClosure.InitialPreparedCountOrder.selectedPairedWord_coordinates",
+        "IDT.QMClosure.InitialPreparedCountOrder.response_nonnegative",
+        "IDT.QMClosure.InitialPreparedCountOrder.prepared_dyadic_order",
+        "IDT.QMClosure.InitialPreparedCountOrder.prepared_dyadic_lower_transfer",
+        "IDT.QMClosure.InitialPreparedCountOrder.prepared_serial_shifted_lower_transfer",
+        "IDT.QMClosure.InitialPreparedCountOrder.prepared_dyadic_upper_transfer"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "transparent_fourth_exact_initial_normal_form",
+    "transparent_fourth_initial_presentation_and_quotient"]
+  limits := [
+    "This checked geometry and conditional order API leaves the original scalar classification and terminal one-sided word classification analytic with empty checked evidence in their own tasks.",
+    "The response interface supplies neither half laws, gain laws, exact serial equality nor response continuity. Actual scalar shifts are algebraic changes of preparation.",
+    "Rational division belongs to numerical design and denominator clearing. No arbitrary odd-natural inverse or arbitrary real-coefficient preparation is adjoined to P.",
+    "Arbitrarily close upper landing, actual finite dyadic-program endpoint limits, numeric real-envelope upper semicontinuity and rotation paths, a single finite bound for an entire c orbit, orbit-supremum scalar-grid transport, finite-grid uniform convergence and changing-source word recovery remain formalization obligations. Real parameters occur only in numeric envelope arguments. No real-coefficient P programs are introduced.",
+    "Fixed-target numerical limits establish no limits of W and supply no varying-target convergence theorem by substitution. Ratio uses retain their required nonzero or positive denominator premises.",
+    "Physical origins of the carrier relations, availability of inverse contexts and response-order laws remain open. This task closes no Born, Hilbert, full QM, GR or physical-scale obligation."]
+}
+
 def initialOneSidedWordReadoutSelection : ResearchTask := {
   id := "initial_one_sided_word_readout_selection_analytic"
   stage := .analyticAwaitingFormalization
@@ -10756,23 +10821,24 @@ def initialOneSidedWordReadoutSelection : ResearchTask := {
   conclusions := [
     "Independently accepted analytic first-five classification is exactly W=N+kappa*indicator(E=0 and q>0), kappa>=0, including the converse. The sixth schema selects W=N.",
     "The bounded monotone c-orbit response has a finite supremum V. V is exactly c-transparent, satisfies prepared count order and every scalar-dyadic raw mixed-zero test. Its positive unit value v=V(1) permits application of the original equality-based scalar classification to V/v.",
-    "On nonnull preparations V=vN. A finite-grid isotonicity argument gives uniform convergence of W(c^k x) to V(x) on compact dyadic raw boxes. Actual denominator-cleared changing-source transport then yields W(p)>=vN(p); W(p)<=V(p) gives equality on nonnull p and unit normalization fixes v=1.",
+    "On nonnull preparations V=vN. A finite-grid isotonicity argument gives uniform convergence of W(c^k x) to V(x) on dyadic points in bounded real boxes. Actual denominator-cleared changing-source transport then yields W(p)>=vN(p); W(p)<=V(p) gives equality on nonnull p and unit normalization fixes v=1.",
     "The null-sector serial equality follows from count order and the forward serial inequality. Power-of-two sandwiching gives one nonnegative positive-null constant and the all-kappa converse.",
     "Exact serial equality and all scalar-grid mixed-zero tests are conclusions. The former word-only one-sided open question is analytically settled under these precise premises."]
   checkedEvidence := []
   plannedArtifacts := [
-    "Formalize dyadic prepared order, actual units and finite monotonic programs, including rational overhead and paired-program estimates.",
+    "Formalize actual finite dyadic-program endpoint limits and the numeric envelope upper-semicontinuity, real local rotation and exact angular-subdivision steps, using the checked finite geometry.",
     "Formalize arbitrarily close raw upper landing from only the forward serial inequality, prepared order and algebraic geometry, before raw response calibration.",
     "Formalize one finite bound for every c orbit, independent of its index, with a fixed rotation and fixed natural raw upper bag in the nonnull case.",
     "Formalize the bounded monotone real orbit supremum, pointwise convergence, tail-supremum equality, inherited count order and positive finite v=V(1).",
-    "Formalize finite word-rectangle telescoping and c^k*u^j=2^(k-j)*h^k for k>=j, followed by four fixed-preparation limits to obtain scalar mixed zero for V.",
+    "Formalize finite word-rectangle telescoping, using the checked c^k*u^j=2^(k-j)*h^k identity for k>=j, followed by four fixed-preparation limits to obtain scalar mixed zero for V.",
     "Apply the original equality-based scalar first-five classification to V/v with every premise discharged; retain its own analytic formalization obligation.",
-    "Formalize uniform convergence on every compact dyadic raw box using finite lower grids, count monotonicity and the continuous quadratic limit.",
+    "Formalize uniform convergence on dyadic points in every bounded real box using finite lower grids, count monotonicity and the continuous quadratic limit.",
     "Formalize paired programs for growing lambda_k with (lambda_k-1)*t_k<epsilon_k/(1+epsilon_k) and 2*u0*t_k/abs(v0)<epsilon_k, giving R_k->1 and eta_k->0.",
-    "Formalize positive integer denominator clearing, exact actual identities before and after multiplication by c^k, and positive dyadic d_k with d_k*H_k<=1 and d_k*H_k->1.",
+    "Use the checked positive integer denominator clearing and serial-shifted actual identities to construct positive dyadic d_k with d_k*H_k<=1 and d_k*H_k->1 for the changing-source recovery.",
     "Formalize the varying-source uniform-convergence lower bound for each fixed rotation, then the separate rotation limit and unit normalization v=1.",
     "Formalize positive-null classification, the all-kappa converse and optional T test, followed by deduced global equality and scalar/word response equivalence."]
   dependencies := [
+    "initial_count_geometry_and_prepared_order",
     "initial_scaled_dyadic_raw_mixed_null_calibration_sufficiency_analytic",
     "transparent_fourth_exact_initial_normal_form"]
   limits := [
@@ -11036,6 +11102,7 @@ def researchTasks : List ResearchTask := [
   initialScaledCountSixSchemaNonredundancy,
   initialTransparencyCalibrationReplacementBoundary,
   initialOneSidedScalarReadoutSelection,
+  initialCountGeometry,
   initialOneSidedWordReadoutSelection,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
