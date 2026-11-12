@@ -11602,6 +11602,118 @@ def initialSquareCComparisonInstability : ResearchTask := {
     "Independent physical origins of universal square response and full prepared c comparison remain open, together with Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins."]
 }
 
+def initialDyadicDetectorProcessCountercontrol : ResearchTask := {
+  id := "initial_dyadic_detector_process_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The literal initial P4 carrier, its existing complex coordinate E and coordinate norm square N, and the four-law BaseContract of InitialColumnOrderReadoutCore.",
+    "D={0} union {2^k | k:Int}, f(x)=x+(1/2)*infDist(x,D), and W(p)=f(N(p)).",
+    "The algebraic process action is literal left multiplication act(p,s)=p*s on actual initial elements."]
+  conclusions := [
+    "The profile has f(0)=0, f(1)=1, strict monotonicity, continuity, nonnegativity on nonnegative inputs and exact dyadic homogeneity. W satisfies normalization, universal column conservation, exact c equality and universally prepared natural-count order.",
+    "The response is complex-coordinate extensional, has null insertion and finite all-null silence, admits a continuous ambient complex-coordinate detector formula, and has generator stationarity on every preparation with exact finite a/b branch-word gains.",
+    "For the actual finite initial term p=1+a, N(p)=5/2, N(p^2)=25/4, W(p)=11/4, W(p^2)=57/8 and W(p)^2=121/16. Thus universal numerical self-square response, equality W=N and global numerical response multiplicativity fail.",
+    "Literal multiplication gives an injective coefficient-to-action map, identity, exact serial composition, coherent addition and input distributivity. The terminal process countercontrol combines the exact action-square identity with the same numerical square discrepancy."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialDyadicDetectorCountermodel.lean"
+      declarations := [
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.dyadicSet",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.zero_mem_dyadicSet",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.zpow_mem_dyadicSet",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.dyadicSet_nonempty",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.two_smul_dyadicSet",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_zero",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_one",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_continuous",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_strictMono",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_nonneg",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_double",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_half",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.infDist_five_halves",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.infDist_twentyfive_quarters",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_five_halves",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.profile_twentyfive_quarters",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_zero",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_one",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_nonneg",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_halfA",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_halfB",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.base_contract",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_c",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_ext",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_null",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_null_insertion",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_all_null_sum",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.ambientDetector",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.ambientDetector_continuous",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.coordinate_formula",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.generator_stationarity",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.finite_word_gain",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.witness",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.witness_norm",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.witness_square_norm",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.witness_values",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.self_square_fails",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.W_ne_N",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.nonmultiplicative",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.act",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.act_injective",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.act_identity",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.act_serial",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.act_coherent_addition",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.act_input_addition",
+        "IDT.QMClosure.InitialDyadicDetectorCountermodel.process_square_countercontrol"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "initial_same_preparation_square_selection",
+    "source_history_faithfulness_origin",
+    "gks_operational_sequence_bridge"]
+  limits := [
+    "The algebraic action identities leave coherent-operation detector gain beyond native a/b branch words open. A stationary numerical gain for an arbitrary coherent operation requires an additional operational bridge.",
+    "The accepted analytic fixed-tripler selection argument has its own task, future artifacts and independent physical-origin obligation.",
+    "The construction is a mathematical response/process countercontrol. A complete probabilistic operational model, physical detector realization, copying, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def initialFixedTriplerReadoutSelection : ResearchTask := {
+  id := "initial_fixed_tripler_readout_selection"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The literal P4 carrier, existing E and N, and exactly the four-law InitialColumnOrderReadoutCore.BaseContract: unit normalization, universal column conservation, universal oriented c comparison and prepared natural-count order.",
+    "One additional supplied universal stationary gain law W((3:P4)*p)=W(3)*W(p) for every actual preparation p. The coherent multiplier 3 acts on p within the literal carrier."]
+  conclusions := [
+    "The independently accepted analytic argument selects W=N and forces W(3)=9. Lean formalization and kernel review remain pending.",
+    "Writing G=W(3), count order gives G>=1. The core positive real-axis coarse upper estimate gives G^n<=G*9^n, while doubling and count sandwiches give 9^n<4*G^n. Power comparison forces G=9.",
+    "Irrational-log pigeonhole near-collisions 1<3^n/2^m<1+epsilon force exact W(2*p)=4*W(p), then exact c equality. Natural j can be bracketed by successive powers of such a near-unit ratio. Clearing positive integer denominators gives W(j*p)=j^2*W(p).",
+    "The literal twoInv coefficient supplies dyadic scalar homogeneity. Relative landing with d=1 and positive dyadic tolerances gives E-extensionality. Natural homogeneity then makes the extension from Gaussian dyadic coordinates to Q(i) well-defined by denominator clearing.",
+    "Rational prepared-count cones yield the local estimate (1-eta)^2*F(v)<=F(u)<=(1+eta)^2*F(v), where eta=abs(Re(u/v)-1)+abs(Im(u/v))<=1 and v is nonzero. Real-axis calibration and the sector bound K=256 provide uniform annular Lipschitz bounds and a continuous extension to complex coordinates, including zero.",
+    "Boundary count order gives F((1+i*t)*z)>=F(z) and F((1-i*t)*z)>=F(z). Degree-two real homogeneity yields F(exp(i*delta)*z)>=cos(delta)^2*F(z) for abs(delta)<pi/2. Finite equal-angle subdivision, Bernoulli-limit estimates and the reverse comparison give isotropy and norm-square selection.",
+    "The three critical formalization obligations are a strictly positive Dirichlet near-collision including the reciprocal-integer case, positive dyadic tolerance selection before extending coordinates, and small-angle subdivision before the isotropy limit.",
+    "Analytic controls retain the premise boundary: the dyadic detector response satisfies BaseContract and fails the tripler law; q satisfies normalization, column laws, prepared order and tripler gain W(3)=3 while failing c comparison; the angular response N+Im(z^4)^2/N^3 satisfies column, c and tripler laws while failing full prepared order.",
+    "For that angular control, the actual p=a+3*b and count pairs (2,0)<=(2,1) give complex coordinates 3+i and 7/2-i/2. The responses are 2402/125 and 503521/31250, with second-minus-first equal to -96979/31250."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Proofs/QMClosure/InitialStationaryTriplerCountCalibration.lean",
+    "Proofs/QMClosure/InitialCountHomogeneousReadoutSelection.lean",
+    "Proofs/QMClosure/InitialStationaryTriplerSelection.lean"]
+  dependencies := [
+    "initial_dyadic_detector_process_countercontrol",
+    "initial_same_preparation_square_selection",
+    "gks_operational_sequence_bridge"]
+  limits := [
+    "This is an accepted analytic selection argument and future formalization plan with empty checkedEvidence. The planned modules and analytic controls require actual artifacts before any checked status.",
+    "Continuity and coordinate factorization are conclusions of the proposed argument. The supplied five-field contract consists of BaseContract and universal stationary coherent-tripler response, with gain nine obtained analytically.",
+    "The square and tripler contracts have the same selected model class under BaseContract. Their operational premises describe different process promises whose independent physical motivation remains open.",
+    "The future selected-proof dependency closure must exclude the old InitialColumnOrderEchoSelection and InitialSquareReadoutSelection selected and Contract declarations and their selfEcho or selfSquare premise accessors. The approved hypotheses are BaseContract and the fixed stationary-tripler response law.",
+    "The existing core, count-sector geometry and coordinate machinery, including mathematical reflection, remain explicit proof inputs. The continuous complex extension serves as a mathematical proof device. Interpreting its points as physically available states requires a separate bridge.",
+    "The stationary tripler law acts on every actual input. Identifying coherent 3*p with a physical operation requires an additional bridge. Independent repetitions and physical copying retain their own contracts.",
+    "The angular formula is used on nonzero complex coordinates, with zero response at zero. Its control calculations remain analytic in this task.",
+    "Detector-gain origin, the scalar-process versus preparation interface, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
 def primitiveOriginOperationalCourseAudit : ResearchTask := {
   id := "primitive_origin_operational_course_audit"
   stage := .openPhysicalBridge
@@ -11617,6 +11729,8 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "The same-preparation square contract conditionally selects W=N while retaining normalization, column conservation, global oriented c increase and prepared count order. The independent physical source of the square law and the scalar-process versus actual-preparation interface remain open, alongside detector locality and reset comparison. Each next test must identify the origin-obligation delta, independent action motivation, falsifier or route-stop criterion and added premises. A proposed law that simply relabels multiplicativity or copying stops that research route.",
     "The finite calibration countercontrol F(p)=sqrt(max(N(p)^2,N(p)*q(p))) retains normalization, column conservation, prepared order, self-square, all-null silence and unit F(c)=1, yet the finite positive word p=1+e gives F(p)=sqrt(2) and F(c*p)=1. Its separate coordinate-continuity evidence concerns this same response. The global c origin obligation survives the specified unit c and dark-null calibration replacement. Adding finite calibration rules solely to remove this countercontrol leaves that origin question unresolved.",
     "The separately accepted analytic instability family gives, for each epsilon>0, one fixed response satisfying relative c tolerance for every preparation while having no finite upper factor against N on actual finite expressions with N=1. Its formalization remains open. Algebraic q/N bounds are mathematical domain restrictions, whose laboratory resource interpretation requires a separate bridge. The current physical question concerns the source of universal square response and full universally prepared c comparison.",
+    "The literal dyadic detector countercontrol retains continuous coordinate readout, exact c equality, null insertion and all native branch-word gains, together with faithful coefficient action and exact serial composition. Its finite p=1+a witness still separates numerical square response from repeated algebraic process composition. The remaining detector-gain bridge concerns coherent operations beyond native a/b words.",
+    "The independently accepted analytic fixed-tripler route adds universal W(3*p)=W(3)*W(p) to BaseContract and obtains W=N with gain W(3)=9. Its planned Lean artifacts and critical approximation steps remain open. The current origin question is an independently motivated stationary gain for one fixed coherent multiplier acting on every preparation, together with the scalar-process versus actual-preparation interface. A proposal that simply relabels multiplicativity or copying stops that route.",
     "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
   checkedEvidence := []
   plannedArtifacts := []
@@ -11631,7 +11745,9 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "initial_square_finite_c_calibration_countercontrol",
     "initial_square_c_comparison_instability",
     "source_history_faithfulness_origin",
-    "gks_operational_sequence_bridge"]
+    "gks_operational_sequence_bridge",
+    "initial_dyadic_detector_process_countercontrol",
+    "initial_fixed_tripler_readout_selection"]
   limits := [
     "This entry is an open research plan and course-audit obligation. Its stopped record-counting route remains analytic, and the cited event controls retain their original supplied contracts.",
     "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Independently motivated reversal, physical readout domains, calibrated attenuation, raw-response accounting and identification of reset trials with coherent echo require their own contracts and evidence.",
@@ -11829,6 +11945,8 @@ def researchTasks : List ResearchTask := [
   initialSamePreparationSquareSelection,
   initialSquareFiniteCCalibrationCountercontrol,
   initialSquareCComparisonInstability,
+  initialDyadicDetectorProcessCountercontrol,
+  initialFixedTriplerReadoutSelection,
   primitiveOriginOperationalCourseAudit,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]

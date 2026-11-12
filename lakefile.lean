@@ -558,6 +558,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.InitialColumnOrderReadoutCore,
     `Proofs.QMClosure.InitialCountSectorBounds,
     `Proofs.QMClosure.InitialSquareReadoutSelection,
+    `Proofs.QMClosure.InitialDyadicDetectorCountermodel,
     `Proofs.QMClosure.InitialSquareFiniteCalibrationCountermodel,
     `Proofs.QMClosure.InitialColumnOrderEchoSelection,
     `Proofs.QMClosure.TransparentFourthNormalFormConsequences,
