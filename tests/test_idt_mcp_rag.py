@@ -478,6 +478,10 @@ class IdtMcpRagTests(unittest.TestCase):
             text = require_string(require_mapping(require_list(result["content"])[0])["text"])
             self.assertIn(stdout_error, text)
             self.assertIn(stderr_error, text)
+            handle = require_mapping(evidence["full_log"])
+            self.assertIn(require_string(handle["path"]), text)
+            self.assertIn(require_string(handle["sha256"]), text)
+            self.assertIn(f"bytes={handle['bytes']}", text)
 
     def test_lean_failure_diagnostics_bound_count_and_excerpt_length(self) -> None:
         output = "\n".join(f"Proofs/A.lean:{line}:1: error: {'x' * 1000}" for line in range(12))
@@ -495,6 +499,166 @@ class IdtMcpRagTests(unittest.TestCase):
             self.assertEqual(True, evidence["diagnostics_truncated"])
             self.assertEqual(["stdout"] * 4 + ["stderr"] * 4, [item["stream"] for item in diagnostics])
             self.assertTrue(all(len(require_string(item["excerpt"])) <= 800 for item in diagnostics))
+
+    def test_command_log_retains_all_errors_after_compact_diagnostics_truncate(self) -> None:
+        stdout = "\n".join(f"Proofs/A.lean:{line}:1: error: σ{line} {'x' * 1000}" for line in range(30))
+        stderr = "\n".join(f"Proofs/B.lean:{line}:1: error: stderr {line}" for line in range(19))
+        command = CheckCommand("synthetic_failure", ("unused", "Fixture"), 1, "mock failed check")
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            with patch(
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(1, stdout, stderr),
+            ) as runner:
+                evidence = run_command_evidence(root, command)
+            handle = require_mapping(evidence["full_log"])
+            artifact_path = Path(require_string(handle["path"]))
+            artifact_bytes = artifact_path.read_bytes()
+            artifact = require_mapping(json.loads(artifact_bytes))
+
+            self.assertEqual((root / ".idt" / "check-logs").resolve(), artifact_path.parent)
+            self.assertEqual("idt-v8-check-log/1", artifact["schema"])
+            self.assertEqual(stdout, artifact["stdout"])
+            self.assertEqual(stderr, artifact["stderr"])
+            self.assertEqual(command.name, artifact["name"])
+            self.assertEqual(command.description, artifact["description"])
+            self.assertEqual(list(command.command), artifact["command"])
+            self.assertEqual(1, artifact["exit_code"])
+            self.assertEqual(evidence["proof_boundary"], artifact["proof_boundary"])
+            self.assertEqual(len(artifact_bytes), handle["bytes"])
+            self.assertEqual(hashlib.sha256(artifact_bytes).hexdigest(), handle["sha256"])
+            self.assertEqual(False, evidence["ok"])
+            self.assertEqual(1, evidence["exit_code"])
+            self.assertEqual(list(command.command), evidence["command"])
+            self.assertEqual("idt-v8-check-evidence/1", evidence["schema"])
+            self.assertEqual(49, evidence["diagnostic_count"])
+            self.assertEqual(True, evidence["diagnostics_truncated"])
+            self.assertEqual(8, len(require_list(evidence["diagnostics"])))
+            self.assertNotEqual(stdout, evidence["stdout_tail"])
+            runner.assert_called_once()
+
+    def test_command_log_captures_complete_success_output_and_empty_streams(self) -> None:
+        command = CheckCommand("synthetic_success", ("unused",), 1, "mock successful check")
+        for stdout, stderr in (("α\ncompleted without final newline", "stderr\n"), ("", "")):
+            with self.subTest(stdout=stdout, stderr=stderr), tempfile.TemporaryDirectory() as raw_dir:
+                with patch(
+                    "theory_verifier.idt_rag.subprocess.Popen",
+                    return_value=completed_command(0, stdout, stderr),
+                ):
+                    evidence = run_command_evidence(Path(raw_dir), command)
+                handle = require_mapping(evidence["full_log"])
+                artifact_bytes = Path(require_string(handle["path"])).read_bytes()
+                artifact = require_mapping(json.loads(artifact_bytes))
+
+                self.assertEqual(stdout, artifact["stdout"])
+                self.assertEqual(stderr, artifact["stderr"])
+                self.assertEqual(0, artifact["exit_code"])
+                self.assertEqual(len(artifact_bytes), handle["bytes"])
+                self.assertEqual(hashlib.sha256(artifact_bytes).hexdigest(), handle["sha256"])
+                self.assertEqual(True, evidence["ok"])
+                self.assertEqual(0, evidence["exit_code"])
+                self.assertEqual([], evidence["diagnostics"])
+                self.assertEqual(0, evidence["diagnostic_count"])
+                self.assertEqual(False, evidence["diagnostics_truncated"])
+
+    def test_command_log_retains_drained_timeout_output(self) -> None:
+        command = CheckCommand("synthetic_timeout", ("unused",), 1, "mock timeout")
+        stdout = b"error: interrupted UTF-8 \xe2"
+        stderr = b"stderr before timeout\n"
+        process = completed_command(-9, "", "")
+        process.communicate.side_effect = [
+            subprocess.TimeoutExpired(command.command, 1, output=stdout, stderr=stderr),
+            (stdout, stderr),
+        ]
+        with tempfile.TemporaryDirectory() as raw_dir:
+            with patch("theory_verifier.idt_rag.subprocess.Popen", return_value=process), patch(
+                "theory_verifier.idt_rag.os.killpg",
+            ):
+                evidence = run_command_evidence(Path(raw_dir), command)
+            handle = require_mapping(evidence["full_log"])
+            artifact = require_mapping(json.loads(Path(require_string(handle["path"])).read_bytes()))
+
+            self.assertEqual(stdout.decode("utf-8", errors="replace"), artifact["stdout"])
+            self.assertEqual(stderr.decode("utf-8", errors="replace"), artifact["stderr"])
+            self.assertEqual(-1, artifact["exit_code"])
+            self.assertEqual(False, evidence["ok"])
+            self.assertEqual(-1, evidence["exit_code"])
+            self.assertEqual(1, evidence["diagnostic_count"])
+            self.assertEqual(artifact["proof_boundary"], evidence["proof_boundary"])
+
+    def test_command_logs_use_unique_paths_and_preserve_previous_capture(self) -> None:
+        command = CheckCommand("synthetic", ("unused",), 1, "mock check")
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            processes = [completed_command(0, "first", ""), completed_command(0, "second", "")]
+            with patch("theory_verifier.idt_rag.subprocess.Popen", side_effect=processes):
+                first = run_command_evidence(root, command)
+                second = run_command_evidence(root, command)
+            first_path = Path(require_string(require_mapping(first["full_log"])["path"]))
+            second_path = Path(require_string(require_mapping(second["full_log"])["path"]))
+
+            self.assertNotEqual(first_path, second_path)
+            self.assertEqual("first", require_mapping(json.loads(first_path.read_bytes()))["stdout"])
+            self.assertEqual("second", require_mapping(json.loads(second_path.read_bytes()))["stdout"])
+            if os.name == "posix":
+                self.assertEqual(0, first_path.stat().st_mode & 0o077)
+                self.assertEqual(0, second_path.stat().st_mode & 0o077)
+
+    def test_command_log_write_failure_keeps_original_check_result(self) -> None:
+        command = CheckCommand("synthetic", ("unused",), 1, "mock check")
+        with tempfile.TemporaryDirectory() as raw_dir:
+            for returncode in (0, 1):
+                with self.subTest(returncode=returncode), patch(
+                    "theory_verifier.idt_rag.subprocess.Popen",
+                    return_value=completed_command(returncode, "captured stdout", "captured stderr"),
+                ), patch(
+                    "theory_verifier.idt_rag.tempfile.NamedTemporaryFile",
+                    side_effect=OSError("synthetic disk failure"),
+                ):
+                    evidence = run_command_evidence(Path(raw_dir), command)
+
+                self.assertEqual(returncode == 0, evidence["ok"])
+                self.assertEqual(returncode, evidence["exit_code"])
+                self.assertEqual("captured stdout", evidence["stdout_tail"])
+                self.assertEqual("captured stderr", evidence["stderr_tail"])
+                self.assertNotIn("full_log", evidence)
+                self.assertIn("synthetic disk failure", require_string(evidence["full_log_error"]))
+
+    def test_command_log_error_message_is_bounded(self) -> None:
+        command = CheckCommand("synthetic", ("unused",), 1, "mock check")
+        with tempfile.TemporaryDirectory() as raw_dir:
+            with patch(
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(0, "captured stdout", "captured stderr"),
+            ), patch(
+                "theory_verifier.idt_rag.tempfile.NamedTemporaryFile",
+                side_effect=OSError("x" * 25000),
+            ):
+                evidence = run_command_evidence(Path(raw_dir), command)
+
+            error_message = require_string(evidence["full_log_error"])
+            self.assertEqual(400, len(error_message))
+            self.assertTrue(error_message.startswith("could not persist captured output: "))
+            self.assertNotIn("full_log", evidence)
+            self.assertEqual(True, evidence["ok"])
+            self.assertEqual(0, evidence["exit_code"])
+            self.assertEqual("captured stdout", evidence["stdout_tail"])
+            self.assertEqual("captured stderr", evidence["stderr_tail"])
+
+    def test_command_log_fsync_failure_removes_incomplete_artifact(self) -> None:
+        command = CheckCommand("synthetic", ("unused",), 1, "mock check")
+        with tempfile.TemporaryDirectory() as raw_dir:
+            root = Path(raw_dir)
+            with patch(
+                "theory_verifier.idt_rag.subprocess.Popen",
+                return_value=completed_command(0, "captured stdout", ""),
+            ), patch("theory_verifier.idt_rag.os.fsync", side_effect=OSError("synthetic fsync failure")):
+                evidence = run_command_evidence(root, command)
+
+            self.assertEqual(True, evidence["ok"])
+            self.assertNotIn("full_log", evidence)
+            self.assertIn("synthetic fsync failure", require_string(evidence["full_log_error"]))
+            self.assertEqual([], list((root / ".idt" / "check-logs").iterdir()))
 
     def test_lean_success_does_not_become_failure_from_error_like_output(self) -> None:
         output = "Proofs/A.lean:1:1: error: quoted diagnostic example"

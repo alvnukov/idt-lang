@@ -745,6 +745,9 @@ def allowed_checks() -> dict[str, CheckCommand]:
     }
 
 
+CHECK_PROOF_BOUNDARY = "check_result_is_not_formal_proof"
+
+
 def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
     started = time.monotonic()
     try:
@@ -781,11 +784,12 @@ def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
             "command": list(check.command),
             "stdout_tail": tail_text(completed.stdout),
             "stderr_tail": tail_text(completed.stderr),
+            **persist_check_log(repo_root, check, completed.stdout, completed.stderr, completed.returncode),
             **failure_diagnostics(
                 completed.stdout if completed.returncode else "",
                 completed.stderr if completed.returncode else "",
             ),
-            "proof_boundary": "check_result_is_not_formal_proof",
+            "proof_boundary": CHECK_PROOF_BOUNDARY,
         }
     except subprocess.TimeoutExpired as error:
         duration = time.monotonic() - started
@@ -805,9 +809,54 @@ def run_command_evidence(repo_root: Path, check: CheckCommand) -> JsonObject:
             "command": list(check.command),
             "stdout_tail": tail_text(stdout),
             "stderr_tail": tail_text(stderr),
+            **persist_check_log(repo_root, check, stdout, stderr, -1),
             **failure_diagnostics(stdout, stderr),
-            "proof_boundary": "check_result_is_not_formal_proof",
+            "proof_boundary": CHECK_PROOF_BOUNDARY,
         }
+
+
+def persist_check_log(
+    repo_root: Path,
+    check: CheckCommand,
+    stdout: str,
+    stderr: str,
+    exit_code: int,
+) -> JsonObject:
+    """Retain captured output in a private, unique file without changing check status."""
+    payload = (json.dumps({
+        "schema": "idt-v8-check-log/1",
+        "name": check.name,
+        "description": check.description,
+        "command": list(check.command),
+        "exit_code": exit_code,
+        "stdout": stdout,
+        "stderr": stderr,
+        "proof_boundary": CHECK_PROOF_BOUNDARY,
+    }, ensure_ascii=False, sort_keys=True) + "\n").encode("utf-8")
+    log_dir = repo_root / ".idt" / "check-logs"
+    log_path: Path | None = None
+    try:
+        log_dir.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(
+            mode="wb", prefix="check-", suffix=".json", dir=log_dir, delete=False,
+        ) as stream:
+            log_path = log_dir / os.path.basename(stream.name)
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
+        return {
+            "full_log": {
+                "path": str(log_path.resolve()),
+                "sha256": hashlib.sha256(payload).hexdigest(),
+                "bytes": len(payload),
+            },
+        }
+    except OSError as error:
+        if log_path is not None:
+            with contextlib.suppress(OSError):
+                log_path.unlink()
+        error_message = f"could not persist captured output: {error}"
+        return {"full_log_error": error_message[:400]}
 
 
 def stop_command(process: subprocess.Popen[str]) -> tuple[str | bytes | None, str | bytes | None]:
@@ -1186,6 +1235,14 @@ def check_evidence_text(result: Mapping[str, object]) -> str:
         "proof_boundary=check_result_is_not_formal_proof"
     )
     lines = [summary]
+    full_log = result.get("full_log")
+    if isinstance(full_log, Mapping):
+        lines.append(
+            f"Complete output {full_log.get('path', '')} "
+            f"(sha256={full_log.get('sha256', '')}, bytes={full_log.get('bytes', '')})"
+        )
+    if result.get("full_log_error"):
+        lines.append(str(result["full_log_error"]))
     diagnostics = result.get("diagnostics", [])
     if isinstance(diagnostics, list):
         for item in diagnostics:
