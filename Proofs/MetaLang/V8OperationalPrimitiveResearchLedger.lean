@@ -12689,6 +12689,117 @@ def commonHiddenCarrierContinuation : ResearchTask := {
     "The direct same-carrier scalar obstruction removes real-complexification norm transfer from that particular argument. A separate Lie/weight route may still need its own complexification and quotient norm theorems.",
     "A bounded ordinary fibre span supplies no automatic hidden-carrier identification. The current packages leave full atomicity, independent primitive origin and full QM reconstruction open."] }
 
+def separateFibreIntersectionObstructionKernel : ResearchTask := {
+  id := "separate_fibre_intersection_obstruction_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A real or complex normed space over one common RCLike field, complementary continuous linear operators A+B=c identity, and submodules U and V.",
+    "A preserves U and B preserves V. Their respective vector-power envelopes hold on those respective submodules with nonnegative constants and positive rates qA and qB.",
+    "The complementary scalar satisfies norm(c)>qA+qB."]
+  conclusions := [
+    "Complementarity derives the cross-invariance needed on the intersection. The restricted operators there inherit both envelopes and scalar complementarity.",
+    "The direct complementary-operator rate obstruction forces U intersection V to be zero."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FibreIntersectionObstruction.lean"
+      declarations := [
+        "IDT.QMClosure.FibreIntersectionObstruction.complementary_preserves_submodule",
+        "IDT.QMClosure.FibreIntersectionObstruction.complementary_intersection_invariant",
+        "IDT.QMClosure.FibreIntersectionObstruction.intersection_eq_bot_of_separate_envelopes"] }]
+  plannedArtifacts := []
+  dependencies := ["complementary_power_envelope_kernel"]
+  limits := [
+    "The theorem needs no finite-dimensionality, completeness or closedness hypothesis. It concludes zero intersection and leaves either individual submodule potentially nonzero.",
+    "It supplies no hidden-carrier containment theorem or exclusion of every possible quotient or transport route."] }
+
+def algebraicSeparateCarrierCountercontrol : ResearchTask := {
+  id := "algebraic_separate_carrier_countercontrol"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The explicit real two-dimensional operators A=diag(a,q), B=diag(q,a), with q=1/4, c=sqrt(3)/2 and a=c-q.",
+    "The vertical and horizontal coordinate axes and the standard nonnegative orthant."]
+  conclusions := [
+    "Both actual operators preserve the standard orthant and satisfy A+B=c identity.",
+    "The vertical and horizontal axes are nonzero and have zero intersection. The respective A and B vector-power norms on their own axes are exactly q to the nth power times the input norm.",
+    "Neither operator admits a global uniform q-power operator-norm envelope because its other axis has the strictly larger rate a."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/SeparateCarrierCountercontrol.lean"
+      declarations := [
+        "IDT.QMClosure.SeparateCarrierCountercontrol.complementary",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.vertical_nonzero_witness",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.horizontal_nonzero_witness",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.A_vertical_power_norm",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.B_horizontal_power_norm",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.axes_intersection_zero",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.A_preserves_standardOrthant",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.B_preserves_standardOrthant",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.A_no_global_q_envelope",
+        "IDT.QMClosure.SeparateCarrierCountercontrol.B_no_global_q_envelope"] }]
+  plannedArtifacts := []
+  dependencies := ["atomicity_spectral_boundary_kernel"]
+  limits := [
+    "This algebraic control uses c=sqrt(3)/2. The separate classical normalized control uses c=1 and a=3/4.",
+    "The control excludes automatic overlap or global envelope inference from the stated separate-axis bounds. It supplies no full GPT core countermodel and excludes no general quotient/transport construction."] }
+
+def classicalSeparateFibreControl : ResearchTask := {
+  id := "classical_separate_fibre_control"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The normalized classical nonnegative two-by-two table construction uses q=1/4, a=3/4, c=1 and A+B=identity.",
+    "The row-sum marginal, its two pure pointer fibres and the actual positive natural diagonal branch maps."]
+  conclusions := [
+    "The normalized control has bounded pure-pointer fibres with nonzero disjoint difference spans. Each branch obtains its own q-power envelope from the bounded marginal-fibre theorem.",
+    "Four coordinate product readouts separate all tables, so a deviation invisible to every one of those readouts is zero."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ClassicalSeparateFibreControl.lean"
+      declarations := [
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branches_sum_identity",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branchA_positive",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branchB_positive",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branchA_natural",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branchB_natural",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.K0_bounded",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.K1_bounded",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.d0_mem",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.d1_mem",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.d0_nonzero",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.d1_nonzero",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.fibre_spans_intersection",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branchA_fibre_envelope",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.branchB_fibre_envelope",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.product_readouts_separate",
+        "IDT.QMClosure.ClassicalSeparateFibreControl.product_invisible_zero"] }]
+  plannedArtifacts := []
+  dependencies := ["bounded_fibre_power_envelope_kernel"]
+  limits := [
+    "The control has zero product-invisible deviation space. It demonstrates separate reference-fibre spans without a common nonzero intersection and supplies no actual hidden-sector violation or full atomicity-core countermodel."] }
+
+def hypotheticalHiddenCarrierContinuation : ResearchTask := {
+  id := "hypothetical_hidden_carrier_continuation"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The intended contradiction argument begins conditionally with a hypothetical nonzero product-invisible deviation satisfying the full proposed operational contract."]
+  conclusions := [
+    "Determine which complete operational, rich-rotation or generative conditions force compatible hidden representations or quotients carrying the needed comparisons, or construct a countermodel satisfying the full stated contract.",
+    "The checked intersection theorem and separate-carrier controls rule out a naive inference from separate fibre bounds to automatic nonzero overlap. Other quotient and transport routes retain their own obligations."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "State and prove the conditional containment or transport of a hypothetical nonzero hidden deviation into compatible invariant carriers or quotients.",
+    "Identify the complete-process, rich-rotation and generative hypotheses actually needed for that conditional transport, or verify a countermodel to that exact package.",
+    "Continue the independent Lie/weight, controlled-phase and physical-origin proof obligations."]
+  dependencies := [
+    "separate_fibre_intersection_obstruction_kernel",
+    "algebraic_separate_carrier_countercontrol", "classical_separate_fibre_control",
+    "common_hidden_carrier_continuation", "optimal_unread_atomicity_origin",
+    "controlled_phase_origin_route"]
+  limits := [
+    "A reference-fibre difference span can contain ordinary reference directions. Hidden-fibre containment requires an explicit theorem under the hypothetical-deviation premise.",
+    "The argument seeks no unconditional nonzero hidden carrier. The controls leave the full atomicity core and general compatible quotient routes unresolved.",
+    "The stated results leave full atomicity, independent primitive origin and completed QM reconstruction open."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -12909,7 +13020,11 @@ def researchTasks : List ResearchTask := [
   boundedFibrePowerEnvelopeKernel,
   quotientPowerEnvelopeKernel,
   complementaryPowerEnvelopeKernel,
-  commonHiddenCarrierContinuation]
+  commonHiddenCarrierContinuation,
+  separateFibreIntersectionObstructionKernel,
+  algebraicSeparateCarrierCountercontrol,
+  classicalSeparateFibreControl,
+  hypotheticalHiddenCarrierContinuation]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

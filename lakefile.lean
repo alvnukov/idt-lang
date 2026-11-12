@@ -19,6 +19,9 @@ lean_exe idt_v8_experiment_protocols where
 @[default_target]
 lean_lib Proofs where
   roots := #[
+    `Proofs.QMClosure.ClassicalSeparateFibreControl,
+    `Proofs.QMClosure.FibreIntersectionObstruction,
+    `Proofs.QMClosure.SeparateCarrierCountercontrol,
     `Proofs.QMClosure.BoundedFibrePowerEnvelope,
     `Proofs.QMClosure.QuotientPowerEnvelope,
     `Proofs.QMClosure.ComplementaryPowerEnvelope,
