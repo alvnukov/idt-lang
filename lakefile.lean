@@ -553,6 +553,7 @@ lean_lib Proofs where
     `Proofs.QMClosure.FiniteCyclicAveraging,
     `Proofs.QMClosure.FiniteRejoinColumnBalance,
     `Proofs.QMClosure.InitialEchoCoordinates,
+    `Proofs.QMClosure.InitialEchoContextObstruction,
     `Proofs.QMClosure.InitialDyadicRelativeLanding,
     `Proofs.QMClosure.InitialColumnOrderEchoSelection,
     `Proofs.QMClosure.TransparentFourthNormalFormConsequences,

@@ -11383,6 +11383,85 @@ def eighthRejoinArithmeticReadoutCountermodel : ResearchTask := {
     "Universally prepared quadratic readout and mixed zero still leave fixed-s cancellation, P4 descent and null insertion unforced under the stated P8 package. Physical origins, canonical pairing, Born actualization, Hilbert reconstruction, dynamics, composites and physical scales remain open."]
 }
 
+def initialEchoArithmeticContextObstruction : ResearchTask := {
+  id := "initial_echo_arithmetic_context_obstruction"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The existing initial P4 semiring with a+b=1, a^4=b^4, canonical generator swap J and echo(p)=p*J(p).",
+    "Expr has exactly input, arbitrary fixed carrier constants, addition and multiplication, with any finite number of syntactic input occurrences.",
+    "Output agreement means exact equality in the full carrier. The comparison controls use the existing complex-coordinate norm square N."]
+  conclusions := [
+    "Every Expr preserves fibres of every semiring homomorphism. The universal map chi:P4->ZMod 5 with chi(a)=2 and chi(b)=4 identifies a with 2.",
+    "At inputs a and 2 the J output images are respectively 4 and 2, and the echo output images are respectively 3 and 4. Every Expr fails simultaneous exact agreement with either target on this two-input set, which also excludes a globally correct Expr.",
+    "Every singleton target test admits a fixed constant expression. The two distinct inputs therefore give a minimal test-set obstruction within the declared expression language.",
+    "Squaring has the same N as echo for every input. Adding the fixed reference one at a gives N(1+a*a)=5/4 and N(1+echo(a))=9/4. Also N(2)=4."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/InitialEchoContextObstruction.lean"
+      declarations := [
+        "IDT.QMClosure.InitialEchoContextObstruction.Expr.eval_preserves_fibres",
+        "IDT.QMClosure.InitialEchoContextObstruction.two_a_same_fibre",
+        "IDT.QMClosure.InitialEchoContextObstruction.chi_J_two",
+        "IDT.QMClosure.InitialEchoContextObstruction.chi_J_a",
+        "IDT.QMClosure.InitialEchoContextObstruction.chi_echo_two",
+        "IDT.QMClosure.InitialEchoContextObstruction.chi_echo_a",
+        "IDT.QMClosure.InitialEchoContextObstruction.two_ne_a",
+        "IDT.QMClosure.InitialEchoContextObstruction.no_two_point_J",
+        "IDT.QMClosure.InitialEchoContextObstruction.no_two_point_echo",
+        "IDT.QMClosure.InitialEchoContextObstruction.no_global_J_expression",
+        "IDT.QMClosure.InitialEchoContextObstruction.no_global_echo_expression",
+        "IDT.QMClosure.InitialEchoContextObstruction.one_point_J",
+        "IDT.QMClosure.InitialEchoContextObstruction.one_point_echo",
+        "IDT.QMClosure.InitialEchoContextObstruction.square_matches_echo_normSq",
+        "IDT.QMClosure.InitialEchoContextObstruction.reference_square_a_normSq",
+        "IDT.QMClosure.InitialEchoContextObstruction.reference_echo_a_normSq",
+        "IDT.QMClosure.InitialEchoContextObstruction.fixed_reference_separates_square_echo",
+        "IDT.QMClosure.InitialEchoContextObstruction.normSq_two"] }]
+  plannedArtifacts := []
+  dependencies := [
+    "transparent_fourth_initial_reflection_echo_boundary",
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "The ZMod 5 map is an algebraic proof witness. Its physical distinguishability interpretation requires a separate comparison contract.",
+    "Physical operation libraries, repeated-input availability, syntax-to-DAG compilation, known-recipe access and unknown-input semantics remain open operational interfaces. The existing mathematical generator-swapping recipe remains available under its own contract.",
+    "Measurement, adaptive branching, division, inversion and environmental operations require a richer operation language. The obstruction applies exactly to Expr and full-carrier equality.",
+    "The norm-square comparisons concern the supplied algebraic coordinate. Physical success probabilities require an independently specified bounded domain and normalization contract.",
+    "This result extends the arithmetic interface boundary. Primitive origins, the selected readout's physical justification, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
+def independentTrialEchoOriginCountercontrol : ResearchTask := {
+  id := "independent_trial_echo_origin_countercontrol"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The existing exact P4 carrier, coordinate norm square N, shadow q, canonical generator swap J, h=a*b and c=2*a*b.",
+    "For x>0 write x=2^k*u with integer k and 1<=u<2. Set F(u)=(u+1)/2 for 1<=u<=3/2 and F(u)=(3*u-2)/2 for 3/2<=u<2, f(x)=2^k*F(u), f(0)=0 and W(p)=f(N(p)).",
+    "The concrete detector supplies classical rational-register arithmetic and fresh independent fair bits. The general independent-count kernel separately supplies ideal real-valued Bernoulli probabilities."]
+  conclusions := [
+    "Analytically f is continuous and strictly increasing on the nonnegative reals, f(1)=1, f(2*x)=2*f(x) and 0<=f(x)<=x. W satisfies normalization, universal column conservation, oriented c equality and prepared count order.",
+    "For the actual p=(a+2*b)*a*h, E(p)=(2+i)/4, q(p)=3/16 and N(p)=5/16. Its echo has E=5/16, q=9/256 and N=25/256. Both preparations satisfy N<=1 and q<=1.",
+    "The exact analytic response values are W(p)=9/32 and W(echo(p))=43/512=86/1024, while W(p)^2=81/1024. The echo defect is 5/1024.",
+    "One fixed dyadic rational-register algorithm computes f(N) and samples Bernoulli success using finitely many fresh fair bits on the bounded dyadic domain, with success one at the unit. For M,d ∈ ℕ with x=M/2^d and 0<=x<=1, M>0, let L be the largest power of two at most M. The numerator of f(x) over 2^(d+1) is M+L when 2*M<=3*L and 3*M-2*L otherwise, giving a sampler using at most d+1 fair bits under this supplied encoding. M=0 outputs zero deterministically. Independent repeats give joint success 81/1024, differing from the compiled echo response 86/1024.",
+    "For any nonnegative real response W, the separately idealized finite-support kernel C_p=floor(W(p))+Bernoulli(frac(W(p))) has mean W(p). Independent repeats have product mean W(p)^2, leaving W(echo(p)) unrestricted.",
+    "With positive raw normalization scales S_A>0, S_B>0 and S_E>0, equality of normalized product and echo probabilities implies W(echo(p))=S_E/(S_A*S_B)*W(p)*W(J(p)). A common scale S>0 leaves the factor 1/S.",
+    "The four non-echo laws give W(h^k*p)=4^(-k)*W(p) for natural k, while J(h)=h gives echo(h^k*p)=h^(2*k)*echo(p). Echo equality at one member of each forward h orbit implies global echo by cancellation of the common factor 4^(-2*k).",
+    "Domains W<=1, q<=1 and N<=1, together with their intersection, meet every forward h orbit analytically. Physical restriction to such a domain transfers the obligation to universally calibrated attenuation and sufficient available depth."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "A Lean artifact for the piecewise dyadic response, the four non-echo laws and the exact bounded echo defect.",
+    "A separate formal contract for independent detector trials, raw normalization and forward-h-orbit attenuation transfer."]
+  dependencies := [
+    "transparent_fourth_initial_reflection_echo_boundary",
+    "initial_column_order_echo_readout_selection_analytic"]
+  limits := [
+    "This is an accepted analytic countercontrol awaiting Lean formalization. The supplied classical detector has its own arithmetic and sampling resources, whose physical IDT origin remains open.",
+    "The finite fair-bit assertion applies to the concrete dyadic detector. Its shared computation of N is supplied, and the encoded bit bound leaves minimal reduced bit complexity open. Arbitrary real Bernoulli kernels are ideal analytic controls. Raw W can exceed one outside the bounded detector domain.",
+    "A q<=1 cutoff alone permits N=4 at actual coordinates (2,1). Existence of a W<=1 attenuated preparation leaves calibrated depth selection for an opaque source open.",
+    "Reset and independence supply a product mean. Identifying that reset process with coherent algebraic echo requires an independent operational equality, together with calibrated raw accounting.",
+    "The next origin question concerns independently motivated locality, resources or an actual native rewrite establishing that operational relation. A proposed law that simply restates multiplicativity or self-echo stops this route.",
+    "The conditional selection theorem retains its existing premises. Physical primitives, Born actualization, Hilbert reconstruction, full QM, GR and physical-scale origins remain open."]
+}
+
 def primitiveOriginOperationalCourseAudit : ResearchTask := {
   id := "primitive_origin_operational_course_audit"
   stage := .openPhysicalBridge
@@ -11392,17 +11471,23 @@ def primitiveOriginOperationalCourseAudit : ResearchTask := {
     "The present cluster strengthens conditional reconstruction and supplies structural exclusions. The operational origin of its supplied carrier and response rules remains open."]
   conclusions := [
     "After each coherent milestone, before a large new package and after prolonged work, assess which origin obligation changed, which consequences were formalized, why the next step could change an origin obligation and its falsifier or route-stop criterion. Check whether the desired structure is being reintroduced as a new axiom.",
-    "The next action is to investigate independently specified preparation, record-retention/discard and comparison operations that could justify invisibility of null insertion. Evaluate proposed two-input conservation operationally before adopting a stronger readout law.",
+    "The analytic audit stopped the fixed positive additive record-counting family. Additive W and the column half laws give W(c*p)=W(p)/2 for c=2*a*b, conflicting at W(1)=1 with the oriented comparison W(c*p)>=W(p). This stopped route has no newly checked counting theorem. Existing positive-event overlap and cancellation controls are already recorded in native_persistent_event_readout_origin.",
+    "The two-input arithmetic-expression obstruction changes the exact-output interface boundary while leaving the physical operation library and response-comparison contract open. A separate accepted analytic countercontrol retains all four non-echo readout laws and independent repeated trials while violating self-echo by 5/1024 on actual bounded preparations. Its formalization remains open.",
+    "Reset and independence supply a product mean. Identifying that reset process with coherent algebraic echo requires an independently justified operational relation and raw-response accounting. Restricting echo to a domain meeting every forward h orbit transfers the obligation to universally calibrated attenuation and available depth.",
+    "The next active question concerns independently motivated locality, resources or an actual native rewrite that could justify this relation. Each next test must identify the origin-obligation delta, explain its independent action motivation, state a falsifier or route-stop criterion and expose every new premise. A law simply restating multiplicativity or self-echo stops that route.",
     "If a proposal only restates quadraticness or cancellation, or lacks independent action motivation, stop that research route and retain the requirement as an explicit conditional postulate while changing route. The overall research goal remains active."]
   checkedEvidence := []
   plannedArtifacts := []
   dependencies := [
     "initial_column_order_echo_readout_selection_analytic",
     "eighth_rejoin_arithmetic_readout_countermodel_analytic",
-    "operational_positive_readout"]
+    "operational_positive_readout",
+    "native_persistent_event_readout_origin",
+    "initial_echo_arithmetic_context_obstruction",
+    "independent_trial_echo_origin_countercontrol"]
   limits := [
-    "This entry is an open research plan and course-audit obligation. It records no new checked scientific result or physical-origin derivation.",
-    "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Proposed two-input lemmas retain their own unchecked status until actual proof artifacts and acceptance exist.",
+    "This entry is an open research plan and course-audit obligation. Its stopped record-counting route remains analytic, and the cited event controls retain their original supplied contracts.",
+    "The origins of pair conservation, a dark baseline and the oriented c increase remain open. Independently motivated reversal, physical readout domains, calibrated attenuation, raw-response accounting and identification of reset trials with coherent echo require their own contracts and evidence.",
     "Conditional readout selection and exclusions retain their exact supplied mathematical premises. Born actualization, Hilbert reconstruction, dynamics, composites and physical-scale origins remain open."]
 }
 
@@ -11590,6 +11675,8 @@ def researchTasks : List ResearchTask := [
   generatedNullIdealAndEighthRejoinCountermodels,
   eighthRejoinCalibratedNullIdealCountermodels,
   eighthRejoinArithmeticReadoutCountermodel,
+  initialEchoArithmeticContextObstruction,
+  independentTrialEchoOriginCountercontrol,
   primitiveOriginOperationalCourseAudit,
   transparentPositivePowerRejoin,
   transparentFourthPowerReadoutNullIdealBoundary]
