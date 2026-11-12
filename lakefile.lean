@@ -19,6 +19,9 @@ lean_exe idt_v8_experiment_protocols where
 @[default_target]
 lean_lib Proofs where
   roots := #[
+    `Proofs.QMClosure.PauliOrientationCompletion,
+    `Proofs.QMClosure.ComplexAtomicitySpectralBoundary,
+    `Proofs.QMClosure.CnotPhaseDefectTransfer,
     `Proofs.QMClosure.IdentityChannelExtremality,
     `Proofs.QMClosure.SharpPhaseEchoTransfer,
     `Proofs.QMClosure.PauliOrientationObstruction,

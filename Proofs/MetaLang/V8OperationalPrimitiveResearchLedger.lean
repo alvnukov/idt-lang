@@ -12486,6 +12486,106 @@ def primitivePhaseEchoOriginContinuation : ResearchTask := {
     "The nilpotent repair of the T_x quotient/composition-factor issue has not been accepted, and CNOT closure remains unproved.",
     "Publication and conditional kernels leave this goal open. Full QM, Born origin, Hilbert origin and physical-scale origins remain unproved."] }
 
+def pauliOrientationCompletionKernel : ResearchTask := {
+  id := "pauli_orientation_completion_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Exactly the sixteen signed tables from PauliOrientationObstruction, its two supplied two-wire circuit test families, and the specified three-wire triangle circuit with four binary product-readout events.",
+    "The parameterized generated grammar has the supplied initial state, H on the second wire, and distinct ordered-pair gates with one fixed sign table throughout."]
+  conclusions := [
+    "The two prior test families together with triangle-event positivity hold exactly for ordinary or ordinaryZ among the sixteen tables.",
+    "Both mirror and mirrorZ triangles are generated in the parameterized grammar, and the specified readout is negative one half for each.",
+    "The prior tests plus nonnegativity of the specified event on every generated state force ordinary or ordinaryZ."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PauliOrientationCompletion.lean"
+      declarations := [
+        "IDT.QMClosure.PauliOrientationCompletion.tested_positive_and_triangle_positive_iff",
+        "IDT.QMClosure.PauliOrientationCompletion.triangle_generated",
+        "IDT.QMClosure.PauliOrientationCompletion.mirror_triangle_negative",
+        "IDT.QMClosure.PauliOrientationCompletion.mirrorZ_triangle_negative",
+        "IDT.QMClosure.PauliOrientationCompletion.tested_and_generated_nonnegativity_forces_ordinary"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_xor_orientation_obstruction"]
+  limits := [
+    "Sufficiency concerns the specified finite tests. Positivity of all generated states for either surviving table is unproved.",
+    "The kernel does not derive arbitrary GPT XOR maps or general pair cones. The earlier four-choice checkpoint retains its historical scope."] }
+
+def cnotPhaseDefectTransferKernel : ResearchTask := {
+  id := "cnot_phase_defect_transfer_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A noncommutative ambient operator algebra with two supplied destructive multiplication tables. Local phase involutions and commutations follow from those tables.",
+    "Four explicit cross-phase commutations and three CNOT equations for a supplied monoid homomorphism.",
+    "Supplied append/discard retraction, fresh-reference fixation, old-action intertwining and local defect formula localDefect=2p-1."]
+  conclusions := [
+    "Finite phase rearrangement gives paired defect cancellation without a commutative-group structure on the operator algebra.",
+    "The fresh defect is involutive, so cancellation derives equality of old and fresh defects.",
+    "The derived defect equality discharges the equality premise of the reference theorem and gives p equal to identity."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/CnotPhaseDefectTransfer.lean"
+      declarations := [
+        "IDT.QMClosure.CnotPhaseDefectTransfer.cnot_defect_cancellation",
+        "IDT.QMClosure.CnotPhaseDefectTransfer.destructive_defects_equal",
+        "IDT.QMClosure.CnotPhaseDefectTransfer.cnot_fresh_reference_projector_total"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_record_phase_projector_kernel"]
+  limits := [
+    "Actual operational conjugation, complete destructive-process construction, natural extension, rank and dimension remain external obligations.",
+    "The supplied monoid homomorphism is an algebraic contract whose physical implementation is unproved."] }
+
+def complexAtomicitySpectralBoundaryKernel : ResearchTask := {
+  id := "complex_atomicity_spectral_boundary_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The stated three distinct nonzero field weights, reciprocal complex scalar or matrix equations, and complex modulus bounds in their respective signatures.",
+    "The general complex normed-space operator argument supplies a nonzero eigenvector and fixed uniform all-power operator-norm bounds with positive q. Complementary operators satisfy A+B=c identity and may have separate envelope constants.",
+    "The finite-dimensional corollary assumes a nontrivial complex normed space, complementarity and both fixed uniform power bounds, and obtains eigenvector existence from algebraic closedness."]
+  conclusions := [
+    "Three-weight exclusion holds over the supplied field, reciprocal matrix identities hold over the complex numbers, and the complex triangle bounds c by 2q.",
+    "An actual eigenvalue has modulus at most q under the supplied uniform operator-power envelope. Complementary operators sharing its eigenvector then force c at most 2q.",
+    "In a finite-dimensional nontrivial complex space the complementary-operator scalar bound derives the required eigenvector and concludes c at most 2q without a supplied-eigenvector premise.",
+    "The earlier real-to-complex coefficient and modulus gap is closed at these exact kernel signatures."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ComplexAtomicitySpectralBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.three_boost_weights",
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.matrix_three_boost_weights",
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.complex_matrix_reciprocal_boost_weights",
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.complex_triangle_bound",
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.eigenvalue_norm_le_of_power_bound",
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.complementary_operator_scalar_bound",
+        "IDT.QMClosure.ComplexAtomicitySpectralBoundary.finite_dimensional_complementary_operator_scalar_bound"] }]
+  plannedArtifacts := []
+  dependencies := ["atomicity_spectral_boundary_kernel"]
+  limits := [
+    "Invariant-fibre uniform power bounds, real-complexification and quotient norm transfer remain open. The new complex signatures leave those geometric and representation-theoretic premises supplied.",
+    "The graph-preserver Lie group, real-kernel/Levi and Zariski arguments, weight classification and full atomicity remain unformalized."] }
+
+def phaseEchoInterfaceOriginContinuation : ResearchTask := {
+  id := "phase_echo_interface_origin_continuation"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The checked finite orientation, operator phase-defect transfer and complex spectral interfaces are conditional continuations of the earlier checkpoint."]
+  conclusions := [
+    "The next analytic/formal interface is to prove inherited uniform power bounds under invariant subspaces and quotients, and then derive the original bounds from pure-marginal fibre geometry.",
+    "Operational phase and destructive-process construction, complete reference extension, rank/dimension selection and independent primitive origin remain active obligations."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize uniform power-envelope inheritance on invariant subspaces and quotients, including real-complexification and quotient norm transport.",
+    "Derive the required complete-process and uniform-bound contracts from pure-marginal fibre geometry.",
+    "Formalize operational realization of the phase homomorphism and destructive maps, their complete extensions, and the remaining Lie/classification and ancilla interfaces."]
+  dependencies := [
+    "pauli_orientation_completion_kernel", "cnot_phase_defect_transfer_kernel",
+    "complex_atomicity_spectral_boundary_kernel", "primitive_phase_echo_origin_continuation",
+    "controlled_phase_origin_route", "bounded_pair_cone_reconstruction_route"]
+  limits := [
+    "The three new kernels close bounded algebraic interfaces. Physical primitive origin, full atomicity, pair-cone reconstruction, ancilla equality, full QM and physical-scale origins remain open.",
+    "Earlier ledger rows preserve the historical checkpoint and its then-open signature gaps. The new kernel rows record the bounded interfaces now supplied."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -12698,7 +12798,11 @@ def researchTasks : List ResearchTask := [
   controlledPhaseOriginRoute,
   boundedPairConeReconstructionRoute,
   completeUnreadCountermodelBoundary,
-  primitivePhaseEchoOriginContinuation]
+  primitivePhaseEchoOriginContinuation,
+  pauliOrientationCompletionKernel,
+  cnotPhaseDefectTransferKernel,
+  complexAtomicitySpectralBoundaryKernel,
+  phaseEchoInterfaceOriginContinuation]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
