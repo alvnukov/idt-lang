@@ -13387,6 +13387,164 @@ def finiteGateFrameGeometryOriginContinuation : ResearchTask := {
   limits := [
     "Conditional dimension and model checks leave the analytic geometry and independent physical origins open. The continuation records no completed QM reconstruction."] }
 
+def finiteGateInvariantMetricKernel : ResearchTask := {
+  id := "finite_gate_invariant_metric_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The exact real Frame contract supplies a nonempty normalized spanning preparation set, actual commuting phase involutions and H,T with H squared identity, H Jz H=Jx, T cubed identity, T nonidentity and T Jz=Jz T.",
+    "For each of the three averages, a single endpoint pair in S is chosen before the preparation input, and every output lies in that pair's ordered real segment with coefficient in [0,1]."]
+  conclusions := [
+    "Every fixed real linear functional is bounded on S. For every fixed preparation-preserving linear A, functional f and vector v, one bound controls |f(A^n v)| for all natural n.",
+    "Constructed character coordinates and two selected reflected orbit bounds give one bound on all reflected even-power traces.",
+    "Bounded reflected powers determine the nontrivial transverse cubic coefficients and a positive plane weight. The constructed spatial quadratic form is nonnegative on V, positive on nonzero ker(u), and invariant under Jx,Jz,H,T.",
+    "Frame.exists_invariant_metric constructs the coordinate and invariant-form package from the original Frame premises."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/BoundedPlaneTraceRigidity.lean"
+      declarations := [
+        "IDT.QMClosure.BoundedPlaneTraceRigidity.trace_zero_of_bounded_even_powers",
+        "IDT.QMClosure.BoundedPlaneTraceRigidity.order_three_reflection_corollary"] },
+    { sourcePath := "Proofs/QMClosure/FiniteGatePreparationBounds.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGatePreparationBounds.binary_functional_bound",
+        "IDT.QMClosure.FiniteGatePreparationBounds.Frame.functional_preparation_bound",
+        "IDT.QMClosure.FiniteGatePreparationBounds.Frame.functional_orbit_bound",
+        "IDT.QMClosure.FiniteGatePreparationBounds.Frame.JxT_orbit_bound"] },
+    { sourcePath := "Proofs/QMClosure/FiniteGateFrameCoordinates.lean"
+      declarations := ["IDT.QMClosure.FiniteGateFrameDimension.Frame.exists_axis_coordinates"] },
+    { sourcePath := "Proofs/QMClosure/FiniteGateInvariantMetric.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGateFrameCoordinates.AxisCoordinates.reflected_trace_bound",
+        "IDT.QMClosure.FiniteGateFrameCoordinates.AxisCoordinates.transverse_metric_shape",
+        "IDT.QMClosure.FiniteGateFrameCoordinates.AxisCoordinates.spatialQuadratic_positive_on_kernel",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.exists_invariant_metric"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_gate_frame_dimension_kernel"]
+  limits := [
+    "The orbit bound is uniform in iteration for each fixed A,f,v. A common bound for all vectors or all functionals is outside this quantifier scope.",
+    "The spatial form describes real preparation geometry on the normalization kernel. It supplies no Born outcome law or event-actualization rule.",
+    "Ordered binary coefficients, actual finite gates and normalized real-linear spanning semantics remain supplied. The theorem derives the invariant form without a supplied metric, coordinate basis or finite-dimensional instance."] }
+
+def finiteGateCubicDensityRadialKernel : ResearchTask := {
+  id := "finite_gate_cubic_density_radial_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The density statements use the two explicit standard real cubic rotations az,ax and a closed subset of spatial coordinate space preserved by each.",
+    "The abstract sphere and radial-ball statements retain their explicit full-circle invariance, nonparallel-axis, radius-bound, radius-attainment and one-axis projection premises."]
+  conclusions := [
+    "Closed invariance under the two finite cubic rotations supplies invariance under two full mathematical rotation circles with nonparallel axes.",
+    "Two full nonparallel circle actions are transitive on each positive-radius sphere and force radiality.",
+    "A radial set with an attained nonnegative radius bound and preservation by one coordinate projection is exactly the corresponding closed ball.",
+    "The checked intertwiners transfer the explicit cubic density and sphere-transitivity packages, giving radiality for every closed set invariant under az and ax."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/TwoCircleSphereTransitivity.lean"
+      declarations := ["IDT.QMClosure.TwoCircleSphere.eq_sphere_of_full_circle_invariance"] },
+    { sourcePath := "Proofs/QMClosure/TwoCircleRadialBall.lean"
+      declarations := [
+        "IDT.QMClosure.TwoCircleSphere.radial_of_full_circle_invariance",
+        "IDT.QMClosure.TwoCircleSphere.eq_ball_of_radial_one_axis_projection"] },
+    { sourcePath := "Proofs/QMClosure/CubicRotationCircleDensity.lean"
+      declarations := [
+        "IDT.QMClosure.CubicRotationCircleDensity.product_factorization",
+        "IDT.QMClosure.CubicRotationCircleDensity.closed_cubic_invariant_two_circles",
+        "IDT.QMClosure.CubicRotationCircleDensity.axes_nonparallel"] },
+    { sourcePath := "Proofs/QMClosure/CubicRotationRadiality.lean"
+      declarations := ["IDT.QMClosure.CubicRotationRadiality.closed_cubic_invariant_radial"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "These are mathematical invariance and geometric implications under their exact supplied hypotheses. The full Frame integration separately constructs the coordinate invariance, attained radius and actual projection.",
+    "Passage to dense rotation circles uses closedness and continuity in mathematical coordinate space. Operational accessibility of limiting gates requires its own resource contract."] }
+
+def finiteGateBallClosureKernel : ResearchTask := {
+  id := "finite_gate_ball_closure_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "An arbitrary real vector space with the exact Frame contract, including normalized spanning preparations, actual finite gates, commuting phase involutions, involutive H, nontrivial cubic T, the stated conjugation and commutation relations, and globally fixed available binary endpoint pairs with coefficients in [0,1].",
+    "At least one of Ex,Ey,Ez actually preserves S. This availability premise is independent of the binary range bounds."]
+  conclusions := [
+    "Frame.exists_cubic_coordinates constructs nonzero coordinate scales, a positive invariant spatial form, exact standard cubic gate actions and injectivity on every fixed normalization fibre.",
+    "The spatial preparation-image closure is compact, nonempty and has a strictly positive attained maximal radius. Closed cubic invariance derives radiality, and the actual average transfers to a coordinate projection on the closure.",
+    "Frame.exists_ball_closure derives BallClosureData from only Frame plus the one-average availability premise. The data contain constructed cubic coordinates, a radius R>0 and equality of the mathematical preparation-image closure to {p | sqnorm p <= R squared}.",
+    "BallClosureData.image_eq_ball gives exact preparation-image equality when that spatial image is separately assumed closed."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteGatePreparationClosure.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGatePreparationClosure.preparationClosure_compact",
+        "IDT.QMClosure.FiniteGatePreparationClosure.preparationClosure_attained_positive_radius"] },
+    { sourcePath := "Proofs/QMClosure/FiniteGateCubicCoordinates.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGateCubicCoordinates.CubicCoordinateData",
+        "IDT.QMClosure.FiniteGateInvariantMetric.InvariantMetricData.rescaledSpatial_injective_fibre",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.exists_cubic_coordinates"] },
+    { sourcePath := "Proofs/QMClosure/FiniteGateBallClosure.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGateBallClosure.preparationClosure_radial",
+        "IDT.QMClosure.FiniteGateBallClosure.preparation_closure_projection",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.exists_ball_closure",
+        "IDT.QMClosure.FiniteGateBallClosure.BallClosureData.image_eq_ball"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_gate_invariant_metric_kernel", "finite_gate_cubic_density_radial_kernel"]
+  limits := [
+    "The closure is taken in the constructed real spatial coordinate image. Exact state availability requires the additional image-closedness premise or an independently justified physical completion principle.",
+    "The H-squared commuting-phase presentation has this checked end-to-end result. Positive-finite-order H and commutation-derived extensions retain their separate analytic status, as does the exact ordered-field characterization.",
+    "The binary endpoint pairs are globally fixed available preparations. Initial E-fixedness of those endpoints and availability of every real point in their segments are outside the supplied Frame premises.",
+    "Real-linear operational semantics, normalized spanning, ordered binary range rules, the actual finite gates and one actual average remain inputs. Physical origins, effects, Born actualization, complex semantics, composites, dynamics, scale constants, full QM and GR remain open."] }
+
+def finiteGateCountableWordControlKernel : ResearchTask := {
+  id := "finite_gate_countable_word_control_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The supplied real-coordinate finite gate model provides six normalized axis-pointer seeds and seven linear actions Jx,Jz,H,T,Ex,Ey,Ez.",
+    "Exact preparations are evaluations of finite words in this alphabet on the six seeds, including the empty word. The standard model's gate matrices and unit-ball containment bounds are supplied control inputs."]
+  conclusions := [
+    "The finite-word preparation set is countable and is contained in the supplied standard real unit ball. Prefixing a finite word proves actual availability of every alphabet operation.",
+    "generatedFrame instantiates the complete Frame contract, and generated_all_averages_actual proves actual availability of all three averages.",
+    "generated_has_ball_closure directly invokes the end-to-end theorem and produces BallClosureData in its constructed coordinates.",
+    "exact_preparation_control combines countability, all-average availability, the constructed ball-closure inhabitant and inequality between the exact preparation set and the supplied standard real ball."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteGateCountableModel.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGateCountableModel.generatedFrame",
+        "IDT.QMClosure.FiniteGateCountableModel.generated_countable",
+        "IDT.QMClosure.FiniteGateCountableModel.generated_subset_ball",
+        "IDT.QMClosure.FiniteGateCountableModel.generated_all_averages_actual",
+        "IDT.QMClosure.FiniteGateCountableModel.generated_has_ball_closure",
+        "IDT.QMClosure.FiniteGateCountableModel.generated_preparations_ne_ball",
+        "IDT.QMClosure.FiniteGateCountableModel.exact_preparation_control"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_gate_frame_ball_sphere_controls_kernel", "finite_gate_ball_closure_kernel"]
+  limits := [
+    "The exact-state inequality compares generated preparations with the supplied standard model ball. BallClosureData separately records the derived coordinate-image closure and radius under its constructed coordinate choice.",
+    "The explicit model validates nonvacuity and the exact-versus-closure boundary. Its gates, coordinates and containment geometry remain supplied inputs to the control.",
+    "Countable exact preparation access leaves physical completion, process limits, gate origins, effects, actualization and full QM open."] }
+
+def finiteGateBallOperationalOriginContinuation : ResearchTask := {
+  id := "finite_gate_ball_operational_origin_continuation"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The checked real local ball-closure theorem retains its complete Frame and actual-average contract, and the exact-image theorem retains its separate closed-image premise."]
+  conclusions := [
+    "Justify real-linear normalized operational semantics, spanning, globally fixed binary output segments and independent actual access to the finite gates and one average from the IDT primitive base.",
+    "Determine the physical preparation-completion principle, allowed effects and instruments, and the outcome-probability and event-actualization link for the derived local state geometry.",
+    "Formalize the exact ordered-field characterization and stronger gate-presentation variants under their own contracts, while retaining separate complex-orientation, composite, dynamical and physical-scale obligations."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Identify operational sources for each real-linear gate law and the ordered binary range contract, with explicit relation-deletion controls.",
+    "Specify actual state completion and process-limit access separately, and determine which effect space and instruments are physically available.",
+    "Continue the ordered-field scalar-extension and endpoint-basis argument, finite-order-H extension and commutation-derived extension as separate formalization tasks.",
+    "Retain complex representation, tensor/composite/entanglement structure, Bell and local-tomographic constraints, physical generators, empirical scale anchors and actualization as separate continuations."]
+  dependencies := [
+    "finite_gate_ball_closure_kernel", "finite_gate_countable_word_control_kernel",
+    "finite_gate_frame_geometry_origin_continuation", "finite_gate_exact_field_boundary"]
+  limits := [
+    "The conditional local preparation geometry supplies no independent primitive-origin or completed QM theorem. The invariant spatial quadratic form has its geometric role and leaves effects and outcome laws separately specified.",
+    "The historical analytic task rows retain their recorded scope. The current checked closure theorem applies to the explicitly commuting, involutive-H presentation and its stated real operational inputs."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -13630,7 +13788,12 @@ def researchTasks : List ResearchTask := [
   finiteGateFrameBallSphereControlsKernel,
   compactFinitePresentationSelectorRoute,
   finiteGateExactFieldBoundary,
-  finiteGateFrameGeometryOriginContinuation]
+  finiteGateFrameGeometryOriginContinuation,
+  finiteGateInvariantMetricKernel,
+  finiteGateCubicDensityRadialKernel,
+  finiteGateBallClosureKernel,
+  finiteGateCountableWordControlKernel,
+  finiteGateBallOperationalOriginContinuation]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 

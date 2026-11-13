@@ -19,8 +19,20 @@ lean_exe idt_v8_experiment_protocols where
 @[default_target]
 lean_lib Proofs where
   roots := #[
+    `Proofs.QMClosure.FiniteGateBallClosure,
+    `Proofs.QMClosure.FiniteGateCubicCoordinates,
+    `Proofs.QMClosure.CubicRotationRadiality,
+    `Proofs.QMClosure.FiniteGatePreparationClosure,
+    `Proofs.QMClosure.FiniteGateInvariantMetric,
+    `Proofs.QMClosure.CubicRotationCircleDensity,
+    `Proofs.QMClosure.TwoCircleRadialBall,
+    `Proofs.QMClosure.TwoCircleSphereTransitivity,
+    `Proofs.QMClosure.BoundedPlaneTraceRigidity,
+    `Proofs.QMClosure.FiniteGatePreparationBounds,
     `Proofs.QMClosure.FiniteGateFrameDimension,
     `Proofs.QMClosure.FiniteGateFrameModel,
+    `Proofs.QMClosure.FiniteGateCountableModel,
+    `Proofs.QMClosure.FiniteGateFrameCoordinates,
     `Proofs.QMClosure.ClassicalPhaseJointReadoutBoundary,
     `Proofs.QMClosure.ClassicalFinitePhaseRepresentation,
     `Proofs.QMClosure.RecordedMixtureRecovery,
