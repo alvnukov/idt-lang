@@ -13090,6 +13090,161 @@ def recordedMixtureRecoveryKernel : ResearchTask := {
     "Retaining and accessing the extra classical branch label is a supplied resource. The theorem supplies no complete controlled-program dual-ensemble construction or atomicity-core model.",
     "The reversible branch and its operational origin remain supplied, and the generic branch need not be involutive. The alternative recorded recovery leaves unique cancellation origin and completed QM reconstruction open."] }
 
+def classicalFinitePhaseRepresentationKernel : ResearchTask := {
+  id := "classical_finite_phase_representation_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The local carrier is the rational distribution space on Bool times Bool, and its ambient state base is the full nonnegative total-one simplex. The joint carrier is the distribution space on the sixteen ordered pairs of local points.",
+    "The three phases are explicit classical permutations, the destructive maps are their half-averages, and the two-wire CNOT is a supplied classical permutation.",
+    "Six axis preparations are separately selected equal mixtures of two distinct point masses, with three specified rational character coordinates."]
+  conclusions := [
+    "The destructive multiplication table, local projector totality, commuting phase involutions and phase product identity hold as operator identities on every rational distribution in the fixed local carrier.",
+    "The actual two-wire conjugation identities and required cross commutations instantiate the published CNOT defect-transfer theorem on the entire joint carrier.",
+    "Permutation maps and their inverses preserve the full normalized simplex. The selected preparations are normalized, have the specified signed-axis coordinates and share the uniform midpoint.",
+    "A normalized ambient point mass has coordinate-square sum three and violates the selected unit quadratic bound."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ClassicalFinitePhaseRepresentation.lean"
+      declarations := [
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.permutation_normalized",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.permutation_inverse_normalized",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.destructive",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.common_uniform",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.local_projector_total",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.local_phase_package",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.local_phases_normalized",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.G_normalized",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.G_involutive",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.conjugate_xA",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.conjugate_zB",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.conjugate_xA_zB",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.required_cross_commutations",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.actual_cnot_defects_equal",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.preparation_normalized",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.preparation_coordinates",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.preparation_common_midpoint",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.preparation_two_point_mixture",
+        "IDT.QMClosure.ClassicalFinitePhaseRepresentation.point_mass_violates_unit_quadratic_bound"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_record_phase_projector_kernel", "cnot_phase_defect_transfer_kernel"]
+  limits := [
+    "The finite carriers support universally quantified rational-distribution identities. These statements exceed sample-only tests while retaining the specified four-point and sixteen-point carriers.",
+    "The six selected preparations are mixed in the ambient simplex. Their selection supplies no restricted sixty-state composite base or all-reference pure-marginal atomicity theorem.",
+    "The coordinate-square exclusion concerns the named character coordinates. Additional operational gates and their independent physical origin remain separate assumptions in any geometric selector."] }
+
+def classicalPhaseJointReadoutBoundaryKernel : ResearchTask := {
+  id := "classical_phase_joint_readout_boundary_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The ambient local and joint bases are the full rational classical simplices of the finite phase representation.",
+    "H is a proposed rational linear map acting on the character coordinates as (x,y,z) mapped to (z,-y,x). Selected mixtures are nonnegative total-one rational mixtures of the six named preparations.",
+    "The joint preparation is generated from the named x-plus and z-plus product preparation using the actual CNOT permutation. The joint effect uses first-wire K=Jy W, CNOT and the binary product event."]
+  conclusions := [
+    "H preserves total weight, squares to identity and preserves every selected mixture by permuting the six preparation labels.",
+    "H sends a normalized ambient point mass to a distribution with a coefficient minus one half, establishing full-simplex positivity failure.",
+    "The generated joint preparation called bell is the uniform correlated diagonal distribution. The generated selected effect lies between zero and one on every normalized ambient joint state.",
+    "Applying the specified first-wire H extension to that generated preparation gives selected-effect value minus one half."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/ClassicalPhaseJointReadoutBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.W_normalized",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_total",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_coordinates",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_involutive",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_preparation",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.chosen_mixture_normalized",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_preserves_chosen_mixtures",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_point_mass_negative",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_not_positive_on_full_simplex",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.generated_preparation_normalized",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.bell_generated",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.bell_normalized",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.bell_diagonal",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.selected_effect_valid",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.selected_effect_support",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_extension_selected_effect",
+        "IDT.QMClosure.ClassicalPhaseJointReadoutBoundary.H_extension_selected_effect_negative"] }]
+  plannedArtifacts := []
+  dependencies := ["classical_finite_phase_representation_kernel"]
+  limits := [
+    "H remains a proposed linear transformation with a checked positivity obstruction on the full ambient base. Its algebraic involution and selected-mixture preservation supply no allowed reversible ambient operation.",
+    "The bell preparation has classical diagonal correlations. Bell nonlocality requires a separate statement and operational scenario.",
+    "The tensor-extension witness uses the specified generated preparation and effect. Restricted composite state selection, all-reference atomicity, independent gate origin and full QM closure remain open."] }
+
+def finiteGateBallClosureRoute : ResearchTask := {
+  id := "finite_gate_ball_closure_route"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "A real vector space V, a linear normalization u and a nonempty preparation set S with u(s)=1 and real span(S)=V.",
+    "Three actual real linear maps E_x,E_y,E_z preserve S. Each E_i(S) lies in the fixed closed segment between two available preparations p_i-minus and p_i-plus. Binary means these fixed output preparations.",
+    "The complete destructive multiplication table holds with common R, and projector totality I=E_x+E_y+E_z-2R is supplied.",
+    "J_i=2E_i-I are actual maps from S to S. Their involution laws follow from the table.",
+    "An actual real linear T preserves S, has T cubed equal to identity, fixes the distinct designated z endpoints and moves an observable preparation.",
+    "A real linear equivalence X satisfies X(S)=S in both operational directions and transports the designated z endpoint pair to the x endpoint pair."]
+  conclusions := [
+    "The independently reviewed analytic argument targets dimension V equal to four, dimension ker(u) equal to three and a derived center, inner product and positive radius with closure(S) equal to the translated closed ball.",
+    "The argument derives rank R equal to one, rank E_i equal to two and rank(E_i-R) equal to one before using compact convex-envelope covariance and a closed-SO(3)-subgroup density bridge.",
+    "In normalized pointer coordinates the derived y-plus binary coefficient after T on x-plus is (2 plus or minus sqrt(3))/4, retaining the orientation sign."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize binary fixed-output range rank bounds, finite-dimensionality, the direct-sum decomposition and the nonidentity order-three dimension lower bound.",
+    "Derive the available center, fixed endpoint lines, bounded normalized preparation set, compact convex envelope, centroid and invariant positive covariance metric.",
+    "Prove endpoint antipodality, orthogonal pointer axes, order-three rotations, product trace minus three quarters and its infinite-order consequence.",
+    "Formalize the proper infinite closed SO(3) subgroup axis theorem and density of the subgroup with two orthogonal order-three axes.",
+    "Transfer finite-word invariance to preparation closure, use actual destructive projections to fill the pointer diameter and ball, and derive the endpoint radius and stated binary coefficient.",
+    "Formalize finite-word countable preparation and convex-orbit exact-versus-closure controls. Keep state-completion and physical process-limit assumptions explicit."]
+  dependencies := ["finite_record_phase_projector_kernel", "cnot_phase_defect_transfer_kernel"]
+  limits := [
+    "The projector and reference kernels are input routes under their supplied contracts. Their citations supply no checked proof of this analytic selector, whose checkedEvidence remains empty.",
+    "Exact S equal to the ball additionally requires closedness or a preparation-completion convention. Mathematical group limits do not imply physically available limiting transformations.",
+    "The actual destructive-map premise supplies closure filling. Abstract maps alone leave the convex-envelope endpoint unless preparation mixing is separately available.",
+    "Two-sided operational preservation by X is essential. A linearly invertible forward-preserving prism control remains a separate analytic countercontrol.",
+    "The designated pole-fixing nonidentity T and reversible axis exchange X remain supplied. Finite phase algebra alone supplies no independent operational origin for them.",
+    "Local closure geometry leaves composite geometry, complex orientation, event actualization, physical scales, full QM and GR open."] }
+
+def finiteGateForwardOnlyPrismControl : ResearchTask := {
+  id := "finite_gate_forward_only_prism_control"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "Normalized affine coordinates on the hexagonal prism |x|<=1, |x plus or minus sqrt(3)y|<=2, |z|<=1, with coordinate destructive maps, their common center and coordinate half-turn phases.",
+    "T is the actual 120-degree rotation around z. Pointer radii are one on x and z and two divided by sqrt(3) on y.",
+    "The invertible real linear map X(x,y,z)=(z,y/4,x/4) preserves the prism forward and sends the designated z endpoints to the designated x endpoints."]
+  conclusions := [
+    "The independently reviewed analytic control satisfies the stated finite algebra and named-pole order-three laws while retaining hexagonal-prism local geometry.",
+    "X inverse sends the available z-plus endpoint to (4,0,0), outside the prism. Forward preservation together with linear invertibility leaves the two-sided preservation premise unresolved."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize every prism inequality, the destructive algebra, positive preparation preservation, pointer ranges and the order-three fixed-axis law.",
+    "Check forward preservation by X, its explicit inverse and the inverse endpoint violation. Register the control with the selector's exact two-sided premise."]
+  dependencies := []
+  limits := [
+    "This row records an analytic countercontrol awaiting its own Lean artifact, with empty checkedEvidence.",
+    "The control concerns operational reversibility of the axis exchange. Composite reconstruction and physical gate origins remain outside its specified local geometry."] }
+
+def finiteGateBallPrimitiveOriginContinuation : ResearchTask := {
+  id := "finite_gate_ball_primitive_origin_continuation"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The analytic selector retains its full real-linear preparation, actual-map, projector-totality, named-pole order-three and two-sided axis-exchange contract."]
+  conclusions := [
+    "Determine independent operational sources for the nonidentity designated-pole order-three T and the two-sided axis-exchange X.",
+    "Retain the previous destructive-map, phase, reference and recovery origin obligations while formalizing the conditional local-closure argument."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Specify the preparation and readout resources witnessing T's nonidentity and its fixed named poles, and justify X and inverse-X operational accessibility.",
+    "Connect an accepted independent phase/reference origin route to the selector inputs without treating the finite algebraic representation as a source of T.",
+    "Keep physical state-completion, process-limit access, composites, complex orientation and actualization as separately quantified continuations."]
+  dependencies := [
+    "finite_gate_ball_closure_route", "finite_gate_forward_only_prism_control",
+    "classical_finite_phase_representation_kernel", "classical_phase_joint_readout_boundary_kernel",
+    "primitive_phase_echo_origin_continuation", "phase_echo_interface_origin_continuation"]
+  limits := [
+    "Independent gate origins and the analytic selector's kernel formalization remain open. The continuation records no completed ball, composite or QM derivation."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -13323,7 +13478,12 @@ def researchTasks : List ResearchTask := [
   controlledProgramRecoveryOrigin,
   positiveMixtureRecoveryObstructionKernel,
   noisyControlledRecoveryBoundaryKernel,
-  recordedMixtureRecoveryKernel]
+  recordedMixtureRecoveryKernel,
+  classicalFinitePhaseRepresentationKernel,
+  classicalPhaseJointReadoutBoundaryKernel,
+  finiteGateBallClosureRoute,
+  finiteGateForwardOnlyPrismControl,
+  finiteGateBallPrimitiveOriginContinuation]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
