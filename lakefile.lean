@@ -19,6 +19,9 @@ lean_exe idt_v8_experiment_protocols where
 @[default_target]
 lean_lib Proofs where
   roots := #[
+    `Proofs.QMClosure.RecordedMixtureRecovery,
+    `Proofs.QMClosure.PositiveMixtureRecoveryObstruction,
+    `Proofs.QMClosure.NoisyControlledRecoveryBoundary,
     `Proofs.QMClosure.DephasedControlledCountercontrol,
     `Proofs.QMClosure.CompleteSharpBranchRigidity,
     `Proofs.QMClosure.ProgramPhaseSynthesis,

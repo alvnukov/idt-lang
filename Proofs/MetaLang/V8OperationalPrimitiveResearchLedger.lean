@@ -12959,20 +12959,136 @@ def controlledProgramRecoveryOrigin : ResearchTask := {
     "The normalized controlled-process route and the checked algebraic bridge kernels retain their exact supplied contracts."]
   conclusions := [
     "Determine a justified operational left-recovery principle, or a sufficient reversible-control construction, that supports the conditional phase synthesis.",
-    "Derive all-reference effect interchange and the complete destructive-response identities from the actual program/control construction before combining the kernels into an operational origin theorem."]
-  checkedEvidence := []
+    "Derive all-reference effect interchange and the complete destructive-response identities from the actual program/control construction before combining the kernels into an operational origin theorem.",
+    "The noisy-control probe is now checked. Algebraic invertibility and nonzero coherent response leave positive linear recovery unestablished, while a retained classical record gives an explicit alternative recovery resource."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NoisyControlledRecoveryBoundary.lean"
+      declarations := ["IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_recovery_boundary"] },
+    { sourcePath := "Proofs/QMClosure/RecordedMixtureRecovery.lean"
+      declarations := ["IDT.QMClosure.RecordedMixtureRecovery.ClassicalBit.recorded_bit_recovery"] }]
   plannedArtifacts := [
     "Close the operational recovery premise without inferring it from normalization.",
-    "Test the candidate mixture G_eta=eta coherent+(1-eta)dephased for 0<eta<1, including its pointer/program laws, algebraic invertibility and a possible obstruction to positive linear left recovery. This is an unchecked falsification obligation.",
+    "Determine whether branch-record accessibility and retention are supplied operational resources, and which recovery conclusion follows when those records are available or discarded.",
+    "Derive the fixed/flipped pure-program alternative ensembles from the intended operational primitives. Any simplex-exclusion argument remains a separate investigation.",
     "Integrate sharp endpoint calibration, complete branch uniqueness, reference naturality, mixed-program response identities and recovered-phase synthesis under one explicit operational contract.",
     "Continue the separate geometric central/noncentral, Lie/weight, rank/dimension and independent primitive-origin obligations."]
   dependencies := [
     "sharp_effect_rank_one_kernel", "fixed_pure_program_restriction_kernel",
     "complete_sharp_branch_rigidity_kernel", "program_phase_synthesis_kernel",
-    "dephased_controlled_countercontrol", "controlled_phase_origin_route"]
+    "dephased_controlled_countercontrol", "controlled_phase_origin_route",
+    "positive_mixture_recovery_obstruction_kernel", "noisy_controlled_recovery_boundary_kernel",
+    "recorded_mixture_recovery_kernel"]
   limits := [
     "The separate algebraic kernels retain their supplied application contracts until this continuation is resolved.",
+    "Retained classical labels provide an alternative to cancellation in the checked mixture recovery. A unique derivation of cancellation requires further operational assumptions.",
     "The checked bridges leave recovery origin, full atomicity and completed QM reconstruction open."] }
+
+def positiveMixtureRecoveryObstructionKernel : ResearchTask := {
+  id := "positive_mixture_recovery_obstruction_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "Two supplied cone states, a nonnegative linear readout calibrated to zero and one on them, and strictly positive coefficients for their swapped mixtures.",
+    "The separate error theorem assumes a nonnegative recovered readout on the first cone state, the prescribed zero/one target inequalities, and a coherence parameter from zero inclusive to one exclusive.",
+    "The algebraic inverse identities supply an idempotent linear projector and a nonzero scaling parameter."]
+  conclusions := [
+    "No cone-positive linear map recovers both chosen states exactly from their two strictly positive swapped mixtures.",
+    "A common upper bound epsilon for the two prescribed one-sided readout deviations is at least (1-eta)/2.",
+    "Scaling the complement of an algebraic projector by a nonzero parameter has the stated reciprocal-parameter left and right inverses."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/PositiveMixtureRecoveryObstruction.lean"
+      declarations := [
+        "IDT.QMClosure.PositiveMixtureRecoveryObstruction.no_positive_two_state_recovery",
+        "IDT.QMClosure.PositiveMixtureRecoveryObstruction.scalar_two_mixture_error_bound",
+        "IDT.QMClosure.PositiveMixtureRecoveryObstruction.positive_two_mixture_error_bound",
+        "IDT.QMClosure.PositiveMixtureRecoveryObstruction.scaleComplement_inverse_left",
+        "IDT.QMClosure.PositiveMixtureRecoveryObstruction.scaleComplement_inverse_right"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The generic error theorem uses prescribed zero/one target inequalities and supplies no calibration of those targets to arbitrary original-state readouts.",
+    "The recovery map in the error bound is positive without a normalization premise, so its recovered readouts need not be probabilities.",
+    "The inverse identities are algebraic and contain no positivity guarantee. The lower bound depends on eta and supplies no single positive gap over all eta below one."] }
+
+def noisyControlledRecoveryBoundaryKernel : ResearchTask := {
+  id := "noisy_controlled_recovery_boundary_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The explicit real-matrix convex mixture G_eta=eta coherent+(1-eta)dephased for 0<eta<1, with the supplied positive trace-one input states and readout.",
+    "The arbitrary finite reference amplification is over real matrix spaces.",
+    "For the error bound, a positive linear recovery map and one common upper bound for the two selected one-sided readout deviations are supplied."]
+  conclusions := [
+    "The noisy channel preserves positivity and trace after every finite real reference extension. It has an explicit algebraic inverse and is bijective for nonzero eta.",
+    "Its fixed-program responses have coherence parameters plus eta and minus eta, its flipped-program reduced responses are dephasing, and its controlled pointer laws remain exact.",
+    "Every positive linear recovery fails already on two explicit normalized positive inputs. The algebraic inverse is not cone positive for 0<eta<1.",
+    "The selected matrix readout has the stated zero/one calibration. A common error upper bound epsilon is at least (1-eta)/2, with identity recovery attaining the bound for 0<=eta<1.",
+    "The half-coherence theorem combines bijectivity, valid-state preservation and the two-state positive-recovery obstruction in one concrete nonvacuous instance."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/NoisyControlledRecoveryBoundary.lean"
+      declarations := [
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.inverse_left",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.inverse_right",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_bijective",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_reference_positive",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_reference_trace",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_reference_product",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_fixed_zero",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_fixed_one",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_sector_zero",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_sector_one",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_flipped_plus",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_flipped_minus",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_no_positive_recovery",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.algebraic_inverse_not_positive",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.jointReadout_plus",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.jointReadout_minus",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_two_readout_error_bound",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.identity_attains_two_readout_bound",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.noisy_recovery_boundary",
+        "IDT.QMClosure.NoisyControlledRecoveryBoundary.half_noisy_recovery_boundary"] }]
+  plannedArtifacts := []
+  dependencies := ["positive_mixture_recovery_obstruction_kernel", "dephased_controlled_countercontrol"]
+  limits := [
+    "The positive-linear recovery exclusion leaves arbitrary algebraic recovery functions available through the explicit inverse.",
+    "The quantitative bound concerns two states and one readout, with a common upper bound for the stated deviations. Recovery normalization is unassumed, so recovered readouts need not be probabilities.",
+    "The gap tends to zero as eta approaches one. No uniform positive gap over all eta<1 is asserted.",
+    "The construction is a supplied real-matrix control, with no checked full atomicity-core, local-dimension-three or simplex exclusion, and no independent recovery or cancellation origin."] }
+
+def recordedMixtureRecoveryKernel : ResearchTask := {
+  id := "recorded_mixture_recovery_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "A real cone closed under addition and nonnegative scaling, a supplied reversible branch J preserving the cone in both directions, and nonnegative weights a+b=1.",
+    "Unit-preservation conclusions additionally supply a linear unit effect invariant under J. The recorded space is V times V with its product cone and summed unit.",
+    "The concrete classical bit family uses the componentwise nonnegative cone, bit swap and a=(1+eta)/2, b=(1-eta)/2 for every 0<eta<1."]
+  conclusions := [
+    "The recorded map x mapped to (a x,b Jx) has positive exact left recovery (x,y) mapped to x+inverse(J)y. Record, recovery and discard preserve the stated normalized state sets under the unit contract.",
+    "Discarding the classical label gives a identity+b J. In the classical bit family this forgotten channel preserves normalized states and has no positive linear recovery even on both pointers.",
+    "Both weights are strictly positive throughout the concrete parameter range, while the recorded classical bit channel retains its positive normalized exact left recovery."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/RecordedMixtureRecovery.lean"
+      declarations := [
+        "IDT.QMClosure.RecordedMixtureRecovery.recovery_record_identity",
+        "IDT.QMClosure.RecordedMixtureRecovery.record_positive",
+        "IDT.QMClosure.RecordedMixtureRecovery.recovery_positive",
+        "IDT.QMClosure.RecordedMixtureRecovery.record_unit_preserving",
+        "IDT.QMClosure.RecordedMixtureRecovery.recovery_unit_preserving",
+        "IDT.QMClosure.RecordedMixtureRecovery.discard_record_mixture",
+        "IDT.QMClosure.RecordedMixtureRecovery.record_normalized_state",
+        "IDT.QMClosure.RecordedMixtureRecovery.recovery_normalized_state",
+        "IDT.QMClosure.RecordedMixtureRecovery.discard_normalized_state",
+        "IDT.QMClosure.RecordedMixtureRecovery.ClassicalBit.weights",
+        "IDT.QMClosure.RecordedMixtureRecovery.ClassicalBit.forgotten_normalized_state",
+        "IDT.QMClosure.RecordedMixtureRecovery.ClassicalBit.forgotten_no_positive_pointer_recovery",
+        "IDT.QMClosure.RecordedMixtureRecovery.ClassicalBit.recorded_bit_recovery"] }]
+  plannedArtifacts := []
+  dependencies := ["positive_mixture_recovery_obstruction_kernel"]
+  limits := [
+    "The record map is an encoding into a larger space with a left recovery. It supplies no same-space automorphism of the original forgotten channel.",
+    "Retaining and accessing the extra classical branch label is a supplied resource. The theorem supplies no complete controlled-program dual-ensemble construction or atomicity-core model.",
+    "The reversible branch and its operational origin remain supplied, and the generic branch need not be involutive. The alternative recorded recovery leaves unique cancellation origin and completed QM reconstruction open."] }
 
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
@@ -13204,7 +13320,10 @@ def researchTasks : List ResearchTask := [
   completeSharpBranchRigidityKernel,
   programPhaseSynthesisKernel,
   dephasedControlledCountercontrol,
-  controlledProgramRecoveryOrigin]
+  controlledProgramRecoveryOrigin,
+  positiveMixtureRecoveryObstructionKernel,
+  noisyControlledRecoveryBoundaryKernel,
+  recordedMixtureRecoveryKernel]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
