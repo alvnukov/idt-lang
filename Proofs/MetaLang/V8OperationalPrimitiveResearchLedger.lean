@@ -13245,6 +13245,148 @@ def finiteGateBallPrimitiveOriginContinuation : ResearchTask := {
   limits := [
     "Independent gate origins and the analytic selector's kernel formalization remain open. The continuation records no completed ball, composite or QM derivation."] }
 
+def finiteGateFrameDimensionKernel : ResearchTask := {
+  id := "finite_gate_frame_dimension_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "An initially arbitrary real vector space V, a linear normalization u and a nonempty normalized preparation set S whose real span is V.",
+    "Actual real linear gates Jx,Jz,H,T preserve S. Jx and Jz are commuting involutions, H squared is identity, H Jz H equals Jx, T cubed is identity, T commutes with Jz and T differs from identity.",
+    "Each of Ex=(I+Jx)/2, Ey=(I+JxJz)/2 and Ez=(I+Jz)/2 sends every preparation into one fixed real closed segment between two available preparations. Endpoint pairs may initially coincide."]
+  conclusions := [
+    "Frame.dimension_forced derives finite-dimensionality, dimension V equal to four and dimension ker(u) equal to three directly from the Frame contract.",
+    "Each average Ex,Ey,Ez has rank two. The common average R and the three transverse character projectors Qx,Qy,Qz each have rank one.",
+    "Available gates preserve normalization on the whole linear carrier. The named finite relations derive T fixedness on the Ez image and equality of the Ex and Ez image ranks."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteGateFrameDimension.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGateFrameDimension.normalization_of_available",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.character_mul",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.character_sum",
+        "IDT.QMClosure.FiniteGateFrameDimension.binary_range_bound",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.finite_dimensional",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.rank_Ez_eq_Ex",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.T_fixes_Ez",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.character_ranks",
+        "IDT.QMClosure.FiniteGateFrameDimension.Frame.dimension_forced"] }]
+  plannedArtifacts := []
+  dependencies := []
+  limits := [
+    "The Frame contract supplies binary range bounds for the average maps. Actual preservation of S by those averages is a separate premise in the preparation-closure route.",
+    "The theorem derives the real linear and normalized-kernel dimensions and the stated ranks. The invariant metric, ball geometry, rotation density and preparation closure remain separate obligations.",
+    "The finite gates, exact range laws and real normalized preparation semantics remain supplied physical resources. Primitive origins, composites, event actualization and full QM remain open."] }
+
+def finiteGateFrameBallSphereControlsKernel : ResearchTask := {
+  id := "finite_gate_frame_ball_sphere_controls_kernel"
+  stage := .conditionalKernelTheorem
+  review := .parentAccepted
+  assumptions := [
+    "The explicit carrier is Fin 4 to the reals, normalization is the first coordinate, and the ball preparation set is the normalized spatial closed unit ball in the supplied coordinates.",
+    "The supplied linear phases are coordinate half-turns, H acts spatially as (x,y,z) mapped to (z,y,x), and T is the displayed real 120-degree z-rotation matrix with sqrt(3) coefficients.",
+    "The companion sphere preparation set uses the same carrier, normalization, gates and coordinate pointer endpoints with spatial square norm exactly one."]
+  conclusions := [
+    "The ball model and sphereModel each instantiate the exact Frame contract, including all gate laws, preparation preservation, spanning and three binary range bounds.",
+    "model_dimension_forced directly applies the general end-to-end dimension theorem to the supplied ball Frame and obtains its full dimension and rank package.",
+    "All three average maps actually preserve the ball preparation set.",
+    "For sphereModel, Ez applied to the available x-plus pointer equals the center, which lies outside spherePreparations. This witnesses failure of actual Ez availability and distinguishes the sphere preparation set from the supplied ball."]
+  checkedEvidence := [
+    { sourcePath := "Proofs/QMClosure/FiniteGateFrameModel.lean"
+      declarations := [
+        "IDT.QMClosure.FiniteGateFrameModel.model",
+        "IDT.QMClosure.FiniteGateFrameModel.model_dimension_forced",
+        "IDT.QMClosure.FiniteGateFrameModel.average_x_available",
+        "IDT.QMClosure.FiniteGateFrameModel.average_y_available",
+        "IDT.QMClosure.FiniteGateFrameModel.average_z_available",
+        "IDT.QMClosure.FiniteGateFrameModel.sphereModel",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_spanning",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_binary_x",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_binary_y",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_binary_z",
+        "IDT.QMClosure.FiniteGateFrameModel.center_not_sphere",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_Ez_xPointer",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_Ez_unavailable",
+        "IDT.QMClosure.FiniteGateFrameModel.sphere_preparations_ne_ball"] }]
+  plannedArtifacts := []
+  dependencies := ["finite_gate_frame_dimension_kernel"]
+  limits := [
+    "The coordinates, ball, sphere and gate matrices are supplied control inputs. These inhabitants check consistency and nonvacuity of the finite contract while leaving physical geometry selection open.",
+    "The sphere center belongs to its linear span and lies outside its preparation set. The explicit projection witness keeps actual average-map access separate from binary range containment.",
+    "The model H is a generic axis-exchange reflection. Its local definition supplies no selected complex orientation or identification with the separately proposed transformation in the earlier classical simplex boundary.",
+    "Metric and ball derivation from the smaller presentation, independent gate origins, composites, event actualization and full QM remain separate obligations."] }
+
+def compactFinitePresentationSelectorRoute : ResearchTask := {
+  id := "compact_finite_presentation_selector_route"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "The checked commuting Frame contract supplies real normalized spanning preparations, two actual commuting involutions, all three fixed-endpoint binary average range bounds, and actual H,T with H squared identity, H Jz H=Jx, T cubed identity, T nonidentity and T Jz=Jz T.",
+    "At least one of the three averages Ek actually preserves S. All three actual destructive maps are a sufficient stronger resource contract.",
+    "A separately labeled analytic extension may replace H squared identity by positive finite order, or derive phase commutation from the other range and geometric assumptions. These extensions retain their own pending proofs."]
+  conclusions := [
+    "The independently reviewed analytic presentation targets the same local closed-ball preparation closure using fewer supplied multiplication-table, projector, dimension and named-pole assumptions.",
+    "The checked Frame.dimension_forced supplies the algebraic dimension and rank step for its exact commuting involutive-H specialization. Bounded convex-envelope geometry, invariant covariance, endpoint radius, rotation density and closure filling retain pending formalization.",
+    "With an actual Ey, the y-plus mixture coordinate after T on the x-plus pointer is (2 plus or minus sqrt(3))/4. Under a one-destructor minimum, that algebraic segment coefficient has a separate Ey-availability requirement."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize boundedness, the available common center, compact convex envelope and invariant positive covariance metric under the compact gate contract.",
+    "Derive pointer axes and equal-radius endpoints, trace minus three quarters for the two orthogonal order-three rotations, and infinite order from the rational noninteger trace.",
+    "Formalize dense powers on the infinite-order rotation circle and SO(3) generation by two nonparallel rotation circles, including the infinitesimal-generator or equivalent density bridge.",
+    "Transfer finite-word invariance to preparation closure and use one actual destructive projection to fill the diameter and ball.",
+    "Formalize the separately stated noncommuting extension, positive-finite-order H extension and exact relation-deletion controls without silently changing the checked Frame contract."]
+  dependencies := ["finite_gate_frame_dimension_kernel", "finite_gate_ball_closure_route"]
+  limits := [
+    "The analytic selector and its stronger variants have empty checkedEvidence. The checked dimension theorem supplies one input step under its exact Frame hypotheses.",
+    "Binary range containment supplies a rank bound and leaves actual preparation preservation by Ei explicit. A sphere satisfies the range-only contract while its projection can leave that preparation set.",
+    "Exact S equal to the ball requires closedness or a completion convention. Mathematical limiting rotations leave physical process-limit availability separately specified.",
+    "The numerical endpoint quantity is a mixture coordinate. Event actualization, orientation selection, physical gate origins, composites and full QM remain open."] }
+
+def finiteGateExactFieldBoundary : ResearchTask := {
+  id := "finite_gate_exact_field_boundary"
+  stage := .analyticAwaitingFormalization
+  review := .notYetKernelChecked
+  assumptions := [
+    "An ordered subfield F of the reals, an exact F-linear normalized spanning preparation model, available F-valued endpoints and gates satisfying the full selector contract with actual destructive maps and two-sided axis exchange.",
+    "Binary outputs lie in fixed endpoint segments with coefficients in F intersect [0,1]. Real-segment wording between distinct F endpoints gives the same coefficient through a ratio of F coordinates.",
+    "Necessity invokes the pending real geometric selector after scalar extension, including its orthogonal equal-radius endpoint-frame conclusion."]
+  conclusions := [
+    "The independently reviewed analytic field characterization is existence of the full exact F-linear selector model if and only if sqrt(3) belongs to F.",
+    "The derived endpoint basis makes the nonidentity order-three transverse coefficient b belong to F with 4b squared equal to three. Its y-plus mixture coordinate p obeys 16p squared minus 16p plus one equal to zero.",
+    "An explicit finite-word model over Q(sqrt(3)), with coordinates in Z[1/2,sqrt(3)], satisfies the full exact contract and has countable available preparations. The pending selector gives real ball closure while exact state availability remains countable."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Formalize exact scalar extension and preservation of gates, spanning, nonidentity, endpoint relations and segment coefficients.",
+    "After the geometric endpoint theorem, formalize the equal-radius F-pointer basis and derive the coefficient equation 4b squared equal to three.",
+    "Prove the rational polynomial exclusions for 4t squared equal to three and 16p squared minus 16p plus one equal to zero, and the separate orthogonal order-three polynomial bridge.",
+    "Formalize the Q(sqrt(3)) finite-word preparation model, exact gate identities, norm and segment bounds, countability and conditional real closure.",
+    "Formalize the rational forward-only prism control and its exact inverse-availability failure."]
+  dependencies := ["compact_finite_presentation_selector_route", "finite_gate_ball_closure_route"]
+  limits := [
+    "The field characterization is conditional on the unformalized geometry and has empty checkedEvidence. Scalar-extension and exact-model arguments remain analytic here.",
+    "The exclusion fixes one exact finite-dimensional F-linear carrier with F-valued endpoint frame and gates. Rational symbolic descriptions can specify algebraic extensions, and approximation questions have separate error contracts.",
+    "The finite-word model uses a countable coordinate ring and leaves exact full-real-ball preparation access open. Continuous physical gate families, complex scalars, tensor structure, event actualization, physical constants and primitive origins remain separate."] }
+
+def finiteGateFrameGeometryOriginContinuation : ResearchTask := {
+  id := "finite_gate_frame_geometry_origin_continuation"
+  stage := .openPhysicalBridge
+  review := .openObligation
+  assumptions := [
+    "The checked finite Frame contract and the analytic selector and field extensions retain their respective exact mathematical and operational premises."]
+  conclusions := [
+    "Continue the metric, endpoint, rotation-density and preparation-closure bridges after the checked dimension result.",
+    "Justify independent availability of at least one average map as a destructive preparation process, and the finite phase, H and nonidentity commuting order-three T resources.",
+    "Determine which exact field representations and preparation or process completions are physically justified while retaining the earlier primitive-origin continuations."]
+  checkedEvidence := []
+  plannedArtifacts := [
+    "Derive actual destructive-map access independently of its binary range bound.",
+    "Preserve explicit finite-order, nonidentity, conjugation, pole-commutation and transverse binary-range obligations, with their separate controls.",
+    "Connect an accepted operational-origin route to the fixed Frame premises and keep state completion, process limits, composites, event actualization and orientation selection explicit."]
+  dependencies := [
+    "finite_gate_frame_dimension_kernel", "finite_gate_frame_ball_sphere_controls_kernel",
+    "compact_finite_presentation_selector_route", "finite_gate_exact_field_boundary",
+    "finite_gate_ball_primitive_origin_continuation"]
+  limits := [
+    "Conditional dimension and model checks leave the analytic geometry and independent physical origins open. The continuation records no completed QM reconstruction."] }
+
 def researchTasks : List ResearchTask := [
   operationalPositiveReadout, mixerRecordNaturality, positiveQuadraticPolarization,
   nonadditiveClassicalControl, jointReadoutFrontier, positiveGramKernel,
@@ -13483,7 +13625,12 @@ def researchTasks : List ResearchTask := [
   classicalPhaseJointReadoutBoundaryKernel,
   finiteGateBallClosureRoute,
   finiteGateForwardOnlyPrismControl,
-  finiteGateBallPrimitiveOriginContinuation]
+  finiteGateBallPrimitiveOriginContinuation,
+  finiteGateFrameDimensionKernel,
+  finiteGateFrameBallSphereControlsKernel,
+  compactFinitePresentationSelectorRoute,
+  finiteGateExactFieldBoundary,
+  finiteGateFrameGeometryOriginContinuation]
 
 def ledger : List ResearchTask := researchTasks ++ globalBridges ++ matterRegimeObligations
 
