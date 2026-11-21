@@ -130,3 +130,48 @@ other 24 tables the same two collisions give 1/4 versus 3/4 (the direction
 depends on the table and naming). Reusing a shared fair label s=t instead
 gives 1/2 for both inputs on all 48. These are exact classical preparation
 weights, not frequencies inferred from the gate or fitted to an experiment.
+
+## What does a native path record change?
+
+The [path-record probe](probe_native_path_record.py) cuts both orders at the
+**same time**, after their common first two collisions AB. At that point the
+only middle label is on either the left or the right, never in the center.
+For each gate and extreme background r there is one middle label k for
+which T(r,k) keeps r on the first port. No table-specific choice is needed:
+BAAAB on a separate triple (r,L,H) or (r,H,L) supplies k at its center.
+The extreme input stocks and port routing are supplied; preparation side
+outputs need not be reset. The trial input m is not used to prepare k.
+
+Let c be the right working cell. A single T(c,k) leaves c unchanged on
+both reachable inputs. Its detached pointer equals k on the right path and
+the other middle label on the left path: in fact it equals the initial m.
+The raw pointer weight is always 1, but a collision with another prepared k
+reads the path at a fixed port. This copies a classical bit on the specified
+code, not arbitrary states. For any single clean contact preserving c and
+conserving the sum of weights, the pointer weight alone cannot change.
+
+With the original analyzer comparing the final center to a supplied copy
+of m, the exact rates are as follows. Each row applies separately to every
+gate and background, averaging both equally weighted inputs, without
+conditioning on the pointer.
+
+| Contact on right cell and pointer | Path readable from pointer alone with fixed apparatus? | UV, VU rates |
+| --- | --- | --- |
+| No contact | No | 1, 0 |
+| T with ready k | Yes; all working cells unchanged | 1, 0 |
+| T with ready r | No; pointer always r | 1, 1/2 |
+| Two T with ready r | Yes; swaps c into the pointer | 1, 1/2 |
+
+Inverting the contact before the suffix restores both the original triple
+and the ready state. The two extreme-ready rows give identical detector
+outputs even trial by trial, despite disagreeing on whether a record exists.
+
+A second protocol needs **no matched input reference prepared in advance**. Make
+two clean records with independently prepared k cells. Compare the final
+center with one record; the other remains readable. The rates are (1,0)
+with the records retained, and (1/2,1/2) with no write or after undoing the
+writes and comparing with k. The 1/2 assumes fair trial inputs; the clean
+comparison succeeds on each input separately. This last readout uses a
+correlation with a record, not an interference signal on the center alone.
+Here each trial follows one deterministic path; neither readout establishes
+quantum complementarity, a Born rule, or a physical detector.

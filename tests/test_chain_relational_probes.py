@@ -28,3 +28,6 @@ class ChainRelationalProbeTests(unittest.TestCase):
 
     def test_closed_middle_order_and_readout_symmetry(self) -> None:
         self.replay("probe_middle_order_echo.py")
+
+    def test_native_path_record_and_disturbance(self) -> None:
+        self.replay("probe_native_path_record.py")
