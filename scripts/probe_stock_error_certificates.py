@@ -237,14 +237,28 @@ def design_fixed_stock_test() -> None:
         for i in range(3)
     )
     need(four == tuple(ps[1:4]), "four-atom competitor")
-    bound_value, chosen = max((lower(ts), ts) for ts in combinations(range(1, 13), 3))
+
+    def best(delta: F) -> tuple[F, list[tuple[int, ...]]]:
+        values = {ts: lower(ts, delta) for ts in combinations(range(1, 13), 3)}
+        peak = max(values.values())
+        return peak, sorted(
+            (ts for ts, gap in values.items() if gap == peak),
+            key=lambda t: (max(t), sum(t), t),
+        )
+
+    bound_value, ties = best(F(0))
+    chosen = ties[0]
     need(
-        chosen == (3, 9, 12) and bound_value == F(864387, 16777216), "short-word design"
+        chosen == (1, 3, 12)
+        and len(ties) == 5
+        and (3, 9, 12) in ties
+        and bound_value == F(864387, 16777216),
+        "short-word design",
     )
-    # An explicit closest stock: masses on 000, 010 and 101. This attains,
+    # An explicit closest stock: masses on 000, 100 and 011. This attains,
     # not merely approaches, the sharp lower bound at the selected design.
     shared = (ps[3] + ps[12]) / 2
-    masses = (1 - ps[9] - shared, ps[9], shared)
+    masses = (1 - ps[1] - shared, ps[1], shared)
     need(
         min(masses) >= 0
         and sum(masses) == 1
@@ -255,18 +269,23 @@ def design_fixed_stock_test() -> None:
     # gives vector error <=2t delta at calibrated operator error delta per gate.
     # Every fixed projector changes by at most pure-state trace distance, itself
     # <= vector error. This calibration model is a control, not lab evidence.
-    robust, shorter = max(
-        (lower(ts, F(1, 500)), ts) for ts in combinations(range(1, 13), 3)
+    robust, noisy_ties = best(F(1, 500))
+    shorter = noisy_ties[0]
+    need(
+        shorter == (1, 3, 4)
+        and len(noisy_ties) == 5
+        and (3, 4, 9) in noisy_ties
+        and robust == F(427, 32000),
+        "noisy word design",
     )
-    need(shorter == (3, 4, 9) and robust == F(427, 32000), "noisy word design")
     print(
         "Uniform ≤4 atoms: t=2, p=1/8, gap 1/8. At observed q=1/8, adversarial losses retain exclusion only if certified efficiency >6/7 (no false counts)."
     )
     print(
-        f"Fixed ≤3 possibly unequal atoms: t=(1,2,3) minimax error 1/64; best noiseless design among 220 short triples: {chosen}, sharp gap {bound_value}."
+        f"Fixed ≤3 possibly unequal atoms: t=(1,2,3) minimax error 1/64; cheapest of five best noiseless designs among 220 triples: {chosen}, sharp gap {bound_value}."
     )
     print(
-        f"At hypothetical per-gate operator error ≤1/500 the best certified triple changes to {shorter}, surviving gap ≥{robust}."
+        f"At hypothetical per-gate operator error ≤1/500 the cheapest of five optimal certificates is {shorter}, surviving gap ≥{robust}."
     )
     print(
         "All designs are against deterministic readout on one fixed stock, not arbitrary classical noise; no detector data fitted."

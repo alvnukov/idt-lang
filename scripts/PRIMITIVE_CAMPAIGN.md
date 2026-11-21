@@ -86,13 +86,16 @@ needed for that exclusion. Unequal atom weights are a different hypothesis.
 For three fixed atoms with arbitrary weights and deterministic binary
 readout, the three probabilities must lie on one of the triangles spanned
 by cube vertices. Among 220 triples with t≤12, the largest exact
-noiseless separation occurs at **(3,9,12)**: the competitor misses
+noiseless separation is attained by five triples. The cheapest in maximum
+depth, then in total gate count, is **(1,3,12)**: the competitor misses
 at least one ideal rate by 864387/16777216 (about 5.15 percentage points).
 A three-atom distribution attains this boundary; it is not a fitted
 laboratory parameter.
 With a *hypothetical*, independently bounded operator error of 1/500 per
-unitary gate, the best certified triple changes to **(3,4,9)** and the
-remaining bound is 427/32000. These bounds are not statistical confidence
+unitary gate, the cheapest of the five best certified triples changes to
+**(1,3,4)** and the remaining bound is 427/32000. The equivalent
+certificates at (3,9,12) and (3,4,9), respectively, require more gates.
+These bounds are not statistical confidence
 intervals. Fresh stochastic responses, variable initial mixtures or loss
 outside its calibrated interval must not be rejected using this test.
 
