@@ -25,3 +25,9 @@ class ShutterCandidateProbeTests(unittest.TestCase):
 
     def test_three_paths_and_repeated_arm_holdout(self) -> None:
         self.replay("probe_cyclic_shutter_holdout.py")
+
+    def test_hidden_arm_word_certificates(self) -> None:
+        self.replay("probe_hidden_arm_certificates.py")
+
+    def test_native_eight_label_phase_plate(self) -> None:
+        self.replay("probe_eight_label_interferometer.py")
