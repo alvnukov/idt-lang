@@ -2,7 +2,7 @@
 
 Can the square weight be obtained without assuming that two invisible
 channels *inside* the same port count independently? **Yes, conditionally.**
-One conserved nonnegative stock, additive only between distinct ports,
+One common-gain nonnegative stock, additive only between distinct ports,
 suffices in the minimal integer architecture. It selects an intrinsic
 count, not a preferred name for either internal coordinate.
 
