@@ -96,3 +96,37 @@ A mixed all-middle word reaches such a pair by XY → LH; a uniform middle
 word cannot. Hence there are 2N+3 components for this move set. This is
 a candidate mechanism for an integer conserved quantity, not evidence that
 the quantity is physical energy or a Standard Model quantum number.
+
+## Does the order of operations matter at the same weight?
+
+The [middle-label order probe](probe_middle_order_echo.py) uses three cells.
+Write A for a collision on sites 0,1 and B on 1,2; read words left to right.
+Start with (r,m,r), where m is either middle label and r is either extreme.
+Run U=AB then V=ABBA, or V then U. All 48 tables give, respectively,
+(r,other-middle,r) and (r,m,r). Both side cells return exactly; both words
+use the same numbers of gates and give the same wire permutation if every
+collision is replaced by a swap. In fact V then U just exchanges the two
+outer cells on arbitrary input. Six collisions are minimal **only** in the
+tested forward, nearest-neighbor, two-block search with these controls.
+
+The center weight alone is 1 in both cases. To read the bit, collide it with
+another middle label s: the output at a fixed port has nonmiddle weight iff
+the labels differed. A reference s matching the initial m reveals the flip;
+an independent fair s erases this contrast. Readiness is restored before
+this analyzer, not claimed afterwards. A reversible map closed on exactly
+two classical labels can only fix or exchange them; two such maps commute.
+Here the individual blocks are not both closed logical operations, even
+though their two complete orderings return the side cells. No superposition,
+relative phase, or quantum probability law follows from this order effect.
+
+A separate calibration distinguishes the tables. Start with (m,s,t) where
+s,t are independently fair middle labels, run B then A, and ask only whether
+site 0 has middle weight. For 24 tables m=X,Y give 1/2 and 1/2. Their gate
+commutes with simultaneously exchanging L with H and X with Y. This exchange
+also preserves the detector and the auxiliary preparation, so any circuit
+using only these gates, wire routing, and independent-of-input auxiliaries
+with that symmetry has identical middle-readout laws on X and Y. For the
+other 24 tables the same two collisions give 1/4 versus 3/4 (the direction
+depends on the table and naming). Reusing a shared fair label s=t instead
+gives 1/2 for both inputs on all 48. These are exact classical preparation
+weights, not frequencies inferred from the gate or fitted to an experiment.

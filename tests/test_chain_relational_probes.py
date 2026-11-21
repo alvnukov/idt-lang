@@ -25,3 +25,6 @@ class ChainRelationalProbeTests(unittest.TestCase):
 
     def test_prepared_references_and_weight_tradeoff(self) -> None:
         self.replay("probe_reference_weight_tradeoff.py")
+
+    def test_closed_middle_order_and_readout_symmetry(self) -> None:
+        self.replay("probe_middle_order_echo.py")
