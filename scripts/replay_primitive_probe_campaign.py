@@ -144,6 +144,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_walk_complex_structure",
         "probe_collision_light_pair",
         "probe_oriented_cell_wave",
+        "probe_internal_signal_geometry",
     ),
     "packet_sectors": (
         "probe_six_packet_sectors",
@@ -169,6 +170,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_opposition_readout",
         "probe_opposition_hidden_carrier",
         "probe_opposition_spin_lift",
+        "probe_binary_window_oppositions",
+        "probe_tetrahedral_cycle_origin",
+    ),
+    "opposition_magic_square": (
+        "probe_opposition_magic_square",
     ),
     "matching_transport": (
         "probe_matching_transport",
