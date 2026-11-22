@@ -83,6 +83,22 @@
       "sources": [
         {"path": "scripts/probe_partial_hidden_exchange.py", "first_line": 1, "last_line": 169, "file_sha256": "90efdd9602e18d901d8023a0558d66f74148253fd9af98c3086f41c679d36474"}
       ]
+    },
+    {
+      "id": "rational_collective_exchange_analyzer",
+      "role": "route",
+      "components": [
+        "Three integer-weighted visible-letter exchanges form a scaled involution when their normalized coefficients have sum and sum of squares one. A two-output coherent copy schedule then has exact, uniform column gain on all 64 raw addresses.",
+        "For pure hidden tags and an orthogonal visible word this rational family approaches the full visible measurement contrast. A three-copy reference with weights (2,2,-1) attains the one-third theoretical gap exactly on the specified input. An irrational supremum is approached, not attained by a finite rational member."
+      ],
+      "declared_status": "Conditional finite checked coherent-device construction and a rational-family supremum argument; no physical exchange measurement, absolute detection efficiency, or derivation of the wiring rule.",
+      "missing_bridges": [
+        "Derive or implement the required signed collective coherent copy schedule, port addressing and complete sampling from the proposed microscopic dynamics.",
+        "Test the prepared exchange lifts and hidden overlaps with independently calibrated hardware before assigning these predicted probabilities to a physical source. Approximation accuracy is not a bound on the resource cost of realization."
+      ],
+      "sources": [
+        {"path": "scripts/probe_native_exchange_optimum.py", "first_line": 1, "last_line": 140, "file_sha256": "d9ad9d10d0b72907e3c0d7a37d4c895fdf8b9aba8b78709ef9106d1d118cbdee"}
+      ]
     }
   ]
 }
