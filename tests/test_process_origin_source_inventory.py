@@ -16,7 +16,8 @@ from scripts.archive_existing_primitives import (
 )
 from scripts.replay_primitive_probe_campaign import TOPIC_BUNDLES
 from theory_experiments import candidate_pipeline
-from theory_experiments.primitive_screen import load_json, object_fields
+from theory_experiments.candidate_history import DEFAULT_HISTORY, SCHEMA, History
+from theory_experiments.primitive_screen import Limits, load_json, object_fields
 from theory_experiments.source_candidate import parse_source_candidate
 
 PROCESS_INVENTORY = ROOT / "data/process_origin_source_inventory.json"
@@ -46,6 +47,19 @@ PROCESS_SOURCES = {f"scripts/probe_{name}.py" for name in (
 
 
 class ProcessOriginSourceInventoryTests(unittest.TestCase):
+    def test_every_captured_proposal_has_its_original_unassessed_pin(self) -> None:
+        archive = History(DEFAULT_HISTORY)
+        for spec in inventory_specifications(PROCESS_INVENTORY):
+            record = {"schema": SCHEMA, "candidates": [spec], "limits": Limits().specification()}
+            key = candidate_pipeline.digest(record)
+            self.assertEqual(archive.get("submissions", key), record)
+            reports = archive.baseline(key)["reports"]
+            if not isinstance(reports, list) or len(reports) != 1:
+                self.fail("expected exactly one pinned report")
+            report = object_fields(reports[0])
+            self.assertEqual((report["status"], report["empirical_status"], report["proof_status"]),
+                             ("unsupported", "not_tested", "not_attempted"))
+
     def test_coverage_and_disjoint_ids(self) -> None:
         candidates = [parse_source_candidate(spec) for spec in inventory_specifications(PROCESS_INVENTORY)]
         self.assertCountEqual([candidate.id for candidate in candidates], PROCESS_IDS)
