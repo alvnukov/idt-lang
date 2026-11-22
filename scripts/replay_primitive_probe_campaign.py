@@ -117,6 +117,17 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_native_markov_spectrum",
         "probe_autonomous_mixer_program",
     ),
+    "unsigned_origins": (
+        "probe_unsigned_neutral_motifs",
+        "probe_uncolored_cycle_carrier",
+    ),
+    "unsigned_junction": (
+        "probe_unsigned_collision_search",
+        "probe_complement_collision_mixer",
+        "probe_asynchronous_pair_resolver",
+        "probe_unsigned_pair_tickets",
+        "probe_unsigned_background_readout",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

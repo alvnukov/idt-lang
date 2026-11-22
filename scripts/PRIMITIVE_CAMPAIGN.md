@@ -100,6 +100,14 @@ distinguishes an additive pilot from a real programmable interaction, and
 tests homogeneous finite-state responses at successively longer circuit
 depths. A finite list of depths never rules out arbitrarily large clocks.
 
+[Unsigned motifs and graph cycles](UNCOLORED_CYCLE_PRIMITIVES.md)
+produce possible phase carriers, but isolated darkness is not cancellation
+in every context. The [unsigned two-mark junction](UNSIGNED_PAIR_JUNCTION.md)
+independently finds the two mixer orientations among 46,656 packet rules.
+An all-schedule pairing procedure implements them under a finite collision
+contract. The whole-event readout obtained for raw counts still does not
+give squared deviations from a positive background.
+
 One cheap **proposed comparison**, not a performed experiment: inject a
 fixed state, repeat the same two-mixer word t times, and read one port.
 At t=2 the ideal model gives 1/8, separated from every deterministic
