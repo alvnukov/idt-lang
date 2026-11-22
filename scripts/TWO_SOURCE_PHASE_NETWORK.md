@@ -100,3 +100,23 @@ information is ineligible, not a rejection; an asserted bound, chronology
 or independent source is not independently verified by command-line flags.
 Use `python3 -m scripts.probe_phase_network_game --help` for the strict
 ordered JSONL format. Default execution uses only synthetic controls.
+
+### A cheaper experiment if the axes are independently calibrated
+
+The [three-axis probe](probe_three_axis_source_parity.py) needs three
+matched settings and 48 recorded cells. Two complex Bell sources with the
+supplied Pauli measurements give score 3. A real model with two independent
+sources, three pairwise anticommuting real reflections **at both ends**, and
+one setting-independent middle measurement has score at most 2; an explicit
+real model attains 2. This is not the preceding device-independent comparison.
+It tests shared phase structure **given** the calibration, not a prediction of
+the bare packet primitive. The complex example uses no oblique analyzer or
+third logical blank port.
+
+The calculation also bounds imperfect axes: if the symmetric parts of their
+triple products have operator norms at most a and c, the score is at most
+3 cos(arccos(ac)/3). This is a mathematical bound in the stated model, not
+an experimentally measured error bar. Commuting counterfeit axes, a middle
+station that learns the setting, and an untested hidden block each evade the
+intended comparison. A few successful preparation tests cannot certify the
+operator norm on all occupied states. No new physical data are asserted.

@@ -6,11 +6,21 @@ from itertools import product
 
 from scripts import probe_balanced_phase_composition as comp
 from scripts import probe_phase_network_game as game
+from scripts import probe_three_axis_source_parity as parity
 from scripts import probe_two_source_phase_network as net
 from scripts.gaussian_dyadic_words import g
 
 
 class TwoSourceControls(unittest.TestCase):
+    def test_three_axis_import_is_a_process_calibration(self) -> None:
+        p = parity.triple_product(parity.REAL_AXES)
+        self.assertEqual(parity.multiply(p, p), parity.scale(-1, parity.eye(4)))
+        self.assertEqual(parity.symmetric(p), parity.scale(0, parity.eye(4)))
+        # Phase-blind return of a whole state is identical for p² and +I.
+        self.assertNotEqual(parity.multiply(p, p), parity.eye(4))
+        self.assertEqual(parity.real_sharp_control(), 2)
+        self.assertEqual(parity.complex_native_control(), 3)
+
     def test_balanced_filter_is_not_ordinary_real_composition(self) -> None:
         rho = comp.matrix(((F(1, 3), F(1, 6)), (F(1, 6), F(2, 3))))
         real_product = comp.tensor(rho, rho)

@@ -112,6 +112,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_balanced_phase_composition",
         "probe_two_source_phase_network",
         "probe_phase_network_game",
+        "probe_three_axis_source_parity",
     ),
     "program_memory": (
         "probe_native_markov_spectrum",
