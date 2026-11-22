@@ -12,7 +12,8 @@ from scripts.archive_existing_primitives import (
 )
 from scripts.replay_primitive_probe_campaign import TOPIC_BUNDLES
 from theory_experiments import candidate_pipeline
-from theory_experiments.primitive_screen import load_json, object_fields
+from theory_experiments.candidate_history import DEFAULT_HISTORY, SCHEMA, History
+from theory_experiments.primitive_screen import Limits, load_json, object_fields
 from theory_experiments.source_candidate import parse_source_candidate
 
 INVENTORY = ROOT / "data/primitive_origin_composite_inventory.json"
@@ -31,6 +32,19 @@ SOURCES = {f"scripts/probe_{name}.py" for name in (
 
 
 class PrimitiveOriginCompositeInventoryTests(unittest.TestCase):
+    def test_retains_each_original_unassessed_baseline(self) -> None:
+        archive = History(DEFAULT_HISTORY)
+        for spec in inventory_specifications(INVENTORY):
+            record = {"schema": SCHEMA, "candidates": [spec], "limits": Limits().specification()}
+            key = candidate_pipeline.digest(record)
+            self.assertEqual(archive.get("submissions", key), record)
+            reports = archive.baseline(key)["reports"]
+            if not isinstance(reports, list) or len(reports) != 1:
+                self.fail("expected one report at the time of archiving")
+            row = object_fields(reports[0])
+            self.assertEqual((row["status"],row["proof_status"],row["empirical_status"]),
+                             ("unsupported","not_attempted","not_tested"))
+
     def test_ids_and_source_coverage(self) -> None:
         bundled_sources = {f"scripts/{probe}.py" for probe in TOPIC_BUNDLES["primitive_origins_and_composites"]}
         self.assertTrue(SOURCES <= bundled_sources)
