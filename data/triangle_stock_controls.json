@@ -1,0 +1,66 @@
+[
+  {
+    "id": "stock_quadratic_labelled",
+    "family": "triangle_stock",
+    "modulus": 1,
+    "default_forms": [[0,1,0],[1,0,0],[1,1,0]],
+    "overrides": [],
+    "gains": ["4","4","4"]
+  },
+  {
+    "id": "stock_mod_three_dark_medians",
+    "family": "triangle_stock",
+    "modulus": 3,
+    "default_forms": [[0,0,1]],
+    "overrides": [{"residue":[0,0],"forms":[]},{"residue":[1,1],"forms":[]},{"residue":[2,2],"forms":[]}],
+    "gains": ["1","1","1"]
+  },
+  {
+    "id": "stock_mixed_edge_calibrated_gain",
+    "family": "triangle_stock",
+    "modulus": 3,
+    "default_forms": [[0,0,1],[0,1,0],[1,0,0],[1,1,0]],
+    "overrides": [{"residue":[0,0],"forms":[[0,1,0],[1,0,0],[1,1,0]]},{"residue":[1,1],"forms":[[0,1,0],[1,0,0],[1,1,0]]},{"residue":[2,2],"forms":[[0,1,0],[1,0,0],[1,1,0]]}],
+    "gains": ["3","3","3"]
+  },
+  {
+    "id": "stock_hidden_seven_sublattice",
+    "family": "triangle_stock",
+    "modulus": 7,
+    "default_forms": [[0,1,0],[1,0,0],[1,1,0]],
+    "overrides": [{"residue":[0,0],"forms":[[0,1,0],[0,1,0],[0,1,0],[2,1,0]]}],
+    "gains": ["4","4","4"]
+  },
+  {
+    "id": "stock_setting_miscalibration",
+    "family": "triangle_stock",
+    "modulus": 1,
+    "default_forms": [[0,1,0],[1,0,0],[1,1,0]],
+    "overrides": [],
+    "gains": ["4","4","5"]
+  },
+  {
+    "id": "stock_single_coordinate_only",
+    "family": "triangle_stock",
+    "modulus": 1,
+    "default_forms": [[1,0,0]],
+    "overrides": [],
+    "gains": ["4","4","4"]
+  },
+  {
+    "id": "stock_zero_no_signal",
+    "family": "triangle_stock",
+    "modulus": 1,
+    "default_forms": [],
+    "overrides": [],
+    "gains": ["4","4","4"]
+  },
+  {
+    "id": "stock_nonzero_pedestal",
+    "family": "triangle_stock",
+    "modulus": 1,
+    "default_forms": [[0,0,1],[0,1,0],[1,0,0],[1,1,0]],
+    "overrides": [],
+    "gains": ["4","4","4"]
+  }
+]

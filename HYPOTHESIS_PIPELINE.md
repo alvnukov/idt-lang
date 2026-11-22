@@ -33,6 +33,19 @@ complete local artifact, including exact witness inputs, imports and gaps.
 a counterexample; 1 = at least one counterexample; 2 = invalid input/operational
 error; 3 = incomplete or unsupported. Code 0 never means physical truth.
 
+## Test an explicit triangle stock across an entire lattice
+
+`triangle_stock` describes W(a,b,−a−b) by a sum of at most five squared
+affine integer forms. Each residue pair (modulus 1 through 7) can override
+the default list. The three instrument gains are independent positive
+fraction strings; the machine does not infer them by fitting. Test the
+[controlled input batch](data/triangle_stock_controls.json) with
+`--max-cases 882`. An actual residual gives the input and the two output
+stocks. A complete six-point stencil per residue and setting certifies
+the identity for this submitted function, including negative and distant
+integer translates. A partial run does not. See the [scientific
+scope, dark alternative and bypass readout](scripts/TRANSFER_AND_STOCK.md).
+
 ## Compare a supplied light neutral current with invisible Z-width summaries
 
 `neutral_current_width` takes 1–12 labeled species and an exact Hermitian

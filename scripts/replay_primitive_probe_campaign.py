@@ -254,6 +254,14 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_anonymous_punctured_carrier",
         "probe_relational_chart_holonomy",
     ),
+    "transfer_stock_and_trials": (
+        "probe_unsigned_transfer_triangle",
+        "probe_bipartite_triangle_origin",
+        "probe_triangle_stock_rigidity",
+        "probe_triangle_bypass_normalization",
+        "probe_native_partial_exchange",
+        "probe_reference_sewing_trials",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
