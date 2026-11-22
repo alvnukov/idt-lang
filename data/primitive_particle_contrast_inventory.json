@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "polarized_electron_current_assignment",
+      "role": "semantic_contract",
+      "components": [
+        "On the same internal carrier, swapping supplied effective neutral-current weights between fixed laboratory electron helicities preserves a total width and an electron-only unpolarized pole asymmetry. Their sign difference is observable in polarized production with the stated calibration."
+      ],
+      "declared_status": "Reanalysis of published polarized and unpolarized summaries and a conditional dictionary contrast, not a derivation of chirality, new couplings or a fit to event data.",
+      "missing_bridges": [
+        "Supply the external particle and helicity mapping, spin-one resonance and factorization, radiation/acceptance treatment and polarization calibration without importing the desired sign."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_polarized_z_electron.py",
+          "first_line": 1,
+          "last_line": 208,
+          "file_sha256": "85a91751bd5d2d9f0beb11e8977df4b2bde7ceb53e908f3a47d06d12559dc396"
+        }
+      ]
+    },
+    {
+      "id": "solar_active_flux_response_degeneracy",
+      "role": "semantic_contract",
+      "components": [
+        "Replay the three calibrated solar-neutrino channel responses with published statistical covariances. Electron and non-electron active flux are distinguished but coherent conversion, classical mixing and a mixed source can give identical rates for matched spectra. Even a two-operation return can be imitated by retained classical memory."
+      ],
+      "declared_status": "Rounded statistical projection, not the original joint likelihood; no direct determination of coherence, species counts or sterile flux.",
+      "missing_bridges": [
+        "Independently specify source spectra, flavor-specific interactions and detector response. A new phase-sensitive interaction, not another copy of the same three rates, is required to distinguish the matched mechanisms."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_solar_active_flux.py",
+          "first_line": 1,
+          "last_line": 200,
+          "file_sha256": "1c7507a234261861c7c86583bd6701a1112a6d942e7e5e847be9cb3d85c0b303"
+        }
+      ]
+    },
+    {
+      "id": "reactor_relative_clock_scale_wall",
+      "role": "semantic_contract",
+      "components": [
+        "A relative-baseline spectral statistic removes a common flux rescaling. A bright identity and a uniformly prepared three-cycle with one active phase give identical relative shapes despite unequal absolute rates. An optional hash-pinned replay checks all 990 central PROSPECT-I bins after one overall normalization per period."
+      ],
+      "declared_status": "Exact toy degeneracy and optional data-table reconstruction, not a reactor exclusion; proposed covariance weights do not exactly reproduce the author null statistic.",
+      "missing_bridges": [
+        "Specify propagation ticks per physical distance and energy, initial phases, response and efficiencies before using real baselines. Resolve the likelihood mismatch before using any significance."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reactor_relative_clocks.py",
+          "first_line": 1,
+          "last_line": 218,
+          "file_sha256": "6378ef04b0648d750788361786866a5c662f3eb5d026ecd5d28d2e60ae950f46"
+        }
+      ]
+    },
+    {
+      "id": "three_arm_late_plate_contact_bound",
+      "role": "route",
+      "components": [
+        "Three independent local setting bits are scored on every herald including uniform settings and misses. The existing paired six-rail preparation, sign controls and reflection yield an all-settings score of five eighths. Any classical decision process accessing at most two settings per trial attains at most one half; three contacts can do better."
+      ],
+      "declared_status": "Conditional synthetic intervention on query access, not a new algorithm, a solar experiment or a rejection of arbitrary classical spreading mechanisms.",
+      "missing_bridges": [
+        "Physically establish the herald precedes independent choices, enforce locality and no global setting leak, calibrate preparation and readout, and account for losses. Intensity-to-event interpretation is not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_arm_setting_contacts.py",
+          "first_line": 1,
+          "last_line": 192,
+          "file_sha256": "7c678fcc024b6aa3dea97b5f9396af9fea65dfe740d6dbdc71ad8d3ee3f3de26"
+        }
+      ]
+    }
+  ]
+}

@@ -295,6 +295,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_calendar_carry_alias",
         "probe_coprime_signed_encounters",
     ),
+    "particle_observation_contrasts": (
+        "probe_polarized_z_electron",
+        "probe_solar_active_flux",
+        "probe_reactor_relative_clocks",
+        "probe_three_arm_setting_contacts",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

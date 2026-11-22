@@ -26,6 +26,12 @@ PACKS = {
         "periodic_calendar_contact_alias": "probe_calendar_carry_alias",
         "coprime_raw_signed_encounters": "probe_coprime_signed_encounters",
     }),
+    "primitive_particle_contrast_inventory.json": ("particle_observation_contrasts", {
+        "polarized_electron_current_assignment": "probe_polarized_z_electron",
+        "solar_active_flux_response_degeneracy": "probe_solar_active_flux",
+        "reactor_relative_clock_scale_wall": "probe_reactor_relative_clocks",
+        "three_arm_late_plate_contact_bound": "probe_three_arm_setting_contacts",
+    }),
 }
 
 
