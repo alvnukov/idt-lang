@@ -211,6 +211,18 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_serial_trial_witness",
         "probe_finite_scalar_channels",
     ),
+    "instrument_realization": (
+        "probe_alternating_catalyst_clock",
+        "probe_affine_contact_record",
+        "probe_full_affine_record",
+        "probe_affine_preparation_mixtures",
+        "probe_affine_operational_library",
+        "probe_affine_fourth_axis",
+        "probe_affine_unread_instruments",
+        "probe_affine_projective_reset",
+        "probe_midpoint_spectator_instrument",
+        "probe_midpoint_rule_origins",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

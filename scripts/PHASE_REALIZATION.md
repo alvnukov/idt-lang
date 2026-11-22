@@ -72,6 +72,8 @@ abelian and nonabelian examples attain it. The general bounds are written
 algebraic arguments with checked finite examples, not registered universal
 proofs. They concern a homogeneous gate, not a physical minimum.
 
+Follow-up: [what happens to the signal after its first click?](INSTRUMENT_REALIZATION.md)
+
 ## Independent controls
 
 * [Point contacts](probe_native_phase_contacts.py): on the separate 216-site
