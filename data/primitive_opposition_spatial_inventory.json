@@ -1,0 +1,532 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "three_opposition_sheet_clock_active_readout",
+      "role": "route",
+      "components": [
+        "three unlabeled binary oppositions, unordered parity sheets and six partial records",
+        "two-mark nonretracing equivariant clock with transparent unused-pair extension",
+        "active cancellation, quadratic ordered-pair tickets and restricted two-origin four-quadrature escape"
+      ],
+      "declared_status": "Conditional finite source construction and scoped readout walls. Passive sheet charts are not dynamics, ticket counts are not outcome selection, and the one-origin contrast quotient is not the full two-complex-port carrier.",
+      "missing_bridges": [
+        "justify the three-opposition stock, physical ordered controller marks and the transparent data/control coupling rather than select a chart passively",
+        "supply neutral deletion and its restricted dynamical congruence, sign-sensitive fanout/cancellation, addressing and physical ticket generation",
+        "select quadratic ordered address-pair counts over other positive tuple counts; axis totals alone lose sign-sensitive port interference",
+        "justify the two-origin restricted code and cross-copy coupling if four additive quadratures are required; do not declare the lost uniform raw axis vacuum",
+        "supply a single-outcome selection law, trial independence and detector actualization; unbounded neutral stock has unbounded serial cancellation cost"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_opposition_origin.py",
+          "first_line": 1,
+          "last_line": 10,
+          "file_sha256": "f78f8719478314e3801c154919f5c69f74e6ba5553e2e0a70335d36bbdb72814"
+        },
+        {
+          "path": "scripts/probe_opposition_clock_scatter.py",
+          "first_line": 1,
+          "last_line": 15,
+          "file_sha256": "4df12b3249774ff028ee72442d3b8cba66351f6d837c79698c844e3e705fbe5f"
+        },
+        {
+          "path": "scripts/probe_opposition_readout.py",
+          "first_line": 3,
+          "last_line": 40,
+          "file_sha256": "81736cea9f349e73f41b586b2fcd882814e61805692d7d9ac702767def3f21cf"
+        },
+        {
+          "path": "scripts/probe_opposition_readout.py",
+          "first_line": 44,
+          "last_line": 79,
+          "file_sha256": "81736cea9f349e73f41b586b2fcd882814e61805692d7d9ac702767def3f21cf"
+        },
+        {
+          "path": "scripts/probe_opposition_readout.py",
+          "first_line": 81,
+          "last_line": 90,
+          "file_sha256": "81736cea9f349e73f41b586b2fcd882814e61805692d7d9ac702767def3f21cf"
+        }
+      ]
+    },
+    {
+      "id": "matching_echo_natural_root_selector",
+      "role": "route",
+      "components": [
+        "ordered disjoint opposition matchings on six linear signed record coordinates",
+        "full-carrier same-device echo and equivariant intertwiner root classification",
+        "ideal darkness/nonzero return selector and positive branching stock implementations"
+      ],
+      "declared_status": "Conditional finite algebraic selector: supplied full-carrier echo, naturality and two ideal response conditions select a non-permutation root in the stated class. Physical devices and probability readout are not supplied.",
+      "missing_bridges": [
+        "realize persistent six-address linear signed coordinates and an ordered pair of distinct matchings; the original tetrahedron has only one natural complement",
+        "justify the same-device full-carrier echo equation, uniform-stock transparency and the ideal zero/nonzero response tests independently of the desired map",
+        "implement positive branching with its explicit amplitude gain and raw population growth; five descendants work only on odd contrasts and nine on all centered modes",
+        "supply clocking, norm/detector interpretation and source-to-device coupling; orthogonality in the classified algebra does not establish physical losslessness"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_matching_echo_selector.py",
+          "first_line": 1,
+          "last_line": 10,
+          "file_sha256": "297fa59a48750358cbaec661f396218fb886e15f70f76019d492e706807b4e80"
+        },
+        {
+          "path": "scripts/probe_matching_echo_selector.py",
+          "first_line": 126,
+          "last_line": 157,
+          "file_sha256": "297fa59a48750358cbaec661f396218fb886e15f70f76019d492e706807b4e80"
+        },
+        {
+          "path": "scripts/probe_matching_transport.py",
+          "first_line": 1,
+          "last_line": 8,
+          "file_sha256": "4645ddaed388a765ecd7a9e9a153e4c755802e3911168ecdf28c1e8573a4d907"
+        }
+      ]
+    },
+    {
+      "id": "cube_parity_capacity_readout_alternatives",
+      "role": "route",
+      "components": [
+        "complete preparation-independent record laws on eight cube inputs",
+        "retained erased-axis channels and POVM-dependent affine decoders",
+        "pair/triple parity visibility tradeoff and ball-plus-pair countercontrol"
+      ],
+      "declared_status": "Conditional readout-law alternatives with finite rational replays and stated analytical bounds, not a universal state-space reconstruction or a probability-law derivation.",
+      "missing_bridges": [
+        "justify the uniform cube preparations, setting-independent complete received record and all-output/no-discard contract",
+        "supply the hidden channel and requested-measurement decoder physically; matching Cartesian scores does not establish every oblique projector or universal effect response",
+        "independently justify supplied Bloch/projective/POVM comparison rules rather than treat their successful rational replay as derived quantum mechanics",
+        "measure or constrain pair and triple parity leakage; the algebraic threshold is not an observed total variation or a fitted empirical parameter"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_erased_bit_readouts.py",
+          "first_line": 1,
+          "last_line": 24,
+          "file_sha256": "98e52df9f24ce476ab44a5e7572a157d998f82e318db38aca3548bac02fc0bb2"
+        },
+        {
+          "path": "scripts/probe_parity_capacity.py",
+          "first_line": 3,
+          "last_line": 39,
+          "file_sha256": "9716be67b01fc8e954232ef9041ea1db59ae9e5a2f11d815985e5b7a69422ffe"
+        },
+        {
+          "path": "scripts/probe_parity_capacity.py",
+          "first_line": 41,
+          "last_line": 52,
+          "file_sha256": "9716be67b01fc8e954232ef9041ea1db59ae9e5a2f11d815985e5b7a69422ffe"
+        }
+      ]
+    },
+    {
+      "id": "six_packet_matter_exterior_carrier_cubic_rival",
+      "role": "route",
+      "components": [
+        "fixed-total six-packet 3+2 contrast split and hidden leg-count kernel",
+        "unsigned sixteen-label character wall versus supplied even exterior carrier",
+        "uniform-mode-vacuum and signed occupation resources with competing sixteen-state carriers",
+        "raw two-boson rescue and cubic-quadrupole rival to gauge-charge interpretation"
+      ],
+      "declared_status": "Finite exact representation controls preserve several non-equivalent carrier choices. A 3+2 split, sixteen-state count or vanishing supplied charge trace does not derive matter, Weyl chirality or gauge dynamics.",
+      "missing_bridges": [
+        "derive coherent addressable packet amplitudes, fermionic exchange/CAR and an exterior algebra rather than infer them from unsigned occupancy labels",
+        "select and physically prepare the delocalized uniform-vacuum carrier; an invariant rank-sixteen projector is not a selective preparation device",
+        "justify charge weights, continuous comparison group, left-Weyl fields and spacetime chirality before interpreting cubic traces as anomalies or particle content",
+        "exclude or distinguish the natural alternative carrier and cubic quadrupole realization using independent dynamics, not dimension or finite symmetry alone",
+        "supply lattice propagation/binding and detector interpretation; one-junction invariant sectors need not survive physical transport"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_six_packet_sectors.py",
+          "first_line": 1,
+          "last_line": 14,
+          "file_sha256": "c6cef70306e8cdea451b192a81776c9b708bc168c4dcac468c712a19aad29a72"
+        },
+        {
+          "path": "scripts/probe_six_packet_matter.py",
+          "first_line": 3,
+          "last_line": 39,
+          "file_sha256": "a7e7974a1cb508473350408a2bc8ed0fcbd6b4c48fad859fb7be37a12e52d05f"
+        },
+        {
+          "path": "scripts/probe_six_packet_matter.py",
+          "first_line": 41,
+          "last_line": 75,
+          "file_sha256": "a7e7974a1cb508473350408a2bc8ed0fcbd6b4c48fad859fb7be37a12e52d05f"
+        },
+        {
+          "path": "scripts/probe_packet_exchange_transport.py",
+          "first_line": 35,
+          "last_line": 67,
+          "file_sha256": "aee37a044c8f7d3295ae006b6c00ec657e786e9b361beb9a00e9ec1227847c37"
+        }
+      ]
+    },
+    {
+      "id": "heralded_rus_sector_phase_resource",
+      "role": "route",
+      "components": [
+        "native paired-rail controlled ancilla phase construction",
+        "heralded-only informative-failure control versus harmless-failure repeat-until-success tree",
+        "finite-tree Gaussian-dyadic obstruction and unbounded-support finite-mean escape"
+      ],
+      "declared_status": "Conditional exact instrument construction: the retained-record ideal RUS tree has finite mean but no bounded worst-case time. Its readout/reset law is supplied, not derived.",
+      "missing_bridges": [
+        "realize paired antisymmetric rails, product addresses, coherent charge-controlled wiring and initial encoded-data preparation",
+        "supply nondemolition ancilla-only grouped readout that does not reveal charge/rail, conditional reset and the stochastic instrument law",
+        "retain all failures and losses; informative failure cannot be repaired by blindly repeating the heralded-only control",
+        "establish robustness to leakage/noise and actual timing/latency; ideal finite mean is neither a bounded-time deterministic circuit nor an empirical iid guarantee",
+        "derive physical charge interpretation and single-outcome origin separately from exact gate arithmetic"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_heralded_sector_phase.py",
+          "first_line": 3,
+          "last_line": 39,
+          "file_sha256": "fd1a63540d526b7032f73387f1c76b6404fae738e934470e15edb30bb0aa39a4"
+        },
+        {
+          "path": "scripts/probe_heralded_sector_phase.py",
+          "first_line": 41,
+          "last_line": 54,
+          "file_sha256": "fd1a63540d526b7032f73387f1c76b6404fae738e934470e15edb30bb0aa39a4"
+        }
+      ]
+    },
+    {
+      "id": "neutral_two_state_referenced_phase_wall",
+      "role": "route",
+      "components": [
+        "six coherent packet species with synchronized controlled C3 and C2 permutations",
+        "two-state neutral controller and finite blind-character Clifford fibers",
+        "referenced weight-circle obstruction, partial closure and exact-return wall"
+      ],
+      "declared_status": "Conditional analytical phase wall with finite exact controls. The supplied two-level controller cannot uniformly approximate a generic referenced pure-weight phase; unreferenced relative phases and exact return have different scopes.",
+      "missing_bridges": [
+        "derive or supply the neutral tensor ancilla, coherent controlled translations, matched hardware and uniform reference; raw factor decompositions need not preserve the stated projectors",
+        "justify the complex norm/topology and physical meaning of the fixed reference before interpreting uniform operator error",
+        "keep dense nontrivial-character closure separate from the finite blind fibers and from exact return; no circuit-length bound follows just from closure",
+        "select the weight law or physical charge/gauge action independently; the controls overgenerate character responses and supply no probability readout"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_neutral_phase_controller.py",
+          "first_line": 3,
+          "last_line": 31,
+          "file_sha256": "7ef5812522b0f9c64f1ba8e2f78679e6a3080546f42d7b301723b4b572cf3606"
+        },
+        {
+          "path": "scripts/probe_neutral_phase_controller.py",
+          "first_line": 33,
+          "last_line": 69,
+          "file_sha256": "7ef5812522b0f9c64f1ba8e2f78679e6a3080546f42d7b301723b4b572cf3606"
+        },
+        {
+          "path": "scripts/probe_neutral_phase_controller.py",
+          "first_line": 71,
+          "last_line": 78,
+          "file_sha256": "7ef5812522b0f9c64f1ba8e2f78679e6a3080546f42d7b301723b4b572cf3606"
+        }
+      ]
+    },
+    {
+      "id": "irrational_catalytic_phase_finite_seed",
+      "role": "route",
+      "components": [
+        "native controlled irrational eigenphase kickback with a supplied exact eigenray",
+        "rational-projective exact-preparation obstruction",
+        "finite heralded approximate catalyst with call-count-uniform error versus fresh-reset loss"
+      ],
+      "declared_status": "Conditional catalytic construction and preparation wall: exact irrational rays are extra resources, while the displayed finite seed yields approximate, generally correlated reuse under a restricted call class. No exact reusable catalyst is inferred.",
+      "missing_bridges": [
+        "supply coherent joint addressing, identity bypass, complex amplitudes, squared-norm readout and same-charge encoding",
+        "prepare the irrational catalytic eigenray independently for exact kickback; finite rational-projective seeds and herald branches do not produce that ray exactly",
+        "retain and account for the initial finite herald and its failures; conditional fringe rates differ from per-injection rates",
+        "preserve the restricted controlled-power/data-only call class for the uniform error bound; noise, arbitrary ancilla operations and later herald conditioning are outside it",
+        "derive any gauge/charge dynamics, source coupling or physical reuse mechanism separately from a Wilson-loop-style comparison"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_catalytic_sector_phase.py",
+          "first_line": 3,
+          "last_line": 34,
+          "file_sha256": "931f253339f775e0696da59ced7bf5057d35e3b5d3cf6575f28ae0b99ede5fb5"
+        },
+        {
+          "path": "scripts/probe_catalytic_sector_phase.py",
+          "first_line": 36,
+          "last_line": 70,
+          "file_sha256": "931f253339f775e0696da59ced7bf5057d35e3b5d3cf6575f28ae0b99ede5fb5"
+        }
+      ]
+    },
+    {
+      "id": "neutral_three_state_approximate_phase_controller",
+      "role": "route",
+      "components": [
+        "neutral three-level tensor controller with common native operations and conditional data translations",
+        "independent character-block closure and finite compiled approximation schedule",
+        "referenced two-level countercontrol and narrower exact pure-weight return wall"
+      ],
+      "declared_status": "Conditional deterministic approximate escape using a stronger supplied controller contract and a finite compiled error certificate. Approximate return is not exact catalysis, and neither closure nor this certificate derives physical charge or QM.",
+      "missing_bridges": [
+        "supply neutral tensor structure, initialized controller, coherent joint configuration addressing, paired rails, synchronized copies and a common phase/clock reference",
+        "justify the complex norm and arbitrarily long finite native words; generic density arguments have no provided word-length bound",
+        "retain the actual finite compilation and product-error schedule for the displayed target; do not replace them by a fixed-size density claim from a scalar Lean theorem",
+        "select the programmed weight circle and charge law independently; available controls also implement off-circle central and noncentral operations",
+        "supply detector actualization, probability and physical controller preparation; the exact-return wall depends on its coordinate-seed/resource contract"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_state_phase_controller.py",
+          "first_line": 3,
+          "last_line": 41,
+          "file_sha256": "5e47c0df2f79d51c38c23afee31f9bed3e0515c06df6ff012af21ba5cc350d7f"
+        },
+        {
+          "path": "scripts/probe_three_state_phase_controller.py",
+          "first_line": 43,
+          "last_line": 67,
+          "file_sha256": "5e47c0df2f79d51c38c23afee31f9bed3e0515c06df6ff012af21ba5cc350d7f"
+        },
+        {
+          "path": "scripts/probe_three_state_phase_controller.py",
+          "first_line": 69,
+          "last_line": 95,
+          "file_sha256": "5e47c0df2f79d51c38c23afee31f9bed3e0515c06df6ff012af21ba5cc350d7f"
+        }
+      ]
+    },
+    {
+      "id": "trusted_three_axis_independent_source_parity",
+      "role": "route",
+      "components": [
+        "three calibrated matched-axis endpoint reflections and complete source-parity output table",
+        "setting-independent middle instrument and real-separable unconditional outer state",
+        "exact/robust calibration bounds with hidden-block and setting-dependent cheats"
+      ],
+      "declared_status": "Conditional calibrated finite source-parity benchmark, not device-independent separation, measured significance or a probability-law derivation. Analytical sharpenings and finite saturation controls have different scopes.",
+      "missing_bridges": [
+        "establish independent sources or the required real-separable unconditional outer state, complete outputs and one setting-independent middle instrument",
+        "calibrate anticommutation or skew triple-product bounds over the entire occupied hidden support; a few rays and phase-blind return do not certify an operator norm",
+        "supply trusted composition, phase-sensitive references, paired-rail encoding and squared-amplitude detector law",
+        "separate fixed-network score controls from empirical shot data and finite controls from universal Lean/SDP certificates; do not claim optimality of the sharpened network bound"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_axis_source_parity.py",
+          "first_line": 3,
+          "last_line": 32,
+          "file_sha256": "6a95433e9438e1c48ac0ddbdd1f694185476aa65ef91e8cb3efac91104fc2dc3"
+        },
+        {
+          "path": "scripts/probe_three_axis_source_parity.py",
+          "first_line": 34,
+          "last_line": 62,
+          "file_sha256": "6a95433e9438e1c48ac0ddbdd1f694185476aa65ef91e8cb3efac91104fc2dc3"
+        }
+      ]
+    },
+    {
+      "id": "native_multiphoton_hidden_exchange_cycles",
+      "role": "route",
+      "components": [
+        "native three-port words resolving Bargmann triad phase at fixed pair HOM magnitudes",
+        "independent occupation-polynomial oracle and positive pair-only dephasing control",
+        "higher-photon source cycles invisible to every proper source subset"
+      ],
+      "declared_status": "Conditional exact benchmark of supplied bosonic exchange and occupation readout. Hidden-cycle distinguishability is not a statistics derivation, new Sorkin order or reconstruction of a published apparatus.",
+      "missing_bridges": [
+        "supply independent single-photon sources, internal coherent states, timing/overlap calibration and labeled inputs",
+        "derive or independently justify the bosonic Fock/exchange lift, squared-norm occupation rule, number resolution and internally unresolved complete detection",
+        "realize native passive words and blank ports with losses retained; enumerated short-word minimality is not global apparatus minimality",
+        "distinguish fixed pair overlap magnitudes from a fixed full Gram matrix and fix an oriented apparatus convention",
+        "compare an actual experiment through a separately reviewed map; ideal tritter formulas and higher-cycle controls are not a fit or raw-data replay"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_triad_phase.py",
+          "first_line": 3,
+          "last_line": 38,
+          "file_sha256": "f286b6395b200b6a2a623bf768b5d3a41286c56ba5eaf9a37058314e75e1db27"
+        },
+        {
+          "path": "scripts/probe_packet_triad_phase.py",
+          "first_line": 40,
+          "last_line": 67,
+          "file_sha256": "f286b6395b200b6a2a623bf768b5d3a41286c56ba5eaf9a37058314e75e1db27"
+        },
+        {
+          "path": "scripts/probe_packet_exchange_cycles.py",
+          "first_line": 1,
+          "last_line": 8,
+          "file_sha256": "83d28f6055f6fe7ecfc3eb078525bce9c4da0c121f5f29b70493458ce4f7126b"
+        }
+      ]
+    },
+    {
+      "id": "collision_spatial_modes_free_pair_light",
+      "role": "route",
+      "components": [
+        "untwisted diamond collision scalar cone with transverse flat modes",
+        "cyclically routed corner Weyl-like comparisons on supplied spatial wiring",
+        "free pair of Weyl deviations versus transverse massless single-particle contract"
+      ],
+      "declared_status": "Conditional finite spatial-mode and free-pair audits. An isotropic leading cone, spin-one symbol or paired spinors do not establish a photon, polarization dynamics or emergent spacetime.",
+      "missing_bridges": [
+        "supply diamond geometry, distance and tick calibration, synchronized collision/wiring, signed deviation preparation and detection",
+        "select and realize cyclic routing where used; finite real phase corners do not classify the whole Brillouin zone or its topology",
+        "supply an operational quotient/preparation restriction for observable flat loops; vertex-sum darkness alone is not gauge redundancy",
+        "derive binding, transverse physical state constraints, statistics and local single absorption for any proposed light pair; free two-body kinematics is not a photon contract",
+        "justify metric isotropy beyond leading order and distinguish clock/sublattice aliasing from two degenerate propagating polarizations"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_diamond_collision_walk.py",
+          "first_line": 3,
+          "last_line": 32,
+          "file_sha256": "6e89f920a3393d748bd391665588928358809f5fbb347d76c4f44feb8f2b8e10"
+        },
+        {
+          "path": "scripts/probe_diamond_collision_walk.py",
+          "first_line": 34,
+          "last_line": 72,
+          "file_sha256": "6e89f920a3393d748bd391665588928358809f5fbb347d76c4f44feb8f2b8e10"
+        },
+        {
+          "path": "scripts/probe_routed_diamond_cones.py",
+          "first_line": 1,
+          "last_line": 13,
+          "file_sha256": "4abb706d06aae31ced4276cbeb468e76cecf688b60278efcb106d912c1808363"
+        },
+        {
+          "path": "scripts/probe_collision_light_pair.py",
+          "first_line": 1,
+          "last_line": 9,
+          "file_sha256": "39ed7b583e507ca2f66eac88f95bb394467ad48d5a1cb87b9ac283f8b1226349"
+        },
+        {
+          "path": "scripts/probe_collision_light_pair.py",
+          "first_line": 38,
+          "last_line": 57,
+          "file_sha256": "39ed7b583e507ca2f66eac88f95bb394467ad48d5a1cb87b9ac283f8b1226349"
+        }
+      ]
+    },
+    {
+      "id": "oriented_cell_reciprocal_wave_primitive",
+      "role": "route",
+      "components": [
+        "oriented edge/face cochains and exact incidence conservation",
+        "stable reciprocal staggered shears with two transverse classical modes",
+        "positive modified invariant, strict CFL bound and growing exact dyadic resolution"
+      ],
+      "declared_status": "Conditional classical wave candidate on a changed primitive carrier. Exact finite algebra preserves Gauss values but does not select the Hodge metric, reciprocal dynamics, Maxwell ontology or quantum readout.",
+      "missing_bridges": [
+        "supply oriented cell topology, real signed cochains, clock, positive Hodge maps and the reciprocal local shear rule rather than derive them from incidence",
+        "select isotropic constitutive weights, stable reciprocal sign and a strictly admissible time step; topology also admits diffusion, identity and anisotropic waves",
+        "provide exact growing resolution, a finite-horizon scale or another encoding; bounded amplitudes do not give one fixed exact integer-stock lattice",
+        "compile/realize the nonorthogonal shears or supply them as a new primitive; dyadic entries alone do not yield existing lossless junction words",
+        "supply sources, physical speed/constitutive law, detector actualization and any quantum interpretation; source-free constraints differ from arbitrary Gauss-value conservation"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_oriented_cell_wave.py",
+          "first_line": 3,
+          "last_line": 34,
+          "file_sha256": "dd1caf03b06ae2b6ef0ee51aa4481c4f2d7c6be3ee3fcf028726d31db267351f"
+        },
+        {
+          "path": "scripts/probe_oriented_cell_wave.py",
+          "first_line": 36,
+          "last_line": 57,
+          "file_sha256": "dd1caf03b06ae2b6ef0ee51aa4481c4f2d7c6be3ee3fcf028726d31db267351f"
+        },
+        {
+          "path": "scripts/probe_oriented_cell_wave.py",
+          "first_line": 59,
+          "last_line": 76,
+          "file_sha256": "dd1caf03b06ae2b6ef0ee51aa4481c4f2d7c6be3ee3fcf028726d31db267351f"
+        }
+      ]
+    },
+    {
+      "id": "weak_gravity_collision_clock_rod_bridge",
+      "role": "route",
+      "components": [
+        "static isotropic lapse/rod metric comparison and optical index",
+        "clock-only and conformal countercontrols versus inverse-lapse rod response",
+        "universal free-fall action and independent source/stock obligations"
+      ],
+      "declared_status": "Conditional weak-field bridge wall, not gravity derived from collision ticks. Redshift, leading universal free fall and local cone isotropy do not select the spatial rod response or PPN gamma.",
+      "missing_bridges": [
+        "derive a source-to-clock field law and physical mass coupling rather than supply a static potential",
+        "justify a universal metric/matter bridge, clock comparison, rod calibration and geometric-optics readout",
+        "derive the independent rod response A(N), including any gamma=1 selector; a common local cone and proper light speed constrain only a ratio",
+        "supply the universal geodesic action, source dynamics and invariant density/transport law; coordinate-cell stock conservation is not established",
+        "treat the retained primary abstract comparator as historical source evidence, not raw-data analysis, a new p-value, a G calibration or GR closure"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_collision_clock_gravity.py",
+          "first_line": 3,
+          "last_line": 26,
+          "file_sha256": "f09f81656e1fc66c61be35ab54ec065e728bb73c8fbda9794c7050b19c09b79f"
+        },
+        {
+          "path": "scripts/probe_collision_clock_gravity.py",
+          "first_line": 28,
+          "last_line": 51,
+          "file_sha256": "f09f81656e1fc66c61be35ab54ec065e728bb73c8fbda9794c7050b19c09b79f"
+        },
+        {
+          "path": "scripts/probe_collision_clock_gravity.py",
+          "first_line": 53,
+          "last_line": 69,
+          "file_sha256": "f09f81656e1fc66c61be35ab54ec065e728bb73c8fbda9794c7050b19c09b79f"
+        }
+      ]
+    },
+    {
+      "id": "opposition_clock_path_memory_spin_lifts",
+      "role": "route",
+      "components": [
+        "24 literal-stock rotations versus separately supplied one-bit frame-path extensions",
+        "four finite cocycle candidates and quarter-tick/half-turn discriminators",
+        "48-state frame memory and alternative 16-state carrier with free central sign"
+      ],
+      "declared_status": "Conditional exact finite path-lift controls. Four quarter ticks can reverse a supplied central sign, but literal stocks do not observe it and the finite extension is not a physical spinor or spin-statistics derivation.",
+      "missing_bridges": [
+        "supply frame-dependent path memory and a cocycle law; literal permutations, an independent fixed flip bit and a two-sheet six-literal cover do not force the sign",
+        "select the quaternion versus parity-twisted lift with an independently calibrated phase/determinant reference; four-tick reversal alone leaves an ambiguity",
+        "couple the central sign to coherently recombined paths and a phase-sensitive readout; literal stocks and an isolated global ray sign are blind",
+        "derive continuous spatial rotations, their topological lift and physical neutron/spin dynamics separately from finite signed-axis relabelings",
+        "treat cited interferometry abstracts/metadata as historical context, not raw-event replay, experimental confirmation or a derivation of fermionic exchange"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_opposition_spin_lift.py",
+          "first_line": 3,
+          "last_line": 30,
+          "file_sha256": "b70da41586e9c3c7c7d8c6ca613c217c86de390b3d42689ae263749cdac9b5d5"
+        },
+        {
+          "path": "scripts/probe_opposition_spin_lift.py",
+          "first_line": 32,
+          "last_line": 56,
+          "file_sha256": "b70da41586e9c3c7c7d8c6ca613c217c86de390b3d42689ae263749cdac9b5d5"
+        },
+        {
+          "path": "scripts/probe_opposition_spin_lift.py",
+          "first_line": 58,
+          "last_line": 74,
+          "file_sha256": "b70da41586e9c3c7c7d8c6ca613c217c86de390b3d42689ae263749cdac9b5d5"
+        }
+      ]
+    }
+  ]
+}
