@@ -19,6 +19,7 @@ SOURCES = {
     "connected_contact_tomography_scope": "scripts/probe_connected_contact_tomography.py",
     "hidden_orthogonal_exchange_label_countermodel": "scripts/probe_hidden_exchange_colors.py",
     "partial_hidden_overlap_exchange_visibility": "scripts/probe_partial_hidden_exchange.py",
+    "rational_collective_exchange_analyzer": "scripts/probe_native_exchange_optimum.py",
 }
 
 

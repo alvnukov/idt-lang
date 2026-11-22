@@ -278,6 +278,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_connected_contact_tomography",
         "probe_hidden_exchange_colors",
         "probe_partial_hidden_exchange",
+        "probe_native_exchange_optimum",
     ),
     "matching_transport": (
         "probe_matching_transport",

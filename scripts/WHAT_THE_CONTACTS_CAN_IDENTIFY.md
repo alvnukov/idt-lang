@@ -117,6 +117,17 @@ visible measurements raises the optimum to 1/3. Achievability of that optimum
 with the available apparatus is not presumed.
 [Partial-overlap probe](probe_partial_hidden_exchange.py).
 
+A [collective integer-copy analyzer](probe_native_exchange_optimum.py) then
+closes that particular gap: combine the three visible-letter exchanges
+with weights `(2,2,-1)` and interfere the result against three unchanged
+copies. All 64 raw input addresses have gain 36. On the two specified lifted
+preparations its plus fractions are **2/3 and 1/3**. On a separate bare
+router-control input all 2304 descendants are accounted for; this is not
+2304 independent trials on the lifted states. A rational family approaches
+the optimal contrast for other pure-tag overlaps; an irrational optimum
+is not exactly attained by a finite member. The collective copy schedule
+and its coherence are supplied, not spontaneous graph dynamics.
+
 For an actual comparison, [Tschernig et al.](https://www.nature.com/articles/s41566-021-00818-7)
 interfered exchanged and reference photon amplitudes and reported an
 exchange phase of −0.04 ± 0.07 rad (95% confidence interval; see their
