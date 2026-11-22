@@ -104,6 +104,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_unread_row_duplication",
         "probe_finite_detector_identity",
     ),
+    "family_mixing": (
+        "probe_ckm_raw_family_wall",
+        "probe_ckm_blank_ports",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
