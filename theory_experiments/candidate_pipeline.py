@@ -48,6 +48,11 @@ from theory_experiments.native_readout_search import (
     evaluate_native_readout_search,
     parse_native_readout_search,
 )
+from theory_experiments.opposition_flag import (
+    OppositionFlag,
+    evaluate_opposition_flag,
+    parse_opposition_flag,
+)
 from theory_experiments.physics_screen import (
     ChiralSpectrum,
     PhysicsCandidate,
@@ -89,7 +94,7 @@ from theory_experiments.unsigned_pair_packet import (
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
-    | UnsignedPairPacket
+    | UnsignedPairPacket | OppositionFlag
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -102,6 +107,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
     "theory_experiments/universe_bench.py",
     "theory_experiments/unsigned_pair_packet.py",
+    "theory_experiments/opposition_flag.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -138,6 +144,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "opposition_flag":
+        return parse_opposition_flag(row)
     if row.get("family") == "unsigned_pair_packet":
         return parse_unsigned_pair_packet(row)
     if row.get("family") == "native_readout_search":
@@ -190,7 +198,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, UnsignedPairPacket):
+    if isinstance(candidate, OppositionFlag):
+        checks, details = evaluate_opposition_flag(candidate, limits)
+    elif isinstance(candidate, UnsignedPairPacket):
         checks, details = evaluate_unsigned_pair_packet(candidate, limits)
     elif isinstance(candidate, NativeReadoutSearch):
         checks, details = evaluate_native_readout_search(candidate, limits)

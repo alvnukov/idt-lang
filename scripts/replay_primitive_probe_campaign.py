@@ -112,6 +112,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_balanced_phase_composition",
         "probe_two_source_phase_network",
         "probe_phase_network_game",
+        "probe_three_axis_source_parity",
     ),
     "program_memory": (
         "probe_native_markov_spectrum",
@@ -134,6 +135,36 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     ),
     "packet_observability": (
         "probe_packet_echo_observability",
+    ),
+    "collision_space": (
+        "probe_diamond_collision_walk",
+        "probe_routed_diamond_cones",
+        "probe_collision_cone_stability",
+        "probe_periodic_collision_metric",
+        "probe_walk_complex_structure",
+        "probe_collision_light_pair",
+        "probe_oriented_cell_wave",
+    ),
+    "packet_sectors": (
+        "probe_six_packet_sectors",
+        "probe_packet_hypercharge_reference",
+        "probe_packet_exchange_transport",
+        "probe_six_packet_matter",
+        "probe_packet_chiral_selection",
+    ),
+    "packet_phase_controls": (
+        "probe_packet_phase_program",
+        "probe_neutral_phase_controller",
+        "probe_three_state_phase_controller",
+        "probe_packet_eigenclock",
+    ),
+    "multiple_photon_exchange": (
+        "probe_packet_triad_phase",
+        "probe_packet_exchange_cycles",
+    ),
+    "opposition_origin": (
+        "probe_three_opposition_origin",
+        "probe_opposition_clock_scatter",
     ),
 }
 DEFAULT_BUNDLE = "fast"
