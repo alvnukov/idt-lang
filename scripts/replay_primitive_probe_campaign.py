@@ -234,6 +234,15 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_chiral_pencil_signs",
         "probe_anonymous_signal_rulers",
     ),
+    "primitive_contacts_and_comparators": (
+        "probe_autonomous_midpoint_repair",
+        "probe_triangle_exchange_source",
+        "probe_heralded_triangle_factory",
+        "probe_signed_phase_join",
+        "probe_independent_phase_comparator",
+        "probe_weighted_chiral_pencil",
+        "probe_local_angular_rulers",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
