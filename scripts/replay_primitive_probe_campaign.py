@@ -113,6 +113,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_two_source_phase_network",
         "probe_phase_network_game",
     ),
+    "program_memory": (
+        "probe_native_markov_spectrum",
+        "probe_autonomous_mixer_program",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

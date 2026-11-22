@@ -95,6 +95,11 @@ ports, the addition of one initially blank port, and arbitrary complete
 multi-output tests. The last admits a conditional density-matrix law and a
 finite five-rate check; none of the three supplies an individual click.
 
+[Autonomous control and finite memory](AUTONOMOUS_PROGRAM_AND_MEMORY.md)
+distinguishes an additive pilot from a real programmable interaction, and
+tests homogeneous finite-state responses at successively longer circuit
+depths. A finite list of depths never rules out arbitrarily large clocks.
+
 One cheap **proposed comparison**, not a performed experiment: inject a
 fixed state, repeat the same two-mixer word t times, and read one port.
 At t=2 the ideal model gives 1/8, separated from every deterministic
