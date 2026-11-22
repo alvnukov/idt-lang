@@ -68,3 +68,53 @@ map already has different second derivatives. It is the linear mode
 splitting that is isotropic, not the full dispersion. The scan does not
 count all momenta, derive a common cone for independent matter sectors,
 select a physical speed unit, or derive spacetime symmetry.
+
+### Can a cone become a complex particle, or two cones a photon?
+
+The [full-walk check](probe_walk_complex_structure.py) establishes a
+stronger limitation than a test of constant matrices. A commuting complex
+structure on the four real components cannot be simultaneously continuous
+in momentum, compatible with real-space reality, and defined for the
+whole walk. At zero momentum the return is the identity, and its first
+x derivative, with the common factor i removed, has a one-dimensional
+real kernel. Any putative continuous structure must preserve that line
+there, but no real map on a line squares to −1. A local spectral definition
+near the selected cone still works. Doubling the real field or using a
+discontinuous, nonlocal Fourier prescription also evades the obstruction.
+This result is specific to the fixed six-tick walk, not a no-go for QM.
+
+The [two-body probe](probe_collision_light_pair.py) tests a different
+interpretation: a photon made of two *free*, positive-branch Weyl modes
+with the same leading speed c. For momenta K/2 ± r the squared mass
+proxy (E/c)²−|K|² is at least 4|r_perp|². This is the triangle inequality
+in the longitudinal/transverse plane, not a fitted particle mass. The
+lightlike set at fixed nonzero K has zero three-dimensional relative
+momentum measure. A normalizable free relative wave packet cannot live
+entirely on it. Collinear ideal momenta, an interaction, or a different
+collective field are distinct possibilities. At equal momenta the spin-one
+triplet has positive, zero, and negative branches, not two independent
+positive-frequency helicities. For identical fermions the aligned
+same-mode pair is forbidden. [Bisio et al.](https://arxiv.org/abs/1407.6928)
+study a different, mode-averaged cellular-automaton construction with
+an approximate low-density bosonic regime; this check does not refute it.
+
+### A positive alternative for transverse propagation
+
+An [oriented-cell candidate](probe_oriented_cell_wave.py) starts from faces
+with oriented boundary edges, the dual incidence map, and two successive
+real additive updates. The boundary-of-a-boundary identity preserves both
+divergences. With positive Euclidean weights and step 1/2 on a supplied
+cubic lattice, two transverse modes propagate; longitudinal modes remain
+static. No complex scalar is needed in the update. The discrete modified
+energy is positive, but the update does **not** preserve the ordinary
+Euclidean squared norm; it is not automatically compilable from the
+previous lossless four-port mixer. Unit integer steps are unstable at high
+momentum, while one *stable* mode at step 1/2 requires denominator 4^t for
+exact arithmetic. Neither boundedness nor integer storage is free.
+
+Incidence alone also permits a static field and diffusion. The reciprocal
+shears, Hodge identification (how edge and dual-face measurements are
+related), coefficients, and clock are real extra assumptions. An anisotropic
+positive choice splits the two speeds without spoiling the incidence
+identities. This is a cheaper transverse-wave **candidate**, not photon
+statistics, an elementary absorption event, or Maxwell theory from nothing.

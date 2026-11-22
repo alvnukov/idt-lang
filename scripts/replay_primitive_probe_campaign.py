@@ -141,6 +141,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_routed_diamond_cones",
         "probe_collision_cone_stability",
         "probe_periodic_collision_metric",
+        "probe_walk_complex_structure",
+        "probe_collision_light_pair",
+        "probe_oriented_cell_wave",
     ),
     "packet_sectors": (
         "probe_six_packet_sectors",
