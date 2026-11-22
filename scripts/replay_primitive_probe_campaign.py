@@ -308,6 +308,14 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_cell_exchange_intervention",
         "probe_photonic_exchange_reference",
     ),
+    "mobile_load_operations": (
+        "probe_indistinguishable_mobile_load",
+        "probe_serial_return_bus",
+        "probe_mobile_cell_complement_mixer",
+        "probe_packet_marginal_automorphisms",
+        "probe_static_cell_mixer_search",
+        "probe_static_cell_elapsed_readout",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
