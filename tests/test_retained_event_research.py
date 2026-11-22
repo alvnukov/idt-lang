@@ -64,6 +64,16 @@ PACKS = {
         "unit_only_mixed_load_intervention": "probe_calibrated_unit_pile_comparator",
         "anonymous_collisions_vs_tritter": "probe_anonymous_tritter_control",
     }),
+    "primitive_carrier_mode_inventory.json": ("carrier_mode_conservation", {
+        "flat_two_state_port_germ": "probe_two_turn_germ_ballots",
+        "lowest_binary_association_readout": "probe_minimal_binary_association",
+        "binary_frustration_ground_contrast": "probe_binary_frustration_carrier",
+        "rooted_parity_walk_mode": "probe_rooted_parity_walk",
+        "parity_mode_contact_countermodels": "probe_carrier_mode_countermodels",
+        "positive_spring_carrier_resonance": "probe_passive_carrier_resonance",
+        "resonant_energy_vs_single_detection": "probe_resonant_energy_and_single_click",
+        "native_hop_charge_conservation_wall": "probe_carrier_charge_conservation",
+    }),
 }
 
 

@@ -1,0 +1,157 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "flat_two_state_port_germ",
+      "role": "primitive_base",
+      "components": [
+        "Transport one distinguished port by opposite sides of squares, using a reversible bit update conditioned only on moving along the germ. A nontrivial path-independent update survives on the folded graph. Ten concordance/discordance ballots reproduce the six-level field without charge weights."
+      ],
+      "declared_status": "Conditional local transport and finite comparative readout; an individual click or raw hop does not expose a conserved scalar.",
+      "missing_bridges": [
+        "Realize reunion detection, the carried port, ordered endpoints, reset and an accessible tally without a preinstalled scientific dictionary."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_turn_germ_ballots.py",
+          "first_line": 1,
+          "last_line": 154,
+          "file_sha256": "ee33a10871d4363bdb319eba8ce81f61eed2e516ebbc238efa6642ceb48792d6"
+        }
+      ]
+    },
+    {
+      "id": "lowest_binary_association_readout",
+      "role": "route",
+      "components": [
+        "For binary count observations and at most two-comparison polynomial tallies, universal vanishing on factorized counts leaves only ad-bc up to scale. On the five port flags its set-intersection form entails disjoint additivity, antipodal reversal and the primitive two/three increments."
+      ],
+      "declared_status": "Conditional selection principle for a marginal-null readout, not an empirical detector law; higher-order alternatives retained.",
+      "missing_bridges": [
+        "Explain why this comparison order, orientation and null criterion describe a physical measurement."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_minimal_binary_association.py",
+          "first_line": 1,
+          "last_line": 128,
+          "file_sha256": "4733e2fc7b6c9c65ca2416def8dde3c6bab17bdb36e9ef58ecaecdc7bfb1a1e3"
+        }
+      ]
+    },
+    {
+      "id": "binary_frustration_ground_contrast",
+      "role": "route",
+      "components": [
+        "Enumerate all sixteen-vertex binary sign assignments for the equal-edge penalty. Ten ground states give the same contrast through a two-point covariance. Thermal ensembles, biased preparation and local descent can differ."
+      ],
+      "declared_status": "An explicit finite classical ensemble, not an independent confirmation or physical gauge charge.",
+      "missing_bridges": [
+        "Ground preparation, symmetry-invariant ensemble, local timing and correlated readings are substantive conditions."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_frustration_carrier.py",
+          "first_line": 1,
+          "last_line": 339,
+          "file_sha256": "b88c5ec6e84cc2d4077938e4b7f6827313f6a73f97f71b4f01004d854aaef54e"
+        }
+      ]
+    },
+    {
+      "id": "rooted_parity_walk_mode",
+      "role": "route",
+      "components": [
+        "A root-absorbed one-wait signed walk has a four-dimensional leading mode; a nonneighbor point input selects the prior field. Explicit all-attempt parity counts and a polynomial filter compare all 160 frames."
+      ],
+      "declared_status": "Signed response with attenuating unconditional signals; no Born rule or particle charge.",
+      "missing_bridges": [
+        "Bind repeatable Markov choices, signed comparisons and nonclick accounting to a physically accessible apparatus."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_rooted_parity_walk.py",
+          "first_line": 1,
+          "last_line": 180,
+          "file_sha256": "b0d9b40029c8d042ade2c8c640457850bd22555924df1dd4006b7e78b9fb4f98"
+        }
+      ]
+    },
+    {
+      "id": "parity_mode_contact_countermodels",
+      "role": "route",
+      "components": [
+        "Independent spectral and positive-count controls compare raw wait weights, fixed and unpinned maps, local first-absorption port probabilities, unresolved marks, and calibrated short path mixtures."
+      ],
+      "declared_status": "Only selected readouts agree; positive click probabilities and signed fields are different observables.",
+      "missing_bridges": [
+        "Establish native access to individual root ports, an aligned parity reference and the calibrated measurement."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_carrier_mode_countermodels.py",
+          "first_line": 1,
+          "last_line": 360,
+          "file_sha256": "5287c9166c1afb5292529c1ba093019dd8438ac653cbaee5770bafc6b1dad4c7"
+        }
+      ]
+    },
+    {
+      "id": "positive_spring_carrier_resonance",
+      "role": "route",
+      "components": [
+        "Equal positive springs and masses with one pin and one harmonic drive show the same signed relative displacement at the top resonance; detuning, static force, changed springs and unfiltered pulse are controls."
+      ],
+      "declared_status": "Classical normal-mode realization on assigned mechanics; no quantization or particle spectrum.",
+      "missing_bridges": [
+        "Explain the passive mechanics, driving, measurement and protected parameters independently."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_passive_carrier_resonance.py",
+          "first_line": 1,
+          "last_line": 251,
+          "file_sha256": "466950ce7b43078feff52e80d2c5fde19cd021a172961acef5c64d4961273a17"
+        }
+      ]
+    },
+    {
+      "id": "resonant_energy_vs_single_detection",
+      "role": "route",
+      "components": [
+        "Local damping energy fractions follow the square of a selected real mode. Whole single-event allocation need not follow: compare covariance bounds for monotone independent detectors, different optical inputs, shared readiness and lost nonclicks."
+      ],
+      "declared_status": "Published optical anticoincidence experiments constrain specific event mechanisms; they do not test the carrier or derive an event law from energy fractions.",
+      "missing_bridges": [
+        "Bind the source, independent detector channels, preparation settings and all-attempt denominators to a native protocol."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_resonant_energy_and_single_click.py",
+          "first_line": 1,
+          "last_line": 242,
+          "file_sha256": "c3438cb14bcc86fc86f2a71a20ebf6adea84f92217bfa7a197096c14f5c96ced"
+        }
+      ]
+    },
+    {
+      "id": "native_hop_charge_conservation_wall",
+      "role": "route",
+      "components": [
+        "Compare the emergent signed response as a scalar site label with actual one- and two-step carrier moves. Thirty-four of forty edges change it, whereas its rank-one mode operator is a different conserved observable. A compensating six-level store records only an endpoint potential."
+      ],
+      "declared_status": "Finite conservation wall and conditional neutral-path taxonomy, not a gauge action or derivation of the Standard Model.",
+      "missing_bridges": [
+        "Supply a dynamical origin for charge conservation and interactions without merely restricting observed endpoints."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_carrier_charge_conservation.py",
+          "first_line": 1,
+          "last_line": 148,
+          "file_sha256": "baab3e9af123eb3faa16d26df7dfb9e52273ded2e06b500d32682bd449894d0e"
+        }
+      ]
+    }
+  ]
+}
