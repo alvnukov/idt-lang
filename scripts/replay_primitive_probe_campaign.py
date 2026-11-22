@@ -224,6 +224,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_midpoint_rule_origins",
     ),
     "operational_data": ("probe_mazurek_operational_bridge",),
+    "neutral_width_data": ("probe_z_width_data_replay",),
     "primitive_origins_and_composites": (
         "probe_anonymous_midpoint_factory",
         "probe_affine_reset_escape",

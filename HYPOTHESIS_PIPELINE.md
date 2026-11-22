@@ -33,6 +33,16 @@ complete local artifact, including exact witness inputs, imports and gaps.
 a counterexample; 1 = at least one counterexample; 2 = invalid input/operational
 error; 3 = incomplete or unsupported. Code 0 never means physical truth.
 
+## Compare a supplied light neutral current with invisible Z-width summaries
+
+`neutral_current_width` takes 1–12 labeled species and an exact Hermitian
+matrix of [real, imaginary] fraction-string pairs. The mass regime and
+current bridge must be explicit. See the [width data, controls and replay](scripts/Z_INVISIBLE_WIDTH.md).
+The candidate's matrix, not the historical central value or a family count,
+sets the prediction. A completed numerical comparison is **not** empirical
+acceptance. Nothing in this family automatically binds a primitive or an
+archived sixteen-state carrier to these data.
+
 ## Check raw five-slot pencil weights without fitting a reference pattern
 
 `chiral_pencil` accepts 40 real rational weights as exact strings. In

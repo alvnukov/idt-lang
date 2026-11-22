@@ -1,0 +1,58 @@
+{
+  "schema": "z_invisible_width_v1",
+  "sources": {
+    "lep_original": {
+      "title": "Precision Electroweak Measurements on the Z Resonance",
+      "url": "https://arxiv.org/abs/hep-ex/0509008",
+      "locator": "Sections 7.2.1 (partial Z widths, lepton universality) and 7.2.2 (invisible width and number of light neutrino species)."
+    },
+    "lep_updated": {
+      "title": "Improved Bhabha cross section at LEP and the number of light neutrino species",
+      "url": "https://arxiv.org/abs/1912.02067",
+      "locator": "Equation (1) and footnote on original rounding; section 6 and Table 9 (last row); Appendix B.1, Table 12 (combined fit assuming lepton universality)."
+    },
+    "atlas": {
+      "title": "Measurement of the Z boson invisible width at 13 TeV with the ATLAS detector",
+      "url": "https://arxiv.org/abs/2312.02789",
+      "locator": "Measurement strategy and extraction of the invisible width from the constant fit to recoil-bin ratios; lepton universality and external LEP leptonic width."
+    },
+    "atlas_table": {
+      "doi": "10.17182/hepdata.151651.v1/t1",
+      "url": "https://www.hepdata.net/record/data/151651/1665453/1/",
+      "locator": "HEPData Table 1, Width = invisible, Width [MeV], error labels stat and sys; sqrt(s) = 13000 GEV."
+    }
+  },
+  "lep_original": {
+    "sample": "LEP1_four_experiment_lineshape",
+    "r_inv": {"value": 5.943, "error": 0.016},
+    "r_nu": {"value": 1.99125, "error": 0.00083},
+    "n_eff": {"value": 2.9840, "error": 0.0082},
+    "gamma_lepton_mev": {"value": 83.985, "error": 0.086},
+    "interpretation": "R_inv and the charged leptonic width are inferred from lineshape data under lepton universality. r_nu is an external SM massless single-neutrino to charged-lepton width ratio. n_eff is an effective width ratio, not a directly counted number. Published rounded inputs yield 2.9846 rather than the reported 2.9840 (discussed by Janot and Jadach)."
+  },
+  "lep_updated": {
+    "sample": "LEP1_four_experiment_lineshape",
+    "r_nu": {"value": 1.99060, "error": 0.00021},
+    "n_eff": {"value": 2.9963, "error": 0.0074},
+    "fit_inputs": {
+      "mass_z_gev": {"value": 91.1875, "error": 0.0021, "unit": "GeV"},
+      "sigma_had_nb": {"value": 41.4802, "error": 0.0325, "unit": "nb"},
+      "r_lepton": {"value": 20.7666, "error": 0.0247, "unit": "1"},
+      "correlation_order": ["mass_z_gev", "sigma_had_nb", "r_lepton"],
+      "correlations": [[1, -0.0521, 0.0332], [-0.0521, 1, 0.1960], [0.0332, 0.1960, 1]],
+      "delta_tau": -0.002263
+    },
+    "interpretation": "Reanalysis of the same published LEP lineshapes with updated luminosities and SM r_nu. Fit inputs are the lepton-universal submatrix, not detector counts. The tau correction is fixed in this rounded-input replay."
+  },
+  "atlas": {
+    "sample": "ATLAS_pp_2015_2016_recoil_37fb-1",
+    "gamma_inv_mev": {"value": 506, "stat_error": 2, "syst_error": 12},
+    "normalization": "external_LEP_charged_leptonic_width",
+    "interpretation": "Independent ATLAS event sample; fit to corrected invisible-to-dilepton recoil ratios using jet plus missing transverse momentum or dileptons. The MeV result uses an external LEP charged-leptonic width assuming universality; not an independent absolute scale."
+  },
+  "boundary": {
+    "mode": "descriptive_only_no_combination",
+    "raw_event_or_likelihood_replay": false,
+    "interpretation": "No joint likelihood, combined significance, raw count, IDT prediction or inferred family ontology. SM per-species normalization and the LEP charged-lepton MeV anchor, if used, remain external."
+  }
+}
