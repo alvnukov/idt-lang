@@ -223,6 +223,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_midpoint_spectator_instrument",
         "probe_midpoint_rule_origins",
     ),
+    "operational_data": ("probe_mazurek_operational_bridge",),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

@@ -104,6 +104,8 @@ covered.
   component-wise outcome flips). A different common four-ticket stock or
   a mixture for just one pole gives the whole **ideal** table exactly.
   A failure at the first interface is not grounds to discard the substrate.
+  A [separate comparison to published coincidence counts](MAZUREK_OPERATIONAL_CHECK.md)
+  retains both original workbook label orders.
 * [Clock control](probe_alternating_catalyst_clock.py): the earlier
   [restored-reference program](PHASE_REALIZATION.md) does not supply
   its own scheduler. For the frozen 216 lifts, two reference wires, six
