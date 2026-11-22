@@ -1,0 +1,131 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "triangle_joint_cycle_operational_phase_axis",
+      "role": "route",
+      "components": [
+        "Three supplied exchanges and one co-located three-path joint cycle comparison herald eight preparations. Every addressed source-ticket descendant is counted with the actual gains four or nine. Their exact preparation/effect table has linear rank four, while its trine restriction has rank three.",
+        "The extra comparison is relational between two triangles, not a fourth self-adjoint axis on one real neutral triangle. Independent fair relative windings erase its pole; reversing both windings preserves it. A trine read between cycle reads erases repeatability rather than preserving a stale cycle record.",
+        "A neutral-plane algebra diagnostic exhibits a complex-like reference commutant only for the supplied generator set; it does not derive complex composition or a physical phase law."
+      ],
+      "declared_status": "Finite routed eight-preparation extension and exact algebra diagnostics, not a single-triangle complex phase, physical detector, independent remote frames or complete qubit theory.",
+      "missing_bridges": [
+        "Derive the joint cycle setting, coherent paths, complementary identity copies, signed merging, paired rails, quadratic event stock and uniform seeds from primitive dynamics.",
+        "Establish physical reference transport and relative winding control; operational rank in a supplied finite interface is not universal Hilbert representation or full QM closure."
+      ],
+      "sources": [
+        {"path": "scripts/probe_triangle_cycle_phase_axis.py", "first_line": 1, "last_line": 13, "file_sha256": "fcfa0e256ed6b99e50f6421b596ba0f316234f1d6a53b3f412d25aec067f3e14"},
+        {"path": "scripts/probe_triangle_cycle_phase_axis.py", "first_line": 50, "last_line": 135, "file_sha256": "fcfa0e256ed6b99e50f6421b596ba0f316234f1d6a53b3f412d25aec067f3e14"},
+        {"path": "scripts/probe_triangle_cycle_phase_axis.py", "first_line": 205, "last_line": 280, "file_sha256": "fcfa0e256ed6b99e50f6421b596ba0f316234f1d6a53b3f412d25aec067f3e14"},
+        {"path": "scripts/probe_triangle_cycle_phase_axis.py", "first_line": 283, "last_line": 309, "file_sha256": "fcfa0e256ed6b99e50f6421b596ba0f316234f1d6a53b3f412d25aec067f3e14"}
+      ]
+    },
+    {
+      "id": "independent_triangle_package_sewing_efficiency_wall",
+      "role": "semantic_contract",
+      "components": [
+        "Two independently prepared real triangle-plus-reference packages may have independently cycled hidden references. Native cycle comparisons and exchanges recover the target antiswap row exactly conditional on a reference branch occurring with probability one half; the unconditional zero-false-positive signal is half the target.",
+        "Equal-input vectors span fourteen of sixteen real dimensions. Positivity bounds any binary effect with no equal-input clicks by the remaining rank-two projector, giving a tight unconditioned efficiency ceiling one half relative to the target on orthogonal inputs. This is a zero-false-positive ceiling, not a universal efficiency bound without that condition.",
+        "For arbitrary positive real binary effects the sharp worst-coordinate error to the supplied target is 1/12. A native comparison plus independent one-in-three acceptance attains it; an independent random trit is an additional supplied resource, not derived randomness."
+      ],
+      "declared_status": "Exact finite package-comparison and positive-effect walls with explicitly conditional resource accounting, not observed data, independent physical sources or a derived complex composition law.",
+      "missing_bridges": [
+        "Establish physical package preparation, label identification, final co-location, reference access and positive real effect interface rather than importing the finite package model.",
+        "Derive or certify native random-trit access and the signed-path/quadratic-readout mechanism. Do not discard the other reference branch when interpreting all-trial efficiency."
+      ],
+      "sources": [
+        {"path": "scripts/probe_triangle_reference_sewing.py", "first_line": 1, "last_line": 9, "file_sha256": "f7329448522b8175b2d759f101347439deeb301e277e26658af4221c30265e87"},
+        {"path": "scripts/probe_triangle_reference_sewing.py", "first_line": 38, "last_line": 105, "file_sha256": "f7329448522b8175b2d759f101347439deeb301e277e26658af4221c30265e87"},
+        {"path": "scripts/probe_triangle_reference_sewing.py", "first_line": 184, "last_line": 241, "file_sha256": "f7329448522b8175b2d759f101347439deeb301e277e26658af4221c30265e87"},
+        {"path": "scripts/probe_triangle_reference_sewing.py", "first_line": 244, "last_line": 264, "file_sha256": "f7329448522b8175b2d759f101347439deeb301e277e26658af4221c30265e87"}
+      ]
+    },
+    {
+      "id": "native_reference_fanout_and_prior_contact_preparation",
+      "role": "route",
+      "components": [
+        "A supplied co-located B,C contact and conditional C reflection preserve the eight-by-eight rank-four preparation/effect table through either reference B or C separately on both contact flags. Both alternatives share the same data triangle A; this distributes a reference role, not independent data copies or a universal cloning channel.",
+        "A different protocol contacts and corrects two references before local preparation choices and independent data attachment. Its actual prior event addresses and both flags survive local preparation and final whole-package exchange. All sixty-four comparisons per prior flag match the target, even after nine independent cyclic reference turns.",
+        "Local joint readings factor despite package-matrix rank two of the raw joint currents. This does not mean two independently issued finished packages. Reversing the time ordering to independent finished packages then late contact restores exactness only conditionally on the half-rate reference branch; removing prior feedback produces explicit mismatches."
+      ],
+      "declared_status": "Finite addressed reference-sharing and correlated prior-contact protocols, not independently prepared finished packages, remote frame alignment, general cloning or universal quantum composition.",
+      "missing_bridges": [
+        "Derive physical contact, feedback, shared label identification, relative winding and the signed/quadratic/uniform-seed router; final comparison is co-located.",
+        "Justify the availability and transport of the correlated prior reference source. Do not transfer its exact comparisons to the distinct independent-finished-package or late-contact source contract."
+      ],
+      "sources": [
+        {"path": "scripts/probe_native_triangle_reference_fanout.py", "first_line": 1, "last_line": 9, "file_sha256": "b106655e679e45f8b0195eb242321cf4779c0a4428a57eb0661f004ae7c48296"},
+        {"path": "scripts/probe_native_triangle_reference_fanout.py", "first_line": 112, "last_line": 190, "file_sha256": "b106655e679e45f8b0195eb242321cf4779c0a4428a57eb0661f004ae7c48296"},
+        {"path": "scripts/probe_prior_triangle_reference.py", "first_line": 1, "last_line": 9, "file_sha256": "f8d8cd0854007e3e9e56519938d24a33ed711d1d0a6aeb43e8c953f78ba80b18"},
+        {"path": "scripts/probe_prior_triangle_reference.py", "first_line": 47, "last_line": 89, "file_sha256": "f8d8cd0854007e3e9e56519938d24a33ed711d1d0a6aeb43e8c953f78ba80b18"},
+        {"path": "scripts/probe_prior_triangle_reference.py", "first_line": 222, "last_line": 310, "file_sha256": "f8d8cd0854007e3e9e56519938d24a33ed711d1d0a6aeb43e8c953f78ba80b18"},
+        {"path": "scripts/probe_prior_triangle_reference.py", "first_line": 311, "last_line": 352, "file_sha256": "f8d8cd0854007e3e9e56519938d24a33ed711d1d0a6aeb43e8c953f78ba80b18"}
+      ]
+    },
+    {
+      "id": "coherent_triangle_pulses_and_conditional_rotation_closure",
+      "role": "route",
+      "components": [
+        "Supplied signed splitting, an undetected path with controlled reference cycle and coherent reunification implement reusable co-located pulses on a neutral data/reference product. The integer splitter squares to four times identity, a ray inverse rather than a literal inverse. Two sequential splits have event gain sixteen, while a compiled four-child rule has gain four; equal rays do not authorize dropping descendant counts.",
+        "Routed holdouts yield K-plus 504/576 for forward winding, 72/576 for reversal and 288/576 for bypass, while the data-axis rate remains 192/256. A pulsed preparation exceeds the old eight-state convex-hull witness bound one with value 5/4. Retaining a which-path record erases the cycle interference. Two unreinitialized pulses retain all actual addresses and agree under the two matchings.",
+        "Exact neutral-sector diagnostics give order-three rotations about axes with Gram product -1/2 and adjoint-product trace 9/16. A stated mathematical closure argument using ordinary rotation-group topology, the closed subgroup theorem and unbounded finite words gives dense projective rotations conditionally. It is not an enumerated universal result or Lean proof, and does not give exact arbitrary rotations, efficient compilation, a physical continuum or a time generator."
+      ],
+      "declared_status": "Finite coherent pulse/routing holdouts plus a conditional mathematical density argument, not derived physical continuity, remote-party dynamics, three-dimensional space or full QM.",
+      "missing_bridges": [
+        "Derive controllable coherent paths, reference cycles, data exchanges, common reference orientation, signed cancellation, quadratic event readout and uniform seeds from physical primitives.",
+        "Justify topology, unlimited composability and any resource-efficient approximation or physical time law separately; the dense-closure argument does not establish exact operational access to every rotation."
+      ],
+      "sources": [
+        {"path": "scripts/probe_coherent_triangle_pulses.py", "first_line": 1, "last_line": 39, "file_sha256": "0aa8abec7eb3cf05becda158ae69a99415deea0fad931b585e7bfe6c33bbb805"},
+        {"path": "scripts/probe_coherent_triangle_pulses.py", "first_line": 123, "last_line": 207, "file_sha256": "0aa8abec7eb3cf05becda158ae69a99415deea0fad931b585e7bfe6c33bbb805"},
+        {"path": "scripts/probe_coherent_triangle_pulses.py", "first_line": 216, "last_line": 274, "file_sha256": "0aa8abec7eb3cf05becda158ae69a99415deea0fad931b585e7bfe6c33bbb805"}
+      ]
+    },
+    {
+      "id": "sparse_chiral_support_census_and_anonymous_carrier",
+      "role": "law_family_collection",
+      "components": [
+        "Puncture the supplied five-slot symmetric pencil, keeping every undeleted entry nonzero. Eighty-five support tests certify rank ten for specified unit coefficients independently of nonzero weights. Passing these tests alone does not prove rank-ten avoidance.",
+        "The first all-channel survivors occur at five deletions and the first all-vertex/all-channel survivors at twelve. They admit particular all-complex-coefficient rank-ten-avoiding weights; this is an existence result, not a classification of arbitrary weights on the supports. A fourteen-edge forest passes every at-most-three-channel check yet has a forced rank-ten four-channel certificate.",
+        "Reading only uncolored adjacency of each minimally punctured all-active carrier recovers a relational eight-vertex cube and four antipodal twin bridges, not a cube in physical space. There are forty-eight cube charts and 768 graph automorphisms with two vertex orbits, so no intrinsic six-valued scalar charge follows.",
+        "Eight addressed completions remain under the supplied contract of five commuting ports and transport of each old direction; this is not a count of unrestricted graph completions. Three extra binary adjacency queries distinguish them if those transition probes are available. Chosen chart, vacuum and centered additive block charges still supply two weights; choosing a neutral vacuum yields conditional multiplicities, not physical charges or gauge dynamics."
+      ],
+      "declared_status": "Conditional support census and constructive algebraic controls for a supplied pencil and calibrated rank-selection hypothesis, not observed physical rank, particle content or a status upgrade for zero-entry candidates.",
+      "missing_bridges": [
+        "Derive the carrier/support inventory, symmetric pairing, coherent freely selectable channel coefficients and a physical rank protocol. Calibrated no-rank-ten selection is not an observation.",
+        "Do not treat finite support-screen survival or one admissible weighting as arbitrary-weight closure, a Lean proof artifact or a uniquely selected physical carrier."
+      ],
+      "sources": [
+        {"path": "scripts/probe_sparse_chiral_supports.py", "first_line": 1, "last_line": 21, "file_sha256": "b1d4e27324d5fd7cda7f741f5b81b7699a34ab1f1afa4ea6fbd72287df56590c"},
+        {"path": "scripts/probe_sparse_chiral_supports.py", "first_line": 97, "last_line": 140, "file_sha256": "b1d4e27324d5fd7cda7f741f5b81b7699a34ab1f1afa4ea6fbd72287df56590c"},
+        {"path": "scripts/probe_sparse_chiral_supports.py", "first_line": 193, "last_line": 236, "file_sha256": "b1d4e27324d5fd7cda7f741f5b81b7699a34ab1f1afa4ea6fbd72287df56590c"},
+        {"path": "scripts/probe_sparse_chiral_supports.py", "first_line": 295, "last_line": 324, "file_sha256": "b1d4e27324d5fd7cda7f741f5b81b7699a34ab1f1afa4ea6fbd72287df56590c"},
+        {"path": "scripts/probe_sparse_chiral_supports.py", "first_line": 327, "last_line": 393, "file_sha256": "b1d4e27324d5fd7cda7f741f5b81b7699a34ab1f1afa4ea6fbd72287df56590c"},
+        {"path": "scripts/probe_anonymous_punctured_carrier.py", "first_line": 1, "last_line": 88, "file_sha256": "cd42c8d50fb5af7c268c918aa4a0e44828e215518ec89766a98cf973fcf71b7c"},
+        {"path": "scripts/probe_anonymous_punctured_carrier.py", "first_line": 89, "last_line": 170, "file_sha256": "cd42c8d50fb5af7c268c918aa4a0e44828e215518ec89766a98cf973fcf71b7c"},
+        {"path": "scripts/probe_anonymous_punctured_carrier.py", "first_line": 171, "last_line": 225, "file_sha256": "cd42c8d50fb5af7c268c918aa4a0e44828e215518ec89766a98cf973fcf71b7c"}
+      ]
+    },
+    {
+      "id": "anonymous_relational_chart_return_holonomy",
+      "role": "route",
+      "components": [
+        "An explicitly constructed quotient of four-port two-link differences supplies opaque reunion IDs, complete reciprocal neighbor queries and the earlier angular-mode ruler prescription. Covering words and seam data stay private to the fixture; the reader transports overlapping charts with independent station-local orderings.",
+        "Translation, glide and half-turn screw fixtures share the root-and-shell incidence. Twenty-four elementary root triangles close exactly in each; first-return transported linear maps have respectively (trace,determinant,moved rays) (3,1,0), (1,-1,10), (-1,1,10). Two circuits restore the frame.",
+        "A winding twist on these locally unmodified quotients need not be curvature. Closing the sampled elementary triangles certifies neither universal global flatness nor physical geometry. Failure to return within a budget is not a global exclusion."
+      ],
+      "declared_status": "Conditional finite affine-connection discriminator on constructed quotients, not derived four-port selection, universal three-space, curvature, gravity or particle dynamics.",
+      "missing_bridges": [
+        "Derive stable reunion identities, complete noiseless active queries, persistent records and the Euclidean angular normalization from internal primitive interactions.",
+        "Justify physical endpoint relations, port count, topology and transport law independently of the simulator's quotient construction; finite local closure is not a universal geometric theorem."
+      ],
+      "sources": [
+        {"path": "scripts/probe_relational_chart_holonomy.py", "first_line": 1, "last_line": 17, "file_sha256": "659bf97fb966c51eb9e28943efae8bee8ca9d56f92edcf91f90503e2786251bc"},
+        {"path": "scripts/probe_relational_chart_holonomy.py", "first_line": 36, "last_line": 74, "file_sha256": "659bf97fb966c51eb9e28943efae8bee8ca9d56f92edcf91f90503e2786251bc"},
+        {"path": "scripts/probe_relational_chart_holonomy.py", "first_line": 140, "last_line": 194, "file_sha256": "659bf97fb966c51eb9e28943efae8bee8ca9d56f92edcf91f90503e2786251bc"},
+        {"path": "scripts/probe_relational_chart_holonomy.py", "first_line": 205, "last_line": 234, "file_sha256": "659bf97fb966c51eb9e28943efae8bee8ca9d56f92edcf91f90503e2786251bc"}
+      ]
+    }
+  ]
+}

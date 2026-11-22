@@ -243,6 +243,16 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_weighted_chiral_pencil",
         "probe_local_angular_rulers",
     ),
+    "reference_transport_and_carriers": (
+        "probe_triangle_cycle_phase_axis",
+        "probe_triangle_reference_sewing",
+        "probe_native_triangle_reference_fanout",
+        "probe_prior_triangle_reference",
+        "probe_coherent_triangle_pulses",
+        "probe_sparse_chiral_supports",
+        "probe_anonymous_punctured_carrier",
+        "probe_relational_chart_holonomy",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
