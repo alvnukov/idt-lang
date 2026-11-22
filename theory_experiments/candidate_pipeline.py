@@ -115,6 +115,19 @@ from theory_experiments.physics_screen import (
     physics_controls,
     scope,
 )
+from theory_experiments.prepare_measure_cut import (
+    LOADED_SOURCE_SHA256 as PREPARE_MEASURE_CUT_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.prepare_measure_cut import (
+    RANK_CHECK_ID,
+    TRACE_CHECK_ID,
+    PrepareMeasureCut,
+    evaluate_prepare_measure_cut,
+    parse_prepare_measure_cut,
+)
+from theory_experiments.prepare_measure_cut import (
+    SCOPE as PREPARE_MEASURE_CUT_SCOPE,
+)
 from theory_experiments.primitive_screen import (
     Check,
     Limits,
@@ -155,12 +168,13 @@ Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
-    | DrivenEventSelector | PeriodicContactObserver
+    | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
 _CACHE_MAX_BYTES = 512 * 1024
+_PREPARE_MEASURE_EVIDENCE = "necessary_conditions_on_submitted_finite_table_only"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -176,6 +190,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/triangle_stock.py",
     "theory_experiments/driven_event_selector.py",
     "theory_experiments/periodic_contact_observer.py",
+    "theory_experiments/prepare_measure_cut.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -232,6 +247,23 @@ def _is_driven_event_selector_spec(value: object) -> bool:
 
 def _is_periodic_contact_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "periodic_contact_observer"
+
+
+def _is_prepare_measure_cut_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "prepare_measure_cut"
+
+
+def _assert_prepare_measure_cut_sources(sources: object, *, check_current: bool = False) -> None:
+    """Pin stable loaded table-checker sources, not a physical data adapter."""
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded_hash in (
+        ("theory_experiments/prepare_measure_cut.py", PREPARE_MEASURE_CUT_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded_hash)):
+            raise ValueError(f"prepare-measure cut source changed since import: {path}; "
+                             "restart from a stable checkout")
 
 
 def _assert_periodic_contact_sources(sources: object, *, check_current: bool = False) -> None:
@@ -324,6 +356,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "prepare_measure_cut":
+        return parse_prepare_measure_cut(row)
     if row.get("family") == "periodic_contact_observer":
         return parse_periodic_contact_observer(row)
     if row.get("family") == "driven_event_selector":
@@ -390,6 +424,11 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
+    cut_receipt = isinstance(candidate, PrepareMeasureCut) or _is_prepare_measure_cut_spec(request.get("candidate"))
+    if cut_receipt and (type(candidate) is not PrepareMeasureCut or type(limits) is not Limits
+            or canonical_json(request.get("candidate")) != canonical_json(candidate.specification())
+            or canonical_json(request.get("limits")) != canonical_json(limits.specification())):
+        raise ValueError("prepare-measure cut candidate/limits do not match request")
     periodic_receipt = (isinstance(candidate, PeriodicContactObserver) or
                         _is_periodic_contact_spec(request.get("candidate")))
     if periodic_receipt and (type(candidate) is not PeriodicContactObserver or type(limits) is not Limits
@@ -403,7 +442,10 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
             or canonical_json(request.get("candidate")) != canonical_json(candidate.specification())
             or canonical_json(request.get("limits")) != canonical_json(limits.specification())):
         raise ValueError("driven event selector candidate/limits do not match request")
-    if isinstance(candidate, PeriodicContactObserver):
+    if isinstance(candidate, PrepareMeasureCut):
+        _assert_prepare_measure_cut_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_prepare_measure_cut(candidate, limits)
+    elif isinstance(candidate, PeriodicContactObserver):
         _assert_periodic_contact_sources(request["provenance"], check_current=True)
         checks, details = evaluate_periodic_contact_observer(candidate, limits)
     elif isinstance(candidate, DrivenEventSelector):
@@ -460,6 +502,7 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
             "checks": [check.specification() for check in checks], "scope": details,
             "arithmetic": "exact_rational",
             "evidence_kind": ("descriptive_completion_only" if isinstance(candidate, NeutralCurrentWidth)
+                              else _PREPARE_MEASURE_EVIDENCE if isinstance(candidate, PrepareMeasureCut)
                               else "computation_with_explicit_algebraic_or_bounded_scope"),
             "proof_status": "not_attempted",
             "empirical_status": (details["empirical_status"] if isinstance(candidate, BellLocalResponse)
@@ -482,10 +525,14 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 if isinstance(candidate, DrivenEventSelector)
                                 else PERIODIC_CONTACT_SCOPE
                                 if isinstance(candidate, PeriodicContactObserver)
+                                else PREPARE_MEASURE_CUT_SCOPE
+                                if isinstance(candidate, PrepareMeasureCut)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
 def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_prepare_measure_cut_spec(request.get("candidate")):
+        _assert_prepare_measure_cut_sources(request["provenance"], check_current=True)
     if _is_periodic_contact_spec(request.get("candidate")):
         _assert_periodic_contact_sources(request["provenance"], check_current=True)
     if _is_driven_event_selector_spec(request.get("candidate")):
@@ -516,6 +563,31 @@ def _load_cache_envelope(path: Path) -> dict[str, object]:
     return object_fields(value, {"schema", "key", "report_sha256", "report"})
 
 
+def _assert_cut_receipt_scope(candidate: PrepareMeasureCut, report: dict[str, object]) -> None:
+    """Basic consistency of a trusted local receipt, not authentication or replay."""
+    checks = report["checks"]
+    if not isinstance(checks, list) or len(checks) != 2:
+        raise ValueError("cached prepare-measure cut has invalid checks")
+    statuses = []
+    for check, expected in zip(checks, (RANK_CHECK_ID, TRACE_CHECK_ID), strict=True):
+        row = object_fields(check)
+        status = row.get("status")
+        if row.get("id") != expected or status not in ("counterexample", "inconclusive", "unsupported"):
+            raise ValueError("cached prepare-measure cut has invalid checks")
+        statuses.append(status)
+    aggregate = next(status for status in ("counterexample", "inconclusive", "unsupported") if status in statuses)
+    details = object_fields(report["scope"])
+    claim_limits = {"proof_status": "not_attempted", "empirical_status": "not_tested",
+                    "rejection_scope": PREPARE_MEASURE_CUT_SCOPE}
+    if (report["status"] != aggregate or report["evidence_kind"] != _PREPARE_MEASURE_EVIDENCE
+            or any(report[key] != value or details.get(key) != value for key, value in claim_limits.items())
+            or details.get("scientific_status") != "unassessed"
+            or details.get("necessary_conditions_only") is not True
+            or details.get("event") != candidate.event or details.get("event_basis") != candidate.event_basis
+            or (candidate.event_basis == "accepted_only" and statuses != ["unsupported", "unsupported"])):
+        raise ValueError("cached prepare-measure cut status/scope disagrees with the necessary-test contract")
+
+
 def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object]) -> dict[str, object]:
     report = object_fields(envelope["report"], {"request", "status", "checks", "scope",
         "arithmetic", "evidence_kind", "proof_status", "empirical_status", "rejection_scope"})
@@ -524,7 +596,9 @@ def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
     candidate = parse_hypothesis(request["candidate"])
-    if isinstance(candidate, primitive.PairKernel):
+    if isinstance(candidate, PrepareMeasureCut):
+        _assert_cut_receipt_scope(candidate, report)
+    elif isinstance(candidate, primitive.PairKernel):
         # A cache hit rechecks the small certificate, not the expensive search/generation.
         certificate = object_fields(report["scope"]).get("positivity_certificate")
         exact_check = _certified_kernel_check(candidate, certificate)
@@ -619,7 +693,11 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_stock = any(_is_triangle_stock_spec(spec) for spec in specifications)
     has_driven = any(_is_driven_event_selector_spec(spec) for spec in specifications)
     has_periodic = any(_is_periodic_contact_spec(spec) for spec in specifications)
-    sources = provenance() if has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic else None
+    has_cut = any(_is_prepare_measure_cut_spec(spec) for spec in specifications)
+    pins_sources = has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or has_cut
+    sources = provenance() if pins_sources else None
+    if has_cut:
+        _assert_prepare_measure_cut_sources(sources)
     if has_periodic:
         _assert_periodic_contact_sources(sources)
     if has_driven:
@@ -637,6 +715,8 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     if any(isinstance(candidate, BellLocalResponse) for candidate in candidates):
         assert_bell_sources()
     limits = limits if limits is not None else Limits()
+    if has_cut and type(limits) is not Limits:
+        raise ValueError("prepare-measure cut requires exact Limits")
     if has_periodic and type(limits) is not Limits:
         raise ValueError("periodic contact observer requires exact Limits")
     sources = provenance() if sources is None else sources
@@ -684,7 +764,11 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_stock = _is_triangle_stock_spec(request["candidate"])
     is_driven = _is_driven_event_selector_spec(request["candidate"])
     is_periodic = _is_periodic_contact_spec(request["candidate"])
-    sources = provenance() if is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic else None
+    is_cut = _is_prepare_measure_cut_spec(request["candidate"])
+    pins_sources = is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or is_cut
+    sources = provenance() if pins_sources else None
+    if is_cut:
+        _assert_prepare_measure_cut_sources(sources)
     if is_periodic:
         _assert_periodic_contact_sources(sources)
     if is_driven:

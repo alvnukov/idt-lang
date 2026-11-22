@@ -1,0 +1,142 @@
+"""Five unconditional raw-stream event probabilities as a dimension witness.
+
+This is an exact score of the SUPPLIED final squared-current readout, not a
+detector measurement. Prepare three equal-duration prefixes; choose one of
+two equal-duration suffixes independently after the cut. Apart from a
+setting-independent common classical seed, only the counted message can
+carry information across the cut. An early output, time stamp or record of
+the prefix accessible to the suffix is a side channel. Pre-shared quantum
+entanglement is not allowed. A general one-qubit message can have arbitrary
+preparations and binary effects: the test is not restricted to pure, real,
+unitary or projective implementations.
+
+Gallego et al., Eq. 7 and Table I, https://arxiv.org/pdf/1010.5064 :
+I3 = |E11+E12+E21-E22-E31|. The maxima are 3 for a classical bit,
+1+2 sqrt(2) for a qubit, and 5 already for a classical trit. Count every
+attempt in each input cell. A pre-setting event-ready start is permissible;
+selecting on a later success flag changes the measured object. In contrast
+to a rank test, a linear score bound survives averaging over shared
+classical seeds; the absolute value preserves this two-sided bound.
+
+Qubit bound: fixing two dichotomic observables A,B and optimizing the three
+independent preparations gives lambda_max(A+B)+lambda_max(A-B)+lambda_max(-A).
+Convexity permits maximizing over extreme Hermitian contractions, whose
+eigenvalues are all +/-1 (otherwise perturb an interior eigenvalue). If
+either observable is constant they commute and a classical bit suffices.
+Otherwise A=a.sigma, B=b.sigma for unit Bloch vectors. The maximum over
+states is 1+|a+b|+|a-b| <= 1+2 sqrt(2), since the two squared lengths sum
+to four. Orthogonal a,b and the maximizing states attain equality. Flipping
+both outcome conventions handles the opposite sign. Random encoders,
+decoders, local random choices and independent shared classical seeds are
+convex mixtures as far as this signed score is concerned.
+
+Laboratory comparators, not observations of this stream:
+
+* Ahrens et al., PUBLISHED Fig. 3a, https://www.nature.com/articles/nphys2333/figures/3 :
+  I3 = 3.7815 +/- 0.0782 (optimized qubits), 4.9303 +/- 0.1032 (qutrits).
+  The earlier arXiv:1111.1277 figure gives DIFFERENT numbers and errors;
+  we quote the journal figure's error bars, not a refit or a confidence
+  interval. An attenuated laser, polarization/path preparations and selected
+  detector-channel counts implement the test. Click-normalized probabilities
+  need representative detected events (or explicit loss accounting) to be
+  interpreted as probabilities over all trials. No raw no-click rows are
+  supplied by the figure.
+* Hendrych et al., https://www.nature.com/articles/nphys2334/figures/3 :
+  a separate four-preparation, three-measurement I4 experiment, NOT a repeat
+  of I3. They varied optical delay and used polarization and orbital angular
+  momentum. The published maximum for the quart ensemble is 8.57 +/- 0.06
+  (propagated standard deviation); the qubit and qutrit ensembles give
+  5.66 +/- 0.15 and 7.57 +/- 0.13. These are optimized optical preparations,
+  not prefix/suffix actions, and not a calibration of the raw REF event.
+  Neither experiment bounds a physical particle's entire state dimension.
+
+Run: python3 -B -m scripts.probe_linear_cut_dimension_witness
+"""
+
+from fractions import Fraction as F
+from itertools import product
+
+from scripts.probe_streaming_observer_cut import response_matrix
+
+PREPS = (2, 1, 0)
+SETTINGS = (0, 2)
+# x and y here are zero-based positions in the published witness.
+TERMS = ((0, 0, 1), (0, 1, 1), (1, 0, 1), (1, 1, -1), (2, 0, -1))
+
+
+def need(test, why):
+    if not test:
+        raise ArithmeticError(why)
+
+
+def signed(values):
+    return sum(sign * values[x][y] for x, y, sign in TERMS)
+
+
+def score_ref(ref):
+    # + is non-REF for the first suffix and REF for the second; fixed before
+    # inspection. ref[x][y] always means the original physical-event label.
+    return signed([(1 - 2 * left, 2 * right - 1) for left, right in ref])
+
+
+def classical_extrema():
+    scores = []
+    for msg in product((0, 1), repeat=3):
+        for decoder in product((-1, 1), repeat=4):
+            scores.append(signed([decoder[2*m:2*m + 2] for m in msg]))
+    need(len(scores) == 128 and (min(scores), max(scores)) == (-3, 3),
+         "exhaustive classical bit bound")
+
+
+def lossy_qubit(i, j):
+    """One normalized qubit at the cut, loss only at the chosen measurement."""
+    # |psi_i>=(2i,1)/sqrt(1+4i^2); successful filter K_j=[[1,-2j],[0,1]]/5.
+    # ||K||_op^2 <= ||K||_F^2 <= 18/25, so I-K*K is a positive loss effect.
+    need(j in SETTINGS and 2 + 4*j*j < 25, "invalid qubit filter")
+    denom = 25 * (1 + 4*i*i)
+    ref, other = F(1, denom), F(4*(i-j)**2, denom)
+    loss = 1 - ref - other
+    need(loss >= 0 and ref + other > 0, "invalid outcome denominators")
+    return ref, other, loss
+
+
+def probe():
+    classical_extrema()
+    h = response_matrix(3, 1)  # built from the original raw +/- updates
+    ref = [[h[i][j] for j in SETTINGS] for i in PREPS]
+    score = score_ref(ref)
+    need(score == F(347, 85), "five-cell score from raw updates")
+    # Each of the five probability errors contributes at most 2*epsilon.
+    # Certify a rational radius without rounding the irrational qubit bound.
+    guarded = score - 10 * F(1, 40) - 1
+    need(guarded > 0 and guarded**2 > 8, "lost uniform error margin")
+    # No above-qubit score implies quantum behavior: an ordinary trit can
+    # convey i; for each j the receiver can toss the specified Bernoulli coin.
+    trit = [[sum(int(m == i) * F(1, 1 + 4*(m-j)**2) for m in range(3))
+             for j in SETTINGS] for i in PREPS]
+    need(trit == ref, "three classical messages with a stochastic decoder suffice")
+
+    trials = [[lossy_qubit(i, j) for j in SETTINGS] for i in PREPS]
+    selected = [[r/(r+o) for r, o, _ in row] for row in trials]
+    need(selected == ref, "conditional one-qubit table should imitate target")
+    # Score all attempts, with a predeclared binary output for every no-click.
+    # Allow a different default for each measurement, but not for each hidden
+    # preparation. An explicit third outcome alone is not the binary witness.
+    scores = {}
+    for defaults in product((0, 1), repeat=2):
+        all_trials = [[r + defaults[y]*loss for y, (r, _, loss) in enumerate(row)]
+                      for row in trials]
+        value = score_ref(all_trials)
+        need(abs(value) <= 3, "these loss completions do not even cross the bit bound")
+        scores[defaults] = value
+    need(scores[0, 0] == F(131, 125), "fixed non-REF default changed")
+    return score, scores[0, 0]
+
+
+if __name__ == "__main__":
+    value, completed = probe()
+    print(f"Unconditional synthetic I3={value}: above the unassisted qubit bound "
+          "even with independent shared classical randomness and uniform "
+          "probability error <=1/40. A classical trit suffices.")
+    print(f"Lossy qubit, success-only I3={value}; all attempts (non-REF default) "
+          f"I3={completed}. Neither laboratory implements this signed stream.")

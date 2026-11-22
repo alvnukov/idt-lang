@@ -47,6 +47,10 @@ PACKS = {
         "static_mixer_hardware_census": "probe_static_cell_mixer_search",
         "static_mixer_elapsed_time_and_completion": "probe_static_cell_elapsed_readout",
     }),
+    "primitive_stream_cut_inventory.json": ("streaming_memory_cut", {
+        "streamed_current_memory_cut": "probe_streaming_observer_cut",
+        "five_probability_cut_score": "probe_linear_cut_dimension_witness",
+    }),
 }
 
 
