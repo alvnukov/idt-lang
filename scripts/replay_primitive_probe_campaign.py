@@ -224,6 +224,16 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_midpoint_rule_origins",
     ),
     "operational_data": ("probe_mazurek_operational_bridge",),
+    "primitive_origins_and_composites": (
+        "probe_anonymous_midpoint_factory",
+        "probe_affine_reset_escape",
+        "probe_affine_instrument_witness",
+        "probe_hidden_phase_erasure",
+        "probe_hexagon_composite_closure",
+        "probe_chiral_carrier_holdout",
+        "probe_chiral_pencil_signs",
+        "probe_anonymous_signal_rulers",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
