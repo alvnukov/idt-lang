@@ -20,6 +20,9 @@ class PrimitiveProbeCampaignTests(unittest.TestCase):
             "probe_tetrahedral_cycle_origin": "opposition_origin",
             "probe_internal_signal_geometry": "collision_space",
             "probe_opposition_magic_square": "opposition_magic_square",
+            "probe_flag_local_reunions": "marked_relays",
+            "probe_minimal_signal_relay": "marked_relays",
+            "probe_relay_loop_parity": "marked_relays",
         }
         for probe, bundle in expected.items():
             with self.subTest(probe=probe):

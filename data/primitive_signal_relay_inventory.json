@@ -1,0 +1,86 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "raw_opposition_flag_false_reunion_controls",
+      "role": "route",
+      "components": [
+        "deterministic reciprocal port updates on the regular twenty-four-flag S4 carrier",
+        "exhaustive equivariant prototype-map and connected graph classification",
+        "actual-state reunion tests exposing premature four-tick echoes in six-tick contrast positives"
+      ],
+      "declared_status": "Retained finite source-theory wall for the stated carrier and covariance contract. The physical prediction adapter is missing and unsupported; no empirical rejection, universal obstruction, physical-space derivation or quantum claim is made. The twelve six-tick contrast-positive rules have disconnected K4,4 components and false four-tick echoes.",
+      "missing_bridges": [
+        "justify the fixed twenty-four-state flag carrier, coherent reciprocal port names and global S4 covariance physically; richer carriers, memory and weaker symmetry remain outside the screen",
+        "supply an actual origin marker, observer interaction and repeatable detection rather than identify formal state equality with a detector",
+        "distinguish the nominated six-tick contrast from faithful short-return behavior; false positives have shorter echoes and do not realize the desired connected relay",
+        "derive a probability law, metric, clock calibration and experimental encoding independently of finite deterministic graph enumeration",
+        "provide a reviewed executable physical prediction adapter and eligible observations before testing or rejecting a physical candidate"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_flag_local_reunions.py",
+          "first_line": 1,
+          "last_line": 262,
+          "file_sha256": "e174f567458341b5b65bf1e1fe8c57519e93a9ef03e89a5a1cb41cbb9e683492"
+        }
+      ]
+    },
+    {
+      "id": "finite_marked_signal_relay_minimality",
+      "role": "route",
+      "components": [
+        "actual finite-site transition tables with four reciprocal ports and one marked-site reunion readout",
+        "twenty-six-site difference-set relay versus globally S4-covariant thirty-two, sixty-four and one-hundred-twenty-eight-site abelian quotients",
+        "short-return languages, exhaustive compass lifts and conditional abelian-quotient minimality bounds"
+      ],
+      "declared_status": "Retained finite marked-relay constructions and scoped algebraic minimality argument; physical prediction adapter missing and unsupported. The twenty-six-site witness has only C3 compass relabelings, thirty-two sites add six-tick returns, and sixty-four sites match the complete tested six-tick language while remaining finite. No universal physical minimality, infinite-space inference or Lean proof is asserted.",
+      "missing_bridges": [
+        "physically supply finite sites, transition rules, globally comparable reciprocal port names and a local marker/detection capability; the probe does not generate those resources",
+        "keep the unrestricted girth-six graph bound separate from thirty-two and sixty-four minima conditional on connected finite abelian endpoint quotients with S4-invariant kernel",
+        "distinguish nominated abcabc and ababab tests from the full nonbacktracking six-tick return language; bounded return agreement cannot imply an infinite three-dimensional space",
+        "justify any probability law, equal link-time calibration, metric, dynamics or physical topology separately from graph and quotient arithmetic",
+        "provide a reviewed physical prediction adapter and observational protocol before giving these preserved finite source candidates an empirical status"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_minimal_signal_relay.py",
+          "first_line": 1,
+          "last_line": 299,
+          "file_sha256": "0d21d5e1de29336d0f318ce82b2473770d5d6122243e8e37ca26a37f12ffe4bd"
+        }
+      ]
+    },
+    {
+      "id": "binary_edge_sign_transport_finite_relay",
+      "role": "route",
+      "components": [
+        "a supplied static binary connection on each undirected edge and a reversible carried-bit update",
+        "odd-parity constraints on every rooted distinct-port abcabc circuit of the imported finite relays",
+        "exact binary elimination, explicit contradiction certificates and directly walked gauge-sector representatives"
+      ],
+      "declared_status": "Retained conditional binary-connection source candidate; physical prediction adapter missing and unsupported. The imposed odd-loop demand is obstructed on the twenty-six-site relay and leaves three gauge-invariant binary freedoms on the thirty-two and sixty-four-site relays. Connection signs are not quantum amplitudes, and unchanged graph endpoints do not establish physical geometry or interference.",
+      "missing_bridges": [
+        "physically supply the imported finite relay, coherent reciprocal port labels, edge-bit storage, carried-bit memory and reversible crossing operation",
+        "justify the odd parity demand on every nominated loop as an independent operational law rather than select it to prefer a relay",
+        "select or dynamically generate a connection and establish the operational meaning of vertex gauge equivalence; three algebraic binary freedoms are not an experimentally identified field",
+        "derive amplitude composition, interference, probability, detector actualization and any quantum interpretation separately from reversible classical bit transport",
+        "supply a reviewed physical prediction adapter and eligible observational protocol; exact certificates and gauge-sector replays remain finite conditional evidence, not empirical rejection"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_relay_loop_parity.py",
+          "first_line": 1,
+          "last_line": 218,
+          "file_sha256": "fb81057b047f55c65cf1c204df9f21a87e5dfa068351dc57416f57612bc4c3ef"
+        },
+        {
+          "path": "scripts/probe_minimal_signal_relay.py",
+          "first_line": 35,
+          "last_line": 99,
+          "file_sha256": "0d21d5e1de29336d0f318ce82b2473770d5d6122243e8e37ca26a37f12ffe4bd"
+        }
+      ]
+    }
+  ]
+}
