@@ -280,6 +280,14 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_partial_hidden_exchange",
         "probe_native_exchange_optimum",
     ),
+    "single_event_origins": (
+        "probe_unary_first_passage_detector",
+        "probe_reciprocal_detector_petals",
+        "probe_reversible_excitation_detector",
+        "probe_driven_readout_memory",
+        "probe_event_memory_witness",
+        "probe_delft_second_rotor",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

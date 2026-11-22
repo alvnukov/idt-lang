@@ -1,0 +1,115 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "unary_chain_first_passage_detector",
+      "role": "route",
+      "components": [
+        "A serial signed collector constructs one unary cell per uncancelled occurrence within each named channel. A persistent rotor walker takes exactly n squared steps before exit after initialization; every trigger gets one rail label without generating a list of ordered pairs or drawing a random seed."
+      ],
+      "declared_status": "Only repeated fixed prepared inputs, not single microscopic absorption, independent draws or an automatic selector for changing unknown states.",
+      "missing_bridges": [
+        "Derive or realize sign comparison, serial collection, root and reset/exit wiring, physical clock and enduring detector state."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unary_first_passage_detector.py",
+          "first_line": 1,
+          "last_line": 222,
+          "file_sha256": "9f491e064f65d662674d359011850e56dec96f0fb773b1aa62451e0b628a9e4e"
+        }
+      ]
+    },
+    {
+      "id": "reciprocal_petals_with_port_memory",
+      "role": "route",
+      "components": [
+        "Reflecting chains close back to a common port-sensitive hub. With four uniform physical hops per abstract edge the bipartite apparatus emits one rail label per adjacent hop and four times the square count per full petal passage. An ordinary neutral central rotor instead gives linear counts; unequal wire lengths alter the timing law."
+      ],
+      "declared_status": "Conditional local-clock realization, not a derivation of the hub law, its time metric, quantum probability or physical space.",
+      "missing_bridges": [
+        "Establish the incoming-port rule, homogeneous hop durations, unary growth, observation trigger and changing-input dynamics independently of desired rates."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reciprocal_detector_petals.py",
+          "first_line": 1,
+          "last_line": 232,
+          "file_sha256": "7bccc2a98b667b5f3df2431de764584b20a7a485d1d632119451a8131b1886f7"
+        }
+      ]
+    },
+    {
+      "id": "reversible_marker_detector_sector",
+      "role": "route",
+      "components": [
+        "A traversing excitation exchanges its lane bit with a local memory cell at each reciprocal junction. The hub uses that bit to advance to the next live rail or circulate again. All local maps are invertible and the full directed-edge plus memory dynamics is a permutation. With one circulating mark and blank cells the time per rail is proportional to squared chain length; equal filling gives other laws."
+      ],
+      "declared_status": "Conditional reversible orbit and internal handoff criterion, not a universal sampling measure, particle identity, or quantum event dynamics.",
+      "missing_bridges": [
+        "Explain how the physical preparation selects an active orbit and which clock the physical observation uses. Uniform time on the full one-excitation sector, time on its active part and sampling only at handoffs need not give the same distribution.",
+        "Derive unary channel construction, two-lane geometry, persistent cursor, hardware addressing, and fair passage times from proposed lower primitives rather than treating the apparatus as spontaneous."
+      ],
+      "sources": [
+        {"path":"scripts/probe_reversible_excitation_detector.py","first_line":1,"last_line":282,"file_sha256":"9667701ea94156091982d725631b04cf54736d4d6f68772fc2307cce785b48ef"}
+      ]
+    },
+    {
+      "id": "driven_context_rate_memory_requirement",
+      "role": "semantic_contract",
+      "components": [
+        "For a finite total deterministic transducer with exact per-setting output rates under every eventually periodic setting drive, reachable closed walks force a product-of-denominators lower bound on joint states. Native ticket clocks per setting preserve fixed-input frequencies under interleavings, while a shared clock can be biased by a choice based on earlier outputs."
+      ],
+      "declared_status": "Conditional memory bound and finite machine census, not independent clicks, causal access to a late setting or a general exclusion of hidden dynamics.",
+      "missing_bridges": [
+        "Derive the source and persistent memory; specify when settings become available and what external counters or fresh inputs update the apparatus."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_driven_readout_memory.py",
+          "first_line": 1,
+          "last_line": 204,
+          "file_sha256": "5447d22cb89b24eee3a6f768d4924a1998aee9969902886c0461bfb4355d220a"
+        }
+      ]
+    },
+    {
+      "id": "driven_event_trace_memory_witness",
+      "role": "semantic_contract",
+      "components": [
+        "The same input word can produce at most one output word per starting state of a closed deterministic machine. Disjoint block counts give measurement-error or extra-input lower bounds under a declared trace clock. Optional hash-pinned 2015 data compare accepted-only versus reset-at-gap clocks and local versus bilateral setting inputs."
+      ],
+      "declared_status": "Executable witness and retrospective conditional diagnostics, not a physical detector memory, randomness certification or proof against hidden variables.",
+      "missing_bridges": [
+        "Establish completeness of the model inputs and trial clock, treatment of resets and readout errors; fresh unseen source states can invalidate a detector-only interpretation."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_event_memory_witness.py",
+          "first_line": 1,
+          "last_line": 177,
+          "file_sha256": "220f6ba24dbb60db24b64b55b299da0da4a4a351271231cae72d1d1a6522b932"
+        }
+      ]
+    },
+    {
+      "id": "second_delft_context_rotor_scope",
+      "role": "semantic_contract",
+      "components": [
+        "An optional pinned replay of the second Delft Bell release compares an ideal four-phase 0011 selector on accepted events. Dividing by run, both settings and herald type leaves only singles and pairs, guaranteeing zero distinguishing power. A secondary local-setting clock produces incompatible triples under the stated ideal contract."
+      ],
+      "declared_status": "Model-specific retrospective check on a second run of the same apparatus, not a direct experiment on the IDT rotor, or evidence of independence.",
+      "missing_bridges": [
+        "Justify physical association of a deterministic selector with the trial clock, local state, preparation, resets and readout; missing ticks and errors can change the result."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_delft_second_rotor.py",
+          "first_line": 1,
+          "last_line": 180,
+          "file_sha256": "f279cf74a2786b935f5ff153f7f1671787f49998fad3ce9e443a0ba61c4dc20b"
+        }
+      ]
+    }
+  ]
+}

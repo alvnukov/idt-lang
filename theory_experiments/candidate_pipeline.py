@@ -36,6 +36,14 @@ from theory_experiments.chiral_pencil import (
     evaluate_chiral_pencil,
     parse_chiral_pencil,
 )
+from theory_experiments.driven_event_selector import (
+    LOADED_SOURCE_SHA256 as DRIVEN_EVENT_SELECTOR_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.driven_event_selector import (
+    DrivenEventSelector,
+    evaluate_driven_event_selector,
+    parse_driven_event_selector,
+)
 from theory_experiments.identical_particles import (
     IdenticalPairAmplitudes,
     evaluate_identical_pair,
@@ -66,12 +74,20 @@ from theory_experiments.native_readout_search import (
 )
 from theory_experiments.neutral_current_width import (
     DATA_PATH as NEUTRAL_WIDTH_DATA_PATH,
+)
+from theory_experiments.neutral_current_width import (
     DATA_SHA256 as NEUTRAL_WIDTH_DATA_SHA256,
+)
+from theory_experiments.neutral_current_width import (
     LOADED_SOURCE_SHA256 as NEUTRAL_WIDTH_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.neutral_current_width import (
     NeutralCurrentWidth,
-    assert_loaded_sources as assert_neutral_width_sources,
     evaluate_neutral_current_width,
     parse_neutral_current_width,
+)
+from theory_experiments.neutral_current_width import (
+    assert_loaded_sources as assert_neutral_width_sources,
 )
 from theory_experiments.opposition_flag import (
     OppositionFlag,
@@ -107,6 +123,8 @@ from theory_experiments.source_candidate import (
 )
 from theory_experiments.triangle_stock import (
     LOADED_SOURCE_SHA256 as TRIANGLE_STOCK_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.triangle_stock import (
     TriangleStock,
     evaluate_triangle_stock,
     parse_triangle_stock,
@@ -126,6 +144,7 @@ Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
+    | DrivenEventSelector
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -143,6 +162,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/chiral_pencil.py",
     "theory_experiments/neutral_current_width.py", NEUTRAL_WIDTH_DATA_PATH,
     "theory_experiments/triangle_stock.py",
+    "theory_experiments/driven_event_selector.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -191,6 +211,26 @@ def _is_neutral_width_spec(value: object) -> bool:
 
 def _is_triangle_stock_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "triangle_stock"
+
+
+def _is_driven_event_selector_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "driven_event_selector"
+
+
+def _assert_driven_event_selector_sources(sources: object, *, check_current: bool = False) -> None:
+    """Pin the loaded submitted-transducer checker and its primitive helpers.
+
+    This assumes stable normal imports, not arbitrary loaders or interpreter
+    attestation. Cache receipts do not attest a physical prediction adapter.
+    """
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded_hash in (
+        ("theory_experiments/driven_event_selector.py", DRIVEN_EVENT_SELECTOR_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded_hash)):
+            raise ValueError(f"driven event selector source changed since import: {path}; restart from a stable checkout")
 
 
 def _assert_triangle_stock_sources(sources: object, *, check_current: bool = False) -> None:
@@ -254,6 +294,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "driven_event_selector":
+        return parse_driven_event_selector(row)
     if row.get("family") == "triangle_stock":
         return parse_triangle_stock(row)
     if row.get("family") == "neutral_current_width":
@@ -316,7 +358,17 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, TriangleStock):
+    # A verdict must be for the supplied transducer and budget. Keep the
+    # historical behavior of calls that do not involve this family.
+    driven_receipt = isinstance(candidate, DrivenEventSelector) or _is_driven_event_selector_spec(request.get("candidate"))
+    if driven_receipt and (not isinstance(candidate, DrivenEventSelector)
+            or canonical_json(request.get("candidate")) != canonical_json(candidate.specification())
+            or canonical_json(request.get("limits")) != canonical_json(limits.specification())):
+        raise ValueError("driven event selector candidate/limits do not match request")
+    if isinstance(candidate, DrivenEventSelector):
+        _assert_driven_event_selector_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_driven_event_selector(candidate, limits)
+    elif isinstance(candidate, TriangleStock):
         _assert_triangle_stock_sources(request["provenance"], check_current=True)
         checks, details = evaluate_triangle_stock(candidate, limits)
     elif isinstance(candidate, NeutralCurrentWidth):
@@ -385,10 +437,14 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 if isinstance(candidate, ChiralPencil)
                                 else "only_submitted_quasipolynomial_and_gain_law"
                                 if isinstance(candidate, TriangleStock)
+                                else "only_submitted_finite_transducer_and_calibrated_reference"
+                                if isinstance(candidate, DrivenEventSelector)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
 def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
+    if _is_driven_event_selector_spec(request.get("candidate")):
+        _assert_driven_event_selector_sources(request["provenance"], check_current=True)
     if _is_triangle_stock_spec(request.get("candidate")):
         _assert_triangle_stock_sources(request["provenance"], check_current=True)
     if _is_neutral_width_spec(request.get("candidate")):
@@ -501,7 +557,10 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_pencil = any(_is_chiral_pencil_spec(spec) for spec in specifications)
     has_width = any(_is_neutral_width_spec(spec) for spec in specifications)
     has_stock = any(_is_triangle_stock_spec(spec) for spec in specifications)
-    sources = provenance() if has_relay or has_pencil or has_width or has_stock else None
+    has_driven = any(_is_driven_event_selector_spec(spec) for spec in specifications)
+    sources = provenance() if has_relay or has_pencil or has_width or has_stock or has_driven else None
+    if has_driven:
+        _assert_driven_event_selector_sources(sources)
     if has_stock:
         _assert_triangle_stock_sources(sources)
     if has_width:
@@ -558,7 +617,10 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_pencil = _is_chiral_pencil_spec(request["candidate"])
     is_width = _is_neutral_width_spec(request["candidate"])
     is_stock = _is_triangle_stock_spec(request["candidate"])
-    sources = provenance() if is_relay or is_pencil or is_width or is_stock else None
+    is_driven = _is_driven_event_selector_spec(request["candidate"])
+    sources = provenance() if is_relay or is_pencil or is_width or is_stock or is_driven else None
+    if is_driven:
+        _assert_driven_event_selector_sources(sources)
     if is_stock:
         _assert_triangle_stock_sources(sources)
     if is_width:
