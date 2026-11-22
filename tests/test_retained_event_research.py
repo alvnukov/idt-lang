@@ -32,6 +32,13 @@ PACKS = {
         "reactor_relative_clock_scale_wall": "probe_reactor_relative_clocks",
         "three_arm_late_plate_contact_bound": "probe_three_arm_setting_contacts",
     }),
+    "primitive_cell_inference_inventory.json": ("local_cell_inference", {
+        "reciprocal_cell_timing_census": "probe_reversible_cell_census",
+        "unrestricted_cell_timing_partition": "probe_unrestricted_cell_tables",
+        "cell_projection_into_clock_screen": "probe_cell_rule_clock_projection",
+        "cell_orientational_fixed_number_exchange": "probe_cell_exchange_intervention",
+        "photonic_exchange_phase_countercontrol": "probe_photonic_exchange_reference",
+    }),
 }
 
 
