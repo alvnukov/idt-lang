@@ -8,7 +8,8 @@ from unittest.mock import patch
 
 from scripts.archive_existing_primitives import ROOT, inventory_specifications
 from theory_experiments import candidate_pipeline
-from theory_experiments.primitive_screen import load_json, object_fields
+from theory_experiments.candidate_history import DEFAULT_HISTORY, SCHEMA, History
+from theory_experiments.primitive_screen import Limits, load_json, object_fields
 from theory_experiments.source_candidate import parse_source_candidate
 
 INVENTORY = ROOT / "data/primitive_contacts_readout_inventory.json"
@@ -29,6 +30,19 @@ SOURCES = {f"scripts/probe_{name}.py" for name in (
 
 
 class PrimitiveContactsReadoutInventoryTests(unittest.TestCase):
+    def test_each_submission_keeps_its_original_unassessed_report(self) -> None:
+        archive = History(DEFAULT_HISTORY)
+        for spec in inventory_specifications(INVENTORY):
+            request = {"schema": SCHEMA, "limits": Limits().specification(), "candidates": [spec]}
+            key = candidate_pipeline.digest(request)
+            self.assertEqual(request, archive.get("submissions", key))
+            rows = archive.baseline(key)["reports"]
+            if not isinstance(rows, list) or len(rows) != 1:
+                self.fail("expected the original source report")
+            r = object_fields(rows[0])
+            self.assertEqual((r["status"], r["proof_status"], r["empirical_status"]),
+                             ("unsupported", "not_attempted", "not_tested"))
+
     def test_unique_ids_and_exact_campaign_sources(self) -> None:
         from scripts.replay_primitive_probe_campaign import TOPIC_BUNDLES
 
