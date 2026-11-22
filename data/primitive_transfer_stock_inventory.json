@@ -1,0 +1,108 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "unsigned_transfer_triangle_endpoint_realization",
+      "role": "realization",
+      "components": [
+        "Unsigned directed transfers with start/end roles splice locally and erase loops. Their signed boundary is an audit observable, not a signed input to rewriting. Exhausting triangle stocks through four arcs and all splice orders preserves the boundary and gives the same terminal squared endpoint incidence counts.",
+        "Exchange covariance plus reversal of either input at the raw-flow level forces an even product boundary; four unsigned arrows attain twice the unit checkerboard. Weaker covariance allows a three-arrow unit-scale shortcut, while preferred horizontal arrows are cheaper still.",
+        "For distinct independent edge motifs the joint antisymmetric herald has stock 24/64 and symmetric stock 40/64. Both retained branches give 1024 terminal ordered-pair events per setting and the named trine table. This router retains populations, not ancestral detector-ticket identities. Two reduced pairings can agree at endpoints yet differ for a pairing-sensitive detector; erasing a visible closed cycle is a substantive assumption."
+      ],
+      "declared_status": "Finite unsigned-transfer realization of endpoint currents and branch populations, not derived event identities, probabilities, physical detectors or a Bell-local source.",
+      "missing_bridges": [
+        "Derive direction, splice/loop erasure, split/reversal wiring, Cartesian corner roles and ordered-pair endpoint readout from primitive dynamics.",
+        "Justify the operational restriction to endpoint effects; pairing-sensitive and raw-path readers are not automatically erased by boundary equivalence. Population accounting does not establish an ancestral-ticket transport law."
+      ],
+      "sources": [
+        {"path": "scripts/probe_unsigned_transfer_triangle.py", "first_line": 1, "last_line": 9, "file_sha256": "019df3f674d46da950e0eb12f095855b577cd822684c0177a58ad426649b1970"},
+        {"path": "scripts/probe_unsigned_transfer_triangle.py", "first_line": 22, "last_line": 86, "file_sha256": "019df3f674d46da950e0eb12f095855b577cd822684c0177a58ad426649b1970"},
+        {"path": "scripts/probe_unsigned_transfer_triangle.py", "first_line": 109, "last_line": 152, "file_sha256": "019df3f674d46da950e0eb12f095855b577cd822684c0177a58ad426649b1970"},
+        {"path": "scripts/probe_unsigned_transfer_triangle.py", "first_line": 163, "last_line": 226, "file_sha256": "019df3f674d46da950e0eb12f095855b577cd822684c0177a58ad426649b1970"}
+      ]
+    },
+    {
+      "id": "bipartite_triangle_incidence_origin",
+      "role": "realization",
+      "components": [
+        "An unoriented packet stores anonymous occurrence vertices, symmetric adjacency and rail tags, without a stored bipartition, sign or amplitude. Connected bipartite path parity recovers two relative roles up to global interchange. A supplied two-sheet wiring coherently attaches an exchanged copy; cancellation and ordered-pair readout give the six-ray single-triangle table.",
+        "A supplied Cartesian occurrence-graph product gives a unit-scale checkerboard without choosing input sign frames. Across nine independent seed pairs and nine settings in both orders, the distinct-edge joint heralds are 10 and 6 of 16; the antisymmetric raw detector cells are (0,48,48,0) or (36,12,12,36). Both heralds and all final events are retained.",
+        "Finite controls cover 332 small tagged connected bipartite graphs, anonymous renamings, temporary parity-root choices and cancellation pairings. Different survivor identities agree only at the named population readout. The same disconnected input sheets can fuse to total stock eight or zero depending on the supplied bridge; input marginals do not select that wiring.",
+        "Odd-cycle and disconnected inputs lie outside this carrier, not a proved physical exclusion. Cancellation is destructive readout, not deletion carried into later graph dynamics; later predictions retain the full unmeasured branch graph. Population counts do not establish persistent event-ticket trajectories or a Bell-local detector."
+      ],
+      "declared_status": "Finite unoriented occurrence-graph realization and explicit fusion/readout controls, not the physical origin of sign, a universal carrier theorem, persistent-ticket dynamics or QM derivation.",
+      "missing_bridges": [
+        "Derive connected bipartite packet availability, rail identity, coherent two-sheet attachment, distinguished triangle ports/swaps, Cartesian composition and destructive ordered-pair readout from physical primitive dynamics.",
+        "Justify a physical fusion law and the allowed effect interface; relative path parity does not determine cross-packet wiring. Do not infer physical impossibility of odd cycles or erase unmeasured wiring after a virtual cancellation."
+      ],
+      "sources": [
+        {"path": "scripts/probe_bipartite_triangle_origin.py", "first_line": 1, "last_line": 21, "file_sha256": "b30e36d076acaba596239e16a7f047207d8b3027e1faf8ebe992a798d8e287d8"},
+        {"path": "scripts/probe_bipartite_triangle_origin.py", "first_line": 57, "last_line": 126, "file_sha256": "b30e36d076acaba596239e16a7f047207d8b3027e1faf8ebe992a798d8e287d8"},
+        {"path": "scripts/probe_bipartite_triangle_origin.py", "first_line": 142, "last_line": 185, "file_sha256": "b30e36d076acaba596239e16a7f047207d8b3027e1faf8ebe992a798d8e287d8"},
+        {"path": "scripts/probe_bipartite_triangle_origin.py", "first_line": 253, "last_line": 297, "file_sha256": "b30e36d076acaba596239e16a7f047207d8b3027e1faf8ebe992a798d8e287d8"}
+      ]
+    },
+    {
+      "id": "whole_triangle_stock_rigidity_and_bypass_discriminators",
+      "role": "semantic_contract",
+      "components": [
+        "Assume a nonnegative boundary-only stock on every neutral integer triple, zero stock at zero, separately readable branch sums and a positive input-independent gain for each of three exchanges. The stated all-lattice argument forces equal gains and a dichotomy: a quadratic gain-four law or a gain-one residue-mod-three law dark on all medians. One lit median selects the quadratic branch but fixes no scale.",
+        "The universal argument is mathematical, not a Lean proof or an exhaustive finite test. Free pooling prepares off-ray currents unavailable by single-edge splitting alone. A gain-two ray rival survives all edge/median splits but fails the three-transfer off-ray comparison; one named setting admits an anisotropic rival. A finite input horizon also leaves an outside-window rival.",
+        "Normalized two-output trines miss a stock multiplier on off-ray inputs. A matched distinguishable bypass separates 1/5 from 1/3 at (2,1,-3), provided the same response law applies at all ports. Input-aware bypass acceptance can counterfeit that result; constant bypass fractions constrain only positive-stock tested inputs, not dark states or all scales.",
+        "A hidden multiplier on currents divisible by seven survives the first off-ray seed but is separated at (4,-3,-1), where one setting gives 13/114 rather than 1/5. The concrete quadratic router gives five descendants per old ticket; the abstract magnitude dichotomy itself neither mints tickets nor derives probabilities."
+      ],
+      "declared_status": "Conditional whole-lattice stock classification plus finite native and bypass controls, not a physical Born law, composite law, universal experimental verification or automatic input to a separate quasipolynomial checker.",
+      "missing_bridges": [
+        "Establish a common boundary-only response, all required pooled preparations, branch additivity, all-scale constant gains and a lit median rather than inferring them from finitely many normalized trines.",
+        "Certify equal protected bypass response and complete branch accounting without input-dependent acceptance or hidden records. A finite discriminator and a separate checker do not supply the missing universal physical premises or ticket dynamics."
+      ],
+      "sources": [
+        {"path": "scripts/probe_triangle_stock_rigidity.py", "first_line": 1, "last_line": 53, "file_sha256": "81ae94e901ca4dde5de4a22f630bfdd0d329128931858ac6805dc27c6ef21d71"},
+        {"path": "scripts/probe_triangle_stock_rigidity.py", "first_line": 118, "last_line": 163, "file_sha256": "81ae94e901ca4dde5de4a22f630bfdd0d329128931858ac6805dc27c6ef21d71"},
+        {"path": "scripts/probe_triangle_stock_rigidity.py", "first_line": 207, "last_line": 252, "file_sha256": "81ae94e901ca4dde5de4a22f630bfdd0d329128931858ac6805dc27c6ef21d71"},
+        {"path": "scripts/probe_triangle_bypass_normalization.py", "first_line": 1, "last_line": 66, "file_sha256": "8c746f87a90f429ef5a5eb02f7a8ac2a343fd34724f426c604e7916d778f020e"},
+        {"path": "scripts/probe_triangle_bypass_normalization.py", "first_line": 69, "last_line": 143, "file_sha256": "8c746f87a90f429ef5a5eb02f7a8ac2a343fd34724f426c604e7916d778f020e"}
+      ]
+    },
+    {
+      "id": "native_coherent_partial_data_exchange",
+      "role": "route",
+      "components": [
+        "Two prior-contacted and corrected reference stocks, with both flags retained, support a co-located partial exchange of the data triangles. Supplied coherent splitting, a lower-path reference winding and reunification implement the conditional operator P-plus plus C times P-minus. No numerical entangling angle enters routing; the common complex-scalar description is diagnostic.",
+        "Every ancestral ticket gains sixteen descendants through the two splits. Raw-edge inputs yield CHSH 33/16 without an input herald. The orthogonal local-preparation branch has CHSH 5/2 but occurs with probability 3/4; retaining both preparation flags gives 13/8. All scores retain both detector outputs and the prior reference flags.",
+        "Which-path recording and bypassing the winding are explicit controls. Reduced real package rank/purity changes and a nonfactorizing joint cell diagnose this supplied source, while a fixed-ancestry remote-setting witness rules out interpreting its marginal no-signalling as Bell locality."
+      ],
+      "declared_status": "Finite co-located addressed partial-exchange construction and scoped CHSH controls, not independently issued finished packages, spacelike detector dynamics or full QM.",
+      "missing_bridges": [
+        "Derive prior correlated references, conditional correction, shared winding, coherent path controls, signed cancellation, joint ordered-pair routing and uniform seeds from physical dynamics.",
+        "Distinguish the all-trial raw-edge score from the herald-conditioned local-preparation score. No Bell-local or remote mechanism follows from the observed marginal equalities within the finite fixture."
+      ],
+      "sources": [
+        {"path": "scripts/probe_native_partial_exchange.py", "first_line": 1, "last_line": 19, "file_sha256": "6ce2f48ca9f70847b0f4a7a381046a6f69941e3b47bb34ff2292de224fe91286"},
+        {"path": "scripts/probe_native_partial_exchange.py", "first_line": 120, "last_line": 188, "file_sha256": "6ce2f48ca9f70847b0f4a7a381046a6f69941e3b47bb34ff2292de224fe91286"},
+        {"path": "scripts/probe_native_partial_exchange.py", "first_line": 269, "last_line": 303, "file_sha256": "6ce2f48ca9f70847b0f4a7a381046a6f69941e3b47bb34ff2292de224fe91286"},
+        {"path": "scripts/probe_native_partial_exchange.py", "first_line": 306, "last_line": 404, "file_sha256": "6ce2f48ca9f70847b0f4a7a381046a6f69941e3b47bb34ff2292de224fe91286"}
+      ]
+    },
+    {
+      "id": "prospective_all_herald_reference_sewing_trials",
+      "role": "route",
+      "components": [
+        "A prospective fixed-size design compares a specified one-real-package-per-port source with the supplied target. Ray labels are intentionally related by same/orthogonal class; preparation products conditional on those labels and fresh independent reference turns are independent. The co-located comparator must not receive class, label, turn, seed, extra-copy or timing side channels.",
+        "Register every herald before drawing treatment; score one bit for every complete fixed-window record, including losses as specified no-clicks, without conditioning on a reference branch. A missing log is not a known zero. The nominal null win cap is 3/4 versus ideal IID target 5/6. At 317 preregistered trials and alpha 1/100, rejection begins at 256 wins; this is design arithmetic, not an observed result or p-value.",
+        "The fixed-N binomial size bound needs the cap conditional on every history, not IID device behavior. Ideal power does assume IID target shots. Classwise trace-error and per-history compromised-shot budgets modify the cap; calibration failure probabilities must be included separately. Pole-only support, synchronized turns and disclosed class give explicit false-hit controls.",
+        "A rejection would challenge the specified joint source/device/isolation assumptions, not all real theories or identify a replacement. Nonrejection is inconclusive. No physical comparator or eligible dataset is identified."
+      ],
+      "declared_status": "Prospective exact design and sensitivity controls only; no empirical trials, experimental rejection, p-value or derived physical composition law.",
+      "missing_bridges": [
+        "Independently certify assigned joint ensembles, independent cyclic turns, one-copy capacity, source/device isolation, herald completeness and uniform per-history leakage/error budgets for any future stream.",
+        "Preregister N, alpha, response window, rail, score and budgets; retain complete records and prohibit peeking, treatment leakage or postselected denominators. Software labels, one-port tomography and ideal power arithmetic do not establish eligibility."
+      ],
+      "sources": [
+        {"path": "scripts/probe_reference_sewing_trials.py", "first_line": 1, "last_line": 42, "file_sha256": "d7cce5235b0615bb098c712f265371acd99470dc90e617307f77eb42c9bcd546"},
+        {"path": "scripts/probe_reference_sewing_trials.py", "first_line": 63, "last_line": 121, "file_sha256": "d7cce5235b0615bb098c712f265371acd99470dc90e617307f77eb42c9bcd546"},
+        {"path": "scripts/probe_reference_sewing_trials.py", "first_line": 124, "last_line": 157, "file_sha256": "d7cce5235b0615bb098c712f265371acd99470dc90e617307f77eb42c9bcd546"}
+      ]
+    }
+  ]
+}
