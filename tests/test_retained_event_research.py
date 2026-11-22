@@ -74,6 +74,11 @@ PACKS = {
         "resonant_energy_vs_single_detection": "probe_resonant_energy_and_single_click",
         "native_hop_charge_conservation_wall": "probe_carrier_charge_conservation",
     }),
+    "primitive_noisy_cut_inventory.json": ("noisy_binary_cuts", {
+        "shared_seed_noisy_binary_overlap": "probe_robust_shared_cut_overlap",
+        "randomized_setting_common_target": "probe_randomized_cut_coverage",
+        "processor_cut_original_count_control": "probe_processor_cut_data",
+    }),
 }
 
 

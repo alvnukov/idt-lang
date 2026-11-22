@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "shared_seed_noisy_binary_overlap",
+      "role": "route",
+      "components": [
+        "Coincidence of binary suffix distributions bounds pairwise preparation overlaps even under an input-independent shared classical seed. Noisy boxes can exclude a proposed dimension; a real qubit example reaches equality and a multi-output countercontrol blocks generalization."
+      ],
+      "declared_status": "Exact finite controls for a necessary dimension inequality; no empirical interval coverage or quantum reconstruction inferred.",
+      "missing_bridges": [
+        "Bind unconditional binary outcomes, common input-independent mixing, and simultaneous statistical coverage to the tested apparatus."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_robust_shared_cut_overlap.py",
+          "first_line": 1,
+          "last_line": 207,
+          "file_sha256": "dea07d0269593fc8d89f13d9fdd3c7f0819b805c0e1da5a7ed02bf4a79e85550"
+        }
+      ]
+    },
+    {
+      "id": "randomized_setting_common_target",
+      "role": "route",
+      "components": [
+        "A declared random choice on every trial permits inverse-propensity estimates of one common time-averaged response. Simultaneous rational time-uniform intervals protect against setting imbalance and drift under explicit independence requirements."
+      ],
+      "declared_status": "Conditional inference design with a synthetic false-exclusion control; unknown propensity schedules cannot be recovered from grouped counts.",
+      "missing_bridges": [
+        "Establish recorded assignment probabilities, all trials and no current-setting leakage in actual data."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_randomized_cut_coverage.py",
+          "first_line": 1,
+          "last_line": 273,
+          "file_sha256": "d5aa350ef3a07e36270da4d4ac6f2bf7db09d7eb3dbcf0508a0eb651179b0df7"
+        }
+      ]
+    },
+    {
+      "id": "processor_cut_original_count_control",
+      "role": "route",
+      "components": [
+        "Independently replay one preselected preparation and measurement processor job from a hash-pinned public count file. The published witness is reproduced; a dimension cut is evaluated only with explicit extra stationarity and sampling premises."
+      ],
+      "declared_status": "Real count reproduction, not independent experimental replication or a drift-robust empirical primitive exclusion.",
+      "missing_bridges": [
+        "The archive lacks shot-level randomization and isolation evidence; test a prospective all-attempt randomized design."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_processor_cut_data.py",
+          "first_line": 1,
+          "last_line": 190,
+          "file_sha256": "fd9fe447d38aa77338344f03d8c7fe1965dca9754866ab99549f41a9d97d3a58"
+        }
+      ]
+    }
+  ]
+}
