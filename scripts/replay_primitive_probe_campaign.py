@@ -360,6 +360,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_three_sheet_reunion_cost",
         "probe_abelian_reunion_dimensions",
     ),
+    "native_charge_dynamics": (
+        "probe_charge_collision_invariants",
+        "probe_blind_collision_charge",
+        "probe_native_reflection_geometry",
+        "probe_even_lattice_completion",
+        "probe_charge_trace_and_running",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

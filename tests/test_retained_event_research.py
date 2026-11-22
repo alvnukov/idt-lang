@@ -91,6 +91,13 @@ PACKS = {
         "closed_three_sheet_reunion_cost": "probe_three_sheet_reunion_cost",
         "abelian_reunion_dimension_intervention": "probe_abelian_reunion_dimensions",
     }),
+    "primitive_native_charge_dynamics_inventory.json": ("native_charge_dynamics", {
+        "signed_neutral_collision_arity": "probe_charge_collision_invariants",
+        "blind_local_collision_invariant": "probe_blind_collision_charge",
+        "signed_flag_reflection_geometry": "probe_native_reflection_geometry",
+        "even_unimodular_lattice_completion": "probe_even_lattice_completion",
+        "trace_normalization_and_pole_control": "probe_charge_trace_and_running",
+    }),
 }
 
 

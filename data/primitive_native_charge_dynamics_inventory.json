@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "signed_neutral_collision_arity",
+      "role": "route",
+      "components": [
+        "Conditional on a signed-neutrality filter, compare common, independent and unrestricted collision alternatives at fixed arity on both sheets."
+      ],
+      "declared_status": "Some small-body interactions conserve both block counts separately; allowing a nontrivial signed conversion costs additional packets and depends on operation locality.",
+      "missing_bridges": [
+        "Select a collision mechanism without filtering on the very quantity to be explained."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_charge_collision_invariants.py",
+          "first_line": 1,
+          "last_line": 311,
+          "file_sha256": "be5e6840b275dd9b3d8cde46ca54964004aeee5fc251cbfcc56bc836da493baf"
+        }
+      ]
+    },
+    {
+      "id": "blind_local_collision_invariant",
+      "role": "route",
+      "components": [
+        "Solve additive conservation from reversible within-block, interpacket and seven ternary channel templates before comparing to signed ballot. Track controls, synchronized moves and operational reachability."
+      ],
+      "declared_status": "One template in this retrospectively chosen grammar reproduces the ballot up to normalization; combined alternatives erase every nonconstant additive invariant.",
+      "missing_bridges": [
+        "Explain supply of two blank packets, synchronized channel choice and firing. Distinguish absolute versus relative preparations out of grammar."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_blind_collision_charge.py",
+          "first_line": 1,
+          "last_line": 326,
+          "file_sha256": "f67d5fc3ed2fc31c46f57354282c63c65192aa8d2122b67347498bbad934e4ce"
+        }
+      ]
+    },
+    {
+      "id": "signed_flag_reflection_geometry",
+      "role": "route",
+      "components": [
+        "Search chord reflections of all sixteen endpoint readings without specifying a root list. Compare signed equal-weight flags with pair-product flags and compare full, blank and ballot stabilizers."
+      ],
+      "declared_status": "The D5, A4 and A2 plus A1 reflection patterns are finite and metric-dependent, not gauge fields or a Standard Model derivation.",
+      "missing_bridges": [
+        "Derive a physical metric, continuous local interactions and a reason to remove the extra Abelian axis."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_reflection_geometry.py",
+          "first_line": 1,
+          "last_line": 139,
+          "file_sha256": "ff9d17925ebb4839240f2a55c74213a0444cb0b0c71cb0f91e4344f8837be5f6"
+        }
+      ]
+    },
+    {
+      "id": "even_unimodular_lattice_completion",
+      "role": "route",
+      "components": [
+        "Check the discriminant form, minimal rank of an even positive unimodular enlargement and root counts of explicit E8 and rank-sixteen completions under D5 projections."
+      ],
+      "declared_status": "Exact lattice identities under extra assumptions; the E8 construction supplies four copies of each spinor chirality in this projection, not three generations.",
+      "missing_bridges": [
+        "Derive any even unimodular requirement, physical compactification, particle identification and selection of an embedding."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_even_lattice_completion.py",
+          "first_line": 1,
+          "last_line": 286,
+          "file_sha256": "33e4f8c66d31093034ec3ac889a9964d08579b93c03520d33892f9066abbc972"
+        }
+      ]
+    },
+    {
+      "id": "trace_normalization_and_pole_control",
+      "role": "route",
+      "components": [
+        "Equal-weight traces of the two-block flags, a weighted-metric control, direct pole asymmetry sign and one-loop complete-family shifts under standard external gauge assumptions."
+      ],
+      "declared_status": "A normalized generator is not a coupling. The naive effective-pole dictionary has the wrong sign; complete families cancel from one-loop slope differences.",
+      "missing_bridges": [
+        "Provide a physical coupling metric, running and thresholds and a genuinely independent generation-selecting observable."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_charge_trace_and_running.py",
+          "first_line": 1,
+          "last_line": 221,
+          "file_sha256": "0382135131ffd027ef695427beca428c0937ed876a4624a162158f663a1d20e7"
+        }
+      ]
+    }
+  ]
+}
