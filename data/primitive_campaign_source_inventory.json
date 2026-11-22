@@ -1,0 +1,177 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "rank_two_transparent_signed_exchange",
+      "role": "route",
+      "components": [
+        "Two addressable rank-two integer ports with signed additive substitutions, minimum transparent scale two, and a raw two-step echo equal to four times full port exchange.",
+        "A nonnegative stock additive across ports, zero at vacuum and not identically zero, with common gain on all preparations. The selected one-port stock counts the lattice index of the sublattice spanned by x and Jx for nonzero x.",
+        "An alternative shutter argument supplies a full raw echo with unknown integral multiplier and a detectable same-port return, using an isolated dump with no feedback. It forces even absolute scalar scale, not physical realization of the minimum."
+      ],
+      "declared_status": "Conditional rank-two argument and finite controls; port populations do not certify the raw echo or a calibrated norm model. Not a checked Lean result or measured detector.",
+      "missing_bridges": [
+        "Establish the rank-two integral carrier, full-state echo and stable port-local gain for physical operations without presupposing norm readout.",
+        "Connect the stock to physical event selection and detector response rather than identifying a lattice index with a click probability."
+      ],
+      "sources": [
+        {"path": "scripts/PORT_STOCK_ORIGIN.md", "first_line": 3, "last_line": 30, "file_sha256": "7e2d04069f35f2f9dbdd7f543b5b49886471ac46e9656301b24c966a00d5f5f6"},
+        {"path": "scripts/PORT_STOCK_ORIGIN.md", "first_line": 73, "last_line": 91, "file_sha256": "7e2d04069f35f2f9dbdd7f543b5b49886471ac46e9656301b24c966a00d5f5f6"},
+        {"path": "scripts/TRANSPARENCY_FROM_A_SHUTTER.md", "first_line": 3, "last_line": 16, "file_sha256": "7356d0d0fcfba8a3596c412f805a20d373e1b486d91158293a01f9040b0c4ff7"},
+        {"path": "scripts/TRANSPARENCY_FROM_A_SHUTTER.md", "first_line": 44, "last_line": 62, "file_sha256": "7356d0d0fcfba8a3596c412f805a20d373e1b486d91158293a01f9040b0c4ff7"},
+        {"path": "scripts/TRANSPARENCY_FROM_A_SHUTTER.md", "first_line": 71, "last_line": 80, "file_sha256": "7356d0d0fcfba8a3596c412f805a20d373e1b486d91158293a01f9040b0c4ff7"}
+      ]
+    },
+    {
+      "id": "ranked_pair_event_routing",
+      "role": "realization",
+      "components": [
+        "Signed children propagate under integer matrices with orthogonal equal-gain columns, then opposite children cancel within each outgoing rail.",
+        "Ordered pairs of live same-rail addresses, including repeated addresses, route bijectively with seeds through two supplied address matchings. Uniform input tags and seeds give uniform output tags.",
+        "A ranked address calculation reproduces explicit routing without listing the cloud. Finite matching changes can alter individual histories without altering the aggregate."
+      ],
+      "declared_status": "Conditional finite tag routing, not a unique trajectory prediction. The combined Bell probe supplies joint configuration space, not Bell-local dynamics or experimental evidence.",
+      "missing_bridges": [
+        "Identify a physical carrier of the full signed cloud, a local supply of seeds and matchings, and a detector that converts routed tags into exclusive events with physical energy accounting.",
+        "Derive composite preparation and the joint-space operations rather than assuming them for finite Bell comparisons."
+      ],
+      "sources": [
+        {"path": "scripts/ROUTED_EVENT_CANDIDATE.md", "first_line": 13, "last_line": 48, "file_sha256": "4e4791dc71fb352d4c8b47b487b9ab0bcc5198674176cb924130f571038900a3"},
+        {"path": "scripts/ROUTED_EVENT_CANDIDATE.md", "first_line": 71, "last_line": 77, "file_sha256": "4e4791dc71fb352d4c8b47b487b9ab0bcc5198674176cb924130f571038900a3"}
+      ]
+    },
+    {
+      "id": "persistent_rotor_event_supply",
+      "role": "realization",
+      "components": [
+        "One persistent seed counter per arriving tag and gate, one reproducible source tag and a fixed device word. Local routing bijections cycle through all final tags, even with arbitrary initial counter offsets.",
+        "Exact long-run counts do not imply independent clicks. One counter per gate and reset-on-every-shot are distinct controls; trigger alignment, missed arrivals and reset assumptions matter.",
+        "A related finite swap detector coherently stores a record and later returns it, rather than irreversibly absorbing it."
+      ],
+      "declared_status": "Conditional fixed-word schedule and finite memory control. A detected-click comparison does not test a rotor on unobserved emitted trials without additional timing and loss assumptions.",
+      "missing_bridges": [
+        "Supply physical clocks, preparations and empirical timing and loss models that relate emitted trials to detected clicks and address variable settings and inter-device independence.",
+        "Derive irreversible record formation and energy deposition from detector or reservoir dynamics."
+      ],
+      "sources": [
+        {"path": "scripts/EVENT_STREAM_AND_DETECTORS.md", "first_line": 14, "last_line": 47, "file_sha256": "06d5e16924f64ddf29e66e68e6917767e202231ad814125e4d2a979d590f3857"},
+        {"path": "scripts/EVENT_STREAM_AND_DETECTORS.md", "first_line": 72, "last_line": 81, "file_sha256": "06d5e16924f64ddf29e66e68e6917767e202231ad814125e4d2a979d590f3857"},
+        {"path": "scripts/EVENT_STREAM_AND_DETECTORS.md", "first_line": 97, "last_line": 106, "file_sha256": "06d5e16924f64ddf29e66e68e6917767e202231ad814125e4d2a979d590f3857"}
+      ]
+    },
+    {
+      "id": "alternative_prepared_readouts",
+      "role": "route",
+      "components": [
+        "Compare uniform permutation recurrence with a nonuniform absorbing-walk preparation whose phase shift and final threshold are supplied separately.",
+        "Compare a cosine-weighted hemisphere, midpoint-stopped odd-dimensional cube walks and cyclic ballot tapes with unbiased choices and sign detectors. The tape's herald is fixed before choosing the analyzer.",
+        "On eight supplied cube preparations, vertex, one-bit and erased-coordinate edge records have distinct information even when binary tests agree. The edge decoder uses the whole measurement; conditional no-click agreement is not normalized raw agreement."
+      ],
+      "declared_status": "Conditional preparation and finite readout comparisons, not a new sphere model, derivation of the qubit rule, or selection of the physical carrier. A table mismatch applies only to the stated record and target.",
+      "missing_bridges": [
+        "Derive a physical preparation with available settings, unbiased choices and registered herald or loss accounting; the sphere fixture starts from the supplied density.",
+        "Specify retained records and apparatus response for arbitrary states, sequential measurements and composite systems without importing the target rules."
+      ],
+      "sources": [
+        {"path": "scripts/PREPARATION_CANDIDATES.md", "first_line": 3, "last_line": 26, "file_sha256": "b9a47e0062565fa40d089eb0ae46df5d9d76b2db3c646000956795cef6f9d00e"},
+        {"path": "scripts/PREPARATION_CANDIDATES.md", "first_line": 45, "last_line": 80, "file_sha256": "b9a47e0062565fa40d089eb0ae46df5d9d76b2db3c646000956795cef6f9d00e"},
+        {"path": "scripts/CUBE_DETECTOR_CANDIDATES.md", "first_line": 3, "last_line": 40, "file_sha256": "d71724fa0b3b75cfa77c4b3b000ebe3ffdda9b15cb6e979e234732bc1d52b54d"},
+        {"path": "scripts/CUBE_DETECTOR_CANDIDATES.md", "first_line": 64, "last_line": 75, "file_sha256": "d71724fa0b3b75cfa77c4b3b000ebe3ffdda9b15cb6e979e234732bc1d52b54d"}
+      ]
+    },
+    {
+      "id": "commuting_noncommuting_phase_carriers",
+      "role": "law_family_collection",
+      "components": [
+        "Finite blind sign samples versus paired addressable queries with a shared cut structure: signed estimates are not nonnegative clicks.",
+        "Signed integer colors with supplied unit, bilinear serial composition, orthogonal unit colors, signed-axis products and multiplicative squared stock at common exposure. The two-axis lattice is Gaussian, not the continuous complex plane.",
+        "Three commuting masks fail a joint stock constraint; two quaternion orientations survive a separate finite four-axis XOR catalog. An exactly lossless two-mark shell tests a restricted reversible carrier."
+      ],
+      "declared_status": "Conditional comparisons of supplied products, query access and finite state shells. Norm-only checks do not distinguish two composition orders, and the scoped shell obstruction is not a general finite-model exclusion.",
+      "missing_bridges": [
+        "Explain physical access to correlated addresses or coherent references that compare composition orders, and derive the stock and product premises from the same operations.",
+        "Explain selection of a physical carrier and its extension beyond a finite shell or signed-axis catalog, with composite and continuous phase operations."
+      ],
+      "sources": [
+        {"path": "scripts/PHASE_COLOR_CANDIDATES.md", "first_line": 9, "last_line": 15, "file_sha256": "f31bc5d824a8382d460c6d446b8e427086a8105b5307d0e8b57d0ecfbea06c71"},
+        {"path": "scripts/PHASE_COLOR_CANDIDATES.md", "first_line": 26, "last_line": 63, "file_sha256": "f31bc5d824a8382d460c6d446b8e427086a8105b5307d0e8b57d0ecfbea06c71"},
+        {"path": "scripts/PHASE_COLOR_CANDIDATES.md", "first_line": 67, "last_line": 82, "file_sha256": "f31bc5d824a8382d460c6d446b8e427086a8105b5307d0e8b57d0ecfbea06c71"}
+      ]
+    },
+    {
+      "id": "copy_record_erasure_proposals",
+      "role": "route",
+      "components": [
+        "Latent parity leakage is defined for the prepared classical record; the one-/two-bit mixture is calibrated to a supplied cube-retrieval target.",
+        "Independent edge records for adjacent cube preparations have a common ambiguous mass 3^(-N), implying a summed diagonal-error bound (not a per-row bound) for normalized joint readout.",
+        "Correlated erasure schedules are distinct controls: one ternary schedule matches one- and two-source erasure marginals and allows a source-blind decoder for the specified three-copy table."
+      ],
+      "declared_status": "Conditional copy-record comparisons with a supplied quantum benchmark. Passing one table with correlated erasures does not give general composite quantum dynamics; latent leakage is not a measured distance.",
+      "missing_bridges": [
+        "Derive or independently certify the joint preparation and erasure law instead of inferring independence from marginals.",
+        "Connect a physical composite apparatus to normalized joint response and raw loss accounting without importing the benchmark measurement."
+      ],
+      "sources": [
+        {"path": "scripts/PARITY_AND_COMPOSITION.md", "first_line": 22, "last_line": 45, "file_sha256": "b48778c739129871c4a7ce4f2b17b62620a0618836e761b5bbcc62856804468d"},
+        {"path": "scripts/PARITY_AND_COMPOSITION.md", "first_line": 49, "last_line": 67, "file_sha256": "b48778c739129871c4a7ce4f2b17b62620a0618836e761b5bbcc62856804468d"},
+        {"path": "scripts/PARITY_AND_COMPOSITION.md", "first_line": 79, "last_line": 89, "file_sha256": "b48778c739129871c4a7ce4f2b17b62620a0618836e761b5bbcc62856804468d"}
+      ]
+    },
+    {
+      "id": "signed_exterior_slots_charge",
+      "role": "legacy_scaffold",
+      "components": [
+        "Fixed-occupation transfers on binary slots supply reciprocal signs and a commutator. On the checked graphs exterior signs solve the constraints up to vertex rephasing; transfer data do not determine creation signs across sectors.",
+        "Five even-parity slots with a supplied 3+2 split and continuous determinant-one block exterior action. Traceless block-constant additive charge in least integer units yields (-2,-2,-2,3,3) up to overall sign.",
+        "Comparison particle labels are supplied. Unsigned action, alternative block split and affine charges are controls; anomaly checks alone do not select the representation or neutral label interpretation."
+      ],
+      "declared_status": "Finite transfer checks and known exterior-algebra packaging, not emergent particles or a new empirical spectrum. Independent-label charge inputs in the proposed test are synthetic.",
+      "missing_bridges": [
+        "Derive cross-sector creation and annihilation laws, a coherent phase-sensitive readout, and any relativistic spin-statistics connection from more than fixed-sector transfers.",
+        "Derive the 3+2 split, block action and physical identifications independently, including selection among allowed charges and a dynamics for matter and gauge fields."
+      ],
+      "sources": [
+        {"path": "scripts/SLOT_SIGN_AND_CHARGE.md", "first_line": 10, "last_line": 52, "file_sha256": "05c6add4bef182e5ea4b28eb5d9eaa2cb8dbeb06fc638b2b2f57b2773b23c1d1"},
+        {"path": "scripts/SLOT_SIGN_AND_CHARGE.md", "first_line": 63, "last_line": 91, "file_sha256": "05c6add4bef182e5ea4b28eb5d9eaa2cb8dbeb06fc638b2b2f57b2773b23c1d1"}
+      ]
+    },
+    {
+      "id": "local_transport_species_cones",
+      "role": "route",
+      "components": [
+        "A local signed two-channel update with opposite shifts, with dephased controls and count recurrence distinct from single-event trajectories.",
+        "Supplied traceless linear two-state Hermitian crossings constrain momentum Gram rank but do not select dimension or force equal axial speeds for species on the same lattice. Noncommuting spin shifts require checks for opposite chiral crossings.",
+        "Single-band clock matching and higher-order/multi-species controls; supplied link connections and interference comparisons distinguish frame relabeling from loop holonomy."
+      ],
+      "declared_status": "Finite kinematic comparisons using supplied updates and link data, not a derivation of spacetime, a universal clock, isolated chiral matter or a field measurement.",
+      "missing_bridges": [
+        "Derive the local update and a continuum limit with common causal geometry and calibrated clocks across species, and account for unwanted chiral partners.",
+        "Supply physical link dynamics and a coupling law; a loop-phase readout alone is not electromagnetism or gravity."
+      ],
+      "sources": [
+        {"path": "scripts/TRANSPORT_CANDIDATES.md", "first_line": 3, "last_line": 39, "file_sha256": "65f2dc15e3eb3f98f1f64dbb02a9a31c6a86a31669ad15d27ec1f8458180f211"}
+      ]
+    },
+    {
+      "id": "unread_gap_collision_sampler",
+      "role": "semantic_contract",
+      "components": [
+        "Arbitrarily extendible symmetric visible records with chance-level collision force uniform independent draws; finite symmetry and chance collision alone can permit biased marginals.",
+        "In ordered time a separate gap discrepancy is needed: randomized positions in a rotor log can hide memory in consecutive labels.",
+        "For specified finite stochastic instruments, invariance under unread insertion in every ordered context gives a mixture of independent identical draws. Collision at the uniform rate forces uniformity on accessible classes only.",
+        "Fixed two-state detector tests across circuit depths compare final readouts, not shot-index records; the loss control assumes outcome-dependent deletion and no false clicks."
+      ],
+      "declared_status": "Conditional sampling contracts and matrix-specific certificate, not a microscopic random source, a test of unknown matrices from finite histograms, or a verdict on measured streams.",
+      "missing_bridges": [
+        "Establish that the omitted physical operation preserves ordered-context laws and certify accessible fine-label collision rates without shuffling or coarse-graining away memory.",
+        "Justify a physical instrument and its setting, timing and loss assumptions before transferring these sampling or depth bounds to detector data."
+      ],
+      "sources": [
+        {"path": "scripts/OPERATIONAL_SAMPLING.md", "first_line": 3, "last_line": 12, "file_sha256": "3d42b8beafef77e37ed9f9c20b89ba08cadafcc15fd8423aca393f3e082c9522"},
+        {"path": "scripts/OPERATIONAL_SAMPLING.md", "first_line": 24, "last_line": 38, "file_sha256": "3d42b8beafef77e37ed9f9c20b89ba08cadafcc15fd8423aca393f3e082c9522"},
+        {"path": "scripts/OPERATIONAL_SAMPLING.md", "first_line": 40, "last_line": 68, "file_sha256": "3d42b8beafef77e37ed9f9c20b89ba08cadafcc15fd8423aca393f3e082c9522"},
+        {"path": "scripts/OPERATIONAL_SAMPLING.md", "first_line": 72, "last_line": 86, "file_sha256": "3d42b8beafef77e37ed9f9c20b89ba08cadafcc15fd8423aca393f3e082c9522"}
+      ]
+    }
+  ]
+}

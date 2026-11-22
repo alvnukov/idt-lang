@@ -67,6 +67,11 @@ separate from successful *execution*. A counterexample is often a
 successful probe, not a failed run. This suite does not replace or
 update the canonical candidate archive:
 `python3 scripts/check_candidate_history.py` compares its saved baselines.
+The [source inventory](../data/primitive_campaign_source_inventory.json)
+also retains nine families from this campaign, including their missing
+physical links. Those archive records have an unsupported physical
+prediction adapter; that is neither a rejection nor a replacement for
+running the corresponding probes.
 
 The [error-certificate and experiment-design probe](probe_stock_error_certificates.py)
 translates simultaneous residual bounds into bounds on four specific
