@@ -288,6 +288,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_event_memory_witness",
         "probe_delft_second_rotor",
     ),
+    "local_observer_clocks": (
+        "probe_internal_detector_clocks",
+        "probe_matched_vernier_petals",
+        "probe_trigger_carry_slip",
+        "probe_calendar_carry_alias",
+        "probe_coprime_signed_encounters",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

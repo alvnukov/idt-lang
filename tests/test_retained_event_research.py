@@ -19,6 +19,13 @@ PACKS = {
         "driven_event_trace_memory_witness": "probe_event_memory_witness",
         "second_delft_context_rotor_scope": "probe_delft_second_rotor",
     }),
+    "primitive_observer_clock_inventory.json": ("local_observer_clocks", {
+        "internal_port_latch_reference_clock": "probe_internal_detector_clocks",
+        "matched_detuned_petal_reference": "probe_matched_vernier_petals",
+        "externally_stimulated_carry_slip": "probe_trigger_carry_slip",
+        "periodic_calendar_contact_alias": "probe_calendar_carry_alias",
+        "coprime_raw_signed_encounters": "probe_coprime_signed_encounters",
+    }),
 }
 
 
