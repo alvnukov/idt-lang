@@ -136,6 +136,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "packet_observability": (
         "probe_packet_echo_observability",
     ),
+    "collision_space": (
+        "probe_diamond_collision_walk",
+        "probe_routed_diamond_cones",
+        "probe_collision_cone_stability",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
