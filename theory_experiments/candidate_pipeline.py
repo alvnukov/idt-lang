@@ -10,6 +10,7 @@ import stat
 import sys
 import tempfile
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import TypeAlias
 
@@ -152,6 +153,17 @@ from theory_experiments.published_observation import (
     parse_published_observation,
 )
 from theory_experiments.quadratic_certificate import certify, verify_certificate
+from theory_experiments.relational_germ_observer import (
+    LOADED_SOURCE_SHA256 as RELATIONAL_GERM_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.relational_germ_observer import (
+    SCOPE as RELATIONAL_GERM_SCOPE,
+)
+from theory_experiments.relational_germ_observer import (
+    RelationalGermObserver,
+    evaluate_relational_germ_observer,
+    parse_relational_germ_observer,
+)
 from theory_experiments.source_candidate import (
     SourceCandidate,
     parse_source_candidate,
@@ -179,7 +191,7 @@ Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
-    | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut | BinaryOverlapCut
+    | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut | BinaryOverlapCut | RelationalGermObserver
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -187,6 +199,7 @@ CACHE_SCHEMA = "idt-screen-cache/1"
 _CACHE_MAX_BYTES = 512 * 1024
 _PREPARE_MEASURE_EVIDENCE = "necessary_conditions_on_submitted_finite_table_only"
 _BINARY_OVERLAP_EVIDENCE = "necessary_binary_overlap_bounds_on_submitted_event_table_only"
+_RELATIONAL_GERM_EVIDENCE = "finite_local_germ_transport_and_submitted_tally_comparison_only"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -204,6 +217,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/periodic_contact_observer.py",
     "theory_experiments/prepare_measure_cut.py",
     "theory_experiments/binary_overlap_cut.py",
+    "theory_experiments/relational_germ_observer.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -268,6 +282,21 @@ def _is_prepare_measure_cut_spec(value: object) -> bool:
 
 def _is_binary_overlap_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "binary_overlap_cut"
+
+
+def _is_relational_germ_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "relational_germ_observer"
+
+
+def _assert_relational_germ_sources(sources: object, *, check_current: bool = False) -> None:
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded in (
+        ("theory_experiments/relational_germ_observer.py", RELATIONAL_GERM_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded)):
+            raise ValueError(f"relational germ source changed since import: {path}; restart from a stable checkout")
 
 
 def _assert_binary_overlap_sources(sources: object, *, check_current: bool = False) -> None:
@@ -385,6 +414,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if _is_relational_germ_spec(row):
+        return parse_relational_germ_observer(row)
     if _is_binary_overlap_spec(row):
         return parse_binary_overlap_cut(row)
     if row.get("family") == "prepare_measure_cut":
@@ -452,6 +483,32 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
                      "tensor_multiplication", "exact_algebraic_certificate_not_Lean_proof"), witness)
 
 
+def _bind_relational_germ(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> None:
+    if (type(candidate) is not RelationalGermObserver or type(limits) is not Limits
+            or set(request) != {"schema", "candidate", "limits", "provenance"} or request["schema"] != SCHEMA
+            or canonical_json(request["candidate"]) != canonical_json(candidate.specification())
+            or canonical_json(request["limits"]) != canonical_json(limits.specification())):
+        raise ValueError("relational germ candidate/limits do not match request")
+    _assert_relational_germ_sources(request["provenance"], check_current=True)
+
+
+def _relational_germ_body(candidate: RelationalGermObserver, limits: Limits) -> dict[str, object]:
+    checks, details = evaluate_relational_germ_observer(candidate, limits)
+    return {"status": primitive.aggregate_status(checks), "checks": [c.specification() for c in checks],
+            "scope": details, "arithmetic": "exact_finite_graph_and_integer_ballots",
+            "evidence_kind": _RELATIONAL_GERM_EVIDENCE, "proof_status": "not_attempted",
+            "empirical_status": "not_tested", "rejection_scope": RELATIONAL_GERM_SCOPE}
+
+
+@lru_cache(maxsize=128)
+def _verified_germ_body_digest(candidate: RelationalGermObserver, limits: Limits) -> str:
+    # Only locally recomputed expected digests, never caller/file-provided
+    # hashes. An unfamiliar disk receipt requires the bounded traversal once.
+    # A verified repeat needs no domain evaluation. Candidate and limits are
+    # exact frozen values; callers must validate loaded/disk pins on EVERY hit.
+    return digest(_relational_germ_body(candidate, limits))
+
+
 def _binary_overlap_report(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     """Bind the exact normalized objects and the loaded checker to this standalone table."""
     if (type(candidate) is not BinaryOverlapCut or type(limits) is not Limits
@@ -469,6 +526,9 @@ def _binary_overlap_report(candidate: Hypothesis, limits: Limits, request: dict[
 
 
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if isinstance(candidate, RelationalGermObserver) or _is_relational_germ_spec(request.get("candidate")):
+        _bind_relational_germ(candidate, limits, request)
+        return {"request": request, **_relational_germ_body(candidate, limits)}
     if isinstance(candidate, BinaryOverlapCut) or _is_binary_overlap_spec(request.get("candidate")):
         return _binary_overlap_report(candidate, limits, request)
     checks: tuple[Check, ...]
@@ -580,6 +640,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
 
 
 def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_relational_germ_spec(request.get("candidate")):
+        _assert_relational_germ_sources(request["provenance"], check_current=True)
     if _is_binary_overlap_spec(request.get("candidate")):
         _assert_binary_overlap_sources(request["provenance"], check_current=True)
     if _is_prepare_measure_cut_spec(request.get("candidate")):
@@ -647,7 +709,12 @@ def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
     candidate = parse_hypothesis(request["candidate"])
-    if isinstance(candidate, BinaryOverlapCut):
+    if isinstance(candidate, RelationalGermObserver):
+        limits = parse_limits(request["limits"])
+        _bind_relational_germ(candidate, limits, request)
+        if digest({k: v for k, v in report.items() if k != "request"}) != _verified_germ_body_digest(candidate, limits):
+            raise ValueError("cached relational germ verdict/routes disagree with the bounded graph check")
+    elif isinstance(candidate, BinaryOverlapCut):
         # Local hashes are integrity checks, not evidence of a true verdict.
         # Redo this finite binary-only arithmetic (at most 276 pairs x 24
         # settings), including outward rounding and budget. No wide search,
@@ -681,8 +748,9 @@ def publish(path: Path, report: dict[str, object], request: dict[str, object]) -
     if len(raw) > _CACHE_MAX_BYTES:
         raise ValueError("cache entry exceeds 512 KiB")
     saved_request = report.get("request")
-    if _is_binary_overlap_spec(request.get("candidate")) or (
-            isinstance(saved_request, dict) and _is_binary_overlap_spec(saved_request.get("candidate"))):
+    if any(check(request.get("candidate")) or (
+            isinstance(saved_request, dict) and check(saved_request.get("candidate")))
+            for check in (_is_binary_overlap_spec, _is_relational_germ_spec)):
         _validate_cache_entry(envelope, request)
     # Hard-link publication is atomic and refuses replacement, including a competing publisher.
     descriptor, temporary = tempfile.mkstemp(prefix=".screen-", dir=path.parent)
@@ -758,10 +826,16 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_periodic = any(_is_periodic_contact_spec(spec) for spec in specifications)
     has_cut = any(_is_prepare_measure_cut_spec(spec) for spec in specifications)
     has_overlap = any(_is_binary_overlap_spec(spec) for spec in specifications)
+    has_germ = any(_is_relational_germ_spec(spec) for spec in specifications)
+    if has_germ and limits is not None and type(limits) is not Limits:
+        raise ValueError("relational germ candidate/limits do not match request")
     if has_overlap and limits is not None and type(limits) is not Limits:
         raise ValueError("binary overlap cut candidate/limits do not match request")
-    pins_sources = has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or has_cut or has_overlap
+    pins_sources = (has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or
+                    has_cut or has_overlap or has_germ)
     sources = provenance() if pins_sources else None
+    if has_germ:
+        _assert_relational_germ_sources(sources)
     if has_overlap:
         _assert_binary_overlap_sources(sources)
     if has_cut:
@@ -834,8 +908,12 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_periodic = _is_periodic_contact_spec(request["candidate"])
     is_cut = _is_prepare_measure_cut_spec(request["candidate"])
     is_overlap = _is_binary_overlap_spec(request["candidate"])
-    pins_sources = is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or is_cut or is_overlap
+    is_germ = _is_relational_germ_spec(request["candidate"])
+    pins_sources = (is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or
+                    is_cut or is_overlap or is_germ)
     sources = provenance() if pins_sources else None
+    if is_germ:
+        _assert_relational_germ_sources(sources)
     if is_overlap:
         _assert_binary_overlap_sources(sources)
     if is_cut:

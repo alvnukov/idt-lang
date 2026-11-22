@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "local_reunion_moment_discriminator",
+      "role": "route",
+      "components": [
+        "Measure two- and three-way endpoint coincidences of every rooted two-step route. A 24-site adversary matches the 16-site reference on the pair statistic at every root."
+      ],
+      "declared_status": "Third moment completes this finite exact multiplicity test; a folded and an unfolded carrier remain locally indistinguishable.",
+      "missing_bridges": [
+        "Derive comparable local preparations, complete route trials, resets and a reunion sensor."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_local_reunion_moments.py",
+          "first_line": 1,
+          "last_line": 315,
+          "file_sha256": "b613c154046d9a98ab456e1fa5bc5881cec91ea5d00323f913c52167ba6dddcd"
+        }
+      ]
+    },
+    {
+      "id": "reversible_active_vs_passive_ranging",
+      "role": "route",
+      "components": [
+        "Two moving-portal fiber worlds have identical passive slice records. Reversible dirty-store probing distinguishes four-site cliques, twelve words versus none."
+      ],
+      "declared_status": "Finite active intervention distinguishes these fiber models, not all geometries or bare observer-free motion.",
+      "missing_bridges": [
+        "Bind the supplied addressable ports, route memory and chord query to an actual detector."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reversible_range_alias.py",
+          "first_line": 1,
+          "last_line": 277,
+          "file_sha256": "f4a268808efd39fc96ed286061539d0cfe574fecee8084ae24bad673e1f00d20"
+        }
+      ]
+    },
+    {
+      "id": "exchanged_lift_without_statistics_sign",
+      "role": "route",
+      "components": [
+        "Hard-core two-body configurations on a tree support exchange, including ten-step histories matched in configuration visits and directed spatial bonds."
+      ],
+      "declared_status": "Permutation of the lift is geometric; a sign, coherent readout and its origin are not determined.",
+      "missing_bridges": [
+        "Separate an exchange sign from general occupation-dependent edge phases with additional operational controls."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_collision_free_exchange_paths.py",
+          "first_line": 1,
+          "last_line": 238,
+          "file_sha256": "14bc94321d5620a93f6f1e409300edfba8a54c15eb0fd23a09d1780e26a75d38"
+        }
+      ]
+    },
+    {
+      "id": "closed_three_sheet_reunion_cost",
+      "role": "route",
+      "components": [
+        "Partial sheet identification, disconnected copies and a connected threefold cover with native port lifting have different endpoint-reunion costs."
+      ],
+      "declared_status": "Sharp finite loss of at least one fifteenth in the tested connected-cover contract; not an exclusion of particle generations.",
+      "missing_bridges": [
+        "Specify what carries a sheet record and whether a detector can actually distinguish endpoints in the same fiber."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_sheet_reunion_cost.py",
+          "first_line": 1,
+          "last_line": 307,
+          "file_sha256": "4f9dbb6294aac337c87605c19f19ef6ed1404d28de5da40fd18e9d25cf710f3f"
+        }
+      ]
+    },
+    {
+      "id": "abelian_reunion_dimension_intervention",
+      "role": "route",
+      "components": [
+        "Relax selected local square conditions and compare abelian return records. Enumerating anchored stopping sets gives 400 minimal nine-face rank-three interventions in two inequivalent classes."
+      ],
+      "declared_status": "Exact finite presentation and finite residue comparisons. Neither abelian path addition nor a three-dimensional spacetime is inferred.",
+      "missing_bridges": [
+        "Find an endogenous release rule and operational signal transport; finite probes cannot choose between finite and infinite lifts."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_abelian_reunion_dimensions.py",
+          "first_line": 1,
+          "last_line": 460,
+          "file_sha256": "367f2561f9b3ae477b2eb3707e56dbc78f4f44bc3f6841c6afc7555c598de0d7"
+        }
+      ]
+    }
+  ]
+}

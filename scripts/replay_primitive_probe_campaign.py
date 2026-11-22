@@ -353,6 +353,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_folded_carrier_parity_contexts",
         "probe_contextual_readout_memory",
     ),
+    "relational_observer_covers": (
+        "probe_local_reunion_moments",
+        "probe_reversible_range_alias",
+        "probe_collision_free_exchange_paths",
+        "probe_three_sheet_reunion_cost",
+        "probe_abelian_reunion_dimensions",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
