@@ -272,6 +272,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_local_composite_stock",
         "probe_bypass_port_calibration",
     ),
+    "operational_identifiability": (
+        "probe_boundary_geometry_aliases",
+        "probe_three_packet_exchange_sector",
+        "probe_connected_contact_tomography",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

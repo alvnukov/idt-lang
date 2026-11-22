@@ -1,0 +1,56 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "boundary_ray_and_graph_distance_aliases",
+      "role": "semantic_contract",
+      "components": [
+        "On connected bipartite tagged packets, a frozen two-sheet contact, rail relabeling, Cartesian product and squared rail detector factor through the signed boundary. Two calibrated contact fractions on repeated preparations of one nonzero pure real neutral triangle recover its projective boundary ray, not its scale, sign or occurrence graph.",
+        "An odd tagged corridor with cancelling internal pairs and any prescribed number of attached neutral squares gives a family with exactly the same boundary (1,-1,0) but different cycle ranks. Unique endpoint tags permit a first-echo comparison without coordinates: with a one-edge-per-tick broadcast and immediate labelled reply, the displayed family has round trips of 4n+2 ticks.",
+        "Finite graph checks compare full branch stocks and endpoint echoes. A pair with matched vertex, edge and tag counts yields 6 versus 10 ticks. Different cycle ranks can also yield the same echo; coarse clocks or unknown link delay obscure distance. Mixtures, drifting tag references and coherent addition of a fixed-scale reference lie outside pure-ray inversion or scale homogeneity."
+      ],
+      "declared_status": "Conditional identifiability of a boundary ray, with an explicit graph-topology ambiguity and a timing discriminator for a supplied signal law; not derived physical distance, dimension, observer clocks or a Lean proof.",
+      "missing_bridges": [
+        "Justify calibrated contacts, repeatable pure preparations, a common tag frame and the quadratic population readout before interpreting the ray physically.",
+        "Derive or calibrate signal propagation, persistent identifiable terminals and resolvable return times. One echo does not fix graph topology or establish a three-dimensional geometry."
+      ],
+      "sources": [
+        {"path": "scripts/probe_boundary_geometry_aliases.py", "first_line": 1, "last_line": 225, "file_sha256": "0ab60419f52d55cab4168c2ba230adefee3d061ae0675f1d9a678c5425dea625"}
+      ]
+    },
+    {
+      "id": "three_packet_exchange_sector_discriminators",
+      "role": "route",
+      "components": [
+        "Three supplied orthogonal neutral contrasts on four rails have unsigned path witnesses. A three-factor Cartesian source, coherent factor permutations, signed cancellation and a complete ordered-pair router implement a cyclic classifier with two retained flags. The cyclic sum is not the standard-sector output.",
+        "On that same carrier, a standard-sector source and a balanced incoherent mixture of symmetric and antisymmetric flags agree on all three single pair-swap averages and same-pair repeats. The cyclic classifier accepts the mixture with fraction one and the standard source with fraction zero. Two different successive pair contacts already distinguish the named sources (agreement one versus one quarter).",
+        "On three neutral rails the alternating three-factor construction vanishes by trilinearity on a two-dimensional local basis. The four-rail discrimination does not select Bose, Fermi or any other physical exchange statistics."
+      ],
+      "declared_status": "Finite conditional exchange-sector discrimination under explicit preparation and readout resources, not a derivation of physical particle statistics, general composition, detector events or QM.",
+      "missing_bridges": [
+        "Justify the shared four-rail carrier, its three supplied contrast preparations, Cartesian factor addresses and coherent factor-exchange operations as physical resources.",
+        "Supply a physical detector and sector-selection law; pair-swap averages alone do not identify the exchange sector, and the cyclic classifier is not a uniquely required discriminator."
+      ],
+      "sources": [
+        {"path": "scripts/probe_three_packet_exchange_sector.py", "first_line": 1, "last_line": 195, "file_sha256": "c4b4e17afb1338ecb3a24a0a00dea612368cd33d733c921a9cdba53419d023a1"}
+      ]
+    },
+    {
+      "id": "connected_contact_tomography_scope",
+      "role": "semantic_contract",
+      "components": [
+        "On a known connected graph of named rails, calibrated sum/difference swaps, quadratic stock, reproducible preparations and complete incoherent flag accounting let programs on adjacent edges recover the mean squared contrast for every rail pair. No swap on a nonedge is required.",
+        "Using one shortest-path program per unordered pair and double-centering the recovered squared contrasts gives the trace-one real symmetric second moment for neutral preparations. The protocol uses n(n-1)/2 programs, with depth bounded by the graph diameter; this is a construction, not a lower bound. Reconstruction is checked against exact reference moments on finite lines and stars.",
+        "One-step readings can coincide while a two-step reading separates sources or catches hidden spectator wiring. The real contacts leave the sign of an imaginary cross moment and the ensemble decomposition unresolved; they do not infer the rail topology. Long paths amplify measurement errors."
+      ],
+      "declared_status": "Conditional reconstruction of a real neutral second moment from calibrated connected contacts and finite exact controls. Not complex-state tomography, a physical detector derivation, a noise guarantee or a Lean proof.",
+      "missing_bridges": [
+        "Justify labelled connected access, canonical spectator-preserving swaps, stable preparations, common gains and complete reporting of output flags before interpreting the inversion physically.",
+        "Specify uncertainty and calibration at the required path depths. Complex phase information, ensemble decomposition and a physical topology are not reconstructed by these real second-moment measurements."
+      ],
+      "sources": [
+        {"path": "scripts/probe_connected_contact_tomography.py", "first_line": 1, "last_line": 182, "file_sha256": "87d7f2f694de771c40fa46c900b96891bad48e50c554f416717917141411897b"}
+      ]
+    }
+  ]
+}
