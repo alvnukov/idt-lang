@@ -333,6 +333,16 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_calibrated_unit_pile_comparator",
         "probe_anonymous_tritter_control",
     ),
+    "carrier_mode_conservation": (
+        "probe_two_turn_germ_ballots",
+        "probe_minimal_binary_association",
+        "probe_binary_frustration_carrier",
+        "probe_rooted_parity_walk",
+        "probe_carrier_mode_countermodels",
+        "probe_passive_carrier_resonance",
+        "probe_resonant_energy_and_single_click",
+        "probe_carrier_charge_conservation",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
