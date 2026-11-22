@@ -6,6 +6,7 @@ import subprocess
 import sys
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
+from hashlib import sha256
 from pathlib import Path
 from unittest.mock import patch
 
@@ -24,8 +25,17 @@ class PrimitiveProbeCampaignTests(unittest.TestCase):
         self.assertEqual(
             all_probes, tuple(probe for probes in campaign.TOPIC_BUNDLES.values() for probe in probes)
         )
-        self.assertEqual(len(all_probes), 42)
-        self.assertEqual(len(set(all_probes)), 42)
+        self.assertEqual(len(set(all_probes)), len(all_probes))
+        # Adding probes must not displace the original published 42 or silently
+        # rename a witness. Do not refresh this historic digest on expansion.
+        self.assertEqual(
+            sha256("\n".join(all_probes[:42]).encode()).hexdigest(),
+            "efcee4b9533604418b1d4d9b9b89095a3eec048795e11ab7d6cc6f0d1e55edf4",
+        )
+        self.assertEqual(campaign.BUNDLES["sampling"], (
+            "probe_exchangeable_event_labels","probe_unread_tick_instruments",
+            "probe_two_state_readout_barrier",
+        ))
         self.assertLess(len(campaign.BUNDLES["fast"]), len(all_probes))
         self.assertLessEqual(set(campaign.BUNDLES["fast"]), set(all_probes))
         for probe in all_probes:

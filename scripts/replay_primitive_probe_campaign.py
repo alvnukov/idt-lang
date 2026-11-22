@@ -74,6 +74,67 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_trigger_alignment",
         "probe_transparency_shutter",
     ),
+    "sampling": (
+        "probe_exchangeable_event_labels",
+        "probe_unread_tick_instruments",
+        "probe_two_state_readout_barrier",
+    ),
+    "sector_words": (
+        "probe_echo_gauge_normal_form",
+        "probe_native_mixer_sector_density",
+        "probe_exact_charge_sector_wall",
+        "probe_heralded_sector_phase",
+        "probe_projective_repeat_classification",
+        "probe_catalytic_sector_phase",
+    ),
+    "record_order": (
+        "probe_alternative_setting_gaps",
+        "probe_adic_event_reservoir",
+        "probe_hensen_order_controls",
+    ),
+    "exterior_slots": (
+        "probe_collective_pauli_frame",
+        "probe_exchange_sign_relator",
+        "probe_exterior_slot_minimality",
+        "probe_five_slot_quartic_selector",
+    ),
+    "readout_frames": (
+        "probe_native_qutrit_frames",
+        "probe_native_row_probability",
+        "probe_unread_row_duplication",
+        "probe_finite_detector_identity",
+    ),
+    "family_mixing": (
+        "probe_ckm_raw_family_wall",
+        "probe_ckm_blank_ports",
+    ),
+    "phase_network": (
+        "probe_balanced_phase_composition",
+        "probe_two_source_phase_network",
+        "probe_phase_network_game",
+    ),
+    "program_memory": (
+        "probe_native_markov_spectrum",
+        "probe_autonomous_mixer_program",
+    ),
+    "unsigned_origins": (
+        "probe_unsigned_neutral_motifs",
+        "probe_uncolored_cycle_carrier",
+    ),
+    "unsigned_junction": (
+        "probe_unsigned_collision_search",
+        "probe_complement_collision_mixer",
+        "probe_asynchronous_pair_resolver",
+        "probe_unsigned_pair_tickets",
+        "probe_unsigned_background_readout",
+    ),
+    "qutrit_extensions": (
+        "probe_native_rational_pentagon",
+        "probe_qutrit_residue_frames",
+    ),
+    "packet_observability": (
+        "probe_packet_echo_observability",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
