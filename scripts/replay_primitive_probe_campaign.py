@@ -74,6 +74,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_trigger_alignment",
         "probe_transparency_shutter",
     ),
+    "sampling": (
+        "probe_exchangeable_event_labels",
+        "probe_unread_tick_instruments",
+        "probe_two_state_readout_barrier",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

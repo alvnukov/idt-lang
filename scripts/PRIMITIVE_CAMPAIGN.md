@@ -62,7 +62,7 @@ independently calibrated stock scale, not renormalized counts at each depth.
 
 Run `python3 scripts/replay_primitive_probe_campaign.py --bundle fast`
 for two cheap controls, `--list` for topics, or `--bundle all --json`
-for the 42 named probes. Nonzero exits, timeouts and launch errors are
+for the original 42 probes and the subsequent topic bundles. Nonzero exits, timeouts and launch errors are
 separate from successful *execution*. A counterexample is often a
 successful probe, not a failed run. This suite does not replace or
 update the canonical candidate archive:
@@ -74,6 +74,11 @@ stock contrasts, with explicit rational coefficients available via
 `--show-rows`. It also changes one untested weight without changing
 any of the 625 measured equations. No claim about a whole carrier
 should be promoted from that finite grid.
+
+[When can repeated whole events count as independent draws?](OPERATIONAL_SAMPLING.md)
+records an ordered-gap criterion, collision and bias controls, and a sharp
+two-state competitor. The archived probes distinguish a visible sequence
+of records from an assumed microscopic source of randomness.
 
 One cheap **proposed comparison**, not a performed experiment: inject a
 fixed state, repeat the same two-mixer word t times, and read one port.
