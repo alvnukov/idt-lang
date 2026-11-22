@@ -72,5 +72,56 @@ marks are inputs. A carried classical bit is not a complex amplitude, and
 a detector distinguishing its values is not an interference or Born-rule
 experiment.
 
+**Can an observer tell the eight choices apart?** Yes, if it can both mark
+its origin and read the returning bit in the same local convention. Three
+yes/no returns are necessary to distinguish eight choices. Three fixed
+words suffice; no coordinates, mid-route observations or adaptive choice
+are needed during the trial. To find a shortest word, search pairs
+`(site, character)`: the three-bit character records which independent
+connection changes flip the result on that walk. A closed word gives one
+binary question about the connection. The following small reproducible
+check also retains the negative control: shorter closed words cannot do it.
+This is tomography of a supplied classical connection, not measurement of
+a quantum phase.
+
+```pycon
+>>> from collections import deque
+>>> from scripts.probe_minimal_signal_relay import quotient_4
+>>> from scripts.probe_relay_loop_parity import analyze, carried_walk, edge_key
+>>> def inspect_loops(diagonal, trials):
+...     relay = quotient_4(diagonal)
+...     report = analyze(relay)
+...     indices = {edge: i for i, edge in enumerate(report["edge_index"])}
+...     changes = [int(s, 16) for s in report["quotient_generators_hex"]]
+...     queue, lengths = deque([(0, 0)]), {(0, 0): 0}
+...     while queue:
+...         s, t = queue.popleft()
+...         for j in relay.neighbors[s]:
+...             edge = indices[edge_key(s, j)]
+...             flip = sum(((h >> edge) & 1) << k for k, h in enumerate(changes))
+...             target = (j, t ^ flip)
+...             if target not in lengths:
+...                 lengths[target] = lengths[s, t] + 1
+...                 queue.append(target)
+...     answers = set()
+...     for sector in range(8):
+...         connection = int(report["particular_edge_bitmask_hex"], 16)
+...         for k, h in enumerate(changes):
+...             if (sector >> k) & 1:
+...                 connection ^= h
+...         row = tuple(carried_walk(relay, indices, connection, 0, tuple(map(int, w))) for w in trials)
+...         if any(site != 0 for site, bit in row):
+...             raise ValueError("trial did not return to the local marker")
+...         answers.add(tuple(bit for site, bit in row))
+...     return sorted(lengths[0, t] for t in range(1, 8)), len(answers)
+>>> inspect_loops((0, 1, 2, 3), ["010203", "012131", "021232"])
+([6, 6, 6, 6, 8, 8, 8], 8)
+>>> inspect_loops((0, 2), ["01010101", "01012323", "02020202"])
+([8, 8, 8, 8, 8, 8, 12], 8)
+
+```
+
+Run the example from the repository root: `python3 -B -m doctest scripts/MARKED_RELAYS.md`.
+
 Replay the finite experiments with
 `python3 -B scripts/replay_primitive_probe_campaign.py --bundle marked_relays`.

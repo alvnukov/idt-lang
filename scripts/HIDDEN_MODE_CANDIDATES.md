@@ -75,3 +75,70 @@ There is prior work on the broad idea of definite occupation plus a phase
 of empty modes; see [Catani et al.](https://arxiv.org/abs/2111.13727).
 The finite gate certificates here are not experimental evidence for that
 model or for IDT.
+
+### One localized carrier versus two information-carrying arms
+
+Give Alice and Bob independent uniform bits `x,y` after the direction of
+a single classical transmission has been fixed. Each must guess the other
+input by the same deadline. Even arbitrary shared randomness independent of
+the current inputs cannot raise the joint success chance above 1/2: the
+upstream party has no information about the downstream bit. The downstream
+party may know *both* bits. Enumerating those deterministic extreme cases,
+in both directions, gives the following counts of wins on four input pairs:
+
+```pycon
+>>> from collections import Counter
+>>> from itertools import product
+>>> from scripts.probe_eight_label_interferometer import trial
+>>> bit = range(2)
+>>> inputs = tuple(product(bit, repeat=2))
+>>> scores = Counter()
+>>> for reverse, upstream, downstream in product(bit, product(bit, repeat=2), product(bit, repeat=4)):
+...     wins = 0
+...     for x, y in inputs:
+...         a, b = (y, x) if reverse else (x, y)
+...         wins += (upstream[a] == b and downstream[2*a+b] == a)
+...     scores[wins] += 1
+>>> sorted(scores.items())
+[(0, 32), (1, 64), (2, 32)]
+
+```
+
+Now give the **existing positive eight-label** machine two independently
+switchable plates, including its phase-carrying empty arm. Alice decodes only
+from her input and left click, Bob only from his input and right click.
+Both also need a common deadline, detector convention, and one counted
+emission per trial; a no-click is not assumed to distinguish a loss in a
+real apparatus. Below, the ideal closed accounting explicitly checks for
+loss. An independent random bit flip on one plate is a dephasing *analogue*,
+not a microscopic model of optical temporal mismatch.
+
+```pycon
+>>> def bilateral(noise):
+...     wins = total = 0
+...     for x, y, particle, vacant, n in product(bit, bit, bit, bit, noise):
+...         left, right, lost = trial(0, particle, vacant, (0, 0),
+...                                  (bool(x ^ n), bool(y)), (True, True))
+...         if lost or left + right != 1:
+...             raise ValueError("missing emission or ambiguous local output")
+...         wins += ((x ^ left) == y and (y ^ right ^ 1) == x)
+...         total += 1
+...     return wins, total
+>>> bilateral([0]), bilateral([0, 1])
+((16, 16), (16, 32))
+
+```
+
+The test separates the direction-limited channel from an additional
+information-carrying arm. It does **not** separate complex amplitudes
+from this prepared positive model. In the optical protocol of
+[Massa et al.](https://doi.org/10.1002/qute.201900050)
+([author manuscript, Fig. 3 and Appendix C](https://arxiv.org/pdf/1802.05102)),
+the reported fraction in the correct registered output was 0.961 ± 0.006
+with high visibility and 0.498 ± 0.006 without temporal overlap. Errors
+are standard errors across settings. The paper averages counts over 100
+setting pairs, with multiple photon events per pair; this is not a
+fresh-choice, per-emission test of the unconditional task above. Their
+separate source-correlation check is not an independent replication.
+
+Replay the examples: `python3 -B -m doctest scripts/HIDDEN_MODE_CANDIDATES.md`.
