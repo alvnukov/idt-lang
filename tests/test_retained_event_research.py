@@ -79,6 +79,11 @@ PACKS = {
         "randomized_setting_common_target": "probe_randomized_cut_coverage",
         "processor_cut_original_count_control": "probe_processor_cut_data",
     }),
+    "primitive_carrier_context_inventory.json": ("carrier_sign_contexts", {
+        "central_bit_folded_direction_lifts": "probe_folded_carrier_commutators",
+        "compatible_parity_contexts_of_lifts": "probe_folded_carrier_parity_contexts",
+        "sequential_context_memory_intervention": "probe_contextual_readout_memory",
+    }),
 }
 
 

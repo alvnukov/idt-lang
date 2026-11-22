@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "central_bit_folded_direction_lifts",
+      "role": "route",
+      "components": [
+        "Conditional central binary commutator forms and all sixteen quadratic square refinements on the recovered five directions. Full and marked permutation symmetries, signed transports and an Abelian same-squares control are distinguished."
+      ],
+      "declared_status": "Finite classical signed extension classification. Neither a nonzero commutator nor a particular lift is forced by adjacency.",
+      "missing_bridges": [
+        "Bind the central flip to a persistent operational reference and test order as well as repeated elementary actions."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_folded_carrier_commutators.py",
+          "first_line": 1,
+          "last_line": 260,
+          "file_sha256": "ef95ef7eefb780998972dd40c3e08dc6edf31e5d80d20410c95ec9a82e6a4128"
+        }
+      ]
+    },
+    {
+      "id": "compatible_parity_contexts_of_lifts",
+      "role": "route",
+      "components": [
+        "One fully symmetric nontrivial lift has no compatible involution pair, while a distinct marked refinement admits 72 labeled Peres–Mermin grids with an explicit real representation. Context-wise samplers and two-copy sign composition are controls."
+      ],
+      "declared_status": "Word multiplication is not outcome measurement. A classical permutation realization does not by itself implement contextual statistics.",
+      "missing_bridges": [
+        "Derive native repeatable compatible instruments, joint readout and disturbance controls without importing projective measurement."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_folded_carrier_parity_contexts.py",
+          "first_line": 1,
+          "last_line": 388,
+          "file_sha256": "bbf86d0b1958e352d01dbb03a2c64ff84cb1d82770106600c5e7c24d6c1481e6"
+        }
+      ]
+    },
+    {
+      "id": "sequential_context_memory_intervention",
+      "role": "route",
+      "components": [
+        "Two published deterministic finite automata and extra persistent mask bits reproduce complete single-context support and can match mixed frequencies. Short cross-context sequences expose failures independent of initial machine state."
+      ],
+      "declared_status": "Conditional separation of specific sequential automata and ideal instruments, not a universal hidden-memory exclusion or empirical graph test.",
+      "missing_bridges": [
+        "Implement the sequential setting changes and calibrate actual compatibility and numerator/denominator selection."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_contextual_readout_memory.py",
+          "first_line": 1,
+          "last_line": 241,
+          "file_sha256": "f5f1f9fe65a7e664d35783b6c0d8049e01539c80407e844188eea16b60a5a497"
+        }
+      ]
+    }
+  ]
+}

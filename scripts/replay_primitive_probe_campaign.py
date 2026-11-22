@@ -348,6 +348,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_randomized_cut_coverage",
         "probe_processor_cut_data",
     ),
+    "carrier_sign_contexts": (
+        "probe_folded_carrier_commutators",
+        "probe_folded_carrier_parity_contexts",
+        "probe_contextual_readout_memory",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
