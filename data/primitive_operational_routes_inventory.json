@@ -1,0 +1,382 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "unsigned_four_label_neutral_contrast",
+      "role": "route",
+      "components": [
+        "four unsigned cyclic labels and opposite-pair neutral congruence",
+        "rank-two Gaussian-integer quotient versus full-orbit rank-three quotient",
+        "hidden-height response and finite-quotient countermodels"
+      ],
+      "declared_status": "Conditional algebraic route and finite countercontrols: opposite-pair neutrality must be a substitution-stable congruence, not merely darkness in one detector. No physical prediction adapter is supplied.",
+      "missing_bridges": [
+        "derive or independently justify the four-label stock and operational substitution-stable opposite-pair neutrality",
+        "select the free carrier rather than an additional finite ideal quotient; finite windows do not establish freeness",
+        "derive a norm/readout and serial composition law; dark marginal records alone do not identify neutral substitutions"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unsigned_neutral_motifs.py",
+          "first_line": 3,
+          "last_line": 28,
+          "file_sha256": "6422fbab7b276fc702efc5a703c86afd5efe0cf28af5236ff02fc6b83af3fcfc"
+        },
+        {
+          "path": "scripts/probe_unsigned_neutral_motifs.py",
+          "first_line": 30,
+          "last_line": 45,
+          "file_sha256": "6422fbab7b276fc702efc5a703c86afd5efe0cf28af5236ff02fc6b83af3fcfc"
+        },
+        {
+          "path": "scripts/probe_unsigned_neutral_motifs.py",
+          "first_line": 47,
+          "last_line": 58,
+          "file_sha256": "6422fbab7b276fc702efc5a703c86afd5efe0cf28af5236ff02fc6b83af3fcfc"
+        }
+      ]
+    },
+    {
+      "id": "uncolored_cycle_graph_abelianized_carrier",
+      "role": "route",
+      "components": [
+        "uncolored graph automorphisms inducing a quarter-turn on the complete rank-two cycle lattice",
+        "three-vertex parallel-channel and minimal simple bowtie controls",
+        "free-path commutator versus net-chain abelianization countermodel"
+      ],
+      "declared_status": "Conditional finite graph hit: a chosen graph automorphism acts as J on supplied integer homology. Neither a canonical orientation nor physical neutralization follows from the unmarked graph.",
+      "missing_bridges": [
+        "justify reversible walks, integer chains and abelianization rather than retain distinguishable free-path histories",
+        "select an oriented quarter-turn from conjugate choices; the unmarked graph does not canonically choose J",
+        "justify channel multiplicity or the simple-graph realization and any metric/detector interpretation",
+        "establish physical indistinguishability of equal net flows; commutator histories need not be neutral"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_uncolored_cycle_carrier.py",
+          "first_line": 3,
+          "last_line": 27,
+          "file_sha256": "91d59650e9e11c6cbe0c8da06e8dc71240a0b269eca9f2a520c22cbb0c6ada33"
+        },
+        {
+          "path": "scripts/probe_uncolored_cycle_carrier.py",
+          "first_line": 29,
+          "last_line": 46,
+          "file_sha256": "91d59650e9e11c6cbe0c8da06e8dc71240a0b269eca9f2a520c22cbb0c6ada33"
+        },
+        {
+          "path": "scripts/probe_uncolored_cycle_carrier.py",
+          "first_line": 48,
+          "last_line": 73,
+          "file_sha256": "91d59650e9e11c6cbe0c8da06e8dc71240a0b269eca9f2a520c22cbb0c6ada33"
+        }
+      ]
+    },
+    {
+      "id": "unsigned_complement_packets_asynchronous_resolution",
+      "role": "route",
+      "components": [
+        "unlike-color complementary-packet allocation with transparent equal-pair residue",
+        "terminating two-rule binary resolver on compound free-mark and bond objects",
+        "terminal histogram confluence with schedule-dependent microscopic pairings",
+        "positive-background color-only readout support and likelihood-ratio wall"
+      ],
+      "declared_status": "Finite matching route with scoped negative controls: balanced even stocks admit exhaustive terminal allocation under the supplied encounter model. Terminal histogram confluence is not an autonomous clock or Born readout.",
+      "missing_bridges": [
+        "supply encounter availability and free-mark/bond storage; binary compound-object interactions are not two elementary-particle dynamics",
+        "separate allocation completion from emission and the next layer; a completion barrier or stopping mechanism remains additional",
+        "retain information for reversible implementation or justify irreversible bond repairs and discarded pairing history",
+        "supply a physical neutralization/readout bridge beyond subtracting a background; bounded color-only sampling cannot infer exact dark contrast from full-support background",
+        "justify sampling and any hidden active labels independently rather than tune a condition-dependent detector"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_asynchronous_pair_resolver.py",
+          "first_line": 3,
+          "last_line": 19,
+          "file_sha256": "a2f2070628dd9c48f004bfd96060363e6f876020ef57e16da1cf33456a4dba05"
+        },
+        {
+          "path": "scripts/probe_asynchronous_pair_resolver.py",
+          "first_line": 21,
+          "last_line": 49,
+          "file_sha256": "a2f2070628dd9c48f004bfd96060363e6f876020ef57e16da1cf33456a4dba05"
+        },
+        {
+          "path": "scripts/probe_asynchronous_pair_resolver.py",
+          "first_line": 51,
+          "last_line": 71,
+          "file_sha256": "a2f2070628dd9c48f004bfd96060363e6f876020ef57e16da1cf33456a4dba05"
+        },
+        {
+          "path": "scripts/probe_unsigned_background_readout.py",
+          "first_line": 3,
+          "last_line": 26,
+          "file_sha256": "0a47d7f239777ba5a9fbe465c3d51fdd5b7bea679f5c09f3791fe00db50cca17"
+        },
+        {
+          "path": "scripts/probe_unsigned_background_readout.py",
+          "first_line": 28,
+          "last_line": 39,
+          "file_sha256": "0a47d7f239777ba5a9fbe465c3d51fdd5b7bea679f5c09f3791fe00db50cca17"
+        },
+        {
+          "path": "scripts/probe_unsigned_background_readout.py",
+          "first_line": 66,
+          "last_line": 71,
+          "file_sha256": "0a47d7f239777ba5a9fbe465c3d51fdd5b7bea679f5c09f3791fe00db50cca17"
+        }
+      ]
+    },
+    {
+      "id": "aligned_raw_family_ckm_hidden_spares",
+      "role": "route",
+      "components": [
+        "aligned three-raw-port fixed-uniform native words and determinant lock",
+        "cyclic magnitude triangle and fixed historical CKM comparator",
+        "one-spare absolute leakage bounds versus two-spare continuous-closure escape"
+      ],
+      "declared_status": "Rejected direct aligned three-raw-family adapter scope against the stated historical modulus comparator, not a falsification of IDT or an adapter verdict. Hidden-spare variants are separately scoped: one-spare leakage constraints and a two-spare closure comparator do not predict CKM entries.",
+      "missing_bridges": [
+        "justify the physical family-to-port map and both aligned up/down embeddings; paired logical rails and nonaligned embeddings are outside the direct wall",
+        "supply an independently reviewed prediction map and an appropriate empirical uncertainty/selection model; a historical fitted modulus table is not raw event evidence or a p-value",
+        "measure or constrain absolute hidden-port leakage without survivor renormalization",
+        "distinguish finite Gaussian-dyadic words at zero leakage from non-dyadic continuous closure; extra spares do not constitute a parameter prediction"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ckm_raw_family_wall.py",
+          "first_line": 3,
+          "last_line": 16,
+          "file_sha256": "4be6140843d48496867de9c2871f8e7c603e9af9e329be591605b4c9623ff7f4"
+        },
+        {
+          "path": "scripts/probe_ckm_raw_family_wall.py",
+          "first_line": 25,
+          "last_line": 43,
+          "file_sha256": "4be6140843d48496867de9c2871f8e7c603e9af9e329be591605b4c9623ff7f4"
+        },
+        {
+          "path": "scripts/probe_ckm_raw_family_wall.py",
+          "first_line": 45,
+          "last_line": 67,
+          "file_sha256": "4be6140843d48496867de9c2871f8e7c603e9af9e329be591605b4c9623ff7f4"
+        },
+        {
+          "path": "scripts/probe_ckm_raw_family_wall.py",
+          "first_line": 69,
+          "last_line": 75,
+          "file_sha256": "4be6140843d48496867de9c2871f8e7c603e9af9e329be591605b4c9623ff7f4"
+        },
+        {
+          "path": "scripts/probe_ckm_blank_ports.py",
+          "first_line": 3,
+          "last_line": 8,
+          "file_sha256": "1d78f1466322815808b6bc47c749709cd5c57fdb178e69460564994fa8228071"
+        },
+        {
+          "path": "scripts/probe_ckm_blank_ports.py",
+          "first_line": 116,
+          "last_line": 141,
+          "file_sha256": "1d78f1466322815808b6bc47c749709cd5c57fdb178e69460564994fa8228071"
+        },
+        {
+          "path": "scripts/probe_ckm_blank_ports.py",
+          "first_line": 205,
+          "last_line": 215,
+          "file_sha256": "1d78f1466322815808b6bc47c749709cd5c57fdb178e69460564994fa8228071"
+        }
+      ]
+    },
+    {
+      "id": "coherent_duplicate_detector_row_density",
+      "role": "route",
+      "components": [
+        "coherent duplicate/swap derivation of row equivalence under explicit port-locality assumptions",
+        "stable direct unread-rest coordinate-ideal obstruction",
+        "constructive common-Gram padding and density-matrix linearization on native rows",
+        "calibrated finite discrepancy certificate and nonlinear normalized controls"
+      ],
+      "declared_status": "Conditional analytical bridge with finite exact controls, not a Lean proof or physical actualization: operational duplicate/swap premises imply fine-row noncontextuality, which supports the native density-rule construction.",
+      "missing_bridges": [
+        "establish full occupied-column extensionality, output covariance, blank stability, complement locality and normalization over complete retained records",
+        "realize all required coherent embeddings, disjoint arms and native completions using paired logical rails; bare fixed-uniform raw ports are not eligible",
+        "calibrate the actual duplicate/swap discrepancies and retain losses/herald records; near-equal amplitudes alone supply no robust continuity bound",
+        "identify preparations with pure states if required, and justify nonnative approximation or infinite-dimensional extension separately"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unread_row_duplication.py",
+          "first_line": 3,
+          "last_line": 21,
+          "file_sha256": "c6cbb0b8264581684994d4b9962de6acd36b1e0bf7df01e356b0a014850e113a"
+        },
+        {
+          "path": "scripts/probe_unread_row_duplication.py",
+          "first_line": 23,
+          "last_line": 46,
+          "file_sha256": "c6cbb0b8264581684994d4b9962de6acd36b1e0bf7df01e356b0a014850e113a"
+        },
+        {
+          "path": "scripts/probe_unread_row_duplication.py",
+          "first_line": 54,
+          "last_line": 59,
+          "file_sha256": "c6cbb0b8264581684994d4b9962de6acd36b1e0bf7df01e356b0a014850e113a"
+        },
+        {
+          "path": "scripts/probe_unread_row_duplication.py",
+          "first_line": 61,
+          "last_line": 75,
+          "file_sha256": "c6cbb0b8264581684994d4b9962de6acd36b1e0bf7df01e356b0a014850e113a"
+        },
+        {
+          "path": "scripts/probe_native_row_probability.py",
+          "first_line": 3,
+          "last_line": 39,
+          "file_sha256": "a101615247e7021c4d3ed4b2e35cd2ffd958ef6cfae875f1fd17f6410557fe3e"
+        },
+        {
+          "path": "scripts/probe_native_row_probability.py",
+          "first_line": 41,
+          "last_line": 64,
+          "file_sha256": "a101615247e7021c4d3ed4b2e35cd2ffd958ef6cfae875f1fd17f6410557fe3e"
+        }
+      ]
+    },
+    {
+      "id": "native_frames_heralded_rational_instruments",
+      "role": "route",
+      "components": [
+        "exact native projective qutrit frame controls and four-mode parity comparator",
+        "three-slot rational-unitary normalization obstruction",
+        "compiled rational-projector instrument with scalar neutral failures and retained abort flags",
+        "state-dependent rational pentagon under supplied sharp readout"
+      ],
+      "declared_status": "Distinct finite domains: native qutrit projective controls do not force Born readout; rational sharp instruments are conditionally compiled with ancillas and repeat-until-success. The latter is not a lossless exact three-slot unitary or an empirical contextuality test.",
+      "missing_bridges": [
+        "supply normalized complex-state and sharp projective readout interpretation; compilation does not derive the probability law",
+        "justify coherent outcome/data product addresses, paired rails, grouped ancilla-only readout and blank ancillas",
+        "implement neutral failure reset/retry and record finite-cutoff aborts; finite mean does not imply bounded worst-case completion",
+        "justify identity of shared sharp events across contexts and physical loss controls; heralding assumptions cannot be transferred to arbitrary detector postselection",
+        "do not replace bounded frame controls with the full complex projective domain or claim the open asymmetric prime-5 reachability problem is solved"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_qutrit_frames.py",
+          "first_line": 1,
+          "last_line": 10,
+          "file_sha256": "52257a4ab081b7525195cadce0749a54750ef1be21672fcf49a823c6ec2e44cc"
+        },
+        {
+          "path": "scripts/probe_native_qutrit_frames.py",
+          "first_line": 216,
+          "last_line": 222,
+          "file_sha256": "52257a4ab081b7525195cadce0749a54750ef1be21672fcf49a823c6ec2e44cc"
+        },
+        {
+          "path": "scripts/probe_native_qutrit_frames.py",
+          "first_line": 262,
+          "last_line": 288,
+          "file_sha256": "52257a4ab081b7525195cadce0749a54750ef1be21672fcf49a823c6ec2e44cc"
+        },
+        {
+          "path": "scripts/probe_native_rational_pentagon.py",
+          "first_line": 3,
+          "last_line": 28,
+          "file_sha256": "b7f5ef13c9b0819b035fdea15920df25e82f5ac6316c0ebbd5c6584bc02a3fba"
+        },
+        {
+          "path": "scripts/probe_native_rational_pentagon.py",
+          "first_line": 30,
+          "last_line": 45,
+          "file_sha256": "b7f5ef13c9b0819b035fdea15920df25e82f5ac6316c0ebbd5c6584bc02a3fba"
+        },
+        {
+          "path": "scripts/probe_native_rational_pentagon.py",
+          "first_line": 58,
+          "last_line": 72,
+          "file_sha256": "b7f5ef13c9b0819b035fdea15920df25e82f5ac6316c0ebbd5c6584bc02a3fba"
+        }
+      ]
+    },
+    {
+      "id": "balanced_phase_independent_source_composition",
+      "role": "route",
+      "components": [
+        "integer balanced quotient versus projected real sector and index-four lattice distinction",
+        "orientation signs, loop frustration and shared phase reference",
+        "real-product half-weight and non-real-separability witness for orientation resource",
+        "independent-source real tensor versus supplied balanced composition contract"
+      ],
+      "declared_status": "Exact integer/rational composition controls, not a network violation or universal-bound recomputation. Integer coordinates do not alone select ordinary real quantum tensor composition, and shared classical signs do not supply the balanced reference.",
+      "missing_bridges": [
+        "select and operationally justify composition: ordinary real tensor, balanced quotient and normalized sector identification are different contracts",
+        "derive or supply the quarter-turn, state/effect interpretation and normalization separately from integer coordinates",
+        "justify phase alignment and loop consistency without importing a non-real-separable shared resource or discarding an unrecorded sector",
+        "provide a physical independently sourced network implementation and reviewed prediction adapter; do not infer experimental exclusion from these finite resource controls"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_balanced_phase_composition.py",
+          "first_line": 3,
+          "last_line": 19,
+          "file_sha256": "52606cdc71cefa85ad6620a517e90571ca897cf820db9ef9aa7ceb32fde07424"
+        },
+        {
+          "path": "scripts/probe_balanced_phase_composition.py",
+          "first_line": 21,
+          "last_line": 26,
+          "file_sha256": "52606cdc71cefa85ad6620a517e90571ca897cf820db9ef9aa7ceb32fde07424"
+        },
+        {
+          "path": "scripts/probe_balanced_phase_composition.py",
+          "first_line": 28,
+          "last_line": 42,
+          "file_sha256": "52606cdc71cefa85ad6620a517e90571ca897cf820db9ef9aa7ceb32fde07424"
+        },
+        {
+          "path": "scripts/probe_balanced_phase_composition.py",
+          "first_line": 44,
+          "last_line": 49,
+          "file_sha256": "52606cdc71cefa85ad6620a517e90571ca897cf820db9ef9aa7ceb32fde07424"
+        }
+      ]
+    },
+    {
+      "id": "autonomous_orthogonal_program_collision",
+      "role": "route",
+      "components": [
+        "affine additive-pilot fixed-law obstruction with vacuum and odd-response controls",
+        "orthogonal-program necessity for non-phase-equivalent controlled unitaries",
+        "fixed reversible clock/tape addressed-collision rule and six-tick native-word controls"
+      ],
+      "declared_status": "Conditional finite autonomous-program hit versus an affine-pilot wall. Orthogonal programs and a joint conditional collision are supplied; translation covariance is not a derivation of a homogeneous local QCA or a physical controller.",
+      "missing_bridges": [
+        "supply orthogonal program states, tensor-addressed data/control inputs and the joint conditional native collision; additive pilots do not derive them",
+        "implement clock/tape registration and indexed data interactions as spatially local dynamics rather than infer locality from translation covariance",
+        "provide prepared programs, growing memory/time resources and a stable stopping/latch or readable cycle criterion",
+        "keep common time/readout, vacuum response and all records fixed; program-dependent postselection or premixing changes the tested contract"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_autonomous_mixer_program.py",
+          "first_line": 3,
+          "last_line": 20,
+          "file_sha256": "fd44be672866e8d3cd380d6982aecb06578dbf299ebe0801fda18c58e8e3f36f"
+        },
+        {
+          "path": "scripts/probe_autonomous_mixer_program.py",
+          "first_line": 22,
+          "last_line": 36,
+          "file_sha256": "fd44be672866e8d3cd380d6982aecb06578dbf299ebe0801fda18c58e8e3f36f"
+        },
+        {
+          "path": "scripts/probe_autonomous_mixer_program.py",
+          "first_line": 38,
+          "last_line": 47,
+          "file_sha256": "fd44be672866e8d3cd380d6982aecb06578dbf299ebe0801fda18c58e8e3f36f"
+        }
+      ]
+    }
+  ]
+}
