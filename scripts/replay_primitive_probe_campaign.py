@@ -79,6 +79,14 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_unread_tick_instruments",
         "probe_two_state_readout_barrier",
     ),
+    "sector_words": (
+        "probe_echo_gauge_normal_form",
+        "probe_native_mixer_sector_density",
+        "probe_exact_charge_sector_wall",
+        "probe_heralded_sector_phase",
+        "probe_projective_repeat_classification",
+        "probe_catalytic_sector_phase",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
