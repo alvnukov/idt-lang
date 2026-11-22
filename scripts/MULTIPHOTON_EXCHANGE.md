@@ -61,3 +61,18 @@ for independent pure sources under the stated bosonic model. It does not
 certify the source from noisy clicks, work in place of a mixed or correlated
 source model, or say that each cycle is observable by a particular fixed
 detector. The program never upgrades a public scientific claim.
+
+### A prospective discriminator that also works against real mixed sources
+
+The [conjugate-analyzer probe](probe_triad_reality_swap.py) compares a
+calibrated three-mixer network U with its complex conjugate on the *same*
+independent preparations. For occupation (2,1,0), the probability difference
+is exactly one quarter of Im Tr(ρ₁ρ₂ρ₃); one native preparation gives −1/32.
+Every three-state **preparation triple**, in any common-real internal
+dimension and even allowing mixtures, has zero imaginary trace under the
+specified internal-blind bosonic law. Conversely a real mixed third state
+can mimic the even cosine fringe alone with the same pair overlaps. With
+two calibrated pure real reference states at the specified overlaps, zero
+triple trace bounds the third purity by 13/18. No quoted experiment is
+retrospectively tested by this new contrast. Settings-dependent losses,
+correlated emissions, or a shared auxiliary phase require different nulls.

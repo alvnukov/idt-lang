@@ -118,3 +118,18 @@ related), coefficients, and clock are real extra assumptions. An anisotropic
 positive choice splits the two speeds without spoiling the incidence
 identities. This is a cheaper transverse-wave **candidate**, not photon
 statistics, an elementary absorption event, or Maxwell theory from nothing.
+
+### Does slowing the same collision clock give gravity?
+
+The [weak-field clock probe](probe_collision_clock_gravity.py) holds clock
+redshift fixed and changes only the spatial response in an explicitly
+supplied static metric. Three choices have exactly the same redshift but
+different round-trip times. With fixed rods, the leading bending/delay is
+half the general-relativistic value; with a common conformal scaling it
+vanishes. An inverse-lapse rod response gives the GR coefficient at this
+order, but an isotropic wave cone does not select it. The
+[Cassini measurement](https://www.nature.com/articles/nature01997) reports
+γ−1=(2.1±2.3)×10⁻⁵. The clock-only and conformal examples fail this comparator
+**given the same metric/matter interpretation**. This neither excludes all
+variable-clock primitives nor derives GR, Newton's constant or galaxy
+dynamics. Replay: `python3 -B scripts/replay_primitive_probe_campaign.py --bundle clock_gravity`.

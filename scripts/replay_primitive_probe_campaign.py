@@ -161,10 +161,24 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "multiple_photon_exchange": (
         "probe_packet_triad_phase",
         "probe_packet_exchange_cycles",
+        "probe_triad_reality_swap",
     ),
     "opposition_origin": (
         "probe_three_opposition_origin",
         "probe_opposition_clock_scatter",
+        "probe_opposition_readout",
+        "probe_opposition_hidden_carrier",
+        "probe_opposition_spin_lift",
+    ),
+    "matching_transport": (
+        "probe_matching_transport",
+        "probe_pairing_natural_transport",
+        "probe_matching_echo_selector",
+        "probe_matching_transport_cost",
+        "probe_ternary_stock_ambiguity",
+    ),
+    "clock_gravity": (
+        "probe_collision_clock_gravity",
     ),
 }
 DEFAULT_BUNDLE = "fast"

@@ -73,3 +73,42 @@ Replay the theoretical controls with `python3 -B scripts/replay_primitive_probe_
 To screen the five candidates without modifying canonical history, use
 `python3 scripts/screen_hypotheses.py --batch-file data/opposition_flag_controls.json --no-cache --history-dir /path/to/disposable/history`.
 The batch intentionally returns exit code 1 when it records a counterexample.
+
+### What the detector can and cannot read
+
+The [cancellation test](probe_opposition_readout.py) pairs off opposite marks
+exhaustively. Its remainder is independent of cancellation order. Counting
+ordered pairs of the remaining marks gives a genuinely nonnegative total
+of squared differences without a background subtraction. This uses an active
+comparison, not a detector sampling a random leg. Bare per-axis square
+counts cannot locate the whole stock in one of two coherent outputs: signs
+matter in their cross term. One tested preparation has intended weights
+(2,0) yet raw port populations (2,2). Routed cancellation streams can recover
+the relative weights, but the single chart loses a uniform quadrature of
+the full two-complex-port carrier. A two-copy encoding supplies it at the
+cost of cross-copy operations. A ticket count is not selection of an event.
+
+The [hidden-carrier check](probe_opposition_hidden_carrier.py) also identifies
+a known single-system alternative. Uniform knowledge of two out of four
+completions gives six preparations, as in [Spekkens' toy theory](https://arxiv.org/abs/quant-ph/0401052).
+It reproduces the isolated three-axis preparation probabilities. But only
+12 of the 24 generated proper axis rotations permute those four completions;
+the other 12 require a coefficient −1/2 in their unique fixed-chart linear
+action. A six-state positive model with stochastic responses and reset does
+reproduce the entire specified single-system experiment. Fewer than six
+cannot do so with fixed reusable Markov updates and linear readout. If every
+axis must have a simultaneous deterministic covariant value, eight cube
+completions suffice and are necessary. None is an independent-source or
+Bell experiment. The original paper is prior art, not a measurement of IDT.
+
+### Rotating a mark versus rotating a spinor
+
+Four quarter-turns return every mark. An [additional binary record of the
+path](probe_opposition_spin_lift.py) can distinguish that history from doing
+nothing; in the binary octahedral lift it takes eight quarter-turns to return
+the lifted state. Different consistent lift rules exist. An isolated sign
+is not observable without a phase comparison, and not every six-state
+mark plus a bit admits a faithful such action. [Werner et al.](https://doi.org/10.1103/PhysRevLett.35.1053)
+measured a relative phase from controlled neutron **magnetic precession**,
+not a mechanical rotation of these marks. Reproducing the sign in a finite
+lift does not derive fermion statistics or the experiment's detection law.
