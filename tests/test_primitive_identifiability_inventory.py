@@ -17,6 +17,8 @@ SOURCES = {
     "boundary_ray_and_graph_distance_aliases": "scripts/probe_boundary_geometry_aliases.py",
     "three_packet_exchange_sector_discriminators": "scripts/probe_three_packet_exchange_sector.py",
     "connected_contact_tomography_scope": "scripts/probe_connected_contact_tomography.py",
+    "hidden_orthogonal_exchange_label_countermodel": "scripts/probe_hidden_exchange_colors.py",
+    "partial_hidden_overlap_exchange_visibility": "scripts/probe_partial_hidden_exchange.py",
 }
 
 

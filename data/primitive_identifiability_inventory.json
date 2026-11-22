@@ -51,6 +51,38 @@
       "sources": [
         {"path": "scripts/probe_connected_contact_tomography.py", "first_line": 1, "last_line": 182, "file_sha256": "87d7f2f694de771c40fa46c900b96891bad48e50c554f416717917141411897b"}
       ]
+    },
+    {
+      "id": "hidden_orthogonal_exchange_label_countermodel",
+      "role": "semantic_contract",
+      "components": [
+        "Three orthogonal hidden tag states label six permutation histories. Coherent simultaneous visible and hidden permutations with equal or alternating coefficients prepare opposite total exchange characters. Tracing the unread tags gives exactly the same visible permutation average for both signs, including on inputs correlated with a visible reference.",
+        "A visible cycle still distinguishes the earlier input sectors after averaging; it cannot distinguish the sign of the total exchange lift. A coherent controlled full exchange or hidden eraser can separate the lifts; an uncontrolled full swap is only a global sign, and reading diagonal hidden labels does not restore relative phases."
+      ],
+      "declared_status": "Conditional finite hidden-label countermodel to attributing visible exchange directly to particle statistics; not a physical exclusion-principle violation, derivation, or empirical fit.",
+      "missing_bridges": [
+        "Establish the physical hidden-state content, coherent simultaneous exchanges, partial-trace readout, and operational access to any full controlled swap.",
+        "Connect the complete degrees of freedom and their exchange representation to measured particle species, spin and locality. These abstract labels are not particle-physics color."
+      ],
+      "sources": [
+        {"path": "scripts/probe_hidden_exchange_colors.py", "first_line": 1, "last_line": 190, "file_sha256": "6a9194de1dc99f6eb829c5bb32fd17fb8d999dda474fa24a748907b24e9fbbfa"}
+      ]
+    },
+    {
+      "id": "partial_hidden_overlap_exchange_visibility",
+      "role": "route",
+      "components": [
+        "For one visible word of three mutually orthogonal letters and three normalized pure hidden tag states, the visible trace distance between the two lifts is determined by the three squared pair overlaps. The odd/even difference block contains only transpositions; a triad phase may change each separate visible state without changing their distance.",
+        "A coherent visible-letter exchange achieves a probability contrast equal to that pair's squared overlap. A physical example gives maximal single-letter contact contrast one quarter while arbitrary visible measurements have optimal contrast one third."
+      ],
+      "declared_status": "Conditional distinguishability formula with finite exact controls, not evidence of measured particle statistics or of native access to an optimal measurement.",
+      "missing_bridges": [
+        "Establish orthogonal visible letters, independent pure hidden tags and coherent preparation of both exchange lifts with the declared full normalization.",
+        "Identify physically calibrated observable operations and accessible hidden overlaps; do not transfer the formula to arbitrary nonorthogonal visible words, correlated hidden states or particle species."
+      ],
+      "sources": [
+        {"path": "scripts/probe_partial_hidden_exchange.py", "first_line": 1, "last_line": 169, "file_sha256": "90efdd9602e18d901d8023a0558d66f74148253fd9af98c3086f41c679d36474"}
+      ]
     }
   ]
 }
