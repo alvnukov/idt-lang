@@ -28,6 +28,17 @@ from theory_experiments.bell_trial_test import (
 from theory_experiments.bell_trial_test import (
     assert_loaded_sources as assert_bell_sources,
 )
+from theory_experiments.binary_overlap_cut import (
+    LOADED_SOURCE_SHA256 as BINARY_OVERLAP_CUT_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.binary_overlap_cut import (
+    SCOPE as BINARY_OVERLAP_CUT_SCOPE,
+)
+from theory_experiments.binary_overlap_cut import (
+    BinaryOverlapCut,
+    evaluate_binary_overlap_cut,
+    parse_binary_overlap_cut,
+)
 from theory_experiments.chiral_pencil import (
     LOADED_SOURCE_SHA256 as CHIRAL_PENCIL_LOADED_SOURCE_SHA256,
 )
@@ -168,13 +179,14 @@ Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
-    | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut
+    | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut | BinaryOverlapCut
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
 _CACHE_MAX_BYTES = 512 * 1024
 _PREPARE_MEASURE_EVIDENCE = "necessary_conditions_on_submitted_finite_table_only"
+_BINARY_OVERLAP_EVIDENCE = "necessary_binary_overlap_bounds_on_submitted_event_table_only"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -191,6 +203,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/driven_event_selector.py",
     "theory_experiments/periodic_contact_observer.py",
     "theory_experiments/prepare_measure_cut.py",
+    "theory_experiments/binary_overlap_cut.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -251,6 +264,22 @@ def _is_periodic_contact_spec(value: object) -> bool:
 
 def _is_prepare_measure_cut_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "prepare_measure_cut"
+
+
+def _is_binary_overlap_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "binary_overlap_cut"
+
+
+def _assert_binary_overlap_sources(sources: object, *, check_current: bool = False) -> None:
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded in (
+        ("theory_experiments/binary_overlap_cut.py", BINARY_OVERLAP_CUT_LOADED_SOURCE_SHA256),
+        ("theory_experiments/prepare_measure_cut.py", PREPARE_MEASURE_CUT_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded)):
+            raise ValueError(f"binary overlap cut source changed since import: {path}; restart from a stable checkout")
 
 
 def _assert_prepare_measure_cut_sources(sources: object, *, check_current: bool = False) -> None:
@@ -356,6 +385,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if _is_binary_overlap_spec(row):
+        return parse_binary_overlap_cut(row)
     if row.get("family") == "prepare_measure_cut":
         return parse_prepare_measure_cut(row)
     if row.get("family") == "periodic_contact_observer":
@@ -421,7 +452,25 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
                      "tensor_multiplication", "exact_algebraic_certificate_not_Lean_proof"), witness)
 
 
+def _binary_overlap_report(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    """Bind the exact normalized objects and the loaded checker to this standalone table."""
+    if (type(candidate) is not BinaryOverlapCut or type(limits) is not Limits
+            or set(request) != {"schema", "candidate", "limits", "provenance"} or request["schema"] != SCHEMA
+            or canonical_json(request["candidate"]) != canonical_json(candidate.specification())
+            or canonical_json(request["limits"]) != canonical_json(limits.specification())):
+        raise ValueError("binary overlap cut candidate/limits do not match request")
+    _assert_binary_overlap_sources(request["provenance"], check_current=True)
+    checks, details = evaluate_binary_overlap_cut(candidate, limits)
+    return {"request": request, "status": primitive.aggregate_status(checks),
+            "checks": [c.specification() for c in checks], "scope": details,
+            "arithmetic": "exact_rational_outward_bounds", "evidence_kind": _BINARY_OVERLAP_EVIDENCE,
+            "proof_status": "not_attempted", "empirical_status": "not_tested",
+            "rejection_scope": BINARY_OVERLAP_CUT_SCOPE}
+
+
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if isinstance(candidate, BinaryOverlapCut) or _is_binary_overlap_spec(request.get("candidate")):
+        return _binary_overlap_report(candidate, limits, request)
     checks: tuple[Check, ...]
     details: dict[str, object]
     cut_receipt = isinstance(candidate, PrepareMeasureCut) or _is_prepare_measure_cut_spec(request.get("candidate"))
@@ -531,6 +580,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
 
 
 def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_binary_overlap_spec(request.get("candidate")):
+        _assert_binary_overlap_sources(request["provenance"], check_current=True)
     if _is_prepare_measure_cut_spec(request.get("candidate")):
         _assert_prepare_measure_cut_sources(request["provenance"], check_current=True)
     if _is_periodic_contact_spec(request.get("candidate")):
@@ -596,7 +647,15 @@ def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
     candidate = parse_hypothesis(request["candidate"])
-    if isinstance(candidate, PrepareMeasureCut):
+    if isinstance(candidate, BinaryOverlapCut):
+        # Local hashes are integrity checks, not evidence of a true verdict.
+        # Redo this finite binary-only arithmetic (at most 276 pairs x 24
+        # settings), including outward rounding and budget. No wide search,
+        # statistics, or other adapter is run on a warm hit.
+        expected = _binary_overlap_report(candidate, parse_limits(request["limits"]), request)
+        if canonical_json(report) != canonical_json(expected):
+            raise ValueError("cached binary overlap verdict/certificate disagrees with its bounded check")
+    elif isinstance(candidate, PrepareMeasureCut):
         _assert_cut_receipt_scope(candidate, report)
     elif isinstance(candidate, primitive.PairKernel):
         # A cache hit rechecks the small certificate, not the expensive search/generation.
@@ -621,6 +680,10 @@ def publish(path: Path, report: dict[str, object], request: dict[str, object]) -
     raw = (canonical_json(envelope) + "\n").encode("utf-8")
     if len(raw) > _CACHE_MAX_BYTES:
         raise ValueError("cache entry exceeds 512 KiB")
+    saved_request = report.get("request")
+    if _is_binary_overlap_spec(request.get("candidate")) or (
+            isinstance(saved_request, dict) and _is_binary_overlap_spec(saved_request.get("candidate"))):
+        _validate_cache_entry(envelope, request)
     # Hard-link publication is atomic and refuses replacement, including a competing publisher.
     descriptor, temporary = tempfile.mkstemp(prefix=".screen-", dir=path.parent)
     try:
@@ -694,8 +757,13 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_driven = any(_is_driven_event_selector_spec(spec) for spec in specifications)
     has_periodic = any(_is_periodic_contact_spec(spec) for spec in specifications)
     has_cut = any(_is_prepare_measure_cut_spec(spec) for spec in specifications)
-    pins_sources = has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or has_cut
+    has_overlap = any(_is_binary_overlap_spec(spec) for spec in specifications)
+    if has_overlap and limits is not None and type(limits) is not Limits:
+        raise ValueError("binary overlap cut candidate/limits do not match request")
+    pins_sources = has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or has_cut or has_overlap
     sources = provenance() if pins_sources else None
+    if has_overlap:
+        _assert_binary_overlap_sources(sources)
     if has_cut:
         _assert_prepare_measure_cut_sources(sources)
     if has_periodic:
@@ -765,8 +833,11 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_driven = _is_driven_event_selector_spec(request["candidate"])
     is_periodic = _is_periodic_contact_spec(request["candidate"])
     is_cut = _is_prepare_measure_cut_spec(request["candidate"])
-    pins_sources = is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or is_cut
+    is_overlap = _is_binary_overlap_spec(request["candidate"])
+    pins_sources = is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or is_cut or is_overlap
     sources = provenance() if pins_sources else None
+    if is_overlap:
+        _assert_binary_overlap_sources(sources)
     if is_cut:
         _assert_prepare_measure_cut_sources(sources)
     if is_periodic:

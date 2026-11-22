@@ -343,6 +343,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_resonant_energy_and_single_click",
         "probe_carrier_charge_conservation",
     ),
+    "noisy_binary_cuts": (
+        "probe_robust_shared_cut_overlap",
+        "probe_randomized_cut_coverage",
+        "probe_processor_cut_data",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
