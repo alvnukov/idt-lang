@@ -140,6 +140,7 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_diamond_collision_walk",
         "probe_routed_diamond_cones",
         "probe_collision_cone_stability",
+        "probe_periodic_collision_metric",
     ),
 }
 DEFAULT_BUNDLE = "fast"

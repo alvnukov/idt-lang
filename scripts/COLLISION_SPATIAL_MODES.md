@@ -38,3 +38,33 @@ part of the default exact check. As a literature comparator,
 [D'Ariano and Perinotti](https://arxiv.org/abs/1306.1934) reconstruct a
 different quantum cellular automaton under their own locality and symmetry
 hypotheses. Their result is not evidence for these packets.
+
+### First-order isotropy without continuously tuning a junction
+
+The [periodic schedule search](probe_periodic_collision_metric.py) keeps
+the same four-leg junction, but repeats three pairs of ticks. In each pair,
+both sublattices use the **same** cyclic rewiring. In one fixed schedule
+the two conjugate eigenphase cones at a real momentum corner have zero
+tilt and squared-speed matrix **4 times the identity** per six ticks.
+At that corner the real return map squares to −I. The two carriers now
+share a spherical first-order cone in the supplied lattice coordinates.
+No adjustable coefficient or fit to measured speeds was used. The extra
+schedule and its clock are real costs of this candidate.
+
+For ordered words over 36 possible two-tick wirings, the real corners,
+up to tetrahedral symmetry and an overall sign, have three representatives
+(multiplicities 1,4,3). No word of length one or two has an isotropic,
+full-rank **nonreal double carrier** in this search. Of 46,656 words of
+length three, twelve pass at a representative with one minus sign, and
+none at the other two representatives. Permutations or clock shifts in
+these counts need not be distinct physical systems. One example uses
+cyclic permutations with row maps 2031, 2310, 1230, in that order.
+Default replay checks the example with rational arithmetic; the optional
+`--period 1`, `2`, or `3` reruns the exhaustive integer census with NumPy.
+
+The isotropy has a measurable mathematical limit **within the walk**:
+at equal-length directions (5,0,0) and (3,4,0) the trace of the six-tick
+map already has different second derivatives. It is the linear mode
+splitting that is isotropic, not the full dispersion. The scan does not
+count all momenta, derive a common cone for independent matter sectors,
+select a physical speed unit, or derive spacetime symmetry.
