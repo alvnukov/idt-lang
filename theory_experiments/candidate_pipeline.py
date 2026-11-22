@@ -94,6 +94,17 @@ from theory_experiments.opposition_flag import (
     evaluate_opposition_flag,
     parse_opposition_flag,
 )
+from theory_experiments.periodic_contact_observer import (
+    LOADED_SOURCE_SHA256 as PERIODIC_CONTACT_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.periodic_contact_observer import (
+    SCOPE as PERIODIC_CONTACT_SCOPE,
+)
+from theory_experiments.periodic_contact_observer import (
+    PeriodicContactObserver,
+    evaluate_periodic_contact_observer,
+    parse_periodic_contact_observer,
+)
 from theory_experiments.physics_screen import (
     ChiralSpectrum,
     PhysicsCandidate,
@@ -144,11 +155,12 @@ Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
-    | DrivenEventSelector
+    | DrivenEventSelector | PeriodicContactObserver
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
 CACHE_SCHEMA = "idt-screen-cache/1"
+_CACHE_MAX_BYTES = 512 * 1024
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -163,6 +175,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/neutral_current_width.py", NEUTRAL_WIDTH_DATA_PATH,
     "theory_experiments/triangle_stock.py",
     "theory_experiments/driven_event_selector.py",
+    "theory_experiments/periodic_contact_observer.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -215,6 +228,23 @@ def _is_triangle_stock_spec(value: object) -> bool:
 
 def _is_driven_event_selector_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "driven_event_selector"
+
+
+def _is_periodic_contact_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "periodic_contact_observer"
+
+
+def _assert_periodic_contact_sources(sources: object, *, check_current: bool = False) -> None:
+    """Pin the loaded finite checker and shared helpers, not a physical adapter."""
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded_hash in (
+        ("theory_experiments/periodic_contact_observer.py", PERIODIC_CONTACT_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded_hash)):
+            raise ValueError(f"periodic contact observer source changed since import: {path}; "
+                             "restart from a stable checkout")
 
 
 def _assert_driven_event_selector_sources(sources: object, *, check_current: bool = False) -> None:
@@ -294,6 +324,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "periodic_contact_observer":
+        return parse_periodic_contact_observer(row)
     if row.get("family") == "driven_event_selector":
         return parse_driven_event_selector(row)
     if row.get("family") == "triangle_stock":
@@ -358,6 +390,12 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
+    periodic_receipt = (isinstance(candidate, PeriodicContactObserver) or
+                        _is_periodic_contact_spec(request.get("candidate")))
+    if periodic_receipt and (type(candidate) is not PeriodicContactObserver or type(limits) is not Limits
+            or canonical_json(request.get("candidate")) != canonical_json(candidate.specification())
+            or canonical_json(request.get("limits")) != canonical_json(limits.specification())):
+        raise ValueError("periodic contact observer candidate/limits do not match request")
     # A verdict must be for the supplied transducer and budget. Keep the
     # historical behavior of calls that do not involve this family.
     driven_receipt = isinstance(candidate, DrivenEventSelector) or _is_driven_event_selector_spec(request.get("candidate"))
@@ -365,7 +403,10 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
             or canonical_json(request.get("candidate")) != canonical_json(candidate.specification())
             or canonical_json(request.get("limits")) != canonical_json(limits.specification())):
         raise ValueError("driven event selector candidate/limits do not match request")
-    if isinstance(candidate, DrivenEventSelector):
+    if isinstance(candidate, PeriodicContactObserver):
+        _assert_periodic_contact_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_periodic_contact_observer(candidate, limits)
+    elif isinstance(candidate, DrivenEventSelector):
         _assert_driven_event_selector_sources(request["provenance"], check_current=True)
         checks, details = evaluate_driven_event_selector(candidate, limits)
     elif isinstance(candidate, TriangleStock):
@@ -439,10 +480,14 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 if isinstance(candidate, TriangleStock)
                                 else "only_submitted_finite_transducer_and_calibrated_reference"
                                 if isinstance(candidate, DrivenEventSelector)
+                                else PERIODIC_CONTACT_SCOPE
+                                if isinstance(candidate, PeriodicContactObserver)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
-def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
+def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_periodic_contact_spec(request.get("candidate")):
+        _assert_periodic_contact_sources(request["provenance"], check_current=True)
     if _is_driven_event_selector_spec(request.get("candidate")):
         _assert_driven_event_selector_sources(request["provenance"], check_current=True)
     if _is_triangle_stock_spec(request.get("candidate")):
@@ -453,18 +498,25 @@ def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
         _assert_marked_relay_sources(request["provenance"], check_current=True)
     if _is_chiral_pencil_spec(request.get("candidate")):
         _assert_chiral_pencil_sources(request["provenance"], check_current=True)
-    # Refuse symlinks, non-regular files, oversized and partial entries. The directory is trusted.
+
+
+def _load_cache_envelope(path: Path) -> dict[str, object]:
+    # Refuse symlink entries, non-regular files, oversized and partial entries.
+    # The directory is trusted; these checks do not authenticate its contents.
     descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     with os.fdopen(descriptor, "rb") as source:
         if not stat.S_ISREG(os.fstat(source.fileno()).st_mode):
             raise ValueError("cache entry is not a regular file")
-        raw = source.read(524289)
-    if len(raw) > 524288:
+        raw = source.read(_CACHE_MAX_BYTES + 1)
+    if len(raw) > _CACHE_MAX_BYTES:
         raise ValueError("cache entry exceeds 512 KiB")
     value: object = json.loads(raw, object_pairs_hook=primitive.reject_duplicate_keys,
                               parse_float=primitive.reject_nonexact_number,
                               parse_constant=primitive.reject_nonexact_number)
-    envelope = object_fields(value, {"schema", "key", "report_sha256", "report"})
+    return object_fields(value, {"schema", "key", "report_sha256", "report"})
+
+
+def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object]) -> dict[str, object]:
     report = object_fields(envelope["report"], {"request", "status", "checks", "scope",
         "arithmetic", "evidence_kind", "proof_status", "empirical_status", "rejection_scope"})
     if (envelope["schema"] != CACHE_SCHEMA or envelope["key"] != digest(request)
@@ -484,14 +536,22 @@ def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
     return report
 
 
+def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
+    _assert_cache_request_sources(request)
+    return _validate_cache_entry(_load_cache_envelope(path), request)
+
+
 def publish(path: Path, report: dict[str, object], request: dict[str, object]) -> None:
     envelope = {"schema": CACHE_SCHEMA, "key": digest(request),
                 "report_sha256": digest(report), "report": report}
+    raw = (canonical_json(envelope) + "\n").encode("utf-8")
+    if len(raw) > _CACHE_MAX_BYTES:
+        raise ValueError("cache entry exceeds 512 KiB")
     # Hard-link publication is atomic and refuses replacement, including a competing publisher.
     descriptor, temporary = tempfile.mkstemp(prefix=".screen-", dir=path.parent)
     try:
-        with os.fdopen(descriptor, "w", encoding="utf-8") as output:
-            output.write(canonical_json(envelope) + "\n")
+        with os.fdopen(descriptor, "wb") as output:
+            output.write(raw)
             output.flush()
             os.fsync(output.fileno())
         try:
@@ -558,7 +618,10 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_width = any(_is_neutral_width_spec(spec) for spec in specifications)
     has_stock = any(_is_triangle_stock_spec(spec) for spec in specifications)
     has_driven = any(_is_driven_event_selector_spec(spec) for spec in specifications)
-    sources = provenance() if has_relay or has_pencil or has_width or has_stock or has_driven else None
+    has_periodic = any(_is_periodic_contact_spec(spec) for spec in specifications)
+    sources = provenance() if has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic else None
+    if has_periodic:
+        _assert_periodic_contact_sources(sources)
     if has_driven:
         _assert_driven_event_selector_sources(sources)
     if has_stock:
@@ -574,6 +637,8 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     if any(isinstance(candidate, BellLocalResponse) for candidate in candidates):
         assert_bell_sources()
     limits = limits if limits is not None else Limits()
+    if has_periodic and type(limits) is not Limits:
+        raise ValueError("periodic contact observer requires exact Limits")
     sources = provenance() if sources is None else sources
     if sources.get("source_sha256") != LOADED_SOURCE_HASHES:
         raise ValueError("sources changed since import; restart the interpreter from a stable checkout")
@@ -610,15 +675,18 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
 
 
 def replay_artifact(path: Path) -> dict[str, object]:
-    envelope = object_fields(primitive.load_json(path))
-    saved = object_fields(envelope.get("report"))
+    envelope = _load_cache_envelope(path)
+    saved = object_fields(envelope["report"])
     request = object_fields(saved.get("request"), {"schema", "candidate", "limits", "provenance"})
     is_relay = _is_marked_relay_spec(request["candidate"])
     is_pencil = _is_chiral_pencil_spec(request["candidate"])
     is_width = _is_neutral_width_spec(request["candidate"])
     is_stock = _is_triangle_stock_spec(request["candidate"])
     is_driven = _is_driven_event_selector_spec(request["candidate"])
-    sources = provenance() if is_relay or is_pencil or is_width or is_stock or is_driven else None
+    is_periodic = _is_periodic_contact_spec(request["candidate"])
+    sources = provenance() if is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic else None
+    if is_periodic:
+        _assert_periodic_contact_sources(sources)
     if is_driven:
         _assert_driven_event_selector_sources(sources)
     if is_stock:
@@ -629,7 +697,8 @@ def replay_artifact(path: Path) -> dict[str, object]:
         _assert_marked_relay_sources(sources)
     if is_pencil:
         _assert_chiral_pencil_sources(sources)
-    saved = read_entry(path, request)
+    _assert_cache_request_sources(request)
+    saved = _validate_cache_entry(envelope, request)
     candidate = parse_hypothesis(request["candidate"])
     limits = parse_limits(request["limits"])
     current_request = request_for(candidate, limits, provenance() if sources is None else sources)

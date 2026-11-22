@@ -33,6 +33,16 @@ complete local artifact, including exact witness inputs, imports and gaps.
 a counterexample; 1 = at least one counterexample; 2 = invalid input/operational
 error; 3 = incomplete or unsupported. Code 0 never means physical truth.
 
+## Check a detector against an independently phased clock
+
+The [periodic-contact screen](scripts/PERIODIC_CONTACT_SCREEN.md) tests every
+relative phase of two submitted finite devices, without tracing their
+potentially enormous joint period. A mismatch names the actual clock phase
+and its observed rail counts. A silent recurrent clock, a zero reference
+or an unfinished search cannot pass. This is distinct from the
+[driven-selector check](scripts/SINGLE_EVENT_ORIGINS.md), in which the input
+can switch among settings and one output is required at every step.
+
 ## Test an explicit triangle stock across an entire lattice
 
 `triangle_stock` describes W(a,b,−a−b) by a sum of at most five squared
