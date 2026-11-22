@@ -59,6 +59,11 @@ PACKS = {
         "even_carrier_additive_unit_frontier": "probe_even_carrier_resource_frontier",
         "whole_carrier_wire_orbit_census": "probe_even_mask_wire_orbits",
     }),
+    "primitive_anonymous_collision_inventory.json": ("anonymous_collision_preparations", {
+        "anonymous_equivariant_port_fusion": "probe_anonymous_port_fusion",
+        "unit_only_mixed_load_intervention": "probe_calibrated_unit_pile_comparator",
+        "anonymous_collisions_vs_tritter": "probe_anonymous_tritter_control",
+    }),
 }
 
 

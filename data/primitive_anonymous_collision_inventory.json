@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "anonymous_equivariant_port_fusion",
+      "role": "primitive_base",
+      "components": [
+        "Stabilizer-preserving deterministic conservative anonymous junctions restrict binary arrivals. Three ports first permit a double on the vacant arm; on a cubic mesh the active two-unit pattern has a six-tick cycle."
+      ],
+      "declared_status": "Explicit fusion or identity alternative, not selected by permutation symmetry. A moving double is not parked stock.",
+      "missing_bridges": [
+        "Supply simultaneous arrivals, local routing and a physical readout; determine how the rule is prepared and which completions work at higher loads."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_port_fusion.py",
+          "first_line": 1,
+          "last_line": 252,
+          "file_sha256": "11b48810b4aaa5fd18386eb9b7bb583d462e31c6965e143fa8ca31813c9022e7"
+        }
+      ]
+    },
+    {
+      "id": "unit_only_mixed_load_intervention",
+      "role": "route",
+      "components": [
+        "Fixed reversible circuits make a mixed ternary packet at a stocked two-port cell from unit inputs and read one occupied output edge; independently reversible anonymous junctions prepare and compare the two competing load rules."
+      ],
+      "declared_status": "A finite discriminating intervention, including a four-unit circuit with an additional pair-shell calibration; not an observed outcome.",
+      "missing_bridges": [
+        "Realize and check the junction calibrations, arrival clocks and detector independently, including timing and disabled controls."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_calibrated_unit_pile_comparator.py",
+          "first_line": 1,
+          "last_line": 223,
+          "file_sha256": "256151548e4a99ff58b92e95b91d3e5c4f6c3f663750749954383df337f22205"
+        }
+      ]
+    },
+    {
+      "id": "anonymous_collisions_vs_tritter",
+      "role": "route",
+      "components": [
+        "Exact sums of optical permutation phases contrast a fully symmetric deterministic occupancy rule with a symmetric ensemble of oriented implementations, common wire permutations and independent-particle probabilities."
+      ],
+      "declared_status": "Conditional ideal optical comparator, not a fit to counts or an exclusion of a mapped detector.",
+      "missing_bridges": [
+        "Bind preparations and coincidence efficiency to a real device, test more than one setting and include which internal asymmetry resources are available."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_tritter_control.py",
+          "first_line": 1,
+          "last_line": 132,
+          "file_sha256": "6f6764b679d4d5b1094f4a251ad2852386b40ccaf1d868f0cf8470139558b806"
+        }
+      ]
+    }
+  ]
+}

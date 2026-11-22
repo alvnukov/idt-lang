@@ -328,6 +328,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_even_carrier_resource_frontier",
         "probe_even_mask_wire_orbits",
     ),
+    "anonymous_collision_preparations": (
+        "probe_anonymous_port_fusion",
+        "probe_calibrated_unit_pile_comparator",
+        "probe_anonymous_tritter_control",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
