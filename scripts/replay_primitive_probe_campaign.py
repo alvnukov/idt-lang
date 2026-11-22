@@ -108,6 +108,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_ckm_raw_family_wall",
         "probe_ckm_blank_ports",
     ),
+    "phase_network": (
+        "probe_balanced_phase_composition",
+        "probe_two_source_phase_network",
+        "probe_phase_network_game",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
