@@ -158,6 +158,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_three_state_phase_controller",
         "probe_packet_eigenclock",
     ),
+    "multiple_photon_exchange": (
+        "probe_packet_triad_phase",
+        "probe_packet_exchange_cycles",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
