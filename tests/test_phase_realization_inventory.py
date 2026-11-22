@@ -13,7 +13,8 @@ from scripts.archive_existing_primitives import (
 )
 from scripts.replay_primitive_probe_campaign import TOPIC_BUNDLES
 from theory_experiments import candidate_pipeline
-from theory_experiments.primitive_screen import load_json, object_fields
+from theory_experiments.candidate_history import DEFAULT_HISTORY, SCHEMA, History
+from theory_experiments.primitive_screen import Limits, load_json, object_fields
 from theory_experiments.source_candidate import parse_source_candidate
 
 PHASE_INVENTORY = ROOT / "data/phase_realization_source_inventory.json"
@@ -39,6 +40,19 @@ PHASE_SOURCES = {f"scripts/probe_{name}.py" for name in (
 
 
 class PhaseRealizationInventoryTests(unittest.TestCase):
+    def test_pins_retain_the_original_unassessed_results(self) -> None:
+        archive = History(DEFAULT_HISTORY)
+        for spec in inventory_specifications(PHASE_INVENTORY):
+            record = {"schema": SCHEMA, "candidates": [spec], "limits": Limits().specification()}
+            key = candidate_pipeline.digest(record)
+            self.assertEqual(archive.get("submissions", key), record)
+            reports = archive.baseline(key)["reports"]
+            if not isinstance(reports, list) or len(reports) != 1:
+                self.fail("expected exactly one pinned report")
+            report = object_fields(reports[0])
+            self.assertEqual((report["status"], report["proof_status"], report["empirical_status"]),
+                             ("unsupported", "not_attempted", "not_tested"))
+
     def test_ids_and_source_coverage(self) -> None:
         self.assertTrue(PHASE_SOURCES <= {f"scripts/{p}.py" for p in TOPIC_BUNDLES["phase_realization"]})
         candidates = [parse_source_candidate(spec) for spec in inventory_specifications(PHASE_INVENTORY)]
