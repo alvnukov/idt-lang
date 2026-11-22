@@ -70,6 +70,15 @@ stopping and treating descendants as independent trials invalidate the
 comparison. A device that just tosses a coin also passes the overall null.
 [Finite-count test](check_triangle_null_trials.py).
 
+A separate [prespecified statistical witness](check_triangle_population_witness.py)
+tests whether three programs share one positive real second moment. It uses
+the worst of three exact directional binomial tails, not measured frequencies
+as exact inputs. With synthetic minus counts `(8064,4096,4096)` in 8192
+trials per program, the p-value rounded **up** is 0.002416. Each program is
+individually possible. Drifting sources or correlated repeated tickets can
+fake the joint discrepancy; complete reporting, a common preparation and
+independent units within each program must be justified outside the checker.
+
 ### Pairwise agreement is not the Pauli principle
 
 Three orthogonal neutral four-rail currents can each be prepared on a
@@ -85,6 +94,44 @@ the completely antisymmetric three-packet source vanishes. None of these
 calculations explains why physical fermions occupy an antisymmetric sector.
 [Addressed three-packet probe](probe_three_packet_exchange_sector.py).
 
+**Can this certify the sign of exchange of the *whole* object?** No. Attach
+three orthogonal unread labels to the three packets, and coherently add all
+six simultaneous permutations with either equal or alternating signs.
+The two total states then have opposite exchange characters but precisely
+the same visible state. Even repeated visible-only instruments, an accessible
+reference and visible postselection cannot distinguish them. The remaining
+visible state is a permutation average: only permutation-invariant readings
+are guaranteed to agree with the original, unaveraged preparation. Simply
+reading the hidden labels or applying an uncontrolled full swap does not
+recover their relative signs. A coherent comparison of *full* exchange
+against identity could do so; its apparatus is an additional assumption.
+[Hidden-label control](probe_hidden_exchange_colors.py).
+
+Relaxing exact hidden orthogonality gives a quantitative boundary. For one
+orthogonal visible word and three independent pure hidden tags, the largest
+possible visible difference between the two signs depends only on the three
+squared pair overlaps. The triad phase can change each visible state but not
+their distance. For example, with squared overlaps `(1/4,1/4,0)`, a supplied
+letter-exchange contact achieves contrast 1/4; allowing **all** mathematical
+visible measurements raises the optimum to 1/3. Achievability of that optimum
+with the available apparatus is not presumed.
+[Partial-overlap probe](probe_partial_hidden_exchange.py).
+
+For an actual comparison, [Tschernig et al.](https://www.nature.com/articles/s41566-021-00818-7)
+interfered exchanged and reference photon amplitudes and reported an
+exchange phase of −0.04 ± 0.07 rad (95% confidence interval; see their
+[Fig. 3](https://arxiv.org/abs/2011.08777)). That is a measurement on
+photons in a specified interferometer, not a readout of arbitrary hidden tags.
+
+These labels are not quark color and the control does not violate the
+exclusion principle. [Matthews et al.](https://www.nature.com/articles/srep01539)
+simulated bosonic and fermionic output distributions using entangled photons;
+the exchange-like readout did not turn the photons into fermions. The
+[VIP-2 copper experiment](https://link.springer.com/article/10.1140/epjc/s10052-024-12599-8)
+instead counted X-rays at the energies expected for anomalous atomic
+transitions. A bound on that rate is not a bound on an abstract hidden
+label with no transition-energy or capture-rate prediction.
+
 This differs from [three-photon experiments](https://arxiv.org/abs/1609.09804)
 on independent partially distinguishable inputs in an optical tritter and
 from our [prior bosonic benchmarks](MULTIPHOTON_EXCHANGE.md): here both sector
@@ -94,7 +141,7 @@ Likewise the earlier stock arguments do not replace
 [orthogonal-additivity results on real vector spaces](https://msp.org/pjm/1975/58-2/p14.xhtml):
 the domain, available directions and gain assumptions are different.
 
-Replay the three source probes with
+Replay the identifiability probes with
 `python3 -B -m scripts.replay_primitive_probe_campaign --bundle operational_identifiability`.
 The [candidate register](../data/primitive_identifiability_inventory.json)
-retains the three source proposals without binding a physical prediction adapter.
+retains the source proposals without binding a physical prediction adapter.
