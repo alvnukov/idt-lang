@@ -1,0 +1,119 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "minimal_local_two_path_reunion",
+      "role": "primitive_base",
+      "components": [
+        "For a connected triangle-free simple graph every nonbacktracking two-step route has exactly one alternative with the same endpoints. A genuine odd return plus minimal degree or size yields a 16-state five-direction carrier via volume bounds for its bipartite double cover."
+      ],
+      "declared_status": "A minimal finite relational candidate, not a model of spacetime or matter. Graphs with higher degree and odd returns are retained.",
+      "missing_bridges": [
+        "Explain why these local relations and minimality hold for physical processes. Repeated local signals do not certify the same vertex."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_local_reunion_minimum.py",
+          "first_line": 1,
+          "last_line": 325,
+          "file_sha256": "01f63458c6b301aaeeec3540956bd09b41c2c1191d4efdb821cf405eab97462f"
+        }
+      ]
+    },
+    {
+      "id": "anonymous_operations_from_square_opposites",
+      "role": "route",
+      "components": [
+        "Opposite edges of observed four-cycles in the forced 16-state completion define five commuting involutions with just one full-set relation. Direct adjacency checks reproduce the rooted action, larger controls and the consequences of different marker distances."
+      ],
+      "declared_status": "Coordinate reconstruction from a finite graph; the graph does not pick an observer or select matter labels.",
+      "missing_bridges": [
+        "Bind the recovered involutions and odd identity return to reproducible physical preparations."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_folded_carrier.py",
+          "first_line": 1,
+          "last_line": 281,
+          "file_sha256": "3b09d792f33fe17d97bd7d137e8f86b937a50d914e67f1b89aca9ba2c37056a4"
+        }
+      ]
+    },
+    {
+      "id": "complement_odd_additive_carrier_charge",
+      "role": "route",
+      "components": [
+        "An ordered second nonneighbor separates two common ports from the remaining three. On the reconstructed double cover a vacuum-neutral additive integer readout reversing at the antipode selects a one-dimensional ray with primitive coefficients -2 and 3, up to sign."
+      ],
+      "declared_status": "The charge hypotheses are inputs of this route; the integer ray is not a derivation of hypercharge or physical normalization.",
+      "missing_bridges": [
+        "Derive an operational charge law and shared stable reference; establish dynamics, observed gauge actions and particles independently."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_marked_carrier_charge.py",
+          "first_line": 1,
+          "last_line": 327,
+          "file_sha256": "2fbac95175f83d0694860264b7b60dc26cb65c700dbed0fc9e2700074b75f492"
+        }
+      ]
+    },
+    {
+      "id": "two_step_observer_mark_atlas",
+      "role": "route",
+      "components": [
+        "All 320 nonbacktracking two-step paths produce 160 ordered frames. Charge on the same fixed vertex can change with history even at the same final incoming port; simultaneous automorphism transport of apparatus and preparation is covariant."
+      ],
+      "declared_status": "An observer-frame ambiguity for a supplied readout, no universal fixed scalar inferred from local charge labels.",
+      "missing_bridges": [
+        "Produce and maintain ordered marks or demonstrate experimentally operational frame agreement."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_turn_charge_atlas.py",
+          "first_line": 1,
+          "last_line": 230,
+          "file_sha256": "22133c6db6e3b013e78af551c0586325a9ab7ba3a1b04aa4f3022ef29a0515f2"
+        }
+      ]
+    },
+    {
+      "id": "even_carrier_additive_unit_frontier",
+      "role": "route",
+      "components": [
+        "Lower and upper resource certificates distinguish arbitrary lookup, translation by physical rewiring, block permutations and additive per-occupied-site charge with bounded indistinguishable marks."
+      ],
+      "declared_status": "A finite cost frontier conditional on a selected logical carrier and observables, not a particle model.",
+      "missing_bridges": [
+        "Realize the chosen site observables, resource accounting and transport without an installed dictionary."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_even_carrier_resource_frontier.py",
+          "first_line": 1,
+          "last_line": 288,
+          "file_sha256": "531e3e86f525319e18965d701948d9e36ab51b0e2c7ca7a53340aaf2bd74d89e"
+        }
+      ]
+    },
+    {
+      "id": "whole_carrier_wire_orbit_census",
+      "role": "route",
+      "components": [
+        "Exhaust Boolean site functions for a 16-state translation action, retaining entire wire-permutation orbits. Optional block and full coordinate symmetries have different raw-site and unit costs."
+      ],
+      "declared_status": "Exact finite encoding bounds for the declared class only; permutations are not gauge symmetries.",
+      "missing_bridges": [
+        "Bind symmetry operations to measured interactions and explain the actual available resources."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_even_mask_wire_orbits.py",
+          "first_line": 1,
+          "last_line": 246,
+          "file_sha256": "f41171ff5d724fed757bc2383878a5dc20ba8260dd41927bc08412e0b2c9d4ca"
+        }
+      ]
+    }
+  ]
+}

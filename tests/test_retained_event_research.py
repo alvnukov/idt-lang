@@ -51,6 +51,14 @@ PACKS = {
         "streamed_current_memory_cut": "probe_streaming_observer_cut",
         "five_probability_cut_score": "probe_linear_cut_dimension_witness",
     }),
+    "primitive_anonymous_carrier_inventory.json": ("anonymous_carrier_origins", {
+        "minimal_local_two_path_reunion": "probe_local_reunion_minimum",
+        "anonymous_operations_from_square_opposites": "probe_anonymous_folded_carrier",
+        "complement_odd_additive_carrier_charge": "probe_marked_carrier_charge",
+        "two_step_observer_mark_atlas": "probe_two_turn_charge_atlas",
+        "even_carrier_additive_unit_frontier": "probe_even_carrier_resource_frontier",
+        "whole_carrier_wire_orbit_census": "probe_even_mask_wire_orbits",
+    }),
 }
 
 

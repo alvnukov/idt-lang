@@ -320,6 +320,14 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_streaming_observer_cut",
         "probe_linear_cut_dimension_witness",
     ),
+    "anonymous_carrier_origins": (
+        "probe_local_reunion_minimum",
+        "probe_anonymous_folded_carrier",
+        "probe_marked_carrier_charge",
+        "probe_two_turn_charge_atlas",
+        "probe_even_carrier_resource_frontier",
+        "probe_even_mask_wire_orbits",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
