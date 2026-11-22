@@ -128,6 +128,77 @@ the optimal contrast for other pure-tag overlaps; an irrational optimum
 is not exactly attained by a finite member. The collective copy schedule
 and its coherence are supplied, not spontaneous graph dynamics.
 
+**Independent check below the integer matrix.** On a connected bipartite
+input with an edge, the *prescribed* collective device can also be assembled
+from graph sheets. Keep one identity sheet as reference. Join a further
+sheet to it across copies of neighboring vertices to keep the relative
+bipartite parity, or across copies of the same vertex to reverse it. Relabel
+only the rail tags on that sheet. No stored vertex color is required. This
+realizes the specified signed sum, but does not explain the origin of the
+sheet schedule, tag identities, comparison detector or sampling rule.
+For example, the following checks both output currents on 15 four-vertex
+packets against all 64 rows per output:
+
+```python
+from collections import Counter
+from scripts import probe_bipartite_triangle_origin as g
+from scripts.probe_native_exchange_optimum import POINTS, RAIL_SWAPS, raw_gate
+
+def boundary(packet):
+    parity = g.path_parity(packet, 0)
+    counts = Counter()
+    for i, tag in enumerate(packet.tags):
+        counts[tag] += 1 - 2 * parity[i]
+    return tuple(counts[tag] for tag in POINTS)
+
+def wired(packet, schedule):
+    n = len(packet.tags)
+    tags, links = [], []
+    for sheet, (sign, perm) in enumerate(schedule):
+        offset = sheet*n
+        tags.extend(tuple(perm[j] for j in tag) for tag in packet.tags)
+        links.extend((u+offset, v+offset) for u, v in g.edges(packet))
+        if sheet:
+            for u in range(n):
+                targets = packet.adj[u] if sign == 1 else (u,)
+                links.extend((u, v+offset) for v in targets)
+    return g.graph(tags, links)
+
+weights = (2, 2, -1)
+matrix = raw_gate(weights, 3)
+for j in range(15):
+    packet = g.graph([POINTS[(7*j+13*t) % 64] for t in range(4)], [(0,1),(1,2),(2,3)])
+    input_current = boundary(packet)
+    for flag, sign in enumerate((1, -1)):
+        schedule = [(1, tuple(range(4)))]*3
+        for k, perm in zip(weights, RAIL_SWAPS):
+            schedule.extend([(sign*(1 if k > 0 else -1), perm)]*abs(k))
+        predicted = tuple(sum(x*y for x,y in zip(row, input_current))
+                          for row in matrix[64*flag:64*(flag+1)])
+        if boundary(wired(packet, schedule)) != predicted:
+            raise ValueError("sheet boundary and matrix disagree")
+
+from fractions import Fraction
+from math import comb
+
+for num, den, expected in ((5, 8, 43), (2, 3, 23)):
+    def error(n):
+        return Fraction(sum(comb(n,k)*num**k*(den-num)**(n-k) for k in range(n//2+1)), den**n)
+    if next(n for n in range(1, 101, 2) if error(n) < Fraction(1,20)) != expected:
+        raise ValueError("unexpected majority threshold")
+```
+
+**Cost is not just the number of preparations.** For the two specified
+lifts, the single-letter and collective contacts give plus probabilities
+`(5/8,3/8)` and `(2/3,1/3)` respectively. In a fixed odd number of
+independent, fully scored trials, classify by majority. The exact binomial
+tail first falls below 5% per hypothesis at **43** trials for one letter and
+**23** for the collective contact (errors 0.046904 and 0.048050). On the
+router, however, the raw branch gain is 4 versus 36: costing one unit per
+descendant per input ticket gives 172 versus 828 units at those sample
+sizes. These are two different resource measures, not an apparatus runtime
+or new experimental data.
+
 For an actual comparison, [Tschernig et al.](https://www.nature.com/articles/s41566-021-00818-7)
 interfered exchanged and reference photon amplitudes and reported an
 exchange phase of −0.04 ± 0.07 rad (95% confidence interval; see their
