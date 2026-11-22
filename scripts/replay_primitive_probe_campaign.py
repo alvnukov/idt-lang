@@ -98,6 +98,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_exterior_slot_minimality",
         "probe_five_slot_quartic_selector",
     ),
+    "readout_frames": (
+        "probe_native_qutrit_frames",
+        "probe_native_row_probability",
+        "probe_unread_row_duplication",
+        "probe_finite_detector_identity",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

@@ -89,6 +89,12 @@ tag histories, stored streams of random digits, and the limited power of a
 fixed order test on the accepted Delft event-ready Bell trials. The optional
 empirical replay explicitly reports untested when the pinned data are absent.
 
+The [native frame and detector controls](NATIVE_FRAME_RULES.md) separate
+three different experiments: projective measurements on three lossless
+ports, the addition of one initially blank port, and arbitrary complete
+multi-output tests. The last admits a conditional density-matrix law and a
+finite five-rate check; none of the three supplies an individual click.
+
 One cheap **proposed comparison**, not a performed experiment: inject a
 fixed state, repeat the same two-mixer word t times, and read one port.
 At t=2 the ideal model gives 1/8, separated from every deterministic
