@@ -12,7 +12,8 @@ from scripts.archive_existing_primitives import (
 )
 from scripts.replay_primitive_probe_campaign import TOPIC_BUNDLES
 from theory_experiments import candidate_pipeline
-from theory_experiments.primitive_screen import load_json, object_fields
+from theory_experiments.candidate_history import DEFAULT_HISTORY, SCHEMA, History
+from theory_experiments.primitive_screen import Limits, load_json, object_fields
 from theory_experiments.source_candidate import parse_source_candidate
 
 INVENTORY = ROOT / "data/instrument_source_inventory.json"
@@ -43,6 +44,19 @@ EARLIER_INVENTORIES = (
 
 
 class InstrumentInventoryTests(unittest.TestCase):
+    def test_immutable_instrument_baselines_are_unassessed(self) -> None:
+        archive = History(DEFAULT_HISTORY)
+        for spec in inventory_specifications(INVENTORY):
+            record = {"schema": SCHEMA, "candidates": [spec], "limits": Limits().specification()}
+            key = candidate_pipeline.digest(record)
+            self.assertEqual(archive.get("submissions", key), record)
+            reports = archive.baseline(key)["reports"]
+            if not isinstance(reports, list) or len(reports) != 1:
+                self.fail("exactly one original unassessed baseline required")
+            r = object_fields(reports[0])
+            self.assertEqual((r["status"], r["proof_status"], r["empirical_status"]),
+                             ("unsupported", "not_attempted", "not_tested"))
+
     def test_ids_source_coverage_and_campaign_registration(self) -> None:
         self.assertTrue(SOURCES <= {f"scripts/{probe}.py" for probe in TOPIC_BUNDLES["instrument_realization"]})
         candidates = [parse_source_candidate(spec) for spec in inventory_specifications(INVENTORY)]
