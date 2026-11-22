@@ -33,6 +33,14 @@ from theory_experiments.identical_particles import (
     evaluate_identical_pair,
     parse_identical_pair,
 )
+from theory_experiments.marked_relay import (
+    LOADED_SOURCE_SHA256 as MARKED_RELAY_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.marked_relay import (
+    MarkedRelay,
+    evaluate_marked_relay,
+    parse_marked_relay,
+)
 from theory_experiments.native_bell_bridge import (
     NativeBellBridge,
     evaluate_native_bell_bridge,
@@ -94,7 +102,7 @@ from theory_experiments.unsigned_pair_packet import (
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
-    | UnsignedPairPacket | OppositionFlag
+    | UnsignedPairPacket | OppositionFlag | MarkedRelay
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -108,6 +116,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/universe_bench.py",
     "theory_experiments/unsigned_pair_packet.py",
     "theory_experiments/opposition_flag.py",
+    "theory_experiments/marked_relay.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -142,8 +151,31 @@ def provenance() -> dict[str, object]:
 LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 
+def _is_marked_relay_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "marked_relay"
+
+
+def _assert_marked_relay_sources(sources: object, *, check_current: bool = False) -> None:
+    """Refuse preloaded modules changed on disk before this pipeline imported.
+
+    This assumes a stable checkout during each normal module import. It covers
+    the relay adapter and its directly used primitive helpers, not arbitrary
+    loaders, in-process tampering, or the import history of other adapters.
+    """
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded_hash in (
+        ("theory_experiments/marked_relay.py", MARKED_RELAY_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded_hash)):
+            raise ValueError(f"marked relay source changed since import: {path}; restart from a stable checkout")
+
+
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "marked_relay":
+        return parse_marked_relay(row)
     if row.get("family") == "opposition_flag":
         return parse_opposition_flag(row)
     if row.get("family") == "unsigned_pair_packet":
@@ -198,7 +230,10 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, OppositionFlag):
+    if isinstance(candidate, MarkedRelay):
+        _assert_marked_relay_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_marked_relay(candidate, limits)
+    elif isinstance(candidate, OppositionFlag):
         checks, details = evaluate_opposition_flag(candidate, limits)
     elif isinstance(candidate, UnsignedPairPacket):
         checks, details = evaluate_unsigned_pair_packet(candidate, limits)
@@ -245,10 +280,14 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 if isinstance(candidate, PublishedObservation)
                                 else "no_primitive_rejection_execution_diagnostics_only"
                                 if isinstance(candidate, (NativeBellBridge, NativeReadoutProbe, NativeReadoutSearch))
+                                else "declared_markers_origins_and_supplied_relay_target_only"
+                                if isinstance(candidate, MarkedRelay)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
 def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
+    if _is_marked_relay_spec(request.get("candidate")):
+        _assert_marked_relay_sources(request["provenance"], check_current=True)
     # Refuse symlinks, non-regular files, oversized and partial entries. The directory is trusted.
     descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     with os.fdopen(descriptor, "rb") as source:
@@ -349,12 +388,15 @@ class Result:
 def run_batch(specifications: list[object], limits: Limits | None = None,
               cache_dir: Path | None = None, *, fresh: bool = False) -> tuple[Result, ...]:
     primitive.bounded_int(len(specifications), 1, 64)
+    sources = provenance() if any(_is_marked_relay_spec(spec) for spec in specifications) else None
+    if sources is not None:
+        _assert_marked_relay_sources(sources)
     # Validate the entire input before creating cache files.
     candidates = tuple(parse_hypothesis(value) for value in specifications)
     if any(isinstance(candidate, BellLocalResponse) for candidate in candidates):
         assert_bell_sources()
     limits = limits if limits is not None else Limits()
-    sources = provenance()
+    sources = provenance() if sources is None else sources
     if sources.get("source_sha256") != LOADED_SOURCE_HASHES:
         raise ValueError("sources changed since import; restart the interpreter from a stable checkout")
     if cache_dir is not None:
@@ -393,10 +435,13 @@ def replay_artifact(path: Path) -> dict[str, object]:
     envelope = object_fields(primitive.load_json(path))
     saved = object_fields(envelope.get("report"))
     request = object_fields(saved.get("request"), {"schema", "candidate", "limits", "provenance"})
+    sources = provenance() if _is_marked_relay_spec(request["candidate"]) else None
+    if sources is not None:
+        _assert_marked_relay_sources(sources)
     saved = read_entry(path, request)
     candidate = parse_hypothesis(request["candidate"])
     limits = parse_limits(request["limits"])
-    current_request = request_for(candidate, limits, provenance())
+    current_request = request_for(candidate, limits, provenance() if sources is None else sources)
     if (object_fields(current_request["provenance"]).get("source_sha256") != LOADED_SOURCE_HASHES
             or canonical_json(current_request) != canonical_json(request)):
         raise ValueError("replay sources/runtime/request differ")
