@@ -1,0 +1,103 @@
+[
+  {
+    "id": "width_three_unit_currents",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2"],
+    "mass_regime": "all_negligible",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"]],
+      [["0","0"],["0","0"],["1","0"]]
+    ]
+  },
+  {
+    "id": "width_four_unit_currents",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2","n3"],
+    "mass_regime": "all_negligible",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["0","0"],["1","0"],["0","0"]],
+      [["0","0"],["0","0"],["0","0"],["1","0"]]
+    ]
+  },
+  {
+    "id": "width_four_states_rank_three_projector",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2","n3"],
+    "mass_regime": "all_negligible",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["0","0"],["9/25","0"],["12/25","0"]],
+      [["0","0"],["0","0"],["12/25","0"],["16/25","0"]]
+    ]
+  },
+  {
+    "id": "width_rank_three_complex_phase",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2","n3"],
+    "mass_regime": "all_negligible",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["0","0"],["9/25","0"],["0","12/25"]],
+      [["0","0"],["0","0"],["0","-12/25"],["16/25","0"]]
+    ]
+  },
+  {
+    "id": "width_omit_mixed_channels_control",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2","n3"],
+    "mass_regime": "all_negligible",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["0","0"],["9/25","0"],["0","0"]],
+      [["0","0"],["0","0"],["0","0"],["16/25","0"]]
+    ]
+  },
+  {
+    "id": "width_four_unequal_diagonal_currents",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2","n3"],
+    "mass_regime": "all_negligible",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["0","0"],["3/5","0"],["0","0"]],
+      [["0","0"],["0","0"],["0","0"],["4/5","0"]]
+    ]
+  },
+  {
+    "id": "width_undefined_kinematic_threshold",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2"],
+    "mass_regime": "threshold_or_unknown",
+    "bridge": "standard_invisible_left_current_only",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"]],
+      [["0","0"],["0","0"],["1","0"]]
+    ]
+  },
+  {
+    "id": "width_unmapped_slot_carrier",
+    "family": "neutral_current_width",
+    "species": ["n0","n1","n2"],
+    "mass_regime": "all_negligible",
+    "bridge": "unmapped",
+    "left_current_matrix": [
+      [["1","0"],["0","0"],["0","0"]],
+      [["0","0"],["1","0"],["0","0"]],
+      [["0","0"],["0","0"],["1","0"]]
+    ]
+  }
+]

@@ -64,6 +64,15 @@ from theory_experiments.native_readout_search import (
     evaluate_native_readout_search,
     parse_native_readout_search,
 )
+from theory_experiments.neutral_current_width import (
+    DATA_PATH as NEUTRAL_WIDTH_DATA_PATH,
+    DATA_SHA256 as NEUTRAL_WIDTH_DATA_SHA256,
+    LOADED_SOURCE_SHA256 as NEUTRAL_WIDTH_LOADED_SOURCE_SHA256,
+    NeutralCurrentWidth,
+    assert_loaded_sources as assert_neutral_width_sources,
+    evaluate_neutral_current_width,
+    parse_neutral_current_width,
+)
 from theory_experiments.opposition_flag import (
     OppositionFlag,
     evaluate_opposition_flag,
@@ -110,7 +119,7 @@ from theory_experiments.unsigned_pair_packet import (
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
-    | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil
+    | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -126,6 +135,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/opposition_flag.py",
     "theory_experiments/marked_relay.py",
     "theory_experiments/chiral_pencil.py",
+    "theory_experiments/neutral_current_width.py", NEUTRAL_WIDTH_DATA_PATH,
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -168,6 +178,24 @@ def _is_chiral_pencil_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "chiral_pencil"
 
 
+def _is_neutral_width_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "neutral_current_width"
+
+
+def _assert_neutral_width_sources(sources: object, *, check_current: bool = False) -> None:
+    """Refuse stale code or receipt bytes, including warm-cache and replay paths."""
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, expected_hash in (
+        ("theory_experiments/neutral_current_width.py", NEUTRAL_WIDTH_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+        (NEUTRAL_WIDTH_DATA_PATH, NEUTRAL_WIDTH_DATA_SHA256),
+    ):
+        if (hashes.get(path) != expected_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != expected_hash)):
+            raise ValueError(f"neutral-current source changed since import: {path}; restart from a stable checkout")
+    assert_neutral_width_sources()
+
+
 def _assert_chiral_pencil_sources(sources: object, *, check_current: bool = False) -> None:
     """Check the loaded pencil adapter and its directly used primitive helpers.
 
@@ -203,6 +231,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "neutral_current_width":
+        return parse_neutral_current_width(row)
     if row.get("family") == "chiral_pencil":
         return parse_chiral_pencil(row)
     if row.get("family") == "marked_relay":
@@ -261,7 +291,10 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, ChiralPencil):
+    if isinstance(candidate, NeutralCurrentWidth):
+        _assert_neutral_width_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_neutral_current_width(candidate, limits)
+    elif isinstance(candidate, ChiralPencil):
         _assert_chiral_pencil_sources(request["provenance"], check_current=True)
         checks, details = evaluate_chiral_pencil(candidate, limits)
     elif isinstance(candidate, MarkedRelay):
@@ -304,11 +337,15 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
     completed_observation = isinstance(candidate, PublishedObservation) and details["execution_status"] == "complete"
     return {"request": request, "status": primitive.aggregate_status(checks),
             "checks": [check.specification() for check in checks], "scope": details,
-            "arithmetic": "exact_rational", "evidence_kind": "computation_with_explicit_algebraic_or_bounded_scope",
+            "arithmetic": "exact_rational",
+            "evidence_kind": ("descriptive_completion_only" if isinstance(candidate, NeutralCurrentWidth)
+                              else "computation_with_explicit_algebraic_or_bounded_scope"),
             "proof_status": "not_attempted",
             "empirical_status": (details["empirical_status"] if isinstance(candidate, BellLocalResponse)
                                  else "published_summary_compared_conditionally" if completed_observation else "not_tested"),
-            "rejection_scope": ("conditional_statistical_null_and_bridges_not_exact_counterexample"
+            "rejection_scope": ("published_summary_comparison_not_candidate_rejection"
+                                if isinstance(candidate, NeutralCurrentWidth)
+                                else "conditional_statistical_null_and_bridges_not_exact_counterexample"
                                 if isinstance(candidate, BellLocalResponse)
                                 else "no_primitive_rejection_descriptive_comparison_only"
                                 if isinstance(candidate, PublishedObservation)
@@ -322,6 +359,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
 
 
 def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
+    if _is_neutral_width_spec(request.get("candidate")):
+        _assert_neutral_width_sources(request["provenance"], check_current=True)
     if _is_marked_relay_spec(request.get("candidate")):
         _assert_marked_relay_sources(request["provenance"], check_current=True)
     if _is_chiral_pencil_spec(request.get("candidate")):
@@ -428,7 +467,10 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     primitive.bounded_int(len(specifications), 1, 64)
     has_relay = any(_is_marked_relay_spec(spec) for spec in specifications)
     has_pencil = any(_is_chiral_pencil_spec(spec) for spec in specifications)
-    sources = provenance() if has_relay or has_pencil else None
+    has_width = any(_is_neutral_width_spec(spec) for spec in specifications)
+    sources = provenance() if has_relay or has_pencil or has_width else None
+    if has_width:
+        _assert_neutral_width_sources(sources)
     if has_relay:
         _assert_marked_relay_sources(sources)
     if has_pencil:
@@ -479,7 +521,10 @@ def replay_artifact(path: Path) -> dict[str, object]:
     request = object_fields(saved.get("request"), {"schema", "candidate", "limits", "provenance"})
     is_relay = _is_marked_relay_spec(request["candidate"])
     is_pencil = _is_chiral_pencil_spec(request["candidate"])
-    sources = provenance() if is_relay or is_pencil else None
+    is_width = _is_neutral_width_spec(request["candidate"])
+    sources = provenance() if is_relay or is_pencil or is_width else None
+    if is_width:
+        _assert_neutral_width_sources(sources)
     if is_relay:
         _assert_marked_relay_sources(sources)
     if is_pencil:
