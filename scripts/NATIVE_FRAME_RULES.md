@@ -167,3 +167,41 @@ The diagnostic accepts simultaneous probability intervals and separate
 upper bounds on row matching and the two shared remainders. It reports
 inconclusive when those bounds can absorb the discrepancy. No finite grid
 or data-free check establishes the operational assumptions universally.
+
+## Sharp rational projectors: a retry is not a change of coordinates
+
+The [rational pentagon](probe_native_rational_pentagon.py) uses three
+coordinates throughout the input, not the four-mode blank-path example
+above. Five rays e₁,e₂,(1,0,1),(−1,−1,1),(0,1,1) are cyclically orthogonal
+and give squared-amplitude sum **13/6** for the native (1,1,0)/(1+i)
+preparation. The norm-three ray cannot be reached by a projectively
+Gaussian-rational *square unitary on three slots*: if B†B=mI then
+Norm(det B)=m³, whereas such a column would force an odd valuation at 3.
+But sharp rational projectors do not require preparing this normalized
+column. Stack the complete context's projectors with a common numerator,
+pad with scalar-identity failure branches and compile the resulting
+dyadic isometry. All five contexts admit common success probability
+**9/16** and an exactly data-preserving reset on failure. Retrying uses
+15 logical outcome/data addresses (30 paired rails) and has no finite
+worst-case number of steps. It supplies coherent instruments, independent
+control of the extra paths and a readout law; it is not a bare lossless
+three-port projective measurement or an observed violation.
+
+The unrestricted search over asymmetric pentagons with denominator primes
+only 2 and 5 remains open: 10,986,328 candidate pairings through the stated
+larger cutoff had no hit, and an analytical exclusion covers the symmetric
+subfamily only. Adding 17 gives an explicit countercontrol.
+
+The [residue-graph probe](probe_qutrit_residue_frames.py) tests a tempting
+but invalid inference. Reducing normalized Gaussian coordinates modulo 3
+gives 63 nonisotropic rays and 63 bases, which cannot be assigned one true
+ray per basis. Modulo 7 the corresponding counts are 2,107 and 14,749;
+each ray lies in 21 bases, so even a divisibility argument suffices. Yet the
+native *dyadic* three-slot circuits already reach all the residue rays and
+bases in both examples, despite their actual infinite incidence tree having
+a coloring. Distinct rays can collapse after reduction. A coloring constant
+on a residue fiber would pull back, but the nonexistence of such a coloring
+does **not** reject the original candidate. Modulo 3 also has no
+five-distinct-vertex pentagon; a genuine pentagon can collapse to a walk
+with repeated vertices. Real-coordinate rays give a separate restricted
+positive coloring. The checker must keep these logical directions separate.

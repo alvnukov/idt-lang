@@ -128,6 +128,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_unsigned_pair_tickets",
         "probe_unsigned_background_readout",
     ),
+    "qutrit_extensions": (
+        "probe_native_rational_pentagon",
+        "probe_qutrit_residue_frames",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
