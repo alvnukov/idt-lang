@@ -125,3 +125,6 @@ Run the example from the repository root: `python3 -B -m doctest scripts/MARKED_
 
 Replay the finite experiments with
 `python3 -B scripts/replay_primitive_probe_campaign.py --bundle marked_relays`.
+
+The [pulse and detector comparisons](OPPOSITION_PROCESS_RESULTS.md) ask what
+changes when the same relay must also carry a six-setting phase response.

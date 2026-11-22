@@ -183,6 +183,21 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     ),
     "local_shuttles": (
         "probe_shuttle_local_reunions",
+        "probe_boolean_shuttle_origin",
+        "probe_joint_relay_phase",
+    ),
+    "phase_memory": (
+        "probe_serial_phase_memory",
+        "probe_six_mark_phase_origin",
+        "probe_phase_pair_holdout",
+        "probe_local_phase_comparator",
+        "probe_six_phase_exclusive_packet",
+    ),
+    "chiral_observations": (
+        "probe_occupation_square_signs",
+        "probe_packet_charge_pairings",
+        "probe_neutron_charge_anchor",
+        "probe_flavor_charge_connectivity",
     ),
     "matching_transport": (
         "probe_matching_transport",
