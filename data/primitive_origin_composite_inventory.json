@@ -1,0 +1,133 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "affine_six_dial_reset_and_robust_witness",
+      "role": "route",
+      "components": [
+        "A supplied independent fair bit pair chooses one of four affine schedules compiled from the old color contact, with fresh ports, a nonbackground reference and retained garbage. The first-record bit does not select the schedule. The six old dials reproduce the target conditional stocks' statistics, not those stocks themselves.",
+        "One right-contact follow-up separates this concrete escape and the larger independent affine-map class under exact old endpoint rates. A different three-rate witness for the uniformly mixed P0,P2,P4 preparation needs neither exact endpoints nor a six-state output: 3p+3q-r <= 5, with sharp entrywise distance 1/28 to the supplied (1,3/4,0) target.",
+        "An all-trial binary score has conditional null cap 11/12 and ideal comparison 15/16 under the named source and random-setting/reward interface. The fixed-N calculation is prospective; its ideal IID assumption is for power, not an assertion of experimental independence."
+      ],
+      "declared_status": "A finite reset escape, scoped rejection by an added setting, and design-only robust witness. No observed rejection, general physical instrument or inferred quantum angle for the right contact.",
+      "missing_bridges": [
+        "Establish the physical preparation and first-reader interface and certify independence of the schedule and fresh randomness rather than assuming affine maps from fitted solo rates.",
+        "Account for fresh reference stock, unused scratch outputs and external control; preregister the all-trial score and certify any contemplated deviation budget before interpreting data."
+      ],
+      "sources": [
+        {"path": "scripts/probe_affine_reset_escape.py", "first_line": 3, "last_line": 18, "file_sha256": "d9f78bf09bda9e36ae7e45cbe3ca4a0e953ec12bed32a5793ef8cacf6fe8ee8a"},
+        {"path": "scripts/probe_affine_reset_escape.py", "first_line": 145, "last_line": 185, "file_sha256": "d9f78bf09bda9e36ae7e45cbe3ca4a0e953ec12bed32a5793ef8cacf6fe8ee8a"},
+        {"path": "scripts/probe_affine_reset_escape.py", "first_line": 196, "last_line": 226, "file_sha256": "d9f78bf09bda9e36ae7e45cbe3ca4a0e953ec12bed32a5793ef8cacf6fe8ee8a"},
+        {"path": "scripts/probe_affine_instrument_witness.py", "first_line": 3, "last_line": 10, "file_sha256": "879d20e30982cfdd1330d873f184f02fcf2c559347dac5384010f6ba020beda5"},
+        {"path": "scripts/probe_affine_instrument_witness.py", "first_line": 43, "last_line": 82, "file_sha256": "879d20e30982cfdd1330d873f184f02fcf2c559347dac5384010f6ba020beda5"},
+        {"path": "scripts/probe_affine_instrument_witness.py", "first_line": 84, "last_line": 136, "file_sha256": "879d20e30982cfdd1330d873f184f02fcf2c559347dac5384010f6ba020beda5"},
+        {"path": "scripts/probe_affine_instrument_witness.py", "first_line": 139, "last_line": 173, "file_sha256": "879d20e30982cfdd1330d873f184f02fcf2c559347dac5384010f6ba020beda5"}
+      ]
+    },
+    {
+      "id": "restricted_hexagon_joint_extensions",
+      "role": "route",
+      "components": [
+        "The supplied four-ticket preparations and six terminal binary dials give a two-coordinate local hexagon. Among terminal raw-phase readers that respect its affine identities, arbitrary stochastic readouts give only mixtures of the six dials and constants, not the full affine dual.",
+        "For the fixed dial expression the sharp magnitudes are 7/4 for mixtures of local-stock products, 3 for positive measured affine joint tables, 5/2 under bilateral hexagon conditioning, and 9/4 under full affine-effect positivity. A separate single-dial closure bound need not give a unique extremizer.",
+        "The positive extremizer in the conditioning model has CHSH +5/2; the oriented anti-correlated comparison has -5/2. The unique saturated unbiased measured anti-table matches the supplied singlet row on these dials only. Its explicit conditional simulator sends a setting and a sign, so it is not spacelike or Bell-local.",
+        "The shared-opposite phase control is Bell-local but violates the proposed quotient-affine joint extension. A single first-wire contact separates the center mixtures; a middle-wire equality gives a translated singleton reader. Extending to positive products of these singleton effects forces a nonnegative hidden phase-pair table and |CHSH| at most 2."
+      ],
+      "declared_status": "Exact finite model bounds and conditional table equality under explicit effect and conditioning contracts. No natural source, general joint-state law, spacelike implementation or quantum derivation follows.",
+      "missing_bridges": [
+        "Establish which local effects are physically available in a two-arm experiment and justify any affine joint extension without silently discarding a usable phase singleton.",
+        "Derive an independent spacelike source and conditional-state law, or explain why a restricted effect interface is physically enforced without the simulator's setting/outcome message."
+      ],
+      "sources": [
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 5, "last_line": 13, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"},
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 87, "last_line": 134, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"},
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 136, "last_line": 174, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"},
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 228, "last_line": 246, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"},
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 281, "last_line": 322, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"},
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 358, "last_line": 385, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"},
+        {"path": "scripts/probe_hexagon_composite_closure.py", "first_line": 401, "last_line": 417, "file_sha256": "fba92f029548cf7e6cbfab70ea7792eb23ad2d2c56576f8551444189a4afb87c"}
+      ]
+    },
+    {
+      "id": "hexagon_hidden_phase_erasure_tradeoffs",
+      "role": "semantic_contract",
+      "components": [
+        "Require equality or controlled total-variation leakage of the three hidden opposite-pair mixtures, separately from the even/odd triad relation. At zero pair leakage alone a positive abstract model attains visibility 4/5; imposing the triad relation or using a setting-independent raw-phase channel lowers that zero-leakage maximum to 2/3.",
+        "For pair leakage delta, triad leakage eta and exact target probabilities, the joint constraint is 3v <= 2+4delta+eta, alongside the pair-only bound v <= (4/5)(1+delta). The finite constructions check the sharp tradeoffs within the named model families.",
+        "Random translated words can erase leakage in the exposed phase output. Keeping the chosen shift as accessible side information defeats the erasure, and bounded fair-bit schedules cannot produce the exact non-dyadic erased peak. No output trials are discarded."
+      ],
+      "declared_status": "Exact model-level hidden distribution constraints and resource controls, not observed equivalences, certified erasure of all physical records, or an experimental contextuality verdict.",
+      "missing_bridges": [
+        "Identify all physically accessible outputs, including schedule and preparation records, and justify why any actual erasure channel is common and independent of settings and hidden preparation history.",
+        "Establish the pair and triad equivalence contracts under the intended physical effects and verify any needed leakage or probability-error bounds separately."
+      ],
+      "sources": [
+        {"path": "scripts/probe_hidden_phase_erasure.py", "first_line": 5, "last_line": 47, "file_sha256": "c546af498d3bca1b70b2e7ff30f06a470f47b91505f1dc59f50f2e4ec4f8b3ae"},
+        {"path": "scripts/probe_hidden_phase_erasure.py", "first_line": 107, "last_line": 139, "file_sha256": "c546af498d3bca1b70b2e7ff30f06a470f47b91505f1dc59f50f2e4ec4f8b3ae"},
+        {"path": "scripts/probe_hidden_phase_erasure.py", "first_line": 171, "last_line": 219, "file_sha256": "c546af498d3bca1b70b2e7ff30f06a470f47b91505f1dc59f50f2e4ec4f8b3ae"},
+        {"path": "scripts/probe_hidden_phase_erasure.py", "first_line": 222, "last_line": 254, "file_sha256": "c546af498d3bca1b70b2e7ff30f06a470f47b91505f1dc59f50f2e4ec4f8b3ae"}
+      ]
+    },
+    {
+      "id": "five_slot_chiral_support_and_pencil",
+      "role": "law_family_collection",
+      "components": [
+        "An exterior top-form bilinear on supplied even five-slot masks yields ten complementary pairing supports, not a one-particle End operator. Definite opposite scalar charges and neutral trilinear support fix centered additive continuous charges conditional on the five mode charges; unsigned coefficients give the same support result.",
+        "A separate inverse sign test fixes support and unit magnitudes, then imposes no rank-ten matrix in the complex pencil. Mixed hexagon matching tests select the exterior sign class modulo state and channel rephasing. Pure sectors leave nine relative sign bits and a checked pure-passing rival; the exterior coefficient identities are verified after inversion.",
+        "Block labels and four-dimensional Weyl interpretation are additional inputs; anomaly checks do not select unique hypercharge, parity or family count. Charged-current support tests only the specific common effective flavor tensor with aligned normalization and standard currents; distinct kinetic metrics or independent tensors are escapes."
+      ],
+      "declared_status": "Conditional charge and coefficient classifications, not a physical Spin(10) gauge theory, Lorentz chirality, observed rank restriction or extraction of CKM rates.",
+      "missing_bridges": [
+        "Derive the physical pairing support, orientation charges and coherent access to the full mixed pencil; explain why the conditional rank selection law should hold for an apparatus.",
+        "Establish the physical field and flavor dictionary, including kinetic normalization and weak currents, before transferring any support constraint or identifying a particle spectrum."
+      ],
+      "sources": [
+        {"path": "scripts/probe_chiral_carrier_holdout.py", "first_line": 3, "last_line": 44, "file_sha256": "9020a4799b60e67c1fb126e2b699ea12c7c2b6d55d5f888bbfce077e09287d4f"},
+        {"path": "scripts/probe_chiral_carrier_holdout.py", "first_line": 211, "last_line": 254, "file_sha256": "9020a4799b60e67c1fb126e2b699ea12c7c2b6d55d5f888bbfce077e09287d4f"},
+        {"path": "scripts/probe_chiral_carrier_holdout.py", "first_line": 346, "last_line": 374, "file_sha256": "9020a4799b60e67c1fb126e2b699ea12c7c2b6d55d5f888bbfce077e09287d4f"},
+        {"path": "scripts/probe_chiral_pencil_signs.py", "first_line": 3, "last_line": 45, "file_sha256": "ff912f085150347dd764a43721d3cb3b0caf0b424bdcba1474cad3a6534a76f4"},
+        {"path": "scripts/probe_chiral_pencil_signs.py", "first_line": 230, "last_line": 260, "file_sha256": "ff912f085150347dd764a43721d3cb3b0caf0b424bdcba1474cad3a6534a76f4"}
+      ]
+    },
+    {
+      "id": "anonymous_diffusive_signal_rulers",
+      "role": "route",
+      "components": [
+        "Anonymous receivers get arrival-count ratios, a clock horizon and comparable supplied preparations, not port coordinates. Alternating sweeps on the least path quotient yield a sampling-dependent quadratic fixed-displacement limit; finite chordal Gram rank stays full rather than measuring that limit's dimension directly.",
+        "At increasing horizons the declared resolution rule resolves different dimensions for four- and five-port fixtures. The forecast uses two observed fixes and a supplied constant-displacement model; an indistinguishable two-fix history can instead turn back and fail the forecast.",
+        "Sampler bias changes relative lengths, a missing port can silence a receiver, and compact wrapping and a retrace-only tree give sharply different fixed-displacement rulers. Independent shot cost is only a one-standard-deviation diagnostic, not achieved precision."
+      ],
+      "declared_status": "Conditional asymptotic ruler and exact finite count fixtures, not a uniform range limit, shortest clock, wave cone, physical dimension, topology or inertial law.",
+      "missing_bridges": [
+        "Justify the physical endpoint quotient, source law, stationary receiver identity and common clock rather than importing comparable samples into a geometric interpretation.",
+        "Establish reproducible resolution with finite shot budgets and an independently supported motion law before treating a diffusive fixed-displacement fit as a physical ruler."
+      ],
+      "sources": [
+        {"path": "scripts/probe_anonymous_signal_rulers.py", "first_line": 3, "last_line": 36, "file_sha256": "5fd3e2b6827bf75d4c27d6766dc226e3ad3815d42b74cce1e1f8d1b764871ae6"},
+        {"path": "scripts/probe_anonymous_signal_rulers.py", "first_line": 191, "last_line": 206, "file_sha256": "5fd3e2b6827bf75d4c27d6766dc226e3ad3815d42b74cce1e1f8d1b764871ae6"},
+        {"path": "scripts/probe_anonymous_signal_rulers.py", "first_line": 244, "last_line": 276, "file_sha256": "5fd3e2b6827bf75d4c27d6766dc226e3ad3815d42b74cce1e1f8d1b764871ae6"},
+        {"path": "scripts/probe_anonymous_signal_rulers.py", "first_line": 279, "last_line": 306, "file_sha256": "5fd3e2b6827bf75d4c27d6766dc226e3ad3815d42b74cce1e1f8d1b764871ae6"}
+      ]
+    },
+    {
+      "id": "anonymous_midpoint_incidence_factory",
+      "role": "realization",
+      "components": [
+        "Five anonymous centers each hold a matching of the other four marks. A duplicate claim permits a local repair, and six of 243 configurations are collision-free, all in one relabeling class. A uniform proposal schedule has a finite checked absorption calculation; greedy descent and poor scheduling are countercontrols.",
+        "The recovered incidence implements the supplied spectator gate by reflection and midpoint lookup, without converting labels to field coordinates within the update. The finite construction nevertheless assumes five centers, comparable pair claims and the chosen proposal rule.",
+        "A transitive 21-mark rival has a five-mark line for every pair and agrees on every two-tag-source circuit restricted to that line, including both instrument records. It fails global midpoint interchange; an independently supplied third tag can probe outside the line, but its availability and distribution are not derived."
+      ],
+      "declared_status": "A finite anonymous-table construction and a constructive identifiability countermodel. The two-tag instrument output does not determine global alphabet size, midpoint interchange or physical rule origin.",
+      "missing_bridges": [
+        "Derive the physical center/pair inventory, perception of duplicate claims and fair scheduling from an interaction rather than accepting them as factory primitives.",
+        "Establish access to a third independent source and its comparison readout before using any line-membership frequency to distinguish the five- and 21-mark alternatives."
+      ],
+      "sources": [
+        {"path": "scripts/probe_anonymous_midpoint_factory.py", "first_line": 3, "last_line": 18, "file_sha256": "4eef503618265e582c55dcd98c3e244c80e5fa65785a0169b3fdb1a3ed34701d"},
+        {"path": "scripts/probe_anonymous_midpoint_factory.py", "first_line": 60, "last_line": 81, "file_sha256": "4eef503618265e582c55dcd98c3e244c80e5fa65785a0169b3fdb1a3ed34701d"},
+        {"path": "scripts/probe_anonymous_midpoint_factory.py", "first_line": 115, "last_line": 153, "file_sha256": "4eef503618265e582c55dcd98c3e244c80e5fa65785a0169b3fdb1a3ed34701d"},
+        {"path": "scripts/probe_anonymous_midpoint_factory.py", "first_line": 232, "last_line": 301, "file_sha256": "4eef503618265e582c55dcd98c3e244c80e5fa65785a0169b3fdb1a3ed34701d"}
+      ]
+    }
+  ]
+}

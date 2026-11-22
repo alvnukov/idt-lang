@@ -113,6 +113,8 @@ covered.
   stopping time yields zero complete +1 operations. The exact period
   calculation covers arbitrary waiting time, not all clocks.
 
+Next: [recovering the five-tag relation and testing a joint source](LOWER_RELATIONS_AND_JOINTS.md).
+
 Replay all ten probes:
 
 ```sh
