@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "streamed_current_memory_cut",
+      "role": "route",
+      "components": [
+        "A common-time cut of raw signed rail updates produces a rational family of binary event tables under a specified squared-current readout. Rank, saturated overlaps and packing constrain memories that are sufficient across the cut; loss flags change the problem."
+      ],
+      "declared_status": "Conditional finite resource discrimination, including a lossy two-level control; source mechanism unassessed and readout supplied.",
+      "missing_bridges": [
+        "Derive the readout and establish experimental access to unconditional trials, all prefix memory, and independently selected suffixes."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_streaming_observer_cut.py",
+          "first_line": 1,
+          "last_line": 241,
+          "file_sha256": "73834f284b5ef8b0444f42ea779d48d031956c7238b980edf0a044e237d9c479"
+        }
+      ]
+    },
+    {
+      "id": "five_probability_cut_score",
+      "role": "route",
+      "components": [
+        "Five prescribed unconditional cells give a prepare-and-measure dimension score robust to a stated entrywise tolerance. An explicit classical trit suffices and a conditional qubit reproduces the same five cells after selection."
+      ],
+      "declared_status": "Not a nonclassicality witness, particle dimension measurement or test of the raw stream in a laboratory.",
+      "missing_bridges": [
+        "Bind preparation, suffix choice, memory accounting and no-click denominators to an independent physical intervention."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_linear_cut_dimension_witness.py",
+          "first_line": 1,
+          "last_line": 142,
+          "file_sha256": "22cfbf3cb6910a33d1fe531d88ab9fcb38da607eeb0a96ad8fa5e1536ccb0cae"
+        }
+      ]
+    }
+  ]
+}

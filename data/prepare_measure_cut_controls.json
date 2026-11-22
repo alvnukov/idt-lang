@@ -1,0 +1,116 @@
+[
+  {
+    "id": "three_streams_one_classical_bit",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"classical","dimension":2,"shared_classical_seed":false},
+    "intervals": [
+      [["1","1"],["1/5","1/5"],["1/17","1/17"]],
+      [["1/5","1/5"],["1","1"],["1/5","1/5"]],
+      [["1/17","1/17"],["1/5","1/5"],["1","1"]]
+    ]
+  },
+  {
+    "id": "three_streams_a_trit",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"classical","dimension":3,"shared_classical_seed":false},
+    "intervals": [
+      [["1","1"],["1/5","1/5"],["1/17","1/17"]],
+      [["1/5","1/5"],["1","1"],["1/5","1/5"]],
+      [["1/17","1/17"],["1/5","1/5"],["1","1"]]
+    ]
+  },
+  {
+    "id": "three_streams_retained_clicks",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "accepted_only",
+    "memory": {"model":"quantum","dimension":2,"shared_classical_seed":false},
+    "intervals": [
+      [["1","1"],["1/5","1/5"],["1/17","1/17"]],
+      [["1/5","1/5"],["1","1"],["1/5","1/5"]],
+      [["1/17","1/17"],["1/5","1/5"],["1","1"]]
+    ]
+  },
+  {
+    "id": "three_streams_joint_ref_and_success",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "joint_accepted_event",
+    "memory": {"model":"quantum","dimension":2,"shared_classical_seed":false},
+    "intervals": [
+      [["1/25","1/25"],["1/25","1/25"],["1/25","1/25"]],
+      [["1/125","1/125"],["1/125","1/125"],["1/125","1/125"]],
+      [["1/425","1/425"],["1/425","1/425"],["1/425","1/425"]]
+    ]
+  },
+  {
+    "id": "five_streams_shared_seed_qubit",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"quantum","dimension":2,"shared_classical_seed":true},
+    "intervals": [
+      [["1","1"],["1/17","1/17"],["1/65","1/65"],["1/145","1/145"],["1/257","1/257"]],
+      [["1/17","1/17"],["1","1"],["1/17","1/17"],["1/65","1/65"],["1/145","1/145"]],
+      [["1/65","1/65"],["1/17","1/17"],["1","1"],["1/17","1/17"],["1/65","1/65"]],
+      [["1/145","1/145"],["1/65","1/65"],["1/17","1/17"],["1","1"],["1/17","1/17"]],
+      [["1/257","1/257"],["1/145","1/145"],["1/65","1/65"],["1/17","1/17"],["1","1"]]
+    ]
+  },
+  {
+    "id": "five_shared_equality_hashes",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"quantum","dimension":2,"shared_classical_seed":true},
+    "intervals": [
+      [["1","1"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"]],
+      [["1/2","1/2"],["1","1"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"]],
+      [["1/2","1/2"],["1/2","1/2"],["1","1"],["1/2","1/2"],["1/2","1/2"]],
+      [["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1","1"],["1/2","1/2"]],
+      [["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1","1"]]
+    ]
+  },
+  {
+    "id": "five_hashes_no_shared_memory",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"quantum","dimension":2,"shared_classical_seed":false},
+    "intervals": [
+      [["1","1"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"]],
+      [["1/2","1/2"],["1","1"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"]],
+      [["1/2","1/2"],["1/2","1/2"],["1","1"],["1/2","1/2"],["1/2","1/2"]],
+      [["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1","1"],["1/2","1/2"]],
+      [["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1/2","1/2"],["1","1"]]
+    ]
+  },
+  {
+    "id": "bit_robust_diagonal_intervals",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"classical","dimension":2,"shared_classical_seed":false},
+    "intervals": [
+      [["9/10","1"],["0","1/20"],["0","1/20"]],
+      [["0","1/20"],["9/10","1"],["0","1/20"]],
+      [["0","1/20"],["0","1/20"],["9/10","1"]]
+    ]
+  },
+  {
+    "id": "bit_half_admitting_intervals",
+    "family": "prepare_measure_cut",
+    "event": "ref",
+    "event_basis": "unconditional",
+    "memory": {"model":"classical","dimension":2,"shared_classical_seed":false},
+    "intervals": [
+      [["1/2","1"],["0","1/2"],["0","1/2"]],
+      [["0","1/2"],["1/2","1"],["0","1/2"]],
+      [["0","1/2"],["0","1/2"],["1/2","1"]]
+    ]
+  }
+]

@@ -316,6 +316,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_static_cell_mixer_search",
         "probe_static_cell_elapsed_readout",
     ),
+    "streaming_memory_cut": (
+        "probe_streaming_observer_cut",
+        "probe_linear_cut_dimension_witness",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
