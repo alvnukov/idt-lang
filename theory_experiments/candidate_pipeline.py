@@ -105,6 +105,12 @@ from theory_experiments.source_candidate import (
     SourceCandidate,
     parse_source_candidate,
 )
+from theory_experiments.triangle_stock import (
+    LOADED_SOURCE_SHA256 as TRIANGLE_STOCK_LOADED_SOURCE_SHA256,
+    TriangleStock,
+    evaluate_triangle_stock,
+    parse_triangle_stock,
+)
 from theory_experiments.universe_bench import (
     UniverseBench,
     evaluate_universe_bench,
@@ -119,7 +125,7 @@ from theory_experiments.unsigned_pair_packet import (
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
-    | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth
+    | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -136,6 +142,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/marked_relay.py",
     "theory_experiments/chiral_pencil.py",
     "theory_experiments/neutral_current_width.py", NEUTRAL_WIDTH_DATA_PATH,
+    "theory_experiments/triangle_stock.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -180,6 +187,22 @@ def _is_chiral_pencil_spec(value: object) -> bool:
 
 def _is_neutral_width_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "neutral_current_width"
+
+
+def _is_triangle_stock_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "triangle_stock"
+
+
+def _assert_triangle_stock_sources(sources: object, *, check_current: bool = False) -> None:
+    """Refuse a stale loaded stock adapter or its directly used primitive helpers."""
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded_hash in (
+        ("theory_experiments/triangle_stock.py", TRIANGLE_STOCK_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded_hash)):
+            raise ValueError(f"triangle stock source changed since import: {path}; restart from a stable checkout")
 
 
 def _assert_neutral_width_sources(sources: object, *, check_current: bool = False) -> None:
@@ -231,6 +254,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "triangle_stock":
+        return parse_triangle_stock(row)
     if row.get("family") == "neutral_current_width":
         return parse_neutral_current_width(row)
     if row.get("family") == "chiral_pencil":
@@ -291,7 +316,10 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, NeutralCurrentWidth):
+    if isinstance(candidate, TriangleStock):
+        _assert_triangle_stock_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_triangle_stock(candidate, limits)
+    elif isinstance(candidate, NeutralCurrentWidth):
         _assert_neutral_width_sources(request["provenance"], check_current=True)
         checks, details = evaluate_neutral_current_width(candidate, limits)
     elif isinstance(candidate, ChiralPencil):
@@ -355,10 +383,14 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 if isinstance(candidate, MarkedRelay)
                                 else "specified_weighted_support_and_rank_holdout_only"
                                 if isinstance(candidate, ChiralPencil)
+                                else "only_submitted_quasipolynomial_and_gain_law"
+                                if isinstance(candidate, TriangleStock)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
 def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
+    if _is_triangle_stock_spec(request.get("candidate")):
+        _assert_triangle_stock_sources(request["provenance"], check_current=True)
     if _is_neutral_width_spec(request.get("candidate")):
         _assert_neutral_width_sources(request["provenance"], check_current=True)
     if _is_marked_relay_spec(request.get("candidate")):
@@ -468,7 +500,10 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_relay = any(_is_marked_relay_spec(spec) for spec in specifications)
     has_pencil = any(_is_chiral_pencil_spec(spec) for spec in specifications)
     has_width = any(_is_neutral_width_spec(spec) for spec in specifications)
-    sources = provenance() if has_relay or has_pencil or has_width else None
+    has_stock = any(_is_triangle_stock_spec(spec) for spec in specifications)
+    sources = provenance() if has_relay or has_pencil or has_width or has_stock else None
+    if has_stock:
+        _assert_triangle_stock_sources(sources)
     if has_width:
         _assert_neutral_width_sources(sources)
     if has_relay:
@@ -522,7 +557,10 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_relay = _is_marked_relay_spec(request["candidate"])
     is_pencil = _is_chiral_pencil_spec(request["candidate"])
     is_width = _is_neutral_width_spec(request["candidate"])
-    sources = provenance() if is_relay or is_pencil or is_width else None
+    is_stock = _is_triangle_stock_spec(request["candidate"])
+    sources = provenance() if is_relay or is_pencil or is_width or is_stock else None
+    if is_stock:
+        _assert_triangle_stock_sources(sources)
     if is_width:
         _assert_neutral_width_sources(sources)
     if is_relay:
