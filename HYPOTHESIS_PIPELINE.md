@@ -33,6 +33,31 @@ complete local artifact, including exact witness inputs, imports and gaps.
 a counterexample; 1 = at least one counterexample; 2 = invalid input/operational
 error; 3 = incomplete or unsupported. Code 0 never means physical truth.
 
+## Check raw five-slot pencil weights without fitting a reference pattern
+
+`chiral_pencil` accepts 40 real rational weights as exact strings. In
+increasing order take the even five-bit masks, then their unordered pairs
+in lexicographic order at Hamming distance four. A pair contributes one
+symmetric matrix entry (and its transpose); the common slot and its bit
+choose one of ten channels. The support and the proposed absence of a
+rank-ten channel combination are assumptions, **not** measured inputs.
+
+```sh
+python3 scripts/screen_hypotheses.py --batch-file data/chiral_pencil_controls.json --max-cases 20 --no-cache
+```
+
+The adapter constructs the 80 three-channel hexagons from the support. An
+integer certificate, including the signs, reduces their alternating-product
+checks to 20. On a violation it rebuilds the three-channel sum and reports
+its exact rational rank with the offending weights. At a budget of 19 one
+of the controls remains inconclusive; at 20 it produces a rank-ten witness.
+Uniform positive weights fail immediately. Both the signed reference and a
+nonuniform rescaling survive, so this is not a mass or coupling estimator.
+A zero edge is preserved as unsupported by **this nonzero-domain adapter**.
+The [weighted model and restrictions](scripts/CONTACTS_AND_COMPARATORS.md)
+are separate from any claim about the Standard Model. The batch deliberately
+contains counterexamples; an exit code of 1 is expected.
+
 ## Compare a local relay without assuming spatial coordinates
 
 A `marked_relay` input specifies a directed row of four destinations per

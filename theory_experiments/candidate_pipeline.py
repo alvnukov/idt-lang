@@ -28,6 +28,14 @@ from theory_experiments.bell_trial_test import (
 from theory_experiments.bell_trial_test import (
     assert_loaded_sources as assert_bell_sources,
 )
+from theory_experiments.chiral_pencil import (
+    LOADED_SOURCE_SHA256 as CHIRAL_PENCIL_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.chiral_pencil import (
+    ChiralPencil,
+    evaluate_chiral_pencil,
+    parse_chiral_pencil,
+)
 from theory_experiments.identical_particles import (
     IdenticalPairAmplitudes,
     evaluate_identical_pair,
@@ -102,7 +110,7 @@ from theory_experiments.unsigned_pair_packet import (
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
-    | UnsignedPairPacket | OppositionFlag | MarkedRelay
+    | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -117,6 +125,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/unsigned_pair_packet.py",
     "theory_experiments/opposition_flag.py",
     "theory_experiments/marked_relay.py",
+    "theory_experiments/chiral_pencil.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -155,6 +164,26 @@ def _is_marked_relay_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "marked_relay"
 
 
+def _is_chiral_pencil_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "chiral_pencil"
+
+
+def _assert_chiral_pencil_sources(sources: object, *, check_current: bool = False) -> None:
+    """Check the loaded pencil adapter and its directly used primitive helpers.
+
+    Like the relay guard, this assumes a stable normal module import, not
+    arbitrary loaders, in-process tampering or interpreter attestation.
+    """
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded_hash in (
+        ("theory_experiments/chiral_pencil.py", CHIRAL_PENCIL_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded_hash or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded_hash)):
+            raise ValueError(f"chiral pencil source changed since import: {path}; restart from a stable checkout")
+
+
 def _assert_marked_relay_sources(sources: object, *, check_current: bool = False) -> None:
     """Refuse preloaded modules changed on disk before this pipeline imported.
 
@@ -174,6 +203,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "chiral_pencil":
+        return parse_chiral_pencil(row)
     if row.get("family") == "marked_relay":
         return parse_marked_relay(row)
     if row.get("family") == "opposition_flag":
@@ -230,7 +261,10 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, MarkedRelay):
+    if isinstance(candidate, ChiralPencil):
+        _assert_chiral_pencil_sources(request["provenance"], check_current=True)
+        checks, details = evaluate_chiral_pencil(candidate, limits)
+    elif isinstance(candidate, MarkedRelay):
         _assert_marked_relay_sources(request["provenance"], check_current=True)
         checks, details = evaluate_marked_relay(candidate, limits)
     elif isinstance(candidate, OppositionFlag):
@@ -282,12 +316,16 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
                                 if isinstance(candidate, (NativeBellBridge, NativeReadoutProbe, NativeReadoutSearch))
                                 else "declared_markers_origins_and_supplied_relay_target_only"
                                 if isinstance(candidate, MarkedRelay)
+                                else "specified_weighted_support_and_rank_holdout_only"
+                                if isinstance(candidate, ChiralPencil)
                                 else "candidate_plus_stated_imports_and_selected_requirements")}
 
 
 def read_entry(path: Path, request: dict[str, object]) -> dict[str, object]:
     if _is_marked_relay_spec(request.get("candidate")):
         _assert_marked_relay_sources(request["provenance"], check_current=True)
+    if _is_chiral_pencil_spec(request.get("candidate")):
+        _assert_chiral_pencil_sources(request["provenance"], check_current=True)
     # Refuse symlinks, non-regular files, oversized and partial entries. The directory is trusted.
     descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     with os.fdopen(descriptor, "rb") as source:
@@ -388,9 +426,13 @@ class Result:
 def run_batch(specifications: list[object], limits: Limits | None = None,
               cache_dir: Path | None = None, *, fresh: bool = False) -> tuple[Result, ...]:
     primitive.bounded_int(len(specifications), 1, 64)
-    sources = provenance() if any(_is_marked_relay_spec(spec) for spec in specifications) else None
-    if sources is not None:
+    has_relay = any(_is_marked_relay_spec(spec) for spec in specifications)
+    has_pencil = any(_is_chiral_pencil_spec(spec) for spec in specifications)
+    sources = provenance() if has_relay or has_pencil else None
+    if has_relay:
         _assert_marked_relay_sources(sources)
+    if has_pencil:
+        _assert_chiral_pencil_sources(sources)
     # Validate the entire input before creating cache files.
     candidates = tuple(parse_hypothesis(value) for value in specifications)
     if any(isinstance(candidate, BellLocalResponse) for candidate in candidates):
@@ -435,9 +477,13 @@ def replay_artifact(path: Path) -> dict[str, object]:
     envelope = object_fields(primitive.load_json(path))
     saved = object_fields(envelope.get("report"))
     request = object_fields(saved.get("request"), {"schema", "candidate", "limits", "provenance"})
-    sources = provenance() if _is_marked_relay_spec(request["candidate"]) else None
-    if sources is not None:
+    is_relay = _is_marked_relay_spec(request["candidate"])
+    is_pencil = _is_chiral_pencil_spec(request["candidate"])
+    sources = provenance() if is_relay or is_pencil else None
+    if is_relay:
         _assert_marked_relay_sources(sources)
+    if is_pencil:
+        _assert_chiral_pencil_sources(sources)
     saved = read_entry(path, request)
     candidate = parse_hypothesis(request["candidate"])
     limits = parse_limits(request["limits"])
