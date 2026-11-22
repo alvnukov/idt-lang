@@ -87,6 +87,17 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_projective_repeat_classification",
         "probe_catalytic_sector_phase",
     ),
+    "record_order": (
+        "probe_alternative_setting_gaps",
+        "probe_adic_event_reservoir",
+        "probe_hensen_order_controls",
+    ),
+    "exterior_slots": (
+        "probe_collective_pauli_frame",
+        "probe_exchange_sign_relator",
+        "probe_exterior_slot_minimality",
+        "probe_five_slot_quartic_selector",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

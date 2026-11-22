@@ -84,6 +84,10 @@ should be promoted from that finite grid.
 records an ordered-gap criterion, collision and bias controls, and a sharp
 two-state competitor. The archived probes distinguish a visible sequence
 of records from an assumed microscopic source of randomness.
+The [record-order controls](DETECTOR_ORDER_CONTROLS.md) separate unobservable
+tag histories, stored streams of random digits, and the limited power of a
+fixed order test on the accepted Delft event-ready Bell trials. The optional
+empirical replay explicitly reports untested when the pinned data are absent.
 
 One cheap **proposed comparison**, not a performed experiment: inject a
 fixed state, repeat the same two-mixer word t times, and read one port.
@@ -119,6 +123,7 @@ outside its calibrated interval must not be rejected using this test.
 | [Phase colors](PHASE_COLOR_CANDIDATES.md) | Under stated composition and quadratic-weight requirements two orthogonal commuting colors generate Gaussian integers. Four-axis quaternion tables are alternative **noncommuting** candidates. |
 | [Exact, approximate and repeatable sector operations](OPERATIONAL_SECTOR_WORDS.md) | A fixed-port word preserves a uniform direction; paired rails give additional logical control. Exact charge preservation, small leakage, heralding and a supplied phase catalyst permit different operations and cannot be screened as one contract. |
 | [Slot signs and charge](SLOT_SIGN_AND_CHARGE.md) | Five slots with an imposed 3+2 split reproduce the charge pattern of one fermion family plus a neutral singlet. Other splits work algebraically; neither this spectrum nor the interactions or number of generations have been derived. |
+| [Pauli and slot controls](PAULI_AND_SLOT_CONTROLS.md) | Collective collision measurements and a finite mode-swap identity test different assumptions about exclusion. Five is minimal only inside a specified exterior family; changing the carrier or the objective changes the conclusion. |
 | [Transport, chirality and clocks](TRANSPORT_CANDIDATES.md) | Local cones and a speed ceiling can exist without a shared metric. One toy walk has opposite-chirality partners missed by a small grid. Locally flat phase connections can have different loop readouts. None is a gravity or Standard Model derivation. |
 
 For comparison with the quaternion alternative, [Procopio et al.](https://www.nature.com/articles/ncomms15044)
