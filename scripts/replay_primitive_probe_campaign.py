@@ -162,6 +162,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_packet_triad_phase",
         "probe_packet_exchange_cycles",
     ),
+    "opposition_origin": (
+        "probe_three_opposition_origin",
+        "probe_opposition_clock_scatter",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

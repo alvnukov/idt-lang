@@ -1,0 +1,7 @@
+[
+  {"id":"opposition_transparent_calibrated","family":"opposition_flag","flag":[0,4],"data_extension":"transparent_spare","observation_contract":"resolved_packets","label_contract":"fixed_calibration","leg_labels":[0,1,2,3]},
+  {"id":"opposition_transparent_miscalibrated","family":"opposition_flag","flag":[0,2],"data_extension":"transparent_spare","observation_contract":"resolved_packets","label_contract":"fixed_calibration","leg_labels":[0,1,2,3]},
+  {"id":"opposition_transparent_exists","family":"opposition_flag","flag":[0,2],"data_extension":"transparent_spare","observation_contract":"resolved_packets","label_contract":"exists_s4"},
+  {"id":"opposition_flip_resolved","family":"opposition_flag","flag":[0,4],"data_extension":"flip_spare","observation_contract":"resolved_packets","label_contract":"fixed_calibration","leg_labels":[0,1,2,3]},
+  {"id":"opposition_passive_resolved","family":"opposition_flag","flag":[0,4],"data_extension":"passive_chart","observation_contract":"resolved_packets","label_contract":"fixed_calibration","leg_labels":[0,1,2,3]}
+]
