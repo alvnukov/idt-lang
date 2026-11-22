@@ -262,6 +262,16 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_native_partial_exchange",
         "probe_reference_sewing_trials",
     ),
+    "contacts_and_local_readout": (
+        "probe_angular_phase_reference",
+        "probe_anonymous_click_addresses",
+        "probe_repeatable_triangle_contact",
+        "probe_fourth_rail_stock",
+        "probe_associative_stock_merge",
+        "probe_exclusive_triangle_detector",
+        "probe_local_composite_stock",
+        "probe_bypass_port_calibration",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
