@@ -1,0 +1,142 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "affine_contact_phase_and_pulse_census",
+      "role": "realization",
+      "components": [
+        "Affine-covariant, diagonal-fixing contacts on five tags square to wire swap. The three-cell contact word ABAB has period six on nonconstant triples, but its third power is a common affine reflection, invisible to a frame-invariant reader of the isolated triple.",
+        "A supplied center defect, reference, two fair skip-or-step choices and first-wire equality now or after one inverse pulse give the six-count row. The older end-defect two-delayed-visit reader fails; a single affine scalar cannot act as the two-value latch on this orbit.",
+        "The fixed-stock, fixed-reader contact census screens all twenty order-six maps of the native GL2(5) action. The complete solo row leaves only the chosen pulse and its inverse. Prefix and unscreened interior calibration lookalikes are retained as controls; neither target calibration is jointly reached."
+      ],
+      "declared_status": "Scoped finite process and observer construction, not a blind holdout, native equality latch or physical phase. Failure before complete calibration is not a missed held-out prediction at a reached calibration.",
+      "missing_bridges": [
+        "Derive addressed contacts, defended preparation and a literal contact-event latch with a stable oriented reference, instead of reading the isolated affine orbit as an observed phase.",
+        "Establish an independently actuated second setting and justify the unchanged physical preparation and reader through full solo calibration before mixed-word comparison."
+      ],
+      "sources": [
+        {"path": "scripts/probe_affine_contact_fringe.py", "first_line": 3, "last_line": 41, "file_sha256": "a4c3cb155b1768de42f8539ba404e4c4538fd75a0f395453b423c89db7deec44"},
+        {"path": "scripts/probe_affine_contact_fringe.py", "first_line": 139, "last_line": 175, "file_sha256": "a4c3cb155b1768de42f8539ba404e4c4538fd75a0f395453b423c89db7deec44"},
+        {"path": "scripts/probe_affine_pulse_holdouts.py", "first_line": 3, "last_line": 31, "file_sha256": "737dd04eec61d118bae01251201d5c2261a4143ee4a0a57a7d60d66023c8ea8c"},
+        {"path": "scripts/probe_affine_pulse_holdouts.py", "first_line": 120, "last_line": 187, "file_sha256": "737dd04eec61d118bae01251201d5c2261a4143ee4a0a57a7d60d66023c8ea8c"}
+      ]
+    },
+    {
+      "id": "relay_full_site_contact_detector",
+      "role": "realization",
+      "components": [
+        "A relative-symbol reader preserves the row on all eighteen role-zero orbits of the 216-site relay. A fixed three-point marker reproduces it only at the nominated origin and reads zero on the other copies.",
+        "One ready point marker, fixed reversible addressing, and full-site coincidence only, without source-ticket, setting or copy side information. A nominated comparison singles out at most one unknown initial site; exact endpoint responses force at least 54 comparisons.",
+        "An open-loop sweep visits the 54 bright sites at scheduled comparisons and toggles a detector bit on contact. Its 112 visits are an upper bound; premarking sites in parallel supplies the whole window instead."
+      ],
+      "declared_status": "Exact finite observer resource result under a point-contact interface; not a lower bound for general detectors, nor a derivation of the equality sensor or the reference stock.",
+      "missing_bridges": [
+        "Establish the physical coupling that realizes full-site equality and a reversible per-contact output latch with conserved accounting and no uncounted side information.",
+        "Justify common origins, fixed schedules and translated source preparations, or supply a different detector interface and explicitly account for the information it accesses."
+      ],
+      "sources": [
+        {"path": "scripts/probe_native_phase_contacts.py", "first_line": 3, "last_line": 39, "file_sha256": "67a5859f797cfdbe9b0570b994b7dc456b8561ff55e507fcb1e6ed9e46a14b08"},
+        {"path": "scripts/probe_native_phase_contacts.py", "first_line": 58, "last_line": 93, "file_sha256": "67a5859f797cfdbe9b0570b994b7dc456b8561ff55e507fcb1e6ed9e46a14b08"},
+        {"path": "scripts/probe_native_phase_contacts.py", "first_line": 142, "last_line": 172, "file_sha256": "67a5859f797cfdbe9b0570b994b7dc456b8561ff55e507fcb1e6ed9e46a14b08"}
+      ]
+    },
+    {
+      "id": "equivariant_swap_root_tag_carriers",
+      "role": "law_family_collection",
+      "components": [
+        "A raw swap root commuting with a common order-six relabeling must pair its free antipodal orbits. Two six-cycles suffice for this symmetry; the old padded raw completion matches the logical fringe but fails the raw relabeling test.",
+        "Requiring transitive raw tag symmetry rather than a single relabeling gives a conditional minimum of thirteen; the affine example has a fixed point under the selected clock. If the clock is required to be free, a regular nonabelian example reaches 48.",
+        "Regular abelian translation covariance with an order-six element has additional half-element and inversion-root requirements; Z/12 times Z/4 supplies a size-48 witness. Commuting with the chosen frame is not required of arbitrary transitive symmetry."
+      ],
+      "declared_status": "Finite raw-gate constructions and scoped symmetry size arguments. A logical fringe is not a raw symmetry measurement, and no empirical minimum of phase space is asserted.",
+      "missing_bridges": [
+        "Motivate which raw symmetry, if any, applies to an independently observable physical carrier and test how the selected clock and any extra sheets transform.",
+        "Explain why the raw square-to-swap law and the required tags arise from physical interactions rather than merely being consistent finite constructions."
+      ],
+      "sources": [
+        {"path": "scripts/probe_phase_frame_covariance.py", "first_line": 3, "last_line": 34, "file_sha256": "bbb42a99c0822af47a1503febfb7c1fda2a6e40ecc89195be6d11f5d75eccae3"},
+        {"path": "scripts/probe_phase_frame_covariance.py", "first_line": 205, "last_line": 239, "file_sha256": "bbb42a99c0822af47a1503febfb7c1fda2a6e40ecc89195be6d11f5d75eccae3"},
+        {"path": "scripts/probe_transitive_phase_tags.py", "first_line": 3, "last_line": 52, "file_sha256": "9309c011b2c8cccf17d7e06e7a00dd1b43618f3280b5f25c723060c3d172f7b1"},
+        {"path": "scripts/probe_transitive_phase_tags.py", "first_line": 227, "last_line": 271, "file_sha256": "9309c011b2c8cccf17d7e06e7a00dd1b43618f3280b5f25c723060c3d172f7b1"}
+      ]
+    },
+    {
+      "id": "vacancy_reference_phase_lift_census",
+      "role": "law_family_collection",
+      "components": [
+        "A relative half-turn and simultaneous translation on the active occupied/vacant branch constrain the free shift by g(z+3)=-g(z). The 216 lifts share the previous completion outside that branch.",
+        "Uniform fresh shutter stock and the copied-tag control do not distinguish these lifts in the tested readouts. A fixed-offset vacant stock with the same gate used twice in the closed arm gives different unconditional port/loss rows.",
+        "Read both source anchor conventions, both shutters and three reference offsets. Seven retained settings suffice for this family; zero offset alone does not identify it. No paths are read mid-word and no emitted trials removed."
+      ],
+      "declared_status": "Finite census for a specified mixed ansatz and preparation contract, not a full raw-gate classification, native phase plate, or observed discrimination.",
+      "missing_bridges": [
+        "Establish a physical source of prescribed vacant-tag reference offsets and verify unchanged completion, fixed preparation and unconditional loss accounting.",
+        "Connect the synthetic detector signatures to a physical operation that selects or tests a lift without assigning latent tags from the target rows."
+      ],
+      "sources": [
+        {"path": "scripts/probe_vacuum_phase_lifts.py", "first_line": 3, "last_line": 20, "file_sha256": "94c94a2b7e30312c981b71ad89195015ed3d2f0b8865d76ff9a38dbe4b6578e8"},
+        {"path": "scripts/probe_vacuum_phase_lifts.py", "first_line": 36, "last_line": 52, "file_sha256": "94c94a2b7e30312c981b71ad89195015ed3d2f0b8865d76ff9a38dbe4b6578e8"},
+        {"path": "scripts/probe_vacuum_phase_lifts.py", "first_line": 132, "last_line": 201, "file_sha256": "94c94a2b7e30312c981b71ad89195015ed3d2f0b8865d76ff9a38dbe4b6578e8"}
+      ]
+    },
+    {
+      "id": "catalytic_restored_stock_phase_transport",
+      "role": "realization",
+      "components": [
+        "For known inputs on arbitrary addressed pairs with finite restored stock, exact integer membership of raw gate reactions supplies a compiled input-specific word. Rational membership is insufficient; the equal-rational-span index-two control detects this error.",
+        "A different, stricter task uses only two neighboring gates on target, occupied reference and vacant reference, with one unchanged word and both raw reference labels restored on all twelve logical targets. The featured lift and stock allow literal forward replay; the old lift and wrong stock fail the same word.",
+        "The point-orbit census is not a joint-word proof. The optional joint census constructs and replays explicit words on representative eligible stocks and treats a search miss as unresolved."
+      ],
+      "declared_status": "Exact finite reachability and circuit certificates with supplied addresses, stocks and clocking. No shortest word, universal synthesis, or spontaneous phase actuation is inferred.",
+      "missing_bridges": [
+        "Derive preparation and independently test restoration of the physical reference stock, not merely preservation of logical tag names.",
+        "Explain how the common external address schedule could be implemented as a native actuator with counted timing and memory, and keep input-specific lattice witnesses separate from input-independent control."
+      ],
+      "sources": [
+        {"path": "scripts/probe_catalytic_tag_invariants.py", "first_line": 3, "last_line": 14, "file_sha256": "0ae1752132aa0c17009fce7f6802e77395d854a2d8ca76b63635d558a072ffc6"},
+        {"path": "scripts/probe_catalytic_tag_invariants.py", "first_line": 189, "last_line": 232, "file_sha256": "0ae1752132aa0c17009fce7f6802e77395d854a2d8ca76b63635d558a072ffc6"},
+        {"path": "scripts/probe_catalytic_six_phase_words.py", "first_line": 3, "last_line": 16, "file_sha256": "38a1a00f80fa0918b300e0d76ccc8cc078840b490115899bd61986b5ab0925d4"},
+        {"path": "scripts/probe_catalytic_six_phase_words.py", "first_line": 100, "last_line": 117, "file_sha256": "38a1a00f80fa0918b300e0d76ccc8cc078840b490115899bd61986b5ab0925d4"},
+        {"path": "scripts/probe_catalytic_six_phase_words.py", "first_line": 328, "last_line": 351, "file_sha256": "38a1a00f80fa0918b300e0d76ccc8cc078840b490115899bd61986b5ab0925d4"},
+        {"path": "scripts/probe_catalytic_six_phase_words.py", "first_line": 354, "last_line": 396, "file_sha256": "38a1a00f80fa0918b300e0d76ccc8cc078840b490115899bd61986b5ab0925d4"}
+      ]
+    },
+    {
+      "id": "conditional_serial_phase_trial_witness",
+      "role": "semantic_contract",
+      "components": [
+        "Register heralds before settings and read both fixed port bits on every trial. Bound the forward register across each cut; condition setting freshness on trial history, device information and earlier dials, allowing between-trial memory.",
+        "Predictable per-dial total-variation budgets correct the fair-setting bound by a sequential coupling. A nonnegative score factor with a predictable safe stake gives an anytime threshold for one registered game and orientation.",
+        "In the leak control even the full observed setting word is uniform, while a trial-static shared seed reveals the sum; observed balance alone cannot certify the null."
+      ],
+      "declared_status": "Design-only statistical witness with exact control arithmetic, not a dataset, reported significance, or proof of the null from a noncrossing result.",
+      "missing_bridges": [
+        "Certify device-conditional setting privacy and predictable uniform error budgets, and exclude secondary channels for prior choices under the physical cut contract.",
+        "Collect all preregistered heralds and both port records before applying the statistic; separate a scoped rejection from identification of a microscopic carrier."
+      ],
+      "sources": [
+        {"path": "scripts/probe_serial_trial_witness.py", "first_line": 3, "last_line": 30, "file_sha256": "a1ad5f4f11285c40b4faed1bc9812c31f8ae07ee38a4eb4c91110309d997ec46"},
+        {"path": "scripts/probe_serial_trial_witness.py", "first_line": 68, "last_line": 104, "file_sha256": "a1ad5f4f11285c40b4faed1bc9812c31f8ae07ee38a4eb4c91110309d997ec46"}
+      ]
+    },
+    {
+      "id": "single_end_scalar_charge_and_rivals",
+      "role": "route",
+      "components": [
+        "On the supplied even exterior carrier and multiplet identifications, all color-singlet weak-doublet channels in End(S) are L-to-sterile or L-to-charged-singlet maps and adjoints. Four-slot quartic CAR representatives change total occupation; number-preserving exterior lifts cannot implement them.",
+        "Importing the earlier anomaly and Yukawa plane and requiring the scalar in this one End carrier restricts to q=0 or h=±3q. The oriented quotient lattice with a charged electron retains only h=3q; full exact kernel normalization is stronger than quotient compatibility alone.",
+        "Lorentz-contracted same-chirality Weyl pairs use the symmetric internal square, not End(S), and permit ±h throughout the plane. A relative determinant twist between copies or an independent scalar is another alternative; a common twist cancels."
+      ],
+      "declared_status": "Conditional representation and neutron-charge comparison on supplied labels. A nonzero neutron charge could disfavor the single-End package under its premises; a null measurement cannot select that package over the alternatives.",
+      "missing_bridges": [
+        "Derive the physical Lorentz and gauge actions and identify how a scalar field and its allowed couplings are actually realized instead of equating the presence of an End representation with a scalar interaction.",
+        "Justify the exterior matter dictionary, charge normalization and neutron readout independently before applying the conditional neutrality conclusion."
+      ],
+      "sources": [
+        {"path": "scripts/probe_finite_scalar_channels.py", "first_line": 3, "last_line": 37, "file_sha256": "b3bda1b31bf058e5e9530e4763bda9170c58a1ad90d96eb176021fbeccd74800"},
+        {"path": "scripts/probe_finite_scalar_channels.py", "first_line": 91, "last_line": 112, "file_sha256": "b3bda1b31bf058e5e9530e4763bda9170c58a1ad90d96eb176021fbeccd74800"},
+        {"path": "scripts/probe_finite_scalar_channels.py", "first_line": 190, "last_line": 243, "file_sha256": "b3bda1b31bf058e5e9530e4763bda9170c58a1ad90d96eb176021fbeccd74800"}
+      ]
+    }
+  ]
+}

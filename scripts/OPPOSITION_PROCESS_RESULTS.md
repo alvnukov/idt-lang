@@ -9,6 +9,8 @@ confirmation of IDT, a universal proof or a new accepted primitive.
 
 ## From a local update to a relative phase
 
+Follow-up: [which finite models can build the phase plate itself?](PHASE_REALIZATION.md)
+
 The [local shuttle](probe_shuttle_local_reunions.py) has one bit visiting
 four addressed cells. Reversal of three different visits is required to
 give the same **entire** configuration, not merely the same position.

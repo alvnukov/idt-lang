@@ -199,6 +199,18 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_neutron_charge_anchor",
         "probe_flavor_charge_connectivity",
     ),
+    "phase_realization": (
+        "probe_vacuum_phase_lifts",
+        "probe_catalytic_tag_invariants",
+        "probe_catalytic_six_phase_words",
+        "probe_phase_frame_covariance",
+        "probe_transitive_phase_tags",
+        "probe_affine_contact_fringe",
+        "probe_affine_pulse_holdouts",
+        "probe_native_phase_contacts",
+        "probe_serial_trial_witness",
+        "probe_finite_scalar_channels",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
