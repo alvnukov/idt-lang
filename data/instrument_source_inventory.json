@@ -1,0 +1,129 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "affine_memory_contact_records",
+      "role": "realization",
+      "components": [
+        "Attach supplied four-label memory to each F5 cell. The same contact at every step applies a swap root chosen by invariant input-color equality; a fixed sequence records and copies the six-orbit response. Color-independent and inverse-branch substitutions are controls.",
+        "The 17-contact rewind restores signal and ready reference but realizes a different full-space predicate N, a union of coordinate planes, rather than D, the first-wire contact now or after an inverse pulse. The native pullback families do not identify corresponding named effects.",
+        "The short equality-transcript census excludes D only for the stated zero-memory inputs, ready references and words of at most three contacts. A changed-coordinate recorder and a separate-record OR yield 33- and 36-contact D witnesses; disposable scratch is not reset."
+      ],
+      "declared_status": "Finite literal memory and full-space record comparison, not a detector origin, measured click, or optimality result for longer circuits.",
+      "missing_bridges": [
+        "Derive or separately establish physical equality-conditioned memory coupling, stable bit interpretation and reference preparation instead of supplying the branch tables.",
+        "Explain the physical cost and persistence of scratch records and verify the intended effect outside the six-state calibration orbit."
+      ],
+      "sources": [
+        {"path": "scripts/probe_affine_contact_record.py", "first_line": 3, "last_line": 27, "file_sha256": "da78a70e7dd13776647456edc46041cac83eb0b3e56e6b1d98af4466e53bbbb2"},
+        {"path": "scripts/probe_affine_contact_record.py", "first_line": 208, "last_line": 246, "file_sha256": "da78a70e7dd13776647456edc46041cac83eb0b3e56e6b1d98af4466e53bbbb2"},
+        {"path": "scripts/probe_full_affine_record.py", "first_line": 3, "last_line": 20, "file_sha256": "50d39a65ad10a469a7baf6c38fd83666945235c444660e11f575a20118004c5c"},
+        {"path": "scripts/probe_full_affine_record.py", "first_line": 89, "last_line": 141, "file_sha256": "50d39a65ad10a469a7baf6c38fd83666945235c444660e11f575a20118004c5c"},
+        {"path": "scripts/probe_full_affine_record.py", "first_line": 145, "last_line": 169, "file_sha256": "50d39a65ad10a469a7baf6c38fd83666945235c444660e11f575a20118004c5c"}
+      ]
+    },
+    {
+      "id": "strictly_alternating_catalyst_clock",
+      "role": "route",
+      "components": [
+        "A strict open-loop alternation of the two neighboring contact addresses on three wires, for the 216 frozen lifts, all 64 occupied/vacant reference-tag pairs, six layouts, and either starting edge.",
+        "Reduce even and odd schedules of arbitrary finite length to cycle congruences. Of 331,776 cases, 476 reach all twelve targets individually, but none has one common stop for clean +1 with both raw reference tags restored.",
+        "Short known targets at lengths fourteen and fifteen check the clock solver. No terminal permutation, feedback or separate free swaps are part of the null."
+      ],
+      "declared_status": "A scoped exclusion for exactly these finite-state devices and strictly alternating schedules. Not a wall for other periodic words, larger stocks, extra clock state or arbitrary addressed schedules.",
+      "missing_bridges": [
+        "Derive a clock with justified address succession and an input-independent stopping mechanism while explicitly accounting for any extra clock state and its preparation.",
+        "Connect physical reference preparation and restoration to the raw-tag contract rather than inferring a clean actuator from individually reachable outputs."
+      ],
+      "sources": [
+        {"path": "scripts/probe_alternating_catalyst_clock.py", "first_line": 3, "last_line": 11, "file_sha256": "44fab56976df767a03fc5743f23708b38498b283d31d4505311a9ed0ef2848ae"},
+        {"path": "scripts/probe_alternating_catalyst_clock.py", "first_line": 27, "last_line": 49, "file_sha256": "44fab56976df767a03fc5743f23708b38498b283d31d4505311a9ed0ef2848ae"},
+        {"path": "scripts/probe_alternating_catalyst_clock.py", "first_line": 99, "last_line": 146, "file_sha256": "44fab56976df767a03fc5743f23708b38498b283d31d4505311a9ed0ef2848ae"}
+      ]
+    },
+    {
+      "id": "affine_mixture_equivalence_libraries",
+      "role": "route",
+      "components": [
+        "Three equal opposite-preparation mixtures coincide on the original dials but a common right contact separates them. A left-wire swap gives a second-minus-first gap of 1/8 for every admissible probability stock giving the exact solo row in this model.",
+        "Equal rates across the three mixtures and rate one half are distinct operational requirements. The closed macro census containing the original dial has respective maxima of order 24 and 12. The latter is noncommuting but adds no new analyzer row on the six stocks.",
+        "A superficially safe swap fails after composition with the dial. Access to completed macros only, rather than all internal prefixes, is a supplied restriction. Separate even and odd fair triads have the same latent distribution as a positive equivalence control."
+      ],
+      "declared_status": "Exact finite scope tests for preparations and composition-closed analyzer libraries. If the expanded library distinguishes the mixtures, they are not operationally equivalent there; this is not preparation contextuality.",
+      "missing_bridges": [
+        "Specify and independently justify which transformations, preparations and analyzers a physical apparatus actually permits, including internal prefixes and classical randomization.",
+        "Establish operational equivalences with a justified completeness contract before using them for contextuality or comparing the stocks to antipodal quantum preparations."
+      ],
+      "sources": [
+        {"path": "scripts/probe_affine_preparation_mixtures.py", "first_line": 3, "last_line": 20, "file_sha256": "eafac6ebc864da09066c103e771d8f6498f4bee94c86697bd025b91c72856ea2"},
+        {"path": "scripts/probe_affine_preparation_mixtures.py", "first_line": 81, "last_line": 106, "file_sha256": "eafac6ebc864da09066c103e771d8f6498f4bee94c86697bd025b91c72856ea2"},
+        {"path": "scripts/probe_affine_preparation_mixtures.py", "first_line": 183, "last_line": 203, "file_sha256": "eafac6ebc864da09066c103e771d8f6498f4bee94c86697bd025b91c72856ea2"},
+        {"path": "scripts/probe_affine_operational_library.py", "first_line": 3, "last_line": 30, "file_sha256": "32c5919632b4aaf3df84499b725e07a133da872d15b37d261cea759cd557a617"},
+        {"path": "scripts/probe_affine_operational_library.py", "first_line": 167, "last_line": 198, "file_sha256": "32c5919632b4aaf3df84499b725e07a133da872d15b37d261cea759cd557a617"},
+        {"path": "scripts/probe_affine_operational_library.py", "first_line": 254, "last_line": 299, "file_sha256": "32c5919632b4aaf3df84499b725e07a133da872d15b37d261cea759cd557a617"}
+      ]
+    },
+    {
+      "id": "affine_fourth_axis_scope_and_escapes",
+      "role": "route",
+      "components": [
+        "An ideal additional orthogonal setting and two pole stocks from supplied qubit geometry test the fixed center stock, original three native analyzers, unchanged D, and one native word per pole. Enumerate entire maps rather than textual words.",
+        "Deterministic effects miss the full ideal table in the fixed interface. Positive mixtures of fourth-setting words and mixtures with component-by-component output recoding are separately bounded with rational witnesses.",
+        "Exact escapes change the contract: randomize a source pole, choose another common stock with the same solo row, or replace an old analyzer by a different operation indistinguishable on the original six preparations."
+      ],
+      "declared_status": "An exact ideal-table implementation comparison and scoped countercontrols, not an empirical fourth-axis exclusion or an identification of native and laboratory settings.",
+      "missing_bridges": [
+        "Establish an independent physical identification of the old axes and the fourth setting beyond the shared six-row calibration, and test the assumed preparation and measurement interface.",
+        "Separate source randomness from random effects or sign recoding in the physical apparatus before interpreting any bound or exact escape."
+      ],
+      "sources": [
+        {"path": "scripts/probe_affine_fourth_axis.py", "first_line": 3, "last_line": 25, "file_sha256": "a2b51dba12591a81643eb6c8e663a5a357fcbbd34e2614a7c2f7e8cae9af51b7"},
+        {"path": "scripts/probe_affine_fourth_axis.py", "first_line": 108, "last_line": 168, "file_sha256": "a2b51dba12591a81643eb6c8e663a5a357fcbbd34e2614a7c2f7e8cae9af51b7"},
+        {"path": "scripts/probe_affine_fourth_axis.py", "first_line": 195, "last_line": 261, "file_sha256": "a2b51dba12591a81643eb6c8e663a5a357fcbbd34e2614a7c2f7e8cae9af51b7"}
+      ]
+    },
+    {
+      "id": "affine_sequential_reset_walls",
+      "role": "route",
+      "components": [
+        "A supplied repeatable qubit instrument is the comparison, not an implication of matching first-click probabilities. Nondisturbing copy, fair native reflection, doubly stochastic channels on the six-state code and a fresh 1:2:1 reset give distinct sequential behavior.",
+        "The six-state positive doubly stochastic class has sharp errors 1/16 for joint and 1/12 for conditional entries under their respective metrics. An abstract reversible dilation consumes fresh three-valued helper stock and exports the old coordinate; it is not a native affine-contact program.",
+        "The larger raw F5 space is tested by all 480 named analyzers without assuming raw code membership. Positivity pins the target ray masses despite residual linear ambiguity. A common input-independent mixture of affine maps cannot produce the required nonuniform reset; outcome-dependent control and additional gates are outside this wall."
+      ],
+      "declared_status": "Finite sequential and ambient affine walls with exposed assumptions, not a general measurement no-go, a physical projective instrument, or tomography of an unknown system.",
+      "missing_bridges": [
+        "Specify a physical post-click operation and account for the source and outgoing records of any nonuniform reset stock rather than identifying a matched first response with an instrument.",
+        "Derive any further gate or signal-dependent control explicitly and test it against the unchanged full analyzer contract before exporting the comparison."
+      ],
+      "sources": [
+        {"path": "scripts/probe_affine_unread_instruments.py", "first_line": 3, "last_line": 16, "file_sha256": "89c953f1cab8387faf1c8343efd28559793cc41da9f2c6c93d261ab1f8781fdf"},
+        {"path": "scripts/probe_affine_unread_instruments.py", "first_line": 122, "last_line": 182, "file_sha256": "89c953f1cab8387faf1c8343efd28559793cc41da9f2c6c93d261ab1f8781fdf"},
+        {"path": "scripts/probe_affine_projective_reset.py", "first_line": 3, "last_line": 22, "file_sha256": "0a2f79964ea1d31600e1ab8bb24e545b8fe47fbccc516651840510bd195a29e8"},
+        {"path": "scripts/probe_affine_projective_reset.py", "first_line": 150, "last_line": 198, "file_sha256": "0a2f79964ea1d31600e1ab8bb24e545b8fe47fbccc516651840510bd195a29e8"}
+      ]
+    },
+    {
+      "id": "midpoint_spectator_ternary_instrument",
+      "role": "realization",
+      "components": [
+        "Supply a five-tag ternary gate with unchanged spectator: apply the two-target affine contact at midpoint equality and its inverse otherwise. A palette synthesizes the bare pulse; fixed conditional swaps record the two-visit OR and program a reset without reading the bit externally.",
+        "One defect plus blank stock feeds a fixed splitter circuit, not cloning with all auxiliaries restored. Forty contacts prepare one 17-wire kit on 48 wires; 84 prepare two kits on 99 wires. Scratch, scheduled addressing and fresh source/reset fair choices are accounted resources.",
+        "The two literal records match the supplied six-setting projective benchmark on all counted joint histories. Two separated local copies with no messages and arbitrary shared raw stock instead obey the CHSH bound 2, below the supplied six-dial singlet comparison 5/2.",
+        "Fixed spectator, fixed target diagonals, affine F5 relabelings and the swap-root law admit sixteen rules. Target-sum conservation reduces this to four, of which two ignore the spectator and the interacting pair are inverses. Full five-symbol permutation covariance admits no root in this contract. A six-contact Boolean controlled-swap with restored helper values is a classical programming control."
+      ],
+      "declared_status": "A finite scheduled construction using a new ternary rule, not a derivation from the original binary contacts or a model of Born readout, entanglement or general quantum instruments.",
+      "missing_bridges": [
+        "Explain selection or independent physical verification of the midpoint-controlled ternary interaction, not merely its compatibility with a reversible swap law.",
+        "Derive the physical origin of the defect, blanks, clocked addressing, fair choices and stable output tags, and distinguish the sequential construction from any separated composite claim."
+      ],
+      "sources": [
+        {"path": "scripts/probe_midpoint_spectator_instrument.py", "first_line": 3, "last_line": 17, "file_sha256": "0932a774ed37ac6dda3bfafa5c2e4eb0422a75c047854828f275b9a6c121fcb2"},
+        {"path": "scripts/probe_midpoint_spectator_instrument.py", "first_line": 48, "last_line": 101, "file_sha256": "0932a774ed37ac6dda3bfafa5c2e4eb0422a75c047854828f275b9a6c121fcb2"},
+        {"path": "scripts/probe_midpoint_spectator_instrument.py", "first_line": 276, "last_line": 347, "file_sha256": "0932a774ed37ac6dda3bfafa5c2e4eb0422a75c047854828f275b9a6c121fcb2"},
+        {"path": "scripts/probe_midpoint_rule_origins.py", "first_line": 3, "last_line": 9, "file_sha256": "f7dfa6417c60ec3de56fdb544dc8fbb97cca73cdddcfa07e4ca30bccfd0d796d"},
+        {"path": "scripts/probe_midpoint_rule_origins.py", "first_line": 22, "last_line": 64, "file_sha256": "f7dfa6417c60ec3de56fdb544dc8fbb97cca73cdddcfa07e4ca30bccfd0d796d"},
+        {"path": "scripts/probe_midpoint_rule_origins.py", "first_line": 68, "last_line": 144, "file_sha256": "f7dfa6417c60ec3de56fdb544dc8fbb97cca73cdddcfa07e4ca30bccfd0d796d"}
+      ]
+    }
+  ]
+}
