@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "reciprocal_cell_timing_census",
+      "role": "law_family_collection",
+      "components": [
+        "Starting with all 764 involutions on incident side, carried bit and stored bit, compare fresh blank training and held-out first returns. Four tables survive; all exchange the two bits but two independent reflection choices remain. An initially occupied cell and a local return calendar distinguish their implementations."
+      ],
+      "declared_status": "Exact finite inverse-design result in a prepared ideal architecture; neither timing target nor internal mark is experimental evidence.",
+      "missing_bridges": [
+        "Derive the apparatus geometry and collision resources, and supply a physical preparation/readout before identifying any table with nature."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reversible_cell_census.py",
+          "first_line": 1,
+          "last_line": 220,
+          "file_sha256": "4d4c9d0fd7f9d6d8a0b72638474be6ccaf4fe19cb22c4293e9010e95a6e5c31f"
+        }
+      ]
+    },
+    {
+      "id": "unrestricted_cell_timing_partition",
+      "role": "law_family_collection",
+      "components": [
+        "A symbolic decision tree accounts for every one of 16777216 local deterministic tables. With the published blank return contract 164 match times and 128 also restore state and direction. The remaining 36 still match fresh long channels but fail at least one second unreset passage at length two."
+      ],
+      "declared_status": "Exact finite partition plus stated follow-ups, not evidence that reversibility, resetting, or the chosen squared-time target is physically mandatory.",
+      "missing_bridges": [
+        "Establish which initializations, resets and observables a real apparatus implements. Unvisited local input rows can carry irreversible laws invisible in the prepared sector."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unrestricted_cell_tables.py",
+          "first_line": 1,
+          "last_line": 239,
+          "file_sha256": "435e811fab227e107f2a3e380afd34a4c612d47cba136e9cc3d38e953443df39"
+        }
+      ]
+    },
+    {
+      "id": "cell_projection_into_clock_screen",
+      "role": "semantic_contract",
+      "components": [
+        "The four surviving reciprocal tables are compiled via their local transitions into a signal latch and a matched clock. For each of 28 tested preparations their first-visit-numbered submitted machines are identical across the four, though enriched raw contact times differ."
+      ],
+      "declared_status": "Executable projection and alias controls for fixed preparations, not global equivalence, empirical probability or a test of arbitrary clocks.",
+      "missing_bridges": [
+        "Specify the accessible observer interface, both active preparations and the reference circuit before assigning physical meaning to identical reports."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_cell_rule_clock_projection.py",
+          "first_line": 1,
+          "last_line": 184,
+          "file_sha256": "cc39622c548baac711a1156f806c20dc9533b1dc47605129c4ff3a9bce6c8561"
+        }
+      ]
+    },
+    {
+      "id": "cell_orientational_fixed_number_exchange",
+      "role": "route",
+      "components": [
+        "On an imposed antisymmetric pair of orientations, a raw reflection can generate a relative sign. Number-preserving dual-rail interferometry on two total excitations distinguishes a reflection on double occupancy while coherent direction sum does not. One-body phases, braid tests and swapped port assignments are explicit."
+      ],
+      "declared_status": "Conditional fixed-occupation circuit on a signed linear lift; it neither identifies physical species nor derives Pauli exclusion, linear superposition or readout.",
+      "missing_bridges": [
+        "Realize coherent orientation preparations, number-preserving mixers and actual detector statistics without using the desired sign as a physical postulate."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_cell_exchange_intervention.py",
+          "first_line": 1,
+          "last_line": 219,
+          "file_sha256": "6ec687ad2ad094d72d2c551f34cb194672183a0b47264453ee6076f2e095735a"
+        }
+      ]
+    },
+    {
+      "id": "photonic_exchange_phase_countercontrol",
+      "role": "semantic_contract",
+      "components": [
+        "Two distinct published photonic interferometers use calibrated path phases to constrain photon exchange phase with different uncertainty conventions. In the cell toy an independently supplied joint-occupancy phase can imitate the odd-sector exchange sign, including an empty reference and path-information controls."
+      ],
+      "declared_status": "Primary experimental context and synthetic identifiability controls, no measurement of the hypothetical cells or exclusion of fermionic or bosonic models.",
+      "missing_bridges": [
+        "Distinguish local interaction phase from exchange by further calibrated interventions, and supply the missing physical map from circuit to photons."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_photonic_exchange_reference.py",
+          "first_line": 1,
+          "last_line": 127,
+          "file_sha256": "0a537d2bb0a8aa2d83bd6fa00802e95e72ad294e549cbae751ee5c6585f70117"
+        }
+      ]
+    }
+  ]
+}

@@ -301,6 +301,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_reactor_relative_clocks",
         "probe_three_arm_setting_contacts",
     ),
+    "local_cell_inference": (
+        "probe_reversible_cell_census",
+        "probe_unrestricted_cell_tables",
+        "probe_cell_rule_clock_projection",
+        "probe_cell_exchange_intervention",
+        "probe_photonic_exchange_reference",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
