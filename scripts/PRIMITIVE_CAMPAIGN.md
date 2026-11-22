@@ -73,6 +73,13 @@ physical links. Those archive records have an unsupported physical
 prediction adapter; that is neither a rejection nor a replacement for
 running the corresponding probes.
 
+A [second immutable source inventory](../data/primitive_operational_routes_inventory.json)
+retains eight later proposals, including the unsigned pair, cycle-carrier,
+three-family mixing, detector-duplication and independent-source routes.
+For an actual six-entry unsigned packet table there is now also an
+[executable candidate input](../data/unsigned_pair_packet_controls.json).
+The source-only record and the executable finite contract remain distinct.
+
 The [error-certificate and experiment-design probe](probe_stock_error_certificates.py)
 translates simultaneous residual bounds into bounds on four specific
 stock contrasts, with explicit rational coefficients available via

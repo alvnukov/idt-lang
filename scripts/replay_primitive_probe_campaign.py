@@ -132,6 +132,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_native_rational_pentagon",
         "probe_qutrit_residue_frames",
     ),
+    "packet_observability": (
+        "probe_packet_echo_observability",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

@@ -80,10 +80,16 @@ from theory_experiments.universe_bench import (
     evaluate_universe_bench,
     parse_universe_bench,
 )
+from theory_experiments.unsigned_pair_packet import (
+    UnsignedPairPacket,
+    evaluate_unsigned_pair_packet,
+    parse_unsigned_pair_packet,
+)
 
 Hypothesis: TypeAlias = (
     primitive.Candidate | PhysicsCandidate | SourceCandidate | AmplitudeAlgebra | IdenticalPairAmplitudes | UniverseBench
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
+    | UnsignedPairPacket
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -95,6 +101,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/candidate_history.py", "scripts/check_candidate_history.py",
     "theory_experiments/source_candidate.py", "theory_experiments/amplitude_algebra.py",
     "theory_experiments/universe_bench.py",
+    "theory_experiments/unsigned_pair_packet.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -131,6 +138,8 @@ LOADED_SOURCE_HASHES = provenance()["source_sha256"]
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if row.get("family") == "unsigned_pair_packet":
+        return parse_unsigned_pair_packet(row)
     if row.get("family") == "native_readout_search":
         return parse_native_readout_search(row)
     if row.get("family") == "native_readout_probe":
@@ -181,7 +190,9 @@ def _certified_kernel_check(candidate: primitive.PairKernel, certificate: object
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
     checks: tuple[Check, ...]
     details: dict[str, object]
-    if isinstance(candidate, NativeReadoutSearch):
+    if isinstance(candidate, UnsignedPairPacket):
+        checks, details = evaluate_unsigned_pair_packet(candidate, limits)
+    elif isinstance(candidate, NativeReadoutSearch):
         checks, details = evaluate_native_readout_search(candidate, limits)
     elif isinstance(candidate, NativeReadoutProbe):
         checks, details = evaluate_native_readout_probe(candidate, limits)

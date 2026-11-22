@@ -40,6 +40,38 @@ possibly swapping either endpoint in each. The resulting 48 operations are
 leg permutations and their compositions with edge complementation. The
 coincidence of these two classes is not an assumption about physics.
 
+**Try a new candidate.** Supply its six output indices in input order
+01,02,03,12,13,23 (same order for output indices 0–5), plus which
+readout is available. The [four example rows](../data/unsigned_pair_packet_controls.json)
+can be evaluated together:
+
+    python3 scripts/screen_hypotheses.py --batch-file data/unsigned_pair_packet_controls.json --no-cache
+
+This example intentionally includes a resolved counterexample, so its
+nonzero batch exit is expected. Like other candidate batches it records
+the submission in history; `--no-cache` only disables the disposable
+cache. Supply a temporary `--history-dir` for a scratch replay.
+The same reset table survives under
+`port_totals` but fails under `resolved_packets`. Both contracts permit
+all six input packets to be separately prepared; they differ only in the
+output measurement. A limited budget that exhausts no counterexample and
+does not finish the checks gives an inconclusive result. The individual
+candidate costs at most six echo cases and two transparency cases, not
+the 46,656-table census. These are requirements of the microscopic model,
+not measured particle data.
+
+With **only two pure-port preparations**, a different test is needed.
+Let F be the unknown tick, S an independently implementable port exchange,
+and V a trusted internal swap in the first port, with only final port totals
+reported. The [observability search](probe_packet_echo_observability.py)
+finds four short experiments totaling 15 operations: one FF, one FSF
+and FVFVF on both pure inputs. Together, with the outputs specified in the
+probe, they isolate the two intended orientations among all 46,656 tables.
+Without the independent controls, repeated F alone cannot distinguish
+either genuine rule from the hidden resets on those preparations. Gauge-
+conjugate orientations still need not be distinguishable. This is a
+proposed device test, not an assumption that a laboratory has V or S.
+
 ## From complementary edges to the mixer
 
 First replace each unordered pair {i,j} by the two *unused* labels. Of

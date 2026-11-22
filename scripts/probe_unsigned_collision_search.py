@@ -13,64 +13,21 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass
-from itertools import combinations, permutations, product
+from itertools import permutations, product
 
-Edge = tuple[int, int]
-Table = tuple[int, ...]
-EDGES = tuple(combinations(range(4), 2))
-INDEX = {e: i for i, e in enumerate(EDGES)}
-INC = tuple(tuple(int(k in e) for k in range(4)) for e in EDGES)
-COMP = tuple(
-    next(i for i, f in enumerate(EDGES) if set(e).isdisjoint(f)) for e in EDGES
+if not __package__:
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from theory_experiments.unsigned_pair_packet import (
+    COMP,
+    Table,
+    after,
+    check_table,
+    leg_table,
 )
-MATCHES = tuple((i, j) for i, j in enumerate(COMP) if i < j)
-BY_PORT = tuple(sum(v[:2]) for v in INC)
-
-
-def leg_table(p: tuple[int, ...]) -> Table:
-    if sorted(p) != list(range(4)):
-        raise ValueError("four-leg permutation required")
-    return tuple(INDEX[min(p[a], p[b]), max(p[a], p[b])] for a, b in EDGES)
-
-
-SWAP = leg_table((2, 3, 0, 1))
-FIX = tuple(i for i, j in enumerate(SWAP) if i == j)
-ID = tuple(range(6))
-
-
-def after(a: Table, b: Table) -> Table:
-    return tuple(a[x] for x in b)
-
-
-PAIRS = tuple(
-    tuple(tuple(x + y for x, y in zip(v, w, strict=True)) for w in INC) for v in INC
-)
-OVER = tuple(
-    tuple(sum(x * y for x, y in zip(v, w, strict=True)) for w in INC) for v in INC
-)
-
-
-def check_table(f: Table) -> dict[str, bool]:
-    """Six exact transitions are required; unavailable is not a predicted failure."""
-    if len(f) != 6 or any(type(x) is not int or not 0 <= x < 6 for x in f):
-        raise ValueError("complete six-entry unsigned edge table required")
-    ff = after(f, f)
-    outputs = {PAIRS[f[a]][f[b]] for a, b in MATCHES}
-    packet_echo = ff == SWAP
-    fixed = all(f[i] == i for i in FIX)
-    coarse = all(BY_PORT[u] == BY_PORT[v] for u, v in zip(ff, SWAP, strict=True))
-    coarse_fixed = all(BY_PORT[f[i]] == BY_PORT[i] for i in FIX)
-    # All self-overlaps are two; pair overlap then checks the full Gram.
-    metric = all(OVER[i][j] == OVER[f[i]][f[j]] for i, j in combinations(range(6), 2))
-    return {
-        "histogram_sufficient": len(outputs) == 1,
-        "bijective": len(set(f)) == 6,
-        "square_stock": metric,
-        "raw_echo": packet_echo,
-        "transparent_root": packet_echo and fixed,
-        "coarse_echo": coarse,
-        "coarse_transparent": coarse and coarse_fixed,
-    }
 
 
 @dataclass(frozen=True)
