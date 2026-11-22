@@ -61,3 +61,41 @@ for independent pure sources under the stated bosonic model. It does not
 certify the source from noisy clicks, work in place of a mixed or correlated
 source model, or say that each cycle is observable by a particular fixed
 detector. The program never upgrades a public scientific claim.
+
+### A prospective discriminator that also works against real mixed sources
+
+The [conjugate-analyzer probe](probe_triad_reality_swap.py) compares a
+calibrated three-mixer network U with its complex conjugate on the *same*
+independent preparations. For occupation (2,1,0), the probability difference
+is exactly one quarter of Im Tr(ρ₁ρ₂ρ₃); one native preparation gives −1/32.
+Every three-state **preparation triple**, in any common-real internal
+dimension and even allowing mixtures, has zero imaginary trace under the
+specified internal-blind bosonic law. Conversely a real mixed third state
+can mimic the even cosine fringe alone with the same pair overlaps. With
+two calibrated pure real reference states at the specified overlaps, zero
+triple trace bounds the third purity by 13/18. No quoted experiment is
+retrospectively tested by this new contrast. Settings-dependent losses,
+correlated emissions, or a shared auxiliary phase require different nulls.
+
+### Two copies test a different assumption
+
+The [magic-square check](probe_opposition_magic_square.py) is complementary to
+these exchange-phase probes. It supplies two shared Bell pairs and commuting
+two-qubit Pauli contexts to test Bell-local response models without requiring
+continuously adjustable oblique analyzer angles. The ideal conditional model
+wins every setting; the exact uniform-input local bound is 8/9. This is not
+an inference from pairwise exchange data or a derivation of tensor composition.
+In particular, two local contexts need entangled joint readout, implemented
+in the probe with supplied CNOT/Hadamard operations; isolated Pauli tests do
+not provide that capability.
+
+[Xu et al.](https://doi.org/10.1103/PhysRevLett.129.050402) provide a published
+magic-square comparator, under explicit locality and fair-sampling assumptions.
+Do not identify a postselected experimental score with this probe's
+unconditional per-trial score: local aborts can give a perfect selected score
+at two-thirds joint answer rate while winning only two-thirds of all trials.
+No raw experimental record, significance calculation, or physical acceptance
+of the packet model is supplied by this comparison. See the
+[two-copy assumptions and loss controls](OPPOSITION_ORIGIN.md#a-two-copy-challenge-without-oblique-analyzer-angles)
+and replay the `opposition_magic_square` campaign bundle. The existing
+`multiple_photon_exchange` bundle retains its distinct exchange-phase scope.

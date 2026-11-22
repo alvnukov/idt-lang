@@ -14,6 +14,22 @@ from scripts import replay_primitive_probe_campaign as campaign
 
 
 class PrimitiveProbeCampaignTests(unittest.TestCase):
+    def test_new_opposition_and_geometry_probes_have_one_topic_owner(self) -> None:
+        expected = {
+            "probe_binary_window_oppositions": "opposition_origin",
+            "probe_tetrahedral_cycle_origin": "opposition_origin",
+            "probe_internal_signal_geometry": "collision_space",
+            "probe_opposition_magic_square": "opposition_magic_square",
+        }
+        for probe, bundle in expected.items():
+            with self.subTest(probe=probe):
+                owners = [
+                    name for name, probes in campaign.TOPIC_BUNDLES.items()
+                    if probe in probes
+                ]
+                self.assertEqual(owners, [bundle])
+                self.assertEqual(campaign.BUNDLES["all"].count(probe), 1)
+
     def test_stock_certificates_and_carrier_controls_execute(self) -> None:
         for probe in ("probe_stock_error_certificates", "probe_carrier_resolution"):
             with self.subTest(probe=probe):

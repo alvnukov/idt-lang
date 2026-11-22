@@ -1,0 +1,176 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "binary_worldline_window_opposition_origin",
+      "role": "route",
+      "components": [
+        "directed binary-window graph with complemented window pairs and discarded constant self-loops",
+        "stationary integer circulations versus open-string endpoint defects",
+        "finite window-length contrast dimensions, positive Euler realizations and restricted graph symmetries"
+      ],
+      "declared_status": "Retained finite classical origin candidate with scoped contrast/symmetry controls, not a physical derivation or experimental rejection. The three-bit stationary stock has one odd contrast; the four-bit stock has three odd and three fixed-total even directions. Other one-bit encodings are not excluded.",
+      "missing_bridges": [
+        "justify a physical binary worldline, window memory length and complement interpretation rather than infer them from a desired opposition count",
+        "supply periodic/stationary circulation or retain open-endpoint defects; discarding constant windows changes the all-tick normalization",
+        "select coarse graining, active transformations and detector access; the exhausted graph permutations/reversal do not cover variable-radius block codes or reset streams",
+        "derive a probability/readout rule and any physical norm, clock or spatial interpretation separately from rational circulation dimensions",
+        "supply an independently reviewed prediction driver and experimental map before comparing observations; dimension mismatches here are not a rejection of all binary-origin mechanisms"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_window_oppositions.py",
+          "first_line": 1,
+          "last_line": 20,
+          "file_sha256": "f3d10346ccd7299220e2ce2cbc7c9bbb9f09c92ab61dc1aafed2faec780386cf"
+        },
+        {
+          "path": "scripts/probe_binary_window_oppositions.py",
+          "first_line": 365,
+          "last_line": 392,
+          "file_sha256": "f3d10346ccd7299220e2ce2cbc7c9bbb9f09c92ab61dc1aafed2faec780386cf"
+        }
+      ]
+    },
+    {
+      "id": "tetrahedral_directed_cycle_origin",
+      "role": "route",
+      "components": [
+        "six directed Hamiltonian tours of uncolored simple K4 and reversal oppositions",
+        "integral cycle lattice with a supplied equal-edge metric and half-shift triangles",
+        "proper cube rotation action, C4 tour stabilizer and last-three-vertex successor",
+        "zero-flow commutator histories as an abelianization countercontrol"
+      ],
+      "declared_status": "Retained exact finite candidate/rival, not a universal machine-checked proof, physical probability rule or smaller-primitive verdict. Tour labels and ordinary tetrahedral edge labels carry inequivalent symmetry actions; passive relabeling does not supply active dynamics.",
+      "missing_bridges": [
+        "justify uncolored simple K4, directed tours modulo cyclic starting point but not reversal, and any physical edge metric; simple-graph vertex minimality is not universal over multigraphs",
+        "supply last-three-vertex memory, nonrepetition and an active controller/data coupling; the natural successor and conjugation action are not detector mechanisms",
+        "justify forgetting ordered path histories if using signed flows; a zero-flow commutator need not be operationally neutral",
+        "derive weighting, outcome actualization and a physical probability/prediction driver rather than identify unit-weight edge L2 with a detector law",
+        "establish an independently tested experimental encoding and distinguish the tour C4 stabilizer from the edge Klein-four stabilizer before transferring earlier opposition couplings"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_tetrahedral_cycle_origin.py",
+          "first_line": 1,
+          "last_line": 6,
+          "file_sha256": "6b32779abc5f8b9b5a1e7f5931b2036c5ff5f77f03b05d74017e3c8bc7e27a21"
+        },
+        {
+          "path": "scripts/probe_tetrahedral_cycle_origin.py",
+          "first_line": 89,
+          "last_line": 128,
+          "file_sha256": "6b32779abc5f8b9b5a1e7f5931b2036c5ff5f77f03b05d74017e3c8bc7e27a21"
+        },
+        {
+          "path": "scripts/probe_tetrahedral_cycle_origin.py",
+          "first_line": 164,
+          "last_line": 184,
+          "file_sha256": "6b32779abc5f8b9b5a1e7f5931b2036c5ff5f77f03b05d74017e3c8bc7e27a21"
+        },
+        {
+          "path": "scripts/probe_tetrahedral_cycle_origin.py",
+          "first_line": 228,
+          "last_line": 254,
+          "file_sha256": "6b32779abc5f8b9b5a1e7f5931b2036c5ff5f77f03b05d74017e3c8bc7e27a21"
+        },
+        {
+          "path": "scripts/probe_tetrahedral_cycle_origin.py",
+          "first_line": 258,
+          "last_line": 276,
+          "file_sha256": "6b32779abc5f8b9b5a1e7f5931b2036c5ff5f77f03b05d74017e3c8bc7e27a21"
+        }
+      ]
+    },
+    {
+      "id": "local_path_reunion_internal_signal_geometry",
+      "role": "route",
+      "components": [
+        "two alternating junction roles with four named traversable relations and tick counting",
+        "local retrace and abc=cba reunion rules generating the least signed-count endpoint equality",
+        "tree, symmetric star-transposition and finite-wrap rivals",
+        "shortest-clock non-Euclidean metric versus protocol-dependent diffusion covariance"
+      ],
+      "declared_status": "Retained conditional internal-signal discriminator, not physical space, observer or gravity derivation. A bounded local-reunion comparison identifies the supplied least endpoint relation; symmetric girth-six alternatives and finite quotients remain explicit rivals.",
+      "missing_bridges": [
+        "realize traversable port addressing, equal link ticks, endpoint reunion recognition and repeatable experiments; these observer/device resources are not supplied by the opposition primitive",
+        "justify local abc=cba in arbitrary path contexts and the least generated equality; extra endpoint relations can remain, and girth six alone does not select this rule",
+        "supply an experimental prediction driver and clock/rod or detector bridge; bounded reunion/shell matches do not prove an infinite rank-three physical space",
+        "do not equate shortest tick distance with Euclidean distance: the stated Ptolemy control obstructs that direct identification",
+        "justify independent uniform port sampling before using the diffusion covariance or uniform nonretracing return rate; biased protocols preserve endpoints but alter covariance",
+        "distinguish tree, star-transposition and finite-wrap alternatives through a separately calibrated test; these source controls are not empirical rejections of geometry or gravity theories"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_internal_signal_geometry.py",
+          "first_line": 1,
+          "last_line": 8,
+          "file_sha256": "6bd1b82aa0e1747b18975394644af721444d7fab80674ca99851f4f3ea47bfdb"
+        },
+        {
+          "path": "scripts/probe_internal_signal_geometry.py",
+          "first_line": 62,
+          "last_line": 76,
+          "file_sha256": "6bd1b82aa0e1747b18975394644af721444d7fab80674ca99851f4f3ea47bfdb"
+        },
+        {
+          "path": "scripts/probe_internal_signal_geometry.py",
+          "first_line": 99,
+          "last_line": 119,
+          "file_sha256": "6bd1b82aa0e1747b18975394644af721444d7fab80674ca99851f4f3ea47bfdb"
+        },
+        {
+          "path": "scripts/probe_internal_signal_geometry.py",
+          "first_line": 145,
+          "last_line": 175,
+          "file_sha256": "6bd1b82aa0e1747b18975394644af721444d7fab80674ca99851f4f3ea47bfdb"
+        },
+        {
+          "path": "scripts/probe_internal_signal_geometry.py",
+          "first_line": 204,
+          "last_line": 225,
+          "file_sha256": "6bd1b82aa0e1747b18975394644af721444d7fab80674ca99851f4f3ea47bfdb"
+        }
+      ]
+    },
+    {
+      "id": "conditional_opposition_magic_square_completion",
+      "role": "route",
+      "components": [
+        "two shared Bell pairs and a supplied real four-dimensional local tensor carrier",
+        "joint Pauli-product projectors with scaled Hadamard/CNOT readout circuits",
+        "complete magic-square output law and exhaustive classical response-table controls",
+        "conditional-freshness and loss/postselection countercontrols"
+      ],
+      "declared_status": "Retained conditional two-copy discriminator, not an experiment, raw-opposition derivation or empirical rejection. Perfect supplied-model predictions and the classical 8/9 conditional expected-score cap do not establish finite-sample significance or new candidate statuses.",
+      "missing_bridges": [
+        "derive or independently supply the tensor carrier, two shared Bell pairs and physical joint Pauli-product projective instruments; product Pauli analyzers alone do not implement the entangled local contexts",
+        "supply active Hadamard/CNOT operations, source preparation and calibrated readout rather than infer them from six opposition labels",
+        "justify the trace probability law and single-event actualization; exact matrix replay does not derive those rules",
+        "ensure fresh independent uniform questions conditional on complete pre-question history and hidden state, plus no within-trial communication; aggregate uniformity alone is insufficient",
+        "retain invalid, absent and aborted outputs as failures and calibrate loss; selected perfect scores need not exceed the unconditional classical bound",
+        "provide a reviewed experimental driver and a valid memory-aware finite-sample statistical analysis before claiming rejection or significance; a realized finite score can exceed its conditional expectation cap"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_opposition_magic_square.py",
+          "first_line": 1,
+          "last_line": 20,
+          "file_sha256": "868e3d82609661be2720207191ecf1e17978f6fece18cb826deec9a1ea45fd33"
+        },
+        {
+          "path": "scripts/probe_opposition_magic_square.py",
+          "first_line": 258,
+          "last_line": 285,
+          "file_sha256": "868e3d82609661be2720207191ecf1e17978f6fece18cb826deec9a1ea45fd33"
+        },
+        {
+          "path": "scripts/probe_opposition_magic_square.py",
+          "first_line": 322,
+          "last_line": 349,
+          "file_sha256": "868e3d82609661be2720207191ecf1e17978f6fece18cb826deec9a1ea45fd33"
+        }
+      ]
+    }
+  ]
+}
