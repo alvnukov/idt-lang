@@ -19,6 +19,8 @@ Status: TypeAlias = Literal[
 ]
 SCHEMA = "idt-primitive-screen/1"
 ROOT = Path(__file__).resolve().parents[1]
+# A marked-relay request also uses these loaded validators and result helpers.
+LOADED_SOURCE_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 SOURCE_PATHS = (
     "theory_experiments/primitive_screen.py",
     "scripts/screen_primitives.py",

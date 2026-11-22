@@ -33,6 +33,56 @@ complete local artifact, including exact witness inputs, imports and gaps.
 a counterexample; 1 = at least one counterexample; 2 = invalid input/operational
 error; 3 = incomplete or unsupported. Code 0 never means physical truth.
 
+## Compare a local relay without assuming spatial coordinates
+
+A `marked_relay` input specifies a directed row of four destinations per
+state (1–128 states). Each named port must undo itself on a second traversal.
+Ports may coincide or fix a state: those are testable behaviors, not parser
+errors. The input also specifies the detector's `marker_classes` and whether
+a single named origin, *some* origin, or *every* origin must pass. A return
+means landing in the starting marker class. It need not mean equality of the
+full hidden states. Neither the raw table nor the detector is derived here.
+
+The two programs compare against a **specified model**, not experimental
+data. `named_six` tries 36 six-tick words; `through_six` tries all 1,456
+nonempty non-retracing words of lengths one through six. The target returns
+when the four alternating counts of port traversals vanish. Reciprocal
+cancellations do not change this predicate or the supplied dynamics.
+One origin must meet all requirements together. A budget exhausted before
+the relevant quantifier is decided is inconclusive.
+
+The checker reuses one origin's trials for another only after matching their
+reachable graphs, in port order, including the detector predicate relative to
+each origin. Identical serialized rows certify the required bijection; equal
+shell sizes do not. On the published 64-state relay this reduces the whole
+through-six comparison from 93,184 trajectories to 1,456. On a different
+105-state relay no roots merge this way: the original mark passes, whereas
+moving the same mark one step produces an unexpected five-tick return.
+Outputs give the word, raw path, detector classes, and what was expected.
+
+For this family, the adapter and its directly used validation helpers also
+capture their source digests on import. If either was loaded before the
+pipeline and then edited on disk, a batch, cache read or replay is refused.
+That is a request to restart from a stable checkout, not a counterexample
+to the candidate. This check is not attestation of a modified interpreter.
+
+To replay nine contrasting inputs **without modifying the historical
+archive**, use a fresh directory. Exit 1 is expected for this deliberately
+mixed batch:
+
+```sh
+relay_trial_dir=$(mktemp -d)
+python3 -B -m scripts.marked_relay_controls > "$relay_trial_dir/controls.json"
+python3 -B scripts/screen_hypotheses.py --batch-file "$relay_trial_dir/controls.json" \
+  --max-cases 5000 --no-cache --history-dir "$relay_trial_dir/history"
+```
+
+The [local shuttle probe](scripts/probe_shuttle_local_reunions.py) searches
+for such tables from a common bit and identical cells instead of giving the
+checker a path identity. These are distinct questions: existence of a gate,
+correct response from a privileged preparation, and correct response at
+every internally marked origin.
+
 ## Candidate history and false-rejection protection
 
 Normal batch runs now save inputs before adapter validation and complete results

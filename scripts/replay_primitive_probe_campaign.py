@@ -181,6 +181,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_minimal_signal_relay",
         "probe_relay_loop_parity",
     ),
+    "local_shuttles": (
+        "probe_shuttle_local_reunions",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
