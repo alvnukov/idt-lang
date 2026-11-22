@@ -162,6 +162,10 @@ select the same path quotient. Replay this probe in the
 `collision_space` bundle; the two origin alternatives above are in
 `opposition_origin`.
 
+The subsequent [marked-relay screen](MARKED_RELAYS.md) tests the returns
+against real local-site markers on finite candidate networks, including a
+false positive on the original 24 flags.
+
 ### A two-copy challenge without oblique analyzer angles
 
 The [magic-square probe](probe_opposition_magic_square.py) uses two supplied

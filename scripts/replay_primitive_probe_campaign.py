@@ -176,6 +176,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "opposition_magic_square": (
         "probe_opposition_magic_square",
     ),
+    "marked_relays": (
+        "probe_flag_local_reunions",
+        "probe_minimal_signal_relay",
+        "probe_relay_loop_parity",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
