@@ -152,6 +152,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_six_packet_matter",
         "probe_packet_chiral_selection",
     ),
+    "packet_phase_controls": (
+        "probe_packet_phase_program",
+        "probe_neutral_phase_controller",
+        "probe_three_state_phase_controller",
+        "probe_packet_eigenclock",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {

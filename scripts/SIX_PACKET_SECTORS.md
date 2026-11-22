@@ -52,7 +52,8 @@ tests all 4,096 subsets against the usual four-dimensional left-Weyl
 local anomaly coefficients and the ordinary doublet parity test.
 128 selections are vectorlike or neutral; four have one chiral orientation,
 four the conjugate. Each nonzero selection contains exactly the same 15
-charged components up to conjugation. Its four variants just choose none,
+components in nonzero-hypercharge multiplets up to conjugation (not 15
+electrically charged particles). Its four variants just choose none,
 either, or both of two neutral labels. For arbitrary multiplicities a
 rank-four integer minor fixes only a common **net family multiple**.
 No generation number, absolute chirality, sterile particle, or mass follows.
@@ -72,3 +73,28 @@ line operators can distinguish theories with the same local fields
 ([Tong](https://arxiv.org/abs/1705.01853)).
 
 Replay: `python3 -B scripts/replay_primitive_probe_campaign.py --bundle packet_sectors`.
+
+### How much apparatus does the missing continuous phase cost?
+
+Fix the uniform six-packet reference. The intended action on the other
+two sectors is z⁻² and z³. The exponent ratio is the *target*, not a
+prediction of any of these programs. Four resource contracts give
+different answers:
+
+| Controller | Verified result and price |
+| --- | --- |
+| [Heralded neutral program](probe_packet_phase_program.py) | Six coherently prepared addresses let controlled packet translations transfer the phase while returning the program unchanged. Two factors of one kind and three of another realize z=(3+4i)/5 exactly on accepted runs. Their single-attempt success probabilities are 25/32 and 225/256; the mean total is 448/75 attempts after offline preparation. Every recorded failure is scalar identity even on entangled input; **only the failed flag** is reset. No fixed maximum run time. The scheme supplies grouped readout and feedback. |
+| [Two-state unmeasured controller](probe_neutral_phase_controller.py) | With only addressed T/i on this controller and the specified coherent translations, two of six character blocks remain finite. Even allowing overall phase, approximate return on arbitrary input permits only points satisfying z⁸=1 on the reference-fixed weight circle. Exact return gives only identity there. The other four character blocks need not be finite; this is not a general impossibility for two-level physics. |
+| [Three-state unmeasured controller](probe_three_state_phase_controller.py) | One more neutral logical address suffices for arbitrary phases **in closure** without preparing a nontrivial eigenstate or measuring. For one nontrivial target, z=exp(i/8), a concrete deterministic circuit bounds joint error by 27/32768, including inputs entangled with outside systems. It uses 594,948 common logical instructions and 1,280 controlled translations; the two-state comparator has error at least 95/768 even modulo overall phase. Verification replays the two constituent common words (952 and 924 instructions) and checks a uniform composition bound; it does not simulate 594,948 full matrices. |
+| [Reusable stationary eigenmode](probe_packet_eigenclock.py) | A fixed infinite-order phase (−1+3i√7)/8 is induced exactly by a compiled 1,380-instruction joint unitary **if** a particular pure ancillary eigenmode is prepared. That direction is impossible to prepare exactly from a basis state by a finite Gaussian-dyadic word. The opposite mode reverses the phase; the stationary maximally mixed state instead loses coherence. The compiled joint unitary preserves the data sectors at its endpoint, not at every substep. |
+
+The unmeasured controllers assume a tensor register and coherent conditional
+permutations. An instruction applied to the register alone must act in sync
+across the data addresses; resolving it into unsynchronized physical mixers
+can break a conservation requirement. The heralded register similarly needs
+uncollapsed labels: preparing a classical mixture of the six program paths
+does not work. The broader controllers allow *other* independently chosen
+phases. None of these constructions chooses a coupling constant, supplies
+electromagnetism, or establishes what state a real physical reference has.
+
+Replay: `python3 -B scripts/replay_primitive_probe_campaign.py --bundle packet_phase_controls`.
