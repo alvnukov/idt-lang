@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "internal_port_latch_reference_clock",
+      "role": "route",
+      "components": [
+        "A reversible register at the common hub tracks the channel after an aligned departure. Only the contact of an independent even reference ring reads it. Exact phase-orbit counts distinguish the microscopic square shares, linear lap counts and uniform switch counts; a neutral triangle can tolerate ring periods that fail on four occupied rails."
+      ],
+      "declared_status": "Finite passive-clock construction and conditional arithmetic classification, not a general clock law, physical dimensions, independent sampling or first-principles Born rule.",
+      "missing_bridges": [
+        "Establish which trigger and relative speed inside a physical detector are independently realized and how the latch and active signal are prepared."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_internal_detector_clocks.py",
+          "first_line": 1,
+          "last_line": 193,
+          "file_sha256": "ea67fcf4d3eca60fa279969e39b745a2f2f633709cf027ef610e192405b36fc1"
+        }
+      ]
+    },
+    {
+      "id": "matched_detuned_petal_reference",
+      "role": "route",
+      "components": [
+        "The observer uses a duplicate of the active unary apparatus with two extra wire vertices on one marked-lane edge. One local marked departure per reference orbit has period T+2; sampling the signal latch at every departure sweeps a full parity class. Every contiguous signal dwell is divisible by two."
+      ],
+      "declared_status": "Complete relative-phase coverage for a fixed matched preparation under homogeneous hopping; neither arbitrary external cadence nor copying an unknown quantum state.",
+      "missing_bridges": [
+        "Construct the matched unary reference from the source without assuming free duplicate preparation, align both active sectors, and account for clock rates and the cost per reported event."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_matched_vernier_petals.py",
+          "first_line": 1,
+          "last_line": 146,
+          "file_sha256": "e51e263898ddffe2650a4f0689098302e94825c6c15d263dd751d0276c4851be"
+        }
+      ]
+    },
+    {
+      "id": "externally_stimulated_carry_slip",
+      "role": "route",
+      "components": [
+        "Deliver the held rail on every external stimulus and advance a reference apparatus. One withheld main hop per reference tour M produces a phase shift Mh-1 over M stimuli of positive fixed interval h. Equal-delay local fanout distributes the enable signals, and a matched active clone realizes M=T without loading weights."
+      ],
+      "declared_status": "Prepared detector under constant external cadence; there is no claim of independence, short-horizon fairness, reversibility of the control tree or robustness to arbitrary retuning.",
+      "missing_bridges": [
+        "Derive the external trigger, clock distribution, memory and active preparation. Explain how a physical changing input would preserve or replace these fixed-period controls."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_trigger_carry_slip.py",
+          "first_line": 1,
+          "last_line": 285,
+          "file_sha256": "cac511b6fb0b77fb1b22db3da0444d17d4a4fd4449e46309f22e6aac41290db5"
+        }
+      ]
+    },
+    {
+      "id": "coprime_raw_signed_encounters",
+      "role": "route",
+      "components": [
+        "Two equal-speed heads on raw signed occurrences and their one-cell-padded copy realize all ordered pairs in time. A local debt register charges opposite-role meetings and pays them from later equal-role meetings. On a stable repeated input, after one declared silent priming period, the remaining clicks per channel equal its net signed current squared."
+      ],
+      "declared_status": "Exact conditional counts for fixed raw lists and sparse click service, not a lossless detector, unconditioned unit efficiency or single-particle energy transfer.",
+      "missing_bridges": [
+        "Explain synchronized raw copies, same-channel role comparison, priming and inherited debt under source changes; preserve all silent ticks."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_coprime_signed_encounters.py",
+          "first_line": 1,
+          "last_line": 300,
+          "file_sha256": "a1ea29c91fa608ac74157587f55d7cc576a8a38a9219c887f1e70a06a2fb2400"
+        }
+      ]
+    },
+    {
+      "id": "periodic_calendar_contact_alias",
+      "role": "semantic_contract",
+      "components": [
+        "For a repeated external interval word of length P and sum H, an active carry apparatus with reference period M advances (M/g)H-P/g signal phases per joint calendar block, where g=gcd(P,M). It can tolerate all alternating cadences for the stated matched petal family but other regular timing patterns can bias a correctly functioning detector."
+      ],
+      "declared_status": "Exact conditional phase-sweep criterion and finite delayed hardware controls, not independent physical emission or robustness to arbitrary aperiodic drives.",
+      "missing_bridges": [
+        "Identify the actual external calendar, prior timing, phase record and measurement window without phase averaging or omitting the cost of a delayed trigger."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_calendar_carry_alias.py",
+          "first_line": 1,
+          "last_line": 171,
+          "file_sha256": "cdcb6be7b469485792af6da1844a4dfc314b1a9b8524f0d868c1070626a0a260"
+        }
+      ]
+    }
+  ]
+}

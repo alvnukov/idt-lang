@@ -9,6 +9,9 @@ named output per specified clock tick. This is not yet a physical theory of
 the trigger, microscopic energy transfer or the measurement of unknown
 changing preparations.
 
+The follow-up [internal-clock experiments](INTERNAL_DETECTOR_CLOCKS.md) ask
+which of these counts an observer limited to a local port can recover.
+
 ## Three local detector candidates
 
 Take a fixed connected bipartite packet with named channels. A serial
