@@ -1,0 +1,146 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "alternating_shuttle_boolean_and_relay",
+      "role": "realization",
+      "components": [
+        "An alternating reciprocal shuttle uses four addressable cells, a shared role bit, and full-configuration equality. With separated fixed binary encoding and no extra persistent state, affine and one-AND circuits admit only the scoped short cycles; a two-Toffoli ternary factor supplies the longer examples.",
+        "A six-symbol relay supplies a diagonal identification and a relative two-cell incidence analyzer. Full-state triple reversal makes the even words commute; a coordinate echo alone does not enforce this on a carried bit.",
+        "The four-symbol relay, reciprocal link-bit lifts and independently supplied orthogonal rotations are controls. The finite quotient fits two solo rows without fixing mixed-word returns across these families."
+      ],
+      "declared_status": "Finite reversible constructions and conditional resource arguments. Full-orbit period is not a six-valued local reading, and the coordinate echo does not select the full dynamics.",
+      "missing_bridges": [
+        "Derive the physical cells, compatible state encoding and addressable reciprocal actuation rather than supplying them as circuitry or endpoint equivalence.",
+        "Specify how a local preparation and analyzer access the required relative symbol or carried bit, and justify which echo laws apply to complete physical states."
+      ],
+      "sources": [
+        {"path": "scripts/probe_boolean_shuttle_origin.py", "first_line": 3, "last_line": 43, "file_sha256": "e3e31bbac8433c11d9f5a3f5a04bf8fa7a584433a541bbc4180854f8e2cae036"},
+        {"path": "scripts/probe_boolean_shuttle_origin.py", "first_line": 72, "last_line": 81, "file_sha256": "e3e31bbac8433c11d9f5a3f5a04bf8fa7a584433a541bbc4180854f8e2cae036"},
+        {"path": "scripts/probe_joint_relay_phase.py", "first_line": 3, "last_line": 39, "file_sha256": "52ce31685f4fb6b99e2fac054bb4b5a444afa90c27d2e0893b4204cccd85d2d4"},
+        {"path": "scripts/probe_joint_relay_phase.py", "first_line": 92, "last_line": 117, "file_sha256": "52ce31685f4fb6b99e2fac054bb4b5a444afa90c27d2e0893b4204cccd85d2d4"},
+        {"path": "scripts/probe_joint_relay_phase.py", "first_line": 240, "last_line": 256, "file_sha256": "52ce31685f4fb6b99e2fac054bb4b5a444afa90c27d2e0893b4204cccd85d2d4"}
+      ]
+    },
+    {
+      "id": "six_mark_incidence_and_pair_holdouts",
+      "role": "route",
+      "components": [
+        "An oriented six-cycle from opposition and a three-cycle, a fixed three-mark incidence detector, and a supplied two-fair-choice preparation give the full six-setting fringe. The row fixes three masses, not the history law.",
+        "Fixed-spare scatterers and a single homogeneous mixture have scoped failures; alternating two scatterers with a stored site gives a passing fringe rival. An aligned singleton preparation and a second detector distinguish that rival from the direct rotor.",
+        "Frozen mixed-pulse holdouts compare unchanged four fair tickets with a separately supplied 60-degree rotation family. Transparent shuttles and unrestricted six-mark permutations have different survivor sets; some unrestricted rivals fit a calibration and first holdout but miss the second."
+      ],
+      "declared_status": "Conditional incidence and exact arithmetic comparisons. Quarter-grid gaps assume fixed equal-weight histories and a deterministic terminal detector; neither these gaps nor the scoped stationary failures exclude arbitrary alternatives.",
+      "missing_bridges": [
+        "Derive an actuator producing the active six-cycle and separately accessible pulse settings, rather than treating passive relabeling or the extra alternating site as their origin.",
+        "Supply repeatable physical preparation and incidence readout with loss accounted for, and independently freeze any rotation comparison before observing held-out words."
+      ],
+      "sources": [
+        {"path": "scripts/probe_six_mark_phase_origin.py", "first_line": 3, "last_line": 65, "file_sha256": "57b400e2c0a7332feb2d963cc57fa16cafb0e19eb1917ca04844d947405622a2"},
+        {"path": "scripts/probe_six_mark_phase_origin.py", "first_line": 174, "last_line": 209, "file_sha256": "57b400e2c0a7332feb2d963cc57fa16cafb0e19eb1917ca04844d947405622a2"},
+        {"path": "scripts/probe_phase_pair_holdout.py", "first_line": 3, "last_line": 46, "file_sha256": "d5c83ad08d928dac4caa26d9c8aa3ce0674a5512505d92c54b3a730b0954c3cc"},
+        {"path": "scripts/probe_phase_pair_holdout.py", "first_line": 177, "last_line": 200, "file_sha256": "d5c83ad08d928dac4caa26d9c8aa3ce0674a5512505d92c54b3a730b0954c3cc"},
+        {"path": "scripts/probe_phase_pair_holdout.py", "first_line": 203, "last_line": 233, "file_sha256": "d5c83ad08d928dac4caa26d9c8aa3ce0674a5512505d92c54b3a730b0954c3cc"}
+      ]
+    },
+    {
+      "id": "phase_forward_memory_and_comparator",
+      "role": "semantic_contract",
+      "components": [
+        "Fresh independent six-position choices, one counted forward register per cut, trial-static shared randomness and every emission scored. The five-station four-symbol and eight-station five-symbol bounds are Fourier partition certificates; a six-state accumulator with separately supplied stochastic readout is a positive control.",
+        "In the two-reader comparison, reproducing the static six-by-six probability table needs fewer messages than computing each microscopic incidence bit; the trit protocol averages adjacent pairs and fair ties.",
+        "The unmodified shuttle does not convey Alice's cell to Bob across the stated cut. The mobile carrier is an addition. Setting-conditioned omissions can fake a detected-only score; even a six-state carrier may fail the bound with degraded readout."
+      ],
+      "declared_status": "Exact finite controls within stated information and loss contracts, not evidence of quantum memory, experimental replication, or an independently observable local symbol on the relay quotient.",
+      "missing_bridges": [
+        "Identify what the physical cut carries, including timing, additional writable references and the role of shared preparation, and show that settings and denominators meet the scoring contract.",
+        "Derive or independently establish a local readout and communication mechanism rather than inferring microscopic comparison or memory size from a matched conditional table."
+      ],
+      "sources": [
+        {"path": "scripts/probe_serial_phase_memory.py", "first_line": 3, "last_line": 50, "file_sha256": "3f6a42d29495894031cfe7f8d9e5a1b5db4c869eee28fbc23dcc8c559c9b77bd"},
+        {"path": "scripts/probe_serial_phase_memory.py", "first_line": 167, "last_line": 212, "file_sha256": "3f6a42d29495894031cfe7f8d9e5a1b5db4c869eee28fbc23dcc8c559c9b77bd"},
+        {"path": "scripts/probe_local_phase_comparator.py", "first_line": 3, "last_line": 38, "file_sha256": "cd471f222d60c5aa9a6f826a22477d6755e835c88febbe16eccd4afa508f640b"},
+        {"path": "scripts/probe_local_phase_comparator.py", "first_line": 126, "last_line": 143, "file_sha256": "cd471f222d60c5aa9a6f826a22477d6755e835c88febbe16eccd4afa508f640b"}
+      ]
+    },
+    {
+      "id": "six_phase_occupation_exclusive_packet",
+      "role": "realization",
+      "components": [
+        "A finite reversible two-cell coupler uses occupation and six logical phase tags plus padding; two couplers exchange the raw cells. The same gate is used for preset shutters against independently prepared vacancies.",
+        "A three-bit supplied preparation and supplied local dial shifts yield the six rates, while the terminal detector reads occupation only. Dump occupancy accounts for blocked emissions without discarding losses.",
+        "A separate empty-silent, no-other-setting-channel argument prevents a unit endpoint change after a fair split. In the implemented raw coupler a conserved coarse tag count blocks a clean +1 dial with exactly restored auxiliaries."
+      ],
+      "declared_status": "Finite exclusive-routing toy with a selected reversible completion, not a derived actuator or microscopic particle model. The actuation wall applies to this completion and contract.",
+      "missing_bridges": [
+        "Supply an independently justified physical phase actuator, or a different native completion with a checked implementation of the dial and its accounted auxiliaries.",
+        "Relate integer occupation, source stock and shutter dumps to physical preparation, conserved energy and exclusive detector records."
+      ],
+      "sources": [
+        {"path": "scripts/probe_six_phase_exclusive_packet.py", "first_line": 3, "last_line": 29, "file_sha256": "2919a34d5541dbcfdc19537d4e5b8e74f40af8faca22948e7786d32fe6da8dcf"},
+        {"path": "scripts/probe_six_phase_exclusive_packet.py", "first_line": 87, "last_line": 110, "file_sha256": "2919a34d5541dbcfdc19537d4e5b8e74f40af8faca22948e7786d32fe6da8dcf"},
+        {"path": "scripts/probe_six_phase_exclusive_packet.py", "first_line": 147, "last_line": 163, "file_sha256": "2919a34d5541dbcfdc19537d4e5b8e74f40af8faca22948e7786d32fe6da8dcf"},
+        {"path": "scripts/probe_six_phase_exclusive_packet.py", "first_line": 232, "last_line": 241, "file_sha256": "2919a34d5541dbcfdc19537d4e5b8e74f40af8faca22948e7786d32fe6da8dcf"}
+      ]
+    },
+    {
+      "id": "occupation_square_curvature_signs",
+      "role": "law_family_collection",
+      "components": [
+        "Supplied five-slot hard-core occupations, legal forward/reverse toggles, and reciprocal carried edge bits. Vertex frame changes leave the parity around a square invariant; compare it to the bit difference after reversing two legal instructions.",
+        "Curvature invariance under all slot permutations or a supplied 3+2 split is weaker than selecting all-odd squares. Flat, pure-gauge parity-tag, all-odd Jordan-Wigner and split spectator-dependent textures are distinct controls, except that the two flat controls have the same curvature.",
+        "A curvature-preserving permutation admits a vacuum-normalized vertex correction. That formal lift is not identified with a physical swap."
+      ],
+      "declared_status": "Finite signed-operation classification on supplied slots. All-odd curvature yields formal anticommutation; it is not forced by occupations and does not imply a physical spin-statistics law.",
+      "missing_bridges": [
+        "Explain native selection and phase-sensitive readout of square curvature that distinguishes all-odd signs from invariant flat and mixed alternatives.",
+        "Relate addressed toggles and corrected permutations to physically implemented creation and exchange of indistinguishable excitations."
+      ],
+      "sources": [
+        {"path": "scripts/probe_occupation_square_signs.py", "first_line": 3, "last_line": 22, "file_sha256": "32c3435dad3c4ff09ac27fb952bf385de5b83305e542a2f7c01573b48807b152"},
+        {"path": "scripts/probe_occupation_square_signs.py", "first_line": 69, "last_line": 99, "file_sha256": "32c3435dad3c4ff09ac27fb952bf385de5b83305e542a2f7c01573b48807b152"},
+        {"path": "scripts/probe_occupation_square_signs.py", "first_line": 486, "last_line": 529, "file_sha256": "32c3435dad3c4ff09ac27fb952bf385de5b83305e542a2f7c01573b48807b152"}
+      ]
+    },
+    {
+      "id": "packet_charge_pairing_constraints",
+      "role": "route",
+      "components": [
+        "For supplied one-family left-Weyl multiplets and conventional four-dimensional local anomalies the rational solutions have three branches. One supplied scalar doublet and conventional Yukawa links restrict to the hypercharge and B-minus-L plane.",
+        "A supplied bare sterile self-pair with a neutral constant coefficient reduces that plane to the hypercharge line including zero; a number projector does not. The matched affine exterior charge formula is a crosswalk, not independent evidence.",
+        "Three families with diagonal Yukawa links and full-rank sterile support need not be universal: paired opposite sterile charges and a disconnected lepton support preserve a flavor-difference direction. A supplied connectivity condition removes it in the tested system."
+      ],
+      "declared_status": "Exact rational charge diagnostics with imported multiplets and interaction support. No inference of Majorana masses, observed mixing, gauge dynamics, or a charge unit.",
+      "missing_bridges": [
+        "Derive particle identifications, gauge representations and the actual allowed neutral pairings rather than imposing benchmark field content and link supports.",
+        "Establish which family links and mass operators occur with charge-preserving coefficients; selection of a line does not fix normalization or scales."
+      ],
+      "sources": [
+        {"path": "scripts/probe_packet_charge_pairings.py", "first_line": 3, "last_line": 37, "file_sha256": "6fc62c1b22c561b891d0f64bb2e281b3faa38875d654300e96b976f2ddd8ef8a"},
+        {"path": "scripts/probe_packet_charge_pairings.py", "first_line": 169, "last_line": 211, "file_sha256": "6fc62c1b22c561b891d0f64bb2e281b3faa38875d654300e96b976f2ddd8ef8a"},
+        {"path": "scripts/probe_packet_charge_pairings.py", "first_line": 218, "last_line": 239, "file_sha256": "6fc62c1b22c561b891d0f64bb2e281b3faa38875d654300e96b976f2ddd8ef8a"}
+      ]
+    },
+    {
+      "id": "conditional_charge_readout_and_flavor_anchors",
+      "role": "route",
+      "components": [
+        "Compare a published direct free-neutron charge estimate to a supplied charge plane, conventional diagonal quotient, electromagnetic readout and valence dictionary. Fixing the positive scalar character h=3 gives a discrete nonzero gap; changing it admits inequivalent primitive ratios arbitrarily near zero without changing the quotient.",
+        "Two published appearance links constrain active flavor charges only under an exact unbroken U(1), definite-charge tags, neutral transfer in every propagation Kraus branch, and the supplied interpretation of the measurements.",
+        "Conserving total charge with reservoir exchange is compatible with nonzero appearance between differently charged flavors. Same-charge controls can have different dynamics and the same flavor table; connected active charges do not fix a common shift or the sterile sector."
+      ],
+      "declared_status": "Conditional comparisons using published summaries as inputs; no new experiment or fit. The bulk-matter converted bound is not used as a second neutron anchor, and appearance counts are not treated as transition probabilities.",
+      "missing_bridges": [
+        "Independently justify the scalar weight, charge lattice, electromagnetic normalization and composition dictionary before transferring the fixed-weight neutron comparison to physical charge selection.",
+        "Justify charge-sharp preparation and detection and bound hidden exchange before treating appearance as a charge-equality test; this does not determine a neutrino dynamics."
+      ],
+      "sources": [
+        {"path": "scripts/probe_neutron_charge_anchor.py", "first_line": 3, "last_line": 38, "file_sha256": "01968e7f984704373120391f3bc46577b6e67d8bac462bb669f58a65f884f325"},
+        {"path": "scripts/probe_neutron_charge_anchor.py", "first_line": 160, "last_line": 170, "file_sha256": "01968e7f984704373120391f3bc46577b6e67d8bac462bb669f58a65f884f325"},
+        {"path": "scripts/probe_flavor_charge_connectivity.py", "first_line": 3, "last_line": 45, "file_sha256": "5988a24d731ce9606fb6c7c921dd2b7a46fa384bdad84dd4455dcd7047e15466"},
+        {"path": "scripts/probe_flavor_charge_connectivity.py", "first_line": 82, "last_line": 92, "file_sha256": "5988a24d731ce9606fb6c7c921dd2b7a46fa384bdad84dd4455dcd7047e15466"},
+        {"path": "scripts/probe_flavor_charge_connectivity.py", "first_line": 198, "last_line": 232, "file_sha256": "5988a24d731ce9606fb6c7c921dd2b7a46fa384bdad84dd4455dcd7047e15466"}
+      ]
+    }
+  ]
+}
