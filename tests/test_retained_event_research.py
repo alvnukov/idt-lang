@@ -84,6 +84,13 @@ PACKS = {
         "compatible_parity_contexts_of_lifts": "probe_folded_carrier_parity_contexts",
         "sequential_context_memory_intervention": "probe_contextual_readout_memory",
     }),
+    "primitive_relational_observer_inventory.json": ("relational_observer_covers", {
+        "local_reunion_moment_discriminator": "probe_local_reunion_moments",
+        "reversible_active_vs_passive_ranging": "probe_reversible_range_alias",
+        "exchanged_lift_without_statistics_sign": "probe_collision_free_exchange_paths",
+        "closed_three_sheet_reunion_cost": "probe_three_sheet_reunion_cost",
+        "abelian_reunion_dimension_intervention": "probe_abelian_reunion_dimensions",
+    }),
 }
 
 
