@@ -142,6 +142,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_collision_cone_stability",
         "probe_periodic_collision_metric",
     ),
+    "packet_sectors": (
+        "probe_six_packet_sectors",
+        "probe_packet_hypercharge_reference",
+        "probe_packet_exchange_transport",
+        "probe_six_packet_matter",
+        "probe_packet_chiral_selection",
+    ),
 }
 DEFAULT_BUNDLE = "fast"
 BUNDLES = {
