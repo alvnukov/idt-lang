@@ -39,6 +39,14 @@ PACKS = {
         "cell_orientational_fixed_number_exchange": "probe_cell_exchange_intervention",
         "photonic_exchange_phase_countercontrol": "probe_photonic_exchange_reference",
     }),
+    "primitive_mobile_load_inventory.json": ("mobile_load_operations", {
+        "identical_units_moving_and_parked": "probe_indistinguishable_mobile_load",
+        "serial_local_reporting_return_bus": "probe_serial_return_bus",
+        "programmed_mobile_complement_contacts": "probe_mobile_cell_complement_mixer",
+        "two_mark_marginal_automorphism_wall": "probe_packet_marginal_automorphisms",
+        "static_mixer_hardware_census": "probe_static_cell_mixer_search",
+        "static_mixer_elapsed_time_and_completion": "probe_static_cell_elapsed_readout",
+    }),
 }
 
 

@@ -1,0 +1,119 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "identical_units_moving_and_parked",
+      "role": "primitive_base",
+      "components": [
+        "One moving packet and stationary site stocks exchange excess with local stock: a site receiving k>=1 sends 1+s units forward and leaves k-1. With two indistinguishable units the marked detector can be implemented by splitting and rejoining matter. All physical states in the selected example are compared, including traps."
+      ],
+      "declared_status": "A simpler material realization in a prepared architecture, not a derivation of motion, time, charge, independent outcomes or physical absorption.",
+      "missing_bridges": [
+        "Establish addressing, port routing, graph installation and which observable counts packets rather than total flux. A greater load can distinguish rules invisible to threshold readings."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_indistinguishable_mobile_load.py",
+          "first_line": 1,
+          "last_line": 393,
+          "file_sha256": "e86458929835dc8b6353607432f71427fbc0dc1cfc30bd659c69c42209e4c368"
+        }
+      ]
+    },
+    {
+      "id": "serial_local_reporting_return_bus",
+      "role": "route",
+      "components": [
+        "A shared ring of equal-baseline taps stores the source of a pending report as a local excess defect and restores it on return. Two baseline levels and a reversible cold meter provide one unit crossing at the observer per serial occupied signal hop, without a source address or synchronized sampling clock."
+      ],
+      "declared_status": "Serial common-observer count with explicit apparatus and restoration; overlapping requests can undercount and a destructive read breaks the path.",
+      "missing_bridges": [
+        "Explain the extra baseline units and port network, serial preparation and physical non-destructive record. One source stimulus need not constitute one counted hop."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_serial_return_bus.py",
+          "first_line": 1,
+          "last_line": 372,
+          "file_sha256": "46721f07718f5bf78a52eee159e4686a48458715f3995c887b72c83e3a557f9a"
+        }
+      ]
+    },
+    {
+      "id": "programmed_mobile_complement_contacts",
+      "role": "route",
+      "components": [
+        "Three local swap cells, one controllable bypass and a fixed sixteen-passage word transform each prepared two-of-four packet into the complement of a repeatable four-cycle of its occupied slots. The same local hub can later identify the result without opening the remote stores."
+      ],
+      "declared_status": "Finite population transformation synthesized for an explicit target; centered fixed-total contrasts undergo a signed permutation, not arbitrary amplitude mixing.",
+      "missing_bridges": [
+        "Generate the switched schedule, reusable preparations and physical composability, and distinguish registered packet marginals from independent Born readout."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_mobile_cell_complement_mixer.py",
+          "first_line": 1,
+          "last_line": 291,
+          "file_sha256": "5df524cd1f05912273bc2b2755233b64e14ba17d612535d7a29d073107496f6a"
+        }
+      ]
+    },
+    {
+      "id": "two_mark_marginal_automorphism_wall",
+      "role": "semantic_contract",
+      "components": [
+        "Of 720 bijections on six two-of-four packets only 24 wire permutations and 24 complemented permutations preserve equal first-moment distributions on every input ensemble. A witnessed pair of ensembles exposes each other map. More slots with exactly two marks allow only wire permutations under the same closure demand."
+      ],
+      "declared_status": "Finite census and conditional combinatorial obstruction; not a prohibition on operations using correlations, ancillas, other occupancy sectors or amplitudes.",
+      "missing_bridges": [
+        "Specify whether the physical observer has access to coincidences rather than just individual port counts and how it composes or regroups packets."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_marginal_automorphisms.py",
+          "first_line": 1,
+          "last_line": 235,
+          "file_sha256": "335db3819e9acc5cac8135ba2c1740df2823dd3436130f127821e50f32d90eba"
+        }
+      ]
+    },
+    {
+      "id": "static_mixer_hardware_census",
+      "role": "law_family_collection",
+      "components": [
+        "All 64000 ordered three-cell assemblies with static conserving reciprocal laws are tested on all six two-mark inputs. No common hub-return count gives the programmed complement-plus-four-cycle target. Sixteen devices do realize bare complement; a symmetric X-S-X assembly does so at the third return in 32 physical edge hops for every prepared input."
+      ],
+      "declared_status": "Exact census of fixed wiring and common-count gates, with secondary pure complement explicitly distinguished from the primary missed target.",
+      "missing_bridges": [
+        "Derive the preparation, completion marker, output ownership, and access to other sectors rather than relabeling the zero-hit target as a success."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_static_cell_mixer_search.py",
+          "first_line": 1,
+          "last_line": 274,
+          "file_sha256": "9c78bede19f0cea3c6aecc0f2f133601b92de0969de916768723c43aa73d9e74"
+        }
+      ]
+    },
+    {
+      "id": "static_mixer_elapsed_time_and_completion",
+      "role": "semantic_contract",
+      "components": [
+        "Exact congruences for actual hub return times test whether different numbers of passages on the six inputs can reach one common elapsed-time complement-plus-four-cycle gate. No such time exists in the frozen static family. Two local states cannot recognize the third X-S-X return from side and lane alone, while a three-state event counter can."
+      ],
+      "declared_status": "Clock contract on equal-duration edges and a finite local observation alphabet; not a universal exclusion of self-timed hardware or other completion interfaces.",
+      "missing_bridges": [
+        "Realize a suitable internal physical marker, compare alternative signal velocities and retain distinct ports rather than postselecting elapsed times after inspecting one input."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_static_cell_elapsed_readout.py",
+          "first_line": 1,
+          "last_line": 130,
+          "file_sha256": "8124e1f03b59e2c25322c8755796ecf5f4d9fc971ccba5372725d5c57c430113"
+        }
+      ]
+    }
+  ]
+}
