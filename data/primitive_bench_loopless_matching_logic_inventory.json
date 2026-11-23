@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_loopless_boolean_link_gates",
+      "role": "route",
+      "components": [
+        "single irreflexive graph with neighboring parity guard controlling one link"
+      ],
+      "declared_status": "clean four-edge gate with supplied schedule and sharp local contact countercontrols",
+      "missing_bridges": [
+        "intrinsic ports, event order and physics are not selected"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_loopless_link_quartet.py",
+          "first_line": 1,
+          "last_line": 458,
+          "file_sha256": "df808ff67a08aa726091ebdd5b0747d0ad88f76d205d52fe6c2feebd74499316"
+        }
+      ]
+    },
+    {
+      "id": "archive_loopless_matching_port_compiler",
+      "role": "route",
+      "components": [
+        "disjoint physical edge encoding for reusable reversible Boolean operations"
+      ],
+      "declared_status": "composable exact finite gate network and negative direct-gluing control",
+      "missing_bridges": [
+        "clock, port preparation, encounter opportunities and observable statistics remain external"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_loopless_matching_ports.py",
+          "first_line": 1,
+          "last_line": 364,
+          "file_sha256": "e31120f0ec3b0540ef9668293c876a26716b37be28c789eb4e1f78c616830ff2"
+        }
+      ]
+    }
+  ]
+}
