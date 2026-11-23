@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "massive_offdiagonal_invisible_width",
+      "role": "route",
+      "components": [
+        "Unequal-mass tree Dirac neutral-current kinematics, two independent expressions, certified root brackets, a rank-three rotated sterile sector, and measured invisible-width references."
+      ],
+      "declared_status": "Masses and projector rank do not specify the width or visibility. Above-pair-threshold does not close mixed channels.",
+      "missing_bridges": [
+        "Bind the graph to currents, masses, radiative corrections, decay lengths and detector acceptance."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_massive_invisible_channels.py",
+          "first_line": 1,
+          "last_line": 245,
+          "file_sha256": "7c77c50415c03b32cefe4d1f5d62fb49920dc6ebc8b3f638c539fcfdb893a6e2"
+        }
+      ]
+    },
+    {
+      "id": "two_mass_frequency_and_width_control",
+      "role": "route",
+      "components": [
+        "A two-level vacuum generator has a single mass gap. Compare distinct reactor baselines and effective fit parameters, exact sampled one-frequency tests, a multiple-path alias, and an exactly decoupled fourth state."
+      ],
+      "declared_status": "Two resolved common-ruler mass gaps constrain a propagation model, not all species or full generations. Published fits and synthetic trials remain distinct.",
+      "missing_bridges": [
+        "Supply real operational propagation, baseline/exposure/noise model and independent width projection."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_flavor_frequency_and_width.py",
+          "first_line": 1,
+          "last_line": 238,
+          "file_sha256": "a2113507155debf275423ad3fc108245a862052d871b20c2c301d0564f80313a"
+        }
+      ]
+    },
+    {
+      "id": "conjugate_kaon_double_ratio_vs_partial_rate",
+      "role": "route",
+      "components": [
+        "Compare corrected pion-mode double ratios and independent kaon experiments; two-path partial conjugate rates, rescattering and a doubled real realization serve as separate explanatory controls."
+      ],
+      "declared_status": "Direct CP violation is measured; it does not identify IDT interactions, fundamental complex numbers, or the number of sheets.",
+      "missing_bridges": [
+        "Construct a calibrated CP transformation and transition law without inserting Standard Model mixing or strong phases."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_conjugate_decay_rate_contrast.py",
+          "first_line": 1,
+          "last_line": 254,
+          "file_sha256": "6a8d56df65e4b6e48c65a457335ed56c83bbab2f5292fd23ac2568a51456ea37"
+        }
+      ]
+    }
+  ]
+}

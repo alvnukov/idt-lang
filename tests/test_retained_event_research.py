@@ -115,6 +115,11 @@ PACKS = {
         "finite_shadow_reciprocal_instruments": "probe_finite_shadow_instruments",
         "three_port_calibration_vs_event_origins": "probe_junction_calibration_and_events",
     }),
+    "primitive_particle_count_phase_inventory.json": ("particle_count_and_cp_controls", {
+        "massive_offdiagonal_invisible_width": "probe_massive_invisible_channels",
+        "two_mass_frequency_and_width_control": "probe_two_flavor_frequency_and_width",
+        "conjugate_kaon_double_ratio_vs_partial_rate": "probe_conjugate_decay_rate_contrast",
+    }),
 }
 
 
