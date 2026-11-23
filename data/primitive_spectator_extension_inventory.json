@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "six_mode_exclusive_extension_wall",
+      "role": "route",
+      "components": [
+        "From one six-port preparation, five complement-only compressions give four-mode calibrations demanding certainty at five different exclusive ports. Compute robust transfer tolerance and postselection control."
+      ],
+      "declared_status": "Finite objection to extending the calibrated residue law with mode independence and common trials. No selection of all quantum probabilities.",
+      "missing_bridges": [
+        "Verify actual preparation equivalence, calibrations, zero-mode independence and complete raw outcomes."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_six_mode_shadow_exclusivity.py",
+          "first_line": 1,
+          "last_line": 93,
+          "file_sha256": "1199b3ac248c64317efa4b8ddb5dc17d69dde3ff0f7831ee96fba05b61668d0f"
+        }
+      ]
+    },
+    {
+      "id": "spectator_circuit_empty_mode_memory",
+      "role": "route",
+      "components": [
+        "Prove full matrix word equalities for all five six-port reductions with explicit operations on empty input modes; supply a reversible bit countermodel and dephased routing control."
+      ],
+      "declared_status": "Word equality alone does not establish that operations on unused inputs leave no detector-relevant trace.",
+      "missing_bridges": [
+        "Test bypass and input-empty stability separately from the equality of the visible linear maps."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_spectator_circuit_equivalence.py",
+          "first_line": 1,
+          "last_line": 289,
+          "file_sha256": "796ca7ff4960e1511b1dc6ea93fbb1818dd4888981f832159a9bff79cca06b98"
+        }
+      ]
+    },
+    {
+      "id": "five_mode_shared_pair_extension_wall",
+      "role": "route",
+      "components": [
+        "Nineteen finite native circuit identities and shared two-dimensional outcomes force a five-output sum of three halves for four-mode residue seed responses. A coordinate-only marginal alternative still exists."
+      ],
+      "declared_status": "One extra port plus the stated pair refinements excludes that extension, not all non-Born theories; identical circuits admit Born and tolerance controls.",
+      "missing_bridges": [
+        "Bind the shared outcome across alternative refinements, state and operator identities, and stable detector exposure."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_five_mode_shadow_boundary.py",
+          "first_line": 1,
+          "last_line": 325,
+          "file_sha256": "e3331277fd333cf2877bddf4e8f148694d3f56108005348dffc99eb29bedaf2b"
+        }
+      ]
+    }
+  ]
+}

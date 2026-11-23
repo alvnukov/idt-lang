@@ -120,6 +120,11 @@ PACKS = {
         "two_mass_frequency_and_width_control": "probe_two_flavor_frequency_and_width",
         "conjugate_kaon_double_ratio_vs_partial_rate": "probe_conjugate_decay_rate_contrast",
     }),
+    "primitive_spectator_extension_inventory.json": ("spectator_extension_consistency", {
+        "six_mode_exclusive_extension_wall": "probe_six_mode_shadow_exclusivity",
+        "spectator_circuit_empty_mode_memory": "probe_spectator_circuit_equivalence",
+        "five_mode_shared_pair_extension_wall": "probe_five_mode_shadow_boundary",
+    }),
 }
 
 

@@ -389,6 +389,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_two_flavor_frequency_and_width",
         "probe_conjugate_decay_rate_contrast",
     ),
+    "spectator_extension_consistency": (
+        "probe_six_mode_shadow_exclusivity",
+        "probe_spectator_circuit_equivalence",
+        "probe_five_mode_shadow_boundary",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

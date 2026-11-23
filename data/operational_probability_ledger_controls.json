@@ -1,0 +1,326 @@
+[
+  {
+    "id": "six_mode_five_certainties", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1","upper":"1"}
+    ],
+    "links": [
+      {"left":{"setting":"local0","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p0"]},"tolerance":"0"},
+      {"left":{"setting":"local1","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p1"]},"tolerance":"0"},
+      {"left":{"setting":"local3","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p3"]},"tolerance":"0"},
+      {"left":{"setting":"local4","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p4"]},"tolerance":"0"},
+      {"left":{"setting":"local5","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p5"]},"tolerance":"0"}
+    ]
+  },
+  {
+    "id": "six_mode_ordinary_scattering", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1/9","upper":"1/9"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1/9","upper":"1/9"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1/9","upper":"1/9"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1/9","upper":"1/9"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1/9","upper":"1/9"}
+    ],
+    "links": [
+      {"left":{"setting":"local0","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p0"]},"tolerance":"0"},
+      {"left":{"setting":"local1","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p1"]},"tolerance":"0"},
+      {"left":{"setting":"local3","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p3"]},"tolerance":"0"},
+      {"left":{"setting":"local4","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p4"]},"tolerance":"0"},
+      {"left":{"setting":"local5","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p5"]},"tolerance":"0"}
+    ]
+  },
+  {
+    "id": "six_mode_conditioned_transfers", "family": "operational_probability_ledger", "basis": "separately_postselected",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1","upper":"1"}
+    ],
+    "links": [
+      {"left":{"setting":"local0","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p0"]},"tolerance":"0"},
+      {"left":{"setting":"local1","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p1"]},"tolerance":"0"},
+      {"left":{"setting":"local3","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p3"]},"tolerance":"0"},
+      {"left":{"setting":"local4","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p4"]},"tolerance":"0"},
+      {"left":{"setting":"local5","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p5"]},"tolerance":"0"}
+    ]
+  },
+  {
+    "id": "six_mode_memory_no_transfer", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1","upper":"1"}
+    ],
+    "links": [
+
+    ]
+  },
+  {
+    "id": "six_mode_transfer_tolerance_edge", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1","upper":"1"}
+    ],
+    "links": [
+      {"left":{"setting":"local0","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p0"]},"tolerance":"4/5"},
+      {"left":{"setting":"local1","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p1"]},"tolerance":"4/5"},
+      {"left":{"setting":"local3","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p3"]},"tolerance":"4/5"},
+      {"left":{"setting":"local4","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p4"]},"tolerance":"4/5"},
+      {"left":{"setting":"local5","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p5"]},"tolerance":"4/5"}
+    ]
+  },
+  {
+    "id": "six_mode_transfer_tolerance_below", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1","upper":"1"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1","upper":"1"}
+    ],
+    "links": [
+      {"left":{"setting":"local0","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p0"]},"tolerance":"79/100"},
+      {"left":{"setting":"local1","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p1"]},"tolerance":"79/100"},
+      {"left":{"setting":"local3","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p3"]},"tolerance":"79/100"},
+      {"left":{"setting":"local4","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p4"]},"tolerance":"79/100"},
+      {"left":{"setting":"local5","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p5"]},"tolerance":"79/100"}
+    ]
+  },
+  {
+    "id": "six_mode_common_one_fifth_floor", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"central","outcomes":["p0","p1","p2","p3","p4","p5"]},
+      {"id":"local0","outcomes":["hit","miss"]},
+      {"id":"local1","outcomes":["hit","miss"]},
+      {"id":"local3","outcomes":["hit","miss"]},
+      {"id":"local4","outcomes":["hit","miss"]},
+      {"id":"local5","outcomes":["hit","miss"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"local0","outcomes":["hit"]},"lower":"1/5","upper":"1/5"},
+      {"event":{"setting":"local1","outcomes":["hit"]},"lower":"1/5","upper":"1/5"},
+      {"event":{"setting":"local3","outcomes":["hit"]},"lower":"1/5","upper":"1/5"},
+      {"event":{"setting":"local4","outcomes":["hit"]},"lower":"1/5","upper":"1/5"},
+      {"event":{"setting":"local5","outcomes":["hit"]},"lower":"1/5","upper":"1/5"}
+    ],
+    "links": [
+      {"left":{"setting":"local0","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p0"]},"tolerance":"0"},
+      {"left":{"setting":"local1","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p1"]},"tolerance":"0"},
+      {"left":{"setting":"local3","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p3"]},"tolerance":"0"},
+      {"left":{"setting":"local4","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p4"]},"tolerance":"0"},
+      {"left":{"setting":"local5","outcomes":["hit"]},"right":{"setting":"central","outcomes":["p5"]},"tolerance":"0"}
+    ]
+  },
+  {
+    "id": "five_mode_shared_pair_residues", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"a","outcomes":["zero","half","other"]},
+      {"id":"apair","outcomes":["plus","minus","other"]},
+      {"id":"d","outcomes":["zero","sixth","other"]},
+      {"id":"dpair","outcomes":["plus","minus","other"]},
+      {"id":"kpair","outcomes":["plus","other"]},
+      {"id":"b","outcomes":["p0","p1","p2","p3","p4"]},
+      {"id":"c","outcomes":["p0","p1","p2","p3","p4"]},
+      {"id":"bpair12","outcomes":["plus","minus","other"]},
+      {"id":"bpair13","outcomes":["plus","minus","other"]},
+      {"id":"bpair23","outcomes":["plus","minus","other"]},
+      {"id":"cpair12","outcomes":["plus","minus","other"]},
+      {"id":"cpair13","outcomes":["plus","minus","other"]},
+      {"id":"cpair23","outcomes":["plus","minus","other"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"a","outcomes":["zero"]},"lower":"0","upper":"0"},
+      {"event":{"setting":"a","outcomes":["half"]},"lower":"1/4","upper":"1/4"},
+      {"event":{"setting":"d","outcomes":["zero"]},"lower":"0","upper":"0"},
+      {"event":{"setting":"d","outcomes":["sixth"]},"lower":"1/4","upper":"1/4"},
+      {"event":{"setting":"kpair","outcomes":["plus"]},"lower":"1/2","upper":"1/2"}
+    ],
+    "links": [
+      {"left":{"setting":"apair","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["minus"]},"tolerance":"0"},
+      {"left":{"setting":"apair","outcomes":["plus","minus"]},"right":{"setting":"a","outcomes":["zero","half"]},"tolerance":"0"},
+      {"left":{"setting":"dpair","outcomes":["plus"]},"right":{"setting":"dpair","outcomes":["minus"]},"tolerance":"0"},
+      {"left":{"setting":"dpair","outcomes":["plus","minus"]},"right":{"setting":"d","outcomes":["zero","sixth"]},"tolerance":"0"},
+      {"left":{"setting":"bpair12","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair12","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p1","p2"]},"right":{"setting":"bpair12","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair13","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair13","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p1","p3"]},"right":{"setting":"bpair13","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair23","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair23","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p2","p3"]},"right":{"setting":"bpair23","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair12","outcomes":["plus"]},"right":{"setting":"dpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair12","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p1","p2"]},"right":{"setting":"cpair12","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair13","outcomes":["plus"]},"right":{"setting":"kpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair13","outcomes":["minus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p1","p3"]},"right":{"setting":"cpair13","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair23","outcomes":["plus"]},"right":{"setting":"kpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair23","outcomes":["minus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p2","p3"]},"right":{"setting":"cpair23","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p4"]},"right":{"setting":"a","outcomes":["half"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p4"]},"right":{"setting":"a","outcomes":["half"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p0"]},"right":{"setting":"b","outcomes":["p0"]},"tolerance":"0"}
+    ]
+  },
+  {
+    "id": "five_mode_shared_pair_born", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"a","outcomes":["zero","half","other"]},
+      {"id":"apair","outcomes":["plus","minus","other"]},
+      {"id":"d","outcomes":["zero","sixth","other"]},
+      {"id":"dpair","outcomes":["plus","minus","other"]},
+      {"id":"kpair","outcomes":["plus","other"]},
+      {"id":"b","outcomes":["p0","p1","p2","p3","p4"]},
+      {"id":"c","outcomes":["p0","p1","p2","p3","p4"]},
+      {"id":"bpair12","outcomes":["plus","minus","other"]},
+      {"id":"bpair13","outcomes":["plus","minus","other"]},
+      {"id":"bpair23","outcomes":["plus","minus","other"]},
+      {"id":"cpair12","outcomes":["plus","minus","other"]},
+      {"id":"cpair13","outcomes":["plus","minus","other"]},
+      {"id":"cpair23","outcomes":["plus","minus","other"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"a","outcomes":["zero"]},"lower":"0","upper":"0"},
+      {"event":{"setting":"a","outcomes":["half"]},"lower":"1/4","upper":"1/4"},
+      {"event":{"setting":"d","outcomes":["zero"]},"lower":"0","upper":"0"},
+      {"event":{"setting":"d","outcomes":["sixth"]},"lower":"1/36","upper":"1/36"},
+      {"event":{"setting":"kpair","outcomes":["plus"]},"lower":"1/18","upper":"1/18"}
+    ],
+    "links": [
+      {"left":{"setting":"apair","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["minus"]},"tolerance":"0"},
+      {"left":{"setting":"apair","outcomes":["plus","minus"]},"right":{"setting":"a","outcomes":["zero","half"]},"tolerance":"0"},
+      {"left":{"setting":"dpair","outcomes":["plus"]},"right":{"setting":"dpair","outcomes":["minus"]},"tolerance":"0"},
+      {"left":{"setting":"dpair","outcomes":["plus","minus"]},"right":{"setting":"d","outcomes":["zero","sixth"]},"tolerance":"0"},
+      {"left":{"setting":"bpair12","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair12","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p1","p2"]},"right":{"setting":"bpair12","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair13","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair13","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p1","p3"]},"right":{"setting":"bpair13","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair23","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair23","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p2","p3"]},"right":{"setting":"bpair23","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair12","outcomes":["plus"]},"right":{"setting":"dpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair12","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p1","p2"]},"right":{"setting":"cpair12","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair13","outcomes":["plus"]},"right":{"setting":"kpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair13","outcomes":["minus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p1","p3"]},"right":{"setting":"cpair13","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair23","outcomes":["plus"]},"right":{"setting":"kpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair23","outcomes":["minus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p2","p3"]},"right":{"setting":"cpair23","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p4"]},"right":{"setting":"a","outcomes":["half"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p4"]},"right":{"setting":"a","outcomes":["half"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p0"]},"right":{"setting":"b","outcomes":["p0"]},"tolerance":"0"}
+    ]
+  },
+  {
+    "id": "five_mode_unmatched_refinements", "family": "operational_probability_ledger", "basis": "all_attempts",
+    "settings": [
+      {"id":"a","outcomes":["zero","half","other"]},
+      {"id":"apair","outcomes":["plus","minus","other"]},
+      {"id":"d","outcomes":["zero","sixth","other"]},
+      {"id":"dpair","outcomes":["plus","minus","other"]},
+      {"id":"kpair","outcomes":["plus","other"]},
+      {"id":"b","outcomes":["p0","p1","p2","p3","p4"]},
+      {"id":"c","outcomes":["p0","p1","p2","p3","p4"]},
+      {"id":"bpair12","outcomes":["plus","minus","other"]},
+      {"id":"bpair13","outcomes":["plus","minus","other"]},
+      {"id":"bpair23","outcomes":["plus","minus","other"]},
+      {"id":"cpair12","outcomes":["plus","minus","other"]},
+      {"id":"cpair13","outcomes":["plus","minus","other"]},
+      {"id":"cpair23","outcomes":["plus","minus","other"]}
+    ],
+    "bounds": [
+      {"event":{"setting":"a","outcomes":["zero"]},"lower":"0","upper":"0"},
+      {"event":{"setting":"a","outcomes":["half"]},"lower":"1/4","upper":"1/4"},
+      {"event":{"setting":"d","outcomes":["zero"]},"lower":"0","upper":"0"},
+      {"event":{"setting":"d","outcomes":["sixth"]},"lower":"1/4","upper":"1/4"},
+      {"event":{"setting":"kpair","outcomes":["plus"]},"lower":"1/2","upper":"1/2"}
+    ],
+    "links": [
+      {"left":{"setting":"apair","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["minus"]},"tolerance":"0"},
+      {"left":{"setting":"apair","outcomes":["plus","minus"]},"right":{"setting":"a","outcomes":["zero","half"]},"tolerance":"0"},
+      {"left":{"setting":"dpair","outcomes":["plus"]},"right":{"setting":"dpair","outcomes":["minus"]},"tolerance":"0"},
+      {"left":{"setting":"dpair","outcomes":["plus","minus"]},"right":{"setting":"d","outcomes":["zero","sixth"]},"tolerance":"0"},
+      {"left":{"setting":"bpair12","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair12","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p1","p2"]},"right":{"setting":"bpair12","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair13","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair13","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p1","p3"]},"right":{"setting":"bpair13","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair23","outcomes":["plus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"bpair23","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p2","p3"]},"right":{"setting":"bpair23","outcomes":["plus","minus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair12","outcomes":["plus"]},"right":{"setting":"dpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair12","outcomes":["minus"]},"right":{"setting":"a","outcomes":["zero"]},"tolerance":"0"},
+      {"left":{"setting":"cpair13","outcomes":["plus"]},"right":{"setting":"kpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair13","outcomes":["minus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair23","outcomes":["plus"]},"right":{"setting":"kpair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"cpair23","outcomes":["minus"]},"right":{"setting":"apair","outcomes":["plus"]},"tolerance":"0"},
+      {"left":{"setting":"b","outcomes":["p4"]},"right":{"setting":"a","outcomes":["half"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p4"]},"right":{"setting":"a","outcomes":["half"]},"tolerance":"0"},
+      {"left":{"setting":"c","outcomes":["p0"]},"right":{"setting":"b","outcomes":["p0"]},"tolerance":"0"}
+    ]
+  }
+]
