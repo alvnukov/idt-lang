@@ -447,6 +447,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_one_visit_phase_budget",
         "probe_three_absorber_menus",
     ),
+    "minimal_flavor_loop": (
+        "probe_minimal_flavor_phase_loop",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
