@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "ordered_signed_contact_rotor",
+      "role": "route",
+      "components": [
+        "signed pulse scattering on a cyclic rotor with bounded discrepancy"
+      ],
+      "declared_status": "finite timed event stream and exact aggregate control",
+      "missing_bridges": [
+        "Cyclic order and serial signed marks supplied; there is no detector law."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_signed_rotor_junction.py",
+          "first_line": 1,
+          "last_line": 585,
+          "file_sha256": "349dfcc3d39a3a20b8e32f2da04eab945bb8078d0b00b5becb52c1ceffc167fd"
+        }
+      ]
+    },
+    {
+      "id": "permutation_anonymous_signed_bucket",
+      "role": "route",
+      "components": [
+        "opposite return and single remainder with equal broadcast"
+      ],
+      "declared_status": "reversible isolated contact and resolved burst discriminator",
+      "missing_bridges": [
+        "Local stock does not imply network closure or one registered event."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_signed_bucket.py",
+          "first_line": 1,
+          "last_line": 291,
+          "file_sha256": "3f6a2a798d401188892c62dd63458e6b99e89bf2d7280ad85b929276cca08ddf"
+        }
+      ]
+    },
+    {
+      "id": "overlapping_signed_contact_failure",
+      "role": "route",
+      "components": [
+        "raw integer states and incompatible ideal readings on overlapping contacts"
+      ],
+      "declared_status": "finite contact countercontrol with exact clean drift and finite-word gain escape",
+      "missing_bridges": [
+        "No all-word fixed-gain field decoder or physical click interpretation."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_overlapping_bucket_dynamics.py",
+          "first_line": 1,
+          "last_line": 538,
+          "file_sha256": "5e27435383a1f72b3091eefb78d2bb7f2b5197a1b44d3d2a50c32d01478e1264"
+        }
+      ]
+    }
+  ]
+}
