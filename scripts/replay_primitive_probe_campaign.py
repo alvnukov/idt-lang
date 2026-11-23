@@ -586,6 +586,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_binary_pair_switch_wall",
         "probe_ternary_tree_hardware",
     ),
+    "bench_phase_context_capacity": (
+        "probe_native_four_phase_gray",
+        "probe_eight_angle_reader_boundary",
+        "probe_native_eighth_turn",
+        "probe_phase_visibility_controls",
+        "probe_native_pentagon_contexts",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

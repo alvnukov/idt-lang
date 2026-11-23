@@ -18,6 +18,8 @@ A compensated two-port switch composes on trees, but a repeated edge gives a thr
 
 One three-label pair law, `aa ↔ bb` and `Ta ↔ aT`, routes a token and writes ordinary detector flags. A passive dye passes the same port tests but cannot write those flags. Both the working circuit and the binary control include vacuum launches. [Three marks, a tree implementation and the binary pair boundary](scripts/WHEN_THREE_MARKS_CAN_WRITE_A_CLICK.md).
 
+Four cosine-like phase settings extend natively to an eight-step **triangle**, not a cosine. A separate family of five ternary port tests reaches the classical exclusivity bound; matching observed pair tables does not establish that a click denotes the same hidden event in two contexts. [Eight physical settings and information bounds](scripts/WHEN_FOUR_PHASES_ARE_NOT_EIGHT.md) · [Five compatible alternatives and the disturbance control](scripts/WHEN_A_CLICK_HAS_TWO_CONTEXTS.md).
+
 ### Run the public demonstration
 
 ```sh
