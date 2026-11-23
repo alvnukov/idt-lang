@@ -108,6 +108,13 @@ PACKS = {
         "exchange_sector_reciprocal_kinetics": "probe_exchange_sector_kinetics",
         "fermion_exchange_noise_controls": "probe_fermion_exchange_intervention",
     }),
+    "primitive_native_frame_readouts_inventory.json": ("native_frame_readout_limits", {
+        "native_frames_positive_nonstate": "probe_native_frame_positivity",
+        "dense_orbit_discontinuous_readout": "probe_dense_readout_residue_countermodel",
+        "rational_four_port_residue_extension": "probe_four_arm_frame_extension",
+        "finite_shadow_reciprocal_instruments": "probe_finite_shadow_instruments",
+        "three_port_calibration_vs_event_origins": "probe_junction_calibration_and_events",
+    }),
 }
 
 

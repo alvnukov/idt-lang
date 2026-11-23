@@ -377,6 +377,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_exchange_sector_kinetics",
         "probe_fermion_exchange_intervention",
     ),
+    "native_frame_readout_limits": (
+        "probe_native_frame_positivity",
+        "probe_dense_readout_residue_countermodel",
+        "probe_four_arm_frame_extension",
+        "probe_finite_shadow_instruments",
+        "probe_junction_calibration_and_events",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
