@@ -173,6 +173,11 @@ PACKS = {
         "active_fresh_readout_designs": "probe_active_readout_panels",
         "shared_nondisturbing_readout_cost": "probe_shared_prefix_readout_cost",
     }),
+    "primitive_exclusive_mark_controls_inventory.json": ("exclusive_mark_controls", {
+        "single_mark_mutable_ternary_echo": "probe_single_mark_ternary_echo",
+        "single_visit_endpoint_budget": "probe_one_visit_phase_budget",
+        "three_equal_field_absorbers": "probe_three_absorber_menus",
+    }),
 }
 
 
