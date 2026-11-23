@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_apamea_visible_incidence_support",
+      "role": "route",
+      "components": [
+        "visible vertex-only support for classified island changes"
+      ],
+      "declared_status": "conditional retrospective measurement and exact combinatorial minimum",
+      "missing_bridges": [
+        "instantaneous true classifications and physical completeness of the visible fixed incidence are not derived"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_apamea_vertex_support.py",
+          "first_line": 1,
+          "last_line": 369,
+          "file_sha256": "1fc0099b1e1add7459e3d911a4b9809f2fcea49f9a16e85e269881058d0ccfa2"
+        }
+      ]
+    }
+  ]
+}

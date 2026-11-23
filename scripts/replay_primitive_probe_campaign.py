@@ -477,6 +477,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_anonymous_shell_rules",
         "probe_shell_incidence_transfer",
     ),
+    "bench_apamea_visible_support": (
+        "probe_apamea_vertex_support",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
