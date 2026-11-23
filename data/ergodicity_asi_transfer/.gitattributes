@@ -1,0 +1,2 @@
+# Preserve original CRLF and do not render deposited tables as source diffs.
+coordinates_*.dat -text -diff

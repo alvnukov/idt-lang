@@ -470,6 +470,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_packet_matching_order",
         "probe_octagon_three_contexts",
     ),
+    "bench_frozen_apamea_transfer": (
+        "probe_apamea_fixed_transfer",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
