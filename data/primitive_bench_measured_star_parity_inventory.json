@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "apamea_registered_cycle_parity",
+      "role": "route",
+      "components": [
+        "Two consecutively deposited 250 K island classifications and a fixed circuit incidence"
+      ],
+      "declared_status": "observed sign-change census with registration and embedding controls",
+      "missing_bridges": [
+        "Measured signs are processed and time-composite; the assumed edge interpretation is not a fundamental identification."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_measured_asi_loop_parity.py",
+          "first_line": 1,
+          "last_line": 348,
+          "file_sha256": "ba47eeb7cc36be3a8c87294d3738b52900dfcbf6eb0bc86f0c85f2f5942efb2b"
+        }
+      ]
+    },
+    {
+      "id": "apamea_unrestricted_star_edit_distance",
+      "role": "route",
+      "components": [
+        "Face packing and vertex potentials on known fixed-edge transition labels"
+      ],
+      "declared_status": "exact finite minimum edit distance 28 to unrestricted vertex-star differences",
+      "missing_bridges": [
+        "No calibrated count of classification errors, instantaneous joint readout, allowed half-filled firing sequence or primitive-scale map is supplied."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_asi_cut_distance.py",
+          "first_line": 1,
+          "last_line": 306,
+          "file_sha256": "afdd0f5125e64045040b3473aab5cd649c3b797fcdaca862f51f275ef38261f9"
+        }
+      ]
+    }
+  ]
+}
