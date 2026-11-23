@@ -10,6 +10,8 @@ An uncolored token and three vacant labels suffice for a programmed two-arm swit
 
 An exhaustive 400-rule search exposed a false-rejection risk: a four-label rule fails 30 of 32 rows in the old switch but carries vacant-arm records cleanly. With its own reciprocal switch, it passes separate distance and fixed-replacement checks. [Frozen census, redesign and full-trigger results](scripts/WHEN_A_BLANK_RECORD_CAN_TRAVEL.md).
 
+A port that is dark for a single bond packet can receive two of them. In the separate four-label switch, two inputs look fermionic on one menu but fail a free-particle mean-count control on the next. Identical one-launch histograms can hide different fluctuations in counts summed over several launches. [Two-input tests and the experimental readout boundary](scripts/WHEN_TWO_INPUTS_SHARE_A_JUNCTION.md).
+
 ### Run the public demonstration
 
 ```sh

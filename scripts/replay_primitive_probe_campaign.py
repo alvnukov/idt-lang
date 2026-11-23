@@ -561,6 +561,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_four_label_law_census",
         "probe_mobile_blank_interferometer",
     ),
+    "bench_two_input_calibration": (
+        "probe_two_packet_dark_return",
+        "probe_colorless_pair_additivity",
+        "probe_packet_current_noise",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
