@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_packet_setting_cost",
+      "role": "route",
+      "components": [
+        "native positive packet records and the setting dependence of hidden addresses"
+      ],
+      "declared_status": "exact finite setting dependence countercontrol with specified sampling law",
+      "missing_bridges": [
+        "no free-setting violation or measurement of experimental leakage"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_setting_dependence.py",
+          "first_line": 1,
+          "last_line": 433,
+          "file_sha256": "ce33953be6a50272a512f738405ec2dabc7e56b4fb0b17df9f6b2e209b2eb473"
+        }
+      ]
+    },
+    {
+      "id": "archive_neutron_reversal_adapter",
+      "role": "route",
+      "components": [
+        "four calibrated spin and arm rates with synthetic response controls"
+      ],
+      "declared_status": "neutron reversal adapter with candidate mapping not evaluable",
+      "missing_bridges": [
+        "physical axial spin, polar momentum and positive response dynamics missing"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_weak_parity_reversal.py",
+          "first_line": 1,
+          "last_line": 353,
+          "file_sha256": "ce6a8dcc6d8d7439e04420d4966a41c9208099904cce54a1f3b68a45db940dc0"
+        }
+      ]
+    }
+  ]
+}
