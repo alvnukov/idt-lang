@@ -14,6 +14,8 @@ A port that is dark for a single bond packet can receive two of them. In the sep
 
 A pair of occupied bits in staggered Rule 54 travels, collides and recovers with a measurable delay. The same local rule on a fixed-order fork reverses differences in clean pulse counts. Connecting a second fork preserves the differences but defeats the full linear prediction in five of six tests. [Binary scattering, local clocks and the joined-fork control](scripts/WHEN_BINARY_LINKS_SCATTER.md).
 
+A compensated two-port switch composes on trees, but a repeated edge gives a three-port table no fixed complete single-mode unitary can reproduce. A four-reading test quantifies the required precision and stays inconclusive if the mode or sampling assumptions are unknown. [Three-port tables, tolerance and echo controls](scripts/WHEN_THREE_PORTS_REMEMBER.md).
+
 ### Run the public demonstration
 
 ```sh
