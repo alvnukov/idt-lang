@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "moving_ternary_refinement_field",
+      "role": "route",
+      "components": [
+        "signed unit integer branching and a movable balanced ternary hierarchy"
+      ],
+      "declared_status": "exact composable rational field on normalized marks with an unbounded refinement resource",
+      "missing_bridges": [
+        "No derivation of equality of unrelated same-level marks, field detector, or one-click law."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_mobile_refinement_field.py",
+          "first_line": 1,
+          "last_line": 176,
+          "file_sha256": "1a69defa9b07c0a7a1b69edebcf7fca963721322d8979047acb5103e86277819"
+        }
+      ]
+    },
+    {
+      "id": "anonymous_refinement_relations",
+      "role": "route",
+      "components": [
+        "actual sibling sums versus depth quotient and cross-source normalization"
+      ],
+      "declared_status": "finite tree automorphism checks and incidence/marked observer controls",
+      "missing_bridges": [
+        "One parent and arbitrary three marks coincide only after a declared equivalence."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_refinement_relations.py",
+          "first_line": 1,
+          "last_line": 378,
+          "file_sha256": "6f08d5f250f5133a62ac4a68279393b0d427e2a3819ea4230bcf615a92f6a40f"
+        }
+      ]
+    },
+    {
+      "id": "modular_ternary_dark_panel",
+      "role": "route",
+      "components": [
+        "exact rational null observables versus finite modular worlds under repeated overlaps"
+      ],
+      "declared_status": "finite panel distinguishes each bounded design prime from the rational model; holdouts retained",
+      "missing_bridges": [
+        "No finite null panel excludes every finite arithmetic, nor is a physical detector established."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_modular_contact_nulls.py",
+          "first_line": 1,
+          "last_line": 126,
+          "file_sha256": "0b9016b90b12f2c01b5b60145ae67e00b493b637baaeaf4bde3318a446cf8a05"
+        }
+      ]
+    }
+  ]
+}

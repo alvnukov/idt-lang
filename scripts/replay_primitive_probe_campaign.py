@@ -420,6 +420,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_relational_signal_metric",
         "probe_relational_clock_modes",
     ),
+    "mobile_refinement": (
+        "probe_mobile_refinement_field",
+        "probe_anonymous_refinement_relations",
+        "probe_modular_contact_nulls",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
