@@ -151,6 +151,11 @@ PACKS = {
         "relational_return_signal_metric": "probe_relational_signal_metric",
         "relational_cyclic_clock_channel": "probe_relational_clock_modes",
     }),
+    "primitive_mobile_refinement_inventory.json": ("mobile_refinement", {
+        "moving_ternary_refinement_field": "probe_mobile_refinement_field",
+        "anonymous_refinement_relations": "probe_anonymous_refinement_relations",
+        "modular_ternary_dark_panel": "probe_modular_contact_nulls",
+    }),
 }
 
 

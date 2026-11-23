@@ -203,6 +203,17 @@ from theory_experiments.ternary_encounter import (
     evaluate_ternary_encounter,
     parse_ternary_encounter,
 )
+from theory_experiments.ternary_network_nulls import (
+    LOADED_SOURCE_SHA256 as TERNARY_NETWORK_NULLS_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.ternary_network_nulls import (
+    SCOPE as TERNARY_NETWORK_NULLS_SCOPE,
+)
+from theory_experiments.ternary_network_nulls import (
+    TernaryNetworkNulls,
+    evaluate_ternary_network_nulls,
+    parse_ternary_network_nulls,
+)
 from theory_experiments.triangle_stock import (
     LOADED_SOURCE_SHA256 as TRIANGLE_STOCK_LOADED_SOURCE_SHA256,
 )
@@ -227,7 +238,7 @@ Hypothesis: TypeAlias = (
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
     | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut | BinaryOverlapCut | RelationalGermObserver
-    | TernaryEncounter | OperationalProbabilityLedger | SignedContactStream
+    | TernaryEncounter | OperationalProbabilityLedger | SignedContactStream | TernaryNetworkNulls
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -239,6 +250,7 @@ _RELATIONAL_GERM_EVIDENCE = "finite_local_germ_transport_and_submitted_tally_com
 _TERNARY_ENCOUNTER_EVIDENCE = "finite_one_command_comparison_with_submitted_tag_counts_only"
 _PROBABILITY_LEDGER_EVIDENCE = "exact_feasibility_of_submitted_operational_probability_requirements_only"
 _SIGNED_CONTACT_EVIDENCE = "finite_signed_counter_replay_against_submitted_step_and_prefix_reads_only"
+_TERNARY_NETWORK_EVIDENCE = "finite_visible_port_null_flags_on_submitted_ternary_contact_schedule_only"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -259,6 +271,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/relational_germ_observer.py",
     "theory_experiments/ternary_encounter.py",
     "theory_experiments/signed_contact_stream.py",
+    "theory_experiments/ternary_network_nulls.py",
     "theory_experiments/operational_probability_ledger.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
@@ -340,6 +353,22 @@ def _is_probability_ledger_spec(value: object) -> bool:
 
 def _is_signed_contact_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "signed_contact_stream"
+
+
+def _is_ternary_network_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "ternary_network_nulls"
+
+
+def _assert_ternary_network_sources(sources: object, *, check_current: bool = False) -> None:
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded in (
+        ("theory_experiments/candidate_pipeline.py", LOADED_SOURCE_HASHES["theory_experiments/candidate_pipeline.py"]),
+        ("theory_experiments/ternary_network_nulls.py", TERNARY_NETWORK_NULLS_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded)):
+            raise ValueError(f"ternary network nulls source changed since import: {path}; restart interpreter")
 
 
 def _assert_signed_contact_sources(sources: object, *, check_current: bool = False) -> None:
@@ -504,6 +533,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if _is_ternary_network_spec(row):
+        return parse_ternary_network_nulls(row)
     if _is_signed_contact_spec(row):
         return parse_signed_contact_stream(row)
     if _is_probability_ledger_spec(row):
@@ -682,7 +713,23 @@ def _signed_contact_report(candidate: Hypothesis, limits: Limits, request: dict[
             "proof_status": "not_attempted", "empirical_status": "not_tested", "rejection_scope": SIGNED_CONTACT_STREAM_SCOPE}
 
 
+def _ternary_network_report(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if (type(candidate) is not TernaryNetworkNulls or type(limits) is not Limits
+            or set(request) != {"schema", "candidate", "limits", "provenance"} or request["schema"] != SCHEMA
+            or canonical_json(request["candidate"]) != canonical_json(candidate.specification())
+            or canonical_json(request["limits"]) != canonical_json(limits.specification())):
+        raise ValueError("ternary network nulls candidate/limits do not match request")
+    _assert_ternary_network_sources(request["provenance"], check_current=True)
+    checks, details = evaluate_ternary_network_nulls(candidate, limits)
+    return {"request": request, "status": primitive.aggregate_status(checks),
+            "checks": [c.specification() for c in checks], "scope": details,
+            "arithmetic": "exact_declared_ternary_channel_zero_comparison", "evidence_kind": _TERNARY_NETWORK_EVIDENCE,
+            "proof_status": "not_attempted", "empirical_status": "not_tested", "rejection_scope": TERNARY_NETWORK_NULLS_SCOPE}
+
+
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if isinstance(candidate, TernaryNetworkNulls) or _is_ternary_network_spec(request.get("candidate")):
+        return _ternary_network_report(candidate, limits, request)
     if isinstance(candidate, SignedContactStream) or _is_signed_contact_spec(request.get("candidate")):
         return _signed_contact_report(candidate, limits, request)
     if isinstance(candidate, OperationalProbabilityLedger) or _is_probability_ledger_spec(request.get("candidate")):
@@ -804,6 +851,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
 
 
 def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_ternary_network_spec(request.get("candidate")):
+        _assert_ternary_network_sources(request["provenance"], check_current=True)
     if _is_signed_contact_spec(request.get("candidate")):
         _assert_signed_contact_sources(request["provenance"], check_current=True)
     if _is_probability_ledger_spec(request.get("candidate")):
@@ -879,7 +928,13 @@ def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
     candidate = parse_hypothesis(request["candidate"])
-    if isinstance(candidate, SignedContactStream):
+    if isinstance(candidate, TernaryNetworkNulls):
+        # The saved digest alone cannot establish the truth of null flags, the
+        # absence of internal observables, or the actual completed prefix.
+        expected = _ternary_network_report(candidate, parse_limits(request["limits"]), request)
+        if canonical_json(report) != canonical_json(expected):
+            raise ValueError("cached ternary network nulls report disagrees with bounded visible-flag replay")
+    elif isinstance(candidate, SignedContactStream):
         # Only a small finite stream (max 64 incoming signed units).
         # Reproduce the prefix actually consumed, comparisons and verdict.
         expected = _signed_contact_report(candidate, parse_limits(request["limits"]), request)
@@ -945,7 +1000,7 @@ def publish(path: Path, report: dict[str, object], request: dict[str, object]) -
     if any(check(request.get("candidate")) or (
             isinstance(saved_request, dict) and check(saved_request.get("candidate")))
             for check in (_is_binary_overlap_spec, _is_relational_germ_spec, _is_ternary_encounter_spec,
-                          _is_probability_ledger_spec, _is_signed_contact_spec)):
+                          _is_probability_ledger_spec, _is_signed_contact_spec, _is_ternary_network_spec)):
         _validate_cache_entry(envelope, request)
     # Hard-link publication is atomic and refuses replacement, including a competing publisher.
     descriptor, temporary = tempfile.mkstemp(prefix=".screen-", dir=path.parent)
@@ -1025,6 +1080,9 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_encounter = any(_is_ternary_encounter_spec(spec) for spec in specifications)
     has_ledger = any(_is_probability_ledger_spec(spec) for spec in specifications)
     has_stream = any(_is_signed_contact_spec(spec) for spec in specifications)
+    has_nulls = any(_is_ternary_network_spec(spec) for spec in specifications)
+    if has_nulls and limits is not None and type(limits) is not Limits:
+        raise ValueError("ternary network nulls candidate/limits do not match request")
     if has_stream and limits is not None and type(limits) is not Limits:
         raise ValueError("signed contact stream candidate/limits do not match request")
     if has_ledger and limits is not None and type(limits) is not Limits:
@@ -1036,8 +1094,10 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     if has_overlap and limits is not None and type(limits) is not Limits:
         raise ValueError("binary overlap cut candidate/limits do not match request")
     pins_sources = (has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or
-                    has_cut or has_overlap or has_germ or has_encounter or has_ledger or has_stream)
+                    has_cut or has_overlap or has_germ or has_encounter or has_ledger or has_stream or has_nulls)
     sources = provenance() if pins_sources else None
+    if has_nulls:
+        _assert_ternary_network_sources(sources)
     if has_stream:
         _assert_signed_contact_sources(sources)
     if has_ledger:
@@ -1122,9 +1182,12 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_encounter = _is_ternary_encounter_spec(request["candidate"])
     is_ledger = _is_probability_ledger_spec(request["candidate"])
     is_stream = _is_signed_contact_spec(request["candidate"])
+    is_nulls = _is_ternary_network_spec(request["candidate"])
     pins_sources = (is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or
-                    is_cut or is_overlap or is_germ or is_encounter or is_ledger or is_stream)
+                    is_cut or is_overlap or is_germ or is_encounter or is_ledger or is_stream or is_nulls)
     sources = provenance() if pins_sources else None
+    if is_nulls:
+        _assert_ternary_network_sources(sources)
     if is_stream:
         _assert_signed_contact_sources(sources)
     if is_ledger:
