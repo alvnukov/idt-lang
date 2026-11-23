@@ -603,6 +603,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_measured_ion_pentagon",
         "probe_ion_coupling_certificates",
     ),
+    "bench_contact_law_selection": (
+        "probe_ternary_operational_selection",
+        "probe_binary_unanimous_triples",
+        "probe_mixed_binary_triples",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
