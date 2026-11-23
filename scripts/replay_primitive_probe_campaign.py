@@ -429,6 +429,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_flag_center_blindness",
         "probe_pair_cup_exchange",
     ),
+    "clock_memory_contrasts": (
+        "probe_pump_clock_lag_extension",
+        "probe_five_depth_memory_contrast",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
