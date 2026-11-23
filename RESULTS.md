@@ -4,6 +4,8 @@
 
 **Current search frontier.** Two binary bond marks can carry a localized direction and select their next move without a schedule on an isolated prepared sector. [What moved, and which assumptions were supplied](scripts/WHEN_A_SHAPE_DIRECTS_ITS_NEXT_MOVE.md). The original carrier already encodes a ring; changing the law at a crossing changes the output. Joining two junctions in the simulated graph exposes a disagreement that a single four-port intensity table hides. [Two-junction test and a phase-sensitive follow-up](scripts/WHEN_A_SECOND_JUNCTION_DISTINGUISHES_MODELS.md). At finite density even the decomposition into two moving packets need not survive; raw counts remain available. [Particle readings, coincidences and what pair data cannot predict](scripts/WHEN_TWO_PACKETS_LOSE_THEIR_NAMES.md). These mechanisms have **not** supplied the Born rule, the Standard Model spectrum or a gravitational law. Results from different update laws are not stages of one derivation.
 
+A clean two-bond entrance offers a sharp test for spurious phases: one shape passes, the other can jam. A different four-label contact can instead write a detectable correlation **before a particle is injected**, even though each retained empty arm has the same individual distribution in the two preparations. [Entrance, blank preparation and countercontrols](scripts/WHAT_CAN_AN_EMPTY_ARM_REMEMBER.md).
+
 ### Run the public demonstration
 
 ```sh

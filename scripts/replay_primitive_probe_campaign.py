@@ -548,6 +548,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "bench_active_triple_witness": (
         "probe_active_triple_witness",
     ),
+    "bench_empty_arm_record": (
+        "probe_two_bond_entrance_collar",
+        "probe_packet_free_pair_record",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

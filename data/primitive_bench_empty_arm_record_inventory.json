@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_clean_two_bond_entrance",
+      "role": "route",
+      "components": [
+        "A separated empty collar feeding a fixed junction"
+      ],
+      "declared_status": "exact arrival-shape and first-event comparison with a unique lossless input shape",
+      "missing_bridges": [
+        "An extra persistent signal or different junction need not obey the two-bond interface."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_bond_entrance_collar.py",
+          "first_line": 1,
+          "last_line": 236,
+          "file_sha256": "f53bb2b2b7edec0ce5f906875fd40902f6f34a6d9631ae50439df66b1a08e81f"
+        }
+      ]
+    },
+    {
+      "id": "archive_packet_free_blank_pair_record",
+      "role": "route",
+      "components": [
+        "One contact before a token and a later fixed joint reader"
+      ],
+      "declared_status": "matched raw marginals but different readings with four or eight local labels",
+      "missing_bridges": [
+        "Nonuniform resources, wiring, a readout and an external preparation are supplied."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_free_pair_record.py",
+          "first_line": 1,
+          "last_line": 240,
+          "file_sha256": "5853e8ff94d6d26016cc5c5f56afc32ce00c8a413ada6599bcc6b5a3d50cc86e"
+        }
+      ]
+    }
+  ]
+}
