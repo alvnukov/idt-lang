@@ -384,6 +384,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_finite_shadow_instruments",
         "probe_junction_calibration_and_events",
     ),
+    "particle_count_and_cp_controls": (
+        "probe_massive_invisible_channels",
+        "probe_two_flavor_frequency_and_width",
+        "probe_conjugate_decay_rate_contrast",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
