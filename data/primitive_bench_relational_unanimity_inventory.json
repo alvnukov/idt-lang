@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "unanimous_incidence_fano_clock",
+      "role": "route",
+      "components": [
+        "Jam-free equality contact incidence"
+      ],
+      "declared_status": "A seven-support family is selected up to relabeling under a finite no-jam criterion",
+      "missing_bridges": [
+        "An internal rate and snapshot observer do not follow"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unanimous_fano_clock.py",
+          "first_line": 1,
+          "last_line": 177,
+          "file_sha256": "2959435b960225a672850895ae5c8586c3d026291fc61e22e8315c0181dfdcf4"
+        }
+      ]
+    },
+    {
+      "id": "relative_contact_clock_wall",
+      "role": "route",
+      "components": [
+        "Local equality link clock"
+      ],
+      "declared_status": "The complement quotient retains a persistent point but loses binary phase on triangles",
+      "missing_bridges": [
+        "Local consistency need not yield a global lift"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_relational_unanimous_clock.py",
+          "first_line": 1,
+          "last_line": 246,
+          "file_sha256": "00823b9c33c78d1ca35de4cf0bf9ad533eba7420711db50843c44abe7ef0d42e"
+        }
+      ]
+    }
+  ]
+}

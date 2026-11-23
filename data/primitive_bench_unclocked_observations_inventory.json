@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "uncut_staggered_first_passage",
+      "role": "route",
+      "components": [
+        "Clean first events and local source records"
+      ],
+      "declared_status": "Clean endpoint equivalence does not preserve the next observation or certify the source",
+      "missing_bridges": [
+        "No scheduling probabilities or intrinsic detection"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_staggered_next_event.py",
+          "first_line": 1,
+          "last_line": 153,
+          "file_sha256": "a16e1b517f2c4a9dee008b48830b679516c155d2e8dd269614eab69eb83dc789"
+        }
+      ]
+    },
+    {
+      "id": "staggered_active_signed_current",
+      "role": "route",
+      "components": [
+        "Microscopic charge continuity"
+      ],
+      "declared_status": "Signed local current and a background-dependent positive occupancy match clean tag count",
+      "missing_bridges": [
+        "Supplied incidence and vacuum"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_staggered_raw_charge.py",
+          "first_line": 1,
+          "last_line": 295,
+          "file_sha256": "bfaf3f3f326b7b169c4e9525f89390bbe77c3fa59b5a03b0b2039cc713145f8c"
+        }
+      ]
+    },
+    {
+      "id": "staggered_relative_fixed_sector",
+      "role": "route",
+      "components": [
+        "Relational prepared event sector"
+      ],
+      "declared_status": "Relative comparisons retain one-tag clean reachability but unrestricted labels can merge",
+      "missing_bridges": [
+        "Promised preparation and clean cut"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_staggered_relational_sector.py",
+          "first_line": 1,
+          "last_line": 207,
+          "file_sha256": "5c5f7ee4665c5754fb411d7dd5af3fa7c3807675245f7f739e0f5272cfdf9b6d"
+        }
+      ]
+    },
+    {
+      "id": "staggered_topology_closure_wall",
+      "role": "route",
+      "components": [
+        "Network topology transfer"
+      ],
+      "declared_status": "The fixed path witness admits extra clean pairs on rings and forks",
+      "missing_bridges": [
+        "Other contact networks remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_staggered_topology.py",
+          "first_line": 1,
+          "last_line": 264,
+          "file_sha256": "daadfa0b30b6bf97d6d0526296b9b787d4b3517bbe7db0784ecb40f57185d6a7"
+        }
+      ]
+    }
+  ]
+}
