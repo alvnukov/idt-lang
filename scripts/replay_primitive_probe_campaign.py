@@ -593,6 +593,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_phase_visibility_controls",
         "probe_native_pentagon_contexts",
     ),
+    "bench_undriven_clock_reachability": (
+        "probe_binary_rest_packets",
+        "probe_undriven_ternary_ring",
+        "probe_ternary_gap_memory",
+        "probe_ternary_path_normal_form",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
