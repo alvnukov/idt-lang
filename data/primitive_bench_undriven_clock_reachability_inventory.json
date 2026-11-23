@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_rule54_rest_and_medium",
+      "role": "route",
+      "components": [
+        "Whole-state translation including the next matching and independently evolved periodic medium"
+      ],
+      "declared_status": "vacuum finite exact recurrence requires speed magnitude one; finite signed and neutral medium defects travel slower",
+      "missing_bridges": [
+        "no mass or clock derived; finite medium census does not constrain every return"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_rest_packets.py",
+          "first_line": 1,
+          "last_line": 186,
+          "file_sha256": "8ac5f241c339e190419f58b94c3e30166d59d221aa3dc90a961ed0d8a1501a5d"
+        }
+      ]
+    },
+    {
+      "id": "archive_ternary_ring_clock",
+      "role": "route",
+      "components": [
+        "All possible changing contacts on a one-token ring rather than a programmed schedule"
+      ],
+      "declared_status": "odd ring extremal sectors have exactly one flipping contact and two mirrored phases",
+      "missing_bridges": [
+        "a supplied frame can distinguish configurations without providing a signal or a physical clock rate"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_undriven_ternary_ring.py",
+          "first_line": 1,
+          "last_line": 198,
+          "file_sha256": "5abad4b24ca237f090cf4f76af2b34b3584d5e14925aadcbdb7ce4b36875ac6e"
+        }
+      ]
+    },
+    {
+      "id": "archive_ternary_gap_memory",
+      "role": "route",
+      "components": [
+        "Alternating ordinary-shade count in each interval bounded by consecutive indistinguishable tags"
+      ],
+      "declared_status": "reduced graph recovers connectivity while matched global stocks differ on whether tags can meet",
+      "missing_bridges": [
+        "reduced transitions do not generally preserve rates; no exclusion statistics or force inferred"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ternary_gap_memory.py",
+          "first_line": 1,
+          "last_line": 212,
+          "file_sha256": "e0f48445755f9a7b391ac09fe78c6cefb5f76e94dc234df5d367e68862ced264"
+        }
+      ]
+    },
+    {
+      "id": "archive_ternary_path_normal_form",
+      "role": "route",
+      "components": [
+        "Stack reduction and a native contact witness on labeled open-path strings"
+      ],
+      "declared_status": "linear scan decides reachability and determines each ordered tag's attainable sites",
+      "missing_bridges": [
+        "does not predict elapsed time, simultaneous occupation or periodic-boundary behavior"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ternary_path_normal_form.py",
+          "first_line": 1,
+          "last_line": 280,
+          "file_sha256": "2f468718a0a01b5707c24dbec34c74abc9b448066aaa0ed7abc78a65ed53e3e9"
+        }
+      ]
+    }
+  ]
+}

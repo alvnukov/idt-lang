@@ -20,6 +20,8 @@ One three-label pair law, `aa ↔ bb` and `Ta ↔ aT`, routes a token and writes
 
 Four cosine-like phase settings extend natively to an eight-step **triangle**, not a cosine. A separate family of five ternary port tests reaches the classical exclusivity bound; matching observed pair tables does not establish that a click denotes the same hidden event in two contexts. [Eight physical settings and information bounds](scripts/WHEN_FOUR_PHASES_ARE_NOT_EIGHT.md) · [Five compatible alternatives and the disturbance control](scripts/WHEN_A_CLICK_HAS_TWO_CONTEXTS.md).
 
+Removing the program leaves a two-state clock on selected ternary rings and a memory between neighboring tags. On an open path the checker decides exact reachability by reading both words once. It does not infer the chance or time of a detection. [Undriven clocks, unreachable meetings and reduced-word tests](scripts/WHEN_CONTACTS_CHOOSE_THE_NEXT_MOVE.md).
+
 ### Run the public demonstration
 
 ```sh
