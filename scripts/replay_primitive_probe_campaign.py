@@ -480,6 +480,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "bench_apamea_visible_support": (
         "probe_apamea_vertex_support",
     ),
+    "bench_pairwise_quartet_records": (
+        "probe_pair_contact_completion",
+        "probe_relational_quartet_records",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

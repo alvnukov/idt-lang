@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_pairwise_current_completion",
+      "role": "route",
+      "components": [
+        "anonymous reversible pair transducers and local completion certificates"
+      ],
+      "declared_status": "finite local alphabet bounds and separations",
+      "missing_bridges": [
+        "no intrinsic four-site enclosure, inevitability or reusable clean operation follows"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_pair_contact_completion.py",
+          "first_line": 1,
+          "last_line": 490,
+          "file_sha256": "752b926cb4085225258a4c8e6b9c58206ce25cb0c4ed9aed9688028e8e563461"
+        }
+      ]
+    },
+    {
+      "id": "archive_dynamic_bond_quartet_record",
+      "role": "route",
+      "components": [
+        "dynamic dimer and bridge bonds that locally identify four participating sites"
+      ],
+      "declared_status": "local reversible four-member record from binary opportunities",
+      "missing_bridges": [
+        "persistent per-site preparation information and supplied encounter rules remain"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_relational_quartet_records.py",
+          "first_line": 1,
+          "last_line": 429,
+          "file_sha256": "b4546b62e9a0abb4ef7fc901cd9c95fe8eb836c7ce3608276730c758164873fe"
+        }
+      ]
+    }
+  ]
+}
