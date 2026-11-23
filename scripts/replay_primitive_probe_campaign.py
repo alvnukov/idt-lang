@@ -401,6 +401,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_rational_junction_reflection_compiler",
         "probe_nonlinear_junction_discriminator",
     ),
+    "anonymous_cluster": (
+        "probe_anonymous_reference_collision",
+        "probe_local_cluster_charge_descent",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
