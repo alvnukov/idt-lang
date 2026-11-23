@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_intermediate_dark_port",
+      "role": "route",
+      "components": [
+        "Late local shade flip or transparent data-only port cycle between two unchanged ABA blocks"
+      ],
+      "declared_status": "a token-empty arm changes output counts; scoped active-subspace bound and fixed-coherent cycle distinguish alternatives",
+      "missing_bridges": [
+        "this controller need not be a phase-only action on the measured token; hidden modes and fixed permutations survive"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_dark_intermediate_port.py",
+          "first_line": 1,
+          "last_line": 198,
+          "file_sha256": "44a9aadf55bd0d6cf0efa1825e72eea35dfb38a02c458b5247e0bf7eb006ebca"
+        }
+      ]
+    }
+  ]
+}

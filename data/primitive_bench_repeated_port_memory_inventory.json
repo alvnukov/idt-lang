@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_compensated_vacuum_switch",
+      "role": "route",
+      "components": [
+        "Programmed mobile-shade switch with restored vacuum registers"
+      ],
+      "declared_status": "all tree edge switches are independent on the declared iid stock; a loop and a repeated edge yield distinct records",
+      "missing_bridges": [
+        "control shades and contact program are supplied, no three-mode Hilbert interpretation of all rows"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_vacuum_compensated_network.py",
+          "first_line": 1,
+          "last_line": 232,
+          "file_sha256": "7c812930423da069e5cddcda578fa859cf699888e324e7effc227f153ebdb3ff"
+        }
+      ]
+    },
+    {
+      "id": "archive_three_port_dark_interval",
+      "role": "route",
+      "components": [
+        "Four labeled probability bounds, a preregistered finite-count option and an unreset twelve-cell echo"
+      ],
+      "declared_status": "sharp symmetric dark-port threshold separates one fixed complete three-mode unitary from these exact rows",
+      "missing_bridges": [
+        "unresolved modes, changed device, postselection or missing launch accounting are not grounds for exclusion"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_port_dark_bounds.py",
+          "first_line": 1,
+          "last_line": 270,
+          "file_sha256": "61580bf276ba95162317bb767042b87e810cbe11be7233150930ed643e8b7968"
+        }
+      ]
+    }
+  ]
+}

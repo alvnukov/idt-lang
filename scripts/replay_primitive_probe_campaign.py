@@ -572,6 +572,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_binary_star_contrast",
         "probe_joined_binary_stars",
     ),
+    "bench_repeated_port_memory": (
+        "probe_vacuum_compensated_network",
+        "probe_three_port_dark_bounds",
+    ),
+    "bench_dark_intermediate_port": (
+        "probe_dark_intermediate_port",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
