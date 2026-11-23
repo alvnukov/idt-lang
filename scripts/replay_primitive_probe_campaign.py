@@ -442,6 +442,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_active_readout_panels",
         "probe_shared_prefix_readout_cost",
     ),
+    "exclusive_mark_controls": (
+        "probe_single_mark_ternary_echo",
+        "probe_one_visit_phase_budget",
+        "probe_three_absorber_menus",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

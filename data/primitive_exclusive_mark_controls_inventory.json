@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "single_mark_mutable_ternary_echo",
+      "role": "route",
+      "components": [
+        "anonymous one-port mark and two hidden labels with reversible local scattering"
+      ],
+      "declared_status": "exact isolated wave-intensity profile, exhaustive rivals and correlated network limits",
+      "missing_bridges": [
+        "Equal hidden preparations, inter-contact correlations and response to phase interventions are not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_single_mark_ternary_echo.py",
+          "first_line": 1,
+          "last_line": 428,
+          "file_sha256": "b608a41eff04c713df226c3be2a9ba2f4a416eec795e91b1420139e2f9d2e6c2"
+        }
+      ]
+    },
+    {
+      "id": "single_visit_endpoint_budget",
+      "role": "route",
+      "components": [
+        "four independent arm-control settings and distributions over final port records"
+      ],
+      "declared_status": "sharp one-visit TV and minimum responsive stock for synthetic endpoint tables",
+      "missing_bridges": [
+        "Intervention isolation, full trial counts and origin of phase transport are extra."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_one_visit_phase_budget.py",
+          "first_line": 1,
+          "last_line": 332,
+          "file_sha256": "b6d57367e96ea20901545e3d7a91306e475e70472e2dd50302e60829372d956c"
+        }
+      ]
+    },
+    {
+      "id": "three_equal_field_absorbers",
+      "role": "route",
+      "components": [
+        "pairwise illumination at three absorbers with indistinguishable prepared field inputs"
+      ],
+      "declared_status": "sharp loss and double-click tradeoffs with causal tagged-carrier escape",
+      "missing_bridges": [
+        "No inference that real detector inputs share all microscopic labels or that optical loss is negligible."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_absorber_menus.py",
+          "first_line": 1,
+          "last_line": 180,
+          "file_sha256": "d90a8d3626e35b152cd33a77211e8f221e23b73edaa4a44ca99d82ec7c576915"
+        }
+      ]
+    }
+  ]
+}
