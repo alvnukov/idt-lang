@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "native_minimal_flavor_phase_loop",
+      "role": "route",
+      "components": [
+        "one shared and two sector-specific rays; native contact loop tested against a second CKM observable"
+      ],
+      "declared_status": "finite invariant, fixed spectra and explicit failure of the concrete texture as a joint SM match",
+      "missing_bridges": [
+        "Physical family selection, mass operators, charged-current coupling and measured CKM parameters are not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_minimal_flavor_phase_loop.py",
+          "first_line": 1,
+          "last_line": 335,
+          "file_sha256": "3242df5f8ed42c73482c1d3125fa08dbcf0607a36a6e8ab38a5ad89f5411d1e7"
+        }
+      ]
+    }
+  ]
+}

@@ -38,6 +38,10 @@ for QM or GR. Its present value is methodological and test-directed:
 
 For a compact public boundary, see the [Public Claim Sheet](PUBLIC_CLAIM_SHEET.md).
 
+For the primitive search, see [what the current tests distinguish](RESULTS.md).
+Run `python3 scripts/public_demo.py` for a short offline comparison of measured
+detector counts, conditional predictions and the verifier's actual claim records.
+
 ## AI Agent Quickstart
 
 AI agents should start from [AI Agent Guide](AI_AGENT_GUIDE.md), not from a full

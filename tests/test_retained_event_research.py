@@ -178,6 +178,9 @@ PACKS = {
         "single_visit_endpoint_budget": "probe_one_visit_phase_budget",
         "three_equal_field_absorbers": "probe_three_absorber_menus",
     }),
+    "primitive_flavor_loop_inventory.json": ("minimal_flavor_loop", {
+        "native_minimal_flavor_phase_loop": "probe_minimal_flavor_phase_loop",
+    }),
 }
 
 
