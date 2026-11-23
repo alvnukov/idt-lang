@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "relational_parallelogram_scatter",
+      "role": "route",
+      "components": [
+        "Unmarked edge comparison and possible fourth-corner filling"
+      ],
+      "declared_status": "conditional incidence route with integral forward-generation wall",
+      "missing_bridges": [
+        "Incidence and transport assumptions are not generated, and the rational output thirds are unreachable from the two seeds by forward filling."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_relational_balance_scatter.py",
+          "first_line": 1,
+          "last_line": 321,
+          "file_sha256": "a4c6a46a091b7a282ca87aca302778842d3b1688d5816551c22ebd5e56fd7913"
+        }
+      ]
+    },
+    {
+      "id": "delayed_ternary_dyadic_feedback",
+      "role": "route",
+      "components": [
+        "Dyadic four-place reflection with a returning mirror and one tick of flight time"
+      ],
+      "declared_status": "conditional static three-port response with distinct impulse energy",
+      "missing_bridges": [
+        "Signed coherent signals, feedback, internal preparation, and the temporal readout remain supplied."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_feedback_ternary_from_pairs.py",
+          "first_line": 1,
+          "last_line": 250,
+          "file_sha256": "ae7f97700ef22f790c2fcb5937fe0265e07254df7921fed45a380a2f6095b011"
+        }
+      ]
+    },
+    {
+      "id": "raw_pair_window_reflection",
+      "role": "route",
+      "components": [
+        "Complement a pair out of four and feed one occupation back"
+      ],
+      "declared_status": "exact finite unsigned-window reflection with an immediate-overlap counterexample",
+      "missing_bridges": [
+        "Equal counts do not provide legal temporal order and a signed difference of preparations is not an elementary emission."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_raw_pair_window_reflection.py",
+          "first_line": 1,
+          "last_line": 213,
+          "file_sha256": "738bc030735a33fe9d1f6040e51a1365c8e5e8b28cff793291d67edb38fb1461"
+        }
+      ]
+    },
+    {
+      "id": "reversible_pair_retiming_cost",
+      "role": "route",
+      "components": [
+        "Repacketize pair traces while saving the overwritten spectator history"
+      ],
+      "declared_status": "sharp reversible side-state count for a balanced fixed-phase family",
+      "missing_bridges": [
+        "An offline inverse with a side channel does not supply a native local router or a bound when time and wires may change."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reversible_pair_retiming.py",
+          "first_line": 1,
+          "last_line": 191,
+          "file_sha256": "fd09f761a700e7bf5181460b756a1e9561de3922e4541a2a9914c45b7c3c9852"
+        }
+      ]
+    },
+    {
+      "id": "timed_reflection_gain_test",
+      "role": "route",
+      "components": [
+        "Isolated pulse energy readings at two inputs and two outputs"
+      ],
+      "declared_status": "prospective separated gain-invariant contrast for direct and delayed contacts",
+      "missing_bridges": [
+        "Pulse isolation, positive exposure, factorized gains and bounded residual error need independent experimental checks."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_feedback_pulse_gain_control.py",
+          "first_line": 1,
+          "last_line": 99,
+          "file_sha256": "95b78982e1115a5369e922ede5a12b3c114f0a9809bc8119e4896e23917ce72e"
+        }
+      ]
+    }
+  ]
+}

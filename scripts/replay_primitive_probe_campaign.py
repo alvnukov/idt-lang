@@ -450,6 +450,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "minimal_flavor_loop": (
         "probe_minimal_flavor_phase_loop",
     ),
+    "ternary_feedback_windows": (
+        "probe_relational_balance_scatter",
+        "probe_feedback_ternary_from_pairs",
+        "probe_raw_pair_window_reflection",
+        "probe_reversible_pair_retiming",
+        "probe_feedback_pulse_gain_control",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

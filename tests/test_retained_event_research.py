@@ -181,6 +181,13 @@ PACKS = {
     "primitive_flavor_loop_inventory.json": ("minimal_flavor_loop", {
         "native_minimal_flavor_phase_loop": "probe_minimal_flavor_phase_loop",
     }),
+    "primitive_ternary_feedback_windows_inventory.json": ("ternary_feedback_windows", {
+        "relational_parallelogram_scatter": "probe_relational_balance_scatter",
+        "delayed_ternary_dyadic_feedback": "probe_feedback_ternary_from_pairs",
+        "raw_pair_window_reflection": "probe_raw_pair_window_reflection",
+        "reversible_pair_retiming_cost": "probe_reversible_pair_retiming",
+        "timed_reflection_gain_test": "probe_feedback_pulse_gain_control",
+    }),
 }
 
 
