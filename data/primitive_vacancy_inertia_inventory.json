@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "unsigned_vacancy_cut_flux",
+      "role": "route",
+      "components": [
+        "raw unsigned edge exchange gives oriented cut transfers and exact stock continuity"
+      ],
+      "declared_status": "finite transfer identity and exact distal shutter stationary discriminator",
+      "missing_bridges": [
+        "Reservoirs, independently chosen edges and stationarity are extra; no signed wave or detector follows."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_vacancy_cut_flux.py",
+          "first_line": 1,
+          "last_line": 192,
+          "file_sha256": "f137cb4a0d5c3a4225fac8cd4ab95c6b9b3964be9b7253616a0792be48dd27eb"
+        }
+      ]
+    },
+    {
+      "id": "static_current_wave_alias",
+      "role": "route",
+      "components": [
+        "anonymous exchange star under native and calibrated mean current meters"
+      ],
+      "declared_status": "static reflection alias and dynamic/coupling counterexamples",
+      "missing_bridges": [
+        "A reference-subtracted external meter does not provide relayed signed signals."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_static_current_reflection.py",
+          "first_line": 1,
+          "last_line": 122,
+          "file_sha256": "9d06039908e2d65d683b44429d5e249b10f95da1b062826cd2c14b8909f7daaf"
+        }
+      ]
+    },
+    {
+      "id": "edge_inertia_scattering",
+      "role": "route",
+      "components": [
+        "elastic lattice junction inertia, scattering band and local perturbation"
+      ],
+      "declared_status": "two anonymous mass rules agree at long wavelength but differ at finite wavelength and in localized dynamics",
+      "missing_bridges": [
+        "Inertia, springs, time and energy readout are supplied; no single-click interpretation."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_edge_inertia_scattering.py",
+          "first_line": 1,
+          "last_line": 192,
+          "file_sha256": "72a1467d4684c553c72e3e3f0f71f839f68376a3364cbb9c98d98bd43dc72d92"
+        }
+      ]
+    }
+  ]
+}
