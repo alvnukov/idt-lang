@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_native_four_phase_gray",
+      "role": "route",
+      "components": [
+        "Four-label four-phase plate and a reversible prepared Gray-bit comparator"
+      ],
+      "declared_status": "all four settings and shutters match the selected quarter-turn fringe; source scrambling flattens it",
+      "missing_bridges": [
+        "supplied stocks, program, number meter; equality of bits is not the Born rule"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_four_phase_gray.py",
+          "first_line": 1,
+          "last_line": 214,
+          "file_sha256": "c29dbe7280c1d223b238df04ee711ed1e333f892f894db34dd40fef35856b18c"
+        }
+      ]
+    },
+    {
+      "id": "archive_eight_angle_capacity",
+      "role": "route",
+      "components": [
+        "Separate local encoder alphabets and a central binary decoder on the eight-angle grid"
+      ],
+      "declared_status": "sharp finite communication error bounds; exact richer three-by-four comparator needs imported weight",
+      "missing_bridges": [
+        "not a Bell experiment, physical eight-angle quantum target or native richer decoder"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_eight_angle_reader_boundary.py",
+          "first_line": 1,
+          "last_line": 183,
+          "file_sha256": "d324cb84f28737b2d8aaf5d6a6882e7a3bcc3ca43d8465fb7679a2bb296af6e7"
+        }
+      ]
+    },
+    {
+      "id": "archive_native_eighth_turn",
+      "role": "route",
+      "components": [
+        "Compiled four- and three-label contact words with a jointly prepared thermometer phase"
+      ],
+      "declared_status": "both backends realize eight-step triangular counts and shutter controls, distinct from the cosine",
+      "missing_bridges": [
+        "programmed timing, balance leaves and source preparation remain resources"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_eighth_turn.py",
+          "first_line": 1,
+          "last_line": 295,
+          "file_sha256": "e5600ecf5b5a3eadd5b218b2114a10896011a336f346a02635c000c9f29bcff2"
+        }
+      ]
+    },
+    {
+      "id": "archive_phase_visibility_controls",
+      "role": "route",
+      "components": [
+        "Eight-setting visibility, external clock jitter and calibrated three-cell curvature checks"
+      ],
+      "declared_status": "sharp binary and trit visibility thresholds attained under common-stock contracts",
+      "missing_bridges": [
+        "source weights and an independently calibrated knob are not derived; not applied to uncalibrated data"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_phase_visibility_controls.py",
+          "first_line": 1,
+          "last_line": 148,
+          "file_sha256": "bae84836a784024295b1c1d5139dec350297d6af6bfae54d49c86a4817a83bb5"
+        }
+      ]
+    },
+    {
+      "id": "archive_native_pentagon_contexts",
+      "role": "route",
+      "components": [
+        "Five restored ternary event readers and comparison of the two possible contexts of each"
+      ],
+      "declared_status": "same physical preparation retains exclusivity but not a quantum violation; hidden changes can alias ideal edge tables",
+      "missing_bridges": [
+        "context identity is not enforced by matching empirical marginals"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_pentagon_contexts.py",
+          "first_line": 1,
+          "last_line": 230,
+          "file_sha256": "ea0cbafe2c46f7aed0984ffc12f6c42896a0a31edd7c7f665f7a5be92db43f92"
+        }
+      ]
+    }
+  ]
+}
