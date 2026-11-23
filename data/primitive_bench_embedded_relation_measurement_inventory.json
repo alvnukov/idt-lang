@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_embedded_comparison_on_even_star",
+      "role": "route",
+      "components": [
+        "pairwise parity transactions build a reversible change recorder inside the same Boolean relation"
+      ],
+      "declared_status": "finite nondestructive comparison on a prepared even star",
+      "missing_bridges": [
+        "clock, star, initialization, readout convention and choices are supplied"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_embedded_relation_reader.py",
+          "first_line": 1,
+          "last_line": 334,
+          "file_sha256": "8ffd67ea93160557688f5aedee69183b40f25d0dcfd6d21b3d5516bf5c70bb47"
+        }
+      ]
+    },
+    {
+      "id": "archive_compiled_packet_instrument_transfer",
+      "role": "route",
+      "components": [
+        "input-blind pair compiler transferred to frozen single-packet transport and two-source contact schedules"
+      ],
+      "declared_status": "exact compiled clean-domain routing and detector outcomes",
+      "missing_bridges": [
+        "no autonomous cell scheduler, phase measurement, setting independence or Born weights derived"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_pair_compiled_packet_instruments.py",
+          "first_line": 1,
+          "last_line": 391,
+          "file_sha256": "459fad44e76954db948dad8493c30be4ffa7dab3f991acb6a8219a14c49ac084"
+        }
+      ]
+    }
+  ]
+}

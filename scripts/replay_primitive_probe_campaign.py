@@ -499,6 +499,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "bench_one_arm_herald_budget": (
         "probe_single_photon_loss_memory",
     ),
+    "bench_embedded_relation_measurement": (
+        "probe_embedded_relation_reader",
+        "probe_pair_compiled_packet_instruments",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
