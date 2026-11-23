@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_cycle_square_and_crossings",
+      "role": "route",
+      "components": [
+        "carrier reconstruction from locally distinguished short and long bonds"
+      ],
+      "declared_status": "cycle-square classification with two competing extensions at a junction",
+      "missing_bridges": [
+        "no dimension, turning law or physical incidence selected"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_bond_carrier_geometry.py",
+          "first_line": 1,
+          "last_line": 387,
+          "file_sha256": "1a4b29d1a3887430ed6f9b6117ceae22561604a1dc735b20b63222cd8507538d"
+        }
+      ]
+    },
+    {
+      "id": "archive_native_junction_rates",
+      "role": "route",
+      "components": [
+        "literal graph of one and two crossings with a conserved two-bond pulse"
+      ],
+      "declared_status": "exact first-passage rates with jam and recurrent controls under a chosen sampler",
+      "missing_bridges": [
+        "incoming preparation, fair probabilities and output arms are assumptions"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_raw_bond_junction_rates.py",
+          "first_line": 1,
+          "last_line": 257,
+          "file_sha256": "bcb6ff98c1a90cef0f3cd231828c43673fc87b27585258e8dc55e78db4796702"
+        }
+      ]
+    },
+    {
+      "id": "archive_fixed_coherent_port_comparison",
+      "role": "route",
+      "components": [
+        "single-mode complex comparator for the literal four-port intensity tables"
+      ],
+      "declared_status": "fixed-phase obstruction and two-context exact alternative for finite data",
+      "missing_bridges": [
+        "native phase amplitudes, independent repeatability and empirical optics not inferred"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_fixed_phase_four_port.py",
+          "first_line": 1,
+          "last_line": 337,
+          "file_sha256": "11090466acf0ba2f5e9bdadb075a2146f5b04dbcd45fad1ad202834e23bd4c47"
+        }
+      ]
+    },
+    {
+      "id": "archive_calibrated_gradient_query",
+      "role": "route",
+      "components": [
+        "measurement design for hidden intermediate arm phase correlations"
+      ],
+      "declared_status": "exact one-setting bounded-input tomography and discrete-rank countercontrols",
+      "missing_bridges": [
+        "native calibrated phase control and stability of the ensemble not established"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_phase_gradient_tomography.py",
+          "first_line": 1,
+          "last_line": 297,
+          "file_sha256": "0e26ee49ec425310a3c079095c7978c33c63ca5dbe9ec6f0db27a6bc95de4315"
+        }
+      ]
+    }
+  ]
+}
