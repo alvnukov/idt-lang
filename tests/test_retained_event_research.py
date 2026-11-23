@@ -125,6 +125,13 @@ PACKS = {
         "spectator_circuit_empty_mode_memory": "probe_spectator_circuit_equivalence",
         "five_mode_shared_pair_extension_wall": "probe_five_mode_shadow_boundary",
     }),
+    "primitive_square_contact_readouts_inventory.json": ("square_contact_readouts", {
+        "anonymous_contact_additive_weight": "probe_anonymous_contact_additive_readout",
+        "dyadic_readout_background_preparations": "probe_dyadic_contact_preparations",
+        "equal_junction_square_leaf_refinement": "probe_square_leaf_refinement",
+        "rational_junction_reflection_compiler": "probe_rational_junction_reflection_compiler",
+        "nonlinear_contact_same_square_wall": "probe_nonlinear_junction_discriminator",
+    }),
 }
 
 
