@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_four_label_contact_family",
+      "role": "route",
+      "components": [
+        "All 400 reversible involutions under explicit label and swap constraints"
+      ],
+      "declared_status": "complete fixed-hardware occupation census with guarded preparation and road controls",
+      "missing_bridges": [
+        "This design family and its supplied contacts do not span arbitrary primitives or apparatus designs."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_four_label_law_census.py",
+          "first_line": 1,
+          "last_line": 370,
+          "file_sha256": "bde65d3ffd806ce3d90bc26ab3479faecfd08156218f121d82f540ea66e21745"
+        }
+      ]
+    },
+    {
+      "id": "archive_native_mobile_blank_interferometer",
+      "role": "route",
+      "components": [
+        "A colorless token and a mobile vacancy shade governed by one reversible pair rule"
+      ],
+      "declared_status": "finite reciprocal binary-setting switch with true stock replacement and clean empty-arm relays",
+      "missing_bridges": [
+        "A searched word, selected stocks, setting controls and a token meter are supplied, not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_mobile_blank_interferometer.py",
+          "first_line": 1,
+          "last_line": 423,
+          "file_sha256": "030daaac7fc890d450fe40e81033c31c43264adcf31290cee0acb0bc3488053d"
+        }
+      ]
+    }
+  ]
+}

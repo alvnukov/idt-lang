@@ -8,6 +8,8 @@ A clean two-bond entrance offers a sharp test for spurious phases: one shape pas
 
 An uncolored token and three vacant labels suffice for a programmed two-arm switch. All 32 averaged shutter rows match a larger comparator. A fixed closure or a spatial gap distinguishes the circuits; removing the programmed four-label reader leaves only a clock-dependent arm bias. [The circuits, their stocks, and the three controls](scripts/WHEN_A_COLORLESS_TOKEN_READS_TWO_ARMS.md).
 
+An exhaustive 400-rule search exposed a false-rejection risk: a four-label rule fails 30 of 32 rows in the old switch but carries vacant-arm records cleanly. With its own reciprocal switch, it passes separate distance and fixed-replacement checks. [Frozen census, redesign and full-trigger results](scripts/WHEN_A_BLANK_RECORD_CAN_TRAVEL.md).
+
 ### Run the public demonstration
 
 ```sh
