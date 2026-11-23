@@ -367,6 +367,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_even_lattice_completion",
         "probe_charge_trace_and_running",
     ),
+    "absolute_relative_encounters": (
+        "probe_translated_collision_intervention",
+        "probe_collision_reference_memory",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

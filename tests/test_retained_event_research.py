@@ -98,6 +98,10 @@ PACKS = {
         "even_unimodular_lattice_completion": "probe_even_lattice_completion",
         "trace_normalization_and_pole_control": "probe_charge_trace_and_running",
     }),
+    "primitive_ternary_encounter_inventory.json": ("absolute_relative_encounters", {
+        "absolute_blank_relative_encounter_intervention": "probe_translated_collision_intervention",
+        "absolute_collision_reference_memory": "probe_collision_reference_memory",
+    }),
 }
 
 
