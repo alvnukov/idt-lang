@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "anonymous_relative_quartet_collision",
+      "role": "route",
+      "components": [
+        "anonymous reversible reference exchange and finite pair-field descent"
+      ],
+      "declared_status": "finite exhaustive closed-quartet route with extra channels and a supplied split",
+      "missing_bridges": [
+        "No particle labels, global charge or origin of the flag split."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_reference_collision.py",
+          "first_line": 1,
+          "last_line": 226,
+          "file_sha256": "59fbacfbdd064a6ce72e6c954e9693416dfb0c3d4725948fecd42c27f5c08e89"
+        }
+      ]
+    },
+    {
+      "id": "relative_charge_cluster_descent",
+      "role": "countermodel",
+      "components": [
+        "five to eight participant encounter components and ambiguous isolated quartets"
+      ],
+      "declared_status": "finite outsider and association countermodels with sealed-chamber control",
+      "missing_bridges": [
+        "Local isolation and a transferable physical additive charge are not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_local_cluster_charge_descent.py",
+          "first_line": 1,
+          "last_line": 219,
+          "file_sha256": "876b55d7d0876d3a4196b85ffd24b12925defac9f24cdc58f2cde795bbc3014e"
+        }
+      ]
+    }
+  ]
+}

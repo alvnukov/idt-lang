@@ -132,6 +132,10 @@ PACKS = {
         "rational_junction_reflection_compiler": "probe_rational_junction_reflection_compiler",
         "nonlinear_contact_same_square_wall": "probe_nonlinear_junction_discriminator",
     }),
+    "primitive_anonymous_cluster_inventory.json": ("anonymous_cluster", {
+        "anonymous_relative_quartet_collision": "probe_anonymous_reference_collision",
+        "relative_charge_cluster_descent": "probe_local_cluster_charge_descent",
+    }),
 }
 
 
