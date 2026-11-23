@@ -425,6 +425,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_anonymous_refinement_relations",
         "probe_modular_contact_nulls",
     ),
+    "particle_label_limits": (
+        "probe_flag_center_blindness",
+        "probe_pair_cup_exchange",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

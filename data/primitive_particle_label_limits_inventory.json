@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "five_flag_global_line_options",
+      "role": "route",
+      "components": [
+        "finite center-character lattice, quotient options, external lines and conservation rival"
+      ],
+      "declared_status": "exact arithmetic with fixed center actions and primitive Abelian normalization",
+      "missing_bridges": [
+        "Global gauge group, external line preparation, physical charges and multiplets are not selected."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_flag_center_blindness.py",
+          "first_line": 1,
+          "last_line": 291,
+          "file_sha256": "1204cb88ceb12fe05e51db16ec34b5db991b2225e0f756aefcdc8df35e594b08"
+        }
+      ]
+    },
+    {
+      "id": "pair_cup_turn_exchange",
+      "role": "route",
+      "components": [
+        "neutral pair source, frame turn, exchange and multiplicity controls"
+      ],
+      "declared_status": "finite representation matrices and reference-phase countermodels",
+      "missing_bridges": [
+        "Source locality, spatial spin identification and physical spin-statistics remain separate."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_pair_cup_exchange.py",
+          "first_line": 1,
+          "last_line": 226,
+          "file_sha256": "4f6ccc488021759acb341318ba6827a646ccb903e84f5f6241a85fe71ae5e8cc"
+        }
+      ]
+    }
+  ]
+}
