@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "relational_return_signal_metric",
+      "role": "route",
+      "components": [
+        "four-tick returns and effective tensor from two dispatch laws with identical path support"
+      ],
+      "declared_status": "finite gauges and independent return/cell solutions with nonconformal change",
+      "missing_bridges": [
+        "Dispatch weights, an internal recorder, common propagation law and physical space are not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_relational_signal_metric.py",
+          "first_line": 1,
+          "last_line": 648,
+          "file_sha256": "64e58fb8612c04c5ab1ba13e7c62fd1a18d82a48683a3458f1c7f41f345b43d5"
+        }
+      ]
+    },
+    {
+      "id": "relational_cyclic_clock_channel",
+      "role": "route",
+      "components": [
+        "cyclic clock intertwiners oscillator planes and a periodically driven bypass"
+      ],
+      "declared_status": "exact arithmetic phase selectivity under named linear/timing assumptions",
+      "missing_bridges": [
+        "No universal clock common phase composition or physical amplitude is supplied."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_relational_clock_modes.py",
+          "first_line": 1,
+          "last_line": 502,
+          "file_sha256": "b9db21db63d858ccdbd5bc2c42c20b57996a68e691dded346dea694bcd3f8f18"
+        }
+      ]
+    }
+  ]
+}

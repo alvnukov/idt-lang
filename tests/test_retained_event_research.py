@@ -147,6 +147,10 @@ PACKS = {
         "pump_locked_hbt_lag_four": "probe_pump_locked_hbt",
         "irrevocable_fine_event_prefix": "probe_irrevocable_event_prefix",
     }),
+    "primitive_relational_signal_channels_inventory.json": ("relational_signal_channels", {
+        "relational_return_signal_metric": "probe_relational_signal_metric",
+        "relational_cyclic_clock_channel": "probe_relational_clock_modes",
+    }),
 }
 
 
