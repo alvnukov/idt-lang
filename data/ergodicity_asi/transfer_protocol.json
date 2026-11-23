@@ -1,0 +1,16 @@
+{
+  "schema": "idt-apamea-fixed-transfer/1",
+  "source_version_doi": "10.5281/zenodo.8250892",
+  "calibration_temperature_K": 250,
+  "test_temperatures_K": [260, 270, 280, 290, 300, 310],
+  "frames_in_each_temperature_directory": ["coordinates_000.dat", "coordinates_001.dat"],
+  "edge_classification_column_1_based": 3,
+  "axis_column_1_based": 5,
+  "maximum_same_axis_center_separation": 4,
+  "half_edge_x_extent": 11.75,
+  "endpoint_cluster_cutoff": 4,
+  "slope_sign_multiplier": 1,
+  "geometry_acceptance": "The same primary implementation as for 250 K must return a nonempty set of simple bounded faces on an uncrossed embedding with at least one fourfold vertex. Keep every complete face regardless of its parity. Report missing classifications, excluded walks, component count, face sizes and degree histogram.",
+  "outcome": "For each usable pair report matched islands, reversed classifications and the distribution of changes on complete faces. A missing source, ambiguous match, rejected geometry or no complete faces is inconclusive. Do not move cutoffs, change frames, or substitute simulations.",
+  "scope": "Prospective transfer of the reconstruction after the 250 K pilot, within the same author archive and instrument. No independent replication, trial-independence assumption, error probability or fundamental exclusion."
+}

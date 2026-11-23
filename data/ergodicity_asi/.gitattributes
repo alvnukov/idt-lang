@@ -1,0 +1,2 @@
+# Preserve deposited CRLF bytes and treat originals as external data assets.
+coordinates_*.dat -text -diff

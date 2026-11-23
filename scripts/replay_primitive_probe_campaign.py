@@ -462,6 +462,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_contact_edge_frames",
         "probe_neighbor_twins_flux",
     ),
+    "bench_measured_star_parity": (
+        "probe_measured_asi_loop_parity",
+        "probe_asi_cut_distance",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
