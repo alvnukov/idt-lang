@@ -169,6 +169,10 @@ PACKS = {
         "static_current_wave_alias": "probe_static_current_reflection",
         "edge_inertia_scattering": "probe_edge_inertia_scattering",
     }),
+    "primitive_readout_design_cost_inventory.json": ("readout_design_cost", {
+        "active_fresh_readout_designs": "probe_active_readout_panels",
+        "shared_nondisturbing_readout_cost": "probe_shared_prefix_readout_cost",
+    }),
 }
 
 

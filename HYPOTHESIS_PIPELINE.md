@@ -7,6 +7,10 @@ original [primitive screen](PRIMITIVE_SCREEN.md) remains available unchanged.
 See [checker trust and development priority](CHECKER_TRUST.md) for guarantees,
 automated quality controls, limitations and proposed safe accelerations.
 
+Before acquiring more measurements, see [Choosing the next readout](scripts/CHOOSING_THE_NEXT_READOUT.md).
+This optional planner compares competing predictions and keeps unknown outcomes open;
+it does not change the screen or the historical baseline.
+
 ## Run
 
 ```sh

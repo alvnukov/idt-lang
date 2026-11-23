@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "active_fresh_readout_designs",
+      "role": "route",
+      "components": [
+        "exact minimax cost on typed network and signed-stream prediction supports"
+      ],
+      "declared_status": "certified bounded fresh-test plans with unknown predictions retained",
+      "missing_bridges": [
+        "Costs, initial preparations, unmodeled measurement noise and interventions must be supplied."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_active_readout_panels.py",
+          "first_line": 1,
+          "last_line": 130,
+          "file_sha256": "d24d6f1d06f628a3128f57fc2999af5688d7dbe9e976486f4fd82d99e80e6e45"
+        }
+      ]
+    },
+    {
+      "id": "shared_nondisturbing_readout_cost",
+      "role": "route",
+      "components": [
+        "one forward timeline with shared gate cost and exact port readouts"
+      ],
+      "declared_status": "chronological fixed and adaptive cost comparison plus disturbing-projector control",
+      "missing_bridges": [
+        "Shared trace semantics require nondisturbance; they are not automatic in a real experiment."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_shared_prefix_readout_cost.py",
+          "first_line": 1,
+          "last_line": 229,
+          "file_sha256": "39e9861c7bf88eb84ffeb04f78e87a8cb2ea5cb08d37a866639dd756f435a608"
+        }
+      ]
+    }
+  ]
+}
