@@ -22,7 +22,7 @@
     },
     {
       "id": "relative_charge_cluster_descent",
-      "role": "countermodel",
+      "role": "route",
       "components": [
         "five to eight participant encounter components and ambiguous isolated quartets"
       ],
