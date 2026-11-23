@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_anonymous_shell_orbit_rules",
+      "role": "route",
+      "components": [
+        "equality-only reversible shell rules with half-filled centers"
+      ],
+      "declared_status": "complete finite census on two specified incidences",
+      "missing_bridges": [
+        "choice of incidence, autonomous evolution and particle interpretation remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_shell_rules.py",
+          "first_line": 1,
+          "last_line": 274,
+          "file_sha256": "ca6b46cb3ac75fe2762b5f7786c7814433fa48edd33ffb0af01941674e642843"
+        }
+      ]
+    },
+    {
+      "id": "archive_anonymous_shell_incidence_transfer",
+      "role": "route",
+      "components": [
+        "same local shell rules on cycle square and rook graph"
+      ],
+      "declared_status": "fixed-incidence transfer under arbitrary schedules",
+      "missing_bridges": [
+        "no self-selected path, stable propagating excitation or physical observable has been derived"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_shell_incidence_transfer.py",
+          "first_line": 1,
+          "last_line": 252,
+          "file_sha256": "ed94c56b589287c064d5e98379d006f0227617871fab0241cbe2a7b9e45be96d"
+        }
+      ]
+    }
+  ]
+}

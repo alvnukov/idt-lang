@@ -473,6 +473,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "bench_frozen_apamea_transfer": (
         "probe_apamea_fixed_transfer",
     ),
+    "bench_anonymous_shell_census": (
+        "probe_anonymous_shell_rules",
+        "probe_shell_incidence_transfer",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
