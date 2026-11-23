@@ -496,6 +496,9 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_three_mark_tracks",
         "probe_seam_exchange_flux",
     ),
+    "bench_one_arm_herald_budget": (
+        "probe_single_photon_loss_memory",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

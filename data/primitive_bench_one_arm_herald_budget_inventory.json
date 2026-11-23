@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_one_arm_loss_and_memory_budget",
+      "role": "route",
+      "components": [
+        "one-arm causal influence with explicitly recorded loss, double clicks and repeated choices"
+      ],
+      "declared_status": "exact all-herald contrast and sharp conditional-loss and memory controls",
+      "missing_bridges": [
+        "no independent fresh-setting event table replayed; one-packet primitive is not equivalent to silent empty arms"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_single_photon_loss_memory.py",
+          "first_line": 1,
+          "last_line": 419,
+          "file_sha256": "4ecde402bee4ec94880df06eb3ee2db229234af5855a7a9e3898b442dda15bf1"
+        }
+      ]
+    }
+  ]
+}
