@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "anonymous_contact_additive_weight",
+      "role": "route",
+      "components": [
+        "Solve unknown per-port additive invariants from translated contacts, not by fitting an exponent. Compare valences two, three and four, finite integer windows, rational half meshes, alternative nonlinear behavior and bounded errors."
+      ],
+      "declared_status": "Signed quadratic plus linear plus constant on the rational contact contract. Even dark response selects the square up to scale; it could still be zero and is not a click law.",
+      "missing_bridges": [
+        "Derive signed linear port dynamics and demonstrate additive independent, calibrated detector responses across backgrounds."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_anonymous_contact_additive_readout.py",
+          "first_line": 1,
+          "last_line": 155,
+          "file_sha256": "0bb61fdc6691c3bbe798f3a91ebb4bda3092d42a6a4b046e0cd8bdc3d0997e57"
+        }
+      ]
+    },
+    {
+      "id": "dyadic_readout_background_preparations",
+      "role": "route",
+      "components": [
+        "Construct normalized translated background tests by finite four-port words with a separate sign spare. Solve finite unknown tables and compare two dyadic spectator ideals at a fixed target amplitude."
+      ],
+      "declared_status": "No arbitrary state oracle is needed for the tested dyadic preparations; detector separability is independent of preparation reachability.",
+      "missing_bridges": [
+        "Test the assumption that a local detector ignores spectator arithmetic and hidden preparation history."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_dyadic_contact_preparations.py",
+          "first_line": 1,
+          "last_line": 151,
+          "file_sha256": "ed725d44532f77ce97f5742887d07c448a95917c5934767fb1211bec6307917d"
+        }
+      ]
+    },
+    {
+      "id": "equal_junction_square_leaf_refinement",
+      "role": "route",
+      "components": [
+        "Use the same reciprocal port rule to divide an integer signal into its square number of equal-magnitude branches. Check inverse, interference sign controls, maximum arity limits and branch-dependent efficiency."
+      ],
+      "declared_status": "A constructive rational fine-graining gives squared branch counts. Equating complete equal-leaf events and stable grouped outcomes is an extra physical assumption.",
+      "missing_bridges": [
+        "Bind mode count, signed swaps, raw event exclusivity and grouping to a reusable internal detector."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_square_leaf_refinement.py",
+          "first_line": 1,
+          "last_line": 314,
+          "file_sha256": "c8bf560fa590eda65872a20c0390b43b7ddb1a4cbd2d3ce1b1aec679c7144c8f"
+        }
+      ]
+    },
+    {
+      "id": "rational_junction_reflection_compiler",
+      "role": "route",
+      "components": [
+        "Compile exact rational reflections with explicit sign and vacuum resources. Factor arbitrary rational orthogonal matrices; physically leave a named spectator untouched in a complement match."
+      ],
+      "declared_status": "Exact real-linear synthesis with arbitrary port degree and routing is not a derivation of linearity or detectors. No fixed finite rational alphabet gives all denominator primes.",
+      "missing_bridges": [
+        "Derive or constrain signed controls, reservoir size and the physical equivalence of different preparation words."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_rational_junction_reflection_compiler.py",
+          "first_line": 1,
+          "last_line": 350,
+          "file_sha256": "193e06b90b311fb24fb846aa11c0fe68a60c8b3d070b717bc3c5c17b4e8473d3"
+        }
+      ]
+    },
+    {
+      "id": "nonlinear_contact_same_square_wall",
+      "role": "route",
+      "components": [
+        "Retain a symmetry-respecting nonlinear involution which agrees on all two-level additive and branch-split tests, and distinguish it by one reachable three-level input after a shared preparation."
+      ],
+      "declared_status": "Conserving the square does not identify the linear contact. Predictions for a selected unconditioned output-power fraction differ by five sixths.",
+      "missing_bridges": [
+        "Meter incident and emitted powers, phases and losses on the same hardware; input-output calibration is not single-event confirmation."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_nonlinear_junction_discriminator.py",
+          "first_line": 1,
+          "last_line": 85,
+          "file_sha256": "ff13ac3fbfc0349ee52ff5f69ab68498e165cd15706fc030b2e82511140ada68"
+        }
+      ]
+    }
+  ]
+}

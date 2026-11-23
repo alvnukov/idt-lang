@@ -394,6 +394,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_spectator_circuit_equivalence",
         "probe_five_mode_shadow_boundary",
     ),
+    "square_contact_readouts": (
+        "probe_anonymous_contact_additive_readout",
+        "probe_dyadic_contact_preparations",
+        "probe_square_leaf_refinement",
+        "probe_rational_junction_reflection_compiler",
+        "probe_nonlinear_junction_discriminator",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
