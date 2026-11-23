@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_independent_native_arm_delays",
+      "role": "route",
+      "components": [
+        "separate physical corridor-length interventions on a literal two-junction device"
+      ],
+      "declared_status": "exact pathwise locality and additive loss across four independently varied lengths",
+      "missing_bridges": [
+        "corridor parity is not a generated coherent arm phase or a calibrated time unit"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_independent_arm_delays.py",
+          "first_line": 1,
+          "last_line": 67,
+          "file_sha256": "400e1cbae0adc2a02374fbc8a100d90b12ecf85b2e0c8437dbf18fed381924ba"
+        }
+      ]
+    }
+  ]
+}

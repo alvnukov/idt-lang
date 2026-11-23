@@ -121,8 +121,8 @@ def solve_block(block, trans, values):
         values[block[i]] = {k: v / matrix[i][i] for k, v in rhs[i].items()}
 
 
-def first_event(trans, terminals):
-    """Exact full measure with closed non-detector classes named 'trap'."""
+def first_event(trans, terminals, *, trap_label=None):
+    """Full measure; a recorder may label closed classes using its first hit."""
     values = {}
     cyclic, closed = 0, 0
     for block in components(trans):
@@ -133,7 +133,7 @@ def first_event(trans, terminals):
         elif not any(t in values for u in block for t in trans[u]):
             need(all(trans[u] for u in block), "unlabelled dead end")
             for u in block:
-                values[u] = {"trap": F(1)}
+                values[u] = {"trap" if trap_label is None else trap_label(u): F(1)}
             closed += 1
         else:
             cyclic += int(len(block) > 1 or s in trans[s])
@@ -150,6 +150,11 @@ def first_event(trans, terminals):
                 add_scaled(check, values[t], F(1, len(ts)))
             need(check == mass, "raw Bellman residual")
     return values, {"states": len(values), "cyclic_transient_sccs": cyclic, "trap_sccs": closed}
+
+
+def recorded_trap(key):
+    previous, _ = key
+    return "trap" if previous is None else f"{previous}:trap"
 
 
 def event_graph(rule, seeds, first, second):
@@ -199,7 +204,7 @@ def run_fixture(graph, point, *, second=None, **fixture):
               for arm, (axis, side) in enumerate(ARMS) for offset in (6, 7)]
     for law, rule in (("free", FreeAlternatives(graph)), ("line", compile_lines(graph))):
         trans, terminal = event_graph(rule, [s for _, _, s in inputs], gates(point, 0), second)
-        values, audit = first_event(trans, terminal)
+        values, audit = first_event(trans, terminal, trap_label=recorded_trap)
         for arm, offset, state in inputs:
             joint = values[None, state]
             marginal = {}

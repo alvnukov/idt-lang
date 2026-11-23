@@ -3,6 +3,7 @@
 import importlib
 import importlib.util
 import unittest
+from unittest.mock import patch
 from collections import Counter
 from fractions import Fraction as F
 
@@ -42,6 +43,23 @@ class JunctionRates(unittest.TestCase):
         trans = {"s": ("s", "s", "u", "u", "v"), "u": ("u",), "v": ()}
         masses, _ = self.module.first_event(trans, {"v": "jam"})
         self.assertEqual(masses["s"], {"trap": F(2, 3), "jam": F(1, 3)})
+
+    def test_trapped_after_the_first_hit_keeps_that_arm(self):
+        module = self.module
+        graph, point = module.two_crossings(14)
+
+        def late_trap(rule, seeds, first, second):
+            trapped = ("2", frozenset())
+            rows = {(None, s): (trapped,) for s in seeds}
+            rows[trapped] = (trapped,)
+            return rows, {}
+
+        with patch.object(module, "event_graph", late_trap):
+            rows = module.run_fixture(graph, point, second={})
+        self.assertTrue(rows)
+        for row in rows:
+            self.assertEqual(row["joint"], {"2:trap": "1"})
+            self.assertEqual(row["mass"][-1], "1")
 
     def test_reset_and_supplied_coherent_comparator(self):
         rows = self.result["comparison"]

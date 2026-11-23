@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_two_packet_matchings",
+      "role": "route",
+      "components": [
+        "full pair decompositions into moving short and long bonds"
+      ],
+      "declared_status": "finite native loss, recovery, ambiguity and possible non-return",
+      "missing_bridges": [
+        "no microscopic conserved packet identity, exchange sign or statistics inferred"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_packet_matchings.py",
+          "first_line": 1,
+          "last_line": 363,
+          "file_sha256": "8345e03cf65397e797017ddb0c4aec7bbf0f3307881f7d8deb66d39292e9c702"
+        }
+      ]
+    },
+    {
+      "id": "archive_matched_singles_raw_bond_counts",
+      "role": "route",
+      "components": [
+        "unfiltered factorial coincidences of occupied edges with matched single counts"
+      ],
+      "declared_status": "exact native time-dependent counters and finite-population null controls",
+      "missing_bridges": [
+        "occupancy and external ensemble are not identified with detected helium atoms"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_matched_singles_bond_counts.py",
+          "first_line": 1,
+          "last_line": 125,
+          "file_sha256": "3996c1000699bd642804febadeb4358bc2e57d573aeda13bb14cc8c826e8d5e0"
+        }
+      ]
+    },
+    {
+      "id": "archive_hidden_pair_correlations",
+      "role": "route",
+      "components": [
+        "complete binary pair distributions of symmetry-averaged four-mark preparations"
+      ],
+      "declared_status": "next-event pair counterexamples, conditional orbit identification and idle-mixture alias",
+      "missing_bridges": [
+        "higher moments and preparation class not determined by pair frequencies"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_hidden_pair_correlations.py",
+          "first_line": 1,
+          "last_line": 210,
+          "file_sha256": "f77940700da773396c7a8876fbc182eff7168b951270ecc44174abe90eb071d4"
+        }
+      ]
+    },
+    {
+      "id": "archive_exact_readout_sufficiency",
+      "role": "route",
+      "components": [
+        "exact finite row-span or positive-mixture witness for a proposed response"
+      ],
+      "declared_status": "sound finite reconstruction and insufficiency certificates for a specified menu",
+      "missing_bridges": [
+        "no identification of external preparations, clocks, detectors or unsubmitted physics"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_pair_response_span.py",
+          "first_line": 1,
+          "last_line": 121,
+          "file_sha256": "784038a4d0aecd7358a2a7c7c45ffe6ee4de96bcdc991a44b3f1dd92cb93d8c4"
+        }
+      ]
+    }
+  ]
+}

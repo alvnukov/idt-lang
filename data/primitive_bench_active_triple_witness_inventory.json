@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_active_triple_moment_witness",
+      "role": "route",
+      "components": [
+        "two symmetry-averaged preparations in the same randomized active recurrent sector"
+      ],
+      "declared_status": "exact equality of all 5488 one- to three-bond inclusions but distinct next pair response",
+      "missing_bridges": [
+        "a prepared finite sector and next-event law are required, not physical many-body statistics"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_active_triple_witness.py",
+          "first_line": 1,
+          "last_line": 128,
+          "file_sha256": "ae5ffa9fd2307b57f509d56918a64a33aaa86eac1f8fc71d8878243923241725"
+        }
+      ]
+    }
+  ]
+}
