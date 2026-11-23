@@ -438,6 +438,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_static_current_reflection",
         "probe_edge_inertia_scattering",
     ),
+    "readout_design_cost": (
+        "probe_active_readout_panels",
+        "probe_shared_prefix_readout_cost",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
