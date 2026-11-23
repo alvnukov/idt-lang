@@ -507,6 +507,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_loopless_link_quartet",
         "probe_loopless_matching_ports",
     ),
+    "bench_setting_and_reversal_controls": (
+        "probe_packet_setting_dependence",
+        "probe_weak_parity_reversal",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
