@@ -34,8 +34,8 @@
         {
           "path": "scripts/probe_raw_bond_junction_rates.py",
           "first_line": 1,
-          "last_line": 257,
-          "file_sha256": "bcb6ff98c1a90cef0f3cd231828c43673fc87b27585258e8dc55e78db4796702"
+          "last_line": 262,
+          "file_sha256": "65b343c8a8fee49483dc4c73b6c5817fb8fc620e012457e349e24dafb7066ac6"
         }
       ]
     },

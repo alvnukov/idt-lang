@@ -536,6 +536,18 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_fixed_phase_four_port",
         "probe_phase_gradient_tomography",
     ),
+    "bench_packet_identity_and_readout": (
+        "probe_two_packet_matchings",
+        "probe_matched_singles_bond_counts",
+        "probe_hidden_pair_correlations",
+        "probe_pair_response_span",
+    ),
+    "bench_native_arm_length_control": (
+        "probe_independent_arm_delays",
+    ),
+    "bench_active_triple_witness": (
+        "probe_active_triple_witness",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
