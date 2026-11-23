@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "native_frames_positive_nonstate",
+      "role": "route",
+      "components": [
+        "A real trace-one form is strictly positive on twenty-four native rays and all finite native sequential branches, but one extra equal-wave junction exposes a negative entry. Check dense-rotation axes and unsigned control."
+      ],
+      "declared_status": "A finite informationally complete apparatus need not validate positivity of the reconstructed state; closure requires extra operations and readout assumptions.",
+      "missing_bridges": [
+        "Derive the junction, signed controls, continuous quadratic response and physical trial outcomes."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_frame_positivity.py",
+          "first_line": 1,
+          "last_line": 188,
+          "file_sha256": "9131828eb946178d954bd2f4c5eccc23b63f5716b4d19a00145b8dec8e4f57aa"
+        }
+      ]
+    },
+    {
+      "id": "dense_orbit_discontinuous_readout",
+      "role": "route",
+      "components": [
+        "Construct normalized context-compatible but discontinuous responses on the dense orbit of real marked-carrier readouts, including shared coarse projections in mixed bases."
+      ],
+      "declared_status": "An alternate response matches the initial calibrated rays but makes a sharply distinct one-junction probability prediction.",
+      "missing_bridges": [
+        "Distinguish geometric control precision from operational response continuity using a real calibrated preparation and count."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_dense_readout_residue_countermodel.py",
+          "first_line": 1,
+          "last_line": 263,
+          "file_sha256": "7901bfec5bb2aeb962986547d782226ee3dfb87a42939a0e2bb1e9bc8d8e22c8"
+        }
+      ]
+    },
+    {
+      "id": "rational_four_port_residue_extension",
+      "role": "route",
+      "components": [
+        "A fourth active arm changes the coherent operator but preserves the measured orbit from the six initial frames. General rational orthogonal four-mode extensions keep the same consistent residue responses."
+      ],
+      "declared_status": "Four-mode rational routing alone cannot rule out the finite alternative; spectral eigenmode measurement is a distinct resource.",
+      "missing_bridges": [
+        "Test compositional extension across changing mode dimension or implement spectral measurements outside the rational norm classes."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_four_arm_frame_extension.py",
+          "first_line": 1,
+          "last_line": 236,
+          "file_sha256": "62fb53c48322e89f6357ab44c2dcde7539782284f32139624d7d3db3e0075315"
+        }
+      ]
+    },
+    {
+      "id": "finite_shadow_reciprocal_instruments",
+      "role": "route",
+      "components": [
+        "Quantize each admissible rational ray into one of twenty-four small projective records, prove the overlap congruence by full residue classes, construct sharp repeatable state updates and inequivalent ensemble test."
+      ],
+      "declared_status": "Finite recorder reproduces ordinary transitions between native rays but not general wave amplitudes. An intrinsic random outcome mechanism is still absent.",
+      "missing_bridges": [
+        "Identify whether preparations equivalent as wave ensembles are also physically equivalent and whether adding spectator modes changes readout."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_finite_shadow_instruments.py",
+          "first_line": 1,
+          "last_line": 181,
+          "file_sha256": "23fff409e0c9122f2cf4f2fe34c53b890fb14bfebff0d92e661ae4a150a5a3ff"
+        }
+      ]
+    },
+    {
+      "id": "three_port_calibration_vs_event_origins",
+      "role": "route",
+      "components": [
+        "Calibrate coherent equal and unequal port junctions, independently register routing, shunt losses and two-pass phase-sensitive wave and count predictions, and compare actual optical device reports."
+      ],
+      "declared_status": "Measured neighboring interferometers are not direct single-event evidence for this exact three-port scattering law.",
+      "missing_bridges": [
+        "Build a source, separately characterized junction, phase changes, all-attempt counter and detection response without survivor selection."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_junction_calibration_and_events.py",
+          "first_line": 1,
+          "last_line": 298,
+          "file_sha256": "c9a515754e03e60f75d938b72cb2085b520dfa7fe8bb6d7be76b97403cc7e611"
+        }
+      ]
+    }
+  ]
+}
