@@ -9,9 +9,11 @@ import platform
 import stat
 import sys
 import tempfile
+from collections import OrderedDict
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
+from threading import Lock
 from typing import TypeAlias
 
 from theory_experiments import primitive_screen as primitive
@@ -100,6 +102,17 @@ from theory_experiments.neutral_current_width import (
 )
 from theory_experiments.neutral_current_width import (
     assert_loaded_sources as assert_neutral_width_sources,
+)
+from theory_experiments.operational_probability_ledger import (
+    LOADED_SOURCE_SHA256 as PROBABILITY_LEDGER_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.operational_probability_ledger import (
+    SCOPE as PROBABILITY_LEDGER_SCOPE,
+)
+from theory_experiments.operational_probability_ledger import (
+    OperationalProbabilityLedger,
+    evaluate_operational_probability_ledger,
+    parse_operational_probability_ledger,
 )
 from theory_experiments.opposition_flag import (
     OppositionFlag,
@@ -203,7 +216,7 @@ Hypothesis: TypeAlias = (
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
     | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut | BinaryOverlapCut | RelationalGermObserver
-    | TernaryEncounter
+    | TernaryEncounter | OperationalProbabilityLedger
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -213,6 +226,7 @@ _PREPARE_MEASURE_EVIDENCE = "necessary_conditions_on_submitted_finite_table_only
 _BINARY_OVERLAP_EVIDENCE = "necessary_binary_overlap_bounds_on_submitted_event_table_only"
 _RELATIONAL_GERM_EVIDENCE = "finite_local_germ_transport_and_submitted_tally_comparison_only"
 _TERNARY_ENCOUNTER_EVIDENCE = "finite_one_command_comparison_with_submitted_tag_counts_only"
+_PROBABILITY_LEDGER_EVIDENCE = "exact_feasibility_of_submitted_operational_probability_requirements_only"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -232,6 +246,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/binary_overlap_cut.py",
     "theory_experiments/relational_germ_observer.py",
     "theory_experiments/ternary_encounter.py",
+    "theory_experiments/operational_probability_ledger.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -304,6 +319,22 @@ def _is_relational_germ_spec(value: object) -> bool:
 
 def _is_ternary_encounter_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "ternary_encounter"
+
+
+def _is_probability_ledger_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "operational_probability_ledger"
+
+
+def _assert_probability_ledger_sources(sources: object, *, check_current: bool = False) -> None:
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded in (
+        ("theory_experiments/candidate_pipeline.py", LOADED_SOURCE_HASHES["theory_experiments/candidate_pipeline.py"]),
+        ("theory_experiments/operational_probability_ledger.py", PROBABILITY_LEDGER_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded)):
+            raise ValueError(f"operational probability ledger source changed since import: {path}; restart interpreter")
 
 
 def _assert_ternary_encounter_sources(sources: object, *, check_current: bool = False) -> None:
@@ -444,6 +475,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if _is_probability_ledger_spec(row):
+        return parse_operational_probability_ledger(row)
     if _is_ternary_encounter_spec(row):
         return parse_ternary_encounter(row)
     if _is_relational_germ_spec(row):
@@ -572,7 +605,42 @@ def _ternary_encounter_report(candidate: Hypothesis, limits: Limits, request: di
             "rejection_scope": TERNARY_ENCOUNTER_SCOPE}
 
 
+_LEDGER_DIGEST_CAP = 128
+_ledger_body_digests: OrderedDict[str, str] = OrderedDict()
+_ledger_digest_lock = Lock()
+
+
+def _bind_probability_ledger(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> str:
+    if (type(candidate) is not OperationalProbabilityLedger or type(limits) is not Limits
+            or set(request) != {"schema", "candidate", "limits", "provenance"} or request["schema"] != SCHEMA
+            or canonical_json(request["candidate"]) != canonical_json(candidate.specification())
+            or canonical_json(request["limits"]) != canonical_json(limits.specification())):
+        raise ValueError("operational probability ledger candidate/limits do not match request")
+    _assert_probability_ledger_sources(request["provenance"], check_current=True)
+    return digest(request)
+
+
+def _compute_ledger_body(candidate: OperationalProbabilityLedger, limits: Limits, key: str) -> dict[str, object]:
+    # Record only a locally computed digest, never a report/hash supplied by
+    # the caller. Pinning and exact binding precede every lookup and compute.
+    checks, details = evaluate_operational_probability_ledger(candidate, limits)
+    body = {"status": primitive.aggregate_status(checks), "checks": [c.specification() for c in checks],
+            "scope": details, "arithmetic": "exact_rational_probability_feasibility",
+            "evidence_kind": _PROBABILITY_LEDGER_EVIDENCE, "proof_status": "not_attempted",
+            "empirical_status": "not_tested", "rejection_scope": PROBABILITY_LEDGER_SCOPE}
+    fingerprint = digest(body)
+    with _ledger_digest_lock:
+        _ledger_body_digests[key] = fingerprint
+        _ledger_body_digests.move_to_end(key)
+        if len(_ledger_body_digests) > _LEDGER_DIGEST_CAP:
+            _ledger_body_digests.popitem(last=False)
+    return body
+
+
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if isinstance(candidate, OperationalProbabilityLedger) or _is_probability_ledger_spec(request.get("candidate")):
+        key = _bind_probability_ledger(candidate, limits, request)
+        return {"request": request, **_compute_ledger_body(candidate, limits, key)}
     if isinstance(candidate, TernaryEncounter) or _is_ternary_encounter_spec(request.get("candidate")):
         return _ternary_encounter_report(candidate, limits, request)
     if isinstance(candidate, RelationalGermObserver) or _is_relational_germ_spec(request.get("candidate")):
@@ -689,6 +757,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
 
 
 def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_probability_ledger_spec(request.get("candidate")):
+        _assert_probability_ledger_sources(request["provenance"], check_current=True)
     if _is_ternary_encounter_spec(request.get("candidate")):
         _assert_ternary_encounter_sources(request["provenance"], check_current=True)
     if _is_relational_germ_spec(request.get("candidate")):
@@ -760,7 +830,20 @@ def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
     candidate = parse_hypothesis(request["candidate"])
-    if isinstance(candidate, TernaryEncounter):
+    if isinstance(candidate, OperationalProbabilityLedger):
+        limits = parse_limits(request["limits"])
+        key = _bind_probability_ledger(candidate, limits, request)
+        with _ledger_digest_lock:
+            known = _ledger_body_digests.get(key)
+            if known is not None:
+                _ledger_body_digests.move_to_end(key)
+        if known is None:
+            # A certificate proves mathematical feasibility, not how the
+            # submitted budget was used. Rebuild the entire bounded body once.
+            known = digest(_compute_ledger_body(candidate, limits, key))
+        if digest({k: v for k, v in report.items() if k != "request"}) != known:
+            raise ValueError("cached operational probability ledger report disagrees with its bounded decision")
+    elif isinstance(candidate, TernaryEncounter):
         # At most 64 tagged reads: replay them even for a warm, correctly rehashed entry.
         expected = _ternary_encounter_report(candidate, parse_limits(request["limits"]), request)
         if canonical_json(report) != canonical_json(expected):
@@ -806,7 +889,8 @@ def publish(path: Path, report: dict[str, object], request: dict[str, object]) -
     saved_request = report.get("request")
     if any(check(request.get("candidate")) or (
             isinstance(saved_request, dict) and check(saved_request.get("candidate")))
-            for check in (_is_binary_overlap_spec, _is_relational_germ_spec, _is_ternary_encounter_spec)):
+            for check in (_is_binary_overlap_spec, _is_relational_germ_spec, _is_ternary_encounter_spec,
+                          _is_probability_ledger_spec)):
         _validate_cache_entry(envelope, request)
     # Hard-link publication is atomic and refuses replacement, including a competing publisher.
     descriptor, temporary = tempfile.mkstemp(prefix=".screen-", dir=path.parent)
@@ -884,6 +968,9 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_overlap = any(_is_binary_overlap_spec(spec) for spec in specifications)
     has_germ = any(_is_relational_germ_spec(spec) for spec in specifications)
     has_encounter = any(_is_ternary_encounter_spec(spec) for spec in specifications)
+    has_ledger = any(_is_probability_ledger_spec(spec) for spec in specifications)
+    if has_ledger and limits is not None and type(limits) is not Limits:
+        raise ValueError("operational probability ledger candidate/limits do not match request")
     if has_encounter and limits is not None and type(limits) is not Limits:
         raise ValueError("ternary encounter candidate/limits do not match request")
     if has_germ and limits is not None and type(limits) is not Limits:
@@ -891,8 +978,10 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     if has_overlap and limits is not None and type(limits) is not Limits:
         raise ValueError("binary overlap cut candidate/limits do not match request")
     pins_sources = (has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or
-                    has_cut or has_overlap or has_germ or has_encounter)
+                    has_cut or has_overlap or has_germ or has_encounter or has_ledger)
     sources = provenance() if pins_sources else None
+    if has_ledger:
+        _assert_probability_ledger_sources(sources)
     if has_encounter:
         _assert_ternary_encounter_sources(sources)
     if has_germ:
@@ -971,9 +1060,12 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_overlap = _is_binary_overlap_spec(request["candidate"])
     is_germ = _is_relational_germ_spec(request["candidate"])
     is_encounter = _is_ternary_encounter_spec(request["candidate"])
+    is_ledger = _is_probability_ledger_spec(request["candidate"])
     pins_sources = (is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or
-                    is_cut or is_overlap or is_germ or is_encounter)
+                    is_cut or is_overlap or is_germ or is_encounter or is_ledger)
     sources = provenance() if pins_sources else None
+    if is_ledger:
+        _assert_probability_ledger_sources(sources)
     if is_encounter:
         _assert_ternary_encounter_sources(sources)
     if is_germ:
