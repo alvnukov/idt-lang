@@ -433,6 +433,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_pump_clock_lag_extension",
         "probe_five_depth_memory_contrast",
     ),
+    "vacancy_inertia": (
+        "probe_vacancy_cut_flux",
+        "probe_static_current_reflection",
+        "probe_edge_inertia_scattering",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

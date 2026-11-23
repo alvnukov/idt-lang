@@ -164,6 +164,11 @@ PACKS = {
         "pump_clock_extended_delay_comparisons": "probe_pump_clock_lag_extension",
         "five_depth_stochastic_memory_contrast": "probe_five_depth_memory_contrast",
     }),
+    "primitive_vacancy_inertia_inventory.json": ("vacancy_inertia", {
+        "unsigned_vacancy_cut_flux": "probe_vacancy_cut_flux",
+        "static_current_wave_alias": "probe_static_current_reflection",
+        "edge_inertia_scattering": "probe_edge_inertia_scattering",
+    }),
 }
 
 
