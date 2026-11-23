@@ -156,6 +156,10 @@ PACKS = {
         "anonymous_refinement_relations": "probe_anonymous_refinement_relations",
         "modular_ternary_dark_panel": "probe_modular_contact_nulls",
     }),
+    "primitive_particle_label_limits_inventory.json": ("particle_label_limits", {
+        "five_flag_global_line_options": "probe_flag_center_blindness",
+        "pair_cup_turn_exchange": "probe_pair_cup_exchange",
+    }),
 }
 
 
