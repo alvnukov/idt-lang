@@ -515,6 +515,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_facilitated_forest_signal",
         "probe_localized_shell_packets",
     ),
+    "bench_existential_link_comparison": (
+        "probe_available_link_logic",
+        "probe_link_rule_separation",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

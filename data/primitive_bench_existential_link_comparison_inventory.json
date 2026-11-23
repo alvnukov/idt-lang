@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_available_link_programs",
+      "role": "route",
+      "components": [
+        "one target edge toggles once on existence of a neighboring occupied link"
+      ],
+      "declared_status": "source-only finite topology, word and isolation-control certificates",
+      "missing_bridges": [
+        "no endogenous encounter order, isolation or quantum significance"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_available_link_logic.py",
+          "first_line": 1,
+          "last_line": 344,
+          "file_sha256": "b44ae228a24e7e80edc736e35a5482d6e9e696e3cb001053b115ff693ba53f06"
+        }
+      ]
+    },
+    {
+      "id": "archive_robust_link_rule_panel",
+      "role": "route",
+      "components": [
+        "measurement design from exact toggle predictions on raw finite graph preparations"
+      ],
+      "declared_status": "twenty-eight behavioral classes with certified clean and one-error discrimination costs",
+      "missing_bridges": [
+        "unknown rules, preparation costs and real measurement noise not inferred"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_link_rule_separation.py",
+          "first_line": 1,
+          "last_line": 455,
+          "file_sha256": "5b13db02eb491d0cea646a09109a88fa58f7968e4f38d04383c1e58beb77482b"
+        }
+      ]
+    }
+  ]
+}
