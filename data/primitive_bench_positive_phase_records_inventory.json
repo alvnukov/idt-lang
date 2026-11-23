@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_native_positive_phase_coincidence",
+      "role": "route",
+      "components": [
+        "two-copy phase alignments and reversible one-contact coincidence output"
+      ],
+      "declared_status": "finite positive instrument with supplied wiring",
+      "missing_bridges": [
+        "its construction neither selects an alignment nor derives probability or a certified null"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_phase_coincidence.py",
+          "first_line": 1,
+          "last_line": 401,
+          "file_sha256": "3090fb02ec03ab81979141db1fe101db3d03da259c93aa737f52b62f312f9d75"
+        }
+      ]
+    },
+    {
+      "id": "archive_positive_phase_quotient_network_limit",
+      "role": "route",
+      "components": [
+        "orbit quotients, integer contrasts and unconditional two-source setting records"
+      ],
+      "declared_status": "finite quotient construction and bounded deterministic-address model",
+      "missing_bridges": [
+        "Born sampling, independently justified composition and locally nonclassical outcome coupling remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_raw_packet_phase_quotients.py",
+          "first_line": 1,
+          "last_line": 569,
+          "file_sha256": "0c90b7f6bb1347e5bee7c0378850eb58f24d894567d01d928c1be09b29cbdd18"
+        }
+      ]
+    }
+  ]
+}
