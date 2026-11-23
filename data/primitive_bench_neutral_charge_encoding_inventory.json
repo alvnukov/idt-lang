@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "neutral_pair_sheet_source_wall",
+      "role": "route",
+      "components": [
+        "Neutral pair orientation"
+      ],
+      "declared_status": "Neutrality and common projection leave source sheet choices unresolved",
+      "missing_bridges": [
+        "No physical pair production law"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_neutral_pair_lift.py",
+          "first_line": 1,
+          "last_line": 164,
+          "file_sha256": "5b6f1ca704d879c5d8cd6930d593f809b67524839938c6749ce66552604cb848"
+        }
+      ]
+    },
+    {
+      "id": "binary_charge_table_encoding",
+      "role": "route",
+      "components": [
+        "Microscopic and compiled charge"
+      ],
+      "declared_status": "A dual-rail word implements charge-table endpoints where direct binary encodings fail",
+      "missing_bridges": [
+        "Static additive charge on internal steps is not thereby derived"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_charge_encoding.py",
+          "first_line": 1,
+          "last_line": 223,
+          "file_sha256": "1a544c675086fc5d1717041815a50d12a5e4ef5addf281ee7a1f67e523601796"
+        }
+      ]
+    }
+  ]
+}

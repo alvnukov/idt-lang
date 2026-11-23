@@ -614,6 +614,23 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_staggered_binary_codebooks",
         "probe_two_helper_staggered_search",
     ),
+    "bench_unclocked_observations": (
+        "probe_staggered_next_event",
+        "probe_staggered_raw_charge",
+        "probe_staggered_relational_sector",
+        "probe_staggered_topology",
+    ),
+    "bench_relational_unanimity": (
+        "probe_unanimous_fano_clock",
+        "probe_relational_unanimous_clock",
+    ),
+    "bench_neutral_charge_encoding": (
+        "probe_neutral_pair_lift",
+        "probe_binary_charge_encoding",
+    ),
+    "bench_ion_edit_robustness": (
+        "probe_ion_edit_robustness",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
