@@ -416,6 +416,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_pump_locked_hbt",
         "probe_irrevocable_event_prefix",
     ),
+    "relational_signal_channels": (
+        "probe_relational_signal_metric",
+        "probe_relational_clock_modes",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
