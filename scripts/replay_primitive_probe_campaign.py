@@ -519,6 +519,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_available_link_logic",
         "probe_link_rule_separation",
     ),
+    "bench_packet_clock_and_observation": (
+        "probe_shell_shutter_protocols",
+        "probe_packet_scheduler_fairness",
+        "probe_reversible_packet_return",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
