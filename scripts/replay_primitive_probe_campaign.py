@@ -488,6 +488,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_native_phase_coincidence",
         "probe_raw_packet_phase_quotients",
     ),
+    "bench_clean_quartet_compilers": (
+        "probe_clean_quartet_compiler",
+        "probe_single_relation_quartet",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

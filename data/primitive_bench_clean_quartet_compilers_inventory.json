@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_clean_pair_quartet_compiler",
+      "role": "route",
+      "components": [
+        "reversible pair swaps in a bonded path and clean quartet input-output table"
+      ],
+      "declared_status": "exact programmed four-place gate on finite supplied opportunities",
+      "missing_bridges": [
+        "schedule, carrier preparation, individual encounters and physical relevance are supplied"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_clean_quartet_compiler.py",
+          "first_line": 1,
+          "last_line": 426,
+          "file_sha256": "56f6b107b88329a51fe78e7f408a28ed2dede6aaa9e7ad8f7327adde4e26b7dc"
+        }
+      ]
+    },
+    {
+      "id": "archive_symmetric_boolean_relation_quartet",
+      "role": "route",
+      "components": [
+        "loop and link updates on one symmetric Boolean relation"
+      ],
+      "declared_status": "two distinct simple local rules compile the clean table with different timing and quiescence",
+      "missing_bridges": [
+        "autonomous operation selection, spacetime, sources and quantum readout remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_single_relation_quartet.py",
+          "first_line": 1,
+          "last_line": 582,
+          "file_sha256": "e428ac198db6dbd99a35fc109b9116e72829fbb6ef13f1d97d58e1e50a4cf8ea"
+        }
+      ]
+    }
+  ]
+}
