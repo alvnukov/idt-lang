@@ -141,6 +141,12 @@ PACKS = {
         "permutation_anonymous_signed_bucket": "probe_anonymous_signed_bucket",
         "overlapping_signed_contact_failure": "probe_overlapping_bucket_dynamics",
     }),
+    "primitive_single_ticket_transport_inventory.json": ("single_ticket_transport", {
+        "equivariant_one_ticket_transport": "probe_equivariant_event_tickets",
+        "autonomous_fixed_frame_ticket_clock": "probe_autonomous_ticket_clock",
+        "pump_locked_hbt_lag_four": "probe_pump_locked_hbt",
+        "irrevocable_fine_event_prefix": "probe_irrevocable_event_prefix",
+    }),
 }
 
 
