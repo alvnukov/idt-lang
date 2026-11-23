@@ -405,6 +405,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_anonymous_reference_collision",
         "probe_local_cluster_charge_descent",
     ),
+    "signed_contact_streams": (
+        "probe_signed_rotor_junction",
+        "probe_anonymous_signed_bucket",
+        "probe_overlapping_bucket_dynamics",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

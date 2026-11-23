@@ -136,6 +136,11 @@ PACKS = {
         "anonymous_relative_quartet_collision": "probe_anonymous_reference_collision",
         "relative_charge_cluster_descent": "probe_local_cluster_charge_descent",
     }),
+    "primitive_signed_contact_stream_inventory.json": ("signed_contact_streams", {
+        "ordered_signed_contact_rotor": "probe_signed_rotor_junction",
+        "permutation_anonymous_signed_bucket": "probe_anonymous_signed_bucket",
+        "overlapping_signed_contact_failure": "probe_overlapping_bucket_dynamics",
+    }),
 }
 
 
