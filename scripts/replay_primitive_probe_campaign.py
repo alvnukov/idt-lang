@@ -524,6 +524,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_packet_scheduler_fairness",
         "probe_reversible_packet_return",
     ),
+    "bench_directed_shape_motion": (
+        "probe_three_link_translation",
+        "probe_binary_shape_gait",
+        "probe_conserved_bond_gait",
+        "probe_native_temporal_reversal",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
