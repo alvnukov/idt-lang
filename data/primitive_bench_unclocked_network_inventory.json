@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "overlap_breaks_isolated_unclocked_compiler",
+      "role": "route",
+      "components": [
+        "Clean observations on overlapping devices"
+      ],
+      "declared_status": "An isolated exact gadget leaks eight unordered clean pairs when joined",
+      "missing_bridges": [
+        "Uniform random contact rates are conditional"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unclocked_binary_compiler.py",
+          "first_line": 1,
+          "last_line": 261,
+          "file_sha256": "49d82b4cff85da623f9b85695f34ecac380fffaef7440640930cd5bb5e24b495"
+        }
+      ]
+    },
+    {
+      "id": "common_book_unclocked_template_census",
+      "role": "route",
+      "components": [
+        "Uniform binary site codes"
+      ],
+      "declared_status": "All isolated-exact fits with up to two private helpers leak on a three-site path",
+      "missing_bridges": [
+        "Only specified widths and support class"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_unclocked_template_census.py",
+          "first_line": 1,
+          "last_line": 272,
+          "file_sha256": "ff818d09ccc44619fbe52403f11952eb7d9c4d50386a23f66b0431bf2ed181db"
+        }
+      ]
+    },
+    {
+      "id": "staggered_one_helper_window_wall",
+      "role": "route",
+      "components": [
+        "Nonuniform cell codes"
+      ],
+      "declared_status": "Seventy-two one-helper choices fit one window but no adjacent exact window overlaps",
+      "missing_bridges": [
+        "Larger helper stocks are not ruled out"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_staggered_binary_codebooks.py",
+          "first_line": 1,
+          "last_line": 284,
+          "file_sha256": "59b900106177061ed3cc2492dd146bebe74e0b5cecf96ee235d720c066658bf2"
+        }
+      ]
+    },
+    {
+      "id": "staggered_two_helper_unscheduled_path",
+      "role": "route",
+      "components": [
+        "Unclocked clean path connectivity"
+      ],
+      "declared_status": "Two-valued contact reproduces reachable clean pairs through length six with an all-length algebraic route",
+      "missing_bridges": [
+        "Path wiring alternating site books and endpoint observation are supplied"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_helper_staggered_search.py",
+          "first_line": 1,
+          "last_line": 458,
+          "file_sha256": "2fa2030a7b7ae9249c921ae801ffa308a315e3b73d41a242518fa1b1f841d23f"
+        }
+      ]
+    }
+  ]
+}

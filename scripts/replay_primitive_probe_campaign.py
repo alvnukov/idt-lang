@@ -608,6 +608,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_binary_unanimous_triples",
         "probe_mixed_binary_triples",
     ),
+    "bench_unclocked_network": (
+        "probe_unclocked_binary_compiler",
+        "probe_unclocked_template_census",
+        "probe_staggered_binary_codebooks",
+        "probe_two_helper_staggered_search",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
