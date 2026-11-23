@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "shared_port_grant_and_ordered_fifo",
+      "role": "route",
+      "components": [
+        "Half-filled complementation on two closed stars, or event-indexed open wires with held mirrors"
+      ],
+      "declared_status": "two recurring grant cycles and an exact phase-dependent ordered-traffic filter",
+      "missing_bridges": [
+        "The closed grant supplies opposite port roles; stalling alone cannot retime independent arrivals."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_raw_contact_grant_fifo.py",
+          "first_line": 1,
+          "last_line": 281,
+          "file_sha256": "05b8f20d1dddf3f4e4cf080ee868786819eaa8e59496ef368e78b75a340796fb"
+        }
+      ]
+    },
+    {
+      "id": "incident_edge_frame_alternatives",
+      "role": "route",
+      "components": [
+        "Equal versus opposite endpoint occupations, with one event updating the shared edge"
+      ],
+      "declared_status": "finite motif, doubled-triangle and half-filled K5 order and frame discriminators",
+      "missing_bridges": [
+        "Edge frames, the domain of an event, and simultaneous-write semantics are not fixed by the local table."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_contact_edge_frames.py",
+          "first_line": 1,
+          "last_line": 234,
+          "file_sha256": "af1842e3a86ae80aaeaa62dcc68ba91246e628073687e0707fe6835321c4e323"
+        }
+      ]
+    },
+    {
+      "id": "neighbor_equality_twins_and_cycle_parity",
+      "role": "route",
+      "components": [
+        "Classify ports by equal external neighbor populations and exchange twins, with or without the two singletons"
+      ],
+      "declared_status": "same offers; different loop-parity histories on the supplied octahedron",
+      "missing_bridges": [
+        "Persistent incidence and an event choice are supplied; the finite shift is not a freely propagating particle."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_neighbor_twins_flux.py",
+          "first_line": 1,
+          "last_line": 402,
+          "file_sha256": "e10b9e4967c72d98681933dca8ef6a4379514059ce43f5c9d709e948787cc01b"
+        }
+      ]
+    }
+  ]
+}

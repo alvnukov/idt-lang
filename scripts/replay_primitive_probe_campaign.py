@@ -457,6 +457,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_reversible_pair_retiming",
         "probe_feedback_pulse_gain_control",
     ),
+    "bench_contact_composition": (
+        "probe_raw_contact_grant_fifo",
+        "probe_contact_edge_frames",
+        "probe_neighbor_twins_flux",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
