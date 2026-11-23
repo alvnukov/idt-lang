@@ -530,6 +530,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_conserved_bond_gait",
         "probe_native_temporal_reversal",
     ),
+    "bench_two_junction_comparison": (
+        "probe_bond_carrier_geometry",
+        "probe_raw_bond_junction_rates",
+        "probe_fixed_phase_four_port",
+        "probe_phase_gradient_tomography",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
