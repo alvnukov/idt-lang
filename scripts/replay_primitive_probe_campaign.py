@@ -552,6 +552,11 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_two_bond_entrance_collar",
         "probe_packet_free_pair_record",
     ),
+    "bench_colorless_arm_comparison": (
+        "probe_colorless_packet_arms",
+        "probe_separated_empty_arm_transport",
+        "probe_undriven_colorless_analyzer",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
