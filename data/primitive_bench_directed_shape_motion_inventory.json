@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_three_link_translation",
+      "role": "route",
+      "components": [
+        "anonymous shell rule carrying a three-link translating shape"
+      ],
+      "declared_status": "two exact directional options with reflected seed and non-undo control",
+      "missing_bridges": [
+        "the original rule cannot select an orientation of that symmetric seed"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_link_translation.py",
+          "first_line": 1,
+          "last_line": 245,
+          "file_sha256": "7e52169d502c39a43131c4711694bf35a8985a050a21d7b53651ad3074a58e8c"
+        }
+      ]
+    },
+    {
+      "id": "archive_copy_erase_gait",
+      "role": "route",
+      "components": [
+        "directed copy and erase of an oriented binary shape on a cycle square"
+      ],
+      "declared_status": "unique local successor on finite prepared sectors without last-event memory",
+      "missing_bridges": [
+        "carrier, asymmetric seed and new directed rule supplied"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_shape_gait.py",
+          "first_line": 1,
+          "last_line": 167,
+          "file_sha256": "cb2c170b306672d706e8b32ee6acd12a5c35c3684d14525e92ca7b7a354c11a2"
+        }
+      ]
+    },
+    {
+      "id": "archive_conserved_bond_gait",
+      "role": "route",
+      "components": [
+        "pivot updates on an incidence-distinguished short and long marked bond"
+      ],
+      "declared_status": "finite self-directed count-conserving clean sector with multi-seed conflicts",
+      "missing_bridges": [
+        "no physical clock or autonomous general many-body event choice"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_conserved_bond_gait.py",
+          "first_line": 1,
+          "last_line": 209,
+          "file_sha256": "875e0b5d5691e0500df54d850b0232d6f2c1790e1a30993a9720a2c67d18795b"
+        }
+      ]
+    },
+    {
+      "id": "archive_native_temporal_reversal",
+      "role": "route",
+      "components": [
+        "address-free reversal of a moving packet and passive observations along raw histories"
+      ],
+      "declared_status": "exact finite reversal, temporal asymmetry and signed-representation controls",
+      "missing_bridges": [
+        "no derivation of physical pair-context correlations, weak measurements or quantum dynamics"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_temporal_reversal.py",
+          "first_line": 1,
+          "last_line": 325,
+          "file_sha256": "bbf20aa8f81d215f0f2461c23fed341befec7f0ed30a9f51e87a75d600fb333e"
+        }
+      ]
+    }
+  ]
+}
