@@ -484,6 +484,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_pair_contact_completion",
         "probe_relational_quartet_records",
     ),
+    "bench_positive_phase_records": (
+        "probe_native_phase_coincidence",
+        "probe_raw_packet_phase_quotients",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
