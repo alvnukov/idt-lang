@@ -511,6 +511,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_packet_setting_dependence",
         "probe_weak_parity_reversal",
     ),
+    "bench_forest_and_localized_packet": (
+        "probe_facilitated_forest_signal",
+        "probe_localized_shell_packets",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

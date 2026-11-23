@@ -1,0 +1,24 @@
+# A packet that stays local without asking the schedule to keep it together
+
+Take two copies of the same cubic graph H; join corresponding vertices by a rung. Initially only the rungs carry a mark. This background is stationary. To prepare a packet, **externally** flip the four edges at one vertex in the upper copy. This adds two marks. After preparation each event conserves their total. Vertices and rungs use indices in the replay, not spatial coordinates in the rule.
+
+Two candidate rules agree on an endpoint test but disagree about what travels. In both, an offered vertex can act only when two of its four edges are marked. Rule 255 complements that whole star. Rule 32 also asks how many of the *other* edges at each neighboring vertex are marked. It uses only equality of these four counts. Exactly two counts must agree and the two others must be distinct from them and from each other. The two marked ports must be the equal pair or its complement. Only then does the star flip.
+
+| Starting from one prepared vertex on the cube | Rule 255 | Rule 32 |
+| --- | --- | --- |
+| Possible shapes of the changed upper-star set | Any nonempty induced tree | One vertex or two adjacent vertices |
+| Distinct raw configurations in the component | 100 | 20 |
+| First disappearance of a target rung at distance d > 0 | d events | 2d−1 events |
+| First arrival as an isolated packet | 2d events | 2d events |
+
+These are **minimum event counts**, not a signal speed or a probability. The first-contact test at distance two costs two versus three events; using only the final singleton would miss the distinction. Rule 255 adds or removes a leaf of the changed set. Under rule 32 the reachable graph on the cube is the incidence graph of H: a singleton can grow into any incident edge; that adjacent pair can shrink to either endpoint, but not extend further. This comparison checks the full raw graph, including the lack of extra moves, not one programmed trajectory. The same rule gives 25, 25 and 35 raw states on the pentagonal prism, Petersen and Heawood carriers.
+
+**A current snapshot suffices.** In these single-packet orbits the zero-mark-degree vertices are precisely the lower mates of the changed upper stars. Each zero has exactly one neighbor of marked degree at least two. Undoing the stars of these neighbors reconstructs the *entire* stationary matching from that snapshot. The probe checks this for every reached raw state. Local observability is not the construction of a persistent internal clock or detector.
+
+**A correct rule is not unique even for this small task.** Scan all 256 anonymous shell tables against all singleton and adjacent-pair transitions: 32 pass on the cube, 16 on the pentagonal prism and 64 on Petersen. None fits the same incidence transport on the triangular prism or K₃,₃; K₄ has a different 128-rule family. Even every upper-layer star subset across the cube, pentagonal prism and Petersen (2,304 preparations) fails to separate 32, 33, 48 and 49. Two alternate preparations using both layers distinguish these four: at the same offered cube center one query reads selector bit 16 and the other bit 1. These preparations are interventions, not claimed reachable from the original packet.
+
+**Several packets are not guaranteed to travel independently.** On the cube two antipodal roots are frozen. On the hexagonal prism the two root sites 0 and 9 are at distance four. Initially all six solo moves are available together; offers 10 then 11 already produce an occupied component of size three. The full raw component has 489 configurations. A three-root Heawood preparation gives an independent two-event counterexample. This is a collision/scheduling constraint, neither fermionic exclusion nor a measured interaction.
+
+The preparation and the relational carrier matter. For rule 255 the triangular prism and K₃,₃ agree on every *frequency in the singleton distance histogram* (nine unordered pairs at two events, six at four); their six nonadjacent pair preparations form one communicating 12-state sector on the prism but six isolated states on K₃,₃. Changing only the stationary perfect matching on the same K₄ prism also changes how many root sites are accessible: four for the vertical matching versus eight for each of the fifteen others. The mechanism reads geometry already in the graph and the preparation. It does not single out three spatial dimensions, provide an intrinsic time unit, or supply a quantum amplitude.
+
+Replay the [raw forest/metric comparison](probe_facilitated_forest_signal.py) and [bounded packet, collisions and alternative preparations](probe_localized_shell_packets.py) with `python3 scripts/replay_primitive_probe_campaign.py --bundle bench_forest_and_localized_packet`. For a different earlier signal mechanism see the [relational metric probe](probe_relational_signal_metric.py).
