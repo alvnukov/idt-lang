@@ -371,6 +371,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_translated_collision_intervention",
         "probe_collision_reference_memory",
     ),
+    "local_transport_exchange": (
+        "probe_reunion_transport_metric",
+        "probe_two_packet_exchange_topology",
+        "probe_exchange_sector_kinetics",
+        "probe_fermion_exchange_intervention",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
