@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "single_doubled_packet_octagon_order",
+      "role": "route",
+      "components": [
+        "A single doubled occupation moves at the only legal four-place contact of a selected perfect matching"
+      ],
+      "declared_status": "an elementary two-context central involution at eight sites and a measurable return with a supplied spur",
+      "missing_bridges": [
+        "Matching controls, packet sector and an address-relative endpoint readout are supplied; contrast anticommutation is not interference."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_matching_order.py",
+          "first_line": 1,
+          "last_line": 390,
+          "file_sha256": "26ff2c65bf09662cd5aeaf024a0a38940829a30b687062fdeb1d17ab4b04ea26"
+        }
+      ]
+    },
+    {
+      "id": "minimal_three_octagonal_contexts",
+      "role": "route",
+      "components": [
+        "Three matching contexts of a raw packet with equal bicolored periods and a shortest-circuit constraint"
+      ],
+      "declared_status": "unique smallest colored component up to relabeling and a context-commuting quarter-turn word on odd contrasts",
+      "missing_bridges": [
+        "Minimality, geometry and colors are not derived; a larger connected cover preserves the local tests but loses the common square."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_octagon_three_contexts.py",
+          "first_line": 1,
+          "last_line": 315,
+          "file_sha256": "fa200e0fdc2d2cc196cb5882ba7e32dd3bdd7fe0ae9ffe90e70dd4c5c63552eb"
+        }
+      ]
+    }
+  ]
+}

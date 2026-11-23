@@ -466,6 +466,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_measured_asi_loop_parity",
         "probe_asi_cut_distance",
     ),
+    "bench_packet_phase_words": (
+        "probe_packet_matching_order",
+        "probe_octagon_three_contexts",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
