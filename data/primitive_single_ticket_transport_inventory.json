@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "equivariant_one_ticket_transport",
+      "role": "route",
+      "components": [
+        "equivariant transport of one square ticket with reusable physical reference"
+      ],
+      "declared_status": "fixed-point wall and finite six-state reversible lifts",
+      "missing_bridges": [
+        "Formation of tickets, physical reference and unbiased initialization are not established."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_equivariant_event_tickets.py",
+          "first_line": 1,
+          "last_line": 324,
+          "file_sha256": "3c9b88e245b487e840bc06aeccc7fea74c5f0f4af359c3cfb78dbf47e306339f"
+        }
+      ]
+    },
+    {
+      "id": "autonomous_fixed_frame_ticket_clock",
+      "role": "route",
+      "components": [
+        "full deterministic ticket cycle and commuting scatter with a fixed reference"
+      ],
+      "declared_status": "twelve-state construction, sampling alias and temporal correlations",
+      "missing_bridges": [
+        "Static whole-cycle counts do not imply independent shots or a local clock implementation."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_autonomous_ticket_clock.py",
+          "first_line": 1,
+          "last_line": 228,
+          "file_sha256": "fe19775c8829233a189675709dd27ffcc67736cb9b44e21eefdaddfc65529d88"
+        }
+      ]
+    },
+    {
+      "id": "pump_locked_hbt_lag_four",
+      "role": "route",
+      "components": [
+        "two-arm anticoincidence prediction at four pump periods and archived delay bins"
+      ],
+      "declared_status": "original histogram contrasts a clean pump-locked static four-cycle",
+      "missing_bridges": [
+        "Per-emission timestamps, false-pair bound and general stochastic independence are missing."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_pump_locked_hbt.py",
+          "first_line": 1,
+          "last_line": 146,
+          "file_sha256": "9dce8832a3d25972b6e3fadad1288e72e48596098095201fc3e63fb4e1b550d2"
+        }
+      ]
+    },
+    {
+      "id": "irrevocable_fine_event_prefix",
+      "role": "route",
+      "components": [
+        "common fine-label capacities across delayed interventions"
+      ],
+      "declared_status": "exact conditional common-mass bounds with noisy and coarse controls",
+      "missing_bridges": [
+        "Passive records and independent interventions are specified, not derived."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_irrevocable_event_prefix.py",
+          "first_line": 1,
+          "last_line": 273,
+          "file_sha256": "634b4673966bde73a9d6e7fa116b7ca2b1c910925bb174bbc09fc90f83a6419a"
+        }
+      ]
+    }
+  ]
+}

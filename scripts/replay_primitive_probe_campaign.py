@@ -410,6 +410,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_anonymous_signed_bucket",
         "probe_overlapping_bucket_dynamics",
     ),
+    "single_ticket_transport": (
+        "probe_equivariant_event_tickets",
+        "probe_autonomous_ticket_clock",
+        "probe_pump_locked_hbt",
+        "probe_irrevocable_event_prefix",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
