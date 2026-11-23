@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "same_rank_different_return_metrics",
+      "role": "route",
+      "components": [
+        "An internal return-clock protocol compares two three-period covers. Enumerate shortest bounded returns, finite counter aliasing, extremal velocity lattice indices and a symmetric-delay control."
+      ],
+      "declared_status": "Thirteen versus at most seven distinct four-hop returns distinguishes total-geometry interventions; a period rank is not a Euclidean or Lorentz metric.",
+      "missing_bridges": [
+        "Derive the square release rule, clock, reciprocal unit costs and retained counter from endogenous matter."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reunion_transport_metric.py",
+          "first_line": 1,
+          "last_line": 433,
+          "file_sha256": "568066501e9b49c6182c9031edd4b84faad29963eae4163cb00910005f1ed8fb"
+        }
+      ]
+    },
+    {
+      "id": "two_packet_exchange_order_from_paths",
+      "role": "route",
+      "components": [
+        "Form the unordered two-occupation configuration space from graph bonds and interchange independent local moves. Use exact integer and binary algebra, test a Y exchange and a doubled lap, planar graphs and coincidence-permitted control."
+      ],
+      "declared_status": "On the folded carrier the selected exchange has order two for commutative records. This permits either sign; hard-core exclusion was supplied.",
+      "missing_bridges": [
+        "Derive occupancy constraints, selection of a character, coherent instruments and a physical spin-statistics relation."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_packet_exchange_topology.py",
+          "first_line": 1,
+          "last_line": 191,
+          "file_sha256": "80e246cdfc66c7b4b4bb374d128db5a4af2fa75bfbbc38257369a5b10cabf0ff"
+        }
+      ]
+    },
+    {
+      "id": "exchange_sector_reciprocal_kinetics",
+      "role": "route",
+      "components": [
+        "Compare unsigned and sign-transported pair kinetics, exact wedge spectra, spring and kinetic energy choices, and a short open Y transfer with unequal reciprocal weights."
+      ],
+      "declared_status": "Equal negative hopping favors the even sector, positive hopping ties at the lower bound. A three-hop linear signal can distinguish even and odd.",
+      "missing_bridges": [
+        "Explain actual sector preparation, coherence, detector coupling and spectator-independent bond transport."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_exchange_sector_kinetics.py",
+          "first_line": 1,
+          "last_line": 238,
+          "file_sha256": "f254fdb68fb585f064cafc812eec7a95174c97e2b6f041a6738c2628c14d88a2"
+        }
+      ]
+    },
+    {
+      "id": "fermion_exchange_noise_controls",
+      "role": "route",
+      "components": [
+        "Compare two-source partition noise for independently tagged packets with real electron and lithium-atom summaries; test partial overlap, correlated routing and interaction countermodels."
+      ],
+      "declared_status": "Measured exchange-sensitive contrasts are conditional on preparations and interactions, not direct measurements of a character of this graph.",
+      "missing_bridges": [
+        "Supply an independently calibrated realization of the graph and its detector, rather than mapping laboratory devices by name."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_fermion_exchange_intervention.py",
+          "first_line": 1,
+          "last_line": 246,
+          "file_sha256": "1b966812bf6f4c255fc9e97ccebcb30a77688e73741cf4aa928fd18729bcc6da"
+        }
+      ]
+    }
+  ]
+}

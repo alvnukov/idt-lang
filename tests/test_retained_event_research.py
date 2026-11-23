@@ -102,6 +102,12 @@ PACKS = {
         "absolute_blank_relative_encounter_intervention": "probe_translated_collision_intervention",
         "absolute_collision_reference_memory": "probe_collision_reference_memory",
     }),
+    "primitive_transport_exchange_inventory.json": ("local_transport_exchange", {
+        "same_rank_different_return_metrics": "probe_reunion_transport_metric",
+        "two_packet_exchange_order_from_paths": "probe_two_packet_exchange_topology",
+        "exchange_sector_reciprocal_kinetics": "probe_exchange_sector_kinetics",
+        "fermion_exchange_noise_controls": "probe_fermion_exchange_intervention",
+    }),
 }
 
 
