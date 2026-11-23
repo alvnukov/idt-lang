@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_forest_signal_metric",
+      "role": "route",
+      "components": [
+        "raw half-filled star on a doubled cubic graph with rung matching"
+      ],
+      "declared_status": "conditional singleton and pair event-count metric with preparation controls",
+      "missing_bridges": [
+        "graph, background, causal ordering and physical metric not selected"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_facilitated_forest_signal.py",
+          "first_line": 1,
+          "last_line": 522,
+          "file_sha256": "81e3a9314b71bd9fc2f49def2f8ed295cfc712c9b9e09e146781a5102952e685"
+        }
+      ]
+    },
+    {
+      "id": "archive_bounded_shell_packet",
+      "role": "route",
+      "components": [
+        "equality-only neighborhood rule on the same marked edge carrier"
+      ],
+      "declared_status": "exact finite localized incidence packets with alias and density controls",
+      "missing_bridges": [
+        "no intrinsic direction, many-body free motion, clock or quantum amplitudes"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_localized_shell_packets.py",
+          "first_line": 1,
+          "last_line": 424,
+          "file_sha256": "b5668e4eccace21a10ad938bc9202655018bdbf31a45784da402cfe87081bff2"
+        }
+      ]
+    }
+  ]
+}
