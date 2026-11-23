@@ -16,6 +16,8 @@ A pair of occupied bits in staggered Rule 54 travels, collides and recovers with
 
 A compensated two-port switch composes on trees, but a repeated edge gives a three-port table no fixed complete single-mode unitary can reproduce. A four-reading test quantifies the required precision and stays inconclusive if the mode or sampling assumptions are unknown. [Three-port tables, tolerance and echo controls](scripts/WHEN_THREE_PORTS_REMEMBER.md).
 
+One three-label pair law, `aa ↔ bb` and `Ta ↔ aT`, routes a token and writes ordinary detector flags. A passive dye passes the same port tests but cannot write those flags. Both the working circuit and the binary control include vacuum launches. [Three marks, a tree implementation and the binary pair boundary](scripts/WHEN_THREE_MARKS_CAN_WRITE_A_CLICK.md).
+
 ### Run the public demonstration
 
 ```sh
