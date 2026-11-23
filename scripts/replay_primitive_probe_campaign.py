@@ -599,6 +599,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_ternary_gap_memory",
         "probe_ternary_path_normal_form",
     ),
+    "bench_measured_ion_contexts": (
+        "probe_measured_ion_pentagon",
+        "probe_ion_coupling_certificates",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

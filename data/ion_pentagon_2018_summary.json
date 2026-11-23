@@ -1,0 +1,37 @@
+{
+  "schema": "idt.measured_ion_pentagon.v1",
+  "source": {
+    "paper": "M. Malinowski et al., Probing the limits of correlations in an indivisible quantum system (2018)",
+    "doi": "https://doi.org/10.1103/PhysRevA.98.050102",
+    "methods": "https://arxiv.org/html/1712.06494",
+    "landing_page": "https://tiqi.ethz.ch/publications-and-awards/public-datasets.html",
+    "archive_url": "https://ethz.ch/content/dam/ethz/special-interest/phys/quantum-electronics/tiqi-dam/documents/Datasets/Dataset_Public%20repository.zip",
+    "archive_bytes": 13985766,
+    "archive_sha256": "0febe99a7a6e3c12ac72726937737ad0cc1926872d7c055ff6d5900ad95f60b4"
+  },
+  "selection": {
+    "apparatus": "Single trapped calcium-40 ion; five observables; gen = full modular pulse sequence, not the shortened concatenated sho protocol.",
+    "rule": "The lower median of the distinct pulse times, selected before inspecting the raw numerical rows. No optimization of angle or selection by outcomes. Not the paper's nearest-to-compatibility Table I rule.",
+    "rotation_time_keys": ["10.4", "10.5", "10.6", "10.7", "10.8", "10.9"],
+    "rotation_time_selected": "10.6",
+    "blocks_per_edge_and_time": 100,
+    "paired_shots_per_block": 100,
+    "cell_order": ["dark_dark", "dark_bright", "bright_dark", "bright_bright"],
+    "assignment": "First/second in chronological order; dark = -1 (bit 0), bright = +1 (bit 1). Bright iff PMT photon count >= 7; this reproduces the archived block means rather than optimizing a witness.",
+    "weights": "Equal weight per event within each edge. Sum five normalized edge contributions, one for each setting, each with 10000 archived shots in an order. No outcomes discarded in this replay."
+  },
+  "orders": {
+    "normal": {
+      "ordered_edges": [[1, 2], [2, 3], [3, 4], [4, 5], [5, 1]],
+      "counts": [[1028,4413,4555,4], [1084,4352,4554,10], [1070,4348,4560,22], [1001,4383,4609,7], [1077,4389,4527,7]],
+      "raw": {"member": "Public repository/Raw shot files/kcbs_005_gen_nor_shots.txt", "sha256": "17366bc6c2ec85c7334487fcb11da8773b6c9ae0fa0baae090c7ee91f0db293b"},
+      "thresholded": {"member": "Public repository/Thresholded data/kcbs_005_gen_nor.csv", "sha256": "bf5d623a4929820d1cc26c84babadddac2cdc745c93b2e0dd0739281ebb0e967"}
+    },
+    "reverse": {
+      "ordered_edges": [[1, 5], [2, 1], [3, 2], [4, 3], [5, 4]],
+      "counts": [[1042,4461,4488,9], [1080,4350,4561,9], [1084,4416,4485,15], [994,4480,4514,12], [1014,4428,4552,6]],
+      "raw": {"member": "Public repository/Raw shot files/kcbs_005_gen_rev_shots.txt", "sha256": "a604248327705f55ab949c5906e888116d0d2483fd878ef932a7e02f0edea171"},
+      "thresholded": {"member": "Public repository/Thresholded data/kcbs_005_gen_rev.csv", "sha256": "f27a33e3a544465f068bd6a041ee2b9b35161bbe4b750003d031d64b44345d8e"}
+    }
+  }
+}

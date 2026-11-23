@@ -22,6 +22,8 @@ Four cosine-like phase settings extend natively to an eight-step **triangle**, n
 
 Removing the program leaves a two-state clock on selected ternary rings and a memory between neighboring tags. On an open path the checker decides exact reachability by reading both words once. It does not infer the chance or time of a detection. [Undriven clocks, unreachable meetings and reduced-word tests](scripts/WHEN_CONTACTS_CHOOSE_THE_NEXT_MOVE.md).
 
+The five-context test has a measured anchor: on a fixed slice of a public trapped-ion dataset, 44,690 of 50,000 outcome pairs were unlike. [Raw-data provenance, reproducible counts, and what they do not identify](scripts/WHAT_THE_ION_PENTAGON_MEASURED.md).
+
 ### Run the public demonstration
 
 ```sh

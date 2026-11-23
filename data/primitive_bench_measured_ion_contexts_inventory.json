@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_measured_ion_pentagon",
+      "role": "route",
+      "components": [
+        "Pinned primary trapped-ion five-context aggregate and optional original archive replay"
+      ],
+      "declared_status": "reports the raw paired outcomes at a score-independent pulse slice and bounds a hypothetical common-stock mismatch",
+      "missing_bridges": [
+        "no hidden mismatch or new significance directly measured; apparatus claims require experimental contract"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_measured_ion_pentagon.py",
+          "first_line": 1,
+          "last_line": 165,
+          "file_sha256": "a751f6d2140ebc7145f05815bc513eea10c41f99de378d71e05a1277321631c8"
+        }
+      ]
+    },
+    {
+      "id": "archive_exact_ion_coupling_interval",
+      "role": "route",
+      "components": [
+        "Exact empirical edge marginals with nonnegative coupling witnesses and event inequalities"
+      ],
+      "declared_status": "wide sharp counterfactual mismatch intervals despite all twenty cells fixed in each order",
+      "missing_bridges": [
+        "identification interval for finite observed tables only; no population confidence or native physics claim"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ion_coupling_certificates.py",
+          "first_line": 1,
+          "last_line": 113,
+          "file_sha256": "238d92614af33e22b7fa798dd7e8ff96ae91790fdcd510d0f31ffe60dcd844b6"
+        }
+      ]
+    }
+  ]
+}
