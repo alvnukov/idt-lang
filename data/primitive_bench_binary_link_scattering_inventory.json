@@ -1,0 +1,81 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_staggered_binary_link_solitons",
+      "role": "route",
+      "components": [
+        "Known staggered Rule 54 on uncolored binary links with a supplied matching phase"
+      ],
+      "declared_status": "travel, local charge cancellation and delayed clean collisions in a finite cycle census",
+      "missing_bridges": [
+        "no selection of topology or matching, no quantum-particle interpretation"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_cycle_solitons.py",
+          "first_line": 1,
+          "last_line": 288,
+          "file_sha256": "a03277fc23a98e1993f7a348725e68ad2c33831ea9bacdc8c4e2628b4f90c2fb"
+        }
+      ]
+    },
+    {
+      "id": "archive_local_arrow_clock",
+      "role": "route",
+      "components": [
+        "Local sink firing and incident arrow reversal with one binary payload per site"
+      ],
+      "declared_status": "matched local event cuts recover staggered payload evolution with active and dead sector controls",
+      "missing_bridges": [
+        "clock arrows and their initial sector supplied, not a wall-time clock"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_sink_clock.py",
+          "first_line": 1,
+          "last_line": 277,
+          "file_sha256": "421d8470c33bec58acb8e7ea434ad75ba1c6b445fa8777480e7211045085b01a"
+        }
+      ]
+    },
+    {
+      "id": "archive_bare_binary_star_scattering",
+      "role": "route",
+      "components": [
+        "Fixed-order star of reversible link toggles with empty-center cut readout"
+      ],
+      "declared_status": "port-count contrasts reverse for clean pulses and the unchecked common part depends on arrival times",
+      "missing_bridges": [
+        "no general cleaning guarantee, conserved nonnegative packet weight or amplitude readout"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_star_contrast.py",
+          "first_line": 1,
+          "last_line": 264,
+          "file_sha256": "82d3b08e85275c8294a54085c93a415fdf850250b8b41a7759773c287884d885"
+        }
+      ]
+    },
+    {
+      "id": "archive_joined_binary_star_response",
+      "role": "route",
+      "components": [
+        "Two trivalent binary stars with a shared physical bridge and supplied clock orders"
+      ],
+      "declared_status": "one-omission mean matches one reflection; five of six composed full responses differ while all contrasts survive",
+      "missing_bridges": [
+        "no closed linear law for these connected count readers; more detailed carriers remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_joined_binary_stars.py",
+          "first_line": 1,
+          "last_line": 258,
+          "file_sha256": "b0fb039233fad5f05adfe1df8b28cfcb835d3df7343d076519f307936657fae5"
+        }
+      ]
+    }
+  ]
+}

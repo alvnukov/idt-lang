@@ -566,6 +566,12 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_colorless_pair_additivity",
         "probe_packet_current_noise",
     ),
+    "bench_binary_link_scattering": (
+        "probe_binary_cycle_solitons",
+        "probe_binary_sink_clock",
+        "probe_binary_star_contrast",
+        "probe_joined_binary_stars",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

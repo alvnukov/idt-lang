@@ -12,6 +12,8 @@ An exhaustive 400-rule search exposed a false-rejection risk: a four-label rule 
 
 A port that is dark for a single bond packet can receive two of them. In the separate four-label switch, two inputs look fermionic on one menu but fail a free-particle mean-count control on the next. Identical one-launch histograms can hide different fluctuations in counts summed over several launches. [Two-input tests and the experimental readout boundary](scripts/WHEN_TWO_INPUTS_SHARE_A_JUNCTION.md).
 
+A pair of occupied bits in staggered Rule 54 travels, collides and recovers with a measurable delay. The same local rule on a fixed-order fork reverses differences in clean pulse counts. Connecting a second fork preserves the differences but defeats the full linear prediction in five of six tests. [Binary scattering, local clocks and the joined-fork control](scripts/WHEN_BINARY_LINKS_SCATTER.md).
+
 ### Run the public demonstration
 
 ```sh
