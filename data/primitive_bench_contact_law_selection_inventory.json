@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "ternary_contact_operational_filter",
+      "role": "route",
+      "components": [
+        "Ternary law selection"
+      ],
+      "declared_status": "Three operational filters leave one law up to shade renaming among 24 tables",
+      "missing_bridges": [
+        "Choice of physical class and operations"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ternary_operational_selection.py",
+          "first_line": 1,
+          "last_line": 199,
+          "file_sha256": "7f6b6f03a3fd5e0c054a30bb638d019216816d1175e72007523fe6752a8d75dc"
+        }
+      ]
+    },
+    {
+      "id": "unanimous_binary_compiled_contact",
+      "role": "route",
+      "components": [
+        "Unanimous binary triple"
+      ],
+      "declared_status": "Two-state triples compile a ternary switch and reproduce prepared apparatus trials",
+      "missing_bridges": [
+        "Site code stocks and addressed contact word"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_unanimous_triples.py",
+          "first_line": 1,
+          "last_line": 256,
+          "file_sha256": "ed27d9959db1099601d4956c5fad7e0cc19f80040287d0ced31dd020be0b2760"
+        }
+      ]
+    },
+    {
+      "id": "mixed_binary_compiled_contact",
+      "role": "route",
+      "components": [
+        "Mixed binary triple"
+      ],
+      "declared_status": "A different homogeneous-vacuum law compiles the same switch without a helper",
+      "missing_bridges": [
+        "Same prepared observations do not select a raw law"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_mixed_binary_triples.py",
+          "first_line": 1,
+          "last_line": 241,
+          "file_sha256": "3f0ae828c4260f72afae21257e55284be943049015323f9f5c676a5980795934"
+        }
+      ]
+    }
+  ]
+}
