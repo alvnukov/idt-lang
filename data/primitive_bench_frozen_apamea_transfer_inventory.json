@@ -1,0 +1,24 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_frozen_apamea_within_instrument_transfer",
+      "role": "route",
+      "components": [
+        "unchanged Apamea parser and face parity protocol at six held-out temperatures"
+      ],
+      "declared_status": "four usable pairs and two inconclusive encodings in one instrument",
+      "missing_bridges": [
+        "instantaneous edge truth, independent measurements and elementary update identification remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_apamea_fixed_transfer.py",
+          "first_line": 1,
+          "last_line": 197,
+          "file_sha256": "7d1bfbad0aadef5ff0043c9fc4e762e320840557c529957c6a44043cc900999e"
+        }
+      ]
+    }
+  ]
+}
