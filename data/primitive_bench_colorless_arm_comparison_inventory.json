@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_reciprocal_uncolored_arms",
+      "role": "route",
+      "components": [
+        "A mirror symmetric one-token circuit from one four-label contact"
+      ],
+      "declared_status": "exact two-setting and averaged shutter rows with a fixed-mask countercontrol",
+      "missing_bridges": [
+        "An ordered circuit, prepared blank stock and a detector are supplied; the shutter does not cleanly replace a tag."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_colorless_packet_arms.py",
+          "first_line": 1,
+          "last_line": 317,
+          "file_sha256": "81c3c19dd5051c5dd4a0cfec150eacc5651f316099ac8e96bcd0c401bf008d4d"
+        }
+      ]
+    },
+    {
+      "id": "archive_separated_blank_transport",
+      "role": "route",
+      "components": [
+        "Independent transport lengths before and after local settings"
+      ],
+      "declared_status": "retained token with a matched empty-arm signal only at zero downstream gap in the four-label fixture",
+      "missing_bridges": [
+        "Common scheduling and fixed zero support do not cover active visitors, other laws or adaptive settings."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_separated_empty_arm_transport.py",
+          "first_line": 1,
+          "last_line": 367,
+          "file_sha256": "b140f7a1a2d61dcc3d02826cc0c71353a7529b19718a54b1ef38bef41de967b1"
+        }
+      ]
+    },
+    {
+      "id": "archive_undriven_colorless_analyzer",
+      "role": "route",
+      "components": [
+        "Three frozen edge clocks replacing a programmed analyzer"
+      ],
+      "declared_status": "exact all-time correct-arm maxima with separate detector and unresolved counts",
+      "missing_bridges": [
+        "The source, late operations, graph and choice of clock and meter are supplied."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_undriven_colorless_analyzer.py",
+          "first_line": 1,
+          "last_line": 274,
+          "file_sha256": "5685eb415ffaafc6f7f471b16f9ad2f09d6a284f3fc4a6f79060910be36a8dee"
+        }
+      ]
+    }
+  ]
+}

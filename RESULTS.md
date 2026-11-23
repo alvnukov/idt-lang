@@ -6,6 +6,8 @@
 
 A clean two-bond entrance offers a sharp test for spurious phases: one shape passes, the other can jam. A different four-label contact can instead write a detectable correlation **before a particle is injected**, even though each retained empty arm has the same individual distribution in the two preparations. [Entrance, blank preparation and countercontrols](scripts/WHAT_CAN_AN_EMPTY_ARM_REMEMBER.md).
 
+An uncolored token and three vacant labels suffice for a programmed two-arm switch. All 32 averaged shutter rows match a larger comparator. A fixed closure or a spatial gap distinguishes the circuits; removing the programmed four-label reader leaves only a clock-dependent arm bias. [The circuits, their stocks, and the three controls](scripts/WHEN_A_COLORLESS_TOKEN_READS_TWO_ARMS.md).
+
 ### Run the public demonstration
 
 ```sh
