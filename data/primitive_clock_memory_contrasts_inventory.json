@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "pump_clock_extended_delay_comparisons",
+      "role": "route",
+      "components": [
+        "unchanged delay windows at all available pump separations with countermodel class bounds"
+      ],
+      "declared_status": "published histogram contrasts masked small clocks and conditional independent intensity nulls",
+      "missing_bridges": [
+        "Per-emission timing and common acquisition/noise calibration are missing; long cycles can mimic low lags."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_pump_clock_lag_extension.py",
+          "first_line": 1,
+          "last_line": 177,
+          "file_sha256": "4e18f16368f91117a1c41beb9c99231aa52a6ccac2a5d660cc7665af4d4c4e40"
+        }
+      ]
+    },
+    {
+      "id": "five_depth_stochastic_memory_contrast",
+      "role": "route",
+      "components": [
+        "native rational interferometer probabilities at five specified circuit depths versus three hidden states"
+      ],
+      "declared_status": "finite positive-margin contrast, four-state exact control and nonhomogeneous escape",
+      "missing_bridges": [
+        "Complete state bound, fixed readout and interferometric preparation are proposed not measured."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_five_depth_memory_contrast.py",
+          "first_line": 1,
+          "last_line": 340,
+          "file_sha256": "e9a5e0728bbea846866c1d86cb5595683052567eac1fcebc1d2da698366226d8"
+        }
+      ]
+    }
+  ]
+}

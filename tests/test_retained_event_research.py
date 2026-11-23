@@ -160,6 +160,10 @@ PACKS = {
         "five_flag_global_line_options": "probe_flag_center_blindness",
         "pair_cup_turn_exchange": "probe_pair_cup_exchange",
     }),
+    "primitive_clock_memory_contrasts_inventory.json": ("clock_memory_contrasts", {
+        "pump_clock_extended_delay_comparisons": "probe_pump_clock_lag_extension",
+        "five_depth_stochastic_memory_contrast": "probe_five_depth_memory_contrast",
+    }),
 }
 
 
