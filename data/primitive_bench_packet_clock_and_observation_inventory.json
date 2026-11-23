@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_raw_shutter_protocols",
+      "role": "route",
+      "components": [
+        "same native packet with four distinct three-shutter interventions"
+      ],
+      "declared_status": "exact finite inclusion-exclusion and positive history controls",
+      "missing_bridges": [
+        "no optical apparatus or normalized quantum interference prediction"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_shell_shutter_protocols.py",
+          "first_line": 1,
+          "last_line": 218,
+          "file_sha256": "29f25b35fbcef391f5f5c0aa39f1435a40d1d5aa257d2e554590fa683b42fe0d"
+        }
+      ]
+    },
+    {
+      "id": "archive_fair_shell_scheduling",
+      "role": "route",
+      "components": [
+        "offer-label fairness and conditional motion on raw shell packet states"
+      ],
+      "declared_status": "finite exhaustive sweeps, fairness counterexample and conditional first-hit times",
+      "missing_bridges": [
+        "scheduler, probabilities and physical time are not supplied by packet"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_scheduler_fairness.py",
+          "first_line": 1,
+          "last_line": 227,
+          "file_sha256": "5b4b89cc8e0a569e8852b35b8b013b64fbd58336f7868b5d4db36ad76a7a9db7"
+        }
+      ]
+    },
+    {
+      "id": "archive_reversible_packet_return",
+      "role": "route",
+      "components": [
+        "detailed balance and stationary preparation checked against same-event return"
+      ],
+      "declared_status": "exact finite spectral moment controls and optional hash-verified KamLAND data adapter",
+      "missing_bridges": [
+        "no neutrino source, response kernel, physical clock or exclusion significance"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_reversible_packet_return.py",
+          "first_line": 1,
+          "last_line": 367,
+          "file_sha256": "88054e96c4118e1d4f07f380bb2f33d494d49c457f843f1cbf5835607f79b1b1"
+        }
+      ]
+    }
+  ]
+}
