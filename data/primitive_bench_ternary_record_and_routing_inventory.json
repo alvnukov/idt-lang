@@ -1,0 +1,100 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_active_mobile_detector",
+      "role": "route",
+      "components": [
+        "A prepared reversible four-label meter with protected holding and ordinary shade record"
+      ],
+      "declared_status": "six native contacts record the token, including dump counts; a second exposed meter can duplicate the record",
+      "missing_bridges": [
+        "clean preparations and sealed events are supplied; no irreversible detection"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_native_mobile_detector.py",
+          "first_line": 1,
+          "last_line": 358,
+          "file_sha256": "3ec4b0da72dac0fc65d51a2791a989ebf844dbb92a4eaccebd6b9615bf63e4e8"
+        }
+      ]
+    },
+    {
+      "id": "archive_passive_ternary_vacancy",
+      "role": "route",
+      "components": [
+        "A tagged neutral mark plus vacancies, programmed vacancy triangles and raw shutters"
+      ],
+      "declared_status": "compiles the prepared four-label switch tables, but ordinary occupancy cannot see the dye",
+      "missing_bridges": [
+        "requires an externally distinguishing dye meter or another interaction"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ternary_vacancy_switch.py",
+          "first_line": 1,
+          "last_line": 259,
+          "file_sha256": "b7f330cd4f60b855d074e4e1171e919d1d4b18cab461627f375de2a6ddf56379"
+        }
+      ]
+    },
+    {
+      "id": "archive_active_ternary_detector",
+      "role": "route",
+      "components": [
+        "One symmetric pair involution flips equal ordinary shades and lets one tag pass one shade"
+      ],
+      "declared_status": "same rule supplies programmed transport and two ordinary protected records incl vacuum controls",
+      "missing_bridges": [
+        "clean stock, program, capture and record isolation are not derived"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ternary_active_readout.py",
+          "first_line": 1,
+          "last_line": 319,
+          "file_sha256": "40d0c2ccfd6a7bce8dffcd266932647f7e12f28d9b8d30c50d2c1efa7ee5e920"
+        }
+      ]
+    },
+    {
+      "id": "archive_binary_pair_clean_switch",
+      "role": "route",
+      "components": [
+        "Affine two-bit pair census against a factorial vacuum/source and switch intervention"
+      ],
+      "declared_status": "no fixed reversible binary-pair program with independent input encoding implements the tested clean switch",
+      "missing_bridges": [
+        "does not exclude higher arity, adaptive, irreversible or nonlinearly read binary schemes"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_binary_pair_switch_wall.py",
+          "first_line": 1,
+          "last_line": 141,
+          "file_sha256": "c2439f5341e73fc82be2c3832eca1272e654938caa0f041a996371731098365f"
+        }
+      ]
+    },
+    {
+      "id": "archive_bipartite_ternary_hardware",
+      "role": "route",
+      "components": [
+        "A tree of reversible active contacts plus alternating-side ordinary record sites"
+      ],
+      "declared_status": "all previous shutter and hub records on supplied acyclic hardware; sublattice charge constrains clean transport",
+      "missing_bridges": [
+        "high-degree clocked apparatus, not a naturally selected line, topology or autonomous observer"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_ternary_tree_hardware.py",
+          "first_line": 1,
+          "last_line": 247,
+          "file_sha256": "ab1ec6012356362ad5ebfdfbb031ae0d21a2c2dc6fc94248b7dfb150294518af"
+        }
+      ]
+    }
+  ]
+}

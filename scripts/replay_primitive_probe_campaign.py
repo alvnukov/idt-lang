@@ -579,6 +579,13 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
     "bench_dark_intermediate_port": (
         "probe_dark_intermediate_port",
     ),
+    "bench_ternary_record_and_routing": (
+        "probe_native_mobile_detector",
+        "probe_ternary_vacancy_switch",
+        "probe_ternary_active_readout",
+        "probe_binary_pair_switch_wall",
+        "probe_ternary_tree_hardware",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",
