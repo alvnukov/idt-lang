@@ -1,0 +1,62 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_literal_double_input_return",
+      "role": "route",
+      "components": [
+        "Joint unlabeled pivot dynamics and a separately consuming first-hit meter"
+      ],
+      "declared_status": "separated double return and finite positive unconditional mass at a one-body dark port",
+      "missing_bridges": [
+        "Independent port counting, input modes and instrument calibration must match for a physical comparison."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_two_packet_dark_return.py",
+          "first_line": 1,
+          "last_line": 284,
+          "file_sha256": "164abc6997116c4f2c0608789b2938121e4ed21d3a3f036cbc7e06aaee0ab9f7"
+        }
+      ]
+    },
+    {
+      "id": "archive_calibrated_two_input_mean",
+      "role": "route",
+      "components": [
+        "A two-token count benchmark with independently calibrated single-input occupancies"
+      ],
+      "declared_status": "an initially fermion-compatible menu fails passive additive mean counts on a calibrated length-two suffix",
+      "missing_bridges": [
+        "Classical hard-core site capacity is not a derivation of a physical particle species or quantum statistics."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_colorless_pair_additivity.py",
+          "first_line": 1,
+          "last_line": 226,
+          "file_sha256": "4c88c40dc838c60359562acc6b5e16fe273cd91079e24d3a00ae79ae700bb3fd"
+        }
+      ]
+    },
+    {
+      "id": "archive_packet_current_window_control",
+      "role": "route",
+      "components": [
+        "Time correlations of identical one-launch occupation records"
+      ],
+      "declared_status": "exact variance controls separate memory and number resolution before a noise comparison",
+      "missing_bridges": [
+        "A pulse model, physical current calibration, timing and background must be provided for an electronic noise prediction."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_packet_current_noise.py",
+          "first_line": 1,
+          "last_line": 141,
+          "file_sha256": "32e134cc27954bf6c7299227bbb35845cfa5d1198142cfe04e3b5a3374d51aef"
+        }
+      ]
+    }
+  ]
+}
