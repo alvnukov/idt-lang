@@ -492,6 +492,10 @@ TOPIC_BUNDLES: dict[str, tuple[str, ...]] = {
         "probe_clean_quartet_compiler",
         "probe_single_relation_quartet",
     ),
+    "bench_seam_tracks_and_exchange": (
+        "probe_three_mark_tracks",
+        "probe_seam_exchange_flux",
+    ),
     "matching_transport": (
         "probe_matching_transport",
         "probe_pairing_natural_transport",

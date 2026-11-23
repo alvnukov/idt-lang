@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "archive_three_mark_track_and_bound_pair",
+      "role": "route",
+      "components": [
+        "finite sparse signals from occupancy-only contact tracks and a two-seam bound route"
+      ],
+      "declared_status": "exact raw transitions with no chosen direction",
+      "missing_bridges": [
+        "persistent motion, ambient geometry and particle identity not derived"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_three_mark_tracks.py",
+          "first_line": 1,
+          "last_line": 500,
+          "file_sha256": "1ba9233a1034b4414f389383d3bc7864febadacb9abd17b486bfd5cfdc06110d"
+        }
+      ]
+    },
+    {
+      "id": "archive_seam_swap_vs_cut_flux",
+      "role": "route",
+      "components": [
+        "exchange of two resolved signals versus one-signal spatial winding on actual contacts"
+      ],
+      "declared_status": "conditional flat-sign discrimination with a common single-packet reference",
+      "missing_bridges": [
+        "the physical exchange character and phase-sensitive comparator remain open"
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_seam_exchange_flux.py",
+          "first_line": 1,
+          "last_line": 454,
+          "file_sha256": "273991c3df31315cfa5e38b5ae6301cc2ffa7ec8afc2c894709d44204490df33"
+        }
+      ]
+    }
+  ]
+}
