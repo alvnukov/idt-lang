@@ -1,0 +1,43 @@
+{
+  "schema": "idt-existing-primitive-inventory/1",
+  "candidates": [
+    {
+      "id": "absolute_blank_relative_encounter_intervention",
+      "role": "route",
+      "components": [
+        "Compare two reversible scalar-free ternary commands at fixed readout mark. Exhaust all triples and translations; make explicit intermediate versus final tag observations."
+      ],
+      "declared_status": "Anchored domain equals the ballot-preserving part of one relative rule; matching calibration does not identify either as a physical interaction.",
+      "missing_bridges": [
+        "Prepare three packets reproducibly, retain the mark, control a single firing, and observe the predicted alternative count."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_translated_collision_intervention.py",
+          "first_line": 1,
+          "last_line": 90,
+          "file_sha256": "c2782e8e5e6ed65a35c7e35527947336a26a6ca60abc494721defe5a940c772b"
+        }
+      ]
+    },
+    {
+      "id": "absolute_collision_reference_memory",
+      "role": "route",
+      "components": [
+        "With unknown but persistent origin and fixed partition, derive the exact adaptive and parallel costs of identifying which anchored rule acts. Two disjoint queries separate the entire anchored family from the relative rule."
+      ],
+      "declared_status": "Sixteen root-conditioned behaviors are distinct, with eight adaptive versus eleven fixed-setting trials optimal in this tag model. No physical memory register is inferred.",
+      "missing_bridges": [
+        "Bind shared external tags, contact scheduling and calibrated departure reports to endogenous apparatus."
+      ],
+      "sources": [
+        {
+          "path": "scripts/probe_collision_reference_memory.py",
+          "first_line": 1,
+          "last_line": 223,
+          "file_sha256": "7494f8d6746569d0c031a44f58390fb733cd9ef58ad3a7abb130d1fdcbb3517c"
+        }
+      ]
+    }
+  ]
+}

@@ -168,6 +168,17 @@ from theory_experiments.source_candidate import (
     SourceCandidate,
     parse_source_candidate,
 )
+from theory_experiments.ternary_encounter import (
+    LOADED_SOURCE_SHA256 as TERNARY_ENCOUNTER_LOADED_SOURCE_SHA256,
+)
+from theory_experiments.ternary_encounter import (
+    SCOPE as TERNARY_ENCOUNTER_SCOPE,
+)
+from theory_experiments.ternary_encounter import (
+    TernaryEncounter,
+    evaluate_ternary_encounter,
+    parse_ternary_encounter,
+)
 from theory_experiments.triangle_stock import (
     LOADED_SOURCE_SHA256 as TRIANGLE_STOCK_LOADED_SOURCE_SHA256,
 )
@@ -192,6 +203,7 @@ Hypothesis: TypeAlias = (
     | PublishedObservation | BellLocalResponse | NativeBellBridge | NativeReadoutProbe | NativeReadoutSearch
     | UnsignedPairPacket | OppositionFlag | MarkedRelay | ChiralPencil | NeutralCurrentWidth | TriangleStock
     | DrivenEventSelector | PeriodicContactObserver | PrepareMeasureCut | BinaryOverlapCut | RelationalGermObserver
+    | TernaryEncounter
 )
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "idt-hypothesis-screen/2"
@@ -200,6 +212,7 @@ _CACHE_MAX_BYTES = 512 * 1024
 _PREPARE_MEASURE_EVIDENCE = "necessary_conditions_on_submitted_finite_table_only"
 _BINARY_OVERLAP_EVIDENCE = "necessary_binary_overlap_bounds_on_submitted_event_table_only"
 _RELATIONAL_GERM_EVIDENCE = "finite_local_germ_transport_and_submitted_tally_comparison_only"
+_TERNARY_ENCOUNTER_EVIDENCE = "finite_one_command_comparison_with_submitted_tag_counts_only"
 SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/__init__.py",
     "theory_experiments/candidate_pipeline.py", "theory_experiments/physics_screen.py",
@@ -218,6 +231,7 @@ SOURCE_PATHS = tuple(sorted(set(primitive.SOURCE_PATHS) | {
     "theory_experiments/prepare_measure_cut.py",
     "theory_experiments/binary_overlap_cut.py",
     "theory_experiments/relational_germ_observer.py",
+    "theory_experiments/ternary_encounter.py",
     "theory_experiments/native_bell_bridge.py", "data/native_bell_bridge_controls.json",
     "theory_experiments/native_readout_probe.py", "data/native_readout_controls.json",
     "theory_experiments/native_readout_search.py", "data/native_readout_search_controls.json",
@@ -286,6 +300,22 @@ def _is_binary_overlap_spec(value: object) -> bool:
 
 def _is_relational_germ_spec(value: object) -> bool:
     return isinstance(value, dict) and value.get("family") == "relational_germ_observer"
+
+
+def _is_ternary_encounter_spec(value: object) -> bool:
+    return isinstance(value, dict) and value.get("family") == "ternary_encounter"
+
+
+def _assert_ternary_encounter_sources(sources: object, *, check_current: bool = False) -> None:
+    hashes = object_fields(object_fields(sources)["source_sha256"])
+    for path, loaded in (
+        ("theory_experiments/candidate_pipeline.py", LOADED_SOURCE_HASHES["theory_experiments/candidate_pipeline.py"]),
+        ("theory_experiments/ternary_encounter.py", TERNARY_ENCOUNTER_LOADED_SOURCE_SHA256),
+        ("theory_experiments/primitive_screen.py", primitive.LOADED_SOURCE_SHA256),
+    ):
+        if (hashes.get(path) != loaded or
+                (check_current and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != loaded)):
+            raise ValueError(f"ternary encounter source changed since import: {path}; restart from a stable checkout")
 
 
 def _assert_relational_germ_sources(sources: object, *, check_current: bool = False) -> None:
@@ -414,6 +444,8 @@ def _assert_marked_relay_sources(sources: object, *, check_current: bool = False
 
 def parse_hypothesis(value: object) -> Hypothesis:
     row = object_fields(value)
+    if _is_ternary_encounter_spec(row):
+        return parse_ternary_encounter(row)
     if _is_relational_germ_spec(row):
         return parse_relational_germ_observer(row)
     if _is_binary_overlap_spec(row):
@@ -525,7 +557,24 @@ def _binary_overlap_report(candidate: Hypothesis, limits: Limits, request: dict[
             "rejection_scope": BINARY_OVERLAP_CUT_SCOPE}
 
 
+def _ternary_encounter_report(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if (type(candidate) is not TernaryEncounter or type(limits) is not Limits
+            or set(request) != {"schema", "candidate", "limits", "provenance"} or request["schema"] != SCHEMA
+            or canonical_json(request["candidate"]) != canonical_json(candidate.specification())
+            or canonical_json(request["limits"]) != canonical_json(limits.specification())):
+        raise ValueError("ternary encounter candidate/limits do not match request")
+    _assert_ternary_encounter_sources(request["provenance"], check_current=True)
+    checks, details = evaluate_ternary_encounter(candidate, limits)
+    return {"request": request, "status": primitive.aggregate_status(checks),
+            "checks": [c.specification() for c in checks], "scope": details,
+            "arithmetic": "exact_even_record_hops_and_integer_tag_counts", "evidence_kind": _TERNARY_ENCOUNTER_EVIDENCE,
+            "proof_status": "not_attempted", "empirical_status": "not_tested",
+            "rejection_scope": TERNARY_ENCOUNTER_SCOPE}
+
+
 def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -> dict[str, object]:
+    if isinstance(candidate, TernaryEncounter) or _is_ternary_encounter_spec(request.get("candidate")):
+        return _ternary_encounter_report(candidate, limits, request)
     if isinstance(candidate, RelationalGermObserver) or _is_relational_germ_spec(request.get("candidate")):
         _bind_relational_germ(candidate, limits, request)
         return {"request": request, **_relational_germ_body(candidate, limits)}
@@ -640,6 +689,8 @@ def compute(candidate: Hypothesis, limits: Limits, request: dict[str, object]) -
 
 
 def _assert_cache_request_sources(request: dict[str, object]) -> None:
+    if _is_ternary_encounter_spec(request.get("candidate")):
+        _assert_ternary_encounter_sources(request["provenance"], check_current=True)
     if _is_relational_germ_spec(request.get("candidate")):
         _assert_relational_germ_sources(request["provenance"], check_current=True)
     if _is_binary_overlap_spec(request.get("candidate")):
@@ -709,7 +760,12 @@ def _validate_cache_entry(envelope: dict[str, object], request: dict[str, object
             or envelope["report_sha256"] != digest(report)):
         raise ValueError("cache integrity/request mismatch; use a new directory and recompute")
     candidate = parse_hypothesis(request["candidate"])
-    if isinstance(candidate, RelationalGermObserver):
+    if isinstance(candidate, TernaryEncounter):
+        # At most 64 tagged reads: replay them even for a warm, correctly rehashed entry.
+        expected = _ternary_encounter_report(candidate, parse_limits(request["limits"]), request)
+        if canonical_json(report) != canonical_json(expected):
+            raise ValueError("cached ternary encounter report disagrees with its one-command tag counts")
+    elif isinstance(candidate, RelationalGermObserver):
         limits = parse_limits(request["limits"])
         _bind_relational_germ(candidate, limits, request)
         if digest({k: v for k, v in report.items() if k != "request"}) != _verified_germ_body_digest(candidate, limits):
@@ -750,7 +806,7 @@ def publish(path: Path, report: dict[str, object], request: dict[str, object]) -
     saved_request = report.get("request")
     if any(check(request.get("candidate")) or (
             isinstance(saved_request, dict) and check(saved_request.get("candidate")))
-            for check in (_is_binary_overlap_spec, _is_relational_germ_spec)):
+            for check in (_is_binary_overlap_spec, _is_relational_germ_spec, _is_ternary_encounter_spec)):
         _validate_cache_entry(envelope, request)
     # Hard-link publication is atomic and refuses replacement, including a competing publisher.
     descriptor, temporary = tempfile.mkstemp(prefix=".screen-", dir=path.parent)
@@ -827,13 +883,18 @@ def run_batch(specifications: list[object], limits: Limits | None = None,
     has_cut = any(_is_prepare_measure_cut_spec(spec) for spec in specifications)
     has_overlap = any(_is_binary_overlap_spec(spec) for spec in specifications)
     has_germ = any(_is_relational_germ_spec(spec) for spec in specifications)
+    has_encounter = any(_is_ternary_encounter_spec(spec) for spec in specifications)
+    if has_encounter and limits is not None and type(limits) is not Limits:
+        raise ValueError("ternary encounter candidate/limits do not match request")
     if has_germ and limits is not None and type(limits) is not Limits:
         raise ValueError("relational germ candidate/limits do not match request")
     if has_overlap and limits is not None and type(limits) is not Limits:
         raise ValueError("binary overlap cut candidate/limits do not match request")
     pins_sources = (has_relay or has_pencil or has_width or has_stock or has_driven or has_periodic or
-                    has_cut or has_overlap or has_germ)
+                    has_cut or has_overlap or has_germ or has_encounter)
     sources = provenance() if pins_sources else None
+    if has_encounter:
+        _assert_ternary_encounter_sources(sources)
     if has_germ:
         _assert_relational_germ_sources(sources)
     if has_overlap:
@@ -909,9 +970,12 @@ def replay_artifact(path: Path) -> dict[str, object]:
     is_cut = _is_prepare_measure_cut_spec(request["candidate"])
     is_overlap = _is_binary_overlap_spec(request["candidate"])
     is_germ = _is_relational_germ_spec(request["candidate"])
+    is_encounter = _is_ternary_encounter_spec(request["candidate"])
     pins_sources = (is_relay or is_pencil or is_width or is_stock or is_driven or is_periodic or
-                    is_cut or is_overlap or is_germ)
+                    is_cut or is_overlap or is_germ or is_encounter)
     sources = provenance() if pins_sources else None
+    if is_encounter:
+        _assert_ternary_encounter_sources(sources)
     if is_germ:
         _assert_relational_germ_sources(sources)
     if is_overlap:
